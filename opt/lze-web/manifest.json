@@ -1,0 +1,55 @@
+{
+    "name": "Linzeen",
+    "short_name": "lze",
+    "background_color": "#FFFFFF",
+    "display": "minimal-ui",
+    "start_url": "/",
+    "scope": "/",
+    "display":"standalone",
+    "icons": [
+      
+        {
+            "src": "/icon/linzeen.png",
+            "sizes": "512x512",
+            "type": "image/png"
+          },
+      {
+        "src": "/icon/linzeen.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "monochrome"
+      }
+    ],
+    "theme_color": "#FF0000",
+    "gcm_sender_id": "402845223712",
+    "gcm_user_visible_only": true,
+    "related_applications": [],
+    "capture_links": "none",
+    "shortcuts": [
+      {
+        "name": "恩的文档",
+        "url": "/code/Documents/doc.html"
+      },
+      {
+        "name": "其他文件",
+        "url": "/code/Downloads/oth.html"
+      },
+      {
+        "name": "恩的图片",
+        "url": "/code/Pictures/pic.html"
+      },
+      {
+        "name": "恩的便签",
+        "url": "/code/Note/note.html"
+      },
+      {
+        "name": "恩的书签",
+        "url": "/code/Bookmark/bookmark.html"
+      },
+      {
+        "name": "恩的小游戏",
+        "url": "/code/Game/game.html"
+      }
+    ]
+  }
+  

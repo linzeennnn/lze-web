@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17042b"/>
+
+  <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓💻</title>
+  <link rel="icon" href="icon/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="icon/favicon.ico" type="image/x-icon">
+  <!-- 苹果设备 -->
+<link rel="apple-touch-icon" sizes="180x180" href="icon/linzeen_icon.png">
+<!-- 安卓设备 -->
+<link rel="icon" type="image/png" sizes="192x192" href="icon/linzeen_icon.png">
+<link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="font/font.css"> 
+  <style>
+    
+
+    header{
+      font-size: 300%;
+      
+      cursor: pointer;
+      text-align: center;
+      color: #b97fab !important;
+        background-color: #11010ed2 !important;
+       height: 5% !important;
+       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
+       
+    }
+    header:hover{
+      background-color: #81647d94 !important;
+      color: #000000 !important;
+    }
+    .name{
+      position:relative;
+      bottom: -25px;
+      
+    }
+    
+    
+    body {
+      overflow-x: hidden !important;
+      font-family: LZE;
+      margin: 0;
+      padding: 0;
+      background-color: #2b034d;
+      background-image: url(icon/home_background_pc.jpg);
+     color: #1c6da8;
+      background-size:cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      
+    }
+    #buttonText {
+      
+      color: white;
+      padding: 15px 30px;
+      font-size: 1000%;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      top: 0; /* 初始位置位于标题底部 */
+      transition: top 1s ease, transform 1s ease; /* 添加过渡效果 */
+      margin-top: 0;
+    }
+   
+
+    header {
+      
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    main {
+      margin-top: 70px; /* 保证内容不被标题栏遮挡 */
+      text-align: center;
+    }
+
+    #myButton {
+      font-family: LZE;
+      color: #b97fab !important;
+        background-color: #2e0226c7 !important;
+      padding: 15px 30px;
+      font-size: 2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      top: 0; /* 初始位置位于标题底部 */
+      transition: top 1s ease, transform 1s ease; /* 添加过渡效果 */
+      margin-top: 60px;
+      border-radius: 100em;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+
+    #myButton:hover {
+      background-color: #81647d94 !important;
+      color: #000000 !important;
+    }
+
+    #customPopup {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 0;
+      background-color: #fff;
+      overflow: hidden;
+      transition: height 1s ease; /* 添加过渡效果 */
+      z-index: 1001; /* 比标题栏更高的层级 */
+      box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background-image: url(icon/home_popup_pc.jpg);
+      background-size: cover;
+    }
+
+    #customPopup.active {
+      height: 60%; /* 弹出时的高度 */
+    }
+
+    #topBar {
+      color: #b97fab !important;
+        background-color: #2e0226c7 !important;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      
+      
+    }
+
+    #topBar button {
+      font-family: LZE;
+      width: 25%;
+      height: 2em;
+      /* padding: 8px; */
+      background-color: #11010ed2;
+      color: rgb(192, 148, 184);
+      border: none;
+      border-radius: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 0;
+      margin: 5px;
+      margin-bottom: 0;
+      font-size: 150%;
+    }
+
+    #topBar button.selected {
+      background-color: hsla(308, 27%, 58%, 0.663);
+      color: #20021c;
+    }
+
+    #topBar button:hover {
+      background-color: hsla(308, 27%, 58%, 0.663);
+      color: #20021c;
+    }
+
+    .additionalPopup {
+      
+        display: flex;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 80%; /* 弹出时的高度 */
+      background-color: #fff;
+      
+      transition: transform 1s ease, opacity 1s ease; /* 添加过渡效果 */
+      transform-origin: left center;
+      transform: translateX(-100%); /* 初始位置在页面左侧外部 */
+      opacity: 0; /* 初始状态为透明 */
+    }
+
+    .additionalPopup.active {
+        
+      transform: translateX(0); /* 弹出时的位置 */
+      opacity: 1; /* 显示 */
+    }
+
+    .additionalPopup.return {
+      transform: translateX(200%); /* 弹回时的位置 */
+      opacity: 0; /* 隐藏 */
+    }
+
+    .popupContent {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      font-size: 18px;
+      background-color: #ffffff00;
+      
+    }
+    .popupContent button {
+      font-family: LZE;
+        width: 100%; /* 按钮宽度占满父容器 */
+        padding: 10px; /* 设置按钮内边距 */
+       
+        }
+
+
+
+    #popup1{
+
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 2%;
+        }
+
+    #popup1-1{
+        flex: 1;
+        width: auto;
+        height: 100%;
+        background-image: url(icon/doc_background_pc.jpg);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8;
+        font-size: 300%;
+        color: #5b0c58;
+        cursor: pointer;
+        border-radius: 1em;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+    #popup1-1:hover{
+        opacity: 1;
+    }
+    #popup1-2{
+        flex: 1;
+        width: auto;
+        height: 100%;
+        background-image: url(icon/oth_background_pc.jpg);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8;
+        font-size: 300%;
+        color: #722225;
+        cursor: pointer;
+        border-radius: 1em;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+        
+    }
+
+    #popup1-2:hover{
+        opacity: 1;
+    }
+    #popup2{
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 2%;
+    }
+    #popup2-1{
+        border-radius: 1em;
+        height: 100%;
+        width: 100%;
+        background-image: url(icon/pic_background_pc.jpg);
+        opacity: 0.8;
+        cursor: pointer;
+        background-size: cover;
+        background-position: center;
+        font-size: 300%;
+        color: #092958;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+    #popup2-1:hover{
+        opacity: 1;
+        
+    }
+
+
+    #popup3{
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 2%;
+    }
+    #popup3-1{
+        border-radius: 1em;
+        height: 100%;
+        width: 100%;
+        background-image: url(icon/not_background_pc.jpg);
+        opacity: 0.8;
+        cursor: pointer;
+        background-size: cover;
+        background-position: center;
+        font-size: 300%;
+        color: #024a4d;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+    #popup3-1:hover{
+        opacity: 1;
+        
+    }
+
+
+    #popup4{
+
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 2%;
+        }
+
+        #popup4-1{
+        flex: 1;
+        width: auto;
+        height: 100%;
+        background-image: url(icon/bok_background_pc.jpg);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8;
+        font-size: 300%;
+        color: #2d0a1e;
+        cursor: pointer;
+        border-radius: 1em;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+        }
+        #popup4-1:hover{
+        opacity: 1;
+        }
+        #popup4-2{
+        flex: 1;
+        width: auto;
+        height: 100%;
+        background-image: url(icon/gam_background_pc.jpg);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8;
+        font-size: 300%;
+        color: #654409;
+        cursor: pointer;
+        border-radius: 1em;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+
+        }
+
+        #popup4-2:hover{
+        opacity: 1;
+        }
+        @media only screen and (max-width: 600px){
+          .phone_background {
+          position:relative;
+          overflow:hidden;
+            overflow-x: hidden;
+        }
+        .phone_background .fixed {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+          background:no-repeat center center;
+          background-size:cover;
+          z-index:0;
+            overflow:hidden;
+            overflow-x: hidden;
+        }
+          #myButton{
+            
+            font-size: 80%;
+          }
+          #topBar button {
+            font-size: 80%;
+          }
+          #topBar {
+            height: 10%;
+            padding: auto;
+            
+          }
+         
+        #customPopup {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          height: 0;
+          background-color: #fff;
+          overflow: hidden;
+          transition: height 1s ease; /* 添加过渡效果 */
+          z-index: 1001; /* 比标题栏更高的层级 */
+          box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+         
+          background-size: cover;
+        }
+
+        }
+  </style>
+</head>
+<body>
+  <div class="phone_background">
+    <div class="fixed" style="background-image:url(icon/home_background_phone.jpg);"></div>
+  </div>
+  <header onclick="reloadPage()">
+    <div class="name">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
+  </header>
+
+  <main>
+        <div id="buttonText" onclick="handleButtonClick()">🦦💻</div>
+        <div>
+        <button id="myButton" onclick="handleButtonClick()" >开始</button>
+        </div>
+   
+        <div id="customPopup">
+      <div id="topBar">
+        <button onclick="handleTopBarButtonClick(0)">恩的文件</button>
+        <button onclick="handleTopBarButtonClick(1)">恩的图库</button>
+        <button onclick="handleTopBarButtonClick(2)">恩的便签</button>
+        <button onclick="handleTopBarButtonClick(3)">其他</button>
+      </div>
+      <div class="additionalPopup" id="popup1">
+        <div class="popupContent">
+            <button id="popup1-1" onclick="todoc()">进入文档</button>
+            <button id="popup1-2" onclick="tooth()">其他文件</button>
+          </div>
+        </div>
+      <div class="additionalPopup" id="popup2">
+        <div class="popupContent">
+            <button id="popup2-1" onclick="topic()">进入图库</button>
+        </div>
+      </div>
+      <div class="additionalPopup" id="popup3">
+        <div class="popupContent">
+          <button id="popup3-1" onclick="tonote()">进入便签</button>
+        </div>
+      </div>
+      <div class="additionalPopup" id="popup4">
+        <div class="popupContent">
+            <button id="popup4-1" onclick="tobook()">进入书签</button>
+            <button id="popup4-2" onclick="togam()">进入终端</button>
+        </div>
+    </div>
+  </main>
+
+  <script>
+function reloadPage() {
+  location.reload();
+}
+
+    
+    function todoc() {
+    window.location.href = 'code/Documents/doc.html'; 
+  }
+  function tooth() {
+    window.location.href = 'code/Downloads/oth.html'; 
+  }
+  function topic() {
+    window.location.href = 'code/Pictures/pic.html'; 
+  }
+  function tonote() {
+    window.location.href = 'code/Note/note.html'; 
+  }
+  function togam() {
+    window.location.href = 'code/Terminal/terminal.html'; 
+  }
+  function tobook() {
+    window.location.href = 'code/Bookmark/bookmark.html'; 
+  }
+
+
+
+  var buttonState = 1; // 初始状态为1
+
+function handleButtonClick() {
+  var button = document.getElementById('myButton');
+  var popup = document.getElementById('customPopup');
+  var buttonText = document.getElementById('buttonText');
+
+  if (buttonState === 1) {
+    popup.classList.add('active');
+    button.style.top = '0'; // 降落到页面正中心
+    buttonText.style.top = '0';
+    button.innerText = '⟳';
+    buttonState = 2; // 更新状态为2
+  } else {
+    popup.classList.remove('active');
+    button.style.top = '20vh'; // 升回标题底部
+    buttonText.style.top = '20vh';
+    button.innerText = '开始';
+    buttonState = 1; // 更新状态为1
+    // 隐藏所有的框
+    var additionalPopups = document.querySelectorAll('.additionalPopup');
+    additionalPopups.forEach(function (popup) {
+      popup.classList.remove('active', 'return'); // 移除所有类
+    });
+  }
+}
+
+    function handleTopBarButtonClick(index) {
+      var buttons = document.querySelectorAll('#topBar button');
+      buttons.forEach(function (button, i) {
+        button.classList.remove('selected');
+        if (i === index) {
+          button.classList.add('selected');
+        }
+      });
+
+      var additionalPopups = document.querySelectorAll('.additionalPopup');
+      additionalPopups.forEach(function (popup, i) {
+        if (i === index) {
+          popup.classList.add('active');
+        } else {
+          popup.classList.remove('active', 'return');
+        }
+      });
+    }
+
+    function handleDocumentClick(event) {
+      var buttons = document.querySelectorAll('#topBar button');
+      var isButtonClick = false;
+
+      buttons.forEach(function (button) {
+        if (button.contains(event.target)) {
+          isButtonClick = true;
+        }
+      });
+
+      if (!isButtonClick) {
+        buttons.forEach(function (button) {
+          button.classList.remove('selected');
+        });
+
+        // 隐藏所有的框
+        var additionalPopups = document.querySelectorAll('.additionalPopup');
+        additionalPopups.forEach(function (popup) {
+          popup.classList.remove('active', 'return');
+        });
+      }
+    }
+
+    window.onload = function() {
+      var button = document.getElementById('myButton');
+      var buttonText = document.getElementById('buttonText');
+      button.style.top = '30vh'; // 设置初始位置
+      buttonText.style.top = '30vh'; // 设置初始位置
+
+      // 添加点击页面任意地方的事件监听器
+      document.addEventListener('click', handleDocumentClick);
+    };
+  </script>
+
+</body>
+</html>

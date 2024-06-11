@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#4baca6"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📝</title>
+    <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../font/font.css"> 
+    <style>
+        
+        body{
+            overflow-x: hidden !important;
+            font-family: LZE;
+            background-image: url('../../icon/not_background_pc.jpg');
+            background-attachment:fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-size: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: aqua;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+           
+        }
+     
+    #backButton {
+        font-family: LZE;
+            background-color:rgba(8, 148, 148, 0.63);
+            color: #024a4d;
+            border: none;
+            padding: 0.57%;
+            cursor: pointer;
+            font-size: 100%;
+            width: 100%;
+            max-width: 100%;
+            align-self: flex-start;
+            text-align: left;
+            padding-left: 7%;
+            position:fixed;
+            z-index: 1000;
+            top: 0;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            
+            }
+            #backButton:hover {
+                background-color: #05473c9c;
+                color: #ffffff;
+                
+            }
+
+            h2 {
+                cursor: pointer;
+                position: relative;
+            display: inline-block;
+            box-sizing: content-box;
+            
+            border-radius:1em ;
+            background-color: #00b4ba96;
+            left: 48%;
+            margin-top: 4%;
+            width: 6em;
+            
+            text-align: center;
+            padding-bottom: 0.1%;
+            margin-bottom: 0.5%;
+            color: #024a4d;
+            position: relative;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            }
+            h2:hover{
+                background-color: #052f33ab;
+                color: #ffffff;
+            }
+        .expand-btn, .edit-btn, .delete-btn {
+            cursor: pointer;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4em;
+            margin-right: 8px;
+        }
+
+        .expand-btn {
+            position: absolute;
+           
+            bottom: 0;
+            left: 50%;
+            font-size: 150%;
+            cursor: pointer;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 50%;
+            margin-right: 8px;
+            background-color: #cccccc00;
+            opacity: 0.5;
+        }
+        .expand-btn:hover{
+            opacity: 1;
+        }
+
+        .edit-btn {
+            background-color: #35f0e6a8;
+            color: rgb(0, 0, 0);
+        }
+        .edit-btn:hover{
+            background-color: #034442ab;
+            color: #ffffff;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 200%;
+            cursor: pointer;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 200em;
+            margin-right: 0;
+            margin-top: 0;
+            background-color: #a3170d00;
+            color: rgba(173, 6, 6, 0.664);
+        }
+        .delete-btn:hover{
+            color: red;
+        }
+
+        .add-btn {
+            position: relative;
+            font-size: 200%;
+            margin-left: 10%;
+            margin-bottom: 2%;
+            background-color: #1241458a;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 50%;
+            margin-right: 8px;
+            aspect-ratio: 1/1;
+            z-index: 10;
+           
+        }
+        .add-btn:hover{
+            background-color: #0d5d64;
+        }
+        .copy-btn {
+            position: absolute;
+            cursor: pointer;
+            padding: 8px 16px;
+            border: none;
+            margin-bottom: 0;
+            font-size: 200%;
+            margin-right: 0;
+            background-color: #4286f400;
+            color: #000000;
+            bottom: 0 !important;
+            right: 0 !important;
+        }
+        .copy-btn:hover {
+            color: white;
+        }
+        
+
+        /* h3[contenteditable="true"] {
+            border: 1px solid #ccc;
+            padding: 8px;
+            display: inline-block;
+        } */
+        h3.edit-mode,
+        div.edit-mode {
+            border: 1px solid #ccc;
+            padding: 8px;
+            display: inline-block;
+            
+        }
+        .note-element {
+            position: relative;
+            border-radius: 1em;
+            margin-left: 10%;
+            margin-right: 10%;
+            height: 100%;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 50px;   
+            padding: 10px; 
+            background-color: rgba(18, 173, 173, 0.616);
+            align-items: center ;
+            overflow: hidden;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+        }
+        .word{
+            color: rgb(3, 51, 36);
+            max-width: auto;
+            width: 100%;
+            
+        }
+        #note{
+            width: 80%;
+            align-items: center ;
+        }
+        h3[contenteditable="true"] {
+            position: relative;
+            border: 10px;
+            border-radius: 1em;
+            
+            width: 30%;
+            margin-left: 10%;
+            font-size: 18px;
+            background-color: rgba(18, 173, 173, 0.616);
+            
+            }
+        textarea{
+            position: relative;
+            margin-left: 10%;
+            width: 80%;
+            border-radius: 1em;
+            border-color: #cccccc00;
+            background-color: rgba(18, 173, 173, 0.616);
+            }
+            .note-element div[contenteditable="true"]{
+                background-color: rgba(18, 173, 173, 0.616);
+            }
+            @media only screen and (max-width: 600px) {
+    
+            .phone_background {
+            position:relative;
+            overflow:hidden;
+            overflow-x: hidden;
+        }
+        .phone_background .fixed {
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:no-repeat center center;
+            background-size:cover;
+            z-index:0;
+            overflow:hidden;
+            overflow-x: hidden;
+        }
+        #backButton{
+            height: 40px;
+        }
+        h2{
+            left: 31%;
+            margin-top: 20%;
+        }
+
+            }
+            
+    </style>
+    
+</head>
+<body>
+    <div class="phone_background">
+        <div class="fixed" style="background-image:url(../../icon/not_background_phone.jpeg);"></div>
+    </div>
+    <button id="backButton" onclick="goBack()"><返回主页</button>
+
+    <h2 onclick="reloadPage()">恩的便签📝</h2>
+<div id="notes"></div>
+
+<script>
+    function goBack() {
+      window.location.href = '/';
+    }
+    function reloadPage() {
+  location.reload();
+}
+    async function readFile(file) {
+        const response = await fetch(file);
+        const text = await response.text();
+        return text;
+    }
+
+    async function getNoteFiles() {
+        const response = await fetch('not_getFiles.php');
+        const noteFiles = await response.json();
+        return noteFiles;
+    }
+
+    async function showNotes() {
+        const notesContainer = document.getElementById('notes');
+
+        try {
+            // 添加“添加新便签”按钮
+            const addButton = document.createElement('button');
+            addButton.className = 'add-btn';
+            addButton.innerHTML = '+';
+            addButton.onclick = showAddNoteForm;
+            notesContainer.appendChild(addButton);
+
+            const noteFiles = await getNoteFiles();
+
+            for (const file of Object.values(noteFiles)) {
+                const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
+                const filePath = `../../Documents/note/${file}`;
+                const content = await readFile(filePath);
+                const noteElement = document.createElement('div');
+                noteElement.className = 'note-element';
+                noteElement.innerHTML = `
+                    <h3 >${fileNameWithoutExtension}</h3>
+                    <div class="word" rows="4" cols="50" style="display: none;">${content}</div>
+                    <button class="edit-btn" onclick="enableEditMode(this, '${file}')">编辑</button>
+                    <button class="expand-btn" onclick="toggleContent(this)">
+                        <img src="../../icon/down.png" >
+                        </button>
+                    <button class="delete-btn" onclick="deleteNote('${file}')">✘</button>
+                    <button class="copy-btn" onclick="copyNoteContent(this)">❐</button>
+                `;
+
+                notesContainer.appendChild(noteElement);
+            }
+        } catch (error) {
+            console.error('Error reading files:', error);
+        }
+    }
+
+    window.onload = showNotes;
+
+
+
+
+
+
+
+
+
+   
+
+
+    let isEditing = false;
+    let originalFileName;
+    let editingNoteElement; // 用于存储当前正在编辑的便签元素
+// JavaScript函数用于启用编辑模式
+function enableEditMode(editBtn) {
+    if (isEditing) {
+        alert('请先保存正在编辑的内容。');
+        return;
+    }
+
+    isEditing = true;
+
+    const noteElement = editBtn.parentElement;
+    editingNoteElement = noteElement; // 存储正在编辑的便签元素
+
+    const titleElement = noteElement.querySelector('h3');
+    const contentElement = noteElement.querySelector('div');
+
+    // 存储原始文件名
+    originalFileName = titleElement.innerText + '.txt';
+
+    titleElement.contentEditable = 'true';
+    contentElement.contentEditable = 'true';
+
+    const expandBtn = noteElement.querySelector('.expand-btn');
+    const isContentExpanded = contentElement.style.display === 'none';
+    if (expandBtn && isContentExpanded) {
+        expandBtn.click();
+    }
+
+    // 更改编辑按钮的行为为保存按钮
+    editBtn.innerHTML = '保存';
+    editBtn.onclick = function () {
+        // 在deleteEdit之前插入判断重复文件名的函数
+        const newFileName = titleElement.innerText;
+        if (checkDuplicateFileName(newFileName)) {
+            alert('标题名已存在，请选择不同的名称。');
+        } else {
+            deleteEdit(originalFileName);
+            saveNoteChanges(noteElement);
+            isEditing = false;
+            editingNoteElement = null; // 清空正在编辑的便签元素
+        }
+    };
+}
+
+// 判断重复文件名的函数
+function checkDuplicateFileName(newFileName) {
+    const noteElements = document.querySelectorAll('.note-element h3');
+    for (const element of noteElements) {
+        if (element.innerText === newFileName && element.parentElement !== editingNoteElement) {
+            return true; // 文件名重复
+        }
+    }
+    return false; // 文件名不重复
+}
+
+
+
+
+
+
+
+
+// JavaScript函数用于保存编辑后的便签内容
+function saveNoteChanges(noteElement) {
+    const titleElement = noteElement.querySelector('h3');
+    const contentElement = noteElement.querySelector('div');
+
+   
+    const fileName = titleElement.innerText;
+    const newContent = contentElement.innerText;
+
+
+    
+
+    // 向服务器发送保存请求
+    saveNoteRequest(fileName, newContent);
+    console.log('File Name:', fileName);
+    console.log('New Content:', newContent);
+
+   
+    
+
+    // 禁用编辑模式
+    titleElement.contentEditable = 'false';
+    contentElement.contentEditable = 'false';
+
+    // 更改保存按钮的行为为编辑按钮
+    const editBtn = noteElement.querySelector('.edit-btn');
+    editBtn.innerHTML = '编辑';
+    editBtn.onclick = function () {
+        enableEditMode(editBtn);
+    };
+    
+}
+
+// 异步函数，用于向服务器发送保存便签内容的请求
+async function saveNoteRequest (newTitle, newContent) {
+    const formData = new FormData();
+    formData.append('newTitle', newTitle);
+    formData.append('newContent', newContent);
+
+    try {
+        const response = await fetch('not_saveNote.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.text();
+        
+        
+       
+    } catch (error) {
+        console.error('Error adding new note:', error);
+    }
+    
+}
+
+
+
+    // 异步函数，用于删除便签文件
+    async function deleteEdit(fileName) {
+        const formData = new FormData();
+        formData.append('fileName', fileName);
+
+        try {
+            const response = await fetch('not_deleteNote.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.text();
+            console.log(result);
+
+          
+        } catch (error) {
+            console.error('Error deleting note:', error);
+        }
+    }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // JavaScript函数用于切换内容的显示和隐藏
+    function toggleContent(btn) {
+    const contentElement = btn.previousElementSibling.previousElementSibling;
+    if (contentElement && (contentElement.style.display === 'none' || contentElement.style.display === '')) {
+        contentElement.style.display = 'block';
+        btn.innerHTML = '<img src="../../icon/up.png" >';
+
+        // 更新内容区域的实际文本
+        const textArea = contentElement.querySelector('textarea');
+        if (textArea) {
+            contentElement.innerText = textArea.value;
+        }
+    } else if (contentElement) {
+        contentElement.style.display = 'none';
+        btn.innerHTML = '<img src="../../icon/down.png" >';
+    }
+}
+
+
+
+       
+
+
+    // JavaScript函数用于删除便签
+    function deleteNote(fileName) {
+        if (confirm('确定要删除这个便签吗？')) {
+            // 发送删除请求
+            deleteNoteFile(fileName);
+        }
+    }
+
+    // 异步函数，用于删除便签文件
+    async function deleteNoteFile(fileName) {
+        const formData = new FormData();
+        formData.append('fileName', fileName);
+
+        try {
+            const response = await fetch('not_deleteNote.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.text();
+            console.log(result);
+
+            // 重新加载便签
+            document.getElementById('notes').innerHTML = '';
+            showNotes();
+        } catch (error) {
+            console.error('Error deleting note:', error);
+        }
+    }
+
+
+
+
+
+
+
+
+   // JavaScript函数用于显示添加新便签的表单
+function showAddNoteForm() {
+    // 创建新的便签元素
+    const newNoteElement = document.createElement('div');
+
+    // 创建标题元素并设置为可编辑
+    const newTitleElement = document.createElement('h3');
+    newTitleElement.contentEditable = 'true';
+    newTitleElement.innerText = '输入标题'; // 设置默认文本
+    newTitleElement.addEventListener('click', function() {
+        if (this.innerText === '输入标题') {
+            this.innerText = '';
+        }
+    });
+    newNoteElement.appendChild(newTitleElement);
+    // 添加输入事件监听器
+    newTitleElement.addEventListener('input', function () {
+        const newTitle = newTitleElement.innerText;
+
+        // 检查文件名是否包含%或#
+        if (newTitle.includes('%') || newTitle.includes('#')) {
+            alert('标题名不能包含非法字符(#或%)，删除该字符后再输入。');
+          
+        }
+    });
+
+    // 创建文本区域元素
+    const newContentElement = document.createElement('textarea');
+    newContentElement.rows = '4';
+    newContentElement.cols = '50';
+    newContentElement.placeholder = '输入内容';
+    newNoteElement.appendChild(newContentElement);
+
+    // 创建确认按钮
+    const confirmButton = document.createElement('button');
+    confirmButton.className = 'add-btn';
+    confirmButton.innerHTML = '✔';
+    confirmButton.onclick = function () {
+        const newTitle = newTitleElement.innerText;
+        const newContent = newContentElement.value;
+        addNewNoteRequest(newTitle, newContent);
+
+        
+    };
+    newNoteElement.appendChild(confirmButton);
+
+    // 创建取消按钮
+    const addButton = document.querySelector('.add-btn');
+    addButton.innerHTML = '✘';
+    addButton.onclick = function () {
+        // 取消添加新便签的操作
+        newNoteElement.remove();
+
+        // 恢复按钮文本和行为为添加新便签
+        addButton.innerHTML = '+';
+        addButton.onclick = showAddNoteForm;
+    };
+
+    // 将新便签元素添加到页面中的开头
+    const notesContainer = document.getElementById('notes');
+    notesContainer.insertBefore(newNoteElement, notesContainer.firstChild);
+
+    // 设置新便签的标题为焦点
+    newTitleElement.focus();
+}
+
+// JavaScript函数用于取消添加新便签
+function cancelAddNote() {
+    // 恢复按钮文本和行为为添加新便签
+    const addButton = document.querySelector('.add-btn');
+    addButton.innerHTML = '+';
+    addButton.onclick = showAddNoteForm;
+}
+
+
+
+   // 异步函数，用于向服务器发送添加新便签的请求
+async function addNewNoteRequest(newTitle, newContent) {
+    const formData = new FormData();
+    formData.append('newTitle', newTitle);
+    formData.append('newContent', newContent);
+
+    try {
+        const response = await fetch('not_addNote.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.text();
+        
+        // 根据服务器的响应判断是否需要弹窗
+        if (result === 'FileExistsError') {
+            alert('标题名已存在，请选择不同的名称。');
+        } else {
+            // 重新加载便签
+            document.getElementById('notes').innerHTML = '';
+            showNotes();
+        }
+    } catch (error) {
+        console.error('Error adding new note:', error);
+    }
+}
+
+ // 新增JavaScript函数，用于复制便签内容到剪贴板
+function copyNoteContent(copyBtn) {
+    const contentElement = copyBtn.parentElement.querySelector('.word');
+    const contentToCopy = contentElement.innerText;
+
+    // 创建一个文本区域，将内容设置为要复制的文本
+    const textarea = document.createElement('textarea');
+    textarea.value = contentToCopy;
+
+    // 将文本区域添加到DOM中
+    document.body.appendChild(textarea);
+
+    // 选中文本并执行复制命令
+    textarea.select();
+    document.execCommand('copy');
+
+    // 从DOM中移除文本区域
+    document.body.removeChild(textarea);
+
+    // 将复制按钮文本设置为复制成功
+    copyBtn.innerText = '✓';
+
+    // 等待两秒后将复制按钮文本恢复为原始文本
+    setTimeout(() => {
+        copyBtn.innerText = '❐';
+    }, 2000);
+
+   
+}
+
+
+
+</script>
+
+</body>
+</html>
+

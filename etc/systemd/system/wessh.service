@@ -1,0 +1,15 @@
+[Unit]
+Description=Jupyter Notebook Service
+After=network.target sshd.service
+
+
+[Service]
+# backend running
+Type=forking
+ExecStart=webssh-start
+ExecStop=webssh-stop
+Restart=on-failure
+
+
+[Install]
+WantedBy=multi-user.target

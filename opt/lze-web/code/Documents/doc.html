@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#fbbedc"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+  <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📃</title>
+  <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../font/font.css"> 
+  <style>
+    body {
+      font-family: LZE;
+      font-size: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: pink;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: url('../../icon/doc_background_pc.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    @media only screen and (max-width: 600px) {
+    
+    .phone_background {
+	position:relative;
+	overflow:hidden;
+    overflow-x: hidden;
+}
+.phone_background .fixed {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background:no-repeat center center;
+	background-size:cover;
+	z-index:0;
+    overflow:hidden;
+    overflow-x: hidden;
+}
+
+h2{
+  margin-top: 50px !important;
+}
+#backButton {
+      height: 40px;
+    }
+
+    }
+
+    #backButton {
+      font-family: LZE;
+      background-color: #fea6d1af;
+      color: #5b0c58;
+      border: none;
+      padding: 0.57%;
+      cursor: pointer;
+      font-size: 100%;
+      width: 100%;
+      max-width: 100%;
+      align-self: flex-start;
+      text-align: left;
+      padding-left: 7%;
+      position:fixed;
+      top: 0;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.521);
+      z-index: 1000;
+    }
+    #backButton:hover{
+      background-color: #bb1d7180;
+      color: white;
+    }
+
+    h2 {
+      
+      width: 6em;
+      height: 20%;
+      cursor: pointer;
+      text-align: center;
+      display: inline-block;
+      box-sizing: content-box;
+      padding-bottom: 0.1%;
+      margin-bottom: 1%;
+      color: #5b0c58;
+      position: relative;
+      margin-top: 5%;
+      border-radius: 1em;
+      background-color: #f35ec1a6;
+      padding-bottom: 0.1%;
+      
+    }
+    h2:hover{
+      color: white;
+      background-color: #3b204eb0;
+    }
+
+    form {
+      width: 80%;
+      max-width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 自定义文件上传按钮的样式 */
+    .custom-upload-btn {
+      background-color: #df6fa793;
+      color: #5b0c58;
+      border: none;
+      padding: 0.55em;
+      cursor: pointer;
+      border-radius: 2.75em;
+      margin-bottom: 0.55em;
+      position: relative;
+      
+    }
+
+    /* 隐藏默认的文件上传按钮 */
+    #customFileUpload {
+      display: none;
+    }
+    .custom-upload-btn:hover{
+      background-color: #50082794;
+      color: white;
+    }
+
+    /* 用于显示选定文件名的样式 */
+    #selectedFileName {
+      
+      max-width: 45% !important;
+      overflow: auto !important;
+      left: 5px;
+      font-size: 200%;
+      color: #5b0c58;
+      position: relative;
+      background-color: #d54e88ad;
+      border-radius: 1em;
+      width: auto;
+      overflow: hidden;
+      
+    }
+
+    .uploadButton {
+      font-family: LZE;
+      background-color: #df6fa793;
+      color: #5b0c58;
+      border: none;
+      padding: 0.55em;
+      cursor: pointer;
+      font-size: 150%;
+      border-radius: 2em;
+      position: relative;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      
+    }
+    .uploadButton:hover{
+      color: white;
+      background-color:#50082794 ;
+    }
+
+    #fileListContainer {
+      width: 80%;
+      position: relative;
+      max-width: 80%;
+      border: 0.11em solid rgb(255, 255, 255);
+      border-radius: 0.5em;
+      overflow: hidden;
+      z-index: 1;
+      margin-bottom: 2em;
+      background-color: #f07cb48e;
+      position: relative;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+
+    #fileList {
+      padding: 0;
+      list-style: none;
+      position: relative;
+    }
+
+    #fileList li {
+      cursor: pointer;
+      margin-bottom: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 120%;
+      border-bottom: 0.1em solid rgb(255, 255, 255);
+      padding: 1.4%;
+      position: relative;
+    }
+
+    .fileLink {
+      color: #4a105c(0, 64, 160);
+      text-decoration: underline;
+      margin-right: 10%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 42ch; /* 控制显示的最大宽度，ch 是一个字符宽度单位 */
+    }
+    .fileLink:hover{
+      color: rgb(245, 38, 183);
+    }
+
+    .downloadButton {
+      background-color: #fe897e00;
+      color: #546e93c0;
+      border: none;
+      
+      cursor: pointer;
+      font-size: 300%;
+      
+    }
+    .downloadButton:hover{
+      color: #f118819d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="phone_background">
+    <div class="fixed" style="background-image:url(../../icon/doc_background_phone.jpeg);"></div>
+  </div>
+  <button id="backButton" onclick="goBack()"><返回主页</button>
+
+  <h2 onclick="reloadPage()">恩的文档📃</h2>
+  <form action="doc_upload.php" method="post" enctype="multipart/form-data">
+    <!-- 使用自定义上传按钮触发文件上传按钮点击事件 -->
+    <label for="customFileUpload" class="custom-upload-btn">选择文件</label>
+    <input type="file" id="customFileUpload" name="file" required onchange="displayFileName()">
+    <!-- 用于显示选定文件名的元素 -->
+    <div id="selectedFileName"></div>
+    <!-- 使用自定义上传按钮 -->
+    <button type="submit" class="uploadButton" id="uploadBtn" style="display:none;">上传</button>
+  </form>
+
+  <div id="fileListContainer">
+    <ul id="fileList"></ul>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '/';
+    }
+    function reloadPage() {
+  location.reload();
+}
+
+    function displayFileName() {
+      const fileInput = document.getElementById('customFileUpload');
+      const fileNameDisplay = document.getElementById('selectedFileName');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const chooseFileBtn = document.querySelector('.custom-upload-btn'); // 获取选择文件按钮
+
+      if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = '选定文件: ' + fileInput.files[0].name;
+        uploadBtn.style.display = 'block'; // 显示上传按钮
+        chooseFileBtn.style.display = 'none'; // 隐藏选择文件按钮
+      } else {
+        fileNameDisplay.textContent = '';
+        uploadBtn.style.display = 'none'; // 隐藏上传按钮
+        chooseFileBtn.style.display = 'block'; // 显示选择文件按钮
+      }
+    }
+
+    fetch('doc_list.php')
+      .then(response => response.json())
+      .then(data => {
+        const fileList = document.getElementById('fileList');
+        data.files.forEach(file => {
+          const listItem = document.createElement('li');
+
+          const fileLink = document.createElement('span');
+          fileLink.textContent = file;
+          fileLink.className = 'fileLink';
+
+          fileLink.addEventListener('click', function () {
+            window.open('../../Documents/' + file, '_blank');
+          });
+
+          listItem.appendChild(fileLink);
+
+          const downloadButton = document.createElement('button');
+          downloadButton.className = 'downloadButton';
+          downloadButton.textContent = '⇩';
+
+          downloadButton.addEventListener('click', function () {
+            fetch('../../Documentss/' + file)
+              .then(response => response.blob())
+              .then(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              });
+          });
+
+          listItem.appendChild(downloadButton);
+
+          fileList.appendChild(listItem);
+        });
+      });
+  </script>
+
+</body>
+
+</html>

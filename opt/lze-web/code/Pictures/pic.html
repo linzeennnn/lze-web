@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#85cdfe"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓🖼🎞️</title>
+    <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="pic_box/jquery.fancybox.min.css" />
+    <script src="pic_box/jquery-3.6.4.min.js"></script>
+    <script src="pic_box/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" href="../../font/font.css"> 
+    <style>
+        
+        .video-wrapper {
+            max-width: 100%;
+            max-height: 100%;
+            margin: 0;
+        }
+        .hidden {
+    display: none;
+  }
+  h1 {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    font-size: 200% !important;
+    width: 7em;
+    background-color: #03d9ff81;
+    border-radius: 2em;
+    color: #092958 !important;
+    margin-top: 4% !important;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+  }
+  h1:hover{
+    background-color: #002d70a1;
+    color: white !important;
+  }
+        body {
+            overflow-x: hidden !important;
+            max-width: 100% !important;
+            font-family: LZE ;
+            font-size: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(0, 153, 255);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: url('../../icon/pic_background_pc.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            
+            }
+            
+                #backButton {
+                    font-family: LZE;
+            background-color: #56caff80;
+            color: #092958;
+            border: none;
+            padding: 0.57%;
+            cursor: pointer;
+            font-size: 100%;
+            width: 100%;
+            max-width: 100%;
+            align-self: flex-start;
+            text-align: left;
+            padding-left: 7%;
+            position:fixed;
+            top: 0;
+            margin-top: 0;
+            z-index: 1000; 
+            margin-bottom: 60px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            }
+            #backButton:hover{
+                background-color: #0c498f9d;
+                color: white;
+            }
+            input[type="file"] {
+            display: none; 
+        }
+
+        label[for="file"] {
+            width: 10em !important;
+            background-color: #56caff80; 
+            font-size: 200% !important;
+            color: #092958; 
+            padding: 8px 16px; 
+            border: none;     
+            border-radius: 5em; 
+            cursor: pointer;
+            font-size: 300%; 
+            margin: 0.5em;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+        }
+
+        /* 鼠标悬停时的样式 */
+        label[for="file"]:hover {
+            background-color: #0145819f; 
+            color: white;
+        }
+        /* 上传按钮样式 */
+        input[type="submit"] {
+            font-family: LZE;
+            width: 10em !important;
+            background-color: #56caff80; 
+            font-size: 200% !important;
+            color: #092958; 
+            padding: 8px 16px; 
+            border: none;     
+            border-radius: 5em; 
+            cursor: pointer;
+            font-size: 300%; 
+            margin: 0.5em;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+        }
+
+        /* 鼠标悬停时的样式 */
+        input[type="submit"]:hover {
+            background-color: #0c498f9d; 
+            color: white;
+        }
+        /* 样式化显示选定文件名的区域 */
+        #file-name-display {
+            max-height: 2em;
+            max-width: 10em;
+            margin-top: 0.5em; 
+            font-size: 14px; 
+            color: #333; 
+            overflow: auto;
+        }
+
+        /* 如果使用类来标识该元素，可以使用以下样式 */
+        .file-name-display {
+            margin-top: 20%; /* 调整与其他元素的间距 */
+            font-size: 14px; /* 设置文字大小 */
+            color: #333; /* 设置文字颜色 */
+        }
+
+
+
+
+        .gallery-top-bar {
+            display: flex;
+            height: 60px;
+            background-color: #034b9e81;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin-bottom: 20%;
+            z-index: 1; /* 确保在其他内容之上 */
+            border-radius: 1em;
+            overflow: hidden;
+        }
+    
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 80%;
+            position: relative;
+            max-width: 80%; /* 设置最大宽度 */
+            padding-top: 80px;
+            border-color: black;
+            padding-top: 3%; /* 顶部栏高度 */
+            padding-bottom: 3%; /* 底部栏高度 */
+            border-radius: 1em;
+            border-top: #39bedf;
+            background-color: #39d4df85;
+           margin-bottom: 20px;
+            margin-top: 70px ;
+            border-top: 720%;
+            margin-bottom: 70px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+        }
+        
+        #button1 {
+            font-family: LZE;
+            border: none;
+            display:flex ;
+            padding: 1%;
+            height: 60px;
+            width: 7em;
+            position:absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #0077ff44;
+            color: #000000; 
+            text-align: center;
+            cursor: pointer;
+            border-right: 3em #333333; 
+            padding-left: 3.3%;
+            font-size: 135%;
+            border-radius: 1em;
+            
+            
+        }
+        #button1:hover{
+            background-color: #39d4df85;
+            color: white;
+        }
+        #button1.selected {
+            background-color: #39d4df85;
+            color: white;            
+            
+        }
+    
+      
+        #button2 {
+            font-family: LZE;
+            border-radius: 1em;
+            border-bottom: none;
+            border-top: none;
+            display:flex ;
+            padding: 1%;
+            position: absolute;
+            left: 7em;
+            top: 0;
+            bottom: 0;
+            height: 60px;
+            width: 7em ;
+            background-color: #0077ff44;
+            color: #000000; 
+            text-align: center;
+            cursor: pointer;
+            border-right: 3em #333333;
+            padding-left: 3.3%;
+            border-right: 50px #000000;
+            font-size: 135%;
+            
+        }
+        
+    
+        #button2.selected {
+            background-color: #39d4df85; /* 选中时按钮2的背景颜色 */
+            color: white;
+            
+        }
+    
+        #button2:hover {
+            background-color: #39d4df85;
+            color: white;
+            
+        }
+        #button3 {
+            font-family: LZE;
+            border: none;
+            display:flex ;
+            padding: 1%;
+            height: 60px;
+            width: 7em;
+            position:absolute;
+            left: 14em;
+            top: 0;
+            bottom: 0;
+            background-color: #0077ff44;
+            color: #000000; 
+            text-align: center;
+            cursor: pointer;
+            border-right: 3em #333333; 
+            padding-left: 3.3%;
+            font-size: 135%;
+            border-radius: 1em;
+            
+            
+        }
+        #button3:hover{
+            background-color: #39d4df85;
+            color: white;
+        }
+        #button3.selected {
+            background-color: #39d4df85;
+            color: white;            
+            
+        }
+        
+    
+       
+        .gallery-item {
+            width: 29em;
+            height: 29em;
+            overflow: hidden;
+            border: 5px solid #39d4df9d; /* 320x320边框样式 */
+            margin: 5px; /* 调整间距 */
+            margin-bottom: 2%;
+            margin-top: 2%;
+            border-color: rgba(0, 0, 0, 0.507);
+            
+            border-radius: 1em;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+           
+          
+        }
+        
+    
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 图片超出边框的部分不显示 */
+            position: relative;
+            opacity: 0.8;
+
+        }
+        .gallery-item img:hover{
+            opacity: 1;
+        }
+
+        .gallery-item video {
+            width: auto;
+            height: auto;
+            object-fit: cover; /* 图片超出边框的部分不显示 */
+            position: relative;
+            opacity: 0.8;
+        }
+        .gallery-item video:hover{
+            opacity: 1;
+        }
+        .video-item {
+            width: 100%; 
+            height:fit-content;
+            margin-bottom: 5em;
+        }
+
+        .video-item video {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            margin-bottom: 0;
+        }
+        .gallery-bottom-bar {
+            border-radius: 1em;
+            display: flex;
+            height: 60px; /* Set the height of the bottom bar as needed */
+            background-color: #06468fb9; /* Set the background color */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: absolute;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2; /* Make sure it's above the gallery items */
+        }
+        .bottom-button {
+            font-family: LZE;
+            display: flex;
+            flex-direction: row;
+            padding: 8px 16px; /* 调整按钮内边距 */
+             height: 100%;
+             width: 200px;
+            margin: 0 10px; /* 调整按钮之间的间距 */
+            background-color: #6a9effa6; /* 设置按钮背景颜色 */
+            color: #000000; /* 设置按钮文字颜色 */
+            border: none;
+            border-radius: 2em; /* 设置按钮圆角 */
+            cursor: pointer;
+            font-size: 200%; /* 设置按钮字体大小 */
+            margin-left: 42%;
+            margin-right: 35%;
+            /* justify-content: center;
+            align-items: center; */
+            
+        }
+        .bottom-button:hover{
+            background-color: #002d70ab; /* 设置按钮背景颜色 */
+            color: white;
+        }
+        #file-name-display {
+            margin-top: 0.5em; /* 调整与其他元素的间距 */
+            font-size: 250%; /* 设置文字大小 */
+            color: #092958; /* 设置文字颜色 */
+            background-color: #31a7c596;
+            border-radius: 1em;
+        }
+        .top-button{
+            display: flex !important;
+            flex-direction: column;
+        }
+        @media only screen and (max-width: 600px) {
+
+
+
+            
+        .gallery-container {
+            padding-top: 20%; /* 顶部栏高度 */
+            padding-bottom: 20%; /* 底部栏高度 */
+        }
+        
+        
+    
+        
+            
+            .phone_background {
+            position:relative;
+            overflow:hidden;
+            overflow-x: hidden;
+        }
+        .bottom-button {
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+        #backButton{
+            height: 40px;
+        }
+         
+   
+        
+        .phone_background .fixed {
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:no-repeat center center;
+            background-size:cover;
+            z-index:0;
+            overflow:hidden;
+            overflow-x: hidden;
+        }
+        /* .gallery-item video {
+            width: 50%;
+            height: 50%;
+            object-fit: contain;
+            position: relative;
+            border-radius: 0;
+        }
+        
+        .gallery-item video {
+            width: 100%; 
+            height: 100%; 
+            border-radius: 0; 
+        }
+
+        .gallery-item {
+            width: 100%; 
+            height: 100%;
+            border-radius: 0; 
+        } */
+        #button1{
+            width: 33% !important;
+            left: 0;
+        }
+        #button2{
+            width: 33% !important;
+            left: 33%;
+        }
+        #button3{
+            width: 33%;
+            left: 66%;
+        }
+        h1{
+            margin-top: 20% !important;
+        }
+        .gallery-item{
+            margin-top: 10%;
+        }
+    
+            }
+            
+    
+        
+    
+        form {
+            text-align:center ;
+            margin-top: 4%; /* 调整表单与其他元素的间距 */
+            position: relative;
+            z-index: 1;
+        }
+    
+        input[type="file"] {
+            margin: 0.5em;
+            position: relative;
+        }
+    
+        hr {
+            margin: 1em; /* 调整水平线与其他元素的间距 */
+            position: relative;
+        }
+    
+        /* 清除ul的默认样式 */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+    
+        /* 清除li的默认样式 */
+        li {
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        
+    
+        .gallery-item:hover {
+            border-color: #0000009d; /* 鼠标悬停时边框背景色为黑色 */
+        }
+        .gallery-bottom-bar{
+            margin-top: 20%;
+        }
+        
+    </style>
+</head>
+<body>
+    <button id="backButton" onclick="goBack()"><返回主页</button>
+    <div class="phone_background">
+        <div class="fixed" style="background-image:url('../../icon/pic_background_phone.jpeg');"></div>
+    </div>
+    <h1 onclick="reloadPage()">恩的图库🖼🎞️</h1>
+
+    <!-- 上传表单 -->
+    <form action="pic_upload.php" method="post" enctype="multipart/form-data">
+        <label for="file" id="selectButton">选择图片视频</label>
+        <input type="file" name="file" id="file" >
+        <input type="submit" value="上传" name="submit" id="uploadButton" style="display: none;">
+        <div id="file-name-display"></div>
+
+    </form>
+ 
+    <div class="gallery-container" id="gallery-container">
+        <div class="gallery-top-bar">
+            <button id="button1" class="top-button selected">图片</button>
+            <button id="button2" class="top-button">视频</button>
+            <button id="button3" class="top-button">截图</button>
+        </div>
+        <div class="gallery-bottom-bar">
+            <button id="buttonA" class="bottom-button" >加载更多</button>
+            <button id="buttonB" class="bottom-button" >加载更多</button>
+            <button id="buttonC" class="bottom-button" >加载更多</button>
+        </div>
+    </div>
+    
+    <script>
+        function reloadPage() {
+  location.reload();
+}
+
+var fileInput = document.getElementById("file");
+
+// 监听文件输入框的change事件
+fileInput.addEventListener("change", function () {
+            // 获取选择的文件
+            var selectedFile = fileInput.files[0];
+
+            // 更新文件名显示
+            var fileNameDisplay = document.getElementById("file-name-display");
+            if (selectedFile) {
+                fileNameDisplay.textContent = "已选择: " + selectedFile.name;
+                // 显示上传按钮
+                uploadButton.style.display = "block";
+                selectButton.style.display = "none"
+            } else {
+                fileNameDisplay.textContent = ""; // 清空文件名显示
+                // 隐藏上传按钮
+                uploadButton.style.display = "none";
+                selectButton.style.display = "block"
+            }
+        });
+
+
+
+
+
+
+
+
+        
+        var buttonA = document.getElementById("buttonA");
+        var buttonB = document.getElementById("buttonB");
+        var buttonC = document.getElementById("buttonC");
+        
+    
+        // 默认显示按钮 a
+        buttonA.style.display = "block";
+        buttonB.style.display = "none";
+        buttonC.style.display = "none";
+    
+        document.getElementById("button1").classList.add("selected");
+        var button1 = document.getElementById("button1");
+        var button2 = document.getElementById("button2");
+        var button3 = document.getElementById("button3");
+    
+        button1.addEventListener("click", function () {
+            if (!button1.classList.contains("selected")) {
+                button1.classList.add("selected");
+                button2.classList.remove("selected");
+                button3.classList.remove("selected");
+                showImages(); // 切换为显示图片
+                buttonA.style.display = "block";
+                buttonB.style.display = "none";
+                buttonC.style.display = "none";
+            }
+        });
+    
+        button2.addEventListener("click", function () {
+            if (!button2.classList.contains("selected")) {
+                button2.classList.add("selected");
+                button1.classList.remove("selected");
+                button3.classList.remove("selected");
+                showVideos(); // 切换为显示视频
+                buttonA.style.display = "none";
+                buttonC.style.display = "none";
+                buttonB.style.display = "block";
+            }
+        });
+        button3.addEventListener("click", function () {
+            if (!button3.classList.contains("selected")) {
+                button3.classList.add("selected");
+                button1.classList.remove("selected");
+                button2.classList.remove("selected");
+                showScreenshots(); // 切换为显示视频
+                buttonA.style.display = "none";
+                buttonB.style.display = "none";
+                buttonC.style.display = "block";
+            }
+        });
+    
+        buttonA.addEventListener("click", function () {
+            loadImages();
+        });
+    
+        var galleryContainer = document.getElementById("gallery-container");
+        var loadedImageIndices = []; // 用于记录已加载的图片索引
+    
+        function appendImages(count) {
+            var loadedImageCount = 0;
+    
+            for (let i = 0; i < files.length; i++) {
+                // 检查图片是否已加载过
+                if (!loadedImageIndices.includes(i)) {
+                    var filePath = files[i];
+                    var fileExtension = filePath.split('.').pop().toLowerCase();
+                    var isVideo = ['mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
+    
+                    if (!isVideo && loadedImageCount < count) {
+                        var img = document.createElement("a");
+                        img.href = filePath;
+                        img.setAttribute("data-fancybox", "gallery");
+    
+                        var imgElement = document.createElement("img");
+                        imgElement.src = filePath;
+                        img.appendChild(imgElement);
+    
+                        var galleryItem = document.createElement("div");
+                        galleryItem.className = "gallery-item";
+                        galleryItem.appendChild(img);
+                        galleryContainer.appendChild(galleryItem);
+    
+                        loadedImageIndices.push(i); // 记录已加载的图片索引
+                        loadedImageCount++;
+                    }
+                }
+            }
+            if (loadedImageCount < count) {
+                // 隐藏加载更多图片按钮
+                buttonA.style.display = "none";
+                alert("已加载全部图片");
+            }
+            $('[data-fancybox="gallery"]').fancybox({
+                loop: true,
+                protect: true,
+                buttons: ["zoom", "share", "slideShow", "fullScreen", "download", "thumbs", "close"],
+            });
+    
+            // 显示加载的图片
+            showImages();
+    
+            
+        }
+    
+        function loadImages() {
+            // 追加加载三张新图片
+            appendImages(3);
+        }
+    
+        var loadedVideoIndices = []; // 用于记录已加载的视频索引
+    
+        buttonB.addEventListener("click", function () {
+            loadVideos();
+        });
+    
+        function appendVideos(count) {
+            var loadedVideoCount = 0;
+    
+            for (let i = 0; i < files.length; i++) {
+                // 检查视频是否已加载过
+                if (!loadedVideoIndices.includes(i)) {
+                    var filePath = files[i];
+                    var fileExtension = filePath.split('.').pop().toLowerCase();
+                    var isVideo = ['mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
+    
+                    if (isVideo && loadedVideoCount < count) {
+                        var video = document.createElement("video");
+                        video.src = filePath;
+                        video.controls = true;
+    
+                        var videoItem = document.createElement("div");
+                        videoItem.className = "gallery-item video-item";
+                        videoItem.appendChild(video);
+                        galleryContainer.appendChild(videoItem);
+    
+                        loadedVideoIndices.push(i); // 记录已加载的视频索引
+                        loadedVideoCount++;
+    
+                        // 添加自动截取视频第一帧作为poster属性的功能
+                        captureFrame(filePath).then(frame => {
+                            video.poster = frame.url;
+                        });
+                    }
+                }
+            }
+            if (loadedVideoCount < count) {
+                // 隐藏加载更多视频按钮
+                buttonB.style.display = "none";
+                alert("已加载全部视频");
+            }
+    
+            // 显示加载的视频
+            showVideos();
+    
+            
+        }
+    
+        function loadVideos() {
+            // 追加加载一个新视频
+            appendVideos(1);
+        }
+
+
+        
+       
+        var loadedScreenshotsIndices = []; // 用于记录已加载的视频索引
+    
+        buttonC.addEventListener("click", function () {
+            loadScreenshots();
+        });
+    
+        function appendScreenshots(count) {
+            var loadedScreenshotsCount = 0;
+    
+            for (let i = 0; i < screenshotFiles.length; i++) {
+                // 检查视频是否已加载过
+                if (!loadedScreenshotsIndices.includes(i)) {
+                    var filePath = screenshotFiles[i];
+                    
+    
+                    
+                    if (loadedScreenshotsCount < count) {
+                        var img = document.createElement("a");
+                        img.href = filePath;
+                        img.setAttribute("data-fancybox", "gallery");
+    
+                        var imgElement = document.createElement("img");
+                        imgElement.src = filePath;
+                        img.appendChild(imgElement);
+    
+                        var galleryItem = document.createElement("div");
+                        galleryItem.className = "gallery-item screenshot-item";
+                        galleryItem.appendChild(img);
+                        galleryContainer.appendChild(galleryItem);
+    
+                        loadedScreenshotsIndices.push(i); // 记录已加载的图片索引
+                        loadedScreenshotsCount++;
+                    }
+                       
+                    
+                }
+            }
+            if (loadedScreenshotsCount < count) {
+                // 隐藏加载更多视频按钮
+                buttonC.style.display = "none";
+                alert("已加载全部截图");
+            }
+    
+            // 显示加载的视频
+            showScreenshots();
+    
+            
+        }
+    
+        function loadScreenshots() {
+            // 追加加载一个新视频
+            appendScreenshots(3);
+        }
+
+
+
+
+
+
+
+
+    
+        function showImages() {
+            var galleryItems = document.querySelectorAll(".gallery-item");
+            galleryItems.forEach(function (item) {
+                var isVideo = item.classList.contains("video-item");
+                var isScreenshot = item.classList.contains("screenshot-item");
+                item.style.display = isVideo ? "none" : "block";
+                item.style.display = isVideo || isScreenshot ? "none" : "block";
+            });
+        }
+    
+        function showVideos() {
+    var galleryItems = document.querySelectorAll(".gallery-item");
+    galleryItems.forEach(function (item) {
+        var isVideo = item.classList.contains("video-item");
+        item.style.display = isVideo ? "block" : "none";
+    });
+}
+        function showScreenshots() {
+    var galleryItems = document.querySelectorAll(".gallery-item");
+    galleryItems.forEach(function (item) {
+        var isScreenshots = item.classList.contains("screenshot-item");
+        item.style.display = isScreenshots ? "block" : "none";
+    });
+}
+
+
+
+       
+
+        var xmlhttpScreenshot = new XMLHttpRequest();
+        xmlhttpScreenshot.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                 screenshotFiles = JSON.parse(this.responseText);
+                appendScreenshots(0);
+            }
+        };
+
+        xmlhttpScreenshot.open("GET", "pic_sreenshot_list.php", true);
+        xmlhttpScreenshot.send();
+    
+        
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = async function () {
+            if (this.readyState == 4 && this.status == 200) {
+                files = JSON.parse(this.responseText);
+    
+                // 初始加载时默认显示图片
+                appendImages(3);
+            }
+        };
+    
+        xmlhttp.open("GET", "pic_list.php", true);
+        xmlhttp.send();
+    
+        function goBack() {
+            window.location.href = '/';
+        }
+    
+        function drawVideo(vdo) {
+            return new Promise(resolve => {
+                const cvs = document.createElement('canvas');
+                const ctx = cvs.getContext('2d');
+                cvs.width = vdo.videoWidth;
+                cvs.height = vdo.videoHeight;
+                ctx.drawImage(vdo, 0, 0, cvs.width, cvs.height);
+                const dataURL = cvs.toDataURL();
+                resolve({ url: dataURL, width: cvs.width, height: cvs.height });
+            });
+        }
+    
+        function captureFrame(videoSrc) {
+            return new Promise(resolve => {
+                const video = document.createElement('video');
+                video.autoplay = true;
+                video.muted = true;
+                video.loop = true;
+                video.addEventListener('loadeddata', async () => {
+                    const frame = await drawVideo(video);
+                    video.pause();
+                    resolve(frame);
+                });
+                video.src = videoSrc;
+                video.load();
+            });
+        }
+    </script>
+    
+    
+    
+    
+</body>
+</html>

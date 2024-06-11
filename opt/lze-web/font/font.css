@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'LZE'; 
+    src: url('LZE_font.ttf') format('truetype'); 
+    
+}
+body {
+    font-family: 'CustomFont', sans-serif; /* 使用自定义字体 */
+}
