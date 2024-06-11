@@ -1,2 +1,2 @@
-#!/usr/bin/env sh
-kill -9 $(ps -aux | grep wssh | awk 'NR==1{print $2}')
+#!/bin/bash
+pkill -9 wessh
