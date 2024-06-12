@@ -1,5 +1,5 @@
 <?php
-$uploadFolder = '../../Downloads';
+$uploadFolder = '../../file/Downloads';
 
 $files = array_diff(scandir($uploadFolder), array('.', '..'));
 

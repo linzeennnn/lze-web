@@ -1,5 +1,5 @@
 <?php
-$folderPath = '../../Documents/note/';
+$folderPath = '../../file/Note';
 $files = scandir($folderPath);
 
 // Filter out non-txt files

@@ -306,7 +306,7 @@
 
             for (const file of Object.values(noteFiles)) {
                 const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
-                const filePath = `../../Documents/note/${file}`;
+                const filePath = `../../file/Note${file}`;
                 const content = await readFile(filePath);
                 const noteElement = document.createElement('div');
                 noteElement.className = 'note-element';

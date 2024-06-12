@@ -1,6 +1,6 @@
 <?php
 // 获取文件夹中的所有文件
-$folder = '../../Pictures/';
+$folder = '../../file/Pictures/';
 $files = scandir($folder);
 
 // 用于存储文件路径和最后修改时间的关联数组

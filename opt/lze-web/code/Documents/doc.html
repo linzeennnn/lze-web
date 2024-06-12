@@ -286,7 +286,7 @@ h2{
           fileLink.className = 'fileLink';
 
           fileLink.addEventListener('click', function () {
-            window.open('../../Documents/' + file, '_blank');
+            window.open('../../file/Documents/' + file, '_blank');
           });
 
           listItem.appendChild(fileLink);
@@ -296,7 +296,7 @@ h2{
           downloadButton.textContent = '⇩';
 
           downloadButton.addEventListener('click', function () {
-            fetch('../../Documentss/' + file)
+            fetch('../../file/Documentss/' + file)
               .then(response => response.blob())
               .then(blob => {
                 const url = URL.createObjectURL(blob);

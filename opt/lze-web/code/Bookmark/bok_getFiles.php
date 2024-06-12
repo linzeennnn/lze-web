@@ -1,5 +1,5 @@
 <?php
-$folderPath = '../../web/bookmark/';
+$folderPath = '../../file/Bookmark';
 $files = scandir($folderPath);
 
 // Filter out non-txt files

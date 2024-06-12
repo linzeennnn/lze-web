@@ -1,5 +1,5 @@
 <?php
-$uploadFolder = '../../Documents/';
+$uploadFolder = '../../file/Documents/';
 
 if (!file_exists($uploadFolder)) {
   mkdir($uploadFolder, 0777, true);
