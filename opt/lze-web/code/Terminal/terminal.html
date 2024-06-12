@@ -84,6 +84,29 @@
                 background-color: #7a5a1eb0;
                 color: #ffffff;
             }
+            #key {
+                cursor: pointer;
+                position: relative;
+            border-radius: 1em;
+            margin-left: 20%;
+            margin-right: 20%;
+            height: 100%;
+            width:fit-content;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 50px;   
+            padding: 10px; 
+            background-color: #e9c98c8f;
+            align-items: center ;
+            overflow: hidden;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            }
+            #key:hover{
+                background-color: #7a5a1eb0;
+                color: #ffffff;
+            }
 
             #connect {
                 
@@ -97,7 +120,8 @@
             background-color: #e9c98c8f;
             left: 48%;
             margin-top: 2%;
-            width: 1em;
+            width: fit-content;
+            height: fit-content;
             aspect-ratio: 1/1;
             text-align: center;
             padding-bottom: 0.1%;
@@ -160,7 +184,8 @@
             background-color: #e9c98c8f;
             left: 48%;
             margin-top: 0;
-            width: 1em;
+            width: fit-content;
+            height: fit-content;
             aspect-ratio: 1/1;
             text-align: center;
             padding-bottom: 0.1%;
@@ -219,7 +244,7 @@
     <button id="backButton" onclick="goBack()"><返回主页</button>
 
     <h2 onclick="reloadPage()">恩的终端🔳</h2>
-
+    <div id="key" onclick="key()">使用密钥🔑连接</div>
 <input id="hostname" class="user" type="text" placeholder="主机名"></input>
 <input id="username" class="user" type="text" placeholder="用户名"></input>
 <input id="password" class="user" type="password" placeholder="密码"></input>
@@ -234,6 +259,32 @@
   location.reload();
 }
     
+
+
+
+function key() {
+   
+    const keySrc = `http://${window.location.hostname}:8888/static/key.html`;
+
+    // 创建 iframe 元素
+    const terminalIframe = document.createElement('iframe');
+    terminalIframe.setAttribute('id', 'terminal');
+    terminalIframe.setAttribute('src', keySrc);
+
+    // 创建删除按钮
+    const deleteButton = document.createElement('div');
+    deleteButton.setAttribute('id', 'del');
+    deleteButton.textContent = '✘';
+    deleteButton.onclick = function() {
+        terminalIframe.remove();
+        deleteButton.remove();
+    };
+
+    // 添加到 body 中
+    document.body.appendChild(terminalIframe);
+    document.body.appendChild(deleteButton);
+}
+
 
 
 
@@ -274,4 +325,3 @@ function createTerminal() {
 
 </body>
 </html>
-

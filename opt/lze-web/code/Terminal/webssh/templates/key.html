@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8">
     <title> WebSSH </title>
-    <link href="static/img/favicon.png" rel="icon" type="image/png">
-    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="static/css/xterm.min.css" rel="stylesheet" type="text/css"/>
-    <link href="static/css/fullscreen.min.css" rel="stylesheet" type="text/css"/>
+    <link href="img/favicon.png" rel="icon" type="image/png">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/xterm.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/fullscreen.min.css" rel="stylesheet" type="text/css"/>
     <style>
       .row {
         margin-top: 15px;
@@ -53,7 +53,7 @@
 
     <div class="container form-container" style="display: none">
       <form id="connect" action="" method="post" enctype="multipart/form-data"{% if debug %} novalidate{% end %}>
-        <!-- <div class="row hidden">
+        <div class="row hidden">
           <div class="col">
             <label for="Hostname">Hostname</label>
             <input class="form-control" type="text" id="hostname" name="hostname" value="" required>
@@ -62,10 +62,10 @@
             <label for="Port">Port</label>
             <input class="form-control" type="number" id="port" name="port" placeholder="22" value="" min=1 max=65535>
           </div>
-        </div> -->
+        </div>
 
 
-<!-- 
+
         <div class="row">
           <div class="col">
             <label for="Username">Username</label>
@@ -75,11 +75,11 @@
             <label for="Password">Password</label>
             <input class="form-control" type="password" id="password" name="password" value="">
           </div>
-        </div> -->
+        </div>
 
 
 
-        <!-- <div class="row">
+        <div class="row">
           <div class="col">
             <label for="Username">Private Key</label>
             <input class="form-control" type="file" id="privatekey" name="privatekey" value="">
@@ -88,18 +88,11 @@
             <label for="Passphrase">Passphrase</label>
             <input class="form-control" type="password" id="passphrase" name="passphrase" value="">
           </div>
-        </div> -->
+        </div>
 
 
 
-        <!-- <div class="row">
-          <div class="col">
-            <label for="totp">Totp (time-based one-time password)</label>
-            <input class="form-control" type="password" id="totp" name="totp" value="">
-          </div>
-          <div class="col">
-          </div>
-        </div> -->
+        
         <h2>终端未启动</h2>
         <input type="hidden" id="term" name="term" value="xterm-256color">
         {% module xsrf_form_html() %}
@@ -114,12 +107,12 @@
     </div>
     
 
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/popper.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/xterm.min.js"></script>
-    <script src="static/js/xterm-addon-fit.min.js"></script>
-    <script src="static/js/main.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/xterm.min.js"></script>
+    <script src="js/xterm-addon-fit.min.js"></script>
+    <script src="js/main.js"></script>
   </body>
  
  

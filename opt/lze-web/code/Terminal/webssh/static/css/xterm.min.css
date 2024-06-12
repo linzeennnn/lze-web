@@ -125,21 +125,21 @@ body{
 
 
 #status {
-    background-color: rgba(0, 0, 0, 0.5); /* 背景颜色设置为黑色且透明度为50% */
+    background-color: rgba(0, 0, 0, 0); /* 背景颜色设置为黑色且透明度为50% */
 }
 
 .btn-primary {
-    background-color: rgba(0, 0, 0, 0.5); /* 背景颜色设置为黑色且透明度为50% */
+    background-color: rgba(0, 0, 0, 0); /* 背景颜色设置为黑色且透明度为50% */
 }
 
 .form-container {
-    background-color: rgba(0, 0, 0, 0.5); /* 背景颜色设置为黑色且透明度为50% */
+    background-color: rgba(0, 0, 0, 0); /* 背景颜色设置为黑色且透明度为50% */
 }
 
 #waiter {
-    background-color: rgba(0, 0, 0, 0.5); /* 背景颜色设置为黑色且透明度为50% */
+    background-color: rgba(0, 0, 0, 0); /* 背景颜色设置为黑色且透明度为50% */
 }
 
 #term {
-    background-color: rgba(0, 0, 0, 0.5); /* 背景颜色设置为黑色且透明度为50% */
+    background-color: rgba(0, 0, 0, 0); /* 背景颜色设置为黑色且透明度为50% */
 }
