@@ -296,7 +296,7 @@ h2{
           downloadButton.textContent = '⇩';
 
           downloadButton.addEventListener('click', function () {
-            fetch('../../file/Documentss/' + file)
+            fetch('../../file/Documents/' + file)
               .then(response => response.blob())
               .then(blob => {
                 const url = URL.createObjectURL(blob);

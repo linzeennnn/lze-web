@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fileName = generateFileName($newTitle);
 
     // 拼接文件路径
-    $filePath = "../../file/Bookmark{$fileName}";
+    $filePath = "../../file/Bookmark/{$fileName}";
 
     // 检查文件是否已存在
     if (file_exists($filePath)) {

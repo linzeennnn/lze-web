@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fileName = generateFileName($newTitle);
 
     // 拼接文件路径
-    $filePath = "../../file/Note{$fileName}";
+    $filePath = "../../file/Note/{$fileName}";
 
     // 将新便签写入文件
     file_put_contents($filePath, $newContent);

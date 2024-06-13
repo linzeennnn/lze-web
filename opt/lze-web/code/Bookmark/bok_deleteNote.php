@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fileName = $_POST["fileName"];
 
     // 拼接文件路径
-    $filePath = "../../file/Bookmark{$fileName}";
+    $filePath = "../../file/Bookmark/{$fileName}";
 
     // 判断文件是否存在，然后进行删除
     if (file_exists($filePath)) {
