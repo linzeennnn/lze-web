@@ -324,6 +324,7 @@ jQuery(function($){
 
 
   function log_status(text, to_populate) {
+    hideall();
     console.log(text);
     status.html(text.split('\n').join('<br/>'));
 
@@ -405,6 +406,7 @@ jQuery(function($){
     }
 
     function set_encoding(new_encoding) {
+      hideall();
       // for console use
       if (!new_encoding) {
         console.log('An encoding is required');
@@ -554,6 +556,7 @@ jQuery(function($){
       sock = undefined;
       reset_wssh();
       log_status(e.reason, true);
+      hideall();
       state = DISCONNECTED;
       default_title = 'WebSSH';
       title_element.text = default_title;
@@ -564,6 +567,18 @@ jQuery(function($){
         resize_terminal(term);
       }
     });
+  }
+  function hideall() {
+    document.getElementById('username').style.display = 'none';
+    document.getElementById('hostname').style.display = 'none';
+    document.getElementById('passphrase').style.display = 'none';
+    document.getElementById('privatekey').style.display = 'none';
+    
+
+    const bttn = document.querySelector('.btn');
+    bttn.style.display = 'none';
+    window.parent.postMessage('hideall', '*');
+
   }
 
 

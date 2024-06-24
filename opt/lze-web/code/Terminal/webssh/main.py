@@ -28,6 +28,7 @@ def make_handlers(loop, options):
 
 def make_app(handlers, settings):
     settings.update(default_handler_class=NotFoundHandler)
+    settings['xsrf_cookies'] = False
     return tornado.web.Application(handlers, **settings)
     
 

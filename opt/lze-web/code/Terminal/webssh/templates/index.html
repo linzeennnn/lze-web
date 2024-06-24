@@ -8,18 +8,49 @@
     <link href="static/css/xterm.min.css" rel="stylesheet" type="text/css"/>
     <link href="static/css/fullscreen.min.css" rel="stylesheet" type="text/css"/>
     <style>
-      .row {
-        margin-top: 15px;
-        margin-bottom: 10px;
-      }
+      
 
       .container {
         margin-top: 20px;
       }
+      .btn-primary{
+        background-color: rgba(202, 160, 21, 0.829);
+        border-radius:7em;
+        
+        color: black;
+        border-color: rgba(0, 0, 0, 0);
+      }
+      .btn-primary:hover{
+        background-color: rgba(97, 77, 10, 0.829);
+        color: white;
+        border-color: rgba(0, 0, 0, 0);
+      }
+      
+      .user{
+      
+        position: relative;
+        width: 50%;
+            border-radius: 1em;
+            margin-left: 20%;
+            margin-right: 2px;
+            height: 100%;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 20px; 
+            margin-top: 30px;  
+            padding: 10px; 
+            background-color: #e9c98c8f;
+            align-items: center ;
+            overflow: hidden;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+      }
 
       .btn {
-        display: none;
+        /* display: none; */
         margin-top: 15px;
+        
       }
 
       .btn-danger {
@@ -29,6 +60,20 @@
       h2{
         display: inline-block;
       }
+      #port{
+        display: none;
+      }
+      #password{
+        display: none;
+      }
+      #privatekey{
+        
+        width: auto !important;
+      }
+      .key-btn{
+        width: auto !important; 
+      }
+      
       
       {% if font.family %}
       @font-face {
@@ -51,44 +96,43 @@
   <body>
     <div id="waiter" style="display: none"> </div>
 
-    <div class="container form-container" style="display: none">
+    
       <form id="connect" action="" method="post" enctype="multipart/form-data"{% if debug %} novalidate{% end %}>
-        <!-- <div class="row hidden">
-          <div class="col">
-            <label for="Hostname">Hostname</label>
-            <input class="form-control" type="text" id="hostname" name="hostname" value="" required>
-          </div>
-          <div class="col">
-            <label for="Port">Port</label>
-            <input class="form-control" type="number" id="port" name="port" placeholder="22" value="" min=1 max=65535>
-          </div>
-        </div> -->
-
-
-<!-- 
-        <div class="row">
-          <div class="col">
-            <label for="Username">Username</label>
-            <input class="form-control" type="text" id="username" name="username" value="" required>
-          </div>
-          <div class="col">
-            <label for="Password">Password</label>
-            <input class="form-control" type="password" id="password" name="password" value="">
-          </div>
-        </div> -->
+        
+            <!-- <label for="Hostname">Hostname</label> -->
+            <input class="user" type="text" id="hostname" name="hostname" value="" required placeholder="主机名">
+         
+            <!-- <label for="Port">Port</label> -->
+            <input class="user" type="number" id="port" name="port" placeholder="22" value="" min=1 max=65535>
+         
 
 
 
-        <!-- <div class="row">
-          <div class="col">
-            <label for="Username">Private Key</label>
-            <input class="form-control" type="file" id="privatekey" name="privatekey" value="">
-          </div>
-          <div class="col">
-            <label for="Passphrase">Passphrase</label>
-            <input class="form-control" type="password" id="passphrase" name="passphrase" value="">
-          </div>
-        </div> -->
+       
+            <!-- <label for="Username">Username</label> -->
+            <input type="text" class="user" id="username" name="username"  placeholder="用户名"> 
+        
+            <!-- <label for="Password">Password</label> -->
+            <input class="user" type="password" id="password" name="password" value="">
+        
+
+
+          
+       
+            
+        
+
+       
+            <!-- <label for="Passphrase">Passphrase</label> -->
+            <input class="user" type="password" id="passphrase" name="passphrase" value="" placeholder="密码">
+            
+              <!-- <label for="Username">Private Key</label> -->
+            <input class="user" type="file" id="privatekey" name="privatekey" value="" placeholder="密钥"> 
+            
+            <button type="submit" class="btn btn-primary">Connect</button>
+          
+         
+          
 
 
 
@@ -100,10 +144,9 @@
           <div class="col">
           </div>
         </div> -->
-        <h2>终端未启动</h2>
         <input type="hidden" id="term" name="term" value="xterm-256color">
         {% module xsrf_form_html() %}
-        <button type="submit" class="btn btn-primary">Connect</button>
+        
         <button type="reset" class="btn btn-danger">Reset</button>
       </form>
     </div>

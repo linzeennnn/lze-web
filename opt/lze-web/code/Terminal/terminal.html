@@ -108,6 +108,30 @@
                 color: #ffffff;
             }
 
+            #pas {
+                cursor: pointer;
+                position: relative;
+            border-radius: 1em;
+            margin-left: 20%;
+            margin-right: 2px;
+            height: 100%;
+            width:fit-content;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 50px;   
+            padding: 10px; 
+            background-color: #e9c98c8f;
+            align-items: center ;
+            overflow: hidden;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            }
+            #pas:hover{
+                background-color: #7a5a1eb0;
+                color: #ffffff;
+            }
+
             #connect {
                 
                 cursor: pointer;
@@ -138,7 +162,33 @@
                 color: #ffffff;
             }
 
-        .user  {
+
+            #keyconnect {
+                
+                cursor: pointer;
+                position: relative;
+            border-radius: 1em;
+            margin-left: 2px;
+            margin-right: 20%;
+            height: 100%;
+            width:fit-content;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 50px;   
+            padding: 10px; 
+            background-color: #e9c98c8f;
+            align-items: center ;
+            overflow: hidden;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            }
+            #keyconnect:hover{
+                background-color: #7a5a1eb0;
+                color: #ffffff;
+            }
+
+        .passuser  {
                 position: relative;
             border-radius: 1em;
             margin-left: 20%;
@@ -161,9 +211,11 @@
                 position: relative;
             border-radius: 1em;
             height: 400px;
+            margin-left: 1%;
+            margin-right: 1%;
             border: 1px solid #ffffff00;  
             margin-bottom: 1%;   
-            margin-top: 5%;
+            margin-top: 2%;
             padding: 10px; 
             background-color: #e9c98c8f;
             align-items: center ;
@@ -172,7 +224,22 @@
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
   5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
   -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-}            
+}        
+#keyterminal {
+            display: flex;
+                position: relative;
+            border-radius: 1em;
+            height: 500px;
+            width: 80%;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 1%;   
+            margin-top: 1px;
+            padding: 10px; 
+            background-color: #00000000;
+            align-items: center ;
+            overflow: hidden;
+            
+}           
 #del{
     cursor: pointer;
                 position: relative;
@@ -189,7 +256,7 @@
             aspect-ratio: 1/1;
             text-align: center;
             padding-bottom: 0.1%;
-            margin-bottom: 9%;
+            margin-bottom: 1%;
             color: #ad180d;
             position: relative;
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
@@ -200,6 +267,12 @@
 #del:hover{
                 background-color: #7a5a1eb0;
                 color: #ffffff;
+            }
+            .met-btn{
+                display: flex;
+                margin-bottom: 7px;
+                height: auto;
+
             }
         
             @media only screen and (max-width: 600px) {
@@ -244,11 +317,19 @@
     <button id="backButton" onclick="goBack()"><返回主页</button>
 
     <h2 onclick="reloadPage()">恩的终端🔳</h2>
-    <div id="key" onclick="key()">使用密钥🔑连接</div>
-<input id="hostname" class="user" type="text" placeholder="主机名"></input>
-<input id="username" class="user" type="text" placeholder="用户名"></input>
-<input id="password" class="user" type="password" placeholder="密码"></input>
+    <div class="met-btn">
+    <div id="key" onclick="key()">密钥连接></div>
+    <div id="pas" onclick="pas()" style="display: none;" ><密码连接</div>
+
+</div>
+<input id="hostname" class="passuser" type="text" placeholder="主机名"></input>
+<input id="username" class="passuser" type="text" placeholder="用户名"></input>
+<input id="password" class="passuser" type="password" placeholder="密码"></input>
+
 <div id="connect" onclick="createTerminal()">+</div>
+<div class="keypass" style="display: none;">
+
+</div>
 <div id="terminalContainer"></div>
 
 <script>
@@ -264,27 +345,106 @@
 
 function key() {
    
-    const keySrc = `http://${window.location.hostname}:8888/static/key.html`;
+    //隐藏pass登陆
+    document.getElementById('hostname').style.display = 'none';
+    document.getElementById('username').style.display = 'none';
+    document.getElementById('password').style.display = 'none';
+    document.getElementById('connect').style.display = 'none';
+    document.getElementById('key').style.display = 'none';
+    document.getElementById('pas').style.display = 'block';
+    // 选择所有 iframe 标签并将它们从 DOM 中移除
+    var iframes = document.querySelectorAll('iframe');
+    iframes.forEach(function(iframe) {
+        iframe.parentNode.removeChild(iframe);
+    });
+    
+    var delElements = document.querySelectorAll('#del');
+    delElements.forEach(function(element) {
+        element.parentNode.removeChild(element);
+    });
+    keyconnect()
+}
+
+function pas() {
+   
+   
+   document.getElementById('hostname').style.display = 'block';
+   document.getElementById('username').style.display = 'block';
+   document.getElementById('password').style.display = 'block';
+   document.getElementById('connect').style.display = 'block';
+   document.getElementById('key').style.display = 'block';
+   document.getElementById('pas').style.display = 'none';
+   // 选择所有 iframe 标签并将它们从 DOM 中移除
+   var iframes = document.querySelectorAll('iframe');
+    iframes.forEach(function(iframe) {
+        iframe.parentNode.removeChild(iframe);
+    });
+    var delElements = document.querySelectorAll('#del');
+    delElements.forEach(function(element) {
+        element.parentNode.removeChild(element);
+    });
+}
+
+function keyconnect() {
+    const keySrc = `http://${window.location.hostname}:8888`;
 
     // 创建 iframe 元素
     const terminalIframe = document.createElement('iframe');
-    terminalIframe.setAttribute('id', 'terminal');
+    terminalIframe.setAttribute('id', 'keyterminal');
     terminalIframe.setAttribute('src', keySrc);
 
     // 创建删除按钮
     const deleteButton = document.createElement('div');
     deleteButton.setAttribute('id', 'del');
     deleteButton.textContent = '✘';
+    deleteButton.style.display = 'none';
     deleteButton.onclick = function() {
         terminalIframe.remove();
         deleteButton.remove();
     };
 
-    // 添加到 body 中
-    document.body.appendChild(terminalIframe);
-    document.body.appendChild(deleteButton);
-}
+    // 隐藏登录元素
+    document.getElementById('hostname').style.display = 'none';
+    document.getElementById('username').style.display = 'none';
+    document.getElementById('password').style.display = 'none';
+    document.getElementById('connect').style.display = 'none';
 
+    // 获取当前的第一个 iframe 元素（假设是旧的 terminal）
+    const firstIframe = document.querySelector('iframe');
+
+    // 将新创建的 iframe 和删除按钮插入到第一个 iframe 前面
+    if (firstIframe) {
+        document.body.insertBefore(terminalIframe, firstIframe);
+        document.body.insertBefore(deleteButton, firstIframe);
+    } else {
+        // 如果没有旧的 iframe，直接追加到 body 的末尾
+        document.body.appendChild(terminalIframe);
+        document.body.appendChild(deleteButton);
+    }
+
+    // 添加事件监听器到主窗口，只处理来自特定 iframe 的消息
+    function messageHandler(event) {
+        if (event.data === 'hideall' && event.source === terminalIframe.contentWindow) {
+            // 处理隐藏逻辑
+            terminalIframe.style.backgroundColor = '#e9c98c8f';
+            terminalIframe.style.boxShadow = '5px 5px 20px rgba(0, 0, 0, 0.171), -5px -5px 20px rgba(0, 0, 0, 0.171), 5px -5px 20px rgba(0, 0, 0, 0.171), -5px 5px 20px rgba(0, 0, 0, 0.171)';
+            if (deleteButton.style.display == 'none') {
+                keyconnect()
+            }
+            deleteButton.style.display = 'block';
+            
+        }
+    }
+
+    window.addEventListener('message', messageHandler);
+
+    // 移除事件监听器，当 iframe 被删除时
+    deleteButton.onclick = function() {
+        terminalIframe.remove();
+        deleteButton.remove();
+        window.removeEventListener('message', messageHandler);
+    };
+}
 
 
 
@@ -302,11 +462,13 @@ function createTerminal() {
 
     // 创建 iframe 元素
     const terminalIframe = document.createElement('iframe');
+    terminalIframe.style.display = 'none';
     terminalIframe.setAttribute('id', 'terminal');
     terminalIframe.setAttribute('src', newSrc);
 
     // 创建删除按钮
     const deleteButton = document.createElement('div');
+    deleteButton.style.display = 'none';
     deleteButton.setAttribute('id', 'del');
     deleteButton.textContent = '✘';
     deleteButton.onclick = function() {
@@ -314,10 +476,37 @@ function createTerminal() {
         deleteButton.remove();
     };
 
-    // 添加到 body 中
-    document.body.appendChild(terminalIframe);
-    document.body.appendChild(deleteButton);
+    // 获取当前的第一个 iframe 元素（假设是旧的 terminal）
+    const firstIframe = document.querySelector('iframe');
+
+    // 将新创建的 iframe 和删除按钮插入到第一个 iframe 前面
+    if (firstIframe) {
+        document.body.insertBefore(terminalIframe, firstIframe);
+        document.body.insertBefore(deleteButton, firstIframe);
+    } else {
+        // 如果没有旧的 iframe，直接追加到 body 的末尾
+        document.body.appendChild(terminalIframe);
+        document.body.appendChild(deleteButton);
+    }
+    
+    
+    // 添加事件监听器到主窗口，只处理来自特定 iframe 的消息
+    function messageHandler(event) {
+        if (event.data === 'hideall' && event.source === terminalIframe.contentWindow) {
+            terminalIframe.style.display = 'block';
+            deleteButton.style.display = 'block';
+        }
+    }
+
+    window.addEventListener('message', messageHandler);
+    // 移除事件监听器，当 iframe 被删除时
+    deleteButton.onclick = function() {
+        terminalIframe.remove();
+        deleteButton.remove();
+        window.removeEventListener('message', messageHandler);
+    };
 }
+
 
 
 
