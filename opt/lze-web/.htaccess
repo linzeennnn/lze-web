@@ -1,0 +1,3 @@
+ErrorDocument 403 /code/erro/403.html
+
+ErrorDocument 404 /code/erro/404.html

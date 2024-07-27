@@ -2,17 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#4baca6"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <meta name="theme-color" content="#2DB78C"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📝</title>
     <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../../font/font.css"> 
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery-3.5.1.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
     <style>
-        
+        .ui-tooltip {
+            background: #0b915360; 
+            border: none !important;
+            color: #c0fcea; 
+            font-size: 19px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            padding: 15px; 
+            border-radius: 1em; 
+            font-weight: bold;
+            overflow-wrap: break-word;
+        }
         body{
             overflow-x: hidden !important;
-            font-family: LZE;
-            background-image: url('../../icon/not_background_pc.jpg');
+            
+            background-image: url(../../icon/not_pc.svg);
             background-attachment:fixed;
             background-size: cover;
             background-repeat: no-repeat;
@@ -25,68 +37,62 @@
             flex-direction: column;
            
         }
-     
-    #backButton {
-        font-family: LZE;
-            background-color:rgba(8, 148, 148, 0.63);
-            color: #024a4d;
-            border: none;
-            padding: 0.57%;
-            cursor: pointer;
-            font-size: 100%;
-            width: 100%;
-            max-width: 100%;
-            align-self: flex-start;
-            text-align: left;
-            padding-left: 7%;
-            position:fixed;
-            z-index: 1000;
-            top: 0;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-            
-            }
-            #backButton:hover {
-                background-color: #05473c9c;
-                color: #ffffff;
-                
-            }
+        body::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
+}
+   
+header{
+  font-size: 70px;
+      cursor: pointer;
+      height: 60px !important;
+      color: #40f7a1 !important;
+        background-color: #0da56663 !important;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
+}
+header:hover{
+      background-color: #43746194 !important;
+      color: #a1f8db !important;
+    }
 
-            h2 {
-                cursor: pointer;
-                position: relative;
-            display: inline-block;
-            box-sizing: content-box;
-            
-            border-radius:1em ;
-            background-color: #00b4ba96;
-            left: 48%;
-            margin-top: 4%;
-            width: 6em;
-            
-            text-align: center;
-            padding-bottom: 0.1%;
-            margin-bottom: 0.5%;
-            color: #024a4d;
-            position: relative;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-            }
-            h2:hover{
-                background-color: #052f33ab;
-                color: #ffffff;
-            }
+    
+.home{
+  position:relative;
+      bottom: -20px;
+}
         .expand-btn, .edit-btn, .delete-btn {
             cursor: pointer;
             padding: 8px 16px;
             border: none;
             border-radius: 4em;
             margin-right: 8px;
+            background-image: url(../../icon/down_green.svg);
         }
+        .note{
+  cursor: pointer;
+  margin-top: 130px;
+  left: 50% !important;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  background-image: url(../../icon/note.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+.note:hover{
+  background-image: url(../../icon/note_open.svg);
+}
+h3{
+    color: #075832;
+}
 
         .expand-btn {
             position: absolute;
@@ -95,51 +101,57 @@
             left: 50%;
             font-size: 150%;
             cursor: pointer;
-            padding: 8px 16px;
+            width: 32px;
+            height: 32px;
             border: none;
             border-radius: 50%;
             margin-right: 8px;
             background-color: #cccccc00;
-            opacity: 0.5;
+            background-position: center;
+            background-repeat: no-repeat;
+            
         }
         .expand-btn:hover{
-            opacity: 1;
+           background-image: url(../../icon/down_white.svg);
         }
 
         .edit-btn {
-            background-color: #35f0e6a8;
-            color: rgb(0, 0, 0);
+           background-repeat: no-repeat;
+           background-position: center;
+           width: 32px;
+           height: 32px;
+           background-image: url(../../icon/edit_green.svg)
         }
         .edit-btn:hover{
-            background-color: #034442ab;
-            color: #ffffff;
+            background-image: url(../../icon/edit_white.svg);
         }
 
         .delete-btn {
             position: absolute;
-            top: 0;
-            right: 0;
-            font-size: 200%;
+            top: 10px;
+            right: 10px;
             cursor: pointer;
             padding: 8px 16px;
-            border: none;
-            border-radius: 200em;
             margin-right: 0;
             margin-top: 0;
-            background-color: #a3170d00;
-            color: rgba(173, 6, 6, 0.664);
+            background-image: url(../../icon/no_green.svg);
+            background-repeat: no-repeat;
+            background-position: center;
         }
         .delete-btn:hover{
-            color: red;
+            background-image: url(../../icon/no_red.svg);
         }
 
-        .add-btn {
+        .add-btn, .yes-btn, .no-btn {
+            width: 40px;
+            height: 40px;
             position: relative;
             font-size: 200%;
             margin-left: 10%;
             margin-bottom: 2%;
-            background-color: #1241458a;
-            color: rgb(255, 255, 255);
+            background-color: #35ffbc8a;
+            background-repeat: no-repeat;
+            background-position: center;
             cursor: pointer;
             padding: 8px 16px;
             border: none;
@@ -149,32 +161,31 @@
             z-index: 10;
            
         }
-        .add-btn:hover{
-            background-color: #0d5d64;
+        
+        .add-btn:hover, .yes-btn:hover, .no-btn:hover{
+            background-color: #0d5d64 !important;
         }
         .copy-btn {
+            width: 32px;
+            height: 32px;
             position: absolute;
             cursor: pointer;
             padding: 8px 16px;
-            border: none;
             margin-bottom: 0;
             font-size: 200%;
             margin-right: 0;
-            background-color: #4286f400;
-            color: #000000;
             bottom: 0 !important;
             right: 0 !important;
+            background-image: url(../../icon/copy_green.svg);
+            background-repeat: no-repeat;
+            background-position: center;
         }
         .copy-btn:hover {
-            color: white;
+            background-image: url(../../icon/copy_white.svg);
         }
         
 
-        /* h3[contenteditable="true"] {
-            border: 1px solid #ccc;
-            padding: 8px;
-            display: inline-block;
-        } */
+        
         h3.edit-mode,
         div.edit-mode {
             border: 1px solid #ccc;
@@ -182,6 +193,7 @@
             display: inline-block;
             
         }
+       
         .note-element {
             position: relative;
             border-radius: 1em;
@@ -191,7 +203,7 @@
             border: 1px solid #ffffff00;  
             margin-bottom: 50px;   
             padding: 10px; 
-            background-color: rgba(18, 173, 173, 0.616);
+            background-color: rgba(38, 235, 160, 0.479);
             align-items: center ;
             overflow: hidden;
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
@@ -200,11 +212,12 @@
   -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
         }
         .word{
-            color: rgb(3, 51, 36);
+            color: rgb(4, 70, 34);
             max-width: auto;
             width: 100%;
             
         }
+        
         #note{
             width: 80%;
             align-items: center ;
@@ -213,12 +226,21 @@
             position: relative;
             border: 10px;
             border-radius: 1em;
-            
-            width: 30%;
+            width: fit-content;
+            max-width: 80%;
+            padding: 10px;
             margin-left: 10%;
             font-size: 18px;
-            background-color: rgba(18, 173, 173, 0.616);
-            
+            background-color: transparent;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+            }
+            h3[contenteditable="true"]:empty:before{
+
+            content: attr(data-placeholder);
+            color: #0000006b;
             }
         textarea{
             position: relative;
@@ -226,10 +248,21 @@
             width: 80%;
             border-radius: 1em;
             border-color: #cccccc00;
-            background-color: rgba(18, 173, 173, 0.616);
+            background-color: transparent;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.1), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.1),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.1); 
             }
             .note-element div[contenteditable="true"]{
-                background-color: rgba(18, 173, 173, 0.616);
+                width: fit-content;
+                padding: 10px;
+                background-color: transparent;
+                border-radius: 1em;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
             }
             @media only screen and (max-width: 600px) {
     
@@ -265,14 +298,58 @@
 </head>
 <body>
     <div class="phone_background">
-        <div class="fixed" style="background-image:url(../../icon/not_background_phone.jpeg);"></div>
+        <div class="fixed" style="background-image:url(../../icon/not_phone.svg);"></div>
     </div>
-    <button id="backButton" onclick="goBack()"><返回主页</button>
-
-    <h2 onclick="reloadPage()">恩的便签📝</h2>
+    <header>
+        <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
+        
+      </header>
+      <div class="note" onclick="reloadPage()"title="恩的便签"></div>
 <div id="notes"></div>
 
 <script>
+     $(function() {
+    var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // 对于移动设备，使用长按事件来显示 tooltip
+        var tooltipTrigger = $(".tooltip-trigger");
+        var tooltip = $('<div class="tooltip"></div>').appendTo('body');
+        var timeout;
+
+        tooltipTrigger.on("touchstart", function(event) {
+            timeout = setTimeout(function() {
+                var content = tooltipTrigger.attr("title");
+                tooltip.text(content).fadeIn(200);
+                tooltip.css({
+                    left: event.originalEvent.touches[0].pageX + 10 + "px",
+                    top: event.originalEvent.touches[0].pageY + 10 + "px"
+                });
+            }, 500); // 长按持续时间 (500ms)
+        }).on("touchend", function() {
+            clearTimeout(timeout);
+            tooltip.fadeOut(200);
+        });
+
+        $(document).on("touchstart", function(event) {
+            if (!tooltipTrigger.is(event.target)) {
+                tooltip.fadeOut(200);
+            }
+        });
+
+    } else {
+        // 对于桌面设备，使用 jQuery UI 的 tooltip
+        $(document).tooltip({
+            track: true, // 跟随鼠标移动
+            show: { effect: "blind", duration: 200, delay: 250 },
+            position: {
+                my: "left+15 top+15", // Tooltip 的位置点
+                at: "left bottom"     // 目标元素的位置点
+            }
+        });
+    }
+});
+
     function goBack() {
       window.location.href = '/';
     }
@@ -298,7 +375,18 @@
             // 添加“添加新便签”按钮
             const addButton = document.createElement('button');
             addButton.className = 'add-btn';
-            addButton.innerHTML = '+';
+            addButton.title ='添加新便签';
+            addButton.style.backgroundImage = 'url(../../icon/add_green.svg)';
+            addButton.addEventListener('mouseenter' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/add_white.svg)';
+        }
+    )
+    addButton.addEventListener('mouseleave' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/add_green.svg)';
+        }
+    )
             addButton.onclick = showAddNoteForm;
             notesContainer.appendChild(addButton);
 
@@ -306,19 +394,17 @@
 
             for (const file of Object.values(noteFiles)) {
                 const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
-                const filePath = `../../file/Note${file}`;
+                const filePath = `../../file/Note/${file}`;
                 const content = await readFile(filePath);
                 const noteElement = document.createElement('div');
                 noteElement.className = 'note-element';
                 noteElement.innerHTML = `
                     <h3 >${fileNameWithoutExtension}</h3>
                     <div class="word" rows="4" cols="50" style="display: none;">${content}</div>
-                    <button class="edit-btn" onclick="enableEditMode(this, '${file}')">编辑</button>
-                    <button class="expand-btn" onclick="toggleContent(this)">
-                        <img src="../../icon/down.png" >
-                        </button>
-                    <button class="delete-btn" onclick="deleteNote('${file}')">✘</button>
-                    <button class="copy-btn" onclick="copyNoteContent(this)">❐</button>
+                    <div class="edit-btn" onclick="enableEditMode(this, '${file}')" " title="编辑"></div>
+                    <button class="expand-btn" onclick="toggleContent(this)" title="展开"></button>
+                    <div class="delete-btn" onclick="deleteNote('${file}')" title="删除便签"></div>
+                    <div class="copy-btn" onclick="copyNoteContent(this)" title="复制便签内容"></div>
                 `;
 
                 notesContainer.appendChild(noteElement);
@@ -329,7 +415,7 @@
     }
 
     window.onload = showNotes;
-
+    
 
 
 
@@ -372,7 +458,18 @@ function enableEditMode(editBtn) {
     }
 
     // 更改编辑按钮的行为为保存按钮
-    editBtn.innerHTML = '保存';
+    editBtn.style.backgroundImage = 'url(../../icon/save.svg)';
+    editBtn.title = "保存";
+    editBtn.addEventListener('mouseenter' , 
+        function () {
+            editBtn.style.backgroundImage = 'url(../../icon/save_white.svg)';
+        }
+    )
+    editBtn.addEventListener('mouseleave' , 
+        function () {
+            editBtn.style.backgroundImage = 'url(../../icon/save.svg)';
+        }
+    )
     editBtn.onclick = function () {
         // 在deleteEdit之前插入判断重复文件名的函数
         const newFileName = titleElement.innerText;
@@ -431,7 +528,18 @@ function saveNoteChanges(noteElement) {
 
     // 更改保存按钮的行为为编辑按钮
     const editBtn = noteElement.querySelector('.edit-btn');
-    editBtn.innerHTML = '编辑';
+    editBtn.style.backgroundImage = 'url(../../icon/edit_green.svg)';
+    editBtn.title = "编辑";
+    editBtn.addEventListener('mouseenter' , 
+        function () {
+            editBtn.style.backgroundImage = 'url(../../icon/edit_white.svg)';
+        }
+    )
+    editBtn.addEventListener('mouseleave' , 
+        function () {
+            editBtn.style.backgroundImage = 'url(../../icon/edit_green.svg)';
+        }
+    )
     editBtn.onclick = function () {
         enableEditMode(editBtn);
     };
@@ -502,8 +610,18 @@ async function saveNoteRequest (newTitle, newContent) {
     const contentElement = btn.previousElementSibling.previousElementSibling;
     if (contentElement && (contentElement.style.display === 'none' || contentElement.style.display === '')) {
         contentElement.style.display = 'block';
-        btn.innerHTML = '<img src="../../icon/up.png" >';
-
+        btn.style.backgroundImage = 'url(../../icon/up_green.svg)';
+        btn.title = '折叠';
+                btn.addEventListener('mouseenter' , 
+        function () {
+            btn.style.backgroundImage = 'url(../../icon/up_white.svg)';
+        }
+    )
+    btn.addEventListener('mouseleave' , 
+        function () {
+            btn.style.backgroundImage = 'url(../../icon/up_green.svg)';
+        }
+    )
         // 更新内容区域的实际文本
         const textArea = contentElement.querySelector('textarea');
         if (textArea) {
@@ -511,7 +629,18 @@ async function saveNoteRequest (newTitle, newContent) {
         }
     } else if (contentElement) {
         contentElement.style.display = 'none';
-        btn.innerHTML = '<img src="../../icon/down.png" >';
+        btn.style.backgroundImage = 'url(../../icon/down_green.svg)';
+        btn.title = '展开';
+                btn.addEventListener('mouseenter' , 
+        function () {
+            btn.style.backgroundImage = 'url(../../icon/down_white.svg)';
+        }
+    )
+    btn.addEventListener('mouseleave' , 
+        function () {
+            btn.style.backgroundImage = 'url(../../icon/down_green.svg)';
+        }
+    )
     }
 }
 
@@ -561,16 +690,14 @@ async function saveNoteRequest (newTitle, newContent) {
 function showAddNoteForm() {
     // 创建新的便签元素
     const newNoteElement = document.createElement('div');
+    const addbutton = document.querySelector('.add-btn');
+    addbutton.style.display = "none";
 
     // 创建标题元素并设置为可编辑
     const newTitleElement = document.createElement('h3');
     newTitleElement.contentEditable = 'true';
-    newTitleElement.innerText = '输入标题'; // 设置默认文本
-    newTitleElement.addEventListener('click', function() {
-        if (this.innerText === '输入标题') {
-            this.innerText = '';
-        }
-    });
+    newTitleElement.setAttribute('data-placeholder', '输入标题');
+    
     newNoteElement.appendChild(newTitleElement);
     // 添加输入事件监听器
     newTitleElement.addEventListener('input', function () {
@@ -592,8 +719,19 @@ function showAddNoteForm() {
 
     // 创建确认按钮
     const confirmButton = document.createElement('button');
-    confirmButton.className = 'add-btn';
-    confirmButton.innerHTML = '✔';
+    confirmButton.className = 'yes-btn';
+    confirmButton.style.backgroundImage = 'url(../../icon/yes_white.svg)';
+    confirmButton.title ='确认创建';
+    confirmButton.addEventListener('mouseenter' , 
+        function () {
+            confirmButton.style.backgroundImage = 'url(../../icon/yes.svg)';
+        }
+    )
+    confirmButton.addEventListener('mouseleave' , 
+        function () {
+            confirmButton.style.backgroundImage = 'url(../../icon/yes_white.svg)';
+        }
+    )
     confirmButton.onclick = function () {
         const newTitle = newTitleElement.innerText;
         const newContent = newContentElement.value;
@@ -604,16 +742,22 @@ function showAddNoteForm() {
     newNoteElement.appendChild(confirmButton);
 
     // 创建取消按钮
-    const addButton = document.querySelector('.add-btn');
-    addButton.innerHTML = '✘';
-    addButton.onclick = function () {
-        // 取消添加新便签的操作
-        newNoteElement.remove();
-
-        // 恢复按钮文本和行为为添加新便签
-        addButton.innerHTML = '+';
-        addButton.onclick = showAddNoteForm;
-    };
+    const removebtn = document.createElement('button');
+    removebtn.className = 'no-btn';
+    removebtn.style.backgroundImage = 'url(../../icon/no_pink.svg)';
+    removebtn.title ='取消创建';
+    removebtn.addEventListener('mouseenter' , 
+        function () {
+            removebtn.style.backgroundImage = 'url(../../icon/no_red.svg)';
+        }
+    )
+    removebtn.addEventListener('mouseleave' , 
+        function () {
+            removebtn.style.backgroundImage = 'url(../../icon/no_pink.svg)';
+        }
+    )
+    removebtn.onclick = reloadPage;
+    newNoteElement.appendChild(removebtn);
 
     // 将新便签元素添加到页面中的开头
     const notesContainer = document.getElementById('notes');
@@ -623,13 +767,7 @@ function showAddNoteForm() {
     newTitleElement.focus();
 }
 
-// JavaScript函数用于取消添加新便签
-function cancelAddNote() {
-    // 恢复按钮文本和行为为添加新便签
-    const addButton = document.querySelector('.add-btn');
-    addButton.innerHTML = '+';
-    addButton.onclick = showAddNoteForm;
-}
+
 
 
 
@@ -653,7 +791,7 @@ async function addNewNoteRequest(newTitle, newContent) {
         } else {
             // 重新加载便签
             document.getElementById('notes').innerHTML = '';
-            showNotes();
+            reloadPage();
         }
     } catch (error) {
         console.error('Error adding new note:', error);
@@ -680,11 +818,21 @@ function copyNoteContent(copyBtn) {
     document.body.removeChild(textarea);
 
     // 将复制按钮文本设置为复制成功
-    copyBtn.innerText = '✓';
+    copyBtn.style.backgroundImage = 'url(../../icon/yes.svg)';
 
     // 等待两秒后将复制按钮文本恢复为原始文本
     setTimeout(() => {
-        copyBtn.innerText = '❐';
+        copyBtn.style.backgroundImage = 'url(../../icon/copy_green.svg)';
+        copyBtn.addEventListener('mouseenter' , 
+        function () {
+            copyBtn.style.backgroundImage = 'url(../../icon/copy_white.svg)';
+        }
+    )
+    copyBtn.addEventListener('mouseleave' , 
+        function () {
+            copyBtn.style.backgroundImage = 'url(../../icon/copy_green.svg)';
+        }
+    )
     }, 2000);
 
    

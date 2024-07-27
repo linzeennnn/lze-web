@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#cf4b4f"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <meta name="theme-color" content="#BA3537"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓🔖</title>
     <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../../font/font.css"> 
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery-3.5.1.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
     <style>
         
         body{
             overflow-x: hidden !important;
-            font-family: LZE;
-            background-image: url('../../icon/bok_background_pc.jpg');
+            
+            background-image: url("../../icon/bok_pc.svg");
             background-attachment:fixed;
             background-size: cover;
             background-repeat: no-repeat;
@@ -25,94 +27,110 @@
             flex-direction: column;
            
         }
+        body::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
+}
      
-    #backButton {
-        font-family: LZE;
-            background-color:#fc86478f;
-            color: #2d0a1e;
-            border: none;
-            padding: 0.57%;
-            cursor: pointer;
-            font-size: 100%;
-            width: 100%;
-            max-width: 100%;
-            align-self: flex-start;
-            text-align: left;
-            padding-left: 7%;
-            position:fixed;
-            z-index: 1000;
-            top: 0;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-            
-            }
-            #backButton:hover {
-                background-color: #6e3313b0;
-                color: #ffffff;
-                
-            }
+    
+.ui-tooltip {
+            background: #b1124260; 
+            border: none !important;
+            color: #ff7c7c; 
+            font-size: 19px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            padding: 15px; 
+            border-radius: 1em; 
+            font-weight: bold;
+            overflow-wrap: break-word;
+        }
+       
+header{
+  font-size: 70px;
+      cursor: pointer;
+      height: 60px !important;
+      color: #e75480 !important;
+        background-color: #8f0c2263 !important;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
+}
+header:hover{
+      background-color: #f3737994 !important;
+      color: #ffc0c3 !important;
+    }
 
-            h2 {
-                cursor: pointer;
-                position: relative;
-            display: inline-block;
-            box-sizing: content-box;
-            
-            border-radius:1em ;
-            background-color: #fc86478f;
-            left: 48%;
-            margin-top: 4%;
-            width: 6em;
-            
-            text-align: center;
-            padding-bottom: 0.1%;
-            margin-bottom: 0.5%;
-            color: #2d0a1e;
-            position: relative;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-            }
-            h2:hover{
-                background-color: #6e3313b0;
-                color: #ffffff;
-            }
-        
+    
+.home{
+  position:relative;
+      bottom: -20px;
+}
+.tag{
+  cursor: pointer;
+  margin-top: 130px;
+  left: 50% !important;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  background-image: url(../../icon/tag.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+.tag:hover{
+  background-image: url(../../icon/tag_open.svg);
+}
+        .expand-btn, .edit-btn, .delete-btn {
+            cursor: pointer;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4em;
+            margin-right: 8px;
+            background-image: url(../../icon/down_green.svg);
+        }
         
 
         .delete-btn {
             position: absolute;
             top: 0;
             right: 0;
-            font-size: 200%;
             cursor: pointer;
             padding: 8px 16px;
-            border: none;
-            border-radius: 200em;
+           background-image: url(../../icon/no_pink.svg);
+           width: 32px;
+           height: 32px;
+           background-repeat: no-repeat;
+           background-position: center;
             margin-right: 0;
             margin-top: 0;
-            background-color: #a3170d00;
-            color: rgba(173, 6, 6, 0.664);
+           
         }
         .delete-btn:hover{
-            color: red;
+            background-image: url(../../icon/no_red.svg);
         }
 
         .add-btn {
+            transform: translateX(-50%);
             position: relative;
             font-size: 200%;
             margin-left: 50%;
+            
             margin-bottom: 2%;
-            background-color: #ffa2748f;
+            background-color: #ff74746c;
             color: #2d0a1e;
             cursor: pointer;
-            padding: 8px 16px;
+            padding: 32px 32px;
             border: none;
             border-radius: 50%;
-            margin-top: 20px;
+            margin-top: 40px;
+            
+            background-position: center;
+            background-repeat: no-repeat;
             aspect-ratio: 1/1;
             z-index: 10;
             bottom: 20px;
@@ -123,8 +141,9 @@
             
         }
         .add-btn:hover{
-            background-color: #770f278c;
-            color: white;
+           
+            background-color: #770f278c ;
+            
         }
         
         h3.edit-mode,
@@ -137,6 +156,7 @@
         .note-element {
             cursor: pointer;
             position: relative;
+            margin-top: 20px;
             border-radius: 1em;
             margin-left: 10%;
             margin-right: 10%;
@@ -160,20 +180,32 @@
         
        
         #note{
-            width: 80%;
+            width: 20%;
             align-items: center ;
+        }
+        h3{
+            color: #740208;
+        }
+        .note-element:hover h3 {
+            color: #ccc;
         }
         h3[contenteditable="true"] {
             position: relative;
             border: 10px;
             border-radius: 1em;
-            
+            content: attr(data-placeholder);
+            color: #0000006b;
             width: 30%;
             margin-left: 10%;
             font-size: 18px;
             background-color: #c93e5c91;
             
             }
+            h3[contenteditable="true"]:empty:before{
+
+content: attr(data-placeholder);
+color: #0000006b;
+}
         textarea{
             position: relative;
             margin-left: 10%;
@@ -184,6 +216,30 @@
             }
             .note-element div[contenteditable="true"]{
                 background-color: #c93e5c91;
+            }
+            .open-page-btn{
+                transform: translateX(-50%);
+                margin-left: 50%;
+                background-image: url(../../icon/down_red.svg);
+                width: 32px;
+                height: 32px;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+            .open-page-btn:hover{
+                background-image: url(../../icon/down_white.svg);
+            }
+            .iframe-delete-btn{
+                transform: translateX(-50%);
+                margin-left: 50%;
+                background-image: url(../../icon/up_red.svg);
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 32px;
+                height: 32px;
+            }
+            .iframe-delete-btn:hover{
+                background-image: url(../../icon/up_white.svg);
             }
             @media only screen and (max-width: 600px) {
     
@@ -207,11 +263,7 @@
         #backButton{
             height: 40px;
         }
-        h2{
-            left: 31%;
-            margin-top: 20%;
-            margin-bottom: 5%;
-        }
+        
 
             }
             
@@ -220,15 +272,61 @@
 </head>
 <body>
     <div class="phone_background">
-        <div class="fixed" style="background-image:url(../../icon/bok_background_phone.jpeg);"></div>
+        <div class="fixed" style="background-image:url(../../icon/bok_phone.svg);"></div>
     </div>
-    <button id="backButton" onclick="goBack()"><返回主页</button>
+    <header>
+        <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
+        
+      </header>
+      <div class="tag" onclick="reloadPage()"title="恩的书签"></div>
+<div id="notes"></div>
 
-    <h2 onclick="reloadPage()">恩的书签🔖</h2>
 <div id="notes"></div>
 
 
 <script>
+   $(function() {
+    var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // 对于移动设备，使用长按事件来显示 tooltip
+        var tooltipTrigger = $(".tooltip-trigger");
+        var tooltip = $('<div class="tooltip"></div>').appendTo('body');
+        var timeout;
+
+        tooltipTrigger.on("touchstart", function(event) {
+            timeout = setTimeout(function() {
+                var content = tooltipTrigger.attr("title");
+                tooltip.text(content).fadeIn(200);
+                tooltip.css({
+                    left: event.originalEvent.touches[0].pageX + 10 + "px",
+                    top: event.originalEvent.touches[0].pageY + 10 + "px"
+                });
+            }, 500); // 长按持续时间 (500ms)
+        }).on("touchend", function() {
+            clearTimeout(timeout);
+            tooltip.fadeOut(200);
+        });
+
+        $(document).on("touchstart", function(event) {
+            if (!tooltipTrigger.is(event.target)) {
+                tooltip.fadeOut(200);
+            }
+        });
+
+    } else {
+        // 对于桌面设备，使用 jQuery UI 的 tooltip
+        $(document).tooltip({
+            track: true, // 跟随鼠标移动
+            show: { effect: "blind", duration: 200, delay: 250 },
+            position: {
+                my: "left+15 top+15", // Tooltip 的位置点
+                at: "left bottom"     // 目标元素的位置点
+            }
+        });
+    }
+});
+
     function goBack() {
       window.location.href = '/';
     }
@@ -260,60 +358,100 @@
      
 
     async function showNotes() {
-    const notesContainer = document.getElementById('notes');
+            const notesContainer = document.getElementById('notes');
 
-    try {
-        
+            try {
+                const noteFiles = await getNoteFiles();
 
-        const noteFiles = await getNoteFiles();
+                for (const file of Object.values(noteFiles)) {
+                    const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
+                    const filePath = `../../file/Bookmark/${file}`;
+                    const content = await readFile(filePath);
+                    const noteElement = document.createElement('div');
+                    noteElement.className = 'note-element';
+                    noteElement.innerHTML = `
+                        <h3>${fileNameWithoutExtension}</h3>
+                        <div class="delete-btn" onclick="deleteNote('${file}')"></div>
+                        <div class="open-page-btn" >
+                            </div>
+                    `;
 
-        for (const file of Object.values(noteFiles)) {
-    const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
-    const filePath = `../../file/Bookmark/${file}`;
-    const content = await readFile(filePath);
-    const noteElement = document.createElement('div');
-    noteElement.className = 'note-element';
-    noteElement.innerHTML = `
-        <h3>${fileNameWithoutExtension}</h3>
-        <div class="word" rows="4" cols="50" style="display: none;"></div>
-        <button class="delete-btn" onclick="deleteNote('${file}')">✘</button>
-        
-    `;
-    
-    const wordElement = noteElement.querySelector('.word');
-    wordElement.innerHTML = `<a href="${content}" target="_blank">${content}</a>`;
+                    noteElement.addEventListener('click', async function(event) {
+                        const target = event.target;
+                        const iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+                        if (target.classList.contains('delete-btn') || target.classList.contains('open-page-btn') || target.classList.contains('iframe-delete-btn')) {
+                            return;
+                        }
 
-    // 添加点击事件处理程序
-    noteElement.addEventListener('click', function(event) {
-        const target = event.target;
+                        const iframeContainer = noteElement.querySelector('.iframe-container');
+                        if (!iframeContainer) {
+                            
+                            openPage(iframeSrc);
+                            
+                            
+                        }
+                    });
 
-    // 检查点击的元素是否为删除按钮
-    if (target.classList.contains('delete-btn')) {
-        // 如果是删除按钮，则不执行跳转操作
-        return;
-    }
+                    noteElement.querySelector('.open-page-btn').addEventListener('click', function() {
+                        createIframe(noteElement, content);
+                        
+                    });
+                    noteElement.querySelector('.open-page-btn').addEventListener('click', function() {
+                    this.style.display = 'none'; // 隐藏当前书签的打开网页按钮
+                });
 
-    // 如果点击的不是删除按钮，则执行跳转操作
-    window.location.href = content;
-});
+                    notesContainer.appendChild(noteElement);
+                }
 
-    notesContainer.appendChild(noteElement);
-}
-// 添加“添加新便签”按钮
-const addButton = document.createElement('button');
-        addButton.className = 'add-btn';
-        addButton.innerHTML = '+';
-        addButton.onclick = showAddNoteForm;
-        notesContainer.appendChild(addButton);
-    } catch (error) {
-        console.error('Error reading files:', error);
-    }
-}
-
+                const addButton = document.createElement('button');
+                addButton.className = 'add-btn';
+                addButton.onclick = showAddNoteForm;
+                addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
+                addButton.addEventListener('mouseenter' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/add_white.svg)';
+        }
+    )
+    addButton.addEventListener('mouseleave' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
+        }
+    )
+                notesContainer.appendChild(addButton);
+            } catch (error) {
+                console.error('Error reading files:', error);
+            }
+        }
 
     window.onload = showNotes;
 
+    function openPage(url) {
+            window.location.href = url;
+        }
 
+        function createIframe(container, content) {
+
+            const iframeContainer = document.createElement('div');
+            iframeContainer.className = 'iframe-container';
+
+            const iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+            iframeContainer.innerHTML = `
+                <iframe src="${iframeSrc}" style="width:100%; height:500px;"></iframe>
+                <div class="iframe-delete-btn" onclick="closeIframe(this)"></div>
+            `;
+            
+
+            container.appendChild(iframeContainer);
+        }
+        function closeIframe(button) {
+        const iframeContainer = button.parentElement;
+        const noteElement = iframeContainer.parentElement;
+        const openPageBtn = noteElement.querySelector('.open-page-btn');
+        if (openPageBtn) {
+            openPageBtn.style.display = 'inline-block'; // 显示打开网页按钮
+        }
+        iframeContainer.remove();
+    }
 
 
 
@@ -325,7 +463,7 @@ function showAddNoteForm() {
     // 创建标题元素并设置为可编辑
     const newTitleElement = document.createElement('h3');
     newTitleElement.contentEditable = 'true';
-    newTitleElement.innerText = '输入网站名称'; // 设置默认文本
+    newTitleElement.setAttribute('data-placeholder', '输入标题');
     newTitleElement.addEventListener('click', function() {
         if (this.innerText === '输入网站名称') {
             this.innerText = '';
@@ -353,7 +491,17 @@ function showAddNoteForm() {
     // 创建确认按钮
     const confirmButton = document.createElement('button');
     confirmButton.className = 'add-btn';
-    confirmButton.innerHTML = '✔';
+    confirmButton.style.backgroundImage = 'url(../../icon/yes.svg)';
+    confirmButton.addEventListener('mouseenter' , 
+        function () {
+            confirmButton.style.backgroundImage = 'url(../../icon/yes_white.svg)';
+        }
+    )
+    confirmButton.addEventListener('mouseleave' , 
+        function () {
+            confirmButton.style.backgroundImage = 'url(../../icon/yes.svg)';
+        }
+    )
     confirmButton.onclick = function () {
         const newTitle = newTitleElement.innerText;
         const newContent = newContentElement.value;
@@ -365,13 +513,32 @@ function showAddNoteForm() {
 
     // 创建取消按钮
     const addButton = document.querySelector('.add-btn');
-    addButton.innerHTML = '✘';
+    addButton.style.backgroundImage = 'url(../../icon/no_red.svg)';
+    addButton.addEventListener('mouseenter' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/no_pink.svg)';
+        }
+    )
+    addButton.addEventListener('mouseleave' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/no_red.svg)';
+        }
+    )
     addButton.onclick = function () {
         // 取消添加新便签的操作
         newNoteElement.remove();
-
+        addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
+        addButton.addEventListener('mouseenter' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/add_white.svg)';
+        }
+    )
+    addButton.addEventListener('mouseleave' , 
+        function () {
+            addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
+        }
+    )
         // 恢复按钮文本和行为为添加新便签
-        addButton.innerHTML = '+';
         addButton.onclick = showAddNoteForm;
     };
 
@@ -383,13 +550,7 @@ function showAddNoteForm() {
     newTitleElement.focus();
 }
 
-// JavaScript函数用于取消添加新便签
-function cancelAddNote() {
-    // 恢复按钮文本和行为为添加新便签
-    const addButton = document.querySelector('.add-btn');
-    addButton.innerHTML = '+';
-    addButton.onclick = showAddNoteForm;
-}
+
 
 
 
@@ -469,7 +630,6 @@ async function addNewNoteRequest(newTitle, newContent) {
 
 
 </script>
-
 </body>
 </html>
 

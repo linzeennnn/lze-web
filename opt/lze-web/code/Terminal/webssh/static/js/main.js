@@ -573,7 +573,8 @@ jQuery(function($){
     document.getElementById('hostname').style.display = 'none';
     document.getElementById('passphrase').style.display = 'none';
     document.getElementById('privatekey').style.display = 'none';
-    
+    document.getElementById('upload').style.display = 'none';
+    document.getElementById('text').style.display = 'none';
 
     const bttn = document.querySelector('.btn');
     bttn.style.display = 'none';

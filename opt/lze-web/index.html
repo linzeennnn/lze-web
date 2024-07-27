@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#17042b"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta name="theme-color" content="#272B2C"/>
 
   <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓💻</title>
   <link rel="icon" href="icon/favicon.ico" type="image/x-icon">
@@ -13,48 +13,70 @@
 <!-- 安卓设备 -->
 <link rel="icon" type="image/png" sizes="192x192" href="icon/linzeen_icon.png">
 <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="font/font.css"> 
+<link rel="stylesheet" href="code/jquery/jquery-ui.css">
+    <script src="code/jquery/jquery-3.5.1.min.js"></script>
+    <script src="code/jquery/jquery-ui.min.js"></script>
   <style>
     
-
-    header{
-      font-size: 300%;
-      
-      cursor: pointer;
-      text-align: center;
-      color: #b97fab !important;
-        background-color: #11010ed2 !important;
-       height: 5% !important;
-       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
+    .ui-tooltip {
+            background: #4c646d60; 
+            border: none !important;
+            color: #c3c6c9; 
+            font-size: 19px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            padding: 15px; 
+            border-radius: 1em; 
+            font-weight: bold;
+            overflow-wrap: break-word;
+            z-index: 99999999;
+        }
        
+  
+    header {
+      font-size: 70px;
+      cursor: pointer;
+      height: 60px !important;
+      color: #656d79 !important;
+        background-color: #1e2325d2 !important;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
     }
     header:hover{
-      background-color: #81647d94 !important;
-      color: #000000 !important;
+      background-color: #737b8594 !important;
+      color: #a6adc0 !important;
     }
     .name{
       position:relative;
-      bottom: -25px;
+      bottom: -20px;
       
     }
     
     
     body {
       overflow-x: hidden !important;
-      font-family: LZE;
+      
       margin: 0;
       padding: 0;
-      background-color: #2b034d;
-      background-image: url(icon/home_background_pc.jpg);
-     color: #1c6da8;
+      background-color: #2a3033;
+      background-image: url(icon/home_pc.svg);
       background-size:cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
       
     }
     #buttonText {
-      
+      margin-left: 50%;
+      width: 100px;
+      height: 100px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url(icon/logo.png);
       color: white;
       padding: 15px 30px;
       font-size: 1000%;
@@ -62,22 +84,15 @@
       cursor: pointer;
       position: relative;
       top: 0; /* 初始位置位于标题底部 */
+      transform: translateX(-50%);
       transition: top 1s ease, transform 1s ease; /* 添加过渡效果 */
       margin-top: 0;
     }
-   
-
-    header {
-      
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
+    #buttonText:hover{
+      background-image: url(icon/logo_up.png);
     }
+    
+    
 
     main {
       margin-top: 70px; /* 保证内容不被标题栏遮挡 */
@@ -85,19 +100,23 @@
     }
 
     #myButton {
-      font-family: LZE;
-      color: #b97fab !important;
-        background-color: #2e0226c7 !important;
-      padding: 15px 30px;
-      font-size: 2em;
+      
+      background-image: url(icon/power.svg);
+        background-color: #5a708877 !important;
+      
       border: none;
-      border-radius: 5px;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 50px;
+      height: 50px;
       cursor: pointer;
+      margin-left: 50%;
+      transform: translateX(-50%);
       position: relative;
       top: 0; /* 初始位置位于标题底部 */
       transition: top 1s ease, transform 1s ease; /* 添加过渡效果 */
-      margin-top: 60px;
-      border-radius: 100em;
+      margin-top: 10px;
+      border-radius: 50%;
       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
   5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
@@ -105,8 +124,8 @@
     }
 
     #myButton:hover {
-      background-color: #81647d94 !important;
-      color: #000000 !important;
+      background-color: #1e263094 !important;
+      background-image: url(icon/power_white.svg);
     }
 
     #customPopup {
@@ -121,7 +140,7 @@
       box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      background-image: url(icon/home_popup_pc.jpg);
+      background-image: url(icon/pop_pc.svg);
       background-size: cover;
     }
 
@@ -130,8 +149,8 @@
     }
 
     #topBar {
-      color: #b97fab !important;
-        background-color: #2e0226c7 !important;
+      color: #6d7b8d !important;
+        background-color: #3f56688e !important;
       padding: 10px;
       text-align: center;
       display: flex;
@@ -145,12 +164,12 @@
     }
 
     #topBar button {
-      font-family: LZE;
+      
       width: 25%;
       height: 2em;
       /* padding: 8px; */
-      background-color: #11010ed2;
-      color: rgb(192, 148, 184);
+      background-color: #252c35d2;
+      color: rgb(137, 159, 168);
       border: none;
       border-radius: 1em;
       cursor: pointer;
@@ -162,12 +181,12 @@
     }
 
     #topBar button.selected {
-      background-color: hsla(308, 27%, 58%, 0.663);
+      background-color: hsla(200, 33%, 78%, 0.663);
       color: #20021c;
     }
 
     #topBar button:hover {
-      background-color: hsla(308, 27%, 58%, 0.663);
+      background-color: hsla(200, 33%, 78%, 0.663);
       color: #20021c;
     }
 
@@ -203,11 +222,11 @@
       height: 100%;
       padding: 20px;
       font-size: 18px;
-      background-color: #ffffff00;
+      background-color: transparent;
       
     }
     .popupContent button {
-      font-family: LZE;
+      
         width: 100%; /* 按钮宽度占满父容器 */
         padding: 10px; /* 设置按钮内边距 */
        
@@ -217,135 +236,52 @@
 
     #popup1{
 
-        background-color: rgba(255, 255, 255, 0);
+        background-color: transparent;
         margin-bottom: 2%;
         }
-
-    #popup1-1{
+        #popup1-1{
+          border-color: transparent;
         flex: 1;
         width: auto;
         height: 100%;
-        background-image: url(icon/doc_background_pc.jpg);
+        background-color: transparent;
         background-size: cover;
         background-position: center;
-        opacity: 0.8;
-        font-size: 300%;
-        color: #5b0c58;
-        cursor: pointer;
-        border-radius: 1em;
-        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-    }
-    #popup1-1:hover{
-        opacity: 1;
-    }
-    #popup1-2{
-        flex: 1;
-        width: auto;
-        height: 100%;
-        background-image: url(icon/oth_background_pc.jpg);
-        background-size: cover;
-        background-position: center;
-        opacity: 0.8;
-        font-size: 300%;
-        color: #722225;
-        cursor: pointer;
-        border-radius: 1em;
-        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-        
-    }
-
-    #popup1-2:hover{
-        opacity: 1;
-    }
-    #popup2{
-        background-color: rgba(255, 255, 255, 0);
-        margin-bottom: 2%;
-    }
-    #popup2-1{
-        border-radius: 1em;
-        height: 100%;
-        width: 100%;
-        background-image: url(icon/pic_background_pc.jpg);
-        opacity: 0.8;
-        cursor: pointer;
-        background-size: cover;
-        background-position: center;
-        font-size: 300%;
-        color: #092958;
-        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-    }
-    #popup2-1:hover{
-        opacity: 1;
-        
-    }
-
-
-    #popup3{
-        background-color: rgba(255, 255, 255, 0);
-        margin-bottom: 2%;
-    }
-    #popup3-1{
-        border-radius: 1em;
-        height: 100%;
-        width: 100%;
-        background-image: url(icon/not_background_pc.jpg);
-        opacity: 0.8;
-        cursor: pointer;
-        background-size: cover;
-        background-position: center;
-        font-size: 300%;
-        color: #024a4d;
-        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-    }
-    #popup3-1:hover{
-        opacity: 1;
-        
-    }
-
-
-    #popup4{
-
-        background-color: rgba(255, 255, 255, 0);
-        margin-bottom: 2%;
-        }
-
-        #popup4-1{
-        flex: 1;
-        width: auto;
-        height: 100%;
-        background-image: url(icon/bok_background_pc.jpg);
-        background-size: cover;
-        background-position: center;
-        opacity: 0.8;
         font-size: 300%;
         color: #2d0a1e;
         cursor: pointer;
+        background-image: url(icon/doc_pc.svg);
         border-radius: 1em;
         box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
   5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
   -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
         }
-        #popup4-1:hover{
-        opacity: 1;
-        }
-        #popup4-2{
-        flex: 1;
+        
+        
+
+    #folder{
+      transform: translateX(-50%);
+      border-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      margin-left: 50%;
+        width: 100px;
+        height: 100px;
+        background-image: url(icon/folder.svg);
+      
+        cursor: pointer;
+    }
+    #popup1-1:hover #folder{
+        background-image: url(icon/folder_open.svg);
+    }
+    #popup1-2{
+      border-color: transparent;
+      flex: 1;
         width: auto;
         height: 100%;
-        background-image: url(icon/gam_background_pc.jpg);
+        background-image: url(icon/pic_pc.svg);
         background-size: cover;
         background-position: center;
         opacity: 0.8;
@@ -357,12 +293,145 @@
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
   5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
   -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+   
+    #photo{
+      transform: translateX(-50%);
+      border-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      margin-left: 50%;
+        width: 100px;
+        height: 100px;
+        background-image: url(icon/photo.svg);
+      
+        cursor: pointer;
+    }
+    #popup1-2:hover #photo{
+        background-image: url(icon/photo_open.svg);
+    }
+    #popup2{
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 2%;
+    }
+    #popup2-1{
+      border-color: transparent;
+        width: 100%;
+        height: 100%;
+        background-image: url(icon/ter_pc.svg);
+        background-size: cover;
+        background-position: center;
+        font-size: 300%;
+        color: #654409;
+        cursor: pointer;
+        border-radius: 1em;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
 
         }
+        #terminal{
+      transform: translateX(-50%);
+      border-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      margin-left: 50%;
+        width: 100px;
+        height: 100px;
+        background-image: url(icon/terminal.svg);
+      
+        cursor: pointer;
+    }
+    #popup2-1:hover #terminal{
+        background-image: url(icon/terminal_open.svg);
+    }
 
-        #popup4-2:hover{
-        opacity: 1;
+        
+    
+
+
+    #popup3{
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 2%;
+    }
+    #popup3-1{
+      border-color: transparent;
+        border-radius: 1em;
+        height: 100%;
+        width: 100%;
+        background-image: url(icon/not_pc.svg);
+        cursor: pointer;
+        background-size: cover;
+        background-position: center;
+        font-size: 300%;
+        color: #024a4d;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+    
+    #note{
+      transform: translateX(-50%);
+      border-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      margin-left: 50%;
+        width: 100px;
+        height: 100px;
+        background-image: url(icon/note.svg);
+      
+        cursor: pointer;
+    }
+    #popup3-1:hover #note{
+        background-image: url(icon/note_open.svg);
+    }
+
+
+    #popup4{
+
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 2%;
         }
+
+        #popup4-1{
+          border-color: transparent;
+        flex: 1;
+        width: auto;
+        height: 100%;
+        background-image: url(icon/bok_pc.svg);
+        background-size: cover;
+        background-position: center;
+        font-size: 300%;
+        color: #2d0a1e;
+        cursor: pointer;
+        border-radius: 1em;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+        }
+        #tag{
+      transform: translateX(-50%);
+      border-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      margin-left: 50%;
+        width: 100px;
+        height: 100px;
+        background-image: url(icon/tag.svg);
+      
+        cursor: pointer;
+    }
+    #popup4-1:hover #tag{
+        background-image: url(icon/tag_open.svg);
+    }
+        
         @media only screen and (max-width: 600px){
           .phone_background {
           position:relative;
@@ -394,71 +463,125 @@
             
           }
          
-        #customPopup {
-          position: fixed;
-          bottom: 0;
-          width: 100%;
-          height: 0;
-          background-color: #fff;
-          overflow: hidden;
-          transition: height 1s ease; /* 添加过渡效果 */
-          z-index: 1001; /* 比标题栏更高的层级 */
-          box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-         
-          background-size: cover;
+        #popup1-1{
+        background-image: url(icon/doc_phone.svg);
+    }
+   
+    
+
+    #popup1-2{
+       
+        background-image: url(icon/pic_phone.svg);
+        
+    }
+    
+
+    #popup3-1{
+        background-image: url(icon/not_phone.svg);
+    }
+
+        #popup4-1{
+        background-image: url(icon/bok_phone.svg);
         }
+       
+        #popup2-1{
+        background-image: url(icon/ter_phone.svg);
+
+        }
+
+       
 
         }
   </style>
 </head>
 <body>
   <div class="phone_background">
-    <div class="fixed" style="background-image:url(icon/home_background_phone.jpg);"></div>
+    <div class="fixed" style="background-image:url(icon/home_phone.svg);"></div>
   </div>
   <header onclick="reloadPage()">
-    <div class="name">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
+    <div class="name" title="恩的电脑">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
   </header>
 
   <main>
-        <div id="buttonText" onclick="handleButtonClick()">🦦💻</div>
+        <div id="buttonText" ></div>
         <div>
-        <button id="myButton" onclick="handleButtonClick()" >开始</button>
+        <div id="myButton" onclick="handleButtonClick()" title="开始"></div>
         </div>
    
         <div id="customPopup">
       <div id="topBar">
         <button onclick="handleTopBarButtonClick(0)">恩的文件</button>
-        <button onclick="handleTopBarButtonClick(1)">恩的图库</button>
+        <button onclick="handleTopBarButtonClick(1)">恩的终端</button>
         <button onclick="handleTopBarButtonClick(2)">恩的便签</button>
-        <button onclick="handleTopBarButtonClick(3)">其他</button>
+        <button onclick="handleTopBarButtonClick(3)">恩的书签</button>
       </div>
       <div class="additionalPopup" id="popup1">
         <div class="popupContent">
-            <button id="popup1-1" onclick="todoc()">进入文档</button>
-            <button id="popup1-2" onclick="tooth()">其他文件</button>
+            <button id="popup1-1" onclick="todoc()" title="进入文件"><div id="folder"></div></button>
+            <button id="popup1-2" onclick="topic()" title="进入图库"><div id="photo" ></div></button>
           </div>
         </div>
       <div class="additionalPopup" id="popup2">
+        
         <div class="popupContent">
-            <button id="popup2-1" onclick="topic()">进入图库</button>
+          <button id="popup2-1" onclick="togam()" title="进入终端"><div id="terminal" ></div></button>
         </div>
       </div>
       <div class="additionalPopup" id="popup3">
         <div class="popupContent">
-          <button id="popup3-1" onclick="tonote()">进入便签</button>
+          <button id="popup3-1" onclick="tonote()" title="进入便签"><div id="note" ></div></button>
         </div>
       </div>
       <div class="additionalPopup" id="popup4">
         <div class="popupContent">
-            <button id="popup4-1" onclick="tobook()">进入书签</button>
-            <button id="popup4-2" onclick="togam()">进入终端</button>
+            <button id="popup4-1" onclick="tobook()" title="进入书签"><div id="tag" ></div></button>
         </div>
     </div>
   </main>
 
   <script>
+    $(function() {
+    var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // 对于移动设备，使用长按事件来显示 tooltip
+        var tooltipTrigger = $(".tooltip-trigger");
+        var tooltip = $('<div class="tooltip"></div>').appendTo('body');
+        var timeout;
+
+        tooltipTrigger.on("touchstart", function(event) {
+            timeout = setTimeout(function() {
+                var content = tooltipTrigger.attr("title");
+                tooltip.text(content).fadeIn(200);
+                tooltip.css({
+                    left: event.originalEvent.touches[0].pageX + 10 + "px",
+                    top: event.originalEvent.touches[0].pageY + 10 + "px"
+                });
+            }, 500); // 长按持续时间 (500ms)
+        }).on("touchend", function() {
+            clearTimeout(timeout);
+            tooltip.fadeOut(200);
+        });
+
+        $(document).on("touchstart", function(event) {
+            if (!tooltipTrigger.is(event.target)) {
+                tooltip.fadeOut(200);
+            }
+        });
+
+    } else {
+        // 对于桌面设备，使用 jQuery UI 的 tooltip
+        $(document).tooltip({
+            track: true, // 跟随鼠标移动
+            show: { effect: "blind", duration: 200, delay: 250 },
+            position: {
+                my: "left+15 top+15", // Tooltip 的位置点
+                at: "left bottom"     // 目标元素的位置点
+            }
+        });
+    }
+});
+
 function reloadPage() {
   location.reload();
 }
@@ -496,13 +619,11 @@ function handleButtonClick() {
     popup.classList.add('active');
     button.style.top = '0'; // 降落到页面正中心
     buttonText.style.top = '0';
-    button.innerText = '⟳';
     buttonState = 2; // 更新状态为2
   } else {
     popup.classList.remove('active');
     button.style.top = '20vh'; // 升回标题底部
     buttonText.style.top = '20vh';
-    button.innerText = '开始';
     buttonState = 1; // 更新状态为1
     // 隐藏所有的框
     var additionalPopups = document.querySelectorAll('.additionalPopup');

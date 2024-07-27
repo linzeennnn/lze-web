@@ -3,14 +3,46 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="theme-color" content="#fbbedc"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+  <meta name="theme-color" content="#E4689E"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📃</title>
-  <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../../font/font.css"> 
+  <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon"> 
+  <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery-3.5.1.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
+    <script src="StreamSaver.min.js"></script>
+
   <style>
+     .downloadLink {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      background-image: url(../../icon/download_pink.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      cursor: pointer;
+      text-indent: -9999px; /* Hide text */
+      vertical-align: middle;
+    }
+    .downloadLink:hover {
+      background-image: url(../../icon/download_white.svg) !important;
+    }
+    
+     .ui-tooltip {
+            background: #910b7b60; 
+            border: none !important;
+            color: #ffc3e4; 
+            font-size: 19px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            padding: 15px; 
+            border-radius: 1em; 
+            font-weight: bold;
+            overflow-wrap: break-word;
+            z-index: 11111111111;
+        }
     body {
-      font-family: LZE;
+      overflow-x: hidden !important;
+      
       font-size: 100%;
       margin: 0;
       padding: 0;
@@ -19,86 +51,57 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-image: url('../../icon/doc_background_pc.jpg');
+      background-image: url('../../icon/doc_pc.svg');
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
     }
-
-    @media only screen and (max-width: 600px) {
-    
-    .phone_background {
-	position:relative;
-	overflow:hidden;
-    overflow-x: hidden;
+    body::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
 }
-.phone_background .fixed {
-	position:fixed;
-	left:0;
-	top:0;
-	width:100%;
-	height:100%;
-	background:no-repeat center center;
-	background-size:cover;
-	z-index:0;
-    overflow:hidden;
-    overflow-x: hidden;
-}
-
-h2{
-  margin-top: 50px !important;
-}
-#backButton {
-      height: 40px;
-    }
-
-    }
-
-    #backButton {
-      font-family: LZE;
-      background-color: #fea6d1af;
-      color: #5b0c58;
-      border: none;
-      padding: 0.57%;
+header{
+  font-size: 70px;
       cursor: pointer;
-      font-size: 100%;
-      width: 100%;
-      max-width: 100%;
-      align-self: flex-start;
-      text-align: left;
-      padding-left: 7%;
-      position:fixed;
-      top: 0;
-      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.521);
-      z-index: 1000;
-    }
-    #backButton:hover{
-      background-color: #bb1d7180;
-      color: white;
-    }
-
-    h2 {
-      
-      width: 6em;
-      height: 20%;
-      cursor: pointer;
+      height: 60px !important;
+      color: #cc3f86 !important;
+        background-color: #c21e7063 !important;
+      padding: 10px;
       text-align: center;
-      display: inline-block;
-      box-sizing: content-box;
-      padding-bottom: 0.1%;
-      margin-bottom: 1%;
-      color: #5b0c58;
-      position: relative;
-      margin-top: 5%;
-      border-radius: 1em;
-      background-color: #f35ec1a6;
-      padding-bottom: 0.1%;
-      
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
+}
+header:hover{
+      background-color: #74435b94 !important;
+      color: #f8b7df !important;
     }
-    h2:hover{
-      color: white;
-      background-color: #3b204eb0;
-    }
+
+    
+.home{
+  position:relative;
+      bottom: -20px;
+}
+.folder{
+  cursor: pointer;
+  left: 50%;
+  margin-top: 130px;
+  width: 100px;
+  height: 100px;
+  background-image: url(../../icon/folder.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+}
+.folder:hover{
+  background-image: url(../../icon/folder_open.svg);
+}
+
+
+
+    
 
     form {
       width: 80%;
@@ -108,78 +111,149 @@ h2{
       align-items: center;
     }
 
-    /* 自定义文件上传按钮的样式 */
-    .custom-upload-btn {
-      background-color: #df6fa793;
-      color: #5b0c58;
-      border: none;
-      padding: 0.55em;
-      cursor: pointer;
-      border-radius: 2.75em;
-      margin-bottom: 0.55em;
-      position: relative;
-      
-    }
+    
 
     /* 隐藏默认的文件上传按钮 */
     #customFileUpload {
       display: none;
     }
-    .custom-upload-btn:hover{
-      background-color: #50082794;
-      color: white;
-    }
+    
 
     /* 用于显示选定文件名的样式 */
     #selectedFileName {
-      
-      max-width: 45% !important;
-      overflow: auto !important;
-      left: 5px;
-      font-size: 200%;
-      color: #5b0c58;
-      position: relative;
-      background-color: #d54e88ad;
-      border-radius: 1em;
-      width: auto;
-      overflow: hidden;
-      
-    }
-
-    .uploadButton {
-      font-family: LZE;
-      background-color: #df6fa793;
-      color: #5b0c58;
-      border: none;
-      padding: 0.55em;
-      cursor: pointer;
-      font-size: 150%;
-      border-radius: 2em;
-      position: relative;
-      margin-top: 10px;
+      height: fit-content;
+      font-size: 20px;
+      margin-top: 2px;
       margin-bottom: 10px;
-      
+      text-align: center;
+      font-weight: bold;
+      color: #0000008c;
+      white-space: nowrap;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position:relative;
+      max-width: 80%;
     }
-    .uploadButton:hover{
-      color: white;
-      background-color:#50082794 ;
+    #filename{
+      height: fit-content;
+      font-size: 20px;
+      margin-left: 1%;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: #0000008c;
+      white-space: nowrap;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position:relative;
+      max-width: 80%;
     }
+    
 
+    
     #fileListContainer {
+      margin-top: 10px;
       width: 80%;
       position: relative;
       max-width: 80%;
-      border: 0.11em solid rgb(255, 255, 255);
-      border-radius: 0.5em;
+      border: none;
+      border-radius: 1em;
       overflow: hidden;
       z-index: 1;
       margin-bottom: 2em;
       background-color: #f07cb48e;
       position: relative;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
+    }
+    #top-bar{
+       background-color: #c21e704d;
+      display:inline-flex;
+      height: 60px;
+      width: 100%;
+      
+      
+    }
+    .path-bar{
+      background-color: transparent;
+      overflow: hidden;
+      width: 92%;
+      max-width: 95%;
+      margin-left: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-right: 1%;
+      border-radius: 1em;
+      position: relative;
+      box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+    }
+    /* 自定义文件上传按钮的样式 */
+    .custom-upload-btn {
+      cursor: pointer;
+      background-image: url(../../icon/upload_pink.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+    }
+    .custom-upload-btn:hover{
+      background-image: url(../../icon/upload_white.svg);
+    }
+    
+
+    #currentPath{
+      height: fit-content;
+      font-size: 20px;
+      margin-top: 10px;
+      margin-left: 1%;
+      text-align: left;
+      font-weight: bold;
+      color: #0000008c;
+      overflow-x: hidden;
+    }
+    
+    #upButton{
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      width: 32px;
+      height: 32px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    #upButton:hover{
+      background-image: url(../../icon/goup_white.svg);
+    }
+    #cancel{
+      background-image: url(../../icon/no_pink.svg);
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      width: 32px;
+      height: 32px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    #cancel:hover{
+      background-image: url(../../icon/no_red.svg);
     }
 
     #fileList {
@@ -195,128 +269,458 @@ h2{
       justify-content: space-between;
       align-items: center;
       font-size: 120%;
-      border-bottom: 0.1em solid rgb(255, 255, 255);
+      border-bottom: 0.1em solid rgba(173, 96, 134, 0.445);
       padding: 1.4%;
       position: relative;
     }
 
     .fileLink {
-      color: #4a105c(0, 64, 160);
-      text-decoration: underline;
+      
+      color: #6b003e;
+      font-weight: bold;
+      /* text-decoration: underline; */
       margin-right: 10%;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 42ch; /* 控制显示的最大宽度，ch 是一个字符宽度单位 */
     }
-    .fileLink:hover{
+    .fileLink:hover,.folderLink:hover{
       color: rgb(245, 38, 183);
     }
+    .folderLink {
+      color: #000000;
+      text-decoration: underline; /* 添加下划线 */
+      font-weight: bold;
+      margin-right: 10%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 42ch; /* 控制显示的最大宽度，ch 是一个字符宽度单位 */
+    }
+
 
     .downloadButton {
-      background-color: #fe897e00;
-      color: #546e93c0;
-      border: none;
-      
+      width: 32px;
       cursor: pointer;
-      font-size: 300%;
+      height: 32px;
+      background-image: url(../../icon/download_pink.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+
       
     }
     .downloadButton:hover{
-      color: #f118819d;
+      background-image: url(../../icon/download_white.svg) !important;
+    }
+    .rotate-box{
+      margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+    }
+    .rotate-loading {
+      position: absolute;
+            /* left: 50%; */
+            transform: translate(-50%, -50%);
+            border-radius: 50%/50%;
+            border: 6px solid rgb(241, 111, 187);
+            border-top: 6px solid rgba(141, 12, 87, 0.61);
+            animation: rotate-loading 1s linear infinite;
+            width: 20px;
+            height: 20px;
+            z-index: 10;
+        }
+        #progress{
+    width:100%;
+    height:100%;
+    border:none;
+    overflow: hidden;
+  }
+  #bar{
+    width:0%;
+    height:100%;
+    background-color: rgba(165, 6, 125, 0.801);
+  }
+  #percent {
+  color: rgb(70, 3, 47);
+  font-size: 14px; 
+  position: absolute;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  white-space: nowrap; 
+}
+#preview{
+  display: flex;
+  min-width: 80%;
+  min-height: 80%;
+  margin-top: 250px;
+  margin-bottom: 300px;
+      position: absolute;
+      border: none;
+      z-index: 10;
+      margin-bottom: 2em;
+      background-color: transparent;
+      
+}
+#closeifame{
+  width: 80px;
+  max-width: 80%;
+  height: 80px;
+  background-image: url(../../icon/no_pink.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #7933566e;
+  cursor: pointer;
+  position: fixed;
+  margin-top: 150px;
+  left: 20%;
+  border-radius: 50%;
+  z-index: 1000000;
+}
+#closeifame:hover{
+  background-image: url(../../icon/no_red.svg);
+  background-color: #e99fc485;
+}
+        
+        @keyframes rotate-loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                /* 顺时针旋转360度 */
+                transform: rotate(360deg);
+            }
+        }
+    @media only screen and (max-width: 600px) {
+      
+    
+    .phone_background {
+	position:relative;
+	overflow:hidden;
+    overflow-x: hidden;
+}
+.phone_background .fixed {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background:no-repeat center center;
+	background-size:cover;
+	z-index:-100;
+    overflow:hidden;
+    overflow-x: hidden;
+}
+
+    .fileLink {
+      
+  
+      max-width: 200px ; 
+}
+
+.path-bar{
+      
+      max-width: 70%;
+      
+    }
+    
+    
+
     }
   </style>
 </head>
 
+
 <body>
-
   <div class="phone_background">
-    <div class="fixed" style="background-image:url(../../icon/doc_background_phone.jpeg);"></div>
+    <div class="fixed" style="background-image:url(../../icon/doc_phone.svg);"></div>
   </div>
-  <button id="backButton" onclick="goBack()"><返回主页</button>
-
-  <h2 onclick="reloadPage()">恩的文档📃</h2>
-  <form action="doc_upload.php" method="post" enctype="multipart/form-data">
-    <!-- 使用自定义上传按钮触发文件上传按钮点击事件 -->
-    <label for="customFileUpload" class="custom-upload-btn">选择文件</label>
-    <input type="file" id="customFileUpload" name="file" required onchange="displayFileName()">
-    <!-- 用于显示选定文件名的元素 -->
-    <div id="selectedFileName"></div>
-    <!-- 使用自定义上传按钮 -->
-    <button type="submit" class="uploadButton" id="uploadBtn" style="display:none;">上传</button>
-  </form>
-
-  <div id="fileListContainer">
+  
+    <header>
+      <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
+      
+    </header>
+  <div class="folder" onclick="reloadPage()"title="恩的文件"></div>
+  <div id="closeifame" style="display: none;" onclick="closeifame()" title="关闭预览"></div>
+  <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
+  
+  <div id="fileListContainer" >
+    <div id="top-bar">
+      <button id="upButton"  onclick="goUp()" title="返回上一级"></button>
+      <button id="cancel"  style="display: none;" onclick="cancelUpload()" title="取消上传"></button>
+      <div class="path-bar" id="path-bar">
+        <div class="current-path" id="currentPath" >/</div>
+        <div id="progress" style="display: none;">
+          <div id="bar"><div id="percent"></div></div>
+        </div>
+      </div>
+      <label for="uploadfile" class="custom-upload-btn" id="up-btn" title="上传文件"></label>
+      <div class="rotate-box"  id="rotate-box"style="display: none;"><div class="rotate-loading" id="loading" style="display: none;"></div></div> 
+    </div>
+    
     <ul id="fileList"></ul>
-  </div>
+    
+  </div> 
 
   <script>
-    function goBack() {
-      window.location.href = '/';
+  $(function() {
+    var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // 对于移动设备，使用长按事件来显示 tooltip
+        var tooltipTrigger = $(".tooltip-trigger");
+        var tooltip = $('<div class="tooltip"></div>').appendTo('body');
+        var timeout;
+
+        tooltipTrigger.on("touchstart", function(event) {
+            timeout = setTimeout(function() {
+                var content = tooltipTrigger.attr("title");
+                tooltip.text(content).fadeIn(200);
+                tooltip.css({
+                    left: event.originalEvent.touches[0].pageX + 10 + "px",
+                    top: event.originalEvent.touches[0].pageY + 10 + "px"
+                });
+            }, 500); // 长按持续时间 (500ms)
+        }).on("touchend", function() {
+            clearTimeout(timeout);
+            tooltip.fadeOut(200);
+        });
+
+        $(document).on("touchstart", function(event) {
+            if (!tooltipTrigger.is(event.target)) {
+                tooltip.fadeOut(200);
+            }
+        });
+
+    } else {
+        // 对于桌面设备，使用 jQuery UI 的 tooltip
+        $(document).tooltip({
+            track: true, // 跟随鼠标移动
+            show: { effect: "blind", duration: 200, delay: 250 },
+            position: {
+                my: "left+15 top+15", // Tooltip 的位置点
+                at: "left bottom"     // 目标元素的位置点
+            }
+        });
     }
-    function reloadPage() {
-  location.reload();
-}
+  });
 
-    function displayFileName() {
-      const fileInput = document.getElementById('customFileUpload');
-      const fileNameDisplay = document.getElementById('selectedFileName');
-      const uploadBtn = document.getElementById('uploadBtn');
-      const chooseFileBtn = document.querySelector('.custom-upload-btn'); // 获取选择文件按钮
+  function goBack() {
+    window.location.href = '/';
+  }
 
-      if (fileInput.files.length > 0) {
-        fileNameDisplay.textContent = '选定文件: ' + fileInput.files[0].name;
-        uploadBtn.style.display = 'block'; // 显示上传按钮
-        chooseFileBtn.style.display = 'none'; // 隐藏选择文件按钮
-      } else {
-        fileNameDisplay.textContent = '';
-        uploadBtn.style.display = 'none'; // 隐藏上传按钮
-        chooseFileBtn.style.display = 'block'; // 显示选择文件按钮
-      }
+  function reloadPage() {
+    location.reload();
+  }
+
+  function loading() {
+    const fileInput = document.getElementById('uploadfile');
+    const load = document.getElementById('loading');
+    const loadbox = document.getElementById('rotate-box');
+    const loadText = document.getElementById('load-text');
+    const upbtn = document.getElementById('up-btn');
+    const goupbtn = document.getElementById('upButton');
+    const path = document.getElementById('currentPath');
+    const cancel = document.getElementById('cancel');
+    const progress = document.getElementById('progress');
+    if (fileInput.files.length === 0) {
+      alert('请先选择一个文件进行上传。');
+        return; // 没有选择文件，直接返回
+    }
+    console.log('Loading function called');
+    path.style.display = 'none';
+    upbtn.style.display = 'none';
+    goupbtn.style.display = 'none';
+    progress.style.display = 'block';
+    load.style.display = 'block';
+    cancel.style.display = 'block';
+    loadbox.style.display = 'block';
+    
+  }
+
+  
+
+  function cancelUpload() {
+    reloadPage();
+  }
+
+  
+   
+  function pathlen(textid, text) {
+    const barWidth = textid.offsetWidth;
+    const tempElement = document.createElement('span');
+    tempElement.style.visibility = 'hidden';
+    tempElement.style.position = 'absolute';
+    tempElement.style.font = window.getComputedStyle(textid).font;
+    tempElement.innerText = '字';
+    document.body.appendChild(tempElement);
+    const charWidth = tempElement.offsetWidth;
+    document.body.removeChild(tempElement);
+
+    const maxLength = Math.floor(barWidth / (charWidth));
+    let displayPath = text;
+
+    if (text.length > maxLength && textid.id === 'currentPath') {
+      displayPath = '...' + text.slice(-maxLength);  
+    }
+    else if(text.length > maxLength){
+      displayPath = text.slice(0,maxLength) +'...' ; 
     }
 
-    fetch('doc_list.php')
+    textid.innerText = displayPath;
+  }
+  function closeifame(){
+    const preview = document.getElementById('preview');
+    const fileListContainer = document.getElementById('fileListContainer');
+    const closeifame = document.getElementById('closeifame');
+    preview.remove();
+    closeifame.style.display ='none';
+    fileListContainer.style.display = 'block';
+    
+
+
+  }
+
+
+  function loadFolder(folder = '') {
+    fetch('doc_list.php?folder=' + folder)
       .then(response => response.json())
       .then(data => {
         const fileList = document.getElementById('fileList');
+        fileList.innerHTML = '';
+
+        const currentPath = document.getElementById('currentPath');
+        const fullPath = '/' + (data.currentFolder ? data.currentFolder : '');
+        pathlen(currentPath,fullPath);
+        currentPath.title = fullPath;
+
+        data.folders.forEach(folder => {
+          const listItem = document.createElement('li');
+          const folderLink = document.createElement('span');
+          folderLink.textContent = folder + '/';
+          folderLink.className = 'folderLink';
+          folderLink.addEventListener('click', function () {
+            loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+          });
+          listItem.appendChild(folderLink);
+          fileList.appendChild(listItem);
+        });
+
         data.files.forEach(file => {
           const listItem = document.createElement('li');
 
           const fileLink = document.createElement('span');
+          const Src = '../../file/Documents/upload/' + (data.currentFolder ? data.currentFolder + '/' + file : file);
+          const fileListContainer = document.getElementById('fileListContainer');
+          const closeifame = document.getElementById('closeifame');
           fileLink.textContent = file;
           fileLink.className = 'fileLink';
-
+          fileLink.title = `预览${file}`;
           fileLink.addEventListener('click', function () {
-            window.open('../../file/Documents/' + file, '_blank');
+        const preview = document.createElement('iframe');
+        preview.setAttribute('id', 'preview');
+        preview.setAttribute('src', Src);
+        fileListContainer.style.display = 'none';
+        closeifame.style.display ='block';
+        document.body.appendChild(preview);
+
+        preview.onload = function() {
+            const doc = preview.contentDocument || preview.contentWindow.document;
+            preview.style.height = doc.documentElement.scrollHeight + 'px';
+            preview.style.width = doc.documentElement.scrollWidth + 'px';
+        };
+        
           });
 
           listItem.appendChild(fileLink);
 
-          const downloadButton = document.createElement('button');
-          downloadButton.className = 'downloadButton';
-          downloadButton.textContent = '⇩';
+          const downloadLink = document.createElement('a');
+          downloadLink.className = 'downloadLink';
+          downloadLink.href = '../../file/Documents/upload/' + (data.currentFolder ? data.currentFolder + '/' + file : file);
+          downloadLink.download = file;
+          downloadLink.title = `下载${file}`;
 
-          downloadButton.addEventListener('click', function () {
-            fetch('../../file/Documents/' + file)
-              .then(response => response.blob())
-              .then(blob => {
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = file;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-              });
-          });
-
-          listItem.appendChild(downloadButton);
+          listItem.appendChild(downloadLink);
 
           fileList.appendChild(listItem);
         });
+
+         // 处理返回上级目录按钮
+         const upButton = document.getElementById('upButton');
+        if (data.currentFolder && data.currentFolder !== '') {
+          upButton.style.display = 'block';
+          upButton.style.opacity = '1'
+          upButton.dataset.parentFolder = data.parentFolder;
+          upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+          upButton.addEventListener('mouseenter' , 
+      function () {
+        upButton.style.backgroundImage = 'url(../../icon/goup_white.svg)';
+      }
+    )
+    upButton.addEventListener('mouseleave' , 
+      function () {
+        upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+      }
+  )
+        } else {
+          upButton.style.opacity = '0.5'
+          upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)'
+          upButton.addEventListener('mouseenter' , 
+      function () {
+        upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+      }
+    )
+          upButton.addEventListener('mouseleave' , 
+      function () {
+        upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+      }
+    )
+        }
       });
-  </script>
+  }
 
+  function goUp() {
+    const upButton = document.getElementById('upButton');
+    const parentFolder = upButton.dataset.parentFolder;
+    loadFolder(parentFolder);
+  }
+
+  // 初始加载根文件夹内容
+  loadFolder();
+
+  function selfile() {
+    
+  var file = document.getElementsByTagName('input')[0].files[0];
+    loading();
+  var fd = new FormData();
+  fd.append('pic', file);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'upload.php', true);
+
+  xhr.upload.onprogress = function(ev) {
+    if (ev.lengthComputable) {
+      var percent = 100 * ev.loaded / ev.total;
+      var percentElement = document.getElementById('percent');
+      document.getElementById('bar').style.width = percent + '%';
+      percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
+    }
+  };
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      reloadPage();
+    } else {
+      alert('上传失败，请重试。');
+    }
+  };
+
+  xhr.send(fd);
+}
+
+</script>
 </body>
-
 </html>

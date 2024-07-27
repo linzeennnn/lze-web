@@ -2,16 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#85cdfe"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
+    <meta name="theme-color" content="#4282E3"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓🖼🎞️</title>
     <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="pic_box/jquery.fancybox.min.css" />
     <script src="pic_box/jquery-3.6.4.min.js"></script>
     <script src="pic_box/jquery.fancybox.min.js"></script>
-    <link rel="stylesheet" href="../../font/font.css"> 
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery-3.5.1.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
     <style>
-        
+        .ui-tooltip {
+            background: #0b5b9c60; 
+            border: none !important;
+            color: #7ee0f8; 
+            font-size: 19px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            padding: 15px; 
+            border-radius: 1em; 
+            font-weight: bold;
+            overflow-wrap: break-word;
+        }
+        header{
+  font-size: 70px;
+      cursor: pointer;
+      height: 60px !important;
+      color: #24548b !important;
+        background-color: #135fb663 !important;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
+}
+header:hover{
+      background-color: #4c7da594 !important;
+      color: #b7def8 !important;
+    }
+
+    
+.home{
+  position:relative;
+      bottom: -20px;
+}
         .video-wrapper {
             max-width: 100%;
             max-height: 100%;
@@ -20,25 +57,7 @@
         .hidden {
     display: none;
   }
-  h1 {
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    font-size: 200% !important;
-    width: 7em;
-    background-color: #03d9ff81;
-    border-radius: 2em;
-    color: #092958 !important;
-    margin-top: 4% !important;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-  }
-  h1:hover{
-    background-color: #002d70a1;
-    color: white !important;
-  }
+  
         body {
             overflow-x: hidden !important;
             max-width: 100% !important;
@@ -51,15 +70,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-image: url('../../icon/pic_background_pc.jpg');
+            background-image: url('../../icon/pic_pc.svg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             
             }
+            body::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
+}
             
                 #backButton {
-                    font-family: LZE;
+                    font-weight: bold;
             background-color: #56caff80;
             color: #092958;
             border: none;
@@ -88,53 +110,22 @@
             input[type="file"] {
             display: none; 
         }
-
-        label[for="file"] {
-            width: 10em !important;
-            background-color: #56caff80; 
-            font-size: 200% !important;
-            color: #092958; 
-            padding: 8px 16px; 
-            border: none;     
-            border-radius: 5em; 
+        .photo{
             cursor: pointer;
-            font-size: 300%; 
-            margin: 0.5em;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+  left: 50%;
+  margin-top: 130px;
+  width: 100px;
+  height: 100px;
+  background-image: url(../../icon/photo.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+        }
+        .photo:hover{
+            background-image: url(../../icon/photo_open.svg);
         }
 
-        /* 鼠标悬停时的样式 */
-        label[for="file"]:hover {
-            background-color: #0145819f; 
-            color: white;
-        }
-        /* 上传按钮样式 */
-        input[type="submit"] {
-            font-family: LZE;
-            width: 10em !important;
-            background-color: #56caff80; 
-            font-size: 200% !important;
-            color: #092958; 
-            padding: 8px 16px; 
-            border: none;     
-            border-radius: 5em; 
-            cursor: pointer;
-            font-size: 300%; 
-            margin: 0.5em;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-        }
-
-        /* 鼠标悬停时的样式 */
-        input[type="submit"]:hover {
-            background-color: #0c498f9d; 
-            color: white;
-        }
+        
         /* 样式化显示选定文件名的区域 */
         #file-name-display {
             max-height: 2em;
@@ -155,23 +146,7 @@
 
 
 
-        .gallery-top-bar {
-            display: flex;
-            height: 60px;
-            background-color: #034b9e81;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            margin-bottom: 20%;
-            z-index: 1; /* 确保在其他内容之上 */
-            border-radius: 1em;
-            overflow: hidden;
-        }
+        
     
         .gallery-container {
             display: flex;
@@ -179,123 +154,100 @@
             justify-content: space-around;
             width: 80%;
             position: relative;
-            max-width: 80%; /* 设置最大宽度 */
-            padding-top: 80px;
-            border-color: black;
-            padding-top: 3%; /* 顶部栏高度 */
-            padding-bottom: 3%; /* 底部栏高度 */
-            border-radius: 1em;
-            border-top: #39bedf;
-            background-color: #39d4df85;
+            max-width: 80%; 
+            background-color: transparent;
            margin-bottom: 20px;
-            margin-top: 70px ;
-            border-top: 720%;
-            margin-bottom: 70px;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            
         }
         
         #button1 {
-            font-family: LZE;
-            border: none;
-            display:flex ;
-            padding: 1%;
-            height: 60px;
-            width: 7em;
-            position:absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            background-color: #0077ff44;
-            color: #000000; 
-            text-align: center;
+            margin: 20px;
             cursor: pointer;
-            border-right: 3em #333333; 
-            padding-left: 3.3%;
-            font-size: 135%;
-            border-radius: 1em;
+            width: 32px;
+            height: 32px;
+            background-image: url(../../icon/picture.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            
             
             
         }
         #button1:hover{
-            background-color: #39d4df85;
-            color: white;
+            background-image: url(../../icon/picture_white.svg);
+           
         }
         #button1.selected {
-            background-color: #39d4df85;
-            color: white;            
+            background-image: url(../../icon/picture_white.svg);
+                  
             
         }
     
       
         #button2 {
-            font-family: LZE;
-            border-radius: 1em;
-            border-bottom: none;
-            border-top: none;
-            display:flex ;
-            padding: 1%;
-            position: absolute;
-            left: 7em;
-            top: 0;
-            bottom: 0;
-            height: 60px;
-            width: 7em ;
-            background-color: #0077ff44;
-            color: #000000; 
-            text-align: center;
             cursor: pointer;
-            border-right: 3em #333333;
-            padding-left: 3.3%;
-            border-right: 50px #000000;
-            font-size: 135%;
+            width: 32px;
+            height: 32px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url(../../icon/video.svg);
+            margin: 20px;
             
         }
         
     
         #button2.selected {
-            background-color: #39d4df85; /* 选中时按钮2的背景颜色 */
-            color: white;
+            background-image: url(../../icon/video_white.svg);
             
         }
     
         #button2:hover {
-            background-color: #39d4df85;
-            color: white;
+            
+            background-image: url(../../icon/video_white.svg);
             
         }
         #button3 {
-            font-family: LZE;
-            border: none;
-            display:flex ;
-            padding: 1%;
-            height: 60px;
-            width: 7em;
-            position:absolute;
-            left: 14em;
-            top: 0;
-            bottom: 0;
-            background-color: #0077ff44;
-            color: #000000; 
-            text-align: center;
             cursor: pointer;
-            border-right: 3em #333333; 
-            padding-left: 3.3%;
-            font-size: 135%;
-            border-radius: 1em;
+            width: 32px;
+            height: 32px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url(../../icon/cut.svg);
+            margin: 20px;
             
             
         }
         #button3:hover{
-            background-color: #39d4df85;
-            color: white;
+           
+            background-image: url(../../icon/cut_white.svg);
         }
         #button3.selected {
-            background-color: #39d4df85;
-            color: white;            
+           
+            background-image: url(../../icon/cut_white.svg);           
             
+        }
+        label[for="uploadfile"] {
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url(../../icon/upload_blue.svg);
+            margin: 20px;
+        }
+
+        /* 鼠标悬停时的样式 */
+        label[for="uploadfile"]:hover {
+            background-image: url(../../icon/upload_white.svg);
+        }
+        
+        .top-button{
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            display: inline-flex;
+            width: 300px;
+            margin: 10px;
+            z-index: 100;
         }
         
     
@@ -306,8 +258,8 @@
             overflow: hidden;
             border: 5px solid #39d4df9d; /* 320x320边框样式 */
             margin: 5px; /* 调整间距 */
-            margin-bottom: 2%;
-            margin-top: 2%;
+            /* margin-bottom: 10px !important; */
+            margin-top: 40px !important;
             border-color: rgba(0, 0, 0, 0.507);
             
             border-radius: 1em;
@@ -354,46 +306,30 @@
             object-fit: cover; 
             margin-bottom: 0;
         }
-        .gallery-bottom-bar {
-            border-radius: 1em;
-            display: flex;
-            height: 60px; /* Set the height of the bottom bar as needed */
-            background-color: #06468fb9; /* Set the background color */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            position: absolute;
-            top: auto;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 2; /* Make sure it's above the gallery items */
-        }
+        
         .bottom-button {
-            font-family: LZE;
-            display: flex;
-            flex-direction: row;
-            padding: 8px 16px; /* 调整按钮内边距 */
-             height: 100%;
-             width: 200px;
-            margin: 0 10px; /* 调整按钮之间的间距 */
-            background-color: #6a9effa6; /* 设置按钮背景颜色 */
-            color: #000000; /* 设置按钮文字颜色 */
-            border: none;
-            border-radius: 2em; /* 设置按钮圆角 */
             cursor: pointer;
-            font-size: 200%; /* 设置按钮字体大小 */
-            margin-left: 42%;
-            margin-right: 35%;
-            /* justify-content: center;
-            align-items: center; */
+            background-image: url(../../icon/godown_blue.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            margin-bottom: 60px;
+            width: 50px;
+            height: 50px;
+            background-color: #32a9f88e;
+            border: none;
+            z-index: 100;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.068), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.068),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  /* 左下方阴影 */
             
         }
         .bottom-button:hover{
-            background-color: #002d70ab; /* 设置按钮背景颜色 */
-            color: white;
+            background-image: url(../../icon/godown_white.svg);
+            background-color: #01385c77;
         }
+        
         #file-name-display {
             margin-top: 0.5em; /* 调整与其他元素的间距 */
             font-size: 250%; /* 设置文字大小 */
@@ -401,20 +337,40 @@
             background-color: #31a7c596;
             border-radius: 1em;
         }
-        .top-button{
-            display: flex !important;
-            flex-direction: column;
-        }
+        #progress{
+           border-radius: 1em;
+           width:300px;
+    height:30px;
+    border:none;
+    overflow: hidden;
+    box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+              z-index: 1000;
+    
+  }
+  #bar{
+    width: 0%;
+    height:100%;
+    background-color: rgba(1, 67, 155, 0.801);
+  }
+  #percent {
+  color: rgb(186, 216, 255);
+  font-size: 14px; 
+  position: absolute;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  white-space: nowrap; 
+}
+       
         @media only screen and (max-width: 600px) {
 
 
 
             
-        .gallery-container {
-            padding-top: 20%; /* 顶部栏高度 */
-            padding-bottom: 20%; /* 底部栏高度 */
-        }
-        
+       
         
     
         
@@ -424,14 +380,7 @@
             overflow:hidden;
             overflow-x: hidden;
         }
-        .bottom-button {
-            margin-left: auto;
-            margin-right: auto;
-            
-        }
-        #backButton{
-            height: 40px;
-        }
+        
          
    
         
@@ -447,43 +396,7 @@
             overflow:hidden;
             overflow-x: hidden;
         }
-        /* .gallery-item video {
-            width: 50%;
-            height: 50%;
-            object-fit: contain;
-            position: relative;
-            border-radius: 0;
-        }
         
-        .gallery-item video {
-            width: 100%; 
-            height: 100%; 
-            border-radius: 0; 
-        }
-
-        .gallery-item {
-            width: 100%; 
-            height: 100%;
-            border-radius: 0; 
-        } */
-        #button1{
-            width: 33% !important;
-            left: 0;
-        }
-        #button2{
-            width: 33% !important;
-            left: 33%;
-        }
-        #button3{
-            width: 33%;
-            left: 66%;
-        }
-        h1{
-            margin-top: 20% !important;
-        }
-        .gallery-item{
-            margin-top: 10%;
-        }
     
             }
             
@@ -526,67 +439,128 @@
         .gallery-item:hover {
             border-color: #0000009d; /* 鼠标悬停时边框背景色为黑色 */
         }
-        .gallery-bottom-bar{
-            margin-top: 20%;
-        }
-        
+       
     </style>
 </head>
 <body>
-    <button id="backButton" onclick="goBack()"><返回主页</button>
+    <header>
+        <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
+        
+      </header>
     <div class="phone_background">
-        <div class="fixed" style="background-image:url('../../icon/pic_background_phone.jpeg');"></div>
-    </div>
-    <h1 onclick="reloadPage()">恩的图库🖼🎞️</h1>
-
-    <!-- 上传表单 -->
-    <form action="pic_upload.php" method="post" enctype="multipart/form-data">
-        <label for="file" id="selectButton">选择图片视频</label>
-        <input type="file" name="file" id="file" >
-        <input type="submit" value="上传" name="submit" id="uploadButton" style="display: none;">
-        <div id="file-name-display"></div>
-
-    </form>
- 
-    <div class="gallery-container" id="gallery-container">
-        <div class="gallery-top-bar">
-            <button id="button1" class="top-button selected">图片</button>
-            <button id="button2" class="top-button">视频</button>
-            <button id="button3" class="top-button">截图</button>
-        </div>
-        <div class="gallery-bottom-bar">
-            <button id="buttonA" class="bottom-button" >加载更多</button>
-            <button id="buttonB" class="bottom-button" >加载更多</button>
-            <button id="buttonC" class="bottom-button" >加载更多</button>
-        </div>
+        <div class="fixed" style="background-image:url('../../icon/pic_phone.svg');"></div>
     </div>
     
+    <div class="photo" onclick="reloadPage()" title="恩的图库"></div>
+    <div id="progress" style="display: none;">
+        <div id="bar"><div id="percent"></div></div>
+      </div>
+    
+      <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
+
+    </form>
+    <div class="top-button">
+            <div id="button1" class="selected" title="图片"></div>
+            <div id="button2" title="视频"></div>
+            <div id="button3" title="截图"></div>
+            <label for="uploadfile" id="selectButton"title="选择图片视频"></label>
+            
+                </div>
+    </div>
+    <div id="file-preview-display"></div>
+    <div class="gallery-container" id="gallery-container">
+            
+        
+            
+        
+    </div>
+    <button id="buttonA" class="bottom-button" title="显示更多图片"></button>
+            <button id="buttonB" class="bottom-button" title="显示更多视频" ></button>
+            <button id="buttonC" class="bottom-button" title="显示更多截图"></button>
     <script>
+       $(function() {
+    var isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // 对于移动设备，使用长按事件来显示 tooltip
+        var tooltipTrigger = $(".tooltip-trigger");
+        var tooltip = $('<div class="tooltip"></div>').appendTo('body');
+        var timeout;
+
+        tooltipTrigger.on("touchstart", function(event) {
+            timeout = setTimeout(function() {
+                var content = tooltipTrigger.attr("title");
+                tooltip.text(content).fadeIn(200);
+                tooltip.css({
+                    left: event.originalEvent.touches[0].pageX + 10 + "px",
+                    top: event.originalEvent.touches[0].pageY + 10 + "px"
+                });
+            }, 500); // 长按持续时间 (500ms)
+        }).on("touchend", function() {
+            clearTimeout(timeout);
+            tooltip.fadeOut(200);
+        });
+
+        $(document).on("touchstart", function(event) {
+            if (!tooltipTrigger.is(event.target)) {
+                tooltip.fadeOut(200);
+            }
+        });
+
+    } else {
+        // 对于桌面设备，使用 jQuery UI 的 tooltip
+        $(document).tooltip({
+            track: true, // 跟随鼠标移动
+            show: { effect: "blind", duration: 200, delay: 250 },
+            position: {
+                my: "left+15 top+15", // Tooltip 的位置点
+                at: "left bottom"     // 目标元素的位置点
+            }
+        });
+    }
+});
+
         function reloadPage() {
   location.reload();
 }
 
-var fileInput = document.getElementById("file");
+var fileInput = document.getElementById("uploadfile");
 
 // 监听文件输入框的change事件
 fileInput.addEventListener("change", function () {
-            // 获取选择的文件
+            var btn1 = document.getElementById("button1");
+            var btn2 = document.getElementById("button2");
+            var btn3 = document.getElementById("button3");
+            var progress =document.getElementById("progress");
             var selectedFile = fileInput.files[0];
+            var filePreviewDisplay = document.getElementById("file-preview-display");
+            filePreviewDisplay.innerHTML = "";
 
-            // 更新文件名显示
-            var fileNameDisplay = document.getElementById("file-name-display");
             if (selectedFile) {
-                fileNameDisplay.textContent = "已选择: " + selectedFile.name;
-                // 显示上传按钮
-                uploadButton.style.display = "block";
-                selectButton.style.display = "none"
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.style.maxWidth = "400px";
+                    img.style.maxHeight = "400px";
+                    img.style.borderRadius = "1em";
+                    filePreviewDisplay.appendChild(img);
+                };
+                reader.readAsDataURL(selectedFile);
+                progress.style.display = "block";
+                selectButton.style.display = "none";
+                btn1.style.display = "none";
+                btn2.style.display = "none";
+                btn3.style.display = "none";
             } else {
-                fileNameDisplay.textContent = ""; // 清空文件名显示
-                // 隐藏上传按钮
-                uploadButton.style.display = "none";
-                selectButton.style.display = "block"
+                progress.style.display = "none";
+                btn1.style.display = "block";
+                btn2.style.display = "block";
+                btn3.style.display = "block";
+                selectButton.style.display = "block";
             }
         });
+        
 
 
 
@@ -655,35 +629,35 @@ fileInput.addEventListener("change", function () {
     
         function appendImages(count) {
             var loadedImageCount = 0;
-    
+
             for (let i = 0; i < files.length; i++) {
-                // 检查图片是否已加载过
                 if (!loadedImageIndices.includes(i)) {
                     var filePath = files[i];
+                    var fileName = filePath.split('/').pop(); // 获取文件名
                     var fileExtension = filePath.split('.').pop().toLowerCase();
-                    var isVideo = ['mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
-    
+                    var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
+
                     if (!isVideo && loadedImageCount < count) {
                         var img = document.createElement("a");
                         img.href = filePath;
                         img.setAttribute("data-fancybox", "gallery");
-    
+
                         var imgElement = document.createElement("img");
                         imgElement.src = filePath;
                         img.appendChild(imgElement);
-    
+
                         var galleryItem = document.createElement("div");
                         galleryItem.className = "gallery-item";
+                        galleryItem.title = fileName; // 添加title
                         galleryItem.appendChild(img);
                         galleryContainer.appendChild(galleryItem);
-    
-                        loadedImageIndices.push(i); // 记录已加载的图片索引
+
+                        loadedImageIndices.push(i);
                         loadedImageCount++;
                     }
                 }
             }
             if (loadedImageCount < count) {
-                // 隐藏加载更多图片按钮
                 buttonA.style.display = "none";
                 alert("已加载全部图片");
             }
@@ -692,13 +666,9 @@ fileInput.addEventListener("change", function () {
                 protect: true,
                 buttons: ["zoom", "share", "slideShow", "fullScreen", "download", "thumbs", "close"],
             });
-    
-            // 显示加载的图片
+
             showImages();
-    
-            
         }
-    
         function loadImages() {
             // 追加加载三张新图片
             appendImages(3);
@@ -712,28 +682,28 @@ fileInput.addEventListener("change", function () {
     
         function appendVideos(count) {
             var loadedVideoCount = 0;
-    
+
             for (let i = 0; i < files.length; i++) {
-                // 检查视频是否已加载过
                 if (!loadedVideoIndices.includes(i)) {
                     var filePath = files[i];
+                    var fileName = filePath.split('/').pop(); // 获取文件名
                     var fileExtension = filePath.split('.').pop().toLowerCase();
-                    var isVideo = ['mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
-    
+                    var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
+
                     if (isVideo && loadedVideoCount < count) {
                         var video = document.createElement("video");
                         video.src = filePath;
                         video.controls = true;
-    
+
                         var videoItem = document.createElement("div");
                         videoItem.className = "gallery-item video-item";
+                        videoItem.title = fileName; // 添加title
                         videoItem.appendChild(video);
                         galleryContainer.appendChild(videoItem);
-    
-                        loadedVideoIndices.push(i); // 记录已加载的视频索引
+
+                        loadedVideoIndices.push(i);
                         loadedVideoCount++;
-    
-                        // 添加自动截取视频第一帧作为poster属性的功能
+
                         captureFrame(filePath).then(frame => {
                             video.poster = frame.url;
                         });
@@ -741,15 +711,11 @@ fileInput.addEventListener("change", function () {
                 }
             }
             if (loadedVideoCount < count) {
-                // 隐藏加载更多视频按钮
                 buttonB.style.display = "none";
                 alert("已加载全部视频");
             }
-    
-            // 显示加载的视频
+
             showVideos();
-    
-            
         }
     
         function loadVideos() {
@@ -761,53 +727,47 @@ fileInput.addEventListener("change", function () {
         
        
         var loadedScreenshotsIndices = []; // 用于记录已加载的视频索引
-    
+        
         buttonC.addEventListener("click", function () {
             loadScreenshots();
         });
     
         function appendScreenshots(count) {
             var loadedScreenshotsCount = 0;
-    
+
             for (let i = 0; i < screenshotFiles.length; i++) {
-                // 检查视频是否已加载过
                 if (!loadedScreenshotsIndices.includes(i)) {
                     var filePath = screenshotFiles[i];
-                    
-    
-                    
+                    var fileName = filePath.split('/').pop(); // 获取文件名
+
                     if (loadedScreenshotsCount < count) {
                         var img = document.createElement("a");
                         img.href = filePath;
                         img.setAttribute("data-fancybox", "gallery");
-    
+
                         var imgElement = document.createElement("img");
                         imgElement.src = filePath;
                         img.appendChild(imgElement);
-    
+
                         var galleryItem = document.createElement("div");
                         galleryItem.className = "gallery-item screenshot-item";
+                        galleryItem.title = fileName; // 添加title
                         galleryItem.appendChild(img);
                         galleryContainer.appendChild(galleryItem);
-    
-                        loadedScreenshotsIndices.push(i); // 记录已加载的图片索引
+
+                        loadedScreenshotsIndices.push(i);
                         loadedScreenshotsCount++;
                     }
-                       
-                    
                 }
             }
             if (loadedScreenshotsCount < count) {
-                // 隐藏加载更多视频按钮
                 buttonC.style.display = "none";
                 alert("已加载全部截图");
             }
-    
-            // 显示加载的视频
+
             showScreenshots();
-    
-            
         }
+
     
         function loadScreenshots() {
             // 追加加载一个新视频
@@ -908,6 +868,42 @@ fileInput.addEventListener("change", function () {
                 video.load();
             });
         }
+        function goUp() {
+    const upButton = document.getElementById('upButton');
+    const parentFolder = upButton.dataset.parentFolder;
+    loadFolder(parentFolder);
+  }
+
+  
+
+  function selfile() {
+    
+  var file = document.getElementsByTagName('input')[0].files[0];
+  var fd = new FormData();
+  fd.append('pic', file);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'upload.php', true);
+
+  xhr.upload.onprogress = function(ev) {
+    if (ev.lengthComputable) {
+      var percent = 100 * ev.loaded / ev.total;
+      var percentElement = document.getElementById('percent');
+      document.getElementById('bar').style.width = percent + '%';
+      percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
+    }
+  };
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      reloadPage();
+    } else {
+      alert('上传失败，请重试。');
+    }
+  };
+
+  xhr.send(fd);
+}
     </script>
     
     
