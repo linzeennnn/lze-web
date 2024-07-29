@@ -256,6 +256,7 @@ ServerAdmin you@example.com
 #
 DocumentRoot "/opt/lze-web"
 <Directory "/opt/lze-web">
+LimitRequestBody 10737418240
     #
     # Possible values for the Options directive are "None", "All",
     # or any combination of:
@@ -275,7 +276,7 @@ DocumentRoot "/opt/lze-web"
     # It can be "All", "None", or any combination of the keywords:
     #   AllowOverride FileInfo AuthConfig Limit
     #
-    AllowOverride None
+    AllowOverride All
 
     #
     # Controls who can get stuff from this server.

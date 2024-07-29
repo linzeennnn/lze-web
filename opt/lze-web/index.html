@@ -4,18 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <meta name="theme-color" content="#272B2C"/>
-
   <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓💻</title>
-  <link rel="icon" href="icon/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="icon/linzeen.svg" type="image/x-icon">
   <link rel="shortcut icon" href="icon/favicon.ico" type="image/x-icon">
   <!-- 苹果设备 -->
-<link rel="apple-touch-icon" sizes="180x180" href="icon/linzeen_icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon/linzeen_icon.svg">
 <!-- 安卓设备 -->
-<link rel="icon" type="image/png" sizes="192x192" href="icon/linzeen_icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon/linzeen_icon.svg">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="code/jquery/jquery-ui.css">
     <script src="code/jquery/jquery-3.5.1.min.js"></script>
     <script src="code/jquery/jquery-ui.min.js"></script>
+    <script src="code/logo/autoload.js"></script>
+
+   
+
   <style>
     
     .ui-tooltip {
@@ -59,10 +62,12 @@
     
     
     body {
+      box-sizing: border-box; 
       overflow-x: hidden !important;
-      
+      justify-content: center;
       margin: 0;
       padding: 0;
+      
       background-color: #2a3033;
       background-image: url(icon/home_pc.svg);
       background-size:cover;
@@ -113,10 +118,11 @@
       margin-left: 50%;
       transform: translateX(-50%);
       position: relative;
-      top: 0; /* 初始位置位于标题底部 */
+      top: 200px; /* 初始位置位于标题底部 */
+      margin-top: 250px;
       transition: top 1s ease, transform 1s ease; /* 添加过渡效果 */
-      margin-top: 10px;
       border-radius: 50%;
+      z-index: 2;
       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
   5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
@@ -495,6 +501,7 @@
   </style>
 </head>
 <body>
+  
   <div class="phone_background">
     <div class="fixed" style="background-image:url(icon/home_phone.svg);"></div>
   </div>
@@ -503,7 +510,7 @@
   </header>
 
   <main>
-        <div id="buttonText" ></div>
+        
         <div>
         <div id="myButton" onclick="handleButtonClick()" title="开始"></div>
         </div>
@@ -538,8 +545,15 @@
         </div>
     </div>
   </main>
+  
 
   <script>
+    document.addEventListener('touchmove', function(event) {
+  // 禁用水平滑动
+  if (event.scaleX !== 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
     $(function() {
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -613,17 +627,15 @@ function reloadPage() {
 function handleButtonClick() {
   var button = document.getElementById('myButton');
   var popup = document.getElementById('customPopup');
-  var buttonText = document.getElementById('buttonText');
+  var logo = document.getElementById('waifu');
 
   if (buttonState === 1) {
     popup.classList.add('active');
-    button.style.top = '0'; // 降落到页面正中心
-    buttonText.style.top = '0';
+    button.style.top = '50px'; // 降落到页面正中心
     buttonState = 2; // 更新状态为2
   } else {
     popup.classList.remove('active');
-    button.style.top = '20vh'; // 升回标题底部
-    buttonText.style.top = '20vh';
+    button.style.top = '250px'; // 升回标题底部
     buttonState = 1; // 更新状态为1
     // 隐藏所有的框
     var additionalPopups = document.querySelectorAll('.additionalPopup');
@@ -631,6 +643,10 @@ function handleButtonClick() {
       popup.classList.remove('active', 'return'); // 移除所有类
     });
   }
+  document.getElementById('waifu').addEventListener('click', function(event) {
+    buttonState = 2;
+    handleButtonClick();
+});
 }
 
     function handleTopBarButtonClick(index) {
@@ -679,7 +695,6 @@ function handleButtonClick() {
       var button = document.getElementById('myButton');
       var buttonText = document.getElementById('buttonText');
       button.style.top = '30vh'; // 设置初始位置
-      buttonText.style.top = '30vh'; // 设置初始位置
 
       // 添加点击页面任意地方的事件监听器
       document.addEventListener('click', handleDocumentClick);

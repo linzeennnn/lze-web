@@ -357,12 +357,15 @@ header:hover{
   }
   #percent {
   color: rgb(186, 216, 255);
-  font-size: 14px; 
-  position: absolute;
-  top: 50%; 
-  left: 50%; 
-  transform: translate(-50%, -50%); 
+  width: 30px;
+  height: 24px;
+  margin-top: 10px;
+  vertical-align: middle;
+  left: 50%;
+  transform: translate(-50%); 
   white-space: nowrap; 
+  font-size: 14px; 
+  position: fixed;
 }
        
         @media only screen and (max-width: 600px) {
@@ -877,10 +880,18 @@ fileInput.addEventListener("change", function () {
   
 
   function selfile() {
-    
-  var file = document.getElementsByTagName('input')[0].files[0];
+  var files = document.getElementsByTagName('input')[0].files;
+  if (files.length === 0) {
+    alert('请先选择文件。');
+    return;
+  }
+
+ 
+  
   var fd = new FormData();
-  fd.append('pic', file);
+  for (var i = 0; i < files.length; i++) {
+    fd.append('pic[]', files[i]);
+  }
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'upload.php', true);
@@ -904,6 +915,7 @@ fileInput.addEventListener("change", function () {
 
   xhr.send(fd);
 }
+
     </script>
     
     

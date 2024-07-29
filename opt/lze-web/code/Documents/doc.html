@@ -692,11 +692,18 @@ header:hover{
   loadFolder();
 
   function selfile() {
-    
-  var file = document.getElementsByTagName('input')[0].files[0];
-    loading();
+  var files = document.getElementsByTagName('input')[0].files;
+  if (files.length === 0) {
+    alert('请先选择文件。');
+    return;
+  }
+
+  loading();
+  
   var fd = new FormData();
-  fd.append('pic', file);
+  for (var i = 0; i < files.length; i++) {
+    fd.append('pic[]', files[i]);
+  }
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'upload.php', true);
@@ -711,15 +718,120 @@ header:hover{
   };
 
   xhr.onload = function() {
-    if (xhr.status === 200) {
-      reloadPage();
-    } else {
-      alert('上传失败，请重试。');
+    if (xhr.readyState === XMLHttpRequest.DONE) { // 请求已完成
+    switch (xhr.status) {
+      case 200:
+        // 状态码 200: 请求成功
+        console.log('请求成功:', xhr.responseText);
+        reloadPage();
+        break;
+      case 201:
+        // 状态码 201: 资源已创建
+        alert('资源已创建:', xhr.responseText);
+        break;
+      case 204:
+        // 状态码 204: 无内容
+        alert('请求成功，但没有返回内容。');
+        break;
+        case 400:
+        // 状态码 400: Bad Request
+        alert('请求无效，请检查您的输入。');
+        break;
+      case 401:
+        // 状态码 401: Unauthorized
+        alert('未经授权，请登录。');
+        break;
+      case 402:
+        // 状态码 402: Payment Required
+        alert('需要付款，当前操作无法完成。');
+        break;
+      case 403:
+        // 状态码 403: Forbidden
+        alert('您没有权限访问该资源。');
+        break;
+      case 404:
+        // 状态码 404: Not Found
+        alert('请求的资源未找到。');
+        break;
+      case 405:
+        // 状态码 405: Method Not Allowed
+        alert('请求方法不被允许。');
+        break;
+      case 406:
+        // 状态码 406: Not Acceptable
+        alert('请求的资源不可接受。');
+        break;
+      case 407:
+        // 状态码 407: Proxy Authentication Required
+        alert('代理服务器需要身份验证。');
+        break;
+      case 408:
+        // 状态码 408: Request Timeout
+        alert('请求超时，请稍后重试。');
+        break;
+      case 409:
+        // 状态码 409: Conflict
+        alert('请求冲突，可能由于资源状态变化导致。');
+        break;
+      case 410:
+        // 状态码 410: Gone
+        alert('资源已永久删除。');
+        break;
+      case 411:
+        // 状态码 411: Length Required
+        alert('请求必须包含 Content-Length 头。');
+        break;
+      case 412:
+        // 状态码 412: Precondition Failed
+        alert('请求的前提条件失败。');
+        break;
+      case 413:
+        // 状态码 413: Payload Too Large
+        alert('请求的负载过大。');
+        break;
+      case 414:
+        // 状态码 414: URI Too Long
+        alert('请求的 URI 过长。');
+        break;
+      case 415:
+        // 状态码 415: Unsupported Media Type
+        alert('请求的媒体类型不被支持。');
+        break;
+      case 416:
+        // 状态码 416: Range Not Satisfiable
+        alert('请求的范围不满足。');
+        break;
+      case 417:
+        // 状态码 417: Expectation Failed
+        alert('期望的请求头无法满足。');
+        break;
+      case 500:
+        // 状态码 500: 服务器内部错误
+        alert('服务器遇到错误，请稍后重试。');
+        break;
+      case 502:
+        // 状态码 502: 错误的网关
+        alert('网关错误，请稍后重试。');
+        break;
+      case 503:
+        // 状态码 503: 服务不可用
+        alert('服务不可用，请稍后重试。');
+        break;
+      case 504:
+        // 状态码 504: 网关超时
+        alert('请求超时，请稍后重试。');
+        break;
+      default:
+        // 其他状态码
+        alert('发生未知错误，请重试。');
+        break;
     }
+  }
   };
 
   xhr.send(fd);
 }
+
 
 </script>
 </body>

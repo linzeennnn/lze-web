@@ -1,10 +1,16 @@
-
 <?php
-if(empty($_FILES)){
+if (empty($_FILES)) {
   exit('no file');
 }
-if($_FILES['pic']['error'] !== 0){
-  exit('fail');
+
+$uploadDirectory = '../../file/Pictures/';
+
+foreach ($_FILES['pic']['name'] as $key => $name) {
+  if ($_FILES['pic']['error'][$key] === UPLOAD_ERR_OK) {
+    $tmp_name = $_FILES['pic']['tmp_name'][$key];
+    move_uploaded_file($tmp_name, $uploadDirectory . $name);
+  } else {
+    exit('fail');
+  }
 }
-move_uploaded_file($_FILES['pic']['tmp_name'],'../../file/Pictures/'.$_FILES['pic']['name']);
 ?>
