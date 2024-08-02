@@ -39,8 +39,8 @@
       font-size: 70px;
       cursor: pointer;
       height: 60px !important;
-      color: #656d79 !important;
-        background-color: #1e2325d2 !important;
+      color: #656d79 ;
+        background-color: #1e2325d2 ;
       padding: 10px;
       text-align: center;
       position: fixed;
@@ -50,10 +50,10 @@
       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
   -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
     }
-    header:hover{
+    /* header:hover{
       background-color: #737b8594 !important;
       color: #a6adc0 !important;
-    }
+    } */
     .name{
       position:relative;
       bottom: -20px;
@@ -107,7 +107,7 @@
     #myButton {
       
       background-image: url(icon/power.svg);
-        background-color: #5a708877 !important;
+        background-color: #5a708877 ;
       
       border: none;
       background-position: center;
@@ -130,7 +130,7 @@
     }
 
     #myButton:hover {
-      background-color: #1e263094 !important;
+      background-color: #1e263094 ;
       background-image: url(icon/power_white.svg);
     }
 
@@ -155,8 +155,8 @@
     }
 
     #topBar {
-      color: #6d7b8d !important;
-        background-color: #3f56688e !important;
+      color: #6d7b8d ;
+        background-color: #3f56688e ;
       padding: 10px;
       text-align: center;
       display: flex;
@@ -169,7 +169,7 @@
       
     }
 
-    #topBar button {
+    .bar-btn {
       
       width: 25%;
       height: 2em;
@@ -186,12 +186,12 @@
       font-size: 150%;
     }
 
-    #topBar button.selected {
+    .bar-btn.selected {
       background-color: hsla(200, 33%, 78%, 0.663);
       color: #20021c;
     }
 
-    #topBar button:hover {
+    .bar-btn:hover {
       background-color: hsla(200, 33%, 78%, 0.663);
       color: #20021c;
     }
@@ -282,6 +282,7 @@
     #popup1-1:hover #folder{
         background-image: url(icon/folder_open.svg);
     }
+    
     #popup1-2{
       border-color: transparent;
       flex: 1;
@@ -517,10 +518,10 @@
    
         <div id="customPopup">
       <div id="topBar">
-        <button onclick="handleTopBarButtonClick(0)">恩的文件</button>
-        <button onclick="handleTopBarButtonClick(1)">恩的终端</button>
-        <button onclick="handleTopBarButtonClick(2)">恩的便签</button>
-        <button onclick="handleTopBarButtonClick(3)">恩的书签</button>
+        <button class="bar-btn" onclick="handleTopBarButtonClick(0)">恩的文件</button>
+        <button class="bar-btn" onclick="handleTopBarButtonClick(1)">恩的终端</button>
+        <button class="bar-btn" onclick="handleTopBarButtonClick(2)">恩的便签</button>
+        <button class="bar-btn" onclick="handleTopBarButtonClick(3)">恩的书签</button>
       </div>
       <div class="additionalPopup" id="popup1">
         <div class="popupContent">
@@ -548,6 +549,44 @@
   
 
   <script>
+    // 更换主题
+    function changetheme(popup,  color, namecolor, buttonImage, popupImage) {
+      document.getElementById(popup).addEventListener('mouseenter', function() {
+    document.querySelector('header').style.backgroundColor = color;
+    document.querySelector('header').style.color = namecolor;
+    document.getElementById('myButton').style.backgroundColor = color;
+    document.getElementById('myButton').style.backgroundImage = `url(${buttonImage})`;
+    document.getElementById('topBar').style.backgroundColor = color;
+    document.getElementById('customPopup').style.backgroundImage = `url(${popupImage})`;
+    document.querySelector('.selected').style.backgroundColor = color;
+    document.querySelector('.ui-tooltip').style.backgroundColor = color;
+    document.querySelector('body').style.backgroundImage = `url(${popupImage})`;
+
+  })
+
+  document.getElementById(popup).addEventListener('mouseleave', function() {
+    document.querySelector('header').style.backgroundColor = '';
+    document.querySelector('header').style.color = '';
+    document.querySelector('body').style.backgroundImage = '';
+    document.getElementById('myButton').style.backgroundColor = '';
+    document.getElementById('myButton').style.backgroundImage = '';
+    document.getElementById('topBar').style.backgroundColor = '';
+    document.getElementById('customPopup').style.backgroundImage = '';
+    document.querySelector('.selected').style.backgroundColor = '';
+    document.querySelector('.ui-tooltip').style.backgroundColor = '';
+})
+    }
+    changetheme('popup1-1', '#c21e7063', '#cc3f86', 'icon/power_white.svg', 'icon/doc_pc.svg');
+    changetheme('popup1-2', '#135fb663', '#24548b', 'icon/power_white.svg', 'icon/pic_pc.svg');
+    changetheme('popup2-1', '#9e87204b', '#e09f11', 'icon/power_white.svg', 'icon/ter_pc.svg');
+    changetheme('popup3-1', '#0da56663', '#40f7a1', 'icon/power_white.svg', 'icon/not_pc.svg');
+    changetheme('popup4-1', '#8f0c2263', '#e75480', 'icon/power_white.svg', 'icon/bok_pc.svg');
+
+
+
+
+
+
     document.addEventListener('touchmove', function(event) {
   // 禁用水平滑动
   if (event.scaleX !== 1) {
