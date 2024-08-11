@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#4282E3"/>
+    <meta name="theme-color" content="#26426b"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓🖼🎞️</title>
     <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
@@ -24,31 +24,9 @@
             font-weight: bold;
             overflow-wrap: break-word;
         }
-        header{
-  font-size: 70px;
-      cursor: pointer;
-      height: 60px !important;
-      color: #24548b !important;
-        background-color: #135fb663 !important;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
-}
-header:hover{
-    color: #656d79 !important;
-    background-color: #1e2325d2 !important;
-    }
-
     
-.home{
-  position:relative;
-      bottom: -20px;
-}
+    
+
         .video-wrapper {
             max-width: 100%;
             max-height: 100%;
@@ -65,7 +43,7 @@ header:hover{
             font-size: 100%;
             margin: 0;
             padding: 0;
-            background-color: rgb(0, 153, 255);
+            background-color: #26426b;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -74,39 +52,51 @@ header:hover{
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            
+            transition:background-image 1s ease ;
             }
             body::-webkit-scrollbar {
     display: none; /* 隐藏滚动条 */
 }
+
+#cover-bar{
+      border-bottom-left-radius: 1em;
+      border-bottom-right-radius: 1em;
+      top: -150px;
+      position: fixed;
+      width: 100%;
+      height: 80px;
+      z-index: 10;
+      background-color: #26426b;
+      transition: top 1s ease;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
+    }
             
-                #backButton {
-                    font-weight: bold;
-            background-color: #56caff80;
-            color: #092958;
-            border: none;
-            padding: 0.57%;
-            cursor: pointer;
-            font-size: 100%;
-            width: 100%;
-            max-width: 100%;
-            align-self: flex-start;
-            text-align: left;
-            padding-left: 7%;
-            position:fixed;
-            top: 0;
-            margin-top: 0;
-            z-index: 1000; 
-            margin-bottom: 60px;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-            }
-            #backButton:hover{
-                background-color: #0c498f9d;
-                color: white;
-            }
+    .backbtn{
+  cursor: pointer;
+  position: fixed;
+  text-align: left;
+  width: 15% ;
+  height: 60px;
+  left: -30%;
+  margin-top: 10px;
+  font-size: 200%;
+  z-index: 10;
+  transition: left 1s ease , width 1s ease;
+}
+
+#name{
+  width: 100%;
+  height: 100%;
+  background-image: url(../../icon/name_blue.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.backbtn:hover #name{
+  background-image: url(../../icon/name_white.svg);
+}
             input[type="file"] {
             display: none; 
         }
@@ -149,6 +139,8 @@ header:hover{
         
     
         .gallery-container {
+            right:-80%;
+            margin-top: 150px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
@@ -157,18 +149,18 @@ header:hover{
             max-width: 80%; 
             background-color: transparent;
            margin-bottom: 20px;
+           transition: right 1s ease;
+           z-index: 2;
             
         }
         
         #button1 {
-            margin: 20px;
             cursor: pointer;
-            width: 32px;
-            height: 32px;
             background-image: url(../../icon/picture.svg);
             background-repeat: no-repeat;
             background-position: center;
-            
+            margin: 10px;
+            margin-bottom: 10px;
             
             
         }
@@ -185,13 +177,11 @@ header:hover{
       
         #button2 {
             cursor: pointer;
-            width: 32px;
-            height: 32px;
             background-repeat: no-repeat;
             background-position: center;
             background-image: url(../../icon/video.svg);
-            margin: 20px;
-            
+            margin: 10px;
+            margin-bottom: 10px;
         }
         
     
@@ -207,13 +197,11 @@ header:hover{
         }
         #button3 {
             cursor: pointer;
-            width: 32px;
-            height: 32px;
             background-repeat: no-repeat;
             background-position: center;
             background-image: url(../../icon/cut.svg);
-            margin: 20px;
-            
+            margin: 10px;
+            margin-bottom: 10px;
             
         }
         #button3:hover{
@@ -225,14 +213,28 @@ header:hover{
             background-image: url(../../icon/cut_white.svg);           
             
         }
-        label[for="uploadfile"] {
+        #load-btn {
+            width: 32px !important;
             cursor: pointer;
-            width: 32px;
-            height: 32px;
             background-repeat: no-repeat;
             background-position: center;
+            background-image: url(../../icon/load_blue.svg);
+            margin: 10px;
+            margin-bottom: 10px;
+            
+        }
+        #load-btn:hover{
+           
+            background-image: url(../../icon/load_white.svg);
+        }
+      
+        label[for="uploadfile"] {
+            cursor: pointer;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 10px;
+            margin-bottom: 10px;
             background-image: url(../../icon/upload_blue.svg);
-            margin: 20px;
         }
 
         /* 鼠标悬停时的样式 */
@@ -241,13 +243,24 @@ header:hover{
         }
         
         .top-button{
+            height: 60px;
+            position: fixed;
+            border-radius: 1em;
             justify-content: center;
             align-items: center;
-            background-color: transparent;
+            background-color:#12336475;
             display: inline-flex;
-            width: 300px;
-            margin: 10px;
+            margin-left: 0;
+            width: 0;
+            margin-top: 10px;
+           top: 80px; 
             z-index: 100;
+            transition: width 1s ease , top 1s ease, background-color 1s ease,margin-left 1s ease; 
+        }
+        .btn{
+            height: 32px;
+            width: 0;
+            transition: width 1s ease;
         }
         
     
@@ -261,7 +274,6 @@ header:hover{
             /* margin-bottom: 10px !important; */
             margin-top: 40px !important;
             border-color: rgba(0, 0, 0, 0.507);
-            
             border-radius: 1em;
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
@@ -308,6 +320,7 @@ header:hover{
         }
         
         .bottom-button {
+            position: relative;
             cursor: pointer;
             background-image: url(../../icon/godown_blue.svg);
             background-position: center;
@@ -367,6 +380,11 @@ header:hover{
   font-size: 14px; 
   position: fixed;
 }
+#buttonA{
+  bottom: -1000px;
+  transition: bottom 1s ease;
+}
+
        
         @media only screen and (max-width: 600px) {
 
@@ -383,8 +401,23 @@ header:hover{
             overflow:hidden;
             overflow-x: hidden;
         }
-        
-         
+        .next {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+          background:no-repeat center center;
+          background-size:cover;
+            overflow:hidden;
+            overflow-x: hidden; 
+            opacity: 0;
+            transition: opacity 1s ease ; 
+            z-index: 1;
+        }
+        .backbtn{
+          width: 25% ;
+        }
    
         
         .phone_background .fixed {
@@ -446,27 +479,28 @@ header:hover{
     </style>
 </head>
 <body>
-    <header>
-        <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
-        
-      </header>
+   
     <div class="phone_background">
         <div class="fixed" style="background-image:url('../../icon/pic_phone.svg');"></div>
+        <div class="next" ></div>
     </div>
     
-    <div class="photo" onclick="reloadPage()" title="恩的图库"></div>
-    <div id="progress" style="display: none;">
-        <div id="bar"><div id="percent"></div></div>
-      </div>
+    <div id="cover-bar"></div>
+    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+    
     
       <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
 
     </form>
     <div class="top-button">
-            <div id="button1" class="selected" title="图片"></div>
-            <div id="button2" title="视频"></div>
-            <div id="button3" title="截图"></div>
-            <label for="uploadfile" id="selectButton"title="选择图片视频"></label>
+        <div id="progress" style="display: none;">
+            <div id="bar"><div id="percent"></div></div>
+          </div>
+            <div id="button1" class="selected btn" title="图片"></div>
+            <div id="button2" class="btn" title="视频"></div>
+            <div id="button3" class="btn" title="截图"></div>
+            <div id="load-btn" class="btn" title="刷新" onclick="reloadPage()"></div>
+            <label for="uploadfile" class="btn" id="selectButton"title="选择图片视频"></label>
             
                 </div>
     </div>
@@ -480,8 +514,66 @@ header:hover{
     <button id="buttonA" class="bottom-button" title="显示更多图片"></button>
             <button id="buttonB" class="bottom-button" title="显示更多视频" ></button>
             <button id="buttonC" class="bottom-button" title="显示更多截图"></button>
-    <script src="../js/header.js"></script>
+    <!-- <script src="../js/header.js"></script> -->
     <script>
+        function handleScroll() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+        // 当垂直滚动超过100px时改变背景颜色
+        if (scrollTop > 100) {
+          document.querySelector('.backbtn').style.left = '1%';
+          document.querySelector('.backbtn').style.width = '15%';
+          document.querySelector('.top-button').style.top = '5px';
+          document.querySelector('.top-button').style.marginLeft = '50px';
+          document.getElementById('cover-bar').style.top = '0';
+          document.querySelector('.top-button').style.backgroundColor = 'transparent';
+          
+          
+        } else {
+          document.querySelector('.backbtn').style.left = '5%';
+          document.querySelector('.top-button').style.top = ''
+          document.querySelector('.backbtn').style.width = '';
+          document.querySelector('.top-button').style.backgroundColor = '';
+          document.querySelector('.top-button').style.marginLeft = '';
+          document.getElementById('cover-bar').style.top = '';
+         
+        }
+}
+window.addEventListener('scroll', handleScroll);
+
+        function comin(){
+      document.querySelector('.backbtn').style.left = '5%';
+        document.querySelector('.gallery-container').style.right = '0px';
+       document.getElementById('button1').style.width = '32px';
+       document.getElementById('button2').style.width = '32px';
+       document.getElementById('button3').style.width = '32px';
+       document.getElementById('selectButton').style.width = '32px';
+       document.getElementById('buttonA').style.bottom = '0px';
+       document.querySelector('.top-button').style.width = '300px';
+    };
+    window.onload = comin;
+
+    function goBack() {
+        window.removeEventListener('scroll',handleScroll);
+        document.getElementById('cover-bar').style.top = `-80px`;
+            document.querySelector('.backbtn').style.left = '-80%';
+        document.querySelector('.gallery-container').style.right = '-100%';
+       document.getElementById('button1').style.width = '0px';
+       document.getElementById('button2').style.width = '0px';
+       document.getElementById('button3').style.width = '0px';
+       document.getElementById('selectButton').style.width = '0px';
+       document.getElementById('buttonA').style.bottom = '-1000px';
+       document.querySelector('.top-button').style.width = '0px';
+            document.querySelector('body').style.backgroundImage = `url('../../icon/home_pc.svg')`;
+            document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
+    document.querySelector('.next').style.opacity ='1';  
+            setTimeout(() => {
+    window.location.replace('/');
+}, 1000);
+        }
+
+
+
        $(function() {
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -535,6 +627,7 @@ fileInput.addEventListener("change", function () {
             var btn1 = document.getElementById("button1");
             var btn2 = document.getElementById("button2");
             var btn3 = document.getElementById("button3");
+            var loadbtn = document.getElementById("load-btn");
             var progress =document.getElementById("progress");
             var selectedFile = fileInput.files[0];
             var filePreviewDisplay = document.getElementById("file-preview-display");
@@ -556,11 +649,13 @@ fileInput.addEventListener("change", function () {
                 btn1.style.display = "none";
                 btn2.style.display = "none";
                 btn3.style.display = "none";
+                loadbtn.style.display = "none";
             } else {
                 progress.style.display = "none";
                 btn1.style.display = "block";
                 btn2.style.display = "block";
                 btn3.style.display = "block";
+                loadbtn.style.display = "block";
                 selectButton.style.display = "block";
             }
         });
@@ -841,9 +936,7 @@ fileInput.addEventListener("change", function () {
         xmlhttp.open("GET", "pic_list.php", true);
         xmlhttp.send();
     
-        function goBack() {
-            window.location.href = '/';
-        }
+        
     
         function drawVideo(vdo) {
             return new Promise(resolve => {
@@ -872,12 +965,7 @@ fileInput.addEventListener("change", function () {
                 video.load();
             });
         }
-        function goUp() {
-    const upButton = document.getElementById('upButton');
-    const parentFolder = upButton.dataset.parentFolder;
-    loadFolder(parentFolder);
-  }
-
+        
   
 
   function selfile() {

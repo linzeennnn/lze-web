@@ -25,15 +25,12 @@
 #waifu {
 	max-width: 300px;
 	width: auto;
-	margin-top: 20%;
-	margin: 0 auto;
-	bottom: -1000px;
-	top: 0;
+	top: -300px;
 	line-height: 0;
-	margin-bottom: 100px;
-	position: relative;
+	height: 300px;
+	position: fixed;
 	/* transform: translateY(3px) translateX(-50%);  */
-	/* transition: top 1s ease-in-out, transform 1s ease-in-out; */
+	transition: top 1s ease;
 	z-index: 1;
 }
 
@@ -73,13 +70,10 @@
 
 #live2d {
 	overflow-x: hidden; 
-	margin-top: -200px;
 	cursor: grab;
 	height: 300px !important;
 	position: relative;
 	width: 300px !important;
-	margin-left: 50%;
-	transform: translateX(-50%);
 }
 
 #live2d:active {

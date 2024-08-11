@@ -13,18 +13,19 @@
         
         body{
             overflow-x: hidden !important;
-            
-            background-image: url("../../icon/bok_pc.svg");
+            align-items: center;
+            background-image: url(../../icon/bok_pc.svg);
             background-attachment:fixed;
             background-size: cover;
             background-repeat: no-repeat;
             font-size: 100%;
             margin: 0;
             padding: 0;
-            background-color: rgb(206, 54, 43);
+            background-color: #602324;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+           transition: background-image 1s ease;
            
         }
         body::-webkit-scrollbar {
@@ -44,47 +45,45 @@
             overflow-wrap: break-word;
         }
        
-header{
-  font-size: 70px;
-      cursor: pointer;
-      height: 60px !important;
-      color: #e75480 !important;
-        background-color: #8f0c2263 !important;
-      padding: 10px;
-      text-align: center;
+
+        .backbtn{
+  cursor: pointer;
+  position: fixed;
+  text-align: left;
+  width: 15% ;
+  height: 60px;
+  left: -30%;
+  margin-top: 10px;
+  font-size: 200%;
+  z-index: 10;
+  transition: left 1s ease , width 1s ease;
+}
+
+#name{
+  width: 100%;
+  height: 100%;
+  background-image: url(../../icon/name_red.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.backbtn:hover #name{
+  background-image: url(../../icon/name_white.svg);
+}
+#cover-bar{
+      border-bottom-left-radius: 1em;
+      border-bottom-right-radius: 1em;
+      top: -150px;
       position: fixed;
       width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
-}
-header:hover{
-    color: #656d79 !important;
-    background-color: #1e2325d2 !important;
+      height: 80px;
+      z-index: 10;
+      background-color: #602324;
+      transition: top 1s ease;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
     }
-
-    
-.home{
-  position:relative;
-      bottom: -20px;
-}
-.tag{
-  cursor: pointer;
-  margin-top: 130px;
-  left: 50% !important;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 100px;
-  background-image: url(../../icon/tag.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 100;
-}
-.tag:hover{
-  background-image: url(../../icon/tag_open.svg);
-}
         .expand-btn, .edit-btn, .delete-btn {
             cursor: pointer;
             padding: 8px 16px;
@@ -93,8 +92,106 @@ header:hover{
             margin-right: 8px;
             background-image: url(../../icon/down_green.svg);
         }
-        
-
+        #top-bar{
+            padding: 10px;
+            border-radius: 1em;
+            top: 100px;
+            position: fixed;
+            background-color: #681212ad;
+            width: 0;
+            opacity: 0;
+            height: fit-content;
+            display: flex;
+            flex-direction: row;
+            z-index: 10;
+            transition: all 1s ease;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),  
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068), 
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
+        }
+        #add{
+            position: relative;
+            top: 5px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            background-color: transparent;
+            background-image: url(../../icon/add_red.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #add:hover{
+            background-image: url(../../icon/add_white.svg);
+        }
+        #tit-bar{
+            padding: 5px;
+            padding-top: 10px;
+            border-radius: 1em;
+            left: 0;
+            width: 20%;
+            font-weight:bold;
+            color: #d85645;
+            min-height: 30px;
+            margin-right: 10px;
+            margin-left: 10px;
+            background-color: transparent;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+        }
+        #tit-bar:focus{
+            outline: none;
+        }
+        #load{
+            position: relative;
+            top: 5px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            background-color: transparent;
+            background-image: url(../../icon/load_red.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #load:hover{
+            background-image: url(../../icon/load_white.svg);
+        }
+        #word-bar{
+            padding: 5px;
+            padding-top: 10px;
+            right: 0;
+            border-radius: 1em;
+            width: 80% ;
+            color: #d87775;
+            margin-right: 10px;
+            min-height: 30px;
+            font-weight: bold;
+            background-color: transparent;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+        }
+        #word-bar:focus{
+            outline: none;
+        } 
+        .custom-upload-btn {
+      cursor: pointer;
+      background-image: url(../../icon/upload_pink.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 32px;
+      max-height: 32px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    .custom-upload-btn:hover{
+      background-image: url(../../icon/upload_white.svg);
+    }
         .delete-btn {
             position: absolute;
             top: 0;
@@ -155,69 +252,50 @@ header:hover{
         }
         .note-element {
             cursor: pointer;
+            width: 80%;
             position: relative;
-            margin-top: 20px;
             border-radius: 1em;
-            margin-left: 10%;
-            margin-right: 10%;
-            height: 100%;
-            border: 1px solid #ffffff00;  
-            margin-bottom: 40px;   
+            margin-bottom: 50px;   
             padding: 10px; 
-            background-color: #c93e5c91;
-            color: #2d0a1e;
+            background-color: #6d2021c5;
             align-items: center ;
             overflow: hidden;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            transition: all 1s ease;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),  
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068), 
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
         }
         .note-element:hover{
             background-color: #570e1e9f;
             color: white;
         }
         
-       
+        #notes{
+        z-index: 9;
+        position: relative;
+        width: 0;
+        opacity: 0;
+        display: flex;
+        transition: all 1s ease;
+        top: 220px;
+        align-items: center;
+        flex-direction: column;
+     }
         #note{
             width: 20%;
             align-items: center ;
         }
         h3{
-            color: #740208;
+            color: #ca6463;
         }
         .note-element:hover h3 {
             color: #ccc;
         }
-        h3[contenteditable="true"] {
-            position: relative;
-            border: 10px;
-            border-radius: 1em;
-            content: attr(data-placeholder);
-            color: #0000006b;
-            width: 30%;
-            margin-left: 10%;
-            font-size: 18px;
-            background-color: #c93e5c91;
-            
-            }
-            h3[contenteditable="true"]:empty:before{
-
-content: attr(data-placeholder);
-color: #0000006b;
-}
-        textarea{
-            position: relative;
-            margin-left: 10%;
-            width: 80%;
-            border-radius: 1em;
-            border-color: #cccccc00;
-            background-color: rgba(219, 64, 129, 0.616);
-            }
-            .note-element div[contenteditable="true"]{
-                background-color: #c93e5c91;
-            }
+       
+   
             .open-page-btn{
+                cursor: pointer;
                 transform: translateX(-50%);
                 margin-left: 50%;
                 background-image: url(../../icon/down_red.svg);
@@ -247,6 +325,61 @@ color: #0000006b;
             .note-element:hover .iframe-delete-btn{
                 background-image: url(../../icon/up_white.svg)
             }
+            #top-btn{
+  cursor: pointer;
+  background-image: url(../../icon/toup_red.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 45px;
+  height: 45px;
+  background-color: #7a1415b0;
+position: fixed;
+bottom: -25%;
+z-index: 10;
+border-radius: 50%;
+transition: bottom 1s ease;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068); 
+}
+#top-btn:hover{
+  background-color: #c54e50;
+  background-image: url(../../icon/toup_white.svg);
+}
+#progress{
+            overflow: hidden;
+            right: 0;
+            border-radius: 1em;
+            width: 80% ;
+            color: #d87775;
+            margin-right: 10px;
+            min-height: 30px;
+            font-weight: bold;
+            background-color: transparent;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+  }
+  #bar{
+    width:0%;
+    height:100%;
+    background-color: #832826bd;
+    box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+  }
+  #percent {
+  color: rgb(70, 3, 47);
+  font-size: 14px; 
+  position: absolute;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  white-space: nowrap; 
+}
             @media only screen and (max-width: 600px) {
     
             .phone_background {
@@ -266,8 +399,26 @@ color: #0000006b;
             overflow:hidden;
             overflow-x: hidden;
         }
+     
         #backButton{
             height: 40px;
+        }
+        .next {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+          background:no-repeat center center;
+          background-size:cover;
+            overflow:hidden;
+            overflow-x: hidden; 
+            opacity: 0;
+            transition: opacity 1s ease ; 
+            z-index: 1;
+        }
+        .backbtn{
+          width: 25% ;
         }
         
 
@@ -277,20 +428,102 @@ color: #0000006b;
     
 </head>
 <body>
+    
     <div class="phone_background">
         <div class="fixed" style="background-image:url(../../icon/bok_phone.svg);"></div>
     </div>
-    <header>
-        <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
-        
-      </header>
-      <div class="tag" onclick="reloadPage()"title="恩的书签"></div>
+    <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
+    <div class="next" ></div>
+    <div id="cover-bar"></div>
+    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+    <div id="top-bar">
+        <div id="add" title="添加便签" onclick="showAddNoteForm()"></div >
+            <label for="uploadfile" class="custom-upload-btn" id="up-btn" title="上传文件"></label>
+        <div id="tit-bar" contenteditable="true" title="标题"></div>
+        <div id="word-bar" contenteditable="true" title="正文"></div>
+        <div id="progress" style="display: none;">
+            <div id="bar"><div id="percent"></div></div>
+        </div>
+        <div id="load" title="刷新" onclick="reloadPage()"></div >
+    </div>
+    <div id="top-btn" onclick="totop()" title="回到顶部"></div>
 <div id="notes"></div>
 
 <div id="notes"></div>
 
-<script src="../js/header.js"></script>
+
 <script>
+    function handleScroll() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+        // 当垂直滚动超过100px时改变背景颜色
+        if (scrollTop > 100) {
+            document.getElementById('top-btn').style.bottom = '7%';
+          document.getElementById('top-bar').style.top = '10px';
+          document.getElementById('top-bar').style.marginLeft = '20%';
+          document.getElementById('top-bar').style.width = '65%';
+          document.getElementById('top-bar').style.backgroundColor = 'transparent';
+          document.getElementById('top-bar').style.boxShadow = 'none';
+          document.querySelector('.backbtn').style.left = '1%';
+          document.querySelector('.backbtn').style.width = '15%';
+          document.getElementById('cover-bar').style.top = '0';
+          
+        } else {
+            document.getElementById('top-btn').style.bottom = '';
+          document.getElementById('top-bar').style.top= '';
+          document.getElementById('top-bar').style.marginLeft = '';
+          document.getElementById('top-bar').style.width = '80%';
+          document.getElementById('top-bar').style.backgroundColor = '';
+          document.getElementById('top-bar').style.boxShadow = '';
+          document.querySelector('.backbtn').style.left = '5%';
+          document.querySelector('.backbtn').style.width = '';
+          document.getElementById('cover-bar').style.top = '';
+         
+        }
+}
+window.addEventListener('scroll', handleScroll);
+     function handleScroll() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+        // 当垂直滚动超过100px时改变背景颜色
+        if (scrollTop > 100) {
+            document.getElementById('top-btn').style.bottom = '15%';
+          document.getElementById('top-bar').style.top = '10px';
+          document.getElementById('top-bar').style.marginLeft = '20%';
+          document.getElementById('top-bar').style.width = '65%';
+          document.getElementById('top-bar').style.backgroundColor = 'transparent';
+          document.getElementById('top-bar').style.boxShadow = 'none';
+          document.querySelector('.backbtn').style.left = '1%';
+          document.querySelector('.backbtn').style.width = '15%';
+          document.getElementById('cover-bar').style.top = '0';
+          
+        } else {
+            document.getElementById('top-btn').style.bottom = '';
+          document.getElementById('top-bar').style.top= '';
+          document.getElementById('top-bar').style.marginLeft = '';
+          document.getElementById('top-bar').style.width = '80%';
+          document.getElementById('top-bar').style.backgroundColor = '';
+          document.getElementById('top-bar').style.boxShadow = '';
+          document.querySelector('.backbtn').style.left = '5%';
+          document.querySelector('.backbtn').style.width = '';
+          document.getElementById('cover-bar').style.top = '';
+         
+        }
+}
+window.addEventListener('scroll', handleScroll);
+     function comin(){
+        showNotes();
+        
+      
+        document.getElementById('top-bar').style.width ='80%';
+        document.getElementById('top-bar').style.opacity = '1';
+      document.querySelector('.backbtn').style.left = '5%';
+        document.getElementById(`notes`).style.width='100%';
+        document.getElementById(`notes`).style.opacity='1';
+    };
+
+    window.onload = comin;
+
    $(function() {
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -332,9 +565,27 @@ color: #0000006b;
         });
     }
 });
-
-    function goBack() {
-      window.location.href = '/';
+function totop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth' // 添加平滑滚动效果
+    });
+  }
+function goBack() {
+    document.getElementById('cover-bar').style.top = `-80px`;
+        document.getElementById('top-bar').style.width ='';
+        document.getElementById('top-bar').style.opacity = '';
+      document.querySelector('.backbtn').style.left = '';
+      document.getElementById('top-btn').style.bottom = `-5%`;
+        document.getElementById(`notes`).style.width='';
+        document.getElementById(`notes`).style.opacity='';
+        document.querySelector('body').style.backgroundImage = `url('../../icon/home_pc.svg')`;
+        document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
+    document.querySelector('.next').style.opacity ='1';  
+        setTimeout(() => {
+    window.location.replace('/');
+}, 1000); 
     }
     function reloadPage() {
   location.reload();
@@ -350,19 +601,6 @@ color: #0000006b;
         const noteFiles = await response.json();
         return noteFiles;
     }
-
-
-
-
-
-
-
-
-
-
-
-     
-
     async function showNotes() {
             const notesContainer = document.getElementById('notes');
 
@@ -370,13 +608,13 @@ color: #0000006b;
                 const noteFiles = await getNoteFiles();
 
                 for (const file of Object.values(noteFiles)) {
-                    const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
-                    const filePath = `../../file/Bookmark/${file}`;
+                    const linkname = file.replace(/\.[^/.]+$/, '');
+                    const filePath = `/file/Bookmark/${file}`;
                     const content = await readFile(filePath);
                     const noteElement = document.createElement('div');
                     noteElement.className = 'note-element';
                     noteElement.innerHTML = `
-                        <h3>${fileNameWithoutExtension}</h3>
+                        <h3>${linkname}</h3>
                         <div class="delete-btn" onclick="deleteNote('${file}')"></div>
                         <div class="open-page-btn" >
                             </div>
@@ -384,14 +622,19 @@ color: #0000006b;
 
                     noteElement.addEventListener('click', async function(event) {
                         const target = event.target;
-                        const iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+                        let iframeSrc;
+                        if (file.endsWith('.bok')) {
+                            iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+                        }
+                       else{
+                         iframeSrc = content.startsWith('http') ? content : `http://${window.location.hostname}${filePath}`;
+                       }     
                         if (target.classList.contains('delete-btn') || target.classList.contains('open-page-btn') || target.classList.contains('iframe-delete-btn')) {
                             return;
                         }
 
                         const iframeContainer = noteElement.querySelector('.iframe-container');
                         if (!iframeContainer) {
-                            
                             openPage(iframeSrc);
                             
                             
@@ -399,7 +642,7 @@ color: #0000006b;
                     });
 
                     noteElement.querySelector('.open-page-btn').addEventListener('click', function() {
-                        createIframe(noteElement, content);
+                        createIframe(noteElement, content, filePath, file);
                         
                     });
                     noteElement.querySelector('.open-page-btn').addEventListener('click', function() {
@@ -408,39 +651,30 @@ color: #0000006b;
 
                     notesContainer.appendChild(noteElement);
                 }
-
-                const addButton = document.createElement('button');
-                addButton.className = 'add-btn';
-                addButton.onclick = showAddNoteForm;
-                addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
-                addButton.addEventListener('mouseenter' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/add_white.svg)';
-        }
-    )
-    addButton.addEventListener('mouseleave' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
-        }
-    )
-                notesContainer.appendChild(addButton);
             } catch (error) {
                 console.error('Error reading files:', error);
             }
         }
-
-    window.onload = showNotes;
-
-    function openPage(url) {
+        function openPage(url) {
+            // console.log(url);
             window.location.href = url;
         }
+   
 
-        function createIframe(container, content) {
+   
+
+        function createIframe(container, content,filePath ,file) {
 
             const iframeContainer = document.createElement('div');
             iframeContainer.className = 'iframe-container';
 
-            const iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+            let iframeSrc;
+                        if (file.endsWith('.bok')) {
+                            iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+                        }
+                       else{
+                         iframeSrc = content.startsWith('http') ? content : `http://${window.location.hostname}${filePath}`;
+                       }    
             iframeContainer.innerHTML = `
                 <iframe src="${iframeSrc}" style="width:100%; height:500px;"></iframe>
                 <div class="iframe-delete-btn" onclick="closeIframe(this)"></div>
@@ -463,106 +697,58 @@ color: #0000006b;
 
 // JavaScript函数用于显示添加新便签的表单
 function showAddNoteForm() {
-    // 创建新的便签元素
-    const newNoteElement = document.createElement('div');
-
-    // 创建标题元素并设置为可编辑
-    const newTitleElement = document.createElement('h3');
-    newTitleElement.contentEditable = 'true';
-    newTitleElement.setAttribute('data-placeholder', '输入标题');
-    newTitleElement.addEventListener('click', function() {
-        if (this.innerText === '输入网站名称') {
-            this.innerText = '';
-        }
-    });
-    newNoteElement.appendChild(newTitleElement);
-    // 添加输入事件监听器
-    newTitleElement.addEventListener('input', function () {
-        const newTitle = newTitleElement.innerText;
-
-        // 检查文件名是否包含%或#
+    const newTitleElement = document.getElementById('tit-bar');
+    const newTitle = newTitleElement.innerText;
         if (newTitle.includes('%') || newTitle.includes('#')) {
-            alert('网站名不能包含非法字符(#或%)，删除该字符后再输入。');
+            alert('标题包含非法字符(#或%)，删除该字符后再输入。');
+            return;
           
         }
-    });
+        else if (newTitle == ''){
+            alert('请输入标题');
+            return;
+        }
+ 
 
     // 创建文本区域元素
-    const newContentElement = document.createElement('textarea');
-    newContentElement.rows = '4';
-    newContentElement.cols = '50';
-    newContentElement.placeholder = '输入网址';
-    newNoteElement.appendChild(newContentElement);
-
-    // 创建确认按钮
-    const confirmButton = document.createElement('button');
-    confirmButton.className = 'add-btn';
-    confirmButton.style.backgroundImage = 'url(../../icon/yes.svg)';
-    confirmButton.addEventListener('mouseenter' , 
-        function () {
-            confirmButton.style.backgroundImage = 'url(../../icon/yes_white.svg)';
-        }
-    )
-    confirmButton.addEventListener('mouseleave' , 
-        function () {
-            confirmButton.style.backgroundImage = 'url(../../icon/yes.svg)';
-        }
-    )
-    confirmButton.onclick = function () {
-        const newTitle = newTitleElement.innerText;
-        const newContent = newContentElement.value;
-        addNewNoteRequest(newTitle, newContent);
-
+    const newContentElement = document.getElementById('word-bar');
         
-    };
-    newNoteElement.appendChild(confirmButton);
-
-    // 创建取消按钮
-    const addButton = document.querySelector('.add-btn');
-    addButton.style.backgroundImage = 'url(../../icon/no_red.svg)';
-    addButton.addEventListener('mouseenter' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/no_pink.svg)';
-        }
-    )
-    addButton.addEventListener('mouseleave' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/no_red.svg)';
-        }
-    )
-    addButton.onclick = function () {
-        // 取消添加新便签的操作
-        newNoteElement.remove();
-        addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
-        addButton.addEventListener('mouseenter' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/add_white.svg)';
-        }
-    )
-    addButton.addEventListener('mouseleave' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/add_red.svg)';
-        }
-    )
-        // 恢复按钮文本和行为为添加新便签
-        addButton.onclick = showAddNoteForm;
-    };
-
-    // 将新便签元素添加到页面中的开头
-    const notesContainer = document.getElementById('notes');
-    notesContainer.appendChild(newNoteElement);
-
-    // 设置新便签的标题为焦点
-    newTitleElement.focus();
+        const newContent = newContentElement.innerText;
+        addNewNoteRequest(newTitle, newContent);
+        newContentElement.innerText ='';
+        newTitleElement.innerText ='';
 }
 
 
 
 
 
-   
+   // 异步函数，用于向服务器发送添加新便签的请求
+async function addNewNoteRequest(newTitle, newContent) {
+    const formData = new FormData();
+    formData.append('newTitle', newTitle);
+    formData.append('newContent', newContent);
 
+    try {
+        const response = await fetch('bok_addNote.php', {
+            method: 'POST',
+            body: formData
+        });
 
+        const result = await response.text();
+        
+        // 根据服务器的响应判断是否需要弹窗
+        if (result === 'FileExistsError') {
+            alert('标题名已存在，请选择不同的名称。');
+        } else {
+            // 重新加载便签
+            document.getElementById('notes').innerHTML = '';
+            showNotes();
+        }
+    } catch (error) {
+        console.error('Error adding new note:', error);
+    }
+}
 
     // JavaScript函数用于删除便签
     function deleteNote(fileName) {
@@ -594,47 +780,40 @@ function showAddNoteForm() {
         }
     }
 
+  function selfile() {
+  var files = document.getElementsByTagName('input')[0].files;
+  if (files.length === 0) {
+    alert('请先选择文件。');
+    return;
+  }
+  document.getElementById('word-bar').style.display='none';
+  document.getElementById('progress').style.display='block';
+  var fd = new FormData();
+  for (var i = 0; i < files.length; i++) {
+    fd.append('pic[]', files[i]);
+  }
 
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'upload.php', true);
 
-
-
-
-
-
-  
-
-
-
-   // 异步函数，用于向服务器发送添加新便签的请求
-async function addNewNoteRequest(newTitle, newContent) {
-    const formData = new FormData();
-    formData.append('newTitle', newTitle);
-    formData.append('newContent', newContent);
-
-    try {
-        const response = await fetch('bok_addNote.php', {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.text();
-        
-        // 根据服务器的响应判断是否需要弹窗
-        if (result === 'FileExistsError') {
-            alert('网站存在，请选择不同的名称。');
-        } else {
-            // 重新加载便签
-            document.getElementById('notes').innerHTML = '';
-            showNotes();
-        }
-    } catch (error) {
-        console.error('Error adding new note:', error);
+  xhr.upload.onprogress = function(ev) {
+    if (ev.lengthComputable) {
+      var percent = 100 * ev.loaded / ev.total;
+      var percentElement = document.getElementById('percent');
+      document.getElementById('bar').style.width = percent + '%';
+      percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
     }
+  };
+
+  xhr.onload = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) { // 请求已完成
+   
+  }
+  };
+
+  xhr.send(fd);
+  reloadPage();
 }
-
- 
-
-
 </script>
 </body>
 </html>

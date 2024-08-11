@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#2DB78C"/>
+    <meta name="theme-color" content="#1e594d"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📝</title>
     <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
@@ -24,7 +24,7 @@
         }
         body{
             overflow-x: hidden !important;
-            
+            align-items: center;
             background-image: url(../../icon/not_pc.svg);
             background-attachment:fixed;
             background-size: cover;
@@ -32,41 +32,54 @@
             font-size: 100%;
             margin: 0;
             padding: 0;
-            background-color: aqua;
+            background-color: #1e594d;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-           
+           transition: background-image 1s ease;
         }
         body::-webkit-scrollbar {
     display: none; /* 隐藏滚动条 */
 }
    
-header{
-  font-size: 70px;
-      cursor: pointer;
-      height: 60px !important;
-      color: #40f7a1 !important;
-        background-color: #0da56663 !important;
-      padding: 10px;
-      text-align: center;
+.backbtn{
+  cursor: pointer;
+  position: fixed;
+  text-align: left;
+  width: 15% ;
+  height: 60px;
+  left: -30%;
+  margin-top: 10px;
+  font-size: 200%;
+  z-index: 10;
+  transition: left 1s ease , width 1s ease;
+}
+
+#name{
+  width: 100%;
+  height: 100%;
+  background-image: url(../../icon/name_green.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.backbtn:hover #name{
+  background-image: url(../../icon/name_white.svg);
+}
+#cover-bar{
+      border-bottom-left-radius: 1em;
+      border-bottom-right-radius: 1em;
+      top: -150px;
       position: fixed;
       width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
-}
-header:hover{
-    color: #656d79 !important;
-    background-color: #1e2325d2 !important;
+      height: 80px;
+      z-index: 10;
+      background-color: #1e594d;
+      transition: top 1s ease;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
     }
-
-    
-.home{
-  position:relative;
-      bottom: -20px;
-}
         .expand-btn, .edit-btn, .delete-btn {
             cursor: pointer;
             padding: 8px 16px;
@@ -75,31 +88,113 @@ header:hover{
             margin-right: 8px;
             background-image: url(../../icon/down_green.svg);
         }
-        .note{
-  cursor: pointer;
-  margin-top: 130px;
-  left: 50% !important;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 100px;
-  background-image: url(../../icon/note.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 100;
-}
-.note:hover{
-  background-image: url(../../icon/note_open.svg);
-}
+        #top-bar{
+            padding: 10px;
+            border-radius: 1em;
+            top: 100px;
+            position: fixed;
+            background-color: #086855a6;
+            width: 0;
+            opacity: 0;
+            height: fit-content;
+            display: flex;
+            flex-direction: row;
+            z-index: 10;
+            transition: all 1s ease;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),  
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068), 
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
+        }
+        #add{
+            position: relative;
+            top: 5px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            background-color: transparent;
+            background-image: url(../../icon/add_green.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #add:hover{
+            background-image: url(../../icon/add_white.svg);
+        }
+        #tit-bar{
+            padding: 5px;
+            padding-top: 10px;
+            border-radius: 1em;
+            left: 0;
+            width: 20%;
+            font-weight:bold;
+            color: #4cb39b;
+            min-height: 30px;
+            margin-right: 10px;
+            margin-left: 10px;
+            background-color: transparent;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+        }
+        #tit-bar:focus{
+            outline: none;
+        }
+        #load{
+            position: relative;
+            top: 5px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            background-color: transparent;
+            background-image: url(../../icon/load_green.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #load:hover{
+            background-image: url(../../icon/load_white.svg);
+        }
+        #word-bar{
+            padding: 5px;
+            padding-top: 10px;
+            right: 0;
+            border-radius: 1em;
+            width: 80% ;
+            color: #4cb39b;
+            margin-right: 10px;
+            min-height: 30px;
+            font-weight: bold;
+            background-color: transparent;
+            box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+        }
+        #word-bar:focus{
+            outline: none;
+        }
+     #notes{
+        
+        position: relative;
+        width: 0;
+        opacity: 0;
+        display: flex;
+        transition: all 1s ease;
+        top: 220px;
+        align-items: center;
+        flex-direction: column;
+     }
 h3{
-    color: #075832;
+    color: #4ca894;
 }
-
+h3:focus{
+    outline: none;
+}
         .expand-btn {
             position: absolute;
-           
+    bottom: 0;
+    left: 50%;
             bottom: 0;
-            left: 50%;
             font-size: 150%;
             cursor: pointer;
             width: 32px;
@@ -162,7 +257,10 @@ h3{
             z-index: 10;
            
         }
-        
+        .add-btn{
+            position: fixed;
+            top: 80px;
+        }
         .add-btn:hover, .yes-btn:hover, .no-btn:hover{
             background-color: #0d5d64 !important;
         }
@@ -196,33 +294,32 @@ h3{
         }
        
         .note-element {
+            width: 80%;
             position: relative;
             border-radius: 1em;
-            margin-left: 10%;
-            margin-right: 10%;
-            height: 100%;
             border: 1px solid #ffffff00;  
             margin-bottom: 50px;   
             padding: 10px; 
-            background-color: rgba(38, 235, 160, 0.479);
+            background-color: #1d584da4;
             align-items: center ;
             overflow: hidden;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+            transition: all 1s ease;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),  
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068), 
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
         }
         .word{
-            color: rgb(4, 70, 34);
+            color: #53af94;
+            font-weight: bold;
             max-width: auto;
             width: 100%;
             
         }
-        
-        #note{
-            width: 80%;
-            align-items: center ;
+        .word:focus{
+            outline: none;
         }
+      
         h3[contenteditable="true"] {
             position: relative;
             border: 10px;
@@ -265,6 +362,28 @@ h3{
               inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
               inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
             }
+            #top-btn{
+  cursor: pointer;
+  background-image: url(../../icon/toup_green.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 45px;
+  height: 45px;
+  background-color: #11463bc5;
+position: fixed;
+bottom: -25%;
+z-index: 10;
+border-radius: 50%;
+transition: bottom 1s ease;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068); 
+}
+#top-btn:hover{
+  background-color: #0d977cc5;
+  background-image: url(../../icon/toup_white.svg);
+}
             @media only screen and (max-width: 600px) {
     
             .phone_background {
@@ -287,6 +406,23 @@ h3{
         #backButton{
             height: 40px;
         }
+        .next {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+          background:no-repeat center center;
+          background-size:cover;
+            overflow:hidden;
+            overflow-x: hidden; 
+            opacity: 0;
+            transition: opacity 1s ease ; 
+            z-index: 1;
+        }
+        .backbtn{
+          width: 25% ;
+        }
         h2{
             left: 31%;
             margin-top: 20%;
@@ -301,14 +437,61 @@ h3{
     <div class="phone_background">
         <div class="fixed" style="background-image:url(../../icon/not_phone.svg);"></div>
     </div>
-    <header>
-        <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
-        
-      </header>
-      <div class="note" onclick="reloadPage()"title="恩的便签"></div>
-<div id="notes"></div>
-<script src="../js/header.js"></script>
+    <div class="next" ></div>
+    <div id="cover-bar"></div>
+    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+    <div id="top-bar">
+        <div id="add" title="添加便签" onclick="showAddNoteForm()"></div >
+        <div id="tit-bar" contenteditable="true" title="标题"></div>
+        <div id="word-bar" contenteditable="true" title="正文"></div>
+        <div id="load" title="刷新" onclick="reloadPage()"></div >
+    </div>
+    <div id="top-btn" onclick="totop()" title="回到顶部"></div>
+    <div id="notes"></div>
 <script>
+    function handleScroll() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+        // 当垂直滚动超过100px时改变背景颜色
+        if (scrollTop > 100) {
+            document.getElementById('top-btn').style.bottom = '15%';
+          document.getElementById('top-bar').style.top = '10px';
+          document.getElementById('top-bar').style.marginLeft = '20%';
+          document.getElementById('top-bar').style.width = '65%';
+          document.getElementById('top-bar').style.backgroundColor = 'transparent';
+          document.getElementById('top-bar').style.boxShadow = 'none';
+          document.querySelector('.backbtn').style.left = '1%';
+          document.querySelector('.backbtn').style.width = '15%';
+          document.getElementById('cover-bar').style.top = '0';
+          
+        } else {
+            document.getElementById('top-btn').style.bottom = '';
+          document.getElementById('top-bar').style.top= '';
+          document.getElementById('top-bar').style.marginLeft = '';
+          document.getElementById('top-bar').style.width = '80%';
+          document.getElementById('top-bar').style.backgroundColor = '';
+          document.getElementById('top-bar').style.boxShadow = '';
+          document.querySelector('.backbtn').style.left = '5%';
+          document.querySelector('.backbtn').style.width = '';
+          document.getElementById('cover-bar').style.top = '';
+         
+        }
+}
+window.addEventListener('scroll', handleScroll);
+  
+     function comin(){
+        showNotes();
+        
+      
+        document.getElementById('top-bar').style.width ='80%';
+        document.getElementById('top-bar').style.opacity = '1';
+      document.querySelector('.backbtn').style.left = '5%';
+        document.getElementById(`notes`).style.width='100%';
+        document.getElementById(`notes`).style.opacity='1';
+    };
+
+    window.onload = comin;
+
      $(function() {
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -350,9 +533,27 @@ h3{
         });
     }
 });
-
+function totop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth' // 添加平滑滚动效果
+    });
+  }
     function goBack() {
-      window.location.href = '/';
+        document.getElementById('top-bar').style.width ='';
+        document.getElementById('top-bar').style.opacity = '';
+        document.getElementById('cover-bar').style.top = `-80px`;
+      document.querySelector('.backbtn').style.left = '';
+      document.getElementById('top-btn').style.bottom = `-5%`;
+        document.getElementById(`notes`).style.width='';
+        document.getElementById(`notes`).style.opacity='';
+        document.querySelector('body').style.backgroundImage = `url('../../icon/home_pc.svg')`;
+        document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
+    document.querySelector('.next').style.opacity ='1';  
+        setTimeout(() => {
+    window.location.replace('/');
+}, 1000); 
     }
     function reloadPage() {
   location.reload();
@@ -364,35 +565,19 @@ h3{
     }
 
     async function getNoteFiles() {
-        const response = await fetch('not_getFiles.php');
-        const noteFiles = await response.json();
-        return noteFiles;
-    }
+    const timestamp = new Date().getTime(); // 获取当前时间戳
+    const response = await fetch(`not_getFiles.php?timestamp=${timestamp}`);
+    const noteFiles = await response.json();
+    
+    return noteFiles;
+}
+
 
     async function showNotes() {
         const notesContainer = document.getElementById('notes');
-
+        
         try {
-            // 添加“添加新便签”按钮
-            const addButton = document.createElement('button');
-            addButton.className = 'add-btn';
-            addButton.title ='添加新便签';
-            addButton.style.backgroundImage = 'url(../../icon/add_green.svg)';
-            addButton.addEventListener('mouseenter' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/add_white.svg)';
-        }
-    )
-    addButton.addEventListener('mouseleave' , 
-        function () {
-            addButton.style.backgroundImage = 'url(../../icon/add_green.svg)';
-        }
-    )
-            addButton.onclick = showAddNoteForm;
-            notesContainer.appendChild(addButton);
-
             const noteFiles = await getNoteFiles();
-
             for (const file of Object.values(noteFiles)) {
                 const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
                 const filePath = `../../file/Note/${file}`;
@@ -414,19 +599,6 @@ h3{
             console.error('Error reading files:', error);
         }
     }
-
-    window.onload = showNotes;
-    
-
-
-
-
-
-
-
-
-   
-
 
     let isEditing = false;
     let originalFileName;
@@ -459,7 +631,7 @@ function enableEditMode(editBtn) {
     }
 
     // 更改编辑按钮的行为为保存按钮
-    editBtn.style.backgroundImage = 'url(../../icon/save.svg)';
+    editBtn.style.backgroundImage = 'url(../../icon/save_green.svg)';
     editBtn.title = "保存";
     editBtn.addEventListener('mouseenter' , 
         function () {
@@ -468,7 +640,7 @@ function enableEditMode(editBtn) {
     )
     editBtn.addEventListener('mouseleave' , 
         function () {
-            editBtn.style.backgroundImage = 'url(../../icon/save.svg)';
+            editBtn.style.backgroundImage = 'url(../../icon/save_green.svg)';
         }
     )
     editBtn.onclick = function () {
@@ -495,14 +667,6 @@ function checkDuplicateFileName(newFileName) {
     }
     return false; // 文件名不重复
 }
-
-
-
-
-
-
-
-
 // JavaScript函数用于保存编辑后的便签内容
 function saveNoteChanges(noteElement) {
     const titleElement = noteElement.querySelector('h3');
@@ -689,83 +853,26 @@ async function saveNoteRequest (newTitle, newContent) {
 
    // JavaScript函数用于显示添加新便签的表单
 function showAddNoteForm() {
-    // 创建新的便签元素
-    const newNoteElement = document.createElement('div');
-    const addbutton = document.querySelector('.add-btn');
-    addbutton.style.display = "none";
-
-    // 创建标题元素并设置为可编辑
-    const newTitleElement = document.createElement('h3');
-    newTitleElement.contentEditable = 'true';
-    newTitleElement.setAttribute('data-placeholder', '输入标题');
-    
-    newNoteElement.appendChild(newTitleElement);
-    // 添加输入事件监听器
-    newTitleElement.addEventListener('input', function () {
-        const newTitle = newTitleElement.innerText;
-
-        // 检查文件名是否包含%或#
+    const newTitleElement = document.getElementById('tit-bar');
+    const newTitle = newTitleElement.innerText;
         if (newTitle.includes('%') || newTitle.includes('#')) {
-            alert('标题名不能包含非法字符(#或%)，删除该字符后再输入。');
+            alert('标题包含非法字符(#或%)，删除该字符后再输入。');
+            return;
           
         }
-    });
+        else if (newTitle == ''){
+            alert('请输入标题');
+            return;
+        }
+ 
 
     // 创建文本区域元素
-    const newContentElement = document.createElement('textarea');
-    newContentElement.rows = '4';
-    newContentElement.cols = '50';
-    newContentElement.placeholder = '输入内容';
-    newNoteElement.appendChild(newContentElement);
-
-    // 创建确认按钮
-    const confirmButton = document.createElement('button');
-    confirmButton.className = 'yes-btn';
-    confirmButton.style.backgroundImage = 'url(../../icon/yes_white.svg)';
-    confirmButton.title ='确认创建';
-    confirmButton.addEventListener('mouseenter' , 
-        function () {
-            confirmButton.style.backgroundImage = 'url(../../icon/yes.svg)';
-        }
-    )
-    confirmButton.addEventListener('mouseleave' , 
-        function () {
-            confirmButton.style.backgroundImage = 'url(../../icon/yes_white.svg)';
-        }
-    )
-    confirmButton.onclick = function () {
-        const newTitle = newTitleElement.innerText;
-        const newContent = newContentElement.value;
-        addNewNoteRequest(newTitle, newContent);
-
+    const newContentElement = document.getElementById('word-bar');
         
-    };
-    newNoteElement.appendChild(confirmButton);
-
-    // 创建取消按钮
-    const removebtn = document.createElement('button');
-    removebtn.className = 'no-btn';
-    removebtn.style.backgroundImage = 'url(../../icon/no_pink.svg)';
-    removebtn.title ='取消创建';
-    removebtn.addEventListener('mouseenter' , 
-        function () {
-            removebtn.style.backgroundImage = 'url(../../icon/no_red.svg)';
-        }
-    )
-    removebtn.addEventListener('mouseleave' , 
-        function () {
-            removebtn.style.backgroundImage = 'url(../../icon/no_pink.svg)';
-        }
-    )
-    removebtn.onclick = reloadPage;
-    newNoteElement.appendChild(removebtn);
-
-    // 将新便签元素添加到页面中的开头
-    const notesContainer = document.getElementById('notes');
-    notesContainer.insertBefore(newNoteElement, notesContainer.firstChild);
-
-    // 设置新便签的标题为焦点
-    newTitleElement.focus();
+        const newContent = newContentElement.innerText;
+        addNewNoteRequest(newTitle, newContent);
+        newContentElement.innerText ='';
+        newTitleElement.innerText ='';
 }
 
 
@@ -792,7 +899,7 @@ async function addNewNoteRequest(newTitle, newContent) {
         } else {
             // 重新加载便签
             document.getElementById('notes').innerHTML = '';
-            reloadPage();
+            showNotes();
         }
     } catch (error) {
         console.error('Error adding new note:', error);

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="theme-color" content="#E4689E"/>
+  <meta name="theme-color" content="#6f2a4d"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
   <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📃</title>
   <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon"> 
@@ -13,6 +13,7 @@
     <script src="StreamSaver.min.js"></script>
 
   <style>
+    
      .downloadLink {
       display: inline-block;
       width: 32px;
@@ -26,6 +27,21 @@
     }
     .downloadLink:hover {
       background-image: url(../../icon/download_white.svg) !important;
+    }
+    #cover-bar{
+      border-bottom-left-radius: 1em;
+      border-bottom-right-radius: 1em;
+      top: -150px;
+      position: fixed;
+      width: 100%;
+      height: 80px;
+      z-index: 10;
+      background-color: #6f2a4d;
+      transition: top 1s ease;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
     }
     
      .ui-tooltip {
@@ -46,7 +62,7 @@
       font-size: 100%;
       margin: 0;
       padding: 0;
-      background-color: pink;
+      background-color: #6f2a4d;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -55,49 +71,35 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      transition: background-image 1s ease;
     }
     body::-webkit-scrollbar {
     display: none; /* 隐藏滚动条 */
 }
-header{
-  font-size: 70px;
-      cursor: pointer;
-      height: 60px !important;
-      color: #cc3f86 !important;
-        background-color: #c21e7063 !important;
-      padding: 10px;
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
-}
-header:hover{
-  color: #656d79 !important;
-  background-color: #1e2325d2 !important;
-    }
-
-    
-.home{
-  position:relative;
-      bottom: -20px;
-}
-.folder{
+.backbtn{
   cursor: pointer;
-  left: 50%;
-  margin-top: 130px;
-  width: 100px;
-  height: 100px;
-  background-image: url(../../icon/folder.svg);
-  background-repeat: no-repeat;
+  position: fixed;
+  text-align: left;
+  width: 15% ;
+  height: 60px;
+  left: -30%;
+  margin-top: 10px;
+  font-size: 200%;
+  z-index: 10;
+  transition: left 1s ease , width 1s ease;
+}
+
+#name{
+  width: 100%;
+  height: 100%;
+  background-image: url(../../icon/name_pink.svg);
   background-position: center;
-  z-index: 100;
+  background-repeat: no-repeat;
 }
-.folder:hover{
-  background-image: url(../../icon/folder_open.svg);
+.backbtn:hover #name{
+  background-image: url(../../icon/name_white.svg);
 }
+    
 
 
 
@@ -150,31 +152,38 @@ header:hover{
       max-width: 80%;
     }
     
-
+    
     
     #fileListContainer {
-      margin-top: 10px;
-      width: 80%;
+      overflow-y: hidden;
+      margin-top: 150px;
+      width: 0;
       position: relative;
-      max-width: 80%;
       border: none;
-      border-radius: 1em;
+      background-color: transparent;
       overflow: hidden;
-      z-index: 1;
+      z-index: 9;
       margin-bottom: 2em;
-      background-color: #f07cb48e;
       position: relative;
+      overflow: visible;
+      transition: width 1s ease;
+      
+    }
+    #top-bar{
+      top: 77px;
+      margin-left: 0;
+      border-radius: 1em;
+       background-color: #7a2250a6;
+      display:inline-flex;
+      height: 0;
+      width: 80%;
+      position: fixed;
+      z-index: 10;
+      transition: height 1s ease, top 1s ease , width 1s ease,margin-left 1s ease,background-color 1s ease ;
       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
   -5px -5px 20px rgba(0, 0, 0, 0.068), 
   5px -5px 20px rgba(0, 0, 0, 0.068),  
   -5px 5px 20px rgba(0, 0, 0, 0.068);  
-    }
-    #top-bar{
-       background-color: #c21e704d;
-      display:inline-flex;
-      height: 60px;
-      width: 100%;
-      
       
     }
     .path-bar{
@@ -185,7 +194,7 @@ header:hover{
       margin-left: 10px;
       margin-top: 10px;
       margin-bottom: 10px;
-      margin-right: 1%;
+      margin-right: 0.5%;
       border-radius: 1em;
       position: relative;
       box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
@@ -199,12 +208,12 @@ header:hover{
       background-image: url(../../icon/upload_pink.svg);
       background-position: center;
       background-repeat: no-repeat;
-      margin-right: 10px;
       width: 32px;
-      height: 32px;
+      max-height: 32px;
       margin-top: 15px;
       margin-bottom: 10px;
       margin-left: 10px;
+      margin-right: 10px;
     }
     .custom-upload-btn:hover{
       background-image: url(../../icon/upload_white.svg);
@@ -218,7 +227,7 @@ header:hover{
       margin-left: 1%;
       text-align: left;
       font-weight: bold;
-      color: #0000008c;
+      color: #ca6899;
       overflow-x: hidden;
     }
     
@@ -227,7 +236,7 @@ header:hover{
       background-color: transparent;
       border: none;
       width: 32px;
-      height: 32px;
+      max-height: 32px;
       margin-top: 15px;
       margin-bottom: 10px;
       margin-left: 10px;
@@ -255,6 +264,24 @@ header:hover{
     #cancel:hover{
       background-image: url(../../icon/no_red.svg);
     }
+    #loadButton{
+      background-image: url(../../icon/load_pink.svg);
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      right: 10px;
+      bottom: 6px;
+      opacity: 0.5;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    #loadButton:hover{
+      opacity: 1;
+      background-image: url(../../icon/load_white.svg);
+    }
 
     #fileList {
       padding: 0;
@@ -266,23 +293,34 @@ header:hover{
       cursor: pointer;
       margin-bottom: 1em;
       display: flex;
+      height: 70px;
+      max-height: 70px;
+      background-color: #a156738e;
       justify-content: space-between;
+      margin-bottom: 20px;
       align-items: center;
       font-size: 120%;
-      border-bottom: 0.1em solid rgba(173, 96, 134, 0.445);
+      border-bottom: none;
       padding: 1.4%;
       position: relative;
+      text-overflow: ellipsis;
+      border-radius: 1em;
+      transition: height 1S ease;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
     }
 
     .fileLink {
       
       color: #6b003e;
       font-weight: bold;
-      /* text-decoration: underline; */
-      margin-right: 10%;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 42ch; /* 控制显示的最大宽度，ch 是一个字符宽度单位 */
+      margin-right: 10%;
+      max-width: 100% !important;  
     }
     .fileLink:hover,.folderLink:hover{
       color: rgb(245, 38, 183);
@@ -292,9 +330,10 @@ header:hover{
       text-decoration: underline; /* 添加下划线 */
       font-weight: bold;
       margin-right: 10%;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 42ch; /* 控制显示的最大宽度，ch 是一个字符宽度单位 */
+      max-width: 100% !important;  
     }
 
 
@@ -383,6 +422,32 @@ header:hover{
   background-image: url(../../icon/no_red.svg);
   background-color: #e99fc485;
 }
+#top-btn{
+  cursor: pointer;
+  background-image: url(../../icon/toup_pink.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 45px;
+  height: 45px;
+  background-color: #8d5c7886;
+position: fixed;
+bottom: -25%;
+z-index: 10;
+border-radius: 50%;
+transition: bottom 1s ease;
+box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068); 
+}
+#top-btn:hover{
+  background-color: #5e03389a;
+  background-image: url(../../icon/toup_white.svg);
+}
+.all{
+      top: 0;
+      transition: bottom 1s ease;
+    }
         
         @keyframes rotate-loading {
             0% {
@@ -414,7 +479,23 @@ header:hover{
     overflow:hidden;
     overflow-x: hidden;
 }
-
+.next {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+          background:no-repeat center center;
+          background-size:cover;
+            overflow:hidden;
+            overflow-x: hidden; 
+            opacity: 0;
+            transition: opacity 1s ease ; 
+            z-index: 1;
+        }
+        .backbtn{
+          width: 25% ;
+        }
     .fileLink {
       
   
@@ -437,35 +518,84 @@ header:hover{
 <body>
   <div class="phone_background">
     <div class="fixed" style="background-image:url(../../icon/doc_phone.svg);"></div>
+    <div class="next" ></div>
   </div>
-  
-    <header>
-      <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
-      
-    </header>
-  <div class="folder" onclick="reloadPage()"title="恩的文件"></div>
-  <div id="closeifame" style="display: none;" onclick="closeifame()" title="关闭预览"></div>
-  <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
-  
-  <div id="fileListContainer" >
-    <div id="top-bar">
-      <button id="upButton"  onclick="goUp()" title="返回上一级"></button>
-      <button id="cancel"  style="display: none;" onclick="cancelUpload()" title="取消上传"></button>
-      <div class="path-bar" id="path-bar">
-        <div class="current-path" id="currentPath" >/</div>
-        <div id="progress" style="display: none;">
-          <div id="bar"><div id="percent"></div></div>
-        </div>
+  <div id="cover-bar"></div>
+  <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+  <div id="top-bar">
+    <button id="upButton"  onclick="goUp()" title="返回上一级"></button>
+    
+    <button id="cancel"  style="display: none;" onclick="cancelUpload()" title="取消上传"></button>
+    <div class="path-bar" id="path-bar">
+      <div class="current-path" id="currentPath" >/</div>
+      <button id="loadButton"  onclick="reloadPage()" title="刷新"></button>
+      <div id="progress" style="display: none;">
+        <div id="bar"><div id="percent"></div></div>
       </div>
-      <label for="uploadfile" class="custom-upload-btn" id="up-btn" title="上传文件"></label>
-      <div class="rotate-box"  id="rotate-box"style="display: none;"><div class="rotate-loading" id="loading" style="display: none;"></div></div> 
     </div>
     
-    <ul id="fileList"></ul>
+    <label for="uploadfile" class="custom-upload-btn" id="up-btn" title="上传文件"></label>
+    <div class="rotate-box"  id="rotate-box"style="display: none;"><div class="rotate-loading" id="loading" style="display: none;"></div></div> 
+  </div>
     
+  
+  <div id="closeifame" class="all" style="display: none;" onclick="closeifame()" title="关闭预览"></div>
+  <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
+  <div id="top-btn" onclick="totop()" title="回到顶部"></div>
+  
+ 
+  <div id="fileListContainer" class="all">
+    <ul id="fileList" class="all"></ul>
+
   </div> 
-  <script src="../js/header.js"></script>
+  </div>
   <script>
+   
+   function handleScroll() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+        // 当垂直滚动超过100px时改变背景颜色
+        if (scrollTop > 100) {
+          document.getElementById('top-btn').style.bottom = '5%';
+          document.querySelector('.backbtn').style.left = '1%';
+          document.querySelector('.backbtn').style.width = '15%';
+          document.getElementById('top-bar').style.boxShadow = 'none';
+          document.getElementById('top-bar').style.top = '10px';
+          document.getElementById('top-bar').style.width = '70%';
+          document.getElementById('top-bar').style.marginLeft = '10%';
+          document.getElementById('top-bar').style.backgroundColor = 'transparent';
+          document.getElementById('cover-bar').style.top = '0';
+          
+        } else {
+          document.getElementById('top-btn').style.bottom = '';
+          document.querySelector('.backbtn').style.left = '5%';
+          document.querySelector('.backbtn').style.width = '';
+          document.getElementById('top-bar').style.boxShadow = '';
+          document.getElementById('top-bar').style.top = '77px';
+          document.getElementById('top-bar').style.width = '80%';
+          document.getElementById('top-bar').style.marginLeft = '';
+          document.getElementById('top-bar').style.backgroundColor = '';
+          document.getElementById('cover-bar').style.top = '';
+         
+        }
+}
+
+window.addEventListener('scroll', handleScroll);
+  
+function totop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth' // 添加平滑滚动效果
+    });
+  }
+  function comin(){
+      document.querySelector('.backbtn').style.left = '5%';
+      document.getElementById('fileListContainer').style.width = `80%`;
+      document.getElementById('top-bar').style.height = `60px`;
+    };
+    window.onload = comin;
+   
   $(function() {
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -509,7 +639,19 @@ header:hover{
   });
 
   function goBack() {
-    window.location.href = '/';
+    window.removeEventListener('scroll',handleScroll);
+    document.getElementById('cover-bar').style.top = `-80px`;
+    document.querySelector('.backbtn').style.left = '-30%';
+      document.getElementById('fileListContainer').style.width = `0`;
+      document.getElementById('top-bar').style.height = `0`;
+      document.getElementById('top-btn').style.bottom = `-5%`;
+      document.querySelector('body').style.backgroundImage = `url('../../icon/home_pc.svg')`;
+      document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
+    document.querySelector('.next').style.opacity ='1';  
+    
+    setTimeout(() => {
+    window.location.replace('/');
+}, 1000); // 1000 毫秒 = 1 秒
   }
 
   function reloadPage() {
@@ -530,7 +672,6 @@ header:hover{
       alert('请先选择一个文件进行上传。');
         return; // 没有选择文件，直接返回
     }
-    console.log('Loading function called');
     path.style.display = 'none';
     upbtn.style.display = 'none';
     goupbtn.style.display = 'none';
@@ -719,113 +860,7 @@ header:hover{
 
   xhr.onload = function() {
     if (xhr.readyState === XMLHttpRequest.DONE) { // 请求已完成
-    switch (xhr.status) {
-      case 200:
-        // 状态码 200: 请求成功
-        console.log('请求成功:', xhr.responseText);
-        reloadPage();
-        break;
-      case 201:
-        // 状态码 201: 资源已创建
-        alert('资源已创建:', xhr.responseText);
-        break;
-      case 204:
-        // 状态码 204: 无内容
-        alert('请求成功，但没有返回内容。');
-        break;
-        case 400:
-        // 状态码 400: Bad Request
-        alert('请求无效，请检查您的输入。');
-        break;
-      case 401:
-        // 状态码 401: Unauthorized
-        alert('未经授权，请登录。');
-        break;
-      case 402:
-        // 状态码 402: Payment Required
-        alert('需要付款，当前操作无法完成。');
-        break;
-      case 403:
-        // 状态码 403: Forbidden
-        alert('您没有权限访问该资源。');
-        break;
-      case 404:
-        // 状态码 404: Not Found
-        alert('请求的资源未找到。');
-        break;
-      case 405:
-        // 状态码 405: Method Not Allowed
-        alert('请求方法不被允许。');
-        break;
-      case 406:
-        // 状态码 406: Not Acceptable
-        alert('请求的资源不可接受。');
-        break;
-      case 407:
-        // 状态码 407: Proxy Authentication Required
-        alert('代理服务器需要身份验证。');
-        break;
-      case 408:
-        // 状态码 408: Request Timeout
-        alert('请求超时，请稍后重试。');
-        break;
-      case 409:
-        // 状态码 409: Conflict
-        alert('请求冲突，可能由于资源状态变化导致。');
-        break;
-      case 410:
-        // 状态码 410: Gone
-        alert('资源已永久删除。');
-        break;
-      case 411:
-        // 状态码 411: Length Required
-        alert('请求必须包含 Content-Length 头。');
-        break;
-      case 412:
-        // 状态码 412: Precondition Failed
-        alert('请求的前提条件失败。');
-        break;
-      case 413:
-        // 状态码 413: Payload Too Large
-        alert('请求的负载过大。');
-        break;
-      case 414:
-        // 状态码 414: URI Too Long
-        alert('请求的 URI 过长。');
-        break;
-      case 415:
-        // 状态码 415: Unsupported Media Type
-        alert('请求的媒体类型不被支持。');
-        break;
-      case 416:
-        // 状态码 416: Range Not Satisfiable
-        alert('请求的范围不满足。');
-        break;
-      case 417:
-        // 状态码 417: Expectation Failed
-        alert('期望的请求头无法满足。');
-        break;
-      case 500:
-        // 状态码 500: 服务器内部错误
-        alert('服务器遇到错误，请稍后重试。');
-        break;
-      case 502:
-        // 状态码 502: 错误的网关
-        alert('网关错误，请稍后重试。');
-        break;
-      case 503:
-        // 状态码 503: 服务不可用
-        alert('服务不可用，请稍后重试。');
-        break;
-      case 504:
-        // 状态码 504: 网关超时
-        alert('请求超时，请稍后重试。');
-        break;
-      default:
-        // 其他状态码
-        alert('发生未知错误，请重试。');
-        break;
-    }
+   
   }
   };
 

@@ -12,20 +12,20 @@
     <style>
         
         body{
-            overflow-x: hidden !important;
             
+            overflow-x: hidden !important;
+            align-items: center;
             background-image: url('../../icon/ter_pc.svg');
             background-attachment:fixed;
             background-size: cover;
             background-repeat: no-repeat;
             font-size: 100%;
-            margin: 0;
             padding: 0;
-            background-color: rgb(250, 208, 21);
+            background-color: #7b6035;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            max-width: 100% !important;
+            max-width: 100% ;
             overflow-x: hidden !important;
             
            
@@ -45,49 +45,46 @@
             overflow-wrap: break-word;
         }
        
-header{
-  font-size: 70px;
-      cursor: pointer;
-      height: 60px !important;
-      color: #e09f11 !important;
-        background-color: #9e87204b !important;
-      padding: 10px;
-      text-align: center;
+        #cover-bar{
+      border-bottom-left-radius: 1em;
+      border-bottom-right-radius: 1em;
+      top: -150px;
       position: fixed;
       width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
-  -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
-}
-header:hover{
-    color: #656d79 !important;
-    background-color: #1e2325d2 !important;
+      height: 80px;
+      z-index: 10;
+      background-color: #7b6035;
+      transition: top 1s ease;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
     }
-
-    .home{
-  position:relative;
-      bottom: -20px;
-}
-.ter{
-  position:relative;
-      bottom: -20px;
-}
-.ter{
+            
+    .backbtn{
   cursor: pointer;
-  margin-top: 130px;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 100px;
-  background-image: url(../../icon/terminal.svg);
-  background-repeat: no-repeat;
+  position: fixed;
+  text-align: left;
+  width: 15% ;
+  height: 60px;
+  left: -30%;
+  margin-top: 10px;
+  font-size: 200%;
+  z-index: 10;
+  transition: left 1s ease , width 1s ease;
+}
+
+#name{
+  width: 100%;
+  height: 100%;
+  background-image: url(../../icon/name_yellow.svg);
   background-position: center;
-  z-index: 100;
+  background-repeat: no-repeat;
 }
-.ter:hover{
-  background-image: url(../../icon/terminal_open.svg);
+.backbtn:hover #name{
+  background-image: url(../../icon/name_white.svg);
 }
+
         .expand-btn, .edit-btn, .delete-btn {
             cursor: pointer;
             padding: 8px 16px;
@@ -102,11 +99,10 @@ header:hover{
                background-image: url(../../icon/key_yellow.svg);
                background-position: center;
                background-repeat: no-repeat;
-            width: 32px;
-            height: 32px;
-             
-            margin-bottom: 50px;   
+            width: 24px;
+            height: 24px; 
             padding: 10px; 
+            margin: 10px;
             background-color: transparent !important;
             align-items: center ;
             
@@ -122,30 +118,42 @@ header:hover{
                background-image: url(../../icon/user_yellow.svg);
                background-position: center;
                background-repeat: no-repeat;
-            height: 32px;
-            width:32px;
-             
-            margin-bottom: 50px;   
+            height: 24px;
+            width:24px; 
             padding: 10px; 
+            margin: 10px;
             background-color: transparent !important;
             align-items: center ;
             }
             #pas:hover{
                background-image: url(../../icon/user_white.svg);
             }
+            #load-btn{
+                cursor: pointer;
+               background-image: url(../../icon/load_yellow.svg);
+               background-position: center;
+               background-repeat: no-repeat;
+            height: 24px;
+            width:24px; 
+            padding: 10px; 
+            bottom: 0;
+            margin: 10px;
+            background-color: transparent !important;
+            align-items: center ; 
+            }
+            #load-btn:hover{
+                background-image: url(../../icon/load_white.svg);
+            }
 
             #connect {
-                
+                top: 1000px;
                 cursor: pointer;
                 position: relative;
             display: inline-block;
             box-sizing: content-box;
-            font-size: 300%;
             border-radius:50%;
             background-size: 100%;
-            background-color: #e9c98c8f;
-            left: 48%;
-            margin-top: 2%;
+            background-color: #e9c98c62;
             width: 40px;
             height: 40px;
             aspect-ratio: 1/1;
@@ -157,20 +165,43 @@ header:hover{
             background-position: center;
             color: #553601;
             position: relative;
+            z-index: 10;
+            transition: top 1s ease;
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
   5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
   -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
             }
             #connect:hover{
-                background-color: #7a5a1eb0;
+                background-color: #7a5a1e73;
                 color: #ffffff;
+                background-image: url(../../icon/add_white.svg);
+            }
+
+            #bar-connect {
+                top: 20px;
+                right: 10%;
+                cursor: pointer;
+            width: 40px;
+            height: 40px;
+            aspect-ratio: 1/1;
+            text-align: center;
+            opacity: 0;
+            background-image: url(../../icon/add_yellow.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            position: fixed;
+            z-index: 10;
+            transition: opacity 1s ease;
+           
+            }
+            #bar-connect:hover{
                 background-image: url(../../icon/add_white.svg);
             }
 
 
             #keyconnect {
-                
+                z-index: 2;
                 cursor: pointer;
                 position: relative;
             border-radius: 1em;
@@ -193,12 +224,23 @@ header:hover{
                 background-color: #7a5a1eb0;
                 color: #ffffff;
             }
+        .inputbox{
+            opacity: 0;
+            margin-top: 200px;
+            width: 0;
+            height: 300px;
+            flex-direction: column;
+            display: flex;
+            align-items: center ;
+            justify-content: center;
+            z-index: 2;
+            transition: width 1s ease ,opacity 1s ease;
+            }
 
         .passuser  {
+            width: 100%;
                 position: relative;
             border-radius: 1em;
-            margin-left: 20%;
-            margin-right: 20%;
             height: 100%;
             border: 1px solid #ffffff00;  
             margin-bottom: 50px;   
@@ -213,15 +255,13 @@ header:hover{
 }  
 
 #terminal {
+    height: 100%;
             display: flex;
                 position: relative;
             border-radius: 1em;
-            height: 400px;
-            margin-left: 1%;
-            margin-right: 1%;
+            width: 100%;
             border: 1px solid #ffffff00;  
-            margin-bottom: 1%;   
-            margin-top: 2%;
+            margin-bottom: 1%;  
             padding: 10px; 
             background-color: #e9c98c8f;
             align-items: center ;
@@ -230,41 +270,55 @@ header:hover{
   -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
   5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
   -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-}        
+}     
+#terminalbox{
+    top: 50px;
+    opacity: 0;
+    position: relative;
+    width: 90%;
+    height: 0;
+    z-index: 1;
+    margin-bottom: 60px;
+    transition: all 1s ease;
+}   
+#keybox{
+    top: 2000px;
+    opacity: 0;
+    position: relative;
+    width: 90%;
+    height: 500px;
+    z-index: 1;
+    margin-bottom: 60px;
+    transition: all 1s ease;
+}  
 #keyterminal {
             display: flex;
                 position: relative;
             border-radius: 1em;
-            height: 500px;
-            
-            margin-left: 1%;
-            margin-right: 1%;
+            height: 100%;
+            width: 100%;
             border: 1px solid #ffffff00;  
-            margin-bottom: 1%;   
-            margin-top: 1px;
-            padding: 10px; 
             background-color: #00000000;
             align-items: center ;
             overflow: hidden;
+            transition: all 1s ease;
             
 }           
 #del{
-    cursor: pointer;
-                position: relative;
+            top: 20px;
+            left: -20px;
+            cursor: pointer;
+            z-index: 2;
+                position: absolute;
             display: inline-block;
             box-sizing: content-box;
             font-size: 300%;
             border-radius:50%;
             background-size: 100%;
-            background-color: #e9c98c8f;
-            left: 48%;
-            margin-top: 0;
+            background-color: #e9c98c;
             width: fit-content;
             height: fit-content;
             aspect-ratio: 1/1;
-            text-align: center;
-            padding-bottom: 0.1%;
-            margin-bottom: 1%;
             background-image: url(../../icon/no_pink.svg);
             background-position: center;
             background-repeat: no-repeat;
@@ -277,19 +331,27 @@ header:hover{
   -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
 }
 #del:hover{
-                background-color: #7a5a1eb0;
+                background-color: #7a5a1e;
                 background-image: url(../../icon/no_red.svg);
             }
             .met-btn{
+                opacity: 0;
+                align-items: center;
+                padding: 10px;
+                border-radius: 1em;
                 width: fit-content;
+                height: 0;
+                background-color:#7e5c2aa9 ;
                 display:inline-flex;
-                margin-bottom: 7px;
-                margin-top: 40px;
-                height: auto;
-                margin-left: 50%;
-                transform: translateX(-50%);
+                position: fixed;
                 box-sizing: content-box;
-                
+                top: 100px;
+                transition: all 1s ease;
+                z-index: 10;
+                box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068);  
                 
 
             }
@@ -315,9 +377,24 @@ header:hover{
             overflow:hidden;
             overflow-x: hidden;
         }
-        #backButton{
-            height: 40px;
+        .next {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+          background:no-repeat center center;
+          background-size:cover;
+            overflow:hidden;
+            overflow-x: hidden; 
+            opacity: 0;
+            transition: opacity 1s ease ; 
+            z-index: 1;
         }
+        .backbtn{
+          width: 25% ;
+        }
+        
         
         
 
@@ -330,27 +407,110 @@ header:hover{
 <body>
     <div class="phone_background">
         <div class="fixed" style="background-image:url(../../icon/ter_phone.svg);"></div>
+        <div class="next" ></div>
     </div>
-    <header>
-        <div class="home" onclick="goBack()" title="首页">𝕷𝖎𝖓𝖅𝖊𝖊𝖓</div>
-        
-      </header>
-      <div class="ter" onclick="reloadPage()"title="恩的终端"></div>
+    
+    <div id="cover-bar"></div>
+    <div id="bar-connect" onclick="createTerminal()" title="创建终端"></div>
+    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+    
     <div class="met-btn">
         <div id="pas" onclick="pas()" style="background-image: url(../../icon/user_white.svg);" title="使用密码连接"></div>
     <div id="key" onclick="key()" style="background-image: url(../../icon/key_yellow.svg);" title="使用密钥连接"></div>
+    <div id="load-btn" onclick="reloadPage()"  title="刷新"></div>
 </div>
+<div class="inputbox" id="inputbox">
 <input id="hostname" class="passuser" type="text" placeholder="主机名"></input>
 <input id="username" class="passuser" type="text" placeholder="用户名"></input>
 <input id="password" class="passuser" type="password" placeholder="密码"></input>
-
+</div>
 <div id="connect" onclick="createTerminal()" title="创建终端"></div>
 <div class="keypass" style="display: none;">
 
 </div>
 <div id="terminalContainer"></div>
-<script src="../js/header.js"></script>
 <script>
+ function handleScroll() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        
+        // 当垂直滚动超过100px时改变背景颜色
+        if (scrollTop > 100) {
+          document.querySelector('.backbtn').style.left = '1%';
+          document.querySelector('.backbtn').style.width = '15%';
+          document.querySelector('.met-btn').style.top= '5px';
+          document.querySelector('.met-btn').style.backgroundColor= 'transparent';
+          document.querySelector('.met-btn').style.boxShadow= 'none';
+          document.getElementById('cover-bar').style.top = '0';
+          document.getElementById('connect').style.top = '-1000px';
+          document.getElementById('bar-connect').style.opacity = '1';
+          
+          
+        } else {
+          document.querySelector('.backbtn').style.left = '5%';
+          document.querySelector('.backbtn').style.width = '';
+          document.querySelector('.met-btn').style.top= '';
+          document.querySelector('.met-btn').style.backgroundColor= '';
+          document.querySelector('.met-btn').style.boxShadow= '';
+          document.getElementById('cover-bar').style.top = '';
+          document.getElementById('connect').style.top = '10px';
+          document.getElementById('bar-connect').style.opacity = '';
+         
+        }
+}
+window.addEventListener('scroll', handleScroll);
+
+
+function comin(){
+      document.querySelector('.backbtn').style.left = '5%';
+      document.querySelector('.met-btn').style.opacity = '1';
+      document.querySelector('.met-btn').style.height = '50px';
+      openpas();
+        
+    };
+    window.onload = comin;
+
+    function closepas(){
+      document.querySelector('.inputbox').style.opacity = '';
+      document.querySelector('.inputbox').style.width = '';
+      document.getElementById('connect').style.top = '';
+}
+function openpas(){
+    document.querySelector('.inputbox').style.opacity = '1';
+      document.querySelector('.inputbox').style.width = '60%';
+      document.getElementById('connect').style.top = '10px';
+}
+
+
+function goBack() {
+    // 查找所有id为terminalbox和keybox的元素
+var terminalBoxes = document.querySelectorAll("#terminalbox");
+var keyBoxes = document.querySelectorAll("#keybox");
+
+// 将所有找到的terminalbox元素设置为透明
+terminalBoxes.forEach(function(element) {
+    element.style.opacity = "0";
+});
+
+// 将所有找到的keybox元素设置为透明
+keyBoxes.forEach(function(element) {
+    element.style.opacity = "0";
+});
+
+    window.removeEventListener('scroll',handleScroll);
+    document.getElementById('bar-connect').style.opacity = '';
+    closepas();
+    document.getElementById('cover-bar').style.top = `-80px`;
+    document.querySelector('.backbtn').style.left = '';
+      document.querySelector('.met-btn').style.opacity = '';
+      document.querySelector('.met-btn').style.height = '';
+      document.querySelector('body').style.backgroundImage = `url('../../icon/home_pc.svg')`;
+      document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
+    document.querySelector('.next').style.opacity ='1';  
+    setTimeout(() => {
+    window.location.replace('/');
+}, 1000);
+    }
+
     $(function() {
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -393,61 +553,62 @@ header:hover{
     }
 });
 
-    function goBack() {
-      window.location.href = '/';
-    }
+   
     function reloadPage() {
   location.reload();
 }
     
 
 
-
 function key() {
    
     //隐藏pass登陆
-    document.getElementById('hostname').style.display = 'none';
-    document.getElementById('username').style.display = 'none';
-    document.getElementById('password').style.display = 'none';
-    document.getElementById('connect').style.display = 'none';
+    closepas();
+    setTimeout(() => {
+        document.getElementById('connect').style.display = 'none';
+    document.getElementById('inputbox').style.display = 'none';
+}, 1000);
     document.getElementById('pas').style.backgroundImage= 'url(../../icon/user_yellow.svg)';
    document.getElementById('key').style.backgroundImage= 'url(../../icon/key_white.svg)';
-    // 选择所有 iframe 标签并将它们从 DOM 中移除
-    var iframes = document.querySelectorAll('iframe');
-    iframes.forEach(function(iframe) {
-        iframe.parentNode.removeChild(iframe);
-    });
-    
-    var delElements = document.querySelectorAll('#del');
-    delElements.forEach(function(element) {
-        element.parentNode.removeChild(element);
-    });
+   // 选择所有 id 为 'terminalbox' 的元素
+var terminalBoxes = document.querySelectorAll('#terminalbox');
+terminalBoxes.forEach(function(element) {
+    element.parentNode.removeChild(element);
+});
     keyconnect()
 }
 
 function pas() {
-   
-   
-   document.getElementById('hostname').style.display = 'block';
-   document.getElementById('username').style.display = 'block';
-   document.getElementById('password').style.display = 'block';
-   document.getElementById('connect').style.display = 'block';
+     
+    setTimeout(() => {
+        openpas();
+}, 500);
    document.getElementById('pas').style.backgroundImage= 'url(../../icon/user_white.svg)';
    document.getElementById('key').style.backgroundImage= 'url(../../icon/key_yellow.svg)';
-   // 选择所有 iframe 标签并将它们从 DOM 中移除
-   var iframes = document.querySelectorAll('iframe');
-    iframes.forEach(function(iframe) {
-        iframe.parentNode.removeChild(iframe);
-    });
-    var delElements = document.querySelectorAll('#del');
-    delElements.forEach(function(element) {
-        element.parentNode.removeChild(element);
-    });
+  // 选择所有 iframe 标签并将它们从 DOM 中移除
+  var terminalBoxes = document.querySelectorAll('#keybox');
+  
+  document.getElementById('connect').style.display = 'block';
+    document.getElementById('inputbox').style.display = 'flex'; 
+   
+    terminalBoxes.forEach(function(element) {
+        element.style.width='0';
+        element.style.opacity='0';
+        setTimeout(() => {
+    element.parentNode.removeChild(element);
+    openpas();
+});
+}, 1000);
+
+
+   
+
 }
 
 function keyconnect() {
     const keySrc = `http://${window.location.hostname}:8888`;
-
+    const container = document.createElement('div');
+    container.setAttribute('id', 'keybox'); 
     // 创建 iframe 元素
     const terminalIframe = document.createElement('iframe');
     terminalIframe.setAttribute('id', 'keyterminal');
@@ -462,24 +623,26 @@ function keyconnect() {
         deleteButton.remove();
     };
 
-    // 隐藏登录元素
-    document.getElementById('hostname').style.display = 'none';
-    document.getElementById('username').style.display = 'none';
-    document.getElementById('password').style.display = 'none';
-    document.getElementById('connect').style.display = 'none';
+    
+    container.appendChild(deleteButton);
+    container.appendChild(terminalIframe);
+    const firstIframeContainer = document.querySelector('iframe')?.parentElement;
 
-    // 获取当前的第一个 iframe 元素（假设是旧的 terminal）
-    const firstIframe = document.querySelector('iframe');
-
+   
+    
     // 将新创建的 iframe 和删除按钮插入到第一个 iframe 前面
-    if (firstIframe) {
-        document.body.insertBefore(terminalIframe, firstIframe);
-        document.body.insertBefore(deleteButton, firstIframe);
+    if (firstIframeContainer) {
+        firstIframeContainer.parentElement.insertBefore(container, firstIframeContainer);
+        
     } else {
-        // 如果没有旧的 iframe，直接追加到 body 的末尾
-        document.body.appendChild(terminalIframe);
-        document.body.appendChild(deleteButton);
+        // 如果没有旧的 iframe 容器，直接追加到 body 的末尾
+        document.body.appendChild(container);
+        
     }
+    setTimeout(() => {
+        container.style.opacity='1';
+        container.style.top='250px';
+}, 500);
 
     // 添加事件监听器到主窗口，只处理来自特定 iframe 的消息
     function messageHandler(event) {
@@ -499,9 +662,13 @@ function keyconnect() {
 
     // 移除事件监听器，当 iframe 被删除时
     deleteButton.onclick = function() {
-        terminalIframe.remove();
-        deleteButton.remove();
+        container.style.height='0';
+        container.style.opacity='0';
         window.removeEventListener('message', messageHandler);
+        setTimeout(() => {
+            deleteButton.parentNode.remove();
+}, 1000);
+        
     };
 }
 
@@ -518,35 +685,39 @@ function createTerminal() {
 
     // 生成新的URL
     const newSrc = `http://${window.location.hostname}:8888/?hostname=${hostname}&username=${username}&password=${encodedPassword}`;
-
+    const container = document.createElement('div');
+    container.setAttribute('id', 'terminalbox'); 
     // 创建 iframe 元素
     const terminalIframe = document.createElement('iframe');
     terminalIframe.style.display = 'none';
     terminalIframe.setAttribute('id', 'terminal');
     terminalIframe.setAttribute('src', newSrc);
+   
 
     // 创建删除按钮
     const deleteButton = document.createElement('div');
     deleteButton.style.display = 'none';
     deleteButton.setAttribute('id', 'del');
-    deleteButton.onclick = function() {
-        terminalIframe.remove();
-        deleteButton.remove();
-    };
-
-    // 获取当前的第一个 iframe 元素（假设是旧的 terminal）
-    const firstIframe = document.querySelector('iframe');
-
-    // 将新创建的 iframe 和删除按钮插入到第一个 iframe 前面
-    if (firstIframe) {
-        document.body.insertBefore(terminalIframe, firstIframe);
-        document.body.insertBefore(deleteButton, firstIframe);
-    } else {
-        // 如果没有旧的 iframe，直接追加到 body 的末尾
-        document.body.appendChild(terminalIframe);
-        document.body.appendChild(deleteButton);
-    }
+   
+    container.appendChild(deleteButton);
+    container.appendChild(terminalIframe);
     
+    // 获取当前的第一个 iframe 的容器
+    const firstIframeContainer = document.querySelector('iframe')?.parentElement;
+
+    // 将新创建的容器插入到第一个 iframe 容器前面
+    if (firstIframeContainer) {
+        firstIframeContainer.parentElement.insertBefore(container, firstIframeContainer);
+        
+    } else {
+        // 如果没有旧的 iframe 容器，直接追加到 body 的末尾
+        document.body.appendChild(container);
+        
+    }
+    setTimeout(() => {
+        container.style.opacity='1';
+        container.style.height='500px';
+}, 500);
     
     // 添加事件监听器到主窗口，只处理来自特定 iframe 的消息
     function messageHandler(event) {
@@ -559,9 +730,11 @@ function createTerminal() {
     window.addEventListener('message', messageHandler);
     // 移除事件监听器，当 iframe 被删除时
     deleteButton.onclick = function() {
-        terminalIframe.remove();
-        deleteButton.remove();
-        window.removeEventListener('message', messageHandler);
+        container.style.height='0';
+        container.style.opacity='0';
+        setTimeout(() => {
+            deleteButton.parentNode.remove();
+}, 1000);
     };
 }
 

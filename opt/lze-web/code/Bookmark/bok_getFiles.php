@@ -2,9 +2,9 @@
 $folderPath = '../../file/Bookmark';
 $files = scandir($folderPath);
 
-// Filter out non-txt files
-$noteFiles = array_filter($files, function($file) {
-    return pathinfo($file, PATHINFO_EXTENSION) === 'txt';
+// 移除 . 和 .. 以及其他非文件项
+$noteFiles = array_filter($files, function($file) use ($folderPath) {
+    return is_file($folderPath . '/' . $file);
 });
 
 // Sort files by modification time in ascending order

@@ -29,6 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // 生成新的文件名，使用原始标题
 function generateFileName($title) {
-    return "{$title}.txt";
+    return "{$title}.bok";
 }
 ?>
