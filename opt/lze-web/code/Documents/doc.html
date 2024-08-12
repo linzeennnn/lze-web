@@ -550,7 +550,12 @@ box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),
   </div> 
   </div>
   <script>
-   
+   // 获取主页的ip
+function getip() {
+    return window.location.hash.substring(1); 
+}
+const ip = getip();
+
    function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -590,12 +595,14 @@ function totop() {
     });
   }
   function comin(){
+    // 初始加载根文件夹内容
+  loadFolder();
       document.querySelector('.backbtn').style.left = '5%';
       document.getElementById('fileListContainer').style.width = `80%`;
       document.getElementById('top-bar').style.height = `60px`;
     };
     window.onload = comin;
-   
+    
   $(function() {
     var isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -650,15 +657,16 @@ function totop() {
     document.querySelector('.next').style.opacity ='1';  
     
     setTimeout(() => {
-    window.location.replace('/');
+    window.location.replace(`/#${ip}`);
 }, 1000); // 1000 毫秒 = 1 秒
   }
 
   function reloadPage() {
     location.reload();
   }
-
+  
   function loading() {
+   
     const fileInput = document.getElementById('uploadfile');
     const load = document.getElementById('loading');
     const loadbox = document.getElementById('rotate-box');
@@ -668,6 +676,7 @@ function totop() {
     const path = document.getElementById('currentPath');
     const cancel = document.getElementById('cancel');
     const progress = document.getElementById('progress');
+    
     if (fileInput.files.length === 0) {
       alert('请先选择一个文件进行上传。');
         return; // 没有选择文件，直接返回
@@ -679,10 +688,12 @@ function totop() {
     load.style.display = 'block';
     cancel.style.display = 'block';
     loadbox.style.display = 'block';
-    
+  
+ 
   }
 
-  
+ 
+
 
   function cancelUpload() {
     reloadPage();
@@ -727,7 +738,7 @@ function totop() {
 
 
   function loadFolder(folder = '') {
-    fetch('doc_list.php?folder=' + folder)
+    fetch(`http://${ip}/code/Documents/doc_list.php?folder=` + folder)
       .then(response => response.json())
       .then(data => {
         const fileList = document.getElementById('fileList');
@@ -735,7 +746,7 @@ function totop() {
 
         const currentPath = document.getElementById('currentPath');
         const fullPath = '/' + (data.currentFolder ? data.currentFolder : '');
-        pathlen(currentPath,fullPath);
+        pathlen(currentPath, fullPath);
         currentPath.title = fullPath;
 
         data.folders.forEach(folder => {
@@ -754,74 +765,66 @@ function totop() {
           const listItem = document.createElement('li');
 
           const fileLink = document.createElement('span');
-          const Src = '../../file/Documents/upload/' + (data.currentFolder ? data.currentFolder + '/' + file : file);
+          const Src = `http://${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
           const fileListContainer = document.getElementById('fileListContainer');
           const closeifame = document.getElementById('closeifame');
           fileLink.textContent = file;
           fileLink.className = 'fileLink';
           fileLink.title = `预览${file}`;
           fileLink.addEventListener('click', function () {
-        const preview = document.createElement('iframe');
-        preview.setAttribute('id', 'preview');
-        preview.setAttribute('src', Src);
-        fileListContainer.style.display = 'none';
-        closeifame.style.display ='block';
-        document.body.appendChild(preview);
+            const preview = document.createElement('iframe');
+            preview.setAttribute('id', 'preview');
+            preview.setAttribute('src', Src);
+            fileListContainer.style.display = 'none';
+            closeifame.style.display = 'block';
+            document.body.appendChild(preview);
 
-        preview.onload = function() {
-            const doc = preview.contentDocument || preview.contentWindow.document;
-            preview.style.height = doc.documentElement.scrollHeight + 'px';
-            preview.style.width = doc.documentElement.scrollWidth + 'px';
-        };
-        
+            preview.onload = function() {
+                const doc = preview.contentDocument || preview.contentWindow.document;
+                preview.style.height = doc.documentElement.scrollHeight + 'px';
+                preview.style.width = doc.documentElement.scrollWidth + 'px';
+            };
           });
 
           listItem.appendChild(fileLink);
 
           const downloadLink = document.createElement('a');
+          // 修改 downloadLink 的 href 指向 PHP 脚本而不是直接文件路径
           downloadLink.className = 'downloadLink';
-          downloadLink.href = '../../file/Documents/upload/' + (data.currentFolder ? data.currentFolder + '/' + file : file);
-          downloadLink.download = file;
+          downloadLink.href = `http://${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
           downloadLink.title = `下载${file}`;
+          downloadLink.textContent = `下载 ${file}`;
 
           listItem.appendChild(downloadLink);
 
           fileList.appendChild(listItem);
         });
 
-         // 处理返回上级目录按钮
-         const upButton = document.getElementById('upButton');
+        // 处理返回上级目录按钮
+        const upButton = document.getElementById('upButton');
         if (data.currentFolder && data.currentFolder !== '') {
           upButton.style.display = 'block';
-          upButton.style.opacity = '1'
+          upButton.style.opacity = '1';
           upButton.dataset.parentFolder = data.parentFolder;
           upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
-          upButton.addEventListener('mouseenter' , 
-      function () {
-        upButton.style.backgroundImage = 'url(../../icon/goup_white.svg)';
-      }
-    )
-    upButton.addEventListener('mouseleave' , 
-      function () {
-        upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
-      }
-  )
+          upButton.addEventListener('mouseenter', function () {
+            upButton.style.backgroundImage = 'url(../../icon/goup_white.svg)';
+          });
+          upButton.addEventListener('mouseleave', function () {
+            upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+          });
         } else {
-          upButton.style.opacity = '0.5'
-          upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)'
-          upButton.addEventListener('mouseenter' , 
-      function () {
-        upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
-      }
-    )
-          upButton.addEventListener('mouseleave' , 
-      function () {
-        upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
-      }
-    )
+          upButton.style.opacity = '0.5';
+          upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+          upButton.addEventListener('mouseenter', function () {
+            upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+          });
+          upButton.addEventListener('mouseleave', function () {
+            upButton.style.backgroundImage = 'url(../../icon/goup_pink.svg)';
+          });
         }
       });
-  }
+}
 
   function goUp() {
     const upButton = document.getElementById('upButton');
@@ -829,8 +832,7 @@ function totop() {
     loadFolder(parentFolder);
   }
 
-  // 初始加载根文件夹内容
-  loadFolder();
+ 
 
   function selfile() {
   var files = document.getElementsByTagName('input')[0].files;
@@ -847,7 +849,7 @@ function totop() {
   }
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'upload.php', true);
+  xhr.open('POST', `http://${ip}/code/Documents/upload.php`, true);
 
   xhr.upload.onprogress = function(ev) {
     if (ev.lengthComputable) {
@@ -860,11 +862,13 @@ function totop() {
 
   xhr.onload = function() {
     if (xhr.readyState === XMLHttpRequest.DONE) { // 请求已完成
-   
+   reloadPage()
   }
   };
 
   xhr.send(fd);
+  
+
 }
 
 

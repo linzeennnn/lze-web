@@ -449,6 +449,10 @@ box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),
     <div id="top-btn" onclick="totop()" title="回到顶部"></div>
     <div id="notes"></div>
 <script>
+    function getip() {
+    return window.location.hash.substring(1); 
+}
+const ip = getip();
     function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -552,7 +556,7 @@ function totop() {
         document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
     document.querySelector('.next').style.opacity ='1';  
         setTimeout(() => {
-    window.location.replace('/');
+    window.location.replace(`/#${ip}`);
 }, 1000); 
     }
     function reloadPage() {
@@ -566,7 +570,7 @@ function totop() {
 
     async function getNoteFiles() {
     const timestamp = new Date().getTime(); // 获取当前时间戳
-    const response = await fetch(`not_getFiles.php?timestamp=${timestamp}`);
+    const response = await fetch(`http://${ip}/code/Note/not_getFiles.php?timestamp=${timestamp}`);
     const noteFiles = await response.json();
     
     return noteFiles;
@@ -580,7 +584,7 @@ function totop() {
             const noteFiles = await getNoteFiles();
             for (const file of Object.values(noteFiles)) {
                 const fileNameWithoutExtension = file.replace(/\.[^/.]+$/, '');
-                const filePath = `../../file/Note/${file}`;
+                const filePath = `http://${ip}/file/Note/${file}`;
                 const content = await readFile(filePath);
                 const noteElement = document.createElement('div');
                 noteElement.className = 'note-element';
@@ -718,7 +722,7 @@ async function saveNoteRequest (newTitle, newContent) {
     formData.append('newContent', newContent);
 
     try {
-        const response = await fetch('not_saveNote.php', {
+        const response = await fetch(`http://${ip}/code/Note/not_saveNote.php`, {
             method: 'POST',
             body: formData
         });
@@ -741,7 +745,7 @@ async function saveNoteRequest (newTitle, newContent) {
         formData.append('fileName', fileName);
 
         try {
-            const response = await fetch('not_deleteNote.php', {
+            const response = await fetch(`http://${ip}/code/Note/not_deleteNote.php`, {
                 method: 'POST',
                 body: formData
             });
@@ -828,7 +832,7 @@ async function saveNoteRequest (newTitle, newContent) {
         formData.append('fileName', fileName);
 
         try {
-            const response = await fetch('not_deleteNote.php', {
+            const response = await fetch(`http://${ip}/code/Note/not_deleteNote.php`, {
                 method: 'POST',
                 body: formData
             });
@@ -886,7 +890,7 @@ async function addNewNoteRequest(newTitle, newContent) {
     formData.append('newContent', newContent);
 
     try {
-        const response = await fetch('not_addNote.php', {
+        const response = await fetch(`http://${ip}/code/Note/not_addNote.php`, {
             method: 'POST',
             body: formData
         });

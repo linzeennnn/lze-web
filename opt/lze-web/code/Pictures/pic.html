@@ -516,6 +516,10 @@
             <button id="buttonC" class="bottom-button" title="显示更多截图"></button>
     <!-- <script src="../js/header.js"></script> -->
     <script>
+        function getip() {
+    return window.location.hash.substring(1); 
+}
+const ip = getip();
         function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -568,7 +572,7 @@ window.addEventListener('scroll', handleScroll);
             document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
     document.querySelector('.next').style.opacity ='1';  
             setTimeout(() => {
-    window.location.replace('/');
+    window.location.replace(`/#${ip}`);
 }, 1000);
         }
 
@@ -727,39 +731,39 @@ fileInput.addEventListener("change", function () {
         var loadedImageIndices = []; // 用于记录已加载的图片索引
     
         function appendImages(count) {
-            var loadedImageCount = 0;
+    var loadedImageCount = 0;
 
-            for (let i = 0; i < files.length; i++) {
-                if (!loadedImageIndices.includes(i)) {
-                    var filePath = files[i];
-                    var fileName = filePath.split('/').pop(); // 获取文件名
-                    var fileExtension = filePath.split('.').pop().toLowerCase();
-                    var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
+    for (let i = 0; i < files.length; i++) {
+        if (!loadedImageIndices.includes(i)) {
+            var filePath = `http://${ip}/file/Pictures/` + files[i]; // 生成绝对路径
+            var fileName = filePath.split('/').pop(); // 获取文件名
+            var fileExtension = filePath.split('.').pop().toLowerCase();
+            var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
 
-                    if (!isVideo && loadedImageCount < count) {
-                        var img = document.createElement("a");
-                        img.href = filePath;
-                        img.setAttribute("data-fancybox", "gallery");
+            if (!isVideo && loadedImageCount < count) {
+                var img = document.createElement("a");
+                img.href = filePath;
+                img.setAttribute("data-fancybox", "gallery");
 
-                        var imgElement = document.createElement("img");
-                        imgElement.src = filePath;
-                        img.appendChild(imgElement);
+                var imgElement = document.createElement("img");
+                imgElement.src = filePath;
+                img.appendChild(imgElement);
 
-                        var galleryItem = document.createElement("div");
-                        galleryItem.className = "gallery-item";
-                        galleryItem.title = fileName; // 添加title
-                        galleryItem.appendChild(img);
-                        galleryContainer.appendChild(galleryItem);
+                var galleryItem = document.createElement("div");
+                galleryItem.className = "gallery-item";
+                galleryItem.title = fileName; // 添加title
+                galleryItem.appendChild(img);
+                galleryContainer.appendChild(galleryItem);
 
-                        loadedImageIndices.push(i);
-                        loadedImageCount++;
-                    }
-                }
+                loadedImageIndices.push(i);
+                loadedImageCount++;
             }
-            if (loadedImageCount < count) {
-                buttonA.style.display = "none";
-                alert("已加载全部图片");
-            }
+        }
+    }
+    if (loadedImageCount < count) {
+        buttonA.style.display = "none";
+        alert("已加载全部图片");
+    }
             $('[data-fancybox="gallery"]').fancybox({
                 loop: true,
                 protect: true,
@@ -779,40 +783,41 @@ fileInput.addEventListener("change", function () {
             loadVideos();
         });
     
-        function appendVideos(count) {
-            var loadedVideoCount = 0;
+        
+function appendVideos(count) {
+    var loadedVideoCount = 0;
 
-            for (let i = 0; i < files.length; i++) {
-                if (!loadedVideoIndices.includes(i)) {
-                    var filePath = files[i];
-                    var fileName = filePath.split('/').pop(); // 获取文件名
-                    var fileExtension = filePath.split('.').pop().toLowerCase();
-                    var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
+    for (let i = 0; i < files.length; i++) {
+        if (!loadedVideoIndices.includes(i)) {
+            var filePath = `http://${ip}/file/Pictures/` + files[i]; // 生成绝对路径
+            var fileName = filePath.split('/').pop(); // 获取文件名
+            var fileExtension = filePath.split('.').pop().toLowerCase();
+            var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
 
-                    if (isVideo && loadedVideoCount < count) {
-                        var video = document.createElement("video");
-                        video.src = filePath;
-                        video.controls = true;
+            if (isVideo && loadedVideoCount < count) {
+                var video = document.createElement("video");
+                video.src = filePath;
+                video.controls = true;
 
-                        var videoItem = document.createElement("div");
-                        videoItem.className = "gallery-item video-item";
-                        videoItem.title = fileName; // 添加title
-                        videoItem.appendChild(video);
-                        galleryContainer.appendChild(videoItem);
+                var videoItem = document.createElement("div");
+                videoItem.className = "gallery-item video-item";
+                videoItem.title = fileName; // 添加title
+                videoItem.appendChild(video);
+                galleryContainer.appendChild(videoItem);
 
-                        loadedVideoIndices.push(i);
-                        loadedVideoCount++;
+                loadedVideoIndices.push(i);
+                loadedVideoCount++;
 
-                        captureFrame(filePath).then(frame => {
-                            video.poster = frame.url;
-                        });
-                    }
-                }
+                captureFrame(filePath).then(frame => {
+                    video.poster = frame.url;
+                });
             }
-            if (loadedVideoCount < count) {
-                buttonB.style.display = "none";
-                alert("已加载全部视频");
-            }
+        }
+    }
+    if (loadedVideoCount < count) {
+        buttonB.style.display = "none";
+        alert("已加载全部视频");
+    }
 
             showVideos();
         }
@@ -832,40 +837,40 @@ fileInput.addEventListener("change", function () {
         });
     
         function appendScreenshots(count) {
-            var loadedScreenshotsCount = 0;
+    var loadedScreenshotsCount = 0;
 
-            for (let i = 0; i < screenshotFiles.length; i++) {
-                if (!loadedScreenshotsIndices.includes(i)) {
-                    var filePath = screenshotFiles[i];
-                    var fileName = filePath.split('/').pop(); // 获取文件名
+    for (let i = 0; i < screenshotFiles.length; i++) {
+        if (!loadedScreenshotsIndices.includes(i)) {
+            var filePath = `http://${ip}/file/Pictures/` + screenshotFiles[i]; // 生成绝对路径
+            var fileName = filePath.split('/').pop(); // 获取文件名
 
-                    if (loadedScreenshotsCount < count) {
-                        var img = document.createElement("a");
-                        img.href = filePath;
-                        img.setAttribute("data-fancybox", "gallery");
-
-                        var imgElement = document.createElement("img");
-                        imgElement.src = filePath;
-                        img.appendChild(imgElement);
-
-                        var galleryItem = document.createElement("div");
-                        galleryItem.className = "gallery-item screenshot-item";
-                        galleryItem.title = fileName; // 添加title
-                        galleryItem.appendChild(img);
-                        galleryContainer.appendChild(galleryItem);
-
-                        loadedScreenshotsIndices.push(i);
-                        loadedScreenshotsCount++;
-                    }
-                }
-            }
             if (loadedScreenshotsCount < count) {
-                buttonC.style.display = "none";
-                alert("已加载全部截图");
-            }
+                var img = document.createElement("a");
+                img.href = filePath;
+                img.setAttribute("data-fancybox", "gallery");
 
-            showScreenshots();
+                var imgElement = document.createElement("img");
+                imgElement.src = filePath;
+                img.appendChild(imgElement);
+
+                var galleryItem = document.createElement("div");
+                galleryItem.className = "gallery-item screenshot-item";
+                galleryItem.title = fileName; // 添加title
+                galleryItem.appendChild(img);
+                galleryContainer.appendChild(galleryItem);
+
+                loadedScreenshotsIndices.push(i);
+                loadedScreenshotsCount++;
+            }
         }
+    }
+    if (loadedScreenshotsCount < count) {
+        buttonC.style.display = "none";
+        alert("已加载全部截图");
+    }
+
+    showScreenshots();
+}
 
     
         function loadScreenshots() {
@@ -918,7 +923,7 @@ fileInput.addEventListener("change", function () {
             }
         };
 
-        xmlhttpScreenshot.open("GET", "pic_sreenshot_list.php", true);
+        xmlhttpScreenshot.open("GET", `http://${ip}/code/Pictures/pic_sreenshot_list.php`, true);
         xmlhttpScreenshot.send();
     
         
@@ -927,13 +932,14 @@ fileInput.addEventListener("change", function () {
         xmlhttp.onreadystatechange = async function () {
             if (this.readyState == 4 && this.status == 200) {
                 files = JSON.parse(this.responseText);
+                console.log('Response Text:', this.responseText);
     
                 // 初始加载时默认显示图片
                 appendImages(3);
             }
         };
     
-        xmlhttp.open("GET", "pic_list.php", true);
+        xmlhttp.open("GET", `http://${ip}/code/Pictures/pic_list.php`, true);
         xmlhttp.send();
     
         
@@ -983,7 +989,7 @@ fileInput.addEventListener("change", function () {
   }
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'upload.php', true);
+  xhr.open('POST', `http://${ip}/code/Pictures/upload.php`, true);
 
   xhr.upload.onprogress = function(ev) {
     if (ev.lengthComputable) {

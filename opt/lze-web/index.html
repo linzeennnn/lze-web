@@ -54,10 +54,7 @@
       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
   -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
     }
-    /* header:hover{
-      background-color: #737b8594 !important;
-      color: #a6adc0 !important;
-    } */
+   
     .name{
       position:relative;
       bottom: -20px;
@@ -68,10 +65,8 @@
     body {
       display: flex;
       box-sizing: border-box; 
-      /* overflow-x: hidden !important; */
+      overflow-x: hidden !important;
       justify-content: center;
-      margin: 0;
-      padding: 0;
       align-items: center;
       background-color: #2a3033;
       background-image: url(icon/home_pc.svg);
@@ -108,20 +103,18 @@
    
 
     #myButton {
-      
+      transform: translateX(-50%);  
       background-image: url(icon/power.svg);
         background-color: #5a708877 ;
-      
+      position: absolute;
       border: none;
       background-position: center;
       background-repeat: no-repeat;
       width: 50px;
       height: 50px;
       cursor: pointer;
-      position: relative;
-      top: 200px; /* 初始位置位于标题底部 */
-      margin-top: 250px;
-      transition: top 1s ease, transform 1s ease ,display 1s ease-in-out; /* 添加过渡效果 */
+      bottom: -10%;
+      transition:all 1s ease; 
       border-radius: 50%;
       z-index: 2;
       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
@@ -439,7 +432,74 @@
     #popup4-1:hover #tag{
         background-image: url(icon/tag_open.svg);
     }
+    #ip-bar{
+      display: flex;
+      position: fixed;
+      bottom: 25%;
+      width: 0px;
+      height: 100px;
+      z-index: 10;
+      opacity: 0;
+      justify-content: center;
+      align-items: center;
+      transition: all 1s ease ;
+    }
+    #ip-input{
+      width: 70%;
+      height: 40px;
+      padding: 15px;
+      color: #bfd2db;
+      font-weight: bold;
+      border: none;
+      font-size: 20px;
+      background-color: #21232485;
+      border-radius: 1.5em;
+      box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+              inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+              inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+              inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+    }
+    #ip-input:focus{
+      outline: none;
+      background-color: #4f5e68c4;
+    }
+    #ip-connect{
+      margin-left: 10px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      background-image: url(icon/right_grey.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #ip-connect:hover{
+      background-image: url(icon/right_white.svg);
+    }
+    #local{
+      margin-right: 10px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      background-image: url(icon/add_user_grey.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #local:hover{
+      background-image: url(icon/add_user_white.svg);
+    }
         
+    #reconnect{
+      cursor: pointer;
+      margin-top: 0.7em;
+      width: 2em;
+      height: 2em;
+      background-image: url(icon/switch_grey.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #reconnect:hover{
+      background-image: url(icon/switch_white.svg);
+    }
         @media only screen and (max-width: 600px){
           .phone_background {
           position:relative;
@@ -458,6 +518,9 @@
             overflow-x: hidden; 
             z-index: 0;
         }
+        #reconnect{
+          margin-top: 0;
+        }
         .next {
           position:fixed;
           left:0;
@@ -473,10 +536,7 @@
             z-index: 1;
         }
         
-          #myButton{
-            
-            font-size: 80%;
-          }
+          
           #topBar button {
             font-size: 80%;
           }
@@ -532,7 +592,12 @@
  
         
         <div>
-        <div id="myButton" onclick="handleButtonClick()" title="开始"></div>
+        <div id="myButton" onclick="handleButtonClick()" title="开始" ></div>
+        </div>
+        <div id="ip-bar" style="display: none;">
+          <div id="local" title="本机连接" onclick="local()"></div>
+          <input id="ip-input" contenteditable="true" placeholder="IP/hostname"></input>
+          <div id="ip-connect" onclick="connect()"></div>
         </div>
    
         <div id="customPopup">
@@ -541,6 +606,7 @@
         <button class="bar-btn" onclick="handleTopBarButtonClick(1)">恩的终端</button>
         <button class="bar-btn" onclick="handleTopBarButtonClick(2)">恩的便签</button>
         <button class="bar-btn" onclick="handleTopBarButtonClick(3)">恩的书签</button>
+        <div id="reconnect" title="切换ip" onclick="reconnect()"></div>
       </div>
       <div class="additionalPopup" id="popup1">
         <div class="popupContent">
@@ -563,21 +629,125 @@
         <div class="popupContent">
             <button id="popup4-1" class="entry" onclick="tonext('icon/bok_pc.svg','icon/bok_phone.svg',bok_path,3)"  title="进入书签"><div id="tag" ></div></button>
         </div>
+        
     </div>
   
   
 
   <script>
-   const doc_path = '/code/Documents/doc.html';
-   const pic_path = '/code/Pictures/pic.html';
-   const ter_path = '/code/Terminal/terminal.html';
-   const not_path = '/code/Note/note.html';
-   const bok_path = '/code/Bookmark/bookmark.html';
+     let logstatus = '0';
+    let ip;
+   let doc_path;
+   let pic_path;
+   let ter_path;
+   let not_path;
+   let bok_path;
+function reconnect(){
+  logstatus ='0'
+  ip=''
+  buttonState='2';
+  handleButtonClick();
+  connectstatus();
+}
+    function comin(){
+      
+  if(!getip()){
+    logstatus ='0';
+    connectstatus();
+  }
+  else {
+    logstatus ='1';
+    connect();
+  }
+  
+  var button = document.getElementById('myButton');
+        document.getElementById(`waifu`).style.top ='15%';
+        document.querySelector('header').style.top = '0';
+        // 添加点击页面任意地方的事件监听器
+        document.addEventListener('click', handleDocumentClick);
+        const referrer = document.referrer;
+      const referrerUrl = new URL(referrer);
+      const currentUrl = new URL(window.location.href);
+      // 计算相对路径
+      const relativePath = referrerUrl.pathname.replace(currentUrl.origin, '');
+        
+        if (relativePath == doc_path || relativePath == pic_path) {
+          buttonState = 1;
+          handleButtonClick();
+          handleTopBarButtonClick(0);
+      }
+      else if (relativePath == ter_path) {
+        buttonState = 1;
+        handleButtonClick();
+        handleTopBarButtonClick(1);
+      }
+      else if (relativePath == not_path) {
+        buttonState = 1;
+        handleButtonClick();
+        handleTopBarButtonClick(2);
+      }
+      else if (relativePath == bok_path) {
+        buttonState = 1;
+        handleButtonClick();
+        handleTopBarButtonClick(3);
+      }
+};
+    window.onload = comin;
+
+   
+    function local(){
+    ip = window.location.hostname;
+    logstatus ='1';
+    connectstatus();
+  }
+
+function connect(){
+  if (logstatus=='0'){
+   ip =document.getElementById('ip-input').value;
+  logstatus ='1';
+  }
+  else if(logstatus=='1'){
+    ip =getip();
+  }
+  
+  connectstatus();
+}
+   
+function connectstatus(){
+  if (logstatus == 1){
+    document.getElementById('myButton').style.display='block';
+    document.getElementById('ip-bar').style.width='0';
+    document.getElementById('ip-bar').style.opacity='0';
+ 
+  setTimeout(() => {
+    document.getElementById('myButton').style.bottom='35%';
+    document.getElementById('ip-bar').style.display='none';
+}, 200); 
+}
+else if (logstatus ==0){
+  document.getElementById('ip-bar').style.display='flex';
+  document.getElementById('myButton').style.bottom='-10%';
+  setTimeout(() => {
+    document.getElementById('myButton').style.display='none';
+    document.getElementById('ip-bar').style.width='350px';
+      document.getElementById('ip-bar').style.opacity='1';
+}, 200); 
+  
+}
+doc_path = `/code/Documents/doc.html#${ip}`;
+  pic_path = `/code/Pictures/pic.html#${ip}`;
+  ter_path = `/code/Terminal/terminal.html#${ip}`;
+  not_path = `/code/Note/note.html#${ip}`;
+  bok_path = `/code/Bookmark/bookmark.html#${ip}`;
+}
+function getip() {
+    return window.location.hash.substring(1); 
+}
 
 
 
 
-    document.addEventListener('touchmove', function(event) {
+document.addEventListener('touchmove', function(event) {
   禁用水平滑动
   if (event.scaleX !== 1) {
     event.preventDefault();
@@ -626,6 +796,10 @@
 });
 
 function reloadPage() {
+  if(logstatus=='1'){
+  location.hash = `#${ip}`;
+  } 
+  console.log(ip,logstatus);
   location.reload();
 }
 
@@ -639,10 +813,11 @@ function reloadPage() {
     document.getElementById('waifu').style.top = ``;
     document.querySelector('body').style.backgroundImage = `url(${bodyback})`;
     document.querySelector('.next').style.backgroundImage = `url(${bodyback_phone})`;
-    document.querySelector('.next').style.opacity ='1';  
+    document.querySelector('.next').style.opacity ='1'; 
+    console.log(path); 
     setTimeout(() => {
     window.location.replace(path);
-}, 1000); // 2000 毫秒 = 1 秒
+}, 1000); // 1000 毫秒 = 1 秒
     }
     
 
@@ -658,11 +833,11 @@ function handleButtonClick() {
 
   if (buttonState === 1) {
     popup.classList.add('active');
-    button.style.top = '50px'; // 降落到页面正中心
+    button.style.bottom = '60%'; // 降落到页面正中心
     buttonState = 2; // 更新状态为2
   } else {
     popup.classList.remove('active');
-    button.style.top = '250px'; // 升回标题底部
+    button.style.bottom = '35%'; // 升回标题底部
     buttonState = 1; // 更新状态为1
     // 隐藏所有的框
     var additionalPopups = document.querySelectorAll('.additionalPopup');
@@ -717,42 +892,6 @@ function handleButtonClick() {
         });
       }
     }
-function comin(){
-  var button = document.getElementById('myButton');
-        var buttonText = document.getElementById('buttonText');
-        button.style.top = '30vh'; // 设置初始位置
-        document.getElementById(`waifu`).style.top ='15%';
-        document.querySelector('header').style.top = '0';
-        // 添加点击页面任意地方的事件监听器
-        document.addEventListener('click', handleDocumentClick);
-        const referrer = document.referrer;
-      const referrerUrl = new URL(referrer);
-      const currentUrl = new URL(window.location.href);
-      // 计算相对路径
-      const relativePath = referrerUrl.pathname.replace(currentUrl.origin, '');
-        
-        if (relativePath == doc_path || relativePath == pic_path) {
-          buttonState = 1;
-          handleButtonClick();
-          handleTopBarButtonClick(0);
-      }
-      else if (relativePath == ter_path) {
-        buttonState = 1;
-        handleButtonClick();
-        handleTopBarButtonClick(1);
-      }
-      else if (relativePath == not_path) {
-        buttonState = 1;
-        handleButtonClick();
-        handleTopBarButtonClick(2);
-      }
-      else if (relativePath == bok_path) {
-        buttonState = 1;
-        handleButtonClick();
-        handleTopBarButtonClick(3);
-      }
-};
-    window.onload = comin;
 
    
 

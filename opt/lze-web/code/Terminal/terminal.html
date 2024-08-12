@@ -430,6 +430,10 @@
 </div>
 <div id="terminalContainer"></div>
 <script>
+    function getip() {
+    return window.location.hash.substring(1); 
+}
+const ip = getip();
  function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -507,7 +511,7 @@ keyBoxes.forEach(function(element) {
       document.querySelector('.next').style.backgroundImage = `url('../../icon/home_phone.svg')`;
     document.querySelector('.next').style.opacity ='1';  
     setTimeout(() => {
-    window.location.replace('/');
+    window.location.replace(`/#${ip}`);
 }, 1000);
     }
 
@@ -606,7 +610,7 @@ function pas() {
 }
 
 function keyconnect() {
-    const keySrc = `http://${window.location.hostname}:8888`;
+    const keySrc = `http://${ip}:8888`;
     const container = document.createElement('div');
     container.setAttribute('id', 'keybox'); 
     // 创建 iframe 元素
@@ -684,7 +688,7 @@ function createTerminal() {
     const encodedPassword = btoa(password);
 
     // 生成新的URL
-    const newSrc = `http://${window.location.hostname}:8888/?hostname=${hostname}&username=${username}&password=${encodedPassword}`;
+    const newSrc = `http://${ip}:8888/?hostname=${hostname}&username=${username}&password=${encodedPassword}`;
     const container = document.createElement('div');
     container.setAttribute('id', 'terminalbox'); 
     // 创建 iframe 元素
