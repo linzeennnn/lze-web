@@ -1,0 +1,79 @@
+.ui-tooltip {
+          background: #4c646d60; 
+          color: #c3c6c9; 
+      }
+      body {
+        background-image: url(../../wallpaper/dark/home_pc.svg);
+      }
+      #home-bar {
+        color: #656d79 ;
+          background-color: #1e2325d2 ;
+      }
+      .name{
+        background-image: url(../../icon/dark/name.svg);
+        
+      }
+      #myButton {
+          background-color: #57677970 ;
+      }
+      #topBar {
+          background-color: #2b2b2bdc ;
+      }
+      .bar-btn {
+        background-color: #404449d2;
+        color: rgb(199, 238, 253);
+      }
+      .bar-btn.selected {
+        background-color: #a8b7be;
+        color: #383838;
+      }
+  
+      .bar-btn:hover {
+        background-color: hsla(200, 33%, 78%, 0.663);
+        color: #20021c;
+      }
+      #popup1-1{
+      background-image: url(../../wallpaper/dark/pink_pc.svg);
+      }
+      #popup1-2{
+      background-image: url(../../wallpaper/dark/blue_pc.svg);
+      }
+      #popup2-1{
+      background-image: url(../../wallpaper/dark/yellow_pc.svg);
+      }
+      #popup3-1{
+      background-image: url(../../wallpaper/dark/green_pc.svg);
+      }
+      #popup4-1{
+      background-image: url(../../wallpaper/dark/red_pc.svg);
+      }
+      @media only screen and (max-width: 600px){
+        .phone_background {
+        position:relative;
+        overflow:hidden;
+          overflow-x: hidden;
+      }
+      .phone_background .fixed {
+        background-image: url(../../wallpaper/dark/home_phone.svg);
+      }
+      #popup1-1{
+      background-image: url(../../wallpaper/dark/pink_phone.svg);
+  }
+  #popup1-2{
+     
+      background-image: url(../../wallpaper/dark/blue_phone.svg);
+      
+  }
+  #popup2-1{
+      background-image: url(../../wallpaper/dark/yellow_phone.svg);
+  }
+
+      #popup3-1{
+      background-image: url(../../wallpaper/dark/green_phone.svg);
+      }
+     
+      #popup4-1{
+      background-image: url(../../wallpaper/dark/red_phone.svg);
+
+      }
+      }

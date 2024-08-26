@@ -1,4 +1,7 @@
 <?php
+header('Content-Type: application/json');
+require '../auth/auth.php';
+requireAuth();
 $folderPath = '../../file/Bookmark';
 $files = scandir($folderPath);
 

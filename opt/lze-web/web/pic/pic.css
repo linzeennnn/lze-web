@@ -1,0 +1,422 @@
+.ui-tooltip {
+    background: #575d8a8a; 
+    color: #9dcaed; 
+}
+
+
+
+.video-wrapper {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+}
+.hidden {
+display: none;
+}
+
+body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #1c1d26;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition:background-image 1s ease ;
+    }
+    body::-webkit-scrollbar {
+display: none; /* 隐藏滚动条 */
+}
+.backbtn:hover #name{
+background-image: url(../../icon/name_white.svg);
+}
+    input[type="file"] {
+    display: none; 
+}
+.photo{
+    cursor: pointer;
+left: 50%;
+margin-top: 130px;
+width: 100px;
+height: 100px;
+background-image: url(../../icon/photo.svg);
+background-repeat: no-repeat;
+background-position: center;
+z-index: 100;
+}
+.photo:hover{
+    background-image: url(../../icon/photo_open.svg);
+}
+
+
+/* 样式化显示选定文件名的区域 */
+#file-name-display {
+    max-height: 2em;
+    max-width: 10em;
+    margin-top: 0.5em; 
+    font-size: 14px; 
+    color: #333; 
+    overflow: auto;
+}
+
+/* 如果使用类来标识该元素，可以使用以下样式 */
+.file-name-display {
+    margin-top: 20%; /* 调整与其他元素的间距 */
+    font-size: 14px; /* 设置文字大小 */
+    color: #333; /* 设置文字颜色 */
+}
+
+
+
+
+
+
+.gallery-container {
+    right:-100%;
+    margin-top: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 80%;
+    position: relative;
+    max-width: 80%; 
+    background-color: transparent;
+   margin-bottom: 20px;
+   transition: right 1s ease;
+   z-index: 2;
+    
+}
+
+#button1 {
+    cursor: pointer;
+    background-image: url(../../icon/picture.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 10px;
+    margin-bottom: 10px;
+    
+    
+}
+#button1:hover{
+    background-image: url(../../icon/picture_white.svg);
+   
+}
+#button1.selected {
+    background-image: url(../../icon/picture_white.svg);
+          
+    
+}
+
+
+#button2 {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../../icon/video.svg);
+    margin: 10px;
+    margin-bottom: 10px;
+}
+
+
+#button2.selected {
+    background-image: url(../../icon/video_white.svg);
+    
+}
+
+#button2:hover {
+    
+    background-image: url(../../icon/video_white.svg);
+    
+}
+#button3 {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../../icon/cut.svg);
+    margin: 10px;
+    margin-bottom: 10px;
+    
+}
+#button3:hover{
+   
+    background-image: url(../../icon/cut_white.svg);
+}
+#button3.selected {
+   
+    background-image: url(../../icon/cut_white.svg);           
+    
+}
+#load-btn {
+    width: 32px !important;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../../icon/load_blue.svg);
+    margin: 10px;
+    margin-bottom: 10px;
+    
+}
+#load-btn:hover{
+   
+    background-image: url(../../icon/load_white.svg);
+}
+
+label[for="uploadfile"] {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 10px;
+    margin-bottom: 10px;
+    background-image: url(../../icon/upload_blue.svg);
+}
+
+/* 鼠标悬停时的样式 */
+label[for="uploadfile"]:hover {
+    background-image: url(../../icon/upload_white.svg);
+}
+
+.top-button{
+    height: 60px;
+    position: fixed;
+    border-radius: 1em;
+    justify-content: center;
+    align-items: center;
+    background-color:#575d8a8a;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: inline-flex;
+    margin-left: 0;
+    width: 300px;
+    margin-top: 10px;
+   top: -80px; 
+    z-index: 10;
+    transition: width 1s ease , top 1s ease, background-color 1s ease,margin-left 1s ease; 
+}
+.btn{
+    height: 32px;
+    width: 0;
+    transition: width 1s ease;
+}
+
+
+
+.gallery-item {
+    width: 29em;
+    height: 29em;
+    overflow: hidden;
+    border: 10px solid #a7dbfd9d;
+    margin: 5px; 
+    margin-top: 40px !important;
+    border-color: #5a677cbd;
+    border-radius: 1em;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+-5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+-5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+   
+  
+}
+
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 图片超出边框的部分不显示 */
+    position: relative;
+    opacity: 0.8;
+
+}
+.gallery-item img:hover{
+    opacity: 1;
+}
+
+.gallery-item video {
+    width: auto;
+    height: auto;
+    object-fit: cover; /* 图片超出边框的部分不显示 */
+    position: relative;
+    opacity: 0.8;
+}
+.gallery-item video:hover{
+    opacity: 1;
+}
+.video-item {
+    width: 100%; 
+    height:fit-content;
+    margin-bottom: 5em;
+}
+
+.video-item video {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    margin-bottom: 0;
+}
+
+.bottom-button {
+    position: relative;
+    cursor: pointer;
+    background-image: url(../../icon/godown_blue.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    margin-bottom: 60px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 50px;
+    height: 50px;
+    background-color: #5a677cbd;
+    border: none;
+    z-index: 10;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   /* 右下方阴影 */
+-5px -5px 20px rgba(0, 0, 0, 0.068), /* 左上方阴影 */
+5px -5px 20px rgba(0, 0, 0, 0.068),  /* 右上方阴影 */
+-5px 5px 20px rgba(0, 0, 0, 0.068);  /* 左下方阴影 */
+    
+}
+.bottom-button:hover{
+    background-image: url(../../icon/godown_white.svg);
+    background-color: #01385c77;
+}
+
+#file-name-display {
+    margin-top: 0.5em; /* 调整与其他元素的间距 */
+    font-size: 250%; /* 设置文字大小 */
+    color: #092958; /* 设置文字颜色 */
+    background-color: #31a7c596;
+    border-radius: 1em;
+}
+#progress{
+   border-radius: 1em;
+   width:300px;
+height:30px;
+border:none;
+overflow: hidden;
+box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+      inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+      inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+      inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+      z-index: 1000;
+
+}
+#bar{
+width: 0%;
+height:100%;
+background-color: rgba(1, 67, 155, 0.801);
+}
+#percent {
+color: rgb(186, 216, 255);
+width: 30px;
+height: 24px;
+margin-top: 10px;
+vertical-align: middle;
+left: 50%;
+transform: translate(-50%); 
+white-space: nowrap; 
+font-size: 14px; 
+position: fixed;
+}
+#buttonA{
+bottom: -1000px;
+transition: bottom 1s ease;
+}
+#top-btn{
+    background-color:#5a677cbd ;
+    background-image: url(../../icon/toup_blue.svg);
+}
+#top-btn:hover{
+    background-color: #4066808e;
+    background-image: url(../../icon/toup_white.svg);
+}
+#nottify{
+    background-color: #575d8a8a;
+}
+#notifytext{
+    color: #9dcaed; 
+}
+@media only screen and (max-width: 600px) {
+    .phone_background {
+    position:relative;
+    overflow:hidden;
+    overflow-x: hidden;
+}
+.next {
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:no-repeat center center;
+  background-size:cover;
+    overflow:hidden;
+    overflow-x: hidden; 
+    opacity: 0;
+    transition: opacity 1s ease ; 
+    z-index: 1;
+}
+.backbtn{
+  width: 25% ;
+}
+
+
+.phone_background .fixed {
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:no-repeat center center;
+    background-size:cover;
+    z-index:0;
+    overflow:hidden;
+    overflow-x: hidden;
+}
+
+
+    }
+    
+
+
+
+form {
+    text-align:center ;
+    margin-top: 4%; /* 调整表单与其他元素的间距 */
+    position: relative;
+    z-index: 1;
+}
+
+input[type="file"] {
+    margin: 0.5em;
+    position: relative;
+}
+
+hr {
+    margin: 1em; /* 调整水平线与其他元素的间距 */
+    position: relative;
+}
+
+/* 清除ul的默认样式 */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+/* 清除li的默认样式 */
+li {
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+
+.gallery-item:hover {
+    border-color: #0000009d; /* 鼠标悬停时边框背景色为黑色 */
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#271b1b"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓🔖</title>
+    <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery-3.5.1.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="../css/password.css">
+</head>
+<body>
+    
+    <div class="phone_background">
+        <div class="fixed"></div>
+    </div>
+    <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
+    <div class="next" ></div>
+    <div id="cover-bar"></div>
+    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+    <div id="login" title="登陆" onclick="showlogin(1)"></div>
+  <div id="pass-page">
+  <div id="pass-bar">
+    <div id="logout" onclick="logout()" title="退出登陆"></div>
+    <input id="password" contenteditable="true" placeholder="password" type="password"></input>
+    <div id="send-pass" title="连接" onclick="sendpass()"></div>
+  </div>
+  <div id="backlogin" onclick="showlogin(0)"></div>
+</div>
+    <div id="top-bar">
+        <div id="add" title="添加便签" onclick="showAddNoteForm()"></div >
+            <label for="uploadfile" class="custom-upload-btn" id="up-btn" title="上传文件"></label>
+        <div id="tit-bar" contenteditable="true" title="标题"></div>
+        <div id="word-bar" contenteditable="true" title="正文"></div>
+        <div id="progress" style="display: none;">
+            <div id="bar"><div id="percent"></div></div>
+        </div>
+        <div id="load" title="刷新" onclick="reloadPage()"></div >
+    </div>
+    <div id="top-btn" onclick="totop()" title="回到顶部"></div>
+<div id="notes"></div>
+
+<div id="notes"></div>
+<link rel="stylesheet" id="themesheet">
+<script src="../js/password.js"></script>
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/lze.css">
+<link rel="stylesheet" href="bok.css">
+<script src="../js/lze.js"></script>
+<script src="bok.js"></script>
+</body>
+</html>
+

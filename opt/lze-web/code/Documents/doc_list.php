@@ -1,4 +1,8 @@
 <?php
+header('Content-Type: application/json');
+require '../auth/auth.php';
+requireAuth();
+
 $baseFolder = '../../file/Documents/upload';
 $currentFolder = isset($_GET['folder']) ? $_GET['folder'] : '';
 $uploadFolder = $baseFolder . '/' . $currentFolder;

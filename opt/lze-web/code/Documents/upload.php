@@ -1,16 +1,54 @@
 <?php
-if (empty($_FILES)) {
-  exit('no file');
+header('Content-Type: application/json');
+require '../auth/auth.php';
+requireAuth();
+if (empty($_FILES) || !isset($_POST['fileName']) || !isset($_POST['currentChunk']) || !isset($_POST['totalChunks'])) {
+    exit('Invalid request');
+}
+putenv('DISPLAY=:0');
+putenv('DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus');
+putenv('XDG_RUNTIME_DIR=/run/user/1000');
+putenv('XAUTHORITY=/run/user/1000/gdm/Xauthority');
+$uploadDirectory = '../../file/Documents/upload/';
+$fileName = $_POST['fileName'];
+$currentChunk = (int)$_POST['currentChunk'];
+$totalChunks = (int)$_POST['totalChunks'];
+$tempFilePath = $uploadDirectory . $fileName . '.part';
+
+if (!is_dir($uploadDirectory)) {
+    mkdir($uploadDirectory, 0777, true);
 }
 
-$uploadDirectory = '../../file/Documents/upload/';
+// 将当前块的数据追加到临时文件
+if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    $tmp_name = $_FILES['file']['tmp_name'];
+    $out = fopen($tempFilePath, $currentChunk === 0 ? 'wb' : 'ab');
+    $in = fopen($tmp_name, 'rb');
+    while ($buff = fread($in, 4096)) {
+        fwrite($out, $buff);
+    }
+    fclose($in);
+    fclose($out);
 
-foreach ($_FILES['pic']['name'] as $key => $name) {
-  if ($_FILES['pic']['error'][$key] === UPLOAD_ERR_OK) {
-    $tmp_name = $_FILES['pic']['tmp_name'][$key];
-    move_uploaded_file($tmp_name, $uploadDirectory . $name);
-  } else {
+    // 如果这是最后一个块，合并完成的文件
+    if ($currentChunk === $totalChunks - 1) {
+        $finalFilePath = $uploadDirectory . $fileName;
+
+        // 如果文件已经存在，添加序号
+        $fileInfo = pathinfo($finalFilePath);
+        $baseName = $fileInfo['filename'];
+        $extension = isset($fileInfo['extension']) ? '.' . $fileInfo['extension'] : '';
+
+        $counter = 1;
+        while (file_exists($finalFilePath)) {
+            $finalFilePath = $uploadDirectory . $baseName . '_' . $counter . $extension;
+            $counter++;
+        }
+
+        rename($tempFilePath, $finalFilePath);
+        echo 'Upload complete';
+    }
+} else {
     exit('fail');
-  }
 }
 ?>

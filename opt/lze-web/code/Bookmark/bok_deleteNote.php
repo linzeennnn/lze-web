@@ -1,4 +1,7 @@
 <?php
+header('Content-Type: application/json');
+require '../auth/auth.php';
+requireAuth();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // 获取要删除的文件名
     $fileName = $_POST["fileName"];

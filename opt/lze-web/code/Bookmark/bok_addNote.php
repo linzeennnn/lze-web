@@ -1,4 +1,8 @@
 <?php
+header('Content-Type: application/json');
+require '../auth/auth.php';
+requireAuth();
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // 获取新便签的标题和内容
     $newTitle = $_POST["newTitle"];
@@ -29,6 +33,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // 生成新的文件名，使用原始标题
 function generateFileName($title) {
-    return "{$title}.bok";
+    $baseName = "{$title}.bok";
+    $filePath = "../../file/Bookmark/{$baseName}";
+
+    // 如果文件已存在，则添加数字后缀
+    $count = 1;
+    while (file_exists($filePath)) {
+        $filePathInfo = pathinfo($baseName);
+        $baseName = "{$filePathInfo['filename']}({$count}).{$filePathInfo['extension']}";
+        $filePath = "../../file/Bookmark/{$baseName}";
+        $count++;
+    }
+
+    return $baseName;
 }
 ?>

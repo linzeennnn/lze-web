@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#261b24"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📃</title>
+  <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery-3.5.1.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
+    <script src="StreamSaver.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/lze.css">
+    <link rel="stylesheet" href="doc.css">
+    <link rel="stylesheet" id="themesheet">
+    <link rel="stylesheet" href="../css/password.css">
+</head>
+<body>
+  <div class="phone_background">
+    <div class="fixed"></div>
+    <div class="next" ></div>
+  </div>
+  <div id="cover-bar"></div>
+  <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+  <div id="login" title="登陆" onclick="showlogin(1)"></div>
+  <div id="pass-page">
+  <div id="pass-bar">
+    <div id="logout" onclick="logout()" title="退出登陆"></div>
+    <input id="password" contenteditable="true" placeholder="password" type="password"></input>
+    <div id="send-pass" title="连接" onclick="sendpass()"></div>
+  </div>
+  <div id="backlogin" onclick="showlogin(0)"></div>
+</div>
+  <div id="top-bar">
+    <div id="top-bar-blur"></div>
+    <button id="upButton"  onclick="goUp()" title="返回上一级"></button>
+    
+    <button id="cancel"  style="display: none;" onclick="cancelUpload()" title="取消上传"></button>
+    <div class="path-bar" id="path-bar">
+      <div class="current-path" id="currentPath" >/</div>
+      <button id="loadButton"  onclick="reloadPage()" title="刷新"></button>
+      <div id="progress" style="display: none;">
+        <div id="bar"><div id="percent"></div></div>
+      </div>
+    </div>
+    
+    <label for="uploadfile" class="custom-upload-btn" id="up-btn" title="上传文件"></label>
+    <div class="rotate-box"  id="rotate-box"style="display: none;"><div class="rotate-loading" id="loading" style="display: none;"></div></div> 
+  </div>
+    
+  
+  <div id="closeifame" class="all" style="display: none;" onclick="closeifame()" title="关闭预览"></div>
+  <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
+  <div id="top-btn" onclick="totop()" title="回到顶部"></div>
+  
+ 
+  <div id="fileListContainer" class="all">
+    <ul id="fileList" class="all"></ul>
+
+  </div> 
+  </div>
+  <script src="../js/lze.js"></script>
+  <script src="doc.js"></script>
+  <script src="../js/password.js"></script>
+</body>
+</html>

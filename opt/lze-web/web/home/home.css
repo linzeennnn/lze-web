@@ -1,0 +1,546 @@
+ 
+    .ui-tooltip {
+              border: none !important;
+              font-size: 19px; 
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+              padding: 15px; 
+              border-radius: 1em; 
+              font-weight: bold;
+              overflow-wrap: break-word;
+              z-index: 99999999;
+          }
+          body {
+            background-color: #1f2324;
+            display: flex;
+            box-sizing: border-box; 
+            overflow-x: hidden !important;
+            justify-content: center;
+            align-items: center;
+            background-size:cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            flex-direction: column;
+            transition: background-image 1s ease,opacity 1s ease ; 
+          }
+         
+          
+      #home-bar {
+        display: flex;
+        font-size: 70px;
+        height: 60px !important;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        top: -120px;
+        z-index: 10;
+        transition: top 1s ease-in-out;
+        
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
+    -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
+      }
+     
+      .name{
+        position:absolute;
+        cursor: pointer;
+        top: 50px;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 0;
+        height: 60px;
+        z-index: 11;
+        transition: all 1s ease;
+        
+      }
+      .theme-btn{
+        cursor: pointer;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 32px;
+        height: 32px;
+        position: fixed;
+        right: 3%;
+        top: 100px;
+      }
+      #dark-btn{
+        background-image: url(../../icon/dark_grey.svg);
+      }
+      #dark-btn:hover{
+        background-image: url(../../icon/dark_black.svg);
+      }
+      #light-btn{
+        background-image: url(../../icon/light_grey.svg);
+      }
+      #light-btn:hover{
+        background-image: url(../../icon/light_white.svg)
+      }
+      #ip-status{
+        margin-top: 10px;
+        position: relative;
+        font-size: 25px;
+        width: fit-content;
+        height: fit-content;
+        color: #585c5e;
+        font-weight: bold;
+        margin-left: 10px;
+        animation: ipstatus 1s infinite alternate ease-in-out;
+      }
+      @keyframes ipstatus {
+      0% {
+          color: #9fa8ac; /* 第一种颜色 */
+      }
+      100% {
+          color: #444749; /* 第二种颜色 */
+      }
+  }
+  
+      #reconnect{
+        position: relative;
+        cursor: pointer;
+        margin-left: 10px;
+        margin-top: 10px;
+        width: 32px;
+        height: 32px;
+        background-image: url(../../icon/switch_grey.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      #reconnect:hover{
+        background-image: url(../../icon/switch_white.svg);
+      }
+      #myButton {
+        transform: translateX(-50%);  
+        background-image: url(../../icon/power_grey.svg);
+        position: absolute;
+        border: none;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        bottom: -10%;
+        transition:all 1s ease; 
+        border-radius: 50%;
+        z-index: 2;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+      }
+  
+      #myButton:hover {
+        background-color: #1e263094 ;
+        background-image: url(../../icon/power.svg);
+      }
+  
+      #customPopup {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 0;
+        background-color: #fff;
+        overflow: hidden;
+        transition: height 1s ease; /* 添加过渡效果 */
+        z-index: 1001; /* 比标题栏更高的层级 */
+        box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-image: url(../../wallpaper/pop_pc.svg);
+        background-size: cover;
+      }
+      #customPopup.active {
+        height: 60%; /* 弹出时的高度 */
+      }
+  
+      #topBar {
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+  
+      .bar-btn {
+        
+        width: 25%;
+        height: 2em;
+        border: none;
+        border-radius: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 0;
+        margin: 5px;
+        margin-bottom: 0;
+        font-size: 150%;
+      }
+      .additionalPopup {
+        
+          display: flex;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 80%; /* 弹出时的高度 */
+        background-color: #fff;
+        
+        transition: transform 1s ease, opacity 1s ease; /* 添加过渡效果 */
+        transform-origin: left center;
+        transform: translateX(-100%); /* 初始位置在页面左侧外部 */
+        opacity: 0; /* 初始状态为透明 */
+      }
+  
+      .additionalPopup.active {
+          
+        transform: translateX(0); /* 弹出时的位置 */
+        opacity: 1; /* 显示 */
+      }
+  
+      .additionalPopup.return {
+        transform: translateX(200%); /* 弹回时的位置 */
+        opacity: 0; /* 隐藏 */
+      }
+  
+      .popupContent {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        font-size: 18px;
+        background-color: transparent;
+        
+      }
+      .popupContent button {
+        
+          width: 100%; /* 按钮宽度占满父容器 */
+          padding: 10px; /* 设置按钮内边距 */
+         
+          }
+  
+  
+  
+      #popup1{
+  
+          background-color: transparent;
+          margin-bottom: 2%;
+          }
+          #popup1-1{
+            border-color: transparent;
+          flex: 1;
+          width: auto;
+          height: 100%;
+          background-color: transparent;
+          background-size: cover;
+          background-position: center;
+          font-size: 300%;
+          color: #2d0a1e;
+          cursor: pointer;
+          border-radius: 1em;
+          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+          }
+          
+          
+  
+      #folder{
+        transform: translateX(-50%);
+        border-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: transparent;
+        margin-left: 50%;
+          width: 100px;
+          height: 100px;
+          background-image: url(../../icon/folder.svg);
+        
+          cursor: pointer;
+      }
+      #popup1-1:hover #folder{
+          background-image: url(../../icon/folder_open.svg);
+      }
+      
+      #popup1-2{
+        border-color: transparent;
+        flex: 1;
+          width: auto;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          opacity: 0.8;
+          font-size: 300%;
+          color: #654409;
+          cursor: pointer;
+          border-radius: 1em;
+          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+      }
+     
+      #photo{
+        transform: translateX(-50%);
+        border-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: transparent;
+        margin-left: 50%;
+          width: 100px;
+          height: 100px;
+          background-image: url(../../icon/photo.svg);
+        
+          cursor: pointer;
+      }
+      #popup1-2:hover #photo{
+          background-image: url(../../icon/photo_open.svg);
+      }
+      #popup2{
+          background-color: rgba(255, 255, 255, 0);
+          margin-bottom: 2%;
+      }
+      #popup2-1{
+        border-color: transparent;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          font-size: 300%;
+          color: #654409;
+          cursor: pointer;
+          border-radius: 1em;
+          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+  
+          }
+          #terminal{
+        transform: translateX(-50%);
+        border-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: transparent;
+        margin-left: 50%;
+          width: 100px;
+          height: 100px;
+          background-image: url(../../icon/terminal.svg);
+        
+          cursor: pointer;
+      }
+      #popup2-1:hover #terminal{
+          background-image: url(../../icon/terminal_open.svg);
+      }
+  
+          
+      
+  
+  
+      #popup3{
+          background-color: rgba(255, 255, 255, 0);
+          margin-bottom: 2%;
+      }
+      #popup3-1{
+        border-color: transparent;
+          border-radius: 1em;
+          height: 100%;
+          width: 100%;
+          cursor: pointer;
+          background-size: cover;
+          background-position: center;
+          font-size: 300%;
+          color: #024a4d;
+          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+      }
+      
+      #note{
+        transform: translateX(-50%);
+        border-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: transparent;
+        margin-left: 50%;
+          width: 100px;
+          height: 100px;
+          background-image: url(../../icon/note.svg);
+        
+          cursor: pointer;
+      }
+      #popup3-1:hover #note{
+          background-image: url(../../icon/note_open.svg);
+      }
+  
+  
+      #popup4{
+  
+          background-color: rgba(255, 255, 255, 0);
+          margin-bottom: 2%;
+          }
+  
+          #popup4-1{
+            border-color: transparent;
+          flex: 1;
+          width: auto;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          font-size: 300%;
+          color: #2d0a1e;
+          cursor: pointer;
+          border-radius: 1em;
+          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+          }
+          #tag{
+        transform: translateX(-50%);
+        border-color: transparent;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: transparent;
+        margin-left: 50%;
+          width: 100px;
+          height: 100px;
+          background-image: url(../../icon/tag.svg);
+        
+          cursor: pointer;
+      }
+      #popup4-1:hover #tag{
+          background-image: url(../../icon/tag_open.svg);
+      }
+      #ip-bar{
+        display: flex;
+        position: fixed;
+        bottom: 25%;
+        width: 0px;
+        height: 100px;
+        z-index: 10;
+        opacity: 0;
+        justify-content: center;
+        align-items: center;
+        transition: all 1s ease ;
+      }
+      #ip-input{
+        width: 70%;
+        height: 40px;
+        padding: 15px;
+        color: #bfd2db;
+        font-weight: bold;
+        border: none;
+        font-size: 20px;
+        background-color: #21232485;
+        border-radius: 1.5em;
+        box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+                inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+                inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+                inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+      }
+      #ip-input:focus{
+        outline: none;
+        background-color: #4f5e68c4;
+      }
+      #ip-connect{
+        margin-left: 10px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        background-image: url(../../icon/right_grey.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      #ip-connect:hover{
+        background-image: url(../../icon/right_white.svg);
+      }
+      #local{
+        margin-right: 10px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        background-image: url(../../icon/add_user_grey.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      #local:hover{
+        background-image: url(../../icon/add_user_white.svg);
+      }
+          
+
+      #notify{
+        border-radius: 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        position: fixed;
+        top: 30px;
+        z-index: 1000;
+        opacity: 0;
+        background-color: #5a758169;
+        transition: opacity 1s ease;
+    }
+#notifytext{
+  color: #bfe9fc;
+        padding: 20px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+     
+          @media only screen and (max-width: 600px){
+            .phone_background {
+            position:relative;
+            overflow:hidden;
+              overflow-x: hidden;
+          }
+          .phone_background .fixed {
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:no-repeat center center;
+            background-size:cover;
+              overflow:hidden;
+              overflow-x: hidden; 
+              z-index: 0;
+          }
+          
+          .next {
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:no-repeat center center;
+            background-size:cover;
+              overflow:hidden;
+              overflow-x: hidden; 
+              opacity: 0;
+              transition: opacity 1s ease ; 
+              z-index: 1;
+          }
+          
+            
+            #topBar button {
+              font-size: 80%;
+            }
+            #topBar {
+              height: 10%;
+              padding: auto;
+              
+            }
+           
+        
+  
+         
+  
+          }
+  

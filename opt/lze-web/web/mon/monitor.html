@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#27241b"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓🔳</title>
+    <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../jquery/jquery-ui.css">
+    <script src="../jquery/jquery-3.5.1.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
+    <link id="themesheet" rel="stylesheet" href="../css/lze.css">
+    <link rel="stylesheet" href="../css/lze.css">
+    <link rel="stylesheet" href="monitor.css">
+    <link rel="stylesheet" href="../css/password.css">
+</head>
+<body>
+    <div class="phone_background">
+        <div class="fixed"></div>
+        <div class="next" ></div>
+    </div>
+    
+    <div id="cover-bar"></div>
+    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+    <div id="login" title="登陆" onclick="showlogin(1)"></div>
+  <div id="pass-page">
+  <div id="pass-bar">
+    <div id="logout" onclick="logout()" title="退出登陆"></div>
+    <input id="password" contenteditable="true" placeholder="password" type="password"></input>
+    <div id="send-pass" title="连接" onclick="sendpass()"></div>
+  </div>
+  <div id="backlogin" onclick="showlogin(0)"></div>
+</div>
+    <div id="top-bar">
+    <div id="media-bar">
+        <div id="title-space">
+        <span id="media-title">暂无播放</span>
+        </div>
+        <div id="media-tool">
+            <div id="slow" class="media-btn" onclick="mediabutton('slow')" title="后退"></div>
+            <div id="play" class="media-btn" onclick="mediabutton('play')" title="播放"></div>
+            <div id="pause" class="media-btn" onclick="mediabutton('pause')" title="暂停" style="display: none;"></div>
+            <div id="speed" class="media-btn" onclick="mediabutton('speed')" title="前进"></div>
+        </div>
+    </div> 
+    <div id="tool-bar">
+        <div id="btn-bar">
+        <label id="toscreen" for="uploadfile" title="文件投屏"></label>
+        <input type="file" id="uploadfile" name="pic" onchange="toscreen()" multiple="multiple" style="display: none;"/>
+    
+        <div id="reload" onclick="reloadPage()" title="刷新"></div>
+    </div>
+        <div class="slider-container" id="volum-tool">
+            <div id="mute-button" title="音量"></div>
+            <div class="volum-bar">
+                <div class="volum-fill">
+                    <div class="volum-thumb" id="volum-thumb"></div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="slider-container" id="brightness-tool">
+            <div id="min-brightness-button" title="亮度"></div>
+            <div class="brightness-bar">
+                <div class="brightness-fill">
+                    <div class="brightness-thumb" id="brightness-thumb"></div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    </div>
+    <div id="top-btn" onclick="totop()"></div>
+    <div id="allwindow"></div>
+    <script src="../js/theme.js"></script>
+    <script src="../js/lze.js"></script>
+    <script src="monitor.js"></script>
+    <script src="../js/password.js"></script>
+
+</body>
+</html>

@@ -1,4 +1,7 @@
 <?php
+header('Content-Type: application/json');
+require '../auth/auth.php';
+requireAuth();
 // 获取文件夹中的所有文件
 $folder = '../../file/Pictures/Screenshots/';
 $files = scandir($folder);

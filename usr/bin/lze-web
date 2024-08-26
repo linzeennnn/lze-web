@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# 检查第一个参数是否为 -a 或 -p
+if [ "$1" != "-a" ] && [ "$1" != "-p" ]; then
+  echo "Usage: $0 -a [y|n] or $0 -p [string]"
+  exit 1
+fi
+
+# 处理 -a 参数
+if [ "$1" == "-a" ]; then
+  if [ -z "$2" ]; then
+    echo "Usage: $0 -a [y|n]"
+    exit 1
+  fi
+
+  case "$2" in
+    y)
+      cp /opt/lze-web/code/auth/auth_yes.php /opt/lze-web/code/auth/auth.php
+      ;;
+    n)
+      cp /opt/lze-web/code/auth/auth_no.php /opt/lze-web/code/auth/auth.php
+      ;;
+    *)
+      echo "Invalid input. Please enter 'y' or 'n'."
+      exit 1
+      ;;
+  esac
+
+# 处理 -p 参数
+elif [ "$1" == "-p" ]; then
+  if [ -z "$2" ]; then
+    echo "Usage: $0 -p [string]"
+    exit 1
+  fi
+
+  echo -n "$2" | base64 > /etc/lze-web/password
+fi
+

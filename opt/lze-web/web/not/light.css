@@ -1,0 +1,16 @@
+body{
+    background-image: url(../../wallpaper/light/green_pc.svg);
+}
+
+#cover-bar{
+    background-color: #6b96839c;
+    }
+
+#name{
+    background-image: url(../../icon/light/name_green.svg);
+    }
+@media only screen and (max-width: 600px){
+    .phone_background .fixed {
+       background-image: url(../../wallpaper/light/green_phone.svg);
+    }
+  }

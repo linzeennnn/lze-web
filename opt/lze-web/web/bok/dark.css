@@ -1,0 +1,15 @@
+body{
+    background-image: url(../../wallpaper/dark/red_pc.svg);
+   
+}
+#name{
+  background-image: url(../../icon/dark/name_red.svg);
+}
+        #cover-bar{
+            background-color: #281c1c93;
+          }
+          @media only screen and (max-width: 600px){
+            .phone_background .fixed {
+               background-image: url(../../wallpaper/dark/red_phone.svg);
+            }
+          }
