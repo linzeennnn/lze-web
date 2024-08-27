@@ -224,10 +224,14 @@ async function getnote() {
                 },
                 body: formData
             });
-            const result = await response.text();
             fetchnologin(response);
             if (response.status != 401) {
+            const data = await response.json();
+            const filename = data.filename;
+            const uploadpath = data.filepath;
+            console.log(filename,uploadpath);
                 reloadnote();
+                desktopnot('恩的便签','新便签:',`${filename}`,uploadpath);
                 title.innerText='';
                 text.innerText='';
                 notify("保存成功");

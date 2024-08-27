@@ -2,6 +2,7 @@ let darkcolor;
 let lightcolor
 darkcolor='#1c1f28';
 lightcolor='#6b7596';
+let uploadpath;
 function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         if (scrollTop > 100) {
@@ -426,7 +427,9 @@ function appendVideos(count) {
         if (currentChunk < totalChunks) {
           uploadChunk(); // 上传下一个块
         } else {
+          uploadpath=xhr.responseText;
             notify("上传完成");
+          desktopnot('恩的图库','图库新内容:',`${file.name}`,uploadpath);
           reloadPage(); 
         }
       } 

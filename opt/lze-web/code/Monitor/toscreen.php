@@ -34,7 +34,7 @@ foreach ($_FILES['pic']['name'] as $key => $name) {
   }
 }
 echo "done";
-shell_exec("xdg-open $filePath");
+shell_exec("xdg-open $filePath &");
     shell_exec("notify-send -t 500 $baseName");
 ?>
 

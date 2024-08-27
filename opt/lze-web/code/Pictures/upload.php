@@ -43,7 +43,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
         }
 
         rename($tempFilePath, $finalFilePath);
-        echo 'Upload complete';
+        echo $finalFilePath;
     }
 } else {
     exit('fail');

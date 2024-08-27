@@ -15,7 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // 将新便签写入文件
     if (file_put_contents($filePath, $newContent) !== false) {
-        echo "Note added successfully";
+        echo json_encode([
+            'filename' => $fileName,
+            'filepath' => $filePath
+        ]);
     } else {
         echo "Error writing to file";
     }

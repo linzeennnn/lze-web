@@ -1,52 +1,28 @@
 #!/bin/bash
 
-# 定义要监控的文件夹
-doc="/$USER/Documents/upload/"
-pic="/$USER/Pictures/"
-not="/$USER/Note/"
-bok="/$USER/Bookmark/"
+# 在后台执行等待1秒和pkill命令
+(sleep 5; pkill -9 notify-send ) &
 
-# 监控函数
-monitor_folder() {
-  local folder="$1"
-  local label="$2"
-  local notification_text="$3"
-  
-  inotifywait -m -e create --format '%f' "$folder" | while read file
-  do
-    # 检查文件是否以 .part 结尾
-    if [[ "$file" =~ \.part$ ]]; then
-      # 去掉 .part 后缀
-      file_without_part="${file%.part}"
-    else
-      file_without_part="$file"
-    fi
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 <title> <message> <file_path>"
+    exit 1
+fi
 
-    # 去掉文件后缀
-    file_base="${file_without_part%.*}"
+# 从参数获取标题、通知内容和文件路径
+title="$1"
+message="$2"
+file_path="$3"
 
-    # 使用 notify-send 显示通知，并添加一个打开文件夹的按钮
-    action=$(notify-send -t 2000 "$label" "$notification_text: $file_base" \
-       --action="查看$file_base")
-
-    # 根据 action 的值执行相应操作
-    case "$action" in
-      "0")
-        xdg-open "$folder$file_without_part" & 
-        ;;
-      *)
-        # 如果没有匹配的操作则不做任何事情
-        ;;
-    esac
-  done
-}
-
-# 启动每个文件夹的监控进程
-monitor_folder "$doc" "恩的文件" "新上传的文件" &
-monitor_folder "$pic" "恩的图库" "新图片" &
-monitor_folder "$not" "恩的便签" "新便签" &
-monitor_folder "$bok" "恩的书签" "新书签" &
-
-# 等待所有后台进程完成
-wait
+# 使用 notify-send 显示通知，并添加一个按钮
+action=$(notify-send -t 1000 "$title" "$message" --action="查看文件")
+# 根据 action 的值执行相应操作
+case "$action" in
+  "0")
+    # 打开指定的文件路径
+    xdg-open "$file_path" &
+    ;;
+  *)
+    # 如果没有匹配的操作则不做任何事情
+    ;;
+esac
 

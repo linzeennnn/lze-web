@@ -72,3 +72,26 @@ function totop() {
     return window.location.hash.substring(1); 
 }
 const ip = getip();
+// desktop notify
+async function desktopnot(title, content, fileName, finalFilePath){
+  console.log("1111111111111111");
+  const data = new URLSearchParams();
+  data.append('title', title);
+  data.append('content', content);
+  data.append('fileName', fileName);
+  data.append('finalFilePath', finalFilePath);
+
+  try {
+      const response = await fetch(`http://${ip}/code/notify/notify.php`, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: data.toString()
+      });
+  } catch (error) {
+      console.error('Fetch error:', error);
+  }
+}
+

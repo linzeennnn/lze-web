@@ -242,12 +242,12 @@ function getwin(){
         .catch(error => console.error('Error fetching JSON:', error));
 }
 
-            
-        
+  //close window 
         function closewindow() {
     fetch(`http://${ip}/code/Monitor/close_window.php`, {
         method: 'POST',
         headers: {
+            'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: new URLSearchParams({

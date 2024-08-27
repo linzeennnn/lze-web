@@ -2,6 +2,7 @@
  let lightcolor
  darkcolor='#271f25';
  lightcolor='#966a85';
+ let uploadpath;
  function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -261,8 +262,11 @@ window.addEventListener('scroll', handleScroll);
           uploadChunk(); // 上传下一个块
         } else {
           notify("上传成功");
+          uploadpath=xhr.responseText;
+          console.log(uploadpath);
           loading(0);
           loadFolder();
+          desktopnot('恩的文件','新上传文件:',`${file.name}`,uploadpath);
         }
       } 
     };

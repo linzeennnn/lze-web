@@ -14,7 +14,6 @@ $fileName = $_POST['fileName'];
 $currentChunk = (int)$_POST['currentChunk'];
 $totalChunks = (int)$_POST['totalChunks'];
 $tempFilePath = $uploadDirectory . $fileName . '.part';
-
 if (!is_dir($uploadDirectory)) {
     mkdir($uploadDirectory, 0777, true);
 }
@@ -44,9 +43,8 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
             $finalFilePath = $uploadDirectory . $baseName . '_' . $counter . $extension;
             $counter++;
         }
-
+        echo $finalFilePath;
         rename($tempFilePath, $finalFilePath);
-        echo 'Upload complete';
     }
 } else {
     exit('fail');
