@@ -1,0 +1,14 @@
+[I 240611 21:44:01 settings:125] WarningPolicy
+[I 240611 21:44:01 main:38] Listening on :8888 (http)
+[I 240611 21:52:55 settings:125] WarningPolicy
+[I 240611 21:52:55 main:38] Listening on :8888 (http)
+[I 240611 21:53:05 web:2348] 200 GET / (127.0.0.1) 5.14ms
+[I 240611 21:53:05 web:2348] 304 GET /static/css/xterm.min.css (127.0.0.1) 8.16ms
+[I 240611 21:53:05 web:2348] 304 GET /static/css/fullscreen.min.css (127.0.0.1) 8.29ms
+[I 240611 21:53:05 web:2348] 304 GET /static/css/bootstrap.min.css (127.0.0.1) 9.63ms
+[I 240611 21:53:05 web:2348] 304 GET /static/js/jquery.min.js (127.0.0.1) 1.00ms
+[I 240611 21:53:05 web:2348] 304 GET /static/js/main.js (127.0.0.1) 2.34ms
+[I 240611 21:53:05 web:2348] 304 GET /static/js/popper.min.js (127.0.0.1) 2.61ms
+[I 240611 21:53:05 web:2348] 304 GET /static/js/xterm.min.js (127.0.0.1) 4.07ms
+[I 240611 21:53:05 web:2348] 304 GET /static/js/xterm-addon-fit.min.js (127.0.0.1) 4.15ms
+[I 240611 21:53:05 web:2348] 304 GET /static/js/bootstrap.min.js (127.0.0.1) 3.09ms

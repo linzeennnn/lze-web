@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#43474A"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>𝕷𝖎𝖓𝖅𝖊𝖊𝖓📂</title>
+  <link rel="shortcut icon" href="../../icon/favicon.ico" type="image/x-icon"> 
+  <style>
+   body {
+    overflow-x: hidden !important;
+    
+      font-size: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(48, 50, 51);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: url('../../icon/oth_pc.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    body::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
+}
+    
+
+    #backButton {
+      
+      background-color: #3e4447be;
+      color: #722225;
+      border: none;
+      padding: 0.57%;
+      cursor: pointer;
+      font-size: 100%;
+      width: 100%;
+      max-width: 100%;
+      align-self: flex-start;
+      text-align: left;
+      padding-left: 7%;
+      position:fixed;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+    #backButton:hover{
+      background-color: #304a5791;
+      color: white;
+    }
+
+    h2 {
+      
+      width: 6em;
+      height: 20%;
+      cursor: pointer;
+      text-align: center;
+      display: inline-block;
+      box-sizing: content-box;
+      padding-bottom: 0.1%;
+      margin-bottom: 1%;
+      color: #722225;
+      position: relative;
+      margin-top: 80px !important;
+      border-radius: 1em;
+      background-color: #3e4447be;
+      padding-bottom: 0.1%;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+    h2:hover{
+      color: white;
+      background-color: #304a5791;
+    }
+
+    form {
+      width: 80%;
+      max-width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 自定义文件上传按钮的样式 */
+    .custom-upload-btn {
+      
+      background-color: #3e4447be;
+      background-image: url(../../icon/upload.svg);
+      border: none;
+      padding: 0.55em;
+      width: 40px;
+      height: 32px;
+      cursor: pointer;
+      border-radius: 2.75em;
+      margin-bottom: 32px;
+      margin-top: 15px;
+      position: relative;
+      background-repeat: no-repeat;
+      background-position: center;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+
+    /* 隐藏默认的文件上传按钮 */
+    #customFileUpload {
+      display: none;
+    }
+    .custom-upload-btn:hover{
+      background-color: #3a4f5296;
+      background-image: url(../../icon/upload_white.svg);
+    }
+
+    /* 用于显示选定文件名的样式 */
+    #selectedFileName {
+      max-width: 45% !important;
+      overflow: auto !important;
+      left: 5px;
+      font-size: 200%;
+      color: #722225;
+      position: relative;
+      background-color: #3e4447be;
+      border-radius: 1em;
+      width: auto;
+      overflow: hidden;
+    }
+
+    .uploadButton {
+      
+      background-color: #3e4447be;
+      color: #722225;
+      border: none;
+      padding: 0.55em;
+      cursor: pointer;
+      font-size: 150%;
+      border-radius: 2em;
+      position: relative;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+    .uploadButton:hover{
+      color: white;
+      background-color:#3a4f5296 ;
+    }
+
+    #fileListContainer {
+      width: 80%;
+      position: relative;
+      max-width: 80%;
+      border: 0.11em solid rgb(255, 255, 255);
+      border-radius: 0.5em;
+      overflow: hidden;
+      z-index: 1;
+      margin-bottom: 2em;
+      background-color: #3e4447be;
+      position: relative;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+    }
+
+    #fileList {
+      padding: 0;
+      list-style: none;
+      position: relative;
+    }
+
+    #fileList li {
+      cursor: pointer;
+      margin-bottom: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 120%;
+      border-bottom: 0.1em solid rgb(255, 255, 255);
+      padding: 1.4%;
+      position: relative;
+    }
+
+    .fileLink {
+      color: #ff0800;
+      text-decoration: underline;
+      margin-right: 10%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 1200px; /* 控制显示的最大宽度，ch 是一个字符宽度单位 */
+    }
+    .fileLink:hover{
+      color: #3d5d6a;
+    }
+
+    .downloadButton {
+      width: 32px;
+      cursor: pointer;
+      height: 32px;
+      background-image: url(../../icon/download.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      
+    }
+    .downloadButton:hover{
+      background-image: url(../../icon/download_white.svg) !important;
+    }
+    .rotate-loading {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            /* left: 50%; */
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 6px solid rgba(200, 200, 200, 0.5);
+            border-top: 6px solid rgb(255, 0, 0);
+            animation: rotate-loading 1s linear infinite;
+            margin-bottom: 30px;
+        }
+
+        @keyframes rotate-loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                /* 顺时针旋转360度 */
+                transform: rotate(360deg);
+            }
+        }
+    @media only screen and (max-width: 600px) {
+    
+    .phone_background {
+	position:relative;
+	overflow:hidden;
+    overflow-x: hidden;
+}
+.phone_background .fixed {
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background:no-repeat center center;
+	background-size:cover;
+	z-index:0;
+    overflow:hidden;
+    overflow-x: hidden;
+}
+.fileLink {
+      
+  
+      max-width: 200px ; /* 控制显示的最大宽度，ch 是一个字符宽度单位 */
+}
+
+h2{
+  
+  margin-top: 50px !important;
+}
+#backButton {
+      height: 40px;
+    }
+    
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="phone_background">
+    <div class="fixed" style="background-image:url(../../icon/oth_phone.svg);"></div>
+  </div>
+  <button id="backButton" onclick="goBack()"><返回主页</button>
+
+  <h2 onclick="reloadPage()">其他文件📂</h2>
+  <form action="oth_upload.php" method="post" enctype="multipart/form-data">
+    <!-- 使用自定义上传按钮触发文件上传按钮点击事件 -->
+    <label for="customFileUpload" class="custom-upload-btn"></label>
+    <input type="file" id="customFileUpload" name="file" required onchange="displayFileName()">
+    <!-- 用于显示选定文件名的元素 -->
+    <div id="selectedFileName"></div>
+    <!-- 使用自定义上传按钮 -->
+    <button type="submit" class="uploadButton" id="uploadBtn" style="display:none;" onclick="loading()">上传</button>
+  </form>
+
+  <div id="fileListContainer">
+    <ul id="fileList"></ul>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = '/';
+    }
+    function loading() {
+  const confirm = document.getElementById('uploadBtn');
+      const load = document.getElementById('selectedFileName');
+      load.insertAdjacentHTML('afterend', '上传中...<div class="rotate-loading"></div>');
+      uploadBtn.style.display = 'none';
+    }
+    function reloadPage() {
+  location.reload();
+}
+
+    function displayFileName() {
+      const fileInput = document.getElementById('customFileUpload');
+      const fileNameDisplay = document.getElementById('selectedFileName');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const chooseFileBtn = document.querySelector('.custom-upload-btn'); // 获取选择文件按钮
+
+      if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = '选定文件: ' + fileInput.files[0].name;
+        uploadBtn.style.display = 'block'; // 显示上传按钮
+        chooseFileBtn.style.display = 'none'; // 隐藏选择文件按钮
+      } else {
+        fileNameDisplay.textContent = '';
+        uploadBtn.style.display = 'none'; // 隐藏上传按钮
+        chooseFileBtn.style.display = 'block'; // 显示选择文件按钮
+      }
+    }
+
+    fetch('oth_list.php')
+      .then(response => response.json())
+      .then(data => {
+        const fileList = document.getElementById('fileList');
+        data.files.forEach(file => {
+          const listItem = document.createElement('li');
+
+          const fileLink = document.createElement('span');
+          fileLink.textContent = file;
+          fileLink.className = 'fileLink';
+
+          fileLink.addEventListener('click', function () {
+            window.open('../../file/Downloads/' + file, '_blank');
+          });
+
+          listItem.appendChild(fileLink);
+
+          const downloadButton = document.createElement('div');
+          downloadButton.className = 'downloadButton';
+          // downloadButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="bevel"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5"/></svg>';
+
+          downloadButton.addEventListener('click', function () {
+            fetch('../../file/Downloads/' + file)
+              .then(response => response.blob())
+              .then(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              });
+          });
+
+          listItem.appendChild(downloadButton);
+
+          fileList.appendChild(listItem);
+        });
+      });
+  </script>
+
+</body>
+
+</html>

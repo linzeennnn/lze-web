@@ -24,7 +24,6 @@ function showlogin(status){
     else if(logstatus==1 && passtatus==0 && status!=0){
         status=2
     }
-    console.log(status);
     switch(status){
         case 1:
             notify("输入主机");
@@ -116,7 +115,7 @@ function sendpass() {
 }
 
 function logout(){
-    localStorage.removeItem('authToken');
+    localStorage.removeItem(`authToken_${ip}`);
         notify("已登出");
         reloadPage();
 }
@@ -211,7 +210,6 @@ function local(){
 
 // 从 localStorage 中获取数据
 function gethost() {
-    console.log('defaulthost:', defaulthost);
     const hostlist = localStorage.getItem('host');
     return hostlist ? JSON.parse(hostlist) : defaulthost;
 }

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title> WebSSH </title>
+    <link href="static/img/favicon.png" rel="icon" type="image/png">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/xterm.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/fullscreen.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="staticjquery/jquery-ui.css">
+    <script src="static/jquery/jquery-3.5.1.min.js"></script>
+    <script src="static/jquery/jquery-ui.min.js"></script>
+    <style>
+      ui-tooltip {
+            background: #b1941260; 
+            border: none !important;
+            color: #ffe396; 
+            font-size: 19px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+            padding: 15px; 
+            border-radius: 1em; 
+            font-weight: bold;
+            overflow-wrap: break-word;
+        }
+
+      .container {
+        margin-top: 20px;
+      }
+      .btn-primary{
+        background-color: rgba(202, 160, 21, 0.829);
+        border-radius:7em;
+        background-image: url(static/icon/add.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        color: black;
+        border-color: rgba(0, 0, 0, 0);
+        
+      }
+      .btn-primary:hover{
+        background-color: rgba(97, 77, 10, 0.829);
+        color: white;
+        border-color: rgba(0, 0, 0, 0);
+        background-image: url(static/icon/add_white.svg);
+      }
+      
+      .user{
+        display: block;
+      
+        position: relative;
+        width: 40%;
+            border-radius: 1em;
+            margin-left: 30%;
+            margin-right: 2px;
+            height: 100%;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 20px; 
+            margin-top: 30px;  
+            padding: 10px; 
+            background-color: #e9c98c8f;
+            align-items: center ;
+            overflow: hidden;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+      }
+
+      .btn {
+        /* display: none; */
+        margin-top: 15px;
+        display: block;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-left: 50%;
+        font-size: auto;
+        
+
+        
+      }
+
+      .btn-danger {
+        display: none;
+        margin-left: 5px;
+      }
+      h2{
+        display: inline-block;
+      }
+      #port{
+        display: none;
+      }
+      #password{
+        display: none;
+      }
+      .upload{
+        display: inline-block;
+      width:fit-content;
+        position: relative;
+        padding: 0.57%;
+            cursor: pointer;
+            border-radius: 1em;
+            margin-left: 30%;
+            background-image: url(static/icon/upload.svg);
+            text-align:center;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-right: 2px;
+            height: 100%;
+            border: 1px solid #ffffff00;  
+            margin-bottom: 20px; 
+            margin-top: 30px;  
+            padding: 10px; 
+            background-color: #e9c98c8f;
+            align-items: center ;
+            overflow: hidden;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
+  -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
+  5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
+  -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
+      }
+      .upload:hover{
+        background-color: rgba(97, 77, 10, 0.829);
+        background-image: url(static/icon/upload_white.svg);
+        color: white;
+        border-color: rgba(0, 0, 0, 0);
+        
+      }
+      .text{
+        cursor: pointer;
+        position: absolute;
+        pointer-events: none;
+      }
+      #privatekey{
+        opacity: 0;
+        z-index: -1;
+        
+        width: 32px !important;
+      }
+      .key-btn{
+        width: auto !important; 
+      
+      }
+      #selectedFileName {
+      
+      
+      
+      
+      font-size: 200%;
+      color: #5b0c58;
+      
+    
+      
+    }
+      
+      
+      
+      
+    </style>
+  </head>
+  <body>
+    <div id="waiter" style="display: none"> </div>
+
+    
+      <form id="connect" action="" method="post" enctype="multipart/form-data"{% if debug %} novalidate{% end %}>
+         <!-- <label for="Username">Private Key</label> -->
+         <div class="upload user" id="upload">
+          <div class="text" id="text"></div>
+         <input  type="file" id="privatekey" name="privatekey" value="" placeholder="密钥"  onchange="displayFileName()"> 
+        
+         <div id="selectedFileName"></div>
+         </div>
+         
+            <!-- <label for="Hostname">Hostname</label> -->
+            <input class="user" type="text" id="hostname" name="hostname" value="" required placeholder="主机名">
+            
+            <!-- <label for="Port">Port</label> -->
+            <input class="user" type="number" id="port" name="port" placeholder="22" value="" min=1 max=65535>
+         
+
+
+
+       
+            <!-- <label for="Username">Username</label> -->
+            <input type="text" class="user" id="username" name="username"  placeholder="用户名"> 
+        
+            <!-- <label for="Password">Password</label> -->
+            <input class="user" type="password" id="password" name="password" value="">
+        
+
+
+          
+       
+            
+        
+
+       
+            <!-- <label for="Passphrase">Passphrase</label> -->
+            <input class="user" type="password" id="passphrase" name="passphrase" value="" placeholder="密码">
+            
+             
+            
+            <button type="submit" class="btn btn-primary user" title="创建终端"></button>
+          
+         
+          
+
+
+
+        <!-- <div class="row">
+          <div class="col">
+            <label for="totp">Totp (time-based one-time password)</label>
+            <input class="form-control" type="password" id="totp" name="totp" value="">
+          </div>
+          <div class="col">
+          </div>
+        </div> -->
+        <input type="hidden" id="term" name="term" value="xterm-256color">
+        {% module xsrf_form_html() %}
+        
+        <button type="reset" class="btn btn-danger">Reset</button>
+      </form>
+    </div>
+
+    <div class="container">
+      <div id="status" style="color: red;"></div>
+      <div id="terminal"></div>
+    </div>
+    
+   <script>
+    $(function() {
+        $(document).tooltip({
+            track: true, // 跟随鼠标移动
+            show: { effect: "blind", duration: 200 ,delay: 250},
+            position: {
+                my: "left+15 top+15",  // Tooltip 的位置点
+                at: "left bottom"     // 目标元素的位置点
+            }
+        });
+    });
+    function displayFileName() {
+      const fileInput = document.getElementById('privatekey');
+      const fileNameDisplay = document.getElementById('selectedFileName');
+      
+
+      if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = '选定文件: ' + fileInput.files[0].name;
+        
+      } else {
+        fileNameDisplay.textContent = '';
+      }
+    }
+   </script>
+    
+
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/xterm.min.js"></script>
+    <script src="static/js/xterm-addon-fit.min.js"></script>
+    <script src="static/js/main.js"></script>
+  </body>
+ 
+ 
+</html>

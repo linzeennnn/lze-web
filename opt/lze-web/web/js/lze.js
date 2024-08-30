@@ -72,12 +72,10 @@ function totop() {
     return window.location.hash.substring(1); 
 }
 ip = getip();
+token =localStorage.getItem(`authToken_${ip}`)
 // login status
 function loginstatus(){
   if(!getip()){
-
-
-   token =localStorage.getItem(`authToken_${ip}`)
     ip = window.location.hostname;
     }
     else {
