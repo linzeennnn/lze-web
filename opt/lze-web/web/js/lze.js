@@ -75,6 +75,9 @@ ip = getip();
 // login status
 function loginstatus(){
   if(!getip()){
+
+
+   token =localStorage.getItem(`authToken_${ip}`)
     ip = window.location.hostname;
     }
     else {

@@ -9,7 +9,7 @@ let logstatus;
 let passtatus;
 const login=document.getElementById('login');
 const root = document.documentElement;
-const token = localStorage.getItem('authToken');
+let token;
  // 初始化数据
  const defaulthost = {
     host: [
@@ -92,8 +92,9 @@ function showlogin(status){
     }
    
 }
-function sendpass(){
-    password = btoa(document.getElementById('password').value);
+function sendpass() {
+    const password = btoa(document.getElementById('password').value);
+
     fetch(`http://${ip}/code/auth/login.php`, {
         method: 'POST',
         headers: {
@@ -104,20 +105,23 @@ function sendpass(){
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            localStorage.setItem('authToken', data.token);
+            // 使用 IP 作为 key 存储 token
+            localStorage.setItem(`authToken_${ip}`, data.token);
             reloadPage();
         } else {
-            notify("验证失败:"+ data.message);
+            notify("验证失败: " + data.message);
         }
     })
     .catch(error => console.error('Error:', error));
 }
+
 function logout(){
     localStorage.removeItem('authToken');
         notify("已登出");
         reloadPage();
 }
 function checklogin(status) {
+   token =localStorage.getItem(`authToken_${ip}`)
     var xhr = new XMLHttpRequest();
     xhr.open('GET', `http://${ip}/code/auth/check.php`, true); // 替换为你的 PHP 文件路径
 
