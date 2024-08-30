@@ -44,6 +44,7 @@ window.addEventListener('scroll', handleScroll);
         document.getElementById('allnote').style.right='0';
         document.getElementById('top-bar').style.top ='100px';
       document.querySelector('.backbtn').style.left = '5%';
+      loginstatus();
     };
 
     window.onload = comin;
@@ -53,8 +54,8 @@ window.addEventListener('scroll', handleScroll);
         document.getElementById('cover-bar').style.top = `-80px`;
       document.querySelector('.backbtn').style.left = '';
       document.getElementById('top-btn').style.bottom = `-5%`;
-      document.querySelector('body').style.backgroundImage = `url(${wallpath}home_pc.svg)`;
-      document.querySelector('.next').style.backgroundImage = `url(${wallpath}home_phone.svg)`;
+      document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
+      document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
     document.querySelector('.next').style.opacity ='1';  
         setTimeout(() => {
             window.location.replace(`../../index.html#${ip}`);

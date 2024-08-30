@@ -1,5 +1,15 @@
 <?php
-// auth.php
+// 设置 CORS 头
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+// 检查请求方法，如果是 OPTIONS，则返回 204 No Content 并结束脚本执行
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(204); // No Content
+    exit;
+}
+
 session_start();
 
 function verifyToken($token) {

@@ -390,7 +390,6 @@ background-image: url(../../icon/toup_white.svg);
   top:0;
   width:100%;
   height:100%;
-  background:no-repeat center center;
   background-size:cover;
   z-index:-100;
   overflow:hidden;

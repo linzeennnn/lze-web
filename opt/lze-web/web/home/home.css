@@ -10,7 +10,7 @@
               z-index: 99999999;
           }
           body {
-            background-color: #1f2324;
+            /* background-color: #1f2324; */
             display: flex;
             box-sizing: border-box; 
             overflow-x: hidden !important;
@@ -23,7 +23,9 @@
             transition: background-image 1s ease,opacity 1s ease ; 
           }
          
-          
+          body::-webkit-scrollbar {
+            display: none; /* 隐藏滚动条 */
+            }
       #home-bar {
         display: flex;
         font-size: 70px;
@@ -74,40 +76,8 @@
       #light-btn:hover{
         background-image: url(../../icon/light_white.svg)
       }
-      #ip-status{
-        margin-top: 10px;
-        position: relative;
-        font-size: 25px;
-        width: fit-content;
-        height: fit-content;
-        color: #585c5e;
-        font-weight: bold;
-        margin-left: 10px;
-        animation: ipstatus 1s infinite alternate ease-in-out;
-      }
-      @keyframes ipstatus {
-      0% {
-          color: #9fa8ac; /* 第一种颜色 */
-      }
-      100% {
-          color: #444749; /* 第二种颜色 */
-      }
-  }
   
-      #reconnect{
-        position: relative;
-        cursor: pointer;
-        margin-left: 10px;
-        margin-top: 10px;
-        width: 32px;
-        height: 32px;
-        background-image: url(../../icon/switch_grey.svg);
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-      #reconnect:hover{
-        background-image: url(../../icon/switch_white.svg);
-      }
+     
       #myButton {
         transform: translateX(-50%);  
         background-image: url(../../icon/power_grey.svg);
@@ -147,7 +117,7 @@
         box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        background-image: url(../../wallpaper/pop_pc.svg);
+        background-image: url(../../wallpaper/pop.svg);
         background-size: cover;
       }
       #customPopup.active {
@@ -415,61 +385,7 @@
       #popup4-1:hover #tag{
           background-image: url(../../icon/tag_open.svg);
       }
-      #ip-bar{
-        display: flex;
-        position: fixed;
-        bottom: 25%;
-        width: 0px;
-        height: 100px;
-        z-index: 10;
-        opacity: 0;
-        justify-content: center;
-        align-items: center;
-        transition: all 1s ease ;
-      }
-      #ip-input{
-        width: 70%;
-        height: 40px;
-        padding: 15px;
-        color: #bfd2db;
-        font-weight: bold;
-        border: none;
-        font-size: 20px;
-        background-color: #21232485;
-        border-radius: 1.5em;
-        box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
-                inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
-                inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
-                inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
-      }
-      #ip-input:focus{
-        outline: none;
-        background-color: #4f5e68c4;
-      }
-      #ip-connect{
-        margin-left: 10px;
-        cursor: pointer;
-        width: 40px;
-        height: 40px;
-        background-image: url(../../icon/right_grey.svg);
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-      #ip-connect:hover{
-        background-image: url(../../icon/right_white.svg);
-      }
-      #local{
-        margin-right: 10px;
-        cursor: pointer;
-        width: 40px;
-        height: 40px;
-        background-image: url(../../icon/add_user_grey.svg);
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-      #local:hover{
-        background-image: url(../../icon/add_user_white.svg);
-      }
+     
           
 
       #notify{
@@ -506,7 +422,6 @@
             top:0;
             width:100%;
             height:100%;
-            background:no-repeat center center;
             background-size:cover;
               overflow:hidden;
               overflow-x: hidden; 

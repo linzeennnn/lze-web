@@ -3,7 +3,7 @@
           color: #c3c6c9; 
       }
       body {
-        background-image: url(../../wallpaper/dark/home_pc.svg);
+        background-image: url(../../wallpaper/dark/home.svg);
       }
       #home-bar {
         color: #656d79 ;
@@ -33,19 +33,19 @@
         color: #20021c;
       }
       #popup1-1{
-      background-image: url(../../wallpaper/dark/pink_pc.svg);
+      background-image: url(../../wallpaper/dark/pink.svg);
       }
       #popup1-2{
-      background-image: url(../../wallpaper/dark/blue_pc.svg);
+      background-image: url(../../wallpaper/dark/blue.svg);
       }
       #popup2-1{
-      background-image: url(../../wallpaper/dark/yellow_pc.svg);
+      background-image: url(../../wallpaper/dark/yellow.svg);
       }
       #popup3-1{
-      background-image: url(../../wallpaper/dark/green_pc.svg);
+      background-image: url(../../wallpaper/dark/green.svg);
       }
       #popup4-1{
-      background-image: url(../../wallpaper/dark/red_pc.svg);
+      background-image: url(../../wallpaper/dark/red.svg);
       }
       @media only screen and (max-width: 600px){
         .phone_background {
@@ -54,26 +54,27 @@
           overflow-x: hidden;
       }
       .phone_background .fixed {
-        background-image: url(../../wallpaper/dark/home_phone.svg);
+        background:no-repeat center center;
+        background-image: url(../../wallpaper/dark/home.svg);
       }
       #popup1-1{
-      background-image: url(../../wallpaper/dark/pink_phone.svg);
+      background-image: url(../../wallpaper/dark/pink.svg);
   }
   #popup1-2{
      
-      background-image: url(../../wallpaper/dark/blue_phone.svg);
+      background-image: url(../../wallpaper/dark/blue.svg);
       
   }
   #popup2-1{
-      background-image: url(../../wallpaper/dark/yellow_phone.svg);
+      background-image: url(../../wallpaper/dark/yellow.svg);
   }
 
       #popup3-1{
-      background-image: url(../../wallpaper/dark/green_phone.svg);
+      background-image: url(../../wallpaper/dark/green.svg);
       }
      
       #popup4-1{
-      background-image: url(../../wallpaper/dark/red_phone.svg);
+      background-image: url(../../wallpaper/dark/red.svg);
 
       }
       }

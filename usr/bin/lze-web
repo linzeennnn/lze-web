@@ -1,8 +1,25 @@
 #!/bin/bash
 
+# 显示帮助信息
+function show_help() {
+  echo "Usage: $0 [OPTION] [ARGUMENT]"
+  echo
+  echo "Options:"
+  echo "  -a [y|n]    Set authentication option. 'y' for yes, 'n' for no."
+  echo "  -p [string] Set password."
+  echo "  -h, --help  Display this help message and exit."
+}
+
+# 检查是否需要显示帮助信息
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+  show_help
+  exit 0
+fi
+
 # 检查第一个参数是否为 -a 或 -p
 if [ "$1" != "-a" ] && [ "$1" != "-p" ]; then
-  echo "Usage: $0 -a [y|n] or $0 -p [string]"
+  echo "Invalid option: $1"
+  show_help
   exit 1
 fi
 
@@ -34,5 +51,6 @@ elif [ "$1" == "-p" ]; then
   fi
 
   echo -n "$2" | base64 > /etc/lze-web/password
+  echo '' > /etc/lze-web/token
 fi
 

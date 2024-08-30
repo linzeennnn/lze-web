@@ -1,5 +1,5 @@
 body {
-  background-image: url(../../wallpaper/light/pink_pc.svg);
+  background-image: url(../../wallpaper/light/pink.svg);
 }
 
 #cover-bar{
@@ -10,6 +10,7 @@ body {
       }
 @media only screen and (max-width: 600px) {
 .phone_background .fixed {
-  background-image: url(../../wallpaper/light/pink_phone.svg);
+  background:no-repeat center center;
+  background-image: url(../../wallpaper/light/pink.svg);
 }
   }

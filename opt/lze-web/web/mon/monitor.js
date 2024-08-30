@@ -66,7 +66,7 @@ function comin(){
     topbar.style.top="80px";
     allwindow.style.right='0';
       document.querySelector('.backbtn').style.left = '5%';
-        
+      loginstatus();
     };
     window.onload = comin;
 function goBack() {
@@ -74,8 +74,8 @@ function goBack() {
     window.removeEventListener('scroll',handleScroll);
     document.getElementById('cover-bar').style.top = `-80px`;
     document.querySelector('.backbtn').style.left = '';
-    document.querySelector('body').style.backgroundImage = `url(${wallpath}home_pc.svg)`;
-    document.querySelector('.next').style.backgroundImage = `url(${wallpath}home_phone.svg)`;
+    document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
+    document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
       allwindow.style.opacity='';
       topbar.style.top='';
     allwindow.style.right='';

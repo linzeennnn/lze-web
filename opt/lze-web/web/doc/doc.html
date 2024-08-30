@@ -11,27 +11,44 @@
     <script src="../jquery/jquery-ui.min.js"></script>
     <script src="StreamSaver.min.js"></script>
     <script src="../js/theme.js"></script>
-    <link rel="stylesheet" href="../css/lze.css">
-    <link rel="stylesheet" href="doc.css">
     <link rel="stylesheet" id="themesheet">
     <link rel="stylesheet" href="../css/password.css">
+    <link rel="stylesheet" href="../css/lze.css">
+    <link rel="stylesheet" href="doc.css">
 </head>
 <body>
+  <div id="login-bar">
+  </div>
+  <div id="login" title="登陆" onclick="showlogin(3)"></div>
+  <div id="login-page">
+  <div id="ip-status" title="已连接"></div>
+<div id="log-tool">
+  <div id="reconnect" title="切换ip" onclick="switchip()"></div>
+  <div id="logout" onclick="logout()" title="退出登陆"></div>
+  <div id="clear-btn" onclick="clearData()"></div>
+  </div>
+  </div>
+  <div id="pass-bar" class="login-box">
+    <input id="password" contenteditable="true"class="login-input" placeholder="password" type="password"></input>
+    <div id="send-pass" title="连接" class="login-btn" onclick="sendpass()"></div>
+  </div>
+  <div id="backlogin" onclick="showlogin(0)"></div>
+
+    <div id="hostlist-bar">
+      </div>
+      <div id="host-bar" class="login-box">
+        <input type="text" id="ip-input" class="login-input" placeholder="输入 IP 地址">
+        <div onclick="addhost()" class="login-btn" id="addhost"></div>
+        </div>
+        <div id="host-box">
+          <div id="ipList"></div>
+          </div>
   <div class="phone_background">
     <div class="fixed"></div>
     <div class="next" ></div>
   </div>
   <div id="cover-bar"></div>
   <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
-  <div id="login" title="登陆" onclick="showlogin(1)"></div>
-  <div id="pass-page">
-  <div id="pass-bar">
-    <div id="logout" onclick="logout()" title="退出登陆"></div>
-    <input id="password" contenteditable="true" placeholder="password" type="password"></input>
-    <div id="send-pass" title="连接" onclick="sendpass()"></div>
-  </div>
-  <div id="backlogin" onclick="showlogin(0)"></div>
-</div>
   <div id="top-bar">
     <div id="top-bar-blur"></div>
     <button id="upButton"  onclick="goUp()" title="返回上一级"></button>
@@ -53,15 +70,14 @@
   <div id="closeifame" class="all" style="display: none;" onclick="closeifame()" title="关闭预览"></div>
   <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
   <div id="top-btn" onclick="totop()" title="回到顶部"></div>
-  
- 
   <div id="fileListContainer" class="all">
     <ul id="fileList" class="all"></ul>
 
+   
   </div> 
   </div>
+  <script src="../js/password.js"></script>
   <script src="../js/lze.js"></script>
   <script src="doc.js"></script>
-  <script src="../js/password.js"></script>
 </body>
 </html>

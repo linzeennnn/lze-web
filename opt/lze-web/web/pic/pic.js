@@ -41,6 +41,7 @@ window.addEventListener('scroll', handleScroll);
        document.getElementById('selectButton').style.width = '32px';
        document.getElementById('buttonA').style.bottom = '0px';
        document.querySelector('.top-button').style.top = '80px';
+      loginstatus();
     };
     window.onload = comin;
 
@@ -56,8 +57,8 @@ window.addEventListener('scroll', handleScroll);
        document.getElementById('selectButton').style.width = '0px';
        document.getElementById('buttonA').style.bottom = '-1000px';
        document.querySelector('.top-button').style.top = '-80px';
-       document.querySelector('body').style.backgroundImage = `url(${wallpath}home_pc.svg)`;
-       document.querySelector('.next').style.backgroundImage = `url(${wallpath}home_phone.svg)`;
+       document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
+       document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
     document.querySelector('.next').style.opacity ='1';  
             setTimeout(() => {
                 window.location.replace(`../../index.html#${ip}`);

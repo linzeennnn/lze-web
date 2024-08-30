@@ -66,11 +66,10 @@ window.addEventListener('scroll', handleScroll);
 window.addEventListener('scroll', handleScroll);
      function comin(){
         showNotes();
-        
-      
         document.getElementById('top-bar').style.top ='100px';
       document.querySelector('.backbtn').style.left = '5%';
         document.getElementById(`notes`).style.right='0px';
+        loginstatus();
     };
 
     window.onload = comin;
@@ -88,8 +87,8 @@ function goBack() {
         document.getElementById(`notes`).style.right='';
       document.querySelector('.backbtn').style.left = '';
       document.getElementById('top-btn').style.bottom = `-5%`;
-      document.querySelector('body').style.backgroundImage = `url(${wallpath}home_pc.svg)`;
-      document.querySelector('.next').style.backgroundImage = `url(${wallpath}home_phone.svg)`;
+      document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
+      document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
     document.querySelector('.next').style.opacity ='1';  
         setTimeout(() => {
             window.location.replace(`../../index.html#${ip}`);

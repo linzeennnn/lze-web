@@ -43,6 +43,7 @@ window.addEventListener('scroll', handleScroll);
       document.querySelector('.backbtn').style.left = '5%';
       document.getElementById('fileListContainer').style.right = `0`;
       document.getElementById('top-bar').style.top = `77px`;
+      loginstatus();
     };
     window.onload = comin;
   function goBack() {
@@ -52,8 +53,8 @@ window.addEventListener('scroll', handleScroll);
     document.getElementById('fileListContainer').style.right = `-100%`;
       document.getElementById('top-bar').style.top = `-60px`;
       document.getElementById('top-btn').style.bottom = `-5%`;
-      document.querySelector('body').style.backgroundImage = `url(${wallpath}home_pc.svg)`;
-      document.querySelector('.next').style.backgroundImage = `url(${wallpath}home_phone.svg)`;
+      document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
+      document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
     document.querySelector('.next').style.opacity ='1';  
     
     setTimeout(() => {

@@ -3,7 +3,7 @@
     color: #c3c6c9; 
 }
 body {
-  background-image: url(../../wallpaper/light/home_pc.svg);
+  background-image: url(../../wallpaper/light/home.svg);
 }
 #home-bar {
   color: #656d79 ;
@@ -33,19 +33,19 @@ body {
   color: #20021c;
 }
 #popup1-1{
-background-image: url(../../wallpaper/light/pink_pc.svg);
+background-image: url(../../wallpaper/light/pink.svg);
 }
 #popup1-2{
-background-image: url(../../wallpaper/light/blue_pc.svg);
+background-image: url(../../wallpaper/light/blue.svg);
 }
 #popup2-1{
-background-image: url(../../wallpaper/light/yellow_pc.svg);
+background-image: url(../../wallpaper/light/yellow.svg);
 }
 #popup3-1{
-background-image: url(../../wallpaper/light/green_pc.svg);
+background-image: url(../../wallpaper/light/green.svg);
 }
 #popup4-1{
-background-image: url(../../wallpaper/light/red_pc.svg);
+background-image: url(../../wallpaper/light/red.svg);
 }
 @media only screen and (max-width: 600px){
   .phone_background {
@@ -54,26 +54,27 @@ background-image: url(../../wallpaper/light/red_pc.svg);
     overflow-x: hidden;
 }
 .phone_background .fixed {
-  background-image: url(../../wallpaper/light/home_phone.svg);
+  background:no-repeat center center;
+  background-image: url(../../wallpaper/light/home.svg);
 }
 #popup1-1{
-background-image: url(../../wallpaper/light/pink_phone.svg);
+background-image: url(../../wallpaper/light/pink.svg);
 }
 #popup1-2{
 
-background-image: url(../../wallpaper/light/blue_phone.svg);
+background-image: url(../../wallpaper/light/blue.svg);
 
 }
 #popup2-1{
-background-image: url(../../wallpaper/light/yellow_phone.svg);
+background-image: url(../../wallpaper/light/yellow.svg);
 }
 
 #popup3-1{
-background-image: url(../../wallpaper/light/green_phone.svg);
+background-image: url(../../wallpaper/light/green.svg);
 }
 
 #popup4-1{
-background-image: url(../../wallpaper/light/red_phone.svg);
+background-image: url(../../wallpaper/light/red.svg);
 
 }
 }

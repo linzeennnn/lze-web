@@ -71,10 +71,27 @@ function totop() {
  function getip() {
     return window.location.hash.substring(1); 
 }
-const ip = getip();
+ip = getip();
+// login status
+function loginstatus(){
+  if(!getip()){
+    ip = window.location.hostname;
+    }
+    else {
+    ip =getip();
+    }
+    // 本地打开html
+    if(ip==''){
+      logstatus=0;
+      showlogin(1);
+    }else if(ip!=''){
+      logstatus=1;
+      checklogin(0); 
+    }
+  ipstatus();
+}
 // desktop notify
 async function desktopnot(title, content, fileName, finalFilePath){
-  console.log("1111111111111111");
   const data = new URLSearchParams();
   data.append('title', title);
   data.append('content', content);

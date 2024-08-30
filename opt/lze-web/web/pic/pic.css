@@ -371,7 +371,6 @@ transition: bottom 1s ease;
     top:0;
     width:100%;
     height:100%;
-    background:no-repeat center center;
     background-size:cover;
     z-index:0;
     overflow:hidden;
