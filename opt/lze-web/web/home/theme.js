@@ -1,5 +1,5 @@
 let wallpath;
-
+let metaThemeColor = document.querySelector('meta[name="theme-color"]');
 const darkbtn=document.getElementById('dark-btn');
 const lightbtn=document.getElementById('light-btn');
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,18 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
           darkbtn.style.display='none';
           lightbtn.style.display='block';
           wallpath=`wallpaper/${theme}/`;
+          metaThemeColor.setAttribute('content', darkcolor);
             break;
         case 'light':
           themesheet.href = 'web/home/light.css';
           darkbtn.style.display='block';
           lightbtn.style.display='none';
           wallpath=`wallpaper/${theme}/`;
+          metaThemeColor.setAttribute('content', lightcolor);
             break;
         default:
           themesheet.href = 'web/home/dark.css';
           darkbtn.style.display='none';
           lightbtn.style.display='block';
           wallpath=`wallpaper/${theme}/`;
+          metaThemeColor.setAttribute('content', darkcolor);
     }
     
     // 保存选择的主题到 localStorage

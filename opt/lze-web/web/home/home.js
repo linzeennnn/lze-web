@@ -1,4 +1,5 @@
-
+darkcolor='#1f2324';
+lightcolor='#969fa2';
 let doc_path;
 let pic_path;
 let mon_path;
