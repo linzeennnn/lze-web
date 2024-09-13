@@ -2,21 +2,23 @@
 header('Content-Type: application/json');
 require '../auth/auth.php';
 requireAuth();
-if (empty($_FILES) || !isset($_POST['fileName']) || !isset($_POST['currentChunk']) || !isset($_POST['totalChunks'])) {
+
+if (empty($_FILES) || !isset($_POST['fileName']) || !isset($_POST['currentChunk']) || !isset($_POST['totalChunks']) || !isset($_POST['nowpath'])) {
     exit('Invalid request');
 }
-putenv('DISPLAY=:0');
-putenv('DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus');
-putenv('XDG_RUNTIME_DIR=/run/user/1000');
-putenv('XAUTHORITY=/run/user/1000/gdm/Xauthority');
-$uploadDirectory = '../../file/Documents/upload/';
+
+// 处理上传路径
+$nowpath = trim($_POST['nowpath']);
+if ($nowpath === "/") {
+    $uploadDirectory = '../../file/Documents/upload/';
+} else {
+    $uploadDirectory = '../../file/Documents/upload/' . $nowpath;
+}
+
 $fileName = $_POST['fileName'];
 $currentChunk = (int)$_POST['currentChunk'];
 $totalChunks = (int)$_POST['totalChunks'];
 $tempFilePath = $uploadDirectory . $fileName . '.part';
-if (!is_dir($uploadDirectory)) {
-    mkdir($uploadDirectory, 0777, true);
-}
 
 // 将当前块的数据追加到临时文件
 if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
@@ -31,7 +33,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
 
     // 如果这是最后一个块，合并完成的文件
     if ($currentChunk === $totalChunks - 1) {
-        $finalFilePath = $uploadDirectory . $fileName;
+        $finalFilePath = $uploadDirectory . '/' . $fileName;
 
         // 如果文件已经存在，添加序号
         $fileInfo = pathinfo($finalFilePath);
@@ -40,7 +42,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
 
         $counter = 1;
         while (file_exists($finalFilePath)) {
-            $finalFilePath = $uploadDirectory . $baseName . '_' . $counter . $extension;
+            $finalFilePath = $uploadDirectory . '/' . $baseName . '_' . $counter . $extension;
             $counter++;
         }
         echo $finalFilePath;

@@ -28,5 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 保存选择的主题到 localStorage
     localStorage.setItem('theme', theme);
+    window.webkit.messageHandlers.themeColor.postMessage(metaThemeColor.content);
   }
   

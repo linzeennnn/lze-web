@@ -1,6 +1,6 @@
 let darkcolor;
 let lightcolor
-darkcolor='#271f25';
+darkcolor='#1c2825';
 lightcolor='#6b9683';
 const titbar =document.getElementById('tit-bar');
 const wordbar=document.getElementById('word-bar');
@@ -171,18 +171,39 @@ async function getnote() {
         }
     }
     // copy
-    function copytext(note,text) {
+    function copytext(note, text) {
         const copy = note.querySelector('.copy');
-        navigator.clipboard.writeText(text).then(() => {
-           copy.style.backgroundImage='url(../../icon/yes_green.svg)';
-           notify("成功复制");
-           setTimeout(() => {
-            copy.style.backgroundImage='url(../../icon/copy_green.svg)';
-        }, 2000); 
-        }).catch((err) => {
-            console.error('Failed to copy text to clipboard: ', err);
-        });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                copy.style.backgroundImage = 'url(../../icon/yes_green.svg)';
+                notify("成功复制");
+                setTimeout(() => {
+                    copy.style.backgroundImage = 'url(../../icon/copy_green.svg)';
+                }, 2000);
+            }).catch((err) => {
+                console.error('Failed to copy text to clipboard: ', err);
+            });
+        } else {
+            // Safari fallback for unsupported versions
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                copy.style.backgroundImage = 'url(../../icon/yes_green.svg)';
+                notify("成功复制");
+                setTimeout(() => {
+                    copy.style.backgroundImage = 'url(../../icon/copy_green.svg)';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text to clipboard: ', err);
+            }
+            document.body.removeChild(textArea);
+        }
     }
+    
+    
     // delete note
     async function delnote(fileName) {
         

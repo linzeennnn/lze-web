@@ -3,6 +3,7 @@
  darkcolor='#271f25';
  lightcolor='#966a85';
  let uploadpath;
+ let nowpath="/";//当前目录（要上传的目录）
  function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -142,7 +143,7 @@ window.addEventListener('scroll', handleScroll);
         fileList.innerHTML = '';
 
         const currentPath = document.getElementById('currentPath');
-        const fullPath = '/' + (data.currentFolder ? data.currentFolder : '');
+        const fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
         pathlen(currentPath, fullPath);
         currentPath.title = fullPath;
 
@@ -219,63 +220,64 @@ window.addEventListener('scroll', handleScroll);
   }
 
  
-
   function selfile() {
+    nowpath = currentPath.innerText;  // 获取当前路径
+    console.log(nowpath);
+    
     var files = document.getElementById('uploadfile').files;
-  if (files.length === 0) {
-    notify("请先选择文件");
-    return;
-  }
-  loading(1);
-  var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
-  var file = files[0];
-  var totalChunks = Math.ceil(file.size / chunkSize);
-  var currentChunk = 0;
+    if (files.length === 0) {
+        notify("请先选择文件");
+        return;
+    }
+    loading(1);
+    var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
+    var file = files[0];
+    var totalChunks = Math.ceil(file.size / chunkSize);
+    var currentChunk = 0;
 
-  function uploadChunk() {
-    var start = currentChunk * chunkSize;
-    var end = Math.min(start + chunkSize, file.size);
-    var chunk = file.slice(start, end);
+    function uploadChunk() {
+        var start = currentChunk * chunkSize;
+        var end = Math.min(start + chunkSize, file.size);
+        var chunk = file.slice(start, end);
 
-    var fd = new FormData();
-    fd.append('file', chunk);
-    fd.append('fileName', file.name);
-    fd.append('totalChunks', totalChunks);
-    fd.append('currentChunk', currentChunk);
+        var fd = new FormData();
+        fd.append('file', chunk);
+        fd.append('fileName', file.name);
+        fd.append('totalChunks', totalChunks);
+        fd.append('currentChunk', currentChunk);
+        fd.append('nowpath', nowpath);  // 传递 nowpath 变量
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', `http://${ip}/code/Documents/upload.php`, true);
-    xmltoken(xhr);
-    xhr.upload.onprogress = function(ev) {
-      if (ev.lengthComputable) {
-        var percent = ((currentChunk + ev.loaded / ev.total) / totalChunks) * 100;
-        var percentElement = document.getElementById('percent');
-        document.getElementById('bar').style.width = percent + '%';
-        percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
-      }
-    };
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', `http://${ip}/code/Documents/upload.php`, true);
+        xmltoken(xhr);
+        xhr.upload.onprogress = function (ev) {
+            if (ev.lengthComputable) {
+                var percent = ((currentChunk + ev.loaded / ev.total) / totalChunks) * 100;
+                var percentElement = document.getElementById('percent');
+                document.getElementById('bar').style.width = percent + '%';
+                percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
+            }
+        };
 
-    xhr.onload = function() {
-      xmlnologin(xhr);
-      if (xhr.status === 200) {
-        currentChunk++;
-        if (currentChunk < totalChunks) {
-          uploadChunk(); // 上传下一个块
-        } else {
-          notify("上传成功");
-          uploadpath=xhr.responseText;
-          console.log(uploadpath);
-          loading(0);
-          loadFolder();
-          desktopnot('恩的文件','新上传文件:',`${file.name}`,uploadpath);
-        }
-      } 
-    };
+        xhr.onload = function () {
+            xmlnologin(xhr);
+            if (xhr.status === 200) {
+                currentChunk++;
+                if (currentChunk < totalChunks) {
+                    uploadChunk(); // 上传下一个块
+                } else {
+                    notify("上传成功");
+                    uploadpath = xhr.responseText;
+                    console.log(uploadpath);
+                    loading(0);
+                    loadFolder();
+                    desktopnot('恩的文件', '新上传文件:', `${file.name}`, uploadpath);
+                }
+            }
+        };
 
-    xhr.send(fd);
-  }
+        xhr.send(fd);
+    }
 
-  uploadChunk(); // 开始上传第一个块
-
+    uploadChunk(); // 开始上传第一个块
 }
-
