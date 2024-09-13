@@ -189,7 +189,7 @@ fileInput.addEventListener("change", function () {
     }
     if (loadedImageCount < count) {
         buttonA.style.display = "none";
-        alert("已加载全部图片");
+        notify("已加载全部图片");
     }
             $('[data-fancybox="gallery"]').fancybox({
                 loop: true,
@@ -243,7 +243,7 @@ function appendVideos(count) {
     }
     if (loadedVideoCount < count) {
         buttonB.style.display = "none";
-        alert("已加载全部视频");
+       notify("已加载全部视频");
     }
 
             showVideos();
@@ -293,7 +293,7 @@ function appendVideos(count) {
     }
     if (loadedScreenshotsCount < count) {
         buttonC.style.display = "none";
-        alert("已加载全部截图");
+        notify("已加载全部截图");
     }
 
     showScreenshots();
