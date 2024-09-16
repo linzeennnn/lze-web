@@ -124,14 +124,6 @@ window.addEventListener('scroll', handleScroll);
 
     textid.innerText = displayPath;
   }
-  function closeifame(){
-    const preview = document.getElementById('preview');
-    const fileListContainer = document.getElementById('fileListContainer');
-    const closeifame = document.getElementById('closeifame');
-    preview.remove();
-    closeifame.style.display ='none';
-    fileListContainer.style.display = 'flex';
-  }
   function loadFolder(folder = '') {
     fetch(`http://${ip}/code/Documents/doc_list.php?folder=` + folder, fetchtoken())
   .then(response => {
@@ -165,23 +157,20 @@ window.addEventListener('scroll', handleScroll);
           const fileLink = document.createElement('span');
           const Src = `http://${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
           const fileListContainer = document.getElementById('fileListContainer');
-          const closeifame = document.getElementById('closeifame');
           fileLink.textContent = file;
           fileLink.className = 'fileLink';
           fileLink.title = `预览${file}`;
           fileLink.addEventListener('click', function () {
-            const preview = document.createElement('iframe');
-            preview.setAttribute('id', 'preview');
-            preview.setAttribute('src', Src);
-            fileListContainer.style.display = 'none';
-            closeifame.style.display = 'block';
-            document.body.appendChild(preview);
-
-            preview.onload = function() {
-                const doc = preview.contentDocument || preview.contentWindow.document;
-                preview.style.height = doc.documentElement.scrollHeight + 'px';
-                preview.style.width = doc.documentElement.scrollWidth + 'px';
-            };
+            let filepath
+            nowpath = currentPath.innerText;
+            let rootpath=`http://${ip}/file/Documents/upload/`;
+            if (nowpath==="/"){
+              filepath=rootpath + file;
+            }
+            else{
+              filepath=rootpath + nowpath + file;
+            }
+            window.location.href = filepath;
           });
 
           listItem.appendChild(fileLink);
