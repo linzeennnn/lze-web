@@ -15,69 +15,64 @@
     <link rel="stylesheet" href="../css/password.css">
     <link rel="stylesheet" href="../css/lze.css">
     <link rel="stylesheet" href="doc.css">
+    <link rel="stylesheet" href="../css/sidepage.css">
 </head>
 <body>
-  <div id="login-bar">
+  <div id="option-bar">
+    <div id="open-side" class="option-btn" onclick="openside(1)"></div>
+    <label for="uploadfile" class="custom-upload-btn option-btn" id="up-btn" title="上传文件"></label>
+    <div id="loadButton" class="option-btn" onclick="reloadPage()" title="刷新"></div>
+    <div id="del" class="option-btn"  title="删除" onclick="del()"></div>
+    <div id="copy" class="option-btn" title="复制" onclick="copy(1)"></div>
+    <div id="move" class="option-btn" title="移动" onclick="copy(0)"></div>
+    <div id="paste" title="粘贴" class="option-btn" onclick="paste()"></div>
   </div>
-  <div id="login" title="登陆" onclick="showlogin(3)"></div>
-  <div id="login-page">
-  <div id="ip-status" title="已连接"></div>
-<div id="log-tool">
-  <div id="reconnect" title="切换ip" onclick="switchip()"></div>
-  <div id="logout" onclick="logout()" title="退出登陆"></div>
-  <div id="clear-btn" onclick="clearData()"></div>
   </div>
-  </div>
-  <div id="pass-bar" class="login-box">
-    <input id="password" contenteditable="true"class="login-input" placeholder="password" type="password"></input>
-    <div id="send-pass" title="连接" class="login-btn" onclick="sendpass()"></div>
-  </div>
-  <div id="backlogin" onclick="showlogin(0)"></div>
+  <div id="sidepage">
+    <div id="side-top"></div>
+<div id="side-box">
+  <div class="side-btn" title="登陆" onclick="showlogin(3)">
+    <div id="login"></div>
+    <span class="side-text">登陆</span>
+    </div>
 
-    <div id="hostlist-bar">
       </div>
-      <div id="host-bar" class="login-box">
-        <input type="text" id="ip-input" class="login-input" placeholder="输入 IP 地址">
-        <div onclick="addhost()" class="login-btn" id="addhost"></div>
-        </div>
-        <div id="host-box">
-          <div id="ipList"></div>
-          </div>
-  <div class="phone_background">
-    <div class="fixed"></div>
-    <div class="next" ></div>
+    </div>
+<div id="side-bottom"></div>
   </div>
-  <div id="cover-bar"></div>
-  <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
-  <div id="top-bar">
-    <div id="top-bar-blur"></div>
+  <div  id="blur-page" onclick="openside()"></div>
+  <div id="cover-bar" class="main"></div>
+  <div class="backbtn main" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+  <div id="top-bar" class="main">
     <button id="upButton"  onclick="goUp()" title="返回上一级"></button>
-    
+    <div id="cancel-folder" title="取消" onclick="newfolder(0)"></div>
     <button id="cancel"  style="display: none;" onclick="cancelUpload()" title="取消上传"></button>
     <div class="path-bar" id="path-bar">
       <div class="current-path" id="currentPath" >/</div>
-      <button id="loadButton"  onclick="reloadPage()" title="刷新"></button>
       <div id="progress" style="display: none;">
         <div id="bar"><div id="percent"></div></div>
       </div>
     </div>
     
-    <label for="uploadfile" class="custom-upload-btn" id="up-btn" title="上传文件"></label>
+    <input id="folder-name-bar" placeholder="输入文件名"></input>
+    
     <div class="rotate-box"  id="rotate-box"style="display: none;"><div class="rotate-loading" id="loading" style="display: none;"></div></div> 
+
+    <div id="add-folder" title="新建文件夹" onclick="newfolder(1)"></div>
+    <div id="comfirm" title="确定" onclick="newfolder(2)"></div>
   </div>
     
   
-  <div id="closeifame" class="all" style="display: none;" onclick="closeifame()" title="关闭预览"></div>
   <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
   <div id="top-btn" onclick="totop()" title="回到顶部"></div>
-  <div id="fileListContainer" class="all">
+  <div id="fileListContainer" class="all main">
     <ul id="fileList" class="all"></ul>
-
-   
   </div> 
-  </div>
+</div>
+  <script src="../js/login.js"></script>
   <script src="../js/password.js"></script>
   <script src="../js/lze.js"></script>
+  <script src="../js/sidepage.js"></script>
   <script src="doc.js"></script>
 </body>
 </html>

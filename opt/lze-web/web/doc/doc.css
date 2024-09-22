@@ -16,6 +16,74 @@
           background: #85657f86; 
           color: #ffb6d8; 
       }
+      #option-bar{
+        padding-top: 5%;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        /* justify-content: center; */
+        left: 0;
+        position: fixed;
+        height: 100%;
+        width: 60px;
+        background-color: #815477a6;
+        z-index: 11;
+        box-shadow: var(--outshadow)  
+      }
+  .custom-upload-btn {
+    background-image: url(../../icon/upload_pink.svg);
+  }
+  .custom-upload-btn:hover{
+    background-image: url(../../icon/upload_white.svg);
+  }
+  #loadButton{
+    background-image: url(../../icon/load_pink.svg);
+  }
+  #loadButton:hover{
+    background-image: url(../../icon/load_white.svg);
+  }
+  #del{
+    background-image: url(../../icon/bin_pink.svg);
+  }
+  #del:hover{
+    background-image: url(../../icon/bin_white.svg);
+  }
+  #copy{
+    background-image: url(../../icon/copy_pink.svg);
+  }
+  #copy:hover{
+    background-image: url(../../icon/copy_white.svg);
+  }
+  #move{
+    background-image: url(../../icon/move_pink.svg);
+  }
+  #move:hover{
+    background-image: url(../../icon/move_white.svg);
+  }
+  #paste{
+    display: none;
+    animation: paste 2s ease-in-out infinite;;
+    background-image: url(../../icon/paste_pink.svg);
+  }
+  #paste:hover{
+    background-image: url(../../icon/paste_white.svg);
+  }
+  @keyframes paste {
+    0% {
+      background-image: url(../../icon/paste_pink.svg);
+    }
+    50% {
+      background-image: url(../../icon/paste_white.svg);
+    }
+    100% {
+      background-image: url(../../icon/paste_pink.svg);
+    }
+  }
+      .main{
+        margin-left: 60px;
+      }
   body {
     overflow-x: hidden !important;
     
@@ -32,6 +100,8 @@
     background-attachment: fixed;
     transition: background-image 1s ease;
   }
+
+
 .backbtn:hover #name{
 background-image: url(../../icon/name_white.svg);
 }
@@ -93,7 +163,6 @@ background-image: url(../../icon/name_white.svg);
   }
   #top-bar{
     top: -60px;
-    margin-left: 0;
     border-radius: 1em;
      background-color: #815477a6;
      backdrop-filter: blur(10px);
@@ -123,24 +192,29 @@ background-image: url(../../icon/name_white.svg);
     box-shadow: var(--inshadow)
   }
   
-  /* 自定义文件上传按钮的样式 */
-  .custom-upload-btn {
-    cursor: pointer;
-    background-image: url(../../icon/upload_pink.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 32px;
-    max-height: 32px;
-    margin-top: 15px;
-    margin-bottom: 10px;
+  #folder-name-bar{
+    display: none;
+    background-color: transparent;
+    overflow: hidden;
+    width: 92%;
+    max-width: 95%;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-top: 10px;
+    border: none;
+    color: #e9a1d7;
+    margin-bottom: 10px;
+    margin-right: 0.5%;
+    border-radius: 1em;
+    position: relative;
+
     z-index: 10;
+    box-shadow: var(--inshadow)
   }
-  .custom-upload-btn:hover{
-    background-image: url(../../icon/upload_white.svg);
-  }
-  
+  #folder-name-bar:focus{
+  outline: none;
+  background-color: transparent;
+
+}
 
   #currentPath{
     height: fit-content;
@@ -171,6 +245,25 @@ background-image: url(../../icon/name_white.svg);
   #upButton:hover{
     background-image: url(../../icon/goup_white.svg);
   }
+  #cancel-folder{
+    display: none;
+  background-image: url(../../icon/no_pink.svg);
+  cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    max-height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    z-index: 10;
+    margin-left: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  #cancel:hover{
+    background-image: url(../../icon/no_white.svg);
+  }
   #cancel{
     background-image: url(../../icon/no_pink.svg);
     cursor: pointer;
@@ -188,26 +281,44 @@ background-image: url(../../icon/name_white.svg);
   #cancel:hover{
     background-image: url(../../icon/no_red.svg);
   }
-  #loadButton{
-    background-image: url(../../icon/load_pink.svg);
-    cursor: pointer;
+  
+#add-folder{
+  background-image: url(../../icon/addfolder_pink.svg);
+  cursor: pointer;
     background-color: transparent;
     border: none;
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    right: 10px;
-    bottom: 6px;
-    opacity: 0.5;
+    width: 32px;
+    max-height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
     z-index: 10;
+    margin-left: 5px;
     background-repeat: no-repeat;
     background-position: center;
-  }
-  #loadButton:hover{
-    opacity: 1;
-    background-image: url(../../icon/load_white.svg);
-  }
-
+}
+#cancel:hover{
+  background-image: url(../../icon/addfolder_white.svg);
+}
+#add-folder:hover{
+    background-image: url(../../icon/addfolder_white.svg);
+}
+#comfirm{
+  background-image: url(../../icon/yes_pink.svg);
+  cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    max-height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    z-index: 10;
+    margin-left: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+}
   #fileList {
     width: 80%;
     padding: 0;
@@ -215,7 +326,7 @@ background-image: url(../../icon/name_white.svg);
     position: relative;
   }
 
-  #fileList li {
+  .files {
     cursor: pointer;
     margin-bottom: 1em;
     display: flex;
@@ -236,7 +347,13 @@ background-image: url(../../icon/name_white.svg);
     transition: all 1S ease;
     box-shadow: var(--outshadow) 
   }
-
+ 
+  .files:hover{
+    background-color: #8543799c;
+  }
+.selected{
+  background-color: #8543799c;
+}
   .fileLink {
     
     color: #ffb6d8;
@@ -315,38 +432,7 @@ left: 50%;
 transform: translate(-50%, -50%); 
 white-space: nowrap; 
 }
-#preview{
-display: flex;
-min-width: 80%;
-min-height: 80%;
-margin-top: 250px;
-margin-bottom: 300px;
-    position: absolute;
-    border: none;
-    z-index: 8;
-    margin-bottom: 2em;
-    background-color: transparent;
-    
-}
-#closeifame{
-width: 80px;
-max-width: 80%;
-height: 80px;
-background-image: url(../../icon/no_pink.svg);
-background-position: center;
-background-repeat: no-repeat;
-background-color: #85657f86;
-cursor: pointer;
-position: fixed;
-margin-top: 150px;
-left: 20%;
-border-radius: 50%;
-z-index: 1000000;
-}
-#closeifame:hover{
-background-image: url(../../icon/no_red.svg);
-background-color: #86507c86;
-}
+
 #top-btn{
 background-image: url(../../icon/toup_pink.svg);
 background-color: #85657f86;
@@ -377,7 +463,9 @@ background-image: url(../../icon/toup_white.svg);
           }
       }
   @media only screen and (max-width: 600px) {
-    
+    .main{
+      margin-left: 0;
+    }
   
   .phone_background {
   position:relative;
@@ -424,6 +512,27 @@ background-image: url(../../icon/toup_white.svg);
     
   }
   
-  
+  #option-bar{
+    padding-top: 0;
+    align-items: center;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10;
+}
+.files:hover{
+background-color: #85657f86;
+}
+.selected{
+  background-color: #8543799c !important;
+}
 
   }

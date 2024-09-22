@@ -85,3 +85,40 @@ body::-webkit-scrollbar {
               transition: bottom 0.7s ease;
               box-shadow: var(--outshadow)
               }
+.option-btn{
+    top: 80px;
+    margin-top: 30px;
+    position: relative;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 10px;
+}
+#open-side{
+    position: absolute;
+    top: 10px;
+    background-image: url(../../icon/option_grey.svg);
+}
+#open-side:hover{
+    background-image: url(../../icon/option_white.svg);
+}
+@media only screen and (max-width: 600px) {
+    .option-btn{
+        top: auto;
+        margin-top: 10px;
+        position: relative;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        margin: 15px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    #open-side{
+        top: auto;
+        margin-left: 0;
+        left: 5px;
+    }
+}

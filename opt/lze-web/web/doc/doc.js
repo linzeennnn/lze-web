@@ -4,17 +4,18 @@
  lightcolor='#966a85';
  let uploadpath;
  let nowpath="/";//当前目录（要上传的目录）
+ let fullPath; 
  function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
         if (scrollTop > 100) {
-          document.getElementById('top-btn').style.bottom = '5%';
+          document.getElementById('top-btn').style.bottom = '90px';
           document.querySelector('.backbtn').style.left = '1%';
           document.querySelector('.backbtn').style.width = '15%';
           document.getElementById('top-bar').style.boxShadow = 'none';
           document.getElementById('top-bar').style.top = '10px';
           document.getElementById('top-bar').style.width = '70%';
-          document.getElementById('top-bar').style.marginLeft = '10%';
+          document.getElementById('top-bar').style.left = '10%';
           document.getElementById('top-bar').style.backgroundColor = 'transparent';
           document.getElementById('cover-bar').style.top = '0';
       document.getElementById('top-bar').style.backdropFilter = `none`;
@@ -27,7 +28,7 @@
           document.getElementById('top-bar').style.boxShadow = '';
           document.getElementById('top-bar').style.top = '77px';
           document.getElementById('top-bar').style.width = '80%';
-          document.getElementById('top-bar').style.marginLeft = '';
+          document.getElementById('top-bar').style.left = '';
           document.getElementById('top-bar').style.backgroundColor = '';
           document.getElementById('cover-bar').style.top = '';
           document.getElementById('top-bar').style.backdropFilter = ``;
@@ -124,7 +125,8 @@ window.addEventListener('scroll', handleScroll);
 
     textid.innerText = displayPath;
   }
-  function loadFolder(folder = '') {
+  function loadFolder(folder = '',status) {
+    selectedarray.length = 0;
     fetch(`http://${ip}/code/Documents/doc_list.php?folder=` + folder, fetchtoken())
   .then(response => {
     fetchnologin(response)
@@ -135,33 +137,52 @@ window.addEventListener('scroll', handleScroll);
         fileList.innerHTML = '';
 
         const currentPath = document.getElementById('currentPath');
-        const fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
+        if(status==1){
+        fullPath = (data.currentFolder ? data.currentFolder : '');
+        }
+        else{
+        fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
+        }
         pathlen(currentPath, fullPath);
         currentPath.title = fullPath;
 
         data.folders.forEach(folder => {
           const listItem = document.createElement('li');
+          listItem.className = 'files';
           const folderLink = document.createElement('span');
           folderLink.textContent = folder + '/';
           folderLink.className = 'folderLink';
-          folderLink.addEventListener('click', function () {
-            loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+          listItem.addEventListener('click', function() {
+            select(listItem,2);
           });
+          folderLink.addEventListener('click', function () {
+            event.stopPropagation(); 
+            if(status==1){
+              loadFolder(data.currentFolder ? data.currentFolder  + folder : folder);
+            }
+           else{
+            loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+           }
+        });
           listItem.appendChild(folderLink);
           fileList.appendChild(listItem);
         });
 
         data.files.forEach(file => {
           const listItem = document.createElement('li');
-
+          listItem.className = 'files';
           const fileLink = document.createElement('span');
           const Src = `http://${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
           const fileListContainer = document.getElementById('fileListContainer');
           fileLink.textContent = file;
           fileLink.className = 'fileLink';
           fileLink.title = `预览${file}`;
+          listItem.addEventListener('click', function() {
+            select(listItem,1);
+          });
           fileLink.addEventListener('click', function () {
-            let filepath
+            event.stopPropagation(); 
+            let filepath;
             nowpath = currentPath.innerText;
             let rootpath=`http://${ip}/file/Documents/upload/`;
             if (nowpath==="/"){
@@ -210,9 +231,7 @@ window.addEventListener('scroll', handleScroll);
 
  
   function selfile() {
-    nowpath = currentPath.innerText;  // 获取当前路径
-    console.log(nowpath);
-    
+    nowpath = fullPath;  
     var files = document.getElementById('uploadfile').files;
     if (files.length === 0) {
         notify("请先选择文件");
@@ -259,7 +278,7 @@ window.addEventListener('scroll', handleScroll);
                     uploadpath = xhr.responseText;
                     console.log(uploadpath);
                     loading(0);
-                    loadFolder();
+                    loadFolder(nowpath,1);
                     desktopnot('恩的文件', '新上传文件:', `${file.name}`, uploadpath);
                 }
             }
@@ -269,4 +288,195 @@ window.addEventListener('scroll', handleScroll);
     }
 
     uploadChunk(); // 开始上传第一个块
+}
+// 新建文件夹
+function newfolder(status){
+  const pathbar=document.getElementById('path-bar');
+  const namebar=document.getElementById('folder-name-bar');
+  const comfirm=document.getElementById('comfirm');
+  const cancelfolder=document.getElementById('cancel-folder');
+  const upbtn=document.getElementById('upButton');
+  const newfod=document.getElementById('add-folder');
+  let folderName=namebar.value;
+  switch (status){
+    case 1:
+  pathbar.style.display='none';
+  namebar.style.display='block';
+  comfirm.style.display='block'
+  cancelfolder.style.display='block'
+  upbtn.style.display='none';
+  newfod.style.display='none';
+  break;
+  case 0:
+    pathbar.style.display='';
+    namebar.style.display='';
+    comfirm.style.display=''
+    cancelfolder.style.display=''
+    upbtn.style.display='';
+    newfod.style.display='';
+    break;
+    case 2:
+      nowpath = fullPath;  
+      console.log(nowpath)
+    if (folderName===""){
+      folderName="new_folder";
+    }
+    fetch(`http://${ip}/code/Documents/new_folder.php`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ folderName, nowpath })
+  })
+  .then(response => response.text())
+  .then(data => {
+      console.log(data);
+      loadFolder(nowpath,1);
+      namebar.value="";
+      notify("新建:"+folderName)
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+  newfolder(0);
+    break;
+  }
+}
+// 删除
+function del(){
+  if (confirm('确定要删除所选文件吗')) {
+  nowpath = fullPath;  
+const  dellist = JSON.stringify(selectedarray);
+
+  // 创建一个对象，包含 copylist 和 nowpath
+  const requestData = {
+    dellist: dellist
+  };
+  fetch(`http://${ip}/code/Documents/delete.php`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
+  })
+  .then(response => response.json())
+  .then(data => {
+    loadFolder(nowpath,1);
+    notify("已删除");
+    selectedarray.length=0;
+  })
+  .catch((error) => {
+    notify('错误:'+error);
+  });
+}
+}
+
+let pastestatus;
+let copyarray=[];
+// 复制
+const pastebtn=document.getElementById('paste');
+function copy(status){
+copyarray.length=0;
+if (selectedarray.length==0){
+  notify("请选择文件");
+pastebtn.style.display="none";
+  return;
+}
+switch (status){
+  case 1:
+    pastestatus=1;
+    break;
+  case 0:
+  pastestatus=0;
+  break;
+}
+copyarray=selectedarray.slice();
+pastebtn.style.display="block";
+}
+// 粘贴
+let copylist;
+function paste() {
+  nowpath = fullPath;  
+  copylist = JSON.stringify(copyarray);
+
+  // 创建一个对象，包含 copylist 和 nowpath
+  const requestData = {
+    copylist: copylist,
+    nowpath: nowpath
+  };
+switch (pastestatus){
+  case 1:{
+  fetch(`http://${ip}/code/Documents/copy.php`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
+  })
+  .then(response => response.json())
+  .then(data => {
+    loadFolder(nowpath,1);
+    notify("已复制");
+    pastebtn.style.display='none';
+    copyarray.length=0;
+  })
+  .catch((error) => {
+    console.error('错误:', error);
+  });}
+  break;
+  case 0:{
+    fetch(`http://${ip}/code/Documents/move.php`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
+    })
+    .then(response => response.json())
+    .then(data => {
+      loadFolder(nowpath,1);
+      notify("已移动");
+      pastebtn.style.display='none';
+      copyarray.length=0;
+    })
+    .catch((error) => {
+      console.error('错误:', error);
+    });
+  }
+  break;
+}
+  
+}
+
+// 选中
+let filesname;
+let selectedpath;
+let selectedarray = [];
+let index;
+let selectcount;
+function select(fileitem,type){
+  switch (type){
+    case 1:
+     filesname=fileitem.querySelector('.fileLink');
+    break;
+    case 2:
+       filesname=fileitem.querySelector('.folderLink');
+      break;
+  }
+selectedpath = fullPath + filesname.innerText;
+if (fileitem.classList.contains('selected')) {
+  notify("取消选择");
+  fileitem.classList.remove('selected');
+  index = selectedarray.indexOf(selectedpath);
+  selectedarray.splice(index, 1);
+} else {
+  selectcount=selectedarray.length+1;
+  notify("已选择"+selectcount+"个文件");
+  fileitem.classList.add('selected');
+selectedarray.push(selectedpath);
+}
 }

@@ -24,13 +24,13 @@ body {
   color: #2b3033;
 }
 .bar-btn.selected {
-  background-color: hsla(200, 33%, 78%, 0.663);
-  color: #353738;
+  background-color: #555f64;
+  color: #bdd3df;
 }
 
 .bar-btn:hover {
-  background-color: hsla(200, 33%, 78%, 0.663);
-  color: #20021c;
+  background-color: #555f64;
+  color: #bdd3df;
 }
 #popup1-1{
 background-image: url(../../wallpaper/light/pink.svg);
