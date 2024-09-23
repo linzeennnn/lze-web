@@ -64,15 +64,19 @@ function getUniqueName($path) {
     $dirname = $info['dirname'];
     $basename = $info['basename'];
     $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
-    $filename = getname($basename);
+    
+    // 保持完整的basename
+    $filename = mb_substr($basename, 0, mb_strrpos($basename, '.') !== false ? mb_strrpos($basename, '.') : mb_strlen($basename));
     
     $counter = 1;
     while (file_exists($path)) {
+        // 生成新的路径
         $path = $dirname . '/' . $filename . "($counter)" . $extension;
         $counter++;
     }
     return $path;
 }
+
 
 // 递归复制文件夹的函数
 function copyDirectory($source, $dest) {
