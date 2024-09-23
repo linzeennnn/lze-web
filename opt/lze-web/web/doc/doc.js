@@ -5,17 +5,57 @@
  let uploadpath;
  let nowpath="/";//当前目录（要上传的目录）
  let fullPath; 
+//  操作导航栏
+ function optionbar(status){
+  const optionbar=document.getElementById('option-bar');
+  const openbtn=document.getElementById('openbar');
+switch(status){
+  case 0:
+    allmove(status);
+    optionstatus=0;
+    openbtn.style.display='block';
+    optionbar.style.left='-60px';
+    setTimeout(() => {
+      optionbar.style.display='none';
+  }, 1000);
+    break;
+  case 1:
+  allmove(status);
+    optionstatus=1;
+    optionbar.style.display='';
+    setTimeout(() => {
+      openbtn.style.display='none';
+      optionbar.style.left='';
+  }, 10);
+    break;
+}
+ }
+//  整体页面的位置
+function allmove(status){
+  const elements = document.querySelectorAll('.main');
+  switch(status){
+    case 1:
+      elements.forEach(function(element, index) {
+          if (element) {
+              element.style.marginLeft = '';
+          } 
+      });
+      break;
+    case 0:
+elements.forEach(function(element, index) {
+        element.style.marginLeft = '0';
+});
+      break;
+  }
+}
  function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
         if (scrollTop > 100) {
           document.getElementById('top-btn').style.bottom = '90px';
           document.querySelector('.backbtn').style.left = '1%';
-          document.querySelector('.backbtn').style.width = '15%';
           document.getElementById('top-bar').style.boxShadow = 'none';
           document.getElementById('top-bar').style.top = '10px';
-          document.getElementById('top-bar').style.width = '70%';
-          document.getElementById('top-bar').style.left = '10%';
           document.getElementById('top-bar').style.backgroundColor = 'transparent';
           document.getElementById('cover-bar').style.top = '0';
       document.getElementById('top-bar').style.backdropFilter = `none`;
@@ -24,11 +64,8 @@
         } else {
           document.getElementById('top-btn').style.bottom = '';
           document.querySelector('.backbtn').style.left = '5%';
-          document.querySelector('.backbtn').style.width = '';
           document.getElementById('top-bar').style.boxShadow = '';
           document.getElementById('top-bar').style.top = '77px';
-          document.getElementById('top-bar').style.width = '80%';
-          document.getElementById('top-bar').style.left = '';
           document.getElementById('top-bar').style.backgroundColor = '';
           document.getElementById('cover-bar').style.top = '';
           document.getElementById('top-bar').style.backdropFilter = ``;
@@ -42,7 +79,6 @@ window.addEventListener('scroll', handleScroll);
   function comin(){
     // 初始加载根文件夹内容
   loadFolder();
-      document.querySelector('.backbtn').style.left = '5%';
       document.getElementById('fileListContainer').style.right = `0`;
       document.getElementById('top-bar').style.top = `77px`;
       loginstatus();
@@ -127,7 +163,7 @@ window.addEventListener('scroll', handleScroll);
   }
   function loadFolder(folder = '',status) {
     selectedarray.length = 0;
-    fetch(`http://${ip}/code/Documents/doc_list.php?folder=` + folder, fetchtoken())
+    fetch(`${protocol}//${ip}/code/Documents/doc_list.php?folder=` + folder, fetchtoken())
   .then(response => {
     fetchnologin(response)
     return response.json();
@@ -137,7 +173,7 @@ window.addEventListener('scroll', handleScroll);
         fileList.innerHTML = '';
 
         const currentPath = document.getElementById('currentPath');
-        if(status==1){
+        if(status==1 && data.currentFolder!=""){
         fullPath = (data.currentFolder ? data.currentFolder : '');
         }
         else{
@@ -148,31 +184,58 @@ window.addEventListener('scroll', handleScroll);
 
         data.folders.forEach(folder => {
           const listItem = document.createElement('li');
+          const editbtn= document.createElement('div');
+          editbtn.className='edit li-btn';
+          editbtn.title = `重命名`;
+          editbtn.addEventListener('click',function(){
+            event.stopPropagation(); 
+            rename(0,listItem,2);
+          });
+          const savebtn= document.createElement('div');
+          savebtn.className='save li-btn';
+          savebtn.addEventListener('click',function(){
+            event.stopPropagation(); 
+            rename(1,listItem,2);
+          });
           listItem.className = 'files';
           const folderLink = document.createElement('span');
-          folderLink.textContent = folder + '/';
+          folderLink.textContent = folder;
           folderLink.className = 'folderLink';
           listItem.addEventListener('click', function() {
             select(listItem,2);
           });
           folderLink.addEventListener('click', function () {
             event.stopPropagation(); 
-            if(status==1){
-              loadFolder(data.currentFolder ? data.currentFolder  + folder : folder);
-            }
-           else{
+            if (event.target.isContentEditable) {
+              return; 
+          }
             loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
-           }
+
         });
           listItem.appendChild(folderLink);
+          listItem.appendChild(editbtn);
+          listItem.appendChild(savebtn);
           fileList.appendChild(listItem);
         });
 
         data.files.forEach(file => {
           const listItem = document.createElement('li');
+          const editbtn= document.createElement('div');
+          editbtn.className='edit li-btn';
+          editbtn.title = `重命名`;
+          editbtn.addEventListener('click',function(){
+            event.stopPropagation(); 
+            rename(0,listItem,1);
+          });
+          const savebtn= document.createElement('div');
+          savebtn.className='save li-btn';
+          savebtn.addEventListener('click',function(){
+            event.stopPropagation(); 
+            rename(1,listItem,1);
+          });
           listItem.className = 'files';
           const fileLink = document.createElement('span');
-          const Src = `http://${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
+          const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
           const fileListContainer = document.getElementById('fileListContainer');
           fileLink.textContent = file;
           fileLink.className = 'fileLink';
@@ -182,9 +245,12 @@ window.addEventListener('scroll', handleScroll);
           });
           fileLink.addEventListener('click', function () {
             event.stopPropagation(); 
+            if (event.target.isContentEditable) {
+              return; 
+          }
             let filepath;
             nowpath = currentPath.innerText;
-            let rootpath=`http://${ip}/file/Documents/upload/`;
+            let rootpath=`${protocol}//${ip}/file/Documents/upload/`;
             if (nowpath==="/"){
               filepath=rootpath + file;
             }
@@ -195,14 +261,19 @@ window.addEventListener('scroll', handleScroll);
           });
 
           listItem.appendChild(fileLink);
+          listItem.appendChild(editbtn);
+          listItem.appendChild(savebtn);
 
           const downloadLink = document.createElement('a');
           // 修改 downloadLink 的 href 指向 PHP 脚本而不是直接文件路径
           downloadLink.className = 'downloadLink';
-          downloadLink.href = `http://${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
+          downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
           downloadLink.title = `下载${file}`;
           downloadLink.textContent = `下载 ${file}`;
-          downloadLink.addEventListener('click',()=>notify("开始下载"));
+          downloadLink.addEventListener('click',()=>{
+            event.stopPropagation(); 
+            notify("开始下载")
+          });
 
           listItem.appendChild(downloadLink);
 
@@ -222,16 +293,25 @@ window.addEventListener('scroll', handleScroll);
         }
       });
 }
-
+// 回到上一级
   function goUp() {
     const upButton = document.getElementById('upButton');
     const parentFolder = upButton.dataset.parentFolder;
     loadFolder(parentFolder);
   }
 
- 
+ // 判断根目录
+function ifroot(){
+  if (fullPath=="/"){
+    nowpath="";
+  }
+  else {
+    nowpath=fullPath;
+  }
+}
+// 发送文件
   function selfile() {
-    nowpath = fullPath;  
+    ifroot(); 
     var files = document.getElementById('uploadfile').files;
     if (files.length === 0) {
         notify("请先选择文件");
@@ -256,7 +336,7 @@ window.addEventListener('scroll', handleScroll);
         fd.append('nowpath', nowpath);  // 传递 nowpath 变量
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', `http://${ip}/code/Documents/upload.php`, true);
+        xhr.open('POST', `${protocol}//${ip}/code/Documents/upload.php`, true);
         xmltoken(xhr);
         xhr.upload.onprogress = function (ev) {
             if (ev.lengthComputable) {
@@ -279,8 +359,9 @@ window.addEventListener('scroll', handleScroll);
                     console.log(uploadpath);
                     loading(0);
                     loadFolder(nowpath,1);
+                    console.log(nowpath);
                     desktopnot('恩的文件', '新上传文件:', `${file.name}`, uploadpath);
-                }
+                }1
             }
         };
 
@@ -316,12 +397,11 @@ function newfolder(status){
     newfod.style.display='';
     break;
     case 2:
-      nowpath = fullPath;  
-      console.log(nowpath)
+      ifroot();  
     if (folderName===""){
       folderName="new_folder";
     }
-    fetch(`http://${ip}/code/Documents/new_folder.php`, {
+    fetch(`${protocol}//${ip}/code/Documents/new_folder.php`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -331,10 +411,10 @@ function newfolder(status){
   })
   .then(response => response.text())
   .then(data => {
-      console.log(data);
       loadFolder(nowpath,1);
       namebar.value="";
       notify("新建:"+folderName)
+      console.log(nowpath);
   })
   .catch(error => {
       console.error('Error:', error);
@@ -346,14 +426,13 @@ function newfolder(status){
 // 删除
 function del(){
   if (confirm('确定要删除所选文件吗')) {
-  nowpath = fullPath;  
+  ifroot();
 const  dellist = JSON.stringify(selectedarray);
-
   // 创建一个对象，包含 copylist 和 nowpath
   const requestData = {
     dellist: dellist
   };
-  fetch(`http://${ip}/code/Documents/delete.php`, {
+  fetch(`${protocol}//${ip}/code/Documents/delete.php`, {
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + token,
@@ -398,7 +477,7 @@ pastebtn.style.display="block";
 // 粘贴
 let copylist;
 function paste() {
-  nowpath = fullPath;  
+  ifroot(); 
   copylist = JSON.stringify(copyarray);
 
   // 创建一个对象，包含 copylist 和 nowpath
@@ -408,7 +487,7 @@ function paste() {
   };
 switch (pastestatus){
   case 1:{
-  fetch(`http://${ip}/code/Documents/copy.php`, {
+  fetch(`${protocol}//${ip}/code/Documents/copy.php`, {
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + token,
@@ -428,7 +507,8 @@ switch (pastestatus){
   });}
   break;
   case 0:{
-    fetch(`http://${ip}/code/Documents/move.php`, {
+    console.log(copylist);
+    fetch(`${protocol}//${ip}/code/Documents/move.php`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -442,6 +522,7 @@ switch (pastestatus){
       notify("已移动");
       pastebtn.style.display='none';
       copyarray.length=0;
+      console.log(data);
     })
     .catch((error) => {
       console.error('错误:', error);
@@ -479,4 +560,57 @@ if (fileitem.classList.contains('selected')) {
   fileitem.classList.add('selected');
 selectedarray.push(selectedpath);
 }
+}
+// 重命名
+  let oldname;
+  let newname;
+function rename(option,fileitem,type){
+  let newpath;
+  let oldpath;
+  let files;
+  const editbtn=fileitem.querySelector('.edit');
+  const savebtn=fileitem.querySelector('.save');
+  switch (type){
+    case 1:
+files=fileitem.querySelector('.fileLink');
+    break;
+    case 2:    
+files=fileitem.querySelector('.folderLink');
+      break;
+  }
+  switch(option){
+    case 0:
+      editbtn.style.display="none";
+      savebtn.style.display="block";
+      files.classList.add('editing');
+      files.setAttribute('contenteditable', 'true');
+  oldname=files.innerText;
+    break;
+    case 1:
+    ifroot();  
+    newname=files.innerText;
+    oldpath=nowpath+oldname;
+    newpath=nowpath+newname;   
+    fetch(`${protocol}//${ip}/code/Documents/rename.php`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          oldpath: oldpath,
+          newpath: newpath
+      }),
+  })
+  .then(response => response.text())
+  .then(data => {
+  loadFolder(nowpath,1)
+  notify(data);
+  })
+  .catch((error) => {
+      console.log(error);
+      notify(data);;
+  });
+      break;
+  }
 }

@@ -1,3 +1,4 @@
+const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
 // tool tip
 $(function() {
   var isMobile = /Mobi|Android/i.test(navigator.userAgent);
@@ -100,7 +101,7 @@ async function desktopnot(title, content, fileName, finalFilePath){
   data.append('finalFilePath', finalFilePath);
 
   try {
-      const response = await fetch(`http://${ip}/code/notify/notify.php`, {
+      const response = await fetch(`${protocol}//${ip}/code/notify/notify.php`, {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer ' + token,

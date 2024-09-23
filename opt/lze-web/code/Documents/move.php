@@ -1,6 +1,18 @@
 <?php
 require '../auth/auth.php';
 requireAuth();
+
+function getname($path) {
+    $path = rtrim($path, '/'); // 去掉末尾的斜杠
+    $lastSlashPos = strrpos($path, '/'); // 找到最后一个斜杠的位置
+
+    if ($lastSlashPos !== false) {
+        return substr($path, $lastSlashPos + 1); // 获取最后一个斜杠后面的部分
+    } else {
+        return $path; // 如果没有斜杠，说明整个路径就是文件夹名
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 获取 JSON 数据
     $data = file_get_contents("php://input");
@@ -22,19 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 检查源路径是文件夹还是文件
         if (is_dir($source)) {
             // 移动文件夹
-            $destDir = getUniqueName($dest . basename($path));
+            $destDir = getUniqueName($dest . getname($path));
             if (rename($source, $destDir)) {
-                $results[] = "成功移动文件夹: $path";
+                $results[] = "成功移动文件夹: $destDir";
             } else {
                 $results[] = "移动文件夹失败: $path";
             }
         } elseif (file_exists($source)) {
             // 移动文件
-            $fileName = basename($path); // 获取文件名
-            $destinationPath = getUniqueName($dest . $fileName); // 获取唯一文件路径
-
+            $fileName = getname($path); // 获取文件名
+            $destinationPath = getUniqueName($dest . $fileName);
             if (rename($source, $destinationPath)) {
-                $results[] = "成功移动文件: $fileName";
+                $results[] = "成功移动文件: $destinationPath";
             } else {
                 $results[] = "移动文件失败: $fileName";
             }
@@ -53,7 +64,7 @@ function getUniqueName($path) {
     $dirname = $info['dirname'];
     $basename = $info['basename'];
     $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
-    $filename = basename($basename, $extension);
+    $filename = getname($basename);
     
     $counter = 1;
     while (file_exists($path)) {

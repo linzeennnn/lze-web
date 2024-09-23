@@ -1,6 +1,18 @@
 <?php
 require '../auth/auth.php';
 requireAuth();
+
+function getname($path) {
+    $path = rtrim($path, '/'); // 去掉末尾的斜杠
+    $lastSlashPos = strrpos($path, '/'); // 找到最后一个斜杠的位置
+
+    if ($lastSlashPos !== false) {
+        return substr($path, $lastSlashPos + 1); // 获取最后一个斜杠后面的部分
+    } else {
+        return $path; // 如果没有斜杠，说明整个路径就是文件夹名
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 获取 JSON 数据
     $data = file_get_contents("php://input");
@@ -22,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 检查源路径是文件夹还是文件
         if (is_dir($source)) {
             // 复制文件夹
-            $destDir = getUniqueName($dest . basename($path));
+            $destDir = getUniqueName($dest . getname($path));
             if (copyDirectory($source, $destDir)) {
                 $results[] = "成功复制文件夹: $path";
             } else {
@@ -30,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } elseif (file_exists($source)) {
             // 复制文件
-            $fileName = basename($path); // 获取文件名
+            $fileName = getname($path); // 获取文件名
             $destinationPath = getUniqueName($dest . $fileName); // 获取唯一文件路径
 
             if (copy($source, $destinationPath)) {
@@ -53,7 +65,7 @@ function getUniqueName($path) {
     $dirname = $info['dirname'];
     $basename = $info['basename'];
     $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
-    $filename = basename($basename, $extension);
+    $filename = getname($basename); // 使用getname函数替换basename
     
     $counter = 1;
     while (file_exists($path)) {

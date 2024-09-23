@@ -1,7 +1,10 @@
 .downloadLink {
+  position: fixed;
     display: inline-block;
-    width: 32px;
-    height: 32px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    bottom: 10px;
     background-image: url(../../icon/download_pink.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -9,6 +12,22 @@
     text-indent: -9999px; /* Hide text */
     vertical-align: middle;
   }
+  .backbtn{
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: fixed;
+    left: 5%;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    background-image: url(../../icon/left_pink.svg);
+    z-index: 11;
+    transition: all 1s ease , width 1s ease;
+    }
+    .backbtn:hover{
+      background-image: url(../../icon/left_white.svg);
+    }
   .downloadLink:hover {
     background-image: url(../../icon/download_white.svg) !important;
   }
@@ -30,7 +49,9 @@
         width: 60px;
         background-color: #815477a6;
         z-index: 11;
-        box-shadow: var(--outshadow)  
+        box-shadow: var(--outshadow);
+        transition: left 1s ease;
+        
       }
   .custom-upload-btn {
     background-image: url(../../icon/upload_pink.svg);
@@ -64,11 +85,81 @@
   }
   #paste{
     display: none;
-    animation: paste 2s ease-in-out infinite;;
+    animation: paste 2s ease-in-out infinite;
     background-image: url(../../icon/paste_pink.svg);
   }
   #paste:hover{
     background-image: url(../../icon/paste_white.svg);
+  }
+  .edit{
+    background-image: url(../../icon/edit_pink.svg);
+  }
+  .edit:hover{
+    background-image: url(../../icon/edit_white.svg);
+  }
+  .save{
+    display: none;
+    background-image: url(../../icon/save_pink.svg);
+  }
+  .save:hover{
+    background-image: url(../../icon/save_white.svg);
+  }
+  #closebar{
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    position: absolute;
+    top: 500px;
+    right: 0;
+    background-image: url(../../icon/goleft_pink.svg);
+  }
+  #closebar:hover{
+    background-image: url(../../icon/goleft_white.svg);
+  }
+  #openbar{
+    display: none;
+    margin: 0;
+    position: fixed;
+    top: 500px;
+    left: 5px;
+    background-image: url(../../icon/goright_pink.svg);
+    z-index: 9;
+  }
+  #openbar:hover{
+    background-image: url(../../icon/goright_white.svg);
+  }
+  .li-btn{
+    right: 0;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    right: 10px;
+  }
+  .editing{
+    cursor: text;
+    padding: 10px;
+    border-radius: 1em;
+    border: none;
+    box-shadow: var(--inshadow);
+    animation: edit 2s ease-in-out infinite;
+  }
+  .editing:focus{
+    outline: none;
+    background-color: transparent;
+  }
+  @keyframes edit {
+    0% {
+      background-color: #8d72807e;
+    }
+    50% {
+      background-color: transparent;
+    }
+    100% {
+      background-color: #8d72807e;
+    }
   }
   @keyframes paste {
     0% {
@@ -189,7 +280,7 @@ background-image: url(../../icon/name_white.svg);
     border-radius: 1em;
     position: relative;
     z-index: 10;
-    box-shadow: var(--inshadow)
+    box-shadow: var(--inshadow);
   }
   
   #folder-name-bar{
@@ -215,7 +306,6 @@ background-image: url(../../icon/name_white.svg);
   background-color: transparent;
 
 }
-
   #currentPath{
     height: fit-content;
     font-size: 20px;
@@ -304,7 +394,7 @@ background-image: url(../../icon/name_white.svg);
     background-image: url(../../icon/addfolder_white.svg);
 }
 #comfirm{
-  background-image: url(../../icon/yes_pink.svg);
+  background-image: url(../../icon/save_pink.svg);
   cursor: pointer;
     background-color: transparent;
     border: none;
@@ -318,6 +408,9 @@ background-image: url(../../icon/name_white.svg);
     background-repeat: no-repeat;
     background-position: center;
     display: none;
+}
+#comfirm:hover{
+  background-image: url(../../icon/save_pink.svg);
 }
   #fileList {
     width: 80%;
@@ -441,10 +534,7 @@ background-color: #85657f86;
 background-color: #6d37569a;
 background-image: url(../../icon/toup_white.svg);
 }
-.all{
-    top: 0;
-    transition: bottom 1s ease;
-  }
+
   #notify{
     background-color: #85657f86;
   }
@@ -466,7 +556,9 @@ background-image: url(../../icon/toup_white.svg);
     .main{
       margin-left: 0;
     }
-  
+  .pc-only{
+    display: none;
+  }
   .phone_background {
   position:relative;
   overflow:hidden;
@@ -496,9 +588,6 @@ background-image: url(../../icon/toup_white.svg);
           opacity: 0;
           transition: opacity 1s ease ; 
           z-index: 1;
-      }
-      .backbtn{
-        width: 25% ;
       }
   .fileLink {
     

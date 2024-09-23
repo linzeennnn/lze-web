@@ -18,7 +18,10 @@
     <link rel="stylesheet" href="../css/sidepage.css">
 </head>
 <body>
+  <div class="backbtn main" onclick="goBack()" title="返回首页"></div>
+  <div id="openbar"  title="打开导航栏" class="option-btn pc-only" onclick="optionbar(1)"></div>
   <div id="option-bar">
+    <div id="closebar" title="收起" class="option-btn pc-only" onclick="optionbar(0)"></div>
     <div id="open-side" class="option-btn" onclick="openside(1)"></div>
     <label for="uploadfile" class="custom-upload-btn option-btn" id="up-btn" title="上传文件"></label>
     <div id="loadButton" class="option-btn" onclick="reloadPage()" title="刷新"></div>
@@ -42,7 +45,7 @@
   </div>
   <div  id="blur-page" onclick="openside()"></div>
   <div id="cover-bar" class="main"></div>
-  <div class="backbtn main" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+ 
   <div id="top-bar" class="main">
     <button id="upButton"  onclick="goUp()" title="返回上一级"></button>
     <div id="cancel-folder" title="取消" onclick="newfolder(0)"></div>
@@ -65,8 +68,8 @@
   
   <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
   <div id="top-btn" onclick="totop()" title="回到顶部"></div>
-  <div id="fileListContainer" class="all main">
-    <ul id="fileList" class="all"></ul>
+  <div id="fileListContainer" class="main">
+    <ul id="fileList"></ul>
   </div> 
 </div>
   <script src="../js/login.js"></script>
