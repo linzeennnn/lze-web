@@ -95,14 +95,6 @@ body::-webkit-scrollbar {
     background-repeat: no-repeat;
     margin: 10px;
 }
-#open-side{
-    position: absolute;
-    top: 50px;
-    background-image: url(../../icon/option_grey.svg);
-}
-#open-side:hover{
-    background-image: url(../../icon/option_white.svg);
-}
 @media only screen and (max-width: 600px) {
     .option-btn{
         top: auto;

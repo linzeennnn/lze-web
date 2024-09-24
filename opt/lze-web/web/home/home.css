@@ -26,6 +26,25 @@
           body::-webkit-scrollbar {
             display: none; /* 隐藏滚动条 */
             }
+            #open-side{
+              cursor: pointer;
+              width: 32px;
+              height: 32px;
+              background-position: center;
+              background-repeat: no-repeat;
+              position: absolute;
+              top: 50px;
+              background-image: url(../../icon/option_grey.svg);
+            }
+            #open-side:hover{
+              background-image: url(../../icon/option_white.svg);
+            }
+            #sidepage{
+              background-color: #6a7885b7;
+            }
+            .side-btn:hover{
+              background-color: #5155577c;
+            }
       #home-bar {
         display: flex;
         font-size: 70px;
@@ -54,29 +73,7 @@
         transition: all 1s ease;
         
       }
-      .theme-btn{
-        cursor: pointer;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 32px;
-        height: 32px;
-        position: fixed;
-        right: 3%;
-        top: 100px;
-      }
-      #dark-btn{
-        background-image: url(../../icon/dark_grey.svg);
-      }
-      #dark-btn:hover{
-        background-image: url(../../icon/dark_black.svg);
-      }
-      #light-btn{
-        background-image: url(../../icon/light_grey.svg);
-      }
-      #light-btn:hover{
-        background-image: url(../../icon/light_white.svg)
-      }
-  
+      
      
       #myButton {
         transform: translateX(-50%);  
@@ -113,7 +110,7 @@
         background-color: #fff;
         overflow: hidden;
         transition: height 1s ease; /* 添加过渡效果 */
-        z-index: 1001; /* 比标题栏更高的层级 */
+        z-index: 11;
         box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;

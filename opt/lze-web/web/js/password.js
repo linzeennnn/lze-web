@@ -94,7 +94,7 @@ function showlogin(status){
 function sendpass() {
     const password = btoa(document.getElementById('password').value);
 
-    fetch(`http://${ip}/code/auth/login.php`, {
+    fetch(`${protocol}//${ip}/code/auth/login.php`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ function logout(){
 function checklogin(status) {
    token =localStorage.getItem(`authToken_${ip}`)
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://${ip}/code/auth/check.php`, true); // 替换为你的 PHP 文件路径
+    xhr.open('GET', `${protocol}//${ip}/code/auth/check.php`, true); // 替换为你的 PHP 文件路径
 
     // 设置 Authorization 头部
     xhr.setRequestHeader('Authorization', `Bearer ${token}`);

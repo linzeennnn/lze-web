@@ -5,7 +5,7 @@ let pic_path;
 let mon_path;
 let not_path;
 let bok_path;
-
+const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
 
 // notify
 function notify(text) {
@@ -28,7 +28,6 @@ function notify(text) {
 
 function comin(){
 var button = document.getElementById('myButton');
-    document.getElementById(`waifu`).style.top ='15%';
     document.getElementById(`home-bar`).style.top = '0';
     document.querySelector(`.name`).style.width='200px';
 document.getElementById('myButton').style.bottom='35%';
@@ -122,7 +121,6 @@ function tonext(bodyback,path,bar_type) {
 handleButtonClick();
 document.getElementById(`home-bar`).style.top = '-150px';
 document.getElementById('myButton').style.display = `none`;
-document.getElementById('waifu').style.top = ``;
 document.querySelector('body').style.backgroundImage = `url(${wallpath}${bodyback})`;
 document.querySelector('.next').style.backgroundImage = `url(${wallpath}${bodyback})`;
 document.querySelector('.next').style.opacity ='1';
@@ -140,7 +138,6 @@ var buttonState = 1; // 初始状态为1
 function handleButtonClick() {
 var button = document.getElementById('myButton');
 var popup = document.getElementById('customPopup');
-var logo = document.getElementById('waifu');
 
 if (buttonState === 1) {
 popup.classList.add('active');
@@ -156,10 +153,6 @@ additionalPopups.forEach(function (popup) {
   popup.classList.remove('active', 'return'); // 移除所有类
 });
 }
-document.getElementById('waifu').addEventListener('click', function(event) {
-buttonState = 2;
-handleButtonClick();
-});
 }
 
 function handleTopBarButtonClick(index) {

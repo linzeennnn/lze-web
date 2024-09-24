@@ -47,12 +47,26 @@
         position: fixed;
         height: 100%;
         width: 60px;
-        background-color: #815477a6;
+        background-color: #7e6177a6;
         z-index: 11;
         box-shadow: var(--outshadow);
         transition: left 1s ease;
         
       }
+      #sidepage{
+        background-color: #664b62b7;
+      }
+      .side-btn:hover{
+        background-color: #85537a7c;
+      }
+#open-side{
+  position: absolute;
+  top: 50px;
+  background-image: url(../../icon/option_grey.svg);
+}
+#open-side:hover{
+  background-image: url(../../icon/option_white.svg);
+}
   .custom-upload-btn {
     background-image: url(../../icon/upload_pink.svg);
   }

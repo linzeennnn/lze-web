@@ -1,5 +1,7 @@
 let wallpath;
 let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+const darkbtn=document.getElementById('dark-btn');
+const lightbtn=document.getElementById('light-btn');
 document.addEventListener('DOMContentLoaded', () => {
     // 检查 localStorage 是否有保存的主题，如果没有，则设置为默认主题
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -12,16 +14,22 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (theme) {
         case 'dark':
           themesheet.href = 'dark.css';
+          darkbtn.style.display='none';
+          lightbtn.style.display='flex';
           wallpath=`../../wallpaper/${theme}/`;
           metaThemeColor.setAttribute('content', darkcolor);
             break;
         case 'light':
           themesheet.href = 'light.css';
+          darkbtn.style.display='flex';
+          lightbtn.style.display='none';
           wallpath=`../../wallpaper/${theme}/`;
           metaThemeColor.setAttribute('content', lightcolor);
             break;
         default:
           themesheet.href = 'dark.css';
+          darkbtn.style.display='none';
+          lightbtn.style.display='flex';
           wallpath=`../../wallpaper/${theme}/`;
           metaThemeColor.setAttribute('content', darkcolor);
     }
@@ -30,4 +38,3 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', theme);
     window.webkit.messageHandlers.themeColor.postMessage(metaThemeColor.content);
   }
-  

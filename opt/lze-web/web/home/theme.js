@@ -15,13 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
         case 'dark':
           themesheet.href = 'web/home/dark.css';
           darkbtn.style.display='none';
-          lightbtn.style.display='block';
+          lightbtn.style.display='flex';
           wallpath=`wallpaper/${theme}/`;
           metaThemeColor.setAttribute('content', darkcolor);
             break;
         case 'light':
           themesheet.href = 'web/home/light.css';
-          darkbtn.style.display='block';
+          darkbtn.style.display='flex';
           lightbtn.style.display='none';
           wallpath=`wallpaper/${theme}/`;
           metaThemeColor.setAttribute('content', lightcolor);
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         default:
           themesheet.href = 'web/home/dark.css';
           darkbtn.style.display='none';
-          lightbtn.style.display='block';
+          lightbtn.style.display='flex';
           wallpath=`wallpaper/${theme}/`;
           metaThemeColor.setAttribute('content', darkcolor);
     }
