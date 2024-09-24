@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 检查源路径是文件夹还是文件
         if (is_dir($source)) {
             // 复制文件夹
-            $destDir = getUniqueName($dest . getname($path));
+            $destDir = getUniqueName($dest . getname($path),getname($path));
             if (copyDirectory($source, $destDir)) {
                 $results[] = "成功复制文件夹: $path";
             } else {
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (file_exists($source)) {
             // 复制文件
             $fileName = getname($path); // 获取文件名
-            $destinationPath = getUniqueName($dest . $fileName); // 获取唯一文件路径
+            $destinationPath = getUniqueName($dest . $fileName,$fileName); // 获取唯一文件路径
 
             if (copy($source, $destinationPath)) {
                 $results[] = "成功复制文件: $fileName";
@@ -60,14 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // 获取唯一名称的函数
-function getUniqueName($path) {
+function getUniqueName($path,$basename) {
     $info = pathinfo($path);
     $dirname = $info['dirname'];
-    $basename = $info['basename'];
     $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
     
     // 保持完整的basename
-    $filename = mb_substr($basename, 0, mb_strrpos($basename, '.') !== false ? mb_strrpos($basename, '.') : mb_strlen($basename));
+    $filename = $basename;
     
     $counter = 1;
     while (file_exists($path)) {
