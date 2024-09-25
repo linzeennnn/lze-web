@@ -98,7 +98,7 @@ async function getnote() {
                 const textSpan = document.createElement('span');
                 textSpan.className = 'text';
                 textSpan.style.display='none';
-                textSpan.innerText=text;
+                textSpan.innerHTML=hljs.highlightAuto(text).value.replace(/\n/g, '<br>');
                 note.appendChild(textSpan);
                 const edit = document.createElement('div');
                 edit.className = 'edit';
