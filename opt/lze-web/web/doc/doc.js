@@ -161,7 +161,8 @@ window.addEventListener('scroll', handleScroll);
 
     textid.innerText = displayPath;
   }
-  function loadFolder(folder = '',status) {
+  function loadFolder(folder = '') {
+    console.log(folder);
     selectedarray.length = 0;
     fetch(`${protocol}//${ip}/code/Documents/doc_list.php?folder=` + folder, fetchtoken())
   .then(response => {
@@ -173,12 +174,8 @@ window.addEventListener('scroll', handleScroll);
         fileList.innerHTML = '';
 
         const currentPath = document.getElementById('currentPath');
-        if(status==1 && data.currentFolder!=""){
-        fullPath = (data.currentFolder ? data.currentFolder : '');
-        }
-        else{
         fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
-        }
+        
         pathlen(currentPath, fullPath);
         currentPath.title = fullPath;
 
@@ -310,66 +307,79 @@ function ifroot(){
   }
 }
 // 发送文件
-  function selfile() {
-    ifroot(); 
-    var files = document.getElementById('uploadfile').files;
-    if (files.length === 0) {
-        notify("请先选择文件");
-        return;
-    }
-    loading(1);
-    var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
-    var file = files[0];
-    var totalChunks = Math.ceil(file.size / chunkSize);
-    var currentChunk = 0;
+function selfile() {
+  ifroot(); 
+  var files = document.getElementById('uploadfile').files;
+  if (files.length === 0) {
+      notify("请先选择文件");
+      return;
+  }
+  loading(1);
+  var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
+  var totalFiles = files.length;
+  var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
+  var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
 
-    function uploadChunk() {
-        var start = currentChunk * chunkSize;
-        var end = Math.min(start + chunkSize, file.size);
-        var chunk = file.slice(start, end);
+  // 计算每个文件的总块数
+  for (let i = 0; i < totalFiles; i++) {
+      totalChunks[i] = Math.ceil(files[i].size / chunkSize);
+  }
 
-        var fd = new FormData();
-        fd.append('file', chunk);
-        fd.append('fileName', file.name);
-        fd.append('totalChunks', totalChunks);
-        fd.append('currentChunk', currentChunk);
-        fd.append('nowpath', nowpath);  // 传递 nowpath 变量
+  function uploadChunk(fileIndex) {
+      if (fileIndex >= totalFiles) {
+          notify("所有文件上传成功");
+          loading(0);
+          return;
+      }
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', `${protocol}//${ip}/code/Documents/upload.php`, true);
-        xmltoken(xhr);
-        xhr.upload.onprogress = function (ev) {
-            if (ev.lengthComputable) {
-                var percent = ((currentChunk + ev.loaded / ev.total) / totalChunks) * 100;
-                var percentElement = document.getElementById('percent');
-                document.getElementById('bar').style.width = percent + '%';
-                percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
-            }
-        };
+      var file = files[fileIndex];
+      var start = currentChunks[fileIndex] * chunkSize;
+      var end = Math.min(start + chunkSize, file.size);
+      var chunk = file.slice(start, end);
 
-        xhr.onload = function () {
-            xmlnologin(xhr);
-            if (xhr.status === 200) {
-                currentChunk++;
-                if (currentChunk < totalChunks) {
-                    uploadChunk(); // 上传下一个块
-                } else {
-                    notify("上传成功");
-                    uploadpath = xhr.responseText;
-                    console.log(uploadpath);
-                    loading(0);
-                    loadFolder(nowpath,1);
-                    console.log(nowpath);
-                    desktopnot('恩的文件', '新上传文件:', `${file.name}`, uploadpath);
-                }1
-            }
-        };
+      var fd = new FormData();
+      fd.append('file', chunk);
+      fd.append('fileName', file.name);
+      fd.append('totalChunks', totalChunks[fileIndex]);
+      fd.append('currentChunk', currentChunks[fileIndex]);
+      fd.append('nowpath', nowpath);  // 传递 nowpath 变量
 
-        xhr.send(fd);
-    }
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', `${protocol}//${ip}/code/Documents/upload.php`, true);
+      xmltoken(xhr);
+      xhr.upload.onprogress = function (ev) {
+          if (ev.lengthComputable) {
+              var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
+              var percentElement = document.getElementById('percent');
+              document.getElementById('bar').style.width = percent + '%';
+              percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
+          }
+      };
 
-    uploadChunk(); // 开始上传第一个块
+      xhr.onload = function () {
+          xmlnologin(xhr);
+          if (xhr.status === 200) {
+              currentChunks[fileIndex]++;
+              if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
+                  uploadChunk(fileIndex); // 上传下一个块
+              } else {
+                  // 上传下一个文件
+                  uploadChunk(fileIndex + 1);
+                  notify(`文件 ${file.name} 上传成功`);
+                  uploadpath = xhr.responseText;
+                  console.log(uploadpath);
+                  loadFolder(removeslash(nowpath));
+                  desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
+              }
+          }
+      };
+
+      xhr.send(fd);
+  }
+
+  uploadChunk(0); // 开始上传第一个文件
 }
+
 // 新建文件夹
 function newfolder(status){
   const pathbar=document.getElementById('path-bar');
@@ -411,10 +421,9 @@ function newfolder(status){
   })
   .then(response => response.text())
   .then(data => {
-      loadFolder(nowpath,1);
+      loadFolder(removeslash(nowpath));
       namebar.value="";
       notify("新建:"+folderName)
-      console.log(nowpath);
   })
   .catch(error => {
       console.error('Error:', error);
@@ -442,7 +451,7 @@ const  dellist = JSON.stringify(selectedarray);
   })
   .then(response => response.json())
   .then(data => {
-    loadFolder(nowpath,1);
+    loadFolder(removeslash(nowpath));
     notify("已删除");
     selectedarray.length=0;
   })
@@ -497,7 +506,7 @@ switch (pastestatus){
   })
   .then(response => response.json())
   .then(data => {
-    loadFolder(nowpath,1);
+    loadFolder(removeslash(nowpath));
     notify("已复制");
     pastebtn.style.display='none';
     copyarray.length=0;
@@ -604,7 +613,7 @@ files=fileitem.querySelector('.folderLink');
   })
   .then(response => response.text())
   .then(data => {
-  loadFolder(nowpath,1)
+  loadFolder(removeslash(nowpath))
   notify(data);
   })
   .catch((error) => {
@@ -613,4 +622,8 @@ files=fileitem.querySelector('.folderLink');
   });
       break;
   }
+}
+// 去除最后斜杠
+function removeslash(path){
+  return path.endsWith('/') ? path.slice(0, -1) : path;
 }
