@@ -33,9 +33,87 @@ body {
     body::-webkit-scrollbar {
 display: none; /* 隐藏滚动条 */
 }
-.backbtn:hover #name{
-background-image: url(../../icon/name_white.svg);
+.backbtn{
+    background-image: url(../../icon/left_blue.svg);
+    }
+.main{
+    margin-left: 60px;
+  }
+  #sidepage{
+    background-color: #455470b2;
+  }
+  .side-btn:hover{
+    background-color: #4b628d7c;
+  }
+.option-btn{
+    opacity: 0.5;
+      top: 80px;
+      margin-top: 30px;
+      position: relative;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 10px;
+  }
+  #option-bar{
+    opacity: 0;
+    padding-top: 5%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* justify-content: center; */
+    left: -60px;
+    position: fixed;
+    height: 100%;
+    width: 60px;
+    background-color: #3b4657a9;
+    z-index: 11;
+    box-shadow: var(--outshadow);
+    transition: left 1s ease , opacity 1s ease;
+    
+  }
+  .option-btn:hover{
+    opacity: 1;
+  }
+#open-side{
+opacity: 0.5;
+position: absolute;
+top: 50px;
+background-image: url(../../icon/option_white.svg);
 }
+#open-side:hover{
+opacity: 1;
+}
+#closebar{
+    opacity: 0.5;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    position: absolute;
+    top: 500px;
+    right: 0;
+    background-image: url(../../icon/goleft_blue.svg);
+  }
+  #closebar:hover{
+    opacity: 1;
+  }
+  #openbar{
+    border-radius: 50%;
+    display: none;
+    margin: 0;
+    position: fixed;
+    top: 500px;
+    left: 5px;
+    background-image: url(../../icon/goright_blue.svg);
+    z-index: 9;
+  }
+  #openbar:hover{
+    background-color: #96848c4d;
+  }
     input[type="file"] {
     display: none; 
 }
@@ -78,7 +156,7 @@ z-index: 100;
 
 
 .gallery-container {
-    right:-100%;
+    opacity: 0;
     margin-top: 150px;
     display: flex;
     flex-wrap: wrap;
@@ -88,7 +166,7 @@ z-index: 100;
     max-width: 80%; 
     background-color: transparent;
    margin-bottom: 20px;
-   transition: right 1s ease;
+   transition: all 1s ease;
    z-index: 2;
     
 }
@@ -104,11 +182,11 @@ z-index: 100;
     
 }
 #button1:hover{
-    background-image: url(../../icon/picture_white.svg);
+   opacity: 1;
    
 }
 #button1.selected {
-    background-image: url(../../icon/picture_white.svg);
+   opacity: 1;
           
     
 }
@@ -125,13 +203,13 @@ z-index: 100;
 
 
 #button2.selected {
-    background-image: url(../../icon/video_white.svg);
+    opacity: 1;
     
 }
 
 #button2:hover {
     
-    background-image: url(../../icon/video_white.svg);
+   opacity: 1;
     
 }
 #button3 {
@@ -144,13 +222,10 @@ z-index: 100;
     
 }
 #button3:hover{
-   
-    background-image: url(../../icon/cut_white.svg);
+   opacity: 1;
 }
 #button3.selected {
-   
-    background-image: url(../../icon/cut_white.svg);           
-    
+   opacity: 1;
 }
 #load-btn {
     width: 32px !important;
@@ -163,8 +238,7 @@ z-index: 100;
     
 }
 #load-btn:hover{
-   
-    background-image: url(../../icon/load_white.svg);
+   opacity: 1;
 }
 
 label[for="uploadfile"] {
@@ -175,10 +249,12 @@ label[for="uploadfile"] {
     margin-bottom: 10px;
     background-image: url(../../icon/upload_blue.svg);
 }
-
+.btn{
+    opacity: 0.5;
+}
 /* 鼠标悬停时的样式 */
 label[for="uploadfile"]:hover {
-    background-image: url(../../icon/upload_white.svg);
+   opacity: 1;
 }
 
 .top-button{
@@ -191,12 +267,11 @@ label[for="uploadfile"]:hover {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: inline-flex;
-    margin-left: 0;
     width: 300px;
     margin-top: 10px;
    top: -80px; 
     z-index: 10;
-    transition: width 1s ease , top 1s ease, background-color 1s ease,margin-left 1s ease; 
+    transition: top 1s ease, background-color 1s ease,margin-left 1s ease; 
 }
 .btn{
     height: 32px;
@@ -341,6 +416,9 @@ transition: bottom 1s ease;
     color: #9dcaed; 
 }
 @media only screen and (max-width: 600px) {
+    .main{
+        margin-left: 0;
+      }
     .phone_background {
     position:relative;
     overflow:hidden;
@@ -376,7 +454,39 @@ transition: bottom 1s ease;
     overflow:hidden;
     overflow-x: hidden;
 }
-
+#option-bar{
+    left: 0;
+    padding-top: 0;
+    align-items: center;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10;
+}
+.option-btn{
+  top: auto;
+  margin-top: 10px;
+  position: relative;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#open-side{
+  top: auto;
+  margin-left: 0;
+  left: 5px;
+}
 
     }
     

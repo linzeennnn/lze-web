@@ -13,41 +13,20 @@
     <link rel="stylesheet" href="../css/lze.css">
     <link rel="stylesheet" href="monitor.css">
     <link rel="stylesheet" href="../css/password.css">
+    <link rel="stylesheet" href="../css/sidepage.css">
 </head>
 <body>
-    <div id="login-bar">
-    </div>
-    <div id="login" title="登陆" onclick="showlogin(3)"></div>
-    <div id="login-page">
-    <div id="ip-status" title="已连接"></div>
-  <div id="log-tool">
-    <div id="reconnect" title="切换ip" onclick="switchip()"></div>
-    <div id="logout" onclick="logout()" title="退出登陆"></div>
-    <div id="clear-btn" onclick="clearData()"></div>
+    <div id="openbar"  title="打开侧栏" class="option-btn pc-only" onclick="optionbar(1)"></div>
+    <div id="option-bar">
+      <div id="closebar" title="收起" class="option-btn pc-only" onclick="optionbar(0)"></div>
+      <div id="open-side" class="option-btn" onclick="openside(1)" title="打开导航栏"></div>
+      <label id="toscreen" for="uploadfile" title="文件投屏" class="option-btn"></label>
+      <div id="reload" onclick="reloadPage()" title="刷新" class="option-btn"></div>
     </div>
     </div>
-    <div id="pass-bar" class="login-box">
-      <input id="password" contenteditable="true"class="login-input" placeholder="password" type="password"></input>
-      <div id="send-pass" title="连接" class="login-btn" onclick="sendpass()"></div>
-    </div>
-    <div id="backlogin" onclick="showlogin(0)"></div>
-      <div id="hostlist-bar">
-        </div>
-        <div id="host-bar" class="login-box">
-          <input type="text" id="ip-input" class="login-input" placeholder="输入 IP 地址">
-          <div onclick="addhost()" class="login-btn" id="addhost"></div>
-          </div>
-          <div id="host-box">
-            <div id="ipList"></div>
-            </div>
-    <div class="phone_background">
-        <div class="fixed"></div>
-        <div class="next" ></div>
-    </div>
-    
-    <div id="cover-bar"></div>
-    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
-    <div id="top-bar">
+    <div id="cover-bar"  class="main"></div>
+    <div class="backbtn main" onclick="goBack()" title="返回首页"></div>
+    <div id="top-bar" class="main">
     <div id="media-bar">
         <div id="title-space">
         <span id="media-title">暂无播放</span>
@@ -61,10 +40,8 @@
     </div> 
     <div id="tool-bar">
         <div id="btn-bar">
-        <label id="toscreen" for="uploadfile" title="文件投屏"></label>
         <input type="file" id="uploadfile" name="pic" onchange="toscreen()" multiple="multiple" style="display: none;"/>
     
-        <div id="reload" onclick="reloadPage()" title="刷新"></div>
     </div>
         <div class="slider-container" id="volum-tool">
             <div id="mute-button" title="音量"></div>
@@ -87,7 +64,36 @@
     </div>
     </div>
     <div id="top-btn" onclick="totop()"></div>
-    <div id="allwindow"></div>
+    <div id="allwindow" class="main"></div>
+    <!-- 登陆页面 -->
+<div id="login-bar"></div>
+<div id="login-page">
+  <div id="ip-status" title="已连接"></div>
+  <div id="log-tool">
+    <div id="reconnect" title="切换ip" onclick="switchip()"></div>
+    <div id="logout" onclick="logout()" title="退出登陆"></div>
+    <div id="clear-btn" onclick="clearData()"></div>
+  </div>
+</div>
+<div id="pass-bar" class="login-box">
+  <input id="password" contenteditable="true" class="login-input" placeholder="password" type="password"></input>
+  <div id="send-pass" title="连接" class="login-btn" onclick="sendpass()"></div>
+</div>
+<div id="backlogin" onclick="showlogin(0)"></div>
+<div id="hostlist-bar"></div>
+<div id="host-bar" class="login-box">
+  <input type="text" id="ip-input" class="login-input" placeholder="输入 IP 地址">
+  <div onclick="addhost()" class="login-btn" id="addhost"></div>
+</div>
+<div id="host-box">
+  <div id="ipList"></div>
+</div>
+<div class="phone_background">
+  <div class="fixed"></div>
+  <div class="next"></div>
+</div>
+<!-- js -->
+    <script src="../js/sidepage.js"></script>
     <script src="../js/password.js"></script>
     <script src="../js/theme.js"></script>
     <script src="../js/lze.js"></script>

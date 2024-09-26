@@ -14,7 +14,7 @@ switch(status){
     allmove(status);
     optionstatus=0;
     openbtn.style.display='block';
-    optionbar.style.left='-60px';
+    optionbar.style.left='';
     setTimeout(() => {
       optionbar.style.display='none';
   }, 1000);
@@ -25,7 +25,7 @@ switch(status){
     optionbar.style.display='';
     setTimeout(() => {
       openbtn.style.display='none';
-      optionbar.style.left='';
+      optionbar.style.left='0';
   }, 10);
     break;
 }
@@ -79,7 +79,10 @@ window.addEventListener('scroll', handleScroll);
   function comin(){
     // 初始加载根文件夹内容
   loadFolder();
-      document.getElementById('fileListContainer').style.right = `0`;
+  document.querySelector('.backbtn').style.left='5%';
+  document.getElementById('fileListContainer').style.opacity='1';
+  document.getElementById('option-bar').style.left='0';
+  document.getElementById('option-bar').style.opacity='1';
       document.getElementById('top-bar').style.top = `77px`;
       loginstatus();
     };
@@ -87,8 +90,11 @@ window.addEventListener('scroll', handleScroll);
   function goBack() {
     window.removeEventListener('scroll',handleScroll);
     document.getElementById('cover-bar').style.top = `-80px`;
-    document.querySelector('.backbtn').style.left = '-30%';
-    document.getElementById('fileListContainer').style.right = `-100%`;
+    document.querySelector('.backbtn').style.left = '';
+    document.querySelector('.backbtn').style.opacity = '0';
+    document.getElementById('fileListContainer').style.opacity = ``;
+    document.getElementById('option-bar').style.left='';
+  document.getElementById('option-bar').style.opacity='0';
       document.getElementById('top-bar').style.top = `-60px`;
       document.getElementById('top-btn').style.bottom = `-5%`;
       document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
@@ -246,7 +252,7 @@ window.addEventListener('scroll', handleScroll);
               return; 
           }
             let filepath;
-            nowpath = currentPath.innerText;
+            nowpath = fullPath;
             let rootpath=`${protocol}//${ip}/file/Documents/upload/`;
             if (nowpath==="/"){
               filepath=rootpath + file;
@@ -281,12 +287,10 @@ window.addEventListener('scroll', handleScroll);
         const upButton = document.getElementById('upButton');
         if (data.currentFolder && data.currentFolder !== '') {
           upButton.style.display = 'block';
-          upButton.style.opacity = '1';
           upButton.dataset.parentFolder = data.parentFolder;
           upButton.style.pointerEvents = 'auto';
         } else {
           upButton.style.pointerEvents = 'none';
-          upButton.style.opacity = '0.5';
         }
       });
 }
@@ -327,7 +331,6 @@ function selfile() {
 
   function uploadChunk(fileIndex) {
       if (fileIndex >= totalFiles) {
-          notify("所有文件上传成功");
           loading(0);
           return;
       }
@@ -451,12 +454,15 @@ const  dellist = JSON.stringify(selectedarray);
   })
   .then(response => response.json())
   .then(data => {
+    loadFolder(nowpath);
     loadFolder(removeslash(nowpath));
     notify("已删除");
-    selectedarray.length=0;
+    pastebtn.style.display='none';
+    copyarray.length=0;
+    console.log(data);
   })
   .catch((error) => {
-    notify('错误:'+error);
+    console.error('错误:', error);
   });
 }
 }
@@ -516,7 +522,6 @@ switch (pastestatus){
   });}
   break;
   case 0:{
-    console.log(copylist);
     fetch(`${protocol}//${ip}/code/Documents/move.php`, {
       method: 'POST',
       headers: {
@@ -527,7 +532,8 @@ switch (pastestatus){
     })
     .then(response => response.json())
     .then(data => {
-      loadFolder(nowpath,1);
+      loadFolder(nowpath);
+      loadFolder(removeslash(nowpath));
       notify("已移动");
       pastebtn.style.display='none';
       copyarray.length=0;

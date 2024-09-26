@@ -10,6 +10,49 @@ let brightnessValue;
     const allwindow =document.getElementById('allwindow');
     const topbar =document.getElementById('top-bar');
     const btnbar =document.getElementById('btn-bar');
+    //  操作导航栏
+ function optionbar(status){
+    const optionbar=document.getElementById('option-bar');
+    const openbtn=document.getElementById('openbar');
+  switch(status){
+    case 0:
+      allmove(status);
+      optionstatus=0;
+      openbtn.style.display='block';
+      optionbar.style.left='';
+      setTimeout(() => {
+        optionbar.style.display='none';
+    }, 1000);
+      break;
+    case 1:
+    allmove(status);
+      optionstatus=1;
+      optionbar.style.display='';
+      setTimeout(() => {
+        openbtn.style.display='none';
+        optionbar.style.left='0';
+    }, 10);
+      break;
+  }
+   }
+  //  整体页面的位置
+  function allmove(status){
+    const elements = document.querySelectorAll('.main');
+    switch(status){
+      case 1:
+        elements.forEach(function(element, index) {
+            if (element) {
+                element.style.marginLeft = '';
+            } 
+        });
+        break;
+      case 0:
+  elements.forEach(function(element, index) {
+          element.style.marginLeft = '0';
+  });
+        break;
+    }
+  }
 function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -22,7 +65,7 @@ function handleScroll() {
           topbar.style.flexDirection='row';
           mediabar.style.backgroundColor='transparent';
           mediabar.style.margin='0';
-          mediabar.style.top='-30px';
+          mediabar.style.top='-5px';
           mediabar.style.boxShadow='none';
           mediabar.style.backdropFilter = `none`;
           mediabar.style.webkitBackdropFilter = `none`;
@@ -65,6 +108,8 @@ function comin(){
     getvalue();
     topbar.style.top="80px";
     allwindow.style.right='0';
+    document.getElementById('option-bar').style.left='0';
+    document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';
       loginstatus();
     };
@@ -74,6 +119,9 @@ function goBack() {
     window.removeEventListener('scroll',handleScroll);
     document.getElementById('cover-bar').style.top = `-80px`;
     document.querySelector('.backbtn').style.left = '';
+    document.querySelector('.backbtn').style.opacity = '0';
+    document.getElementById('option-bar').style.left='';
+  document.getElementById('option-bar').style.opacity='0';
     document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
     document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
       allwindow.style.opacity='';
@@ -103,7 +151,6 @@ function goBack() {
                 play.style.display = 'none';
                 pause.style.display = 'block';
                 mediatitle();
-                console.log("play");
             } else if (response === 'Paused') {
                 play.style.display = 'block';
                 pause.style.display = 'none';
@@ -130,7 +177,6 @@ function mediatitle() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // 处理响应
             const response = xhr.responseText; // 去除多余的空白字符
-            console.log(response);
             title.innerText=response;
             title.style.animation='media-title 7s linear infinite';
         }pause

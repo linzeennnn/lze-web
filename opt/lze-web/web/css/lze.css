@@ -11,16 +11,22 @@
 body::-webkit-scrollbar {
     display: none; /* 隐藏滚动条 */
     }
-.backbtn{
+    .backbtn{
+        background-position: center;
+        background-repeat: no-repeat;
         cursor: pointer;
         position: fixed;
-        text-align: left;
-        width: 140px ;
-        height: 60px;
-        left: -30%;
-        font-size: 200%;
-        z-index: 10;
-        transition: left 1s ease , width 1s ease;
+        left: -50px;
+        top: 20px;
+        width: 40px;
+        height: 40px;
+        opacity: 0.5;
+        background-image: url(../../icon/left_pink.svg);
+        z-index: 11;
+        transition: all 1s ease;
+        }
+        .backbtn:hover{
+        opacity: 1;
         }
 #name{
             width: 100%;
@@ -84,32 +90,6 @@ body::-webkit-scrollbar {
               transition: bottom 0.7s ease;
               box-shadow: var(--outshadow)
               }
-.option-btn{
-    top: 80px;
-    margin-top: 30px;
-    position: relative;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 10px;
-}
 @media only screen and (max-width: 600px) {
-    .option-btn{
-        top: auto;
-        margin-top: 10px;
-        position: relative;
-        cursor: pointer;
-        width: 24px;
-        height: 24px;
-        margin: 15px;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-    #open-side{
-        top: auto;
-        margin-left: 0;
-        left: 5px;
-    }
+   
 }

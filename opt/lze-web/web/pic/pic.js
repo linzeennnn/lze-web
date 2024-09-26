@@ -3,6 +3,49 @@ let lightcolor
 darkcolor='#1c1f28';
 lightcolor='#6b7596';
 let uploadpath;
+//  操作导航栏
+function optionbar(status){
+    const optionbar=document.getElementById('option-bar');
+    const openbtn=document.getElementById('openbar');
+  switch(status){
+    case 0:
+      allmove(status);
+      optionstatus=0;
+      openbtn.style.display='block';
+      optionbar.style.left='';
+      setTimeout(() => {
+        optionbar.style.display='none';
+    }, 1000);
+      break;
+    case 1:
+    allmove(status);
+      optionstatus=1;
+      optionbar.style.display='';
+      setTimeout(() => {
+        openbtn.style.display='none';
+        optionbar.style.left='0';
+    }, 10);
+      break;
+  }
+   }
+   //  整体页面的位置
+function allmove(status){
+    const elements = document.querySelectorAll('.main');
+    switch(status){
+      case 1:
+        elements.forEach(function(element, index) {
+            if (element) {
+                element.style.marginLeft = '';
+            } 
+        });
+        break;
+      case 0:
+  elements.forEach(function(element, index) {
+          element.style.marginLeft = '0';
+  });
+        break;
+    }
+  }
 function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         if (scrollTop > 100) {
@@ -12,7 +55,6 @@ function handleScroll() {
           document.querySelector('.top-button').style.top = '5px';
           document.querySelector('.top-button').style.backdropFilter = `none`;
           document.querySelector('.top-button').style.webkitBackdropFilter = `none`;
-          document.querySelector('.top-button').style.marginLeft = '50px';
           document.getElementById('cover-bar').style.top = '0';
           document.querySelector('.top-button').style.backgroundColor = 'transparent';
           
@@ -23,7 +65,6 @@ function handleScroll() {
           document.querySelector('.top-button').style.top = '80px'
           document.querySelector('.backbtn').style.width = '';
           document.querySelector('.top-button').style.backgroundColor = '';
-          document.querySelector('.top-button').style.marginLeft = '';
           document.querySelector('.top-button').style.backdropFilter = ``;
           document.querySelector('.top-button').style.twebkitBackdropFilter = ``;
           document.getElementById('cover-bar').style.top = '';
@@ -33,8 +74,10 @@ function handleScroll() {
 window.addEventListener('scroll', handleScroll);
 
         function comin(){
+            document.getElementById('option-bar').style.left='0';
+            document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';
-        document.querySelector('.gallery-container').style.right = '0';
+        document.querySelector('.gallery-container').style.opacity = '1';
        document.getElementById('button1').style.width = '32px';
        document.getElementById('button2').style.width = '32px';
        document.getElementById('button3').style.width = '32px';
@@ -50,10 +93,12 @@ window.addEventListener('scroll', handleScroll);
         window.removeEventListener('scroll',handleScroll);
         document.getElementById('cover-bar').style.top = `-80px`;
             document.querySelector('.backbtn').style.left = '-80%';
-        document.querySelector('.gallery-container').style.right = '-100%';
+            document.querySelector('.gallery-container').style.opacity = '';
        document.getElementById('button1').style.width = '0px';
        document.getElementById('button2').style.width = '0px';
        document.getElementById('button3').style.width = '0px';
+       document.getElementById('option-bar').style.left='';
+     document.getElementById('option-bar').style.opacity='0';
        document.getElementById('selectButton').style.width = '0px';
        document.getElementById('buttonA').style.bottom = '-1000px';
        document.querySelector('.top-button').style.top = '-80px';

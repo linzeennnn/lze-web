@@ -14,13 +14,90 @@ body{
     max-width: 100% ;
     overflow-x: hidden !important;
 }
+.backbtn{
+    background-image: url(../../icon/left_yellow.svg);
+}
 .ui-tooltip {
     background: #857e638f; 
     color: #ffd9a5; 
 }
-.backbtn:hover #name{
-background-image: url(../../icon/name_white.svg);
-}
+#sidepage{
+    background-color: #66604bb7;
+  }
+  .side-btn:hover{
+    background-color: #8879477c;
+  }
+#option-bar{
+    opacity: 0;
+    padding-top: 5%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* justify-content: center; */
+    left: -60px;
+    position: fixed;
+    height: 100%;
+    width: 60px;
+    background-color: #7c7355a6;
+    z-index: 11;
+    box-shadow: var(--outshadow);
+    transition: left 1s ease , opacity 1s ease;
+    
+  }
+  .main{
+    margin-left: 60px;
+  }
+  #openbar{
+    border-radius: 50%;
+    display: none;
+    margin: 0;
+    position: fixed;
+    top: 500px;
+    left: 5px;
+    background-image: url(../../icon/goright_yellow.svg);
+    z-index: 9;
+  }
+  #openbar:hover{
+    background-color: #96848c4d;
+  }#open-side{
+    opacity: 0.5;
+    position: absolute;
+    top: 50px;
+    background-image: url(../../icon/option_white.svg);
+  }
+  #open-side:hover{
+    opacity: 1;
+  }
+  .option-btn{
+    opacity: 0.5;
+      top: 80px;
+      margin-top: 30px;
+      position: relative;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 10px;
+  }
+  .option-btn:hover{
+    opacity: 1;
+  }
+  #closebar{
+    opacity: 0.5;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    position: absolute;
+    top: 500px;
+    right: 0;
+    background-image: url(../../icon/goleft_yellow.svg);
+  }
+  #closebar:hover{
+    opacity: 1;
+  }
 #top-bar{
     top: -300px;
     width: 80%;
@@ -38,29 +115,11 @@ background-image: url(../../icon/name_white.svg);
     flex-direction: row;
 }
 #toscreen{
-    cursor: pointer;
     background-image: url(../../icon/toscreen_yellow.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 32px;
-    height: 32px;
-    margin: 10px;
    
 }
-#toscreen:hover{
-    background-image: url(../../icon/toscreen_white.svg);
-}
 #reload{
-    cursor: pointer;
     background-image: url(../../icon/load_yellow.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 32px;
-    height: 32px;
-    margin: 10px;
-}
-#reload:hover{
-    background-image: url(../../icon/load_white.svg);
 }
 #media-bar{
     position: relative;
@@ -136,6 +195,7 @@ align-items: center;
 justify-content: center;
 }
 .media-btn{
+    opacity: 0.5;
 cursor: pointer;
 background-position: center;
 background-repeat: no-repeat;
@@ -143,29 +203,20 @@ width: 32px;
 height: 32px;
 margin: 10px;
 }
+.media-btn:hover{
+opacity: 1;
+}
 #slow{
 background-image: url(../../icon/slow_yellow.svg);
-}
-#slow:hover{
-background-image: url(../../icon/slow_white.svg);
 }
 #play{
 background-image: url(../../icon/play_yellow.svg);
 }
-#play:hover{
-background-image: url(../../icon/play_white.svg);
-}
 #pause{
 background-image: url(../../icon/pause_yellow.svg);
 }
-#pause:hover{
-background-image: url(../../icon/pause_white.svg);
-}
 #speed{
 background-image: url(../../icon/speed_yellow.svg);
-}
-#speed:hover{
-background-image: url(../../icon/speed_white.svg);
 }
 #allwindow{
 align-items: center;
@@ -207,6 +258,7 @@ padding-bottom: 10px;
     color: #ffd9a5;
 }
 .close-win {
+    opacity: 0.5;
     display: flex;
     position: absolute;
     top: 5px;
@@ -223,12 +275,12 @@ padding-bottom: 10px;
     cursor: pointer;
 }
 .close-win:hover{
-    background-image: url(../../icon/no_red.svg);
+   opacity: 1;
 }
    /* toolkit */
    #tool-bar{
     margin: 20px;
-    height: 150px;
+    height: 100px;
     position: relative;
     display: flex;
     width: 50%;
@@ -302,6 +354,7 @@ padding-bottom: 10px;
 -5px 5px 20px rgba(0, 0, 0, 0.028); 
 }
 #min-brightness-button{
+    opacity: 0.5;
     cursor: pointer;
     width: 24px;
     height: 24px;
@@ -311,9 +364,10 @@ padding-bottom: 10px;
     background-image: url(../../icon/light_yellow.svg);
 }
 #min-brightness-button:hover{
-    background-image: url(../../icon/light_white.svg);
+    opacity: 1;
 }
 #mute-button{
+    opacity: 0.5;
     cursor: pointer;
     width: 24px;margin-right: 10px;
     height: 24px;
@@ -323,7 +377,7 @@ padding-bottom: 10px;
     background-image: url(../../icon/volum_yellow.svg);
 }
 #mute-button:hover{
-    background-image: url(../../icon/volum_white.svg);
+    opacity: 1;
 }
 #top-btn{
     background-image: url(../../icon/toup_yellow.svg);
@@ -334,8 +388,42 @@ padding-bottom: 10px;
     background-color: #8d82558f;
 }
     @media only screen and (max-width: 600px) {
-        
-
+        .main{
+            margin-left: 0;
+          }
+        #option-bar{
+            left: 0;
+            padding-top: 0;
+            align-items: center;
+            position: fixed;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            height: 60px;
+            width: 100%;
+            bottom: 0;
+            border-top-left-radius: 1em;
+            border-top-right-radius: 1em;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+        .option-btn{
+          top: auto;
+          margin-top: 10px;
+          position: relative;
+          cursor: pointer;
+          width: 24px;
+          height: 24px;
+          margin: 15px;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+        #open-side{
+          top: auto;
+          margin-left: 0;
+          left: 5px;
+        }
     .phone_background {
     position:relative;
     overflow:hidden;

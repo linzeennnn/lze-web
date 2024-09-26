@@ -86,8 +86,6 @@ async function getnote() {
             const noteFiles = await getnote();
             for (const file of Object.values(noteFiles)) {
                 const title = file.replace(/\.[^/.]+$/, '');
-                const filePath = `http://${ip}/file/Note/${file}`;
-                const text = await readfile(filePath);
                 const note = document.createElement('div');
                 note.className = 'note';
                 const titleSpan = document.createElement('span');
@@ -98,7 +96,6 @@ async function getnote() {
                 const textSpan = document.createElement('span');
                 textSpan.className = 'text';
                 textSpan.style.display='none';
-                textSpan.innerHTML=hljs.highlightAuto(text).value.replace(/\n/g, '<br>');
                 note.appendChild(textSpan);
                 const edit = document.createElement('div');
                 edit.className = 'edit';
@@ -114,13 +111,17 @@ async function getnote() {
                 const copy = document.createElement('div');
                 copy.className = 'copy';
                 copy.title='复制';
-                copy.addEventListener('click',() =>copytext(note,text));
+                copy.style.display='none'
                 note.appendChild(copy);
                 const expend = document.createElement('div');
                 expend.className = 'expend';
                 expend.title='展开';
-                expend.addEventListener('click',() => notedisplay(note,1));
+                expend.addEventListener('click',() => loadtext(note,file));
                 note.appendChild(expend);
+                const load =document.createElement('div');
+                load.className = 'loading';
+                note.appendChild(load);
+                load.style.display='none';
                 const close = document.createElement('div');
                 close.className = 'close';
                 close.title='合上';
@@ -157,17 +158,20 @@ async function getnote() {
         const expend =note.querySelector('.expend');
         const close =note.querySelector('.close');
         const edit =note.querySelector('.edit');
+        const copy =note.querySelector('.copy');
         if(action==1){
             edit.style.display = 'block';
             text.style.display = 'block';
             expend.style.display='none';
             close.style.display='block';
+            copy.style.display='block'
         }
         else if(action==0){
             edit.style.display = 'none';
             text.style.display = 'none';
             expend.style.display='block';
             close.style.display='none';
+            copy.style.display='none'
         }
     }
     // copy
@@ -236,8 +240,8 @@ async function getnote() {
             title.innerText="new note";
         }
         const formData = new FormData();
-        formData.append('newTitle', title.innerText);
-        formData.append('newContent', text.innerText);
+        formData.append('newTitle', title.value);
+        formData.append('newContent', text.value);
         try {
             const response = await fetch(`http://${ip}/code/Note/${file}`, {
                 method: 'POST',
@@ -254,8 +258,8 @@ async function getnote() {
             console.log(filename,uploadpath);
                 reloadnote();
                 desktopnot('恩的便签','新便签:',`${filename}`,uploadpath);
-                title.innerText='';
-                text.innerText='';
+                title.value='';
+                text.value='';
                 notify("保存成功");
             }
         } catch (error) {
@@ -296,6 +300,36 @@ async function getnote() {
             editstatus=0;
         }
     }
+//load text from server 
+async function loadtext(note, file) {
+
+    const text = note.querySelector('.text');
+    const expend = note.querySelector('.expend');
+    const loading = note.querySelector('.loading');
+    const copy = note.querySelector('.copy');
+    // 判断text是否为空
+    if (text.innerHTML.trim() !== '') {
+        notedisplay(note, 1); // 如果非空，显示内容
+    } else {
+        expend.style.display = 'none'; // 隐藏展开按钮
+        loading.style.display = 'block'; // 显示loading
+
+        const title = note.querySelector('.title').innerText; // 获取标题
+        const filePath = `http://${ip}/file/Note/${title}.txt`; // 构造文件路径
+
+        try {
+            const fileContent = await readfile(filePath); // 读取文件内容
+            text.innerHTML = hljs.highlightAuto(fileContent).value.replace(/\n/g, '<br>');
+            notedisplay(note, 1); // 显示内容
+            copy.addEventListener('click', () => copytext(note, fileContent));
+        } catch (error) {
+            console.error('Error loading text:', error);
+            // 处理错误情况，比如显示错误信息
+        } finally {
+            loading.style.display = 'none'; // 隐藏loading
+        }
+    }
+}
 // reload note
 function reloadnote(){
     document.getElementById('allnote').innerHTML = '';

@@ -19,6 +19,13 @@
 
 </head>
 <body>
+  <div id="openbar"  title="打开侧栏" class="option-btn pc-only" onclick="optionbar(1)"></div>
+  <div id="option-bar">
+    <div id="closebar" title="收起" class="option-btn pc-only" onclick="optionbar(0)"></div>
+    <div id="open-side" class="option-btn" onclick="openside(1)" title="打开导航栏"></div>
+    <div id="load" title="刷新" class="option-btn" onclick="reloadPage()"></div >
+  </div>
+  </div>
   <div id="login-bar">
   </div>
   <div id="login" title="登陆" onclick="showlogin(3)"></div>
@@ -56,7 +63,6 @@
         <div id="add" title="添加便签" onclick="addnote(titbar,wordbar,'addnote.php')"></div >
         <div id="tit-bar" contenteditable="true" title="标题"></div>
         <div id="word-bar" contenteditable="true" title="正文"></div>
-        <div id="load" title="刷新" onclick="reloadPage()"></div >
     </div>
     <div id="allnote"></div>
     <div id="top-btn" onclick="totop()" title="回到顶部"></div>
@@ -66,7 +72,6 @@
     <script src="../js/lze.js"></script>
     <script src="highlight.min.js"></script>
     <script src="not.js"></script>
-    <script src="hightlight.js"></script>
 </body>
 </html>
 
