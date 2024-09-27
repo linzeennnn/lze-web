@@ -17,9 +17,87 @@ body{
     flex-direction: column;
    transition: background-image 1s ease;
 }
-.backbtn:hover #name{
-background-image: url(../../icon/name_white.svg);
+.backbtn{
+    background-image: url(../../icon/left_green.svg);
 }
+#sidepage{
+    background-color: #497460b7;
+  }
+  .side-btn:hover{
+    background-color: #2657427c;
+  }
+#option-bar{
+    opacity: 0;
+    padding-top: 5%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* justify-content: center; */
+    left: -60px;
+    position: fixed;
+    height: 100%;
+    width: 60px;
+    background-color: #55796ba6;
+    z-index: 11;
+    box-shadow: var(--outshadow);
+    transition: left 1s ease , opacity 1s ease;
+    
+  }
+  .option-btn{
+    opacity: 0.5;
+      top: 80px;
+      margin-top: 30px;
+      position: relative;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 10px;
+  }
+  .option-btn:hover{
+    opacity: 1;
+  }
+  #open-side{
+    opacity: 0.5;
+    position: absolute;
+    top: 50px;
+    background-image: url(../../icon/option_white.svg);
+  }
+  #open-side:hover{
+    opacity: 1;
+  }
+  .main{
+    margin-left: 60px;
+  }
+  #closebar{
+    opacity: 0.5;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    position: absolute;
+    top: 500px;
+    right: 0;
+    background-image: url(../../icon/goleft_pink.svg);
+  }
+  #closebar:hover{
+    opacity: 1;
+  }
+  #openbar{
+    border-radius: 50%;
+    display: none;
+    margin: 0;
+    position: fixed;
+    top: 500px;
+    left: 5px;
+    background-image: url(../../icon/goright_pink.svg);
+    z-index: 9;
+  }
+  #openbar:hover{
+    background-color: #96848c4d;
+  }
 #top-bar{
     padding: 10px;
     border-radius: 1em;
@@ -37,15 +115,7 @@ background-image: url(../../icon/name_white.svg);
     box-shadow: var(--outshadow);  
 }
 #add{
-    position: relative;
-    top: 5px;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
     background-image: url(../../icon/add_green.svg);
-    background-position: center;
-    background-repeat: no-repeat;
 }
 #add:hover{
     background-image: url(../../icon/add_white.svg);
@@ -78,18 +148,7 @@ background-image: url(../../icon/name_white.svg);
     color: #5a998a;
 }
 #load{
-    position: relative;
-    top: 5px;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
     background-image: url(../../icon/load_green.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-}
-#load:hover{
-    background-image: url(../../icon/load_white.svg);
 }
 #word-bar{
     display: inline-block;
@@ -98,8 +157,8 @@ background-image: url(../../icon/name_white.svg);
     padding-top: 10px;
     right: 0;
     border-radius: 1em;
-    max-width: 70%;
-    width: 70%;
+    max-width: 80%;
+    width: 80%;
     color: #bcfdef;
     margin-right: 10px;
     min-height: 30px;
@@ -121,7 +180,7 @@ position: relative;
 width: 100%;
 display: flex;
 transition: all 1s ease;
-top: 220px;
+top: 200px;
 align-items: center;
 flex-direction: column;
 z-index: 2;

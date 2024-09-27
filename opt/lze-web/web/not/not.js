@@ -6,6 +6,49 @@ const titbar =document.getElementById('tit-bar');
 const wordbar=document.getElementById('word-bar');
 let oldtitle;
 let editstatus=0;
+//  操作导航栏
+function optionbar(status){
+    const optionbar=document.getElementById('option-bar');
+    const openbtn=document.getElementById('openbar');
+  switch(status){
+    case 0:
+      allmove(status);
+      optionstatus=0;
+      openbtn.style.display='block';
+      optionbar.style.left='';
+      setTimeout(() => {
+        optionbar.style.display='none';
+    }, 1000);
+      break;
+    case 1:
+    allmove(status);
+      optionstatus=1;
+      optionbar.style.display='';
+      setTimeout(() => {
+        openbtn.style.display='none';
+        optionbar.style.left='0';
+    }, 10);
+      break;
+  }
+   }
+  //  整体页面的位置
+  function allmove(status){
+    const elements = document.querySelectorAll('.main');
+    switch(status){
+      case 1:
+        elements.forEach(function(element, index) {
+            if (element) {
+                element.style.marginLeft = '';
+            } 
+        });
+        break;
+      case 0:
+  elements.forEach(function(element, index) {
+          element.style.marginLeft = '0';
+  });
+        break;
+    }
+  }
 // scroll
     function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -43,6 +86,8 @@ window.addEventListener('scroll', handleScroll);
         creatnote();
         document.getElementById('allnote').style.right='0';
         document.getElementById('top-bar').style.top ='100px';
+        document.getElementById('option-bar').style.left='0';
+        document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';
       loginstatus();
     };
@@ -240,8 +285,8 @@ async function getnote() {
             title.innerText="new note";
         }
         const formData = new FormData();
-        formData.append('newTitle', title.value);
-        formData.append('newContent', text.value);
+        formData.append('newTitle', title.innerText);
+        formData.append('newContent', text.innerText);
         try {
             const response = await fetch(`http://${ip}/code/Note/${file}`, {
                 method: 'POST',

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../css/lze.css">
     <link rel="stylesheet" href="not.css">
     <link rel="stylesheet" href="../css/password.css">
+    <link rel="stylesheet" href="../css/sidepage.css">
     
 
 
@@ -23,6 +24,7 @@
   <div id="option-bar">
     <div id="closebar" title="收起" class="option-btn pc-only" onclick="optionbar(0)"></div>
     <div id="open-side" class="option-btn" onclick="openside(1)" title="打开导航栏"></div>
+    <div id="add" title="添加便签" class="option-btn" onclick="addnote(titbar,wordbar,'addnote.php')"></div >
     <div id="load" title="刷新" class="option-btn" onclick="reloadPage()"></div >
   </div>
   </div>
@@ -57,16 +59,16 @@
     </div>
     <div class="next" ></div>
     <div id="cover-bar"></div>
-    <div class="backbtn" onclick="goBack()" title="返回首页"><div id="name"></div></div>
+    <div class="backbtn" onclick="goBack()" class="main" title="返回首页"></div>
   <div id="backlogin" onclick="showlogin(0)"></div>
-    <div id="top-bar">
-        <div id="add" title="添加便签" onclick="addnote(titbar,wordbar,'addnote.php')"></div >
+    <div id="top-bar" class="main">
         <div id="tit-bar" contenteditable="true" title="标题"></div>
         <div id="word-bar" contenteditable="true" title="正文"></div>
     </div>
-    <div id="allnote"></div>
+    <div id="allnote" class="main"></div>
     <div id="top-btn" onclick="totop()" title="回到顶部"></div>
 
+    <script src="../js/sidepage.js"></script>
     <script src="../js/password.js"></script>
     <script src="../js/theme.js"></script>
     <script src="../js/lze.js"></script>
