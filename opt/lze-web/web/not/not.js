@@ -55,12 +55,9 @@ function optionbar(status){
         if (scrollTop > 100) {
             document.getElementById('top-btn').style.bottom = '15%';
           document.getElementById('top-bar').style.top = '10px';
-          document.getElementById('top-bar').style.marginLeft = '20%';
-          document.getElementById('top-bar').style.width = '65%';
           document.getElementById('top-bar').style.backgroundColor = 'transparent';
           document.getElementById('top-bar').style.boxShadow = 'none';
           document.querySelector('.backbtn').style.left = '1%';
-          document.querySelector('.backbtn').style.width = '15%';
           document.getElementById('cover-bar').style.top = '0';
           document.getElementById('top-bar').style.backdropFilter = `none`;
           document.getElementById('top-bar').style.webkitBackdropFilter = `none`;
@@ -68,12 +65,9 @@ function optionbar(status){
         } else {
             document.getElementById('top-btn').style.bottom = '';
           document.getElementById('top-bar').style.top= '100px';
-          document.getElementById('top-bar').style.marginLeft = '';
-          document.getElementById('top-bar').style.width = '80%';
           document.getElementById('top-bar').style.backgroundColor = '';
           document.getElementById('top-bar').style.boxShadow = '';
           document.querySelector('.backbtn').style.left = '5%';
-          document.querySelector('.backbtn').style.width = '';
           document.getElementById('cover-bar').style.top = '';
           document.getElementById('top-bar').style.backdropFilter = ``;
           document.getElementById('top-bar').style.webkitBackdropFilter = ``;
@@ -97,7 +91,10 @@ window.addEventListener('scroll', handleScroll);
         document.getElementById('allnote').style.right='';
         document.getElementById('top-bar').style.top ='';
         document.getElementById('cover-bar').style.top = `-80px`;
-      document.querySelector('.backbtn').style.left = '';
+        document.getElementById('option-bar').style.left='';
+      document.getElementById('option-bar').style.opacity='0';
+        document.querySelector('.backbtn').style.left = '';
+        document.querySelector('.backbtn').style.opacity = '0';
       document.getElementById('top-btn').style.bottom = `-5%`;
       document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
       document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
@@ -282,7 +279,7 @@ async function getnote() {
             return;
         }
         else if (title.innerText == ''){
-            title.innerText="new note";
+            title.innerText="new_note";
         }
         const formData = new FormData();
         formData.append('newTitle', title.innerText);
@@ -303,8 +300,8 @@ async function getnote() {
             console.log(filename,uploadpath);
                 reloadnote();
                 desktopnot('恩的便签','新便签:',`${filename}`,uploadpath);
-                title.value='';
-                text.value='';
+                title.innerText='';
+                text.innerText='';
                 notify("保存成功");
             }
         } catch (error) {
@@ -380,3 +377,68 @@ function reloadnote(){
     document.getElementById('allnote').innerHTML = '';
                     creatnote();
 }
+// upload file
+function selfile() {
+    var files = document.getElementsByTagName('input')[0].files;
+    if (files.length === 0) {
+        notify("请先选择文件");
+        return;
+    }
+
+    document.getElementById('word-bar').style.display = 'none';
+    document.getElementById('progress').style.display = 'block';
+    var fd = new FormData();
+
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+
+        // 检查文件大小是否超过2MB
+        if (file.size > 2 * 1024 * 1024) {
+            notify("文件不能超过2MB");
+            return;
+        }
+
+        // 检查文件是否为纯文本
+        if (!file.type.match(/text.*/) && file.name.slice(-4) !== '.txt') {
+            notify("不支持类型");
+            return;
+        }
+
+        // 检查后缀名
+        if (file.name.slice(-4) !== '.txt') {
+            var newFileName = file.name + '.txt';
+            var newFile = new Blob([file], { type: file.type });
+            newFile = new File([newFile], newFileName, { type: file.type });
+            fd.append('pic[]', newFile);
+        } else {
+            fd.append('pic[]', file);
+        }
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', `http://${ip}/code/Note/upload.php`, true);
+    xmltoken(xhr);
+    xhr.upload.onprogress = function(ev) {
+        if (ev.lengthComputable) {
+            var percent = 100 * ev.loaded / ev.total;
+            var percentElement = document.getElementById('percent');
+            document.getElementById('bar').style.width = percent + '%';
+            percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
+        }
+    };
+
+    xhr.onload = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            xmlnologin(xhr);
+            if (xhr.status != 401) {
+                notify("添加成功");
+                reloadnote();
+                document.getElementById('word-bar').style.display = 'block';
+                document.getElementById('progress').style.display = 'none';
+            }
+        }
+    };
+
+    xhr.send(fd);
+}
+

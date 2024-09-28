@@ -2,6 +2,49 @@ let darkcolor;
 let lightcolor
 darkcolor='#281c1c';
 lightcolor='#966969';
+//  操作导航栏
+function optionbar(status){
+    const optionbar=document.getElementById('option-bar');
+    const openbtn=document.getElementById('openbar');
+  switch(status){
+    case 0:
+      allmove(status);
+      optionstatus=0;
+      openbtn.style.display='block';
+      optionbar.style.left='';
+      setTimeout(() => {
+        optionbar.style.display='none';
+    }, 1000);
+      break;
+    case 1:
+    allmove(status);
+      optionstatus=1;
+      optionbar.style.display='';
+      setTimeout(() => {
+        openbtn.style.display='none';
+        optionbar.style.left='0';
+    }, 10);
+      break;
+  }
+   }
+  //  整体页面的位置
+  function allmove(status){
+    const elements = document.querySelectorAll('.main');
+    switch(status){
+      case 1:
+        elements.forEach(function(element, index) {
+            if (element) {
+                element.style.marginLeft = '';
+            } 
+        });
+        break;
+      case 0:
+  elements.forEach(function(element, index) {
+          element.style.marginLeft = '0';
+  });
+        break;
+    }
+  }
 function handleScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
         
@@ -38,25 +81,19 @@ window.addEventListener('scroll', handleScroll);
         if (scrollTop > 100) {
             document.getElementById('top-btn').style.bottom = '15%';
           document.getElementById('top-bar').style.top = '10px';
-          document.getElementById('top-bar').style.marginLeft = '20%';
-          document.getElementById('top-bar').style.width = '65%';
           document.getElementById('top-bar').style.backgroundColor = 'transparent';
           document.getElementById('top-bar').style.boxShadow = 'none';
           document.getElementById('top-bar').style.backdropFilter = `none`;
           document.getElementById('top-bar').style.webkitBackdropFilter = `none`;
           document.querySelector('.backbtn').style.left = '1%';
-          document.querySelector('.backbtn').style.width = '15%';
           document.getElementById('cover-bar').style.top = '0';
           
         } else {
             document.getElementById('top-btn').style.bottom = '';
           document.getElementById('top-bar').style.top= '100px';
-          document.getElementById('top-bar').style.marginLeft = '';
-          document.getElementById('top-bar').style.width = '80%';
           document.getElementById('top-bar').style.backgroundColor = '';
           document.getElementById('top-bar').style.boxShadow = '';
           document.querySelector('.backbtn').style.left = '5%';
-          document.querySelector('.backbtn').style.width = '';
           document.getElementById('cover-bar').style.top = '';
           document.getElementById('top-bar').style.backdropFilter = ``;
           document.getElementById('top-bar').style.webkitBackdropFilter = ``;
@@ -67,6 +104,8 @@ window.addEventListener('scroll', handleScroll);
      function comin(){
         showNotes();
         document.getElementById('top-bar').style.top ='100px';
+        document.getElementById('option-bar').style.left='0';
+        document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';
         document.getElementById(`notes`).style.right='0px';
         loginstatus();
@@ -85,7 +124,10 @@ function goBack() {
     document.getElementById('cover-bar').style.top = `-80px`;
     document.getElementById('top-bar').style.top ='';
         document.getElementById(`notes`).style.right='';
+        document.getElementById('option-bar').style.left='';
+      document.getElementById('option-bar').style.opacity='0';
       document.querySelector('.backbtn').style.left = '';
+      document.querySelector('.backbtn').style.opacity = '0';
       document.getElementById('top-btn').style.bottom = `-5%`;
       document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
       document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;

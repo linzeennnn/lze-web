@@ -21,7 +21,7 @@ body{
     background-image: url(../../icon/left_green.svg);
 }
 #sidepage{
-    background-color: #497460b7;
+    background-color: #436354b7;
   }
   .side-btn:hover{
     background-color: #2657427c;
@@ -80,10 +80,13 @@ body{
     position: absolute;
     top: 500px;
     right: 0;
-    background-image: url(../../icon/goleft_pink.svg);
+    background-image: url(../../icon/goleft_green.svg);
   }
   #closebar:hover{
     opacity: 1;
+  }
+  .upload{
+    background-image: url(../../icon/upload_green.svg);
   }
   #openbar{
     border-radius: 50%;
@@ -92,7 +95,7 @@ body{
     position: fixed;
     top: 500px;
     left: 5px;
-    background-image: url(../../icon/goright_pink.svg);
+    background-image: url(../../icon/goright_green.svg);
     z-index: 9;
   }
   #openbar:hover{
@@ -117,9 +120,7 @@ body{
 #add{
     background-image: url(../../icon/add_green.svg);
 }
-#add:hover{
-    background-image: url(../../icon/add_white.svg);
-}
+
 #tit-bar{
     border: none;
     padding: 5px;
@@ -213,25 +214,28 @@ z-index: 2;
     background-image: url(../../icon/edit_green.svg);
     left: 10px;
     bottom: 10px;
+    opacity: 0.5;
 }
 .edit:hover{
-    background-image: url(../../icon/edit_white.svg);
+    opacity: 1;
 }
 .save{
     left: 10px;
     bottom: 10px;
     background-image: url(../../icon/save_green.svg);
+    opacity: 0.5;
 }
 .save:hover{
-    background-image: url(../../icon/save_white.svg);
+    opacity: 1;
 }
 .expend{
     bottom: 10px;
     left: 50%;
     background-image: url(../../icon/down_green.svg);
+    opacity: 0.5;
 }
 .expend:hover{
-    background-image: url(../../icon/down_white.svg);
+    opacity: 1;
 }
 .loading {
     bottom: 10px;
@@ -257,26 +261,29 @@ z-index: 2;
     bottom: 10px;
     left: 50%;
     background-image: url(../../icon/up_green.svg);
+    opacity: 0.5;
 }
 .close:hover{
-    background-image: url(../../icon/up_white.svg);
+    opacity: 1;
 }
 .del{
     top: 10px;
     right: 10px;
     background-image: url(../../icon/no_green.svg);
+    opacity: 0.5;
 }
 .del:hover{
-    background-image: url(../../icon/no_white.svg);
+    opacity: 1;
 }
 .copy{
     background-image: url(../../icon/copy_green.svg);
     right: 10px;
     bottom: 10px;
     transition:background-image 1s ease ;
+    opacity: 0.5;
 }
 .copy:hover{
-    background-image: url(../../icon/copy_white.svg);
+    opacity: 1;
 }
 .title,.text{
     font-weight: bold;
@@ -313,6 +320,33 @@ z-index: 2;
 .title:focus{
     outline: none;
 }
+#progress{
+    overflow: hidden;
+    right: 0;
+    border-radius: 1em;
+    width: 80% ;
+    color: #78e7d5;
+    margin-right: 10px;
+    min-height: 30px;
+    font-weight: bold;
+    background-color: transparent;
+    box-shadow: var(--inshadow)
+}
+#bar{
+width:0%;
+height:100%;
+background-color: #2b8a6dbd;
+box-shadow: var(--inshadow)
+}
+#percent {
+color: rgb(70, 3, 47);
+font-size: 14px; 
+position: absolute;
+top: 50%; 
+left: 50%; 
+transform: translate(-50%, -50%); 
+white-space: nowrap; 
+}
 #notify{
     background-color: #65807ba4;
 }
@@ -324,7 +358,6 @@ z-index: 2;
     background-color: #65807ba4;
 }
 #top-btn:hover{
-    background-image: url(../../icon/toup_white.svg);
     background-color: #4c555394;
 }
     @media only screen and (max-width: 600px) {
@@ -364,9 +397,6 @@ z-index: 2;
     opacity: 0;
     transition: opacity 1s ease ; 
     z-index: 1;
-}
-.backbtn{
-  width: 25% ;
 }
 h2{
     left: 31%;

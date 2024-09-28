@@ -19,17 +19,87 @@
             background: #7e5d5e93; 
             color: #fda4a3; 
         }
-.backbtn:hover #name{
-  background-image: url(../../icon/name_white.svg);
-}
-        .expand-btn, .edit-btn, .delete-btn {
-            cursor: pointer;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4em;
-            margin-right: 8px;
-            background-image: url(../../icon/down_green.svg);
+        .backbtn{
+            background-image: url(../../icon/left_red.svg);
         }
+        #sidepage{
+            background-color: #634343b7;
+          }
+          .side-btn:hover{
+            background-color: #5726267c;
+          }
+        #option-bar{
+            opacity: 0;
+            padding-top: 5%;
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* justify-content: center; */
+            left: -60px;
+            position: fixed;
+            height: 100%;
+            width: 60px;
+            background-color: #795555a6;
+            z-index: 11;
+            box-shadow: var(--outshadow);
+            transition: left 1s ease , opacity 1s ease;
+            
+          }
+          .option-btn{
+            opacity: 0.5;
+              top: 80px;
+              margin-top: 30px;
+              position: relative;
+              cursor: pointer;
+              width: 32px;
+              height: 32px;
+              background-position: center;
+              background-repeat: no-repeat;
+              margin: 10px;
+          }
+          .option-btn:hover{
+            opacity: 1;
+          }
+          #open-side{
+            opacity: 0.5;
+            position: absolute;
+            top: 50px;
+            background-image: url(../../icon/option_white.svg);
+          }
+          #open-side:hover{
+            opacity: 1;
+          }
+          .main{
+            margin-left: 60px;
+          }
+       #closebar{
+            opacity: 0.5;
+            width: 40px;
+            height: 40px;
+            margin: 0;
+            position: absolute;
+            top: 500px;
+            right: 0;
+            background-image: url(../../icon/goleft_red.svg);
+          }
+          #closebar:hover{
+            opacity: 1;
+          }
+          #openbar{
+            border-radius: 50%;
+            display: none;
+            margin: 0;
+            position: fixed;
+            top: 500px;
+            left: 5px;
+            background-image: url(../../icon/goright_red.svg);
+            z-index: 9;
+          }
+          #openbar:hover{
+            background-color: #96848c4d;
+          }
         #top-bar{
             padding: 10px;
             border-radius: 1em;
@@ -47,18 +117,7 @@
             box-shadow: var(--outshadow) 
         }
         #add{
-            position: relative;
-            top: 5px;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            background-color: transparent;
             background-image: url(../../icon/add_red.svg);
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        #add:hover{
-            background-image: url(../../icon/add_white.svg);
         }
         #tit-bar{
             padding: 5px;
@@ -78,18 +137,7 @@
             outline: none;
         }
         #load{
-            position: relative;
-            top: 5px;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            background-color: transparent;
             background-image: url(../../icon/load_red.svg);
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        #load:hover{
-            background-image: url(../../icon/load_white.svg);
         }
         #word-bar{
             padding: 5px;
@@ -108,37 +156,25 @@
             outline: none;
         } 
         .custom-upload-btn {
-      cursor: pointer;
       background-image: url(../../icon/upload_pink.svg);
-      background-position: center;
-      background-repeat: no-repeat;
-      width: 32px;
-      max-height: 32px;
-      margin-top: 15px;
-      margin-bottom: 10px;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-    .custom-upload-btn:hover{
-      background-image: url(../../icon/upload_white.svg);
     }
         .delete-btn {
             position: absolute;
-            top: 0;
+            top: 10px;
             right: 0;
             cursor: pointer;
             padding: 8px 16px;
-           background-image: url(../../icon/no_normalred.svg);
-           width: 32px;
-           height: 32px;
+            background-image: url(../../icon/no_red.svg);
+           width: 20px;
+           height: 20px;
            background-repeat: no-repeat;
            background-position: center;
             margin-right: 0;
             margin-top: 0;
-           
+           opacity: 0.5;
         }
         .delete-btn:hover{
-            background-image: url(../../icon/no_red.svg);
+            opacity: 1;
         }
 
         .add-btn {
@@ -229,9 +265,10 @@
                 height: 32px;
                 background-repeat: no-repeat;
                 background-position: center;
+                opacity: 0.5;
             }
             .open-page-btn:hover{
-                background-image: url(../../icon/down_white.svg);
+                opacity: 1;
             }
             .iframe-delete-btn{
                 transform: translateX(-50%);
@@ -241,15 +278,16 @@
                 background-repeat: no-repeat;
                 width: 32px;
                 height: 32px;
+                opacity: 0.5;
             }
             .iframe-delete-btn:hover{
-                background-image: url(../../icon/up_white.svg);
+               opacity: 1;
             }
            .note-element:hover .open-page-btn{
-                background-image: url(../../icon/down_white.svg)
+                opacity: 1;
             }
             .note-element:hover .iframe-delete-btn{
-                background-image: url(../../icon/up_white.svg)
+               opacity: 1;
             }
             #top-btn{
   cursor: pointer;
@@ -258,7 +296,6 @@
 }
 #top-btn:hover{
   background-color: #774243;
-  background-image: url(../../icon/toup_white.svg);
 }
 #progress{
             overflow: hidden;
@@ -294,7 +331,9 @@
     color: #f49f9e;
 }
             @media only screen and (max-width: 600px) {
-    
+                .main{
+                    margin-left: 0;
+                  }
             .phone_background {
             position:relative;
             overflow:hidden;
@@ -329,10 +368,38 @@
             transition: opacity 1s ease ; 
             z-index: 1;
         }
-        .backbtn{
-          width: 25% ;
+        #option-bar{
+            left: 0;
+            padding-top: 0;
+            align-items: center;
+            position: fixed;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            height: 60px;
+            width: 100%;
+            bottom: 0;
+            border-top-left-radius: 1em;
+            border-top-right-radius: 1em;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10;
         }
-        
-
+        .option-btn{
+          top: auto;
+          margin-top: 10px;
+          position: relative;
+          cursor: pointer;
+          width: 24px;
+          height: 24px;
+          margin: 15px;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+        #open-side{
+          top: auto;
+          margin-left: 0;
+          left: 5px;
+        }
             }
             
