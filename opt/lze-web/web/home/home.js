@@ -31,25 +31,8 @@ var button = document.getElementById('myButton');
     document.getElementById(`home-bar`).style.top = '0';
     document.querySelector(`.name`).style.width='200px';
 document.getElementById('myButton').style.bottom='35%';
-    // 添加点击页面任意地方的事件监听器
+    access();
     document.addEventListener('click', handleDocumentClick);
-
-  
-if(!getip()){
-  ip = window.location.hostname;
-  }
-  else {
-  ip =getip();
-  }
-  // 本地打开html
-  if(ip==''){
-    logstatus=0;
-    showlogin(1);
-  }else if(ip!=''){
-    logstatus=1;
-    checklogin(0); 
-  }
-ipstatus();
 doc_path = `web/doc/doc.html#${ip}`;
 pic_path = `web/pic/pic.html#${ip}`;
 mon_path = `web/mon/monitor.html#${ip}`;

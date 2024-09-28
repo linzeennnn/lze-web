@@ -334,6 +334,9 @@
                 .main{
                     margin-left: 0;
                   }
+                  .pc-only{
+                    display: none;
+                  }
             .phone_background {
             position:relative;
             overflow:hidden;

@@ -391,6 +391,9 @@ padding-bottom: 10px;
         .main{
             margin-left: 0;
           }
+          .pc-only{
+            display: none;
+          }
         #option-bar{
             left: 0;
             padding-top: 0;

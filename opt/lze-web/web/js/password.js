@@ -10,6 +10,8 @@ let passtatus;
 const login=document.getElementById('login');
 const root = document.documentElement;
 let token;
+let enterpass = null; 
+let enterip = null; 
  // 初始化数据
  const defaulthost = {
     host: [
@@ -26,6 +28,13 @@ function showlogin(status){
     }
     switch(status){
         case 1:
+            if (enterpass) {
+                document.removeEventListener('keydown', enterpass); // 使用相同的函数引用
+            }
+            enterip = function(event) {
+                enter(1, event);
+            };
+            document.addEventListener('keydown', enterip);
             notify("输入主机");
             loginpage.style.display='flex';
             passbar.style.opacity='';
@@ -40,7 +49,14 @@ function showlogin(status){
             backlogin.style.opacity='1';
             }, 10);
             break;
-        case 2:
+        case 2: 
+        if (enterip) {
+            document.removeEventListener('keydown', enterip);
+        }
+        enterpass = function(event) {
+            enter(2, event);
+        };
+        document.addEventListener('keydown', enterpass);
             notify("输入密码");
             hostbar.style.opacity='';
             hostbox.style.opacity='';
@@ -90,6 +106,42 @@ function showlogin(status){
 
     }
    
+}
+// 回车事件
+function enter(status,event){
+    switch(status){
+        case 1:
+            if (event.key === 'Enter') {
+                console.log("ip");
+                addhost();
+            }
+            break;
+        case 2:
+            if (event.key === 'Enter') {
+                console.log("pass");
+                sendpass();
+            }
+            break;
+    }
+    enterevent=1;
+}
+// access
+function access(){
+    if(!getip()){
+        ip = window.location.hostname;
+        }
+        else {
+        ip =getip();
+        }
+        // 本地打开html
+        if(ip==''){
+          logstatus=0;
+          showlogin(1);
+        }else if(ip!=''){
+          logstatus=1;
+          checklogin(0); 
+        }
+      ipstatus();
 }
 function sendpass() {
     const password = btoa(document.getElementById('password').value);
@@ -146,7 +198,8 @@ function checklogin(status) {
             }
         } 
         catch (error) {
-            notify("错误");
+            console.log(error);
+            notify(error);
         }
     };
 

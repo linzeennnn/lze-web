@@ -424,6 +424,9 @@ transition: bottom 1s ease;
     overflow:hidden;
     overflow-x: hidden;
 }
+.pc-only{
+  display: none;
+}
 .next {
   position:fixed;
   left:0;

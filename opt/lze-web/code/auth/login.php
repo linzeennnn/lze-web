@@ -12,32 +12,31 @@ $correctPassword = trim(file_get_contents($passwordFile));
 $data = json_decode(file_get_contents('php://input'), true);
 $password = $data['password'] ?? '';
 
-// 检查 token 文件路径
-$tokenFile = '/etc/lze-web/token';
-
-// 检查 token 文件是否存在
-if (file_exists($tokenFile)) {
-    // 读取 token 文件内容
-    $fileContent = file_get_contents($tokenFile);
-    $tokenData = json_decode($fileContent, true);
-
-    // 验证 token 是否过期
-    if ($tokenData && isset($tokenData['expiry']) && $tokenData['expiry'] > time()) {
-        // 返回有效 token
-        echo json_encode(['success' => true, 'token' => $tokenData['token']]);
-        exit;
-    } else {
-        // Token 文件存在但已过期
-        unlink($tokenFile); // 删除过期的 token 文件
-    }
-}
 
 // 密码验证
 if ($password === $correctPassword) {
+    // 检查 token 文件路径
+    $tokenFile = '/etc/lze-web/token';
+
+    // 检查 token 文件是否存在
+    if (file_exists($tokenFile)) {
+        // 读取 token 文件内容
+        $fileContent = file_get_contents($tokenFile);
+        $tokenData = json_decode($fileContent, true);
+
+        // 验证 token 是否过期
+        if ($tokenData && isset($tokenData['expiry']) && $tokenData['expiry'] > time()) {
+            // 返回有效 token
+            echo json_encode(['success' => true, 'token' => $tokenData['token']]);
+            exit;
+        } else {
+            // Token 文件存在但已过期
+            unlink($tokenFile); // 删除过期的 token 文件
+        }
+    }
+
     // 生成新的 Token
     $token = bin2hex(random_bytes(16));
-
-    // Token过期时间
     $expiry = time() + 2592000; // 30天
 
     // 保存新 Token 和过期时间到文件
@@ -49,4 +48,5 @@ if ($password === $correctPassword) {
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid password']);
 }
+
 ?>
