@@ -436,43 +436,40 @@ function newfolder(status){
  }
 }
 // 删除
-function del(){
+function del() {
   access();
- if (confirm('确定要删除所选文件吗')) {
- ifroot();
-const  dellist = JSON.stringify(selectedarray);
- // 创建一个对象，包含 copylist 和 nowpath
- const requestData = {
-   dellist: dellist
- };
- fetch(`${protocol}//${ip}/code/Documents/delete.php`, {
-   method: 'POST',
-   headers: {
-     'Authorization': 'Bearer ' + token,
-     'Content-Type': 'application/json',
-   },
-   body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
- })
- .then(response => {
-  if (response.status === 401) {
-    throw new Error('未授权访问');
+  if (confirm('确定要删除所选文件吗')) {
+    ifroot();
+    const dellist = JSON.stringify(selectedarray);
+    const requestData = { dellist: dellist };
+
+    fetch(`${protocol}//${ip}/code/Documents/delete.php`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+    .then(response => {
+      if (response.status === 401) {
+        throw new Error('未授权访问');
+      }
+      return response.text();  
+    })
+    .then(data => {
+      loadFolder(removeslash(nowpath));
+      notify("已删除");
+      pastebtn.style.display = 'none';
+      copyarray.length = 0;
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('错误:', error);
+    });
   }
-  return response.text();  
-})
- .then(response => response.json())
- .then(data => {
-   loadFolder(nowpath);
-   loadFolder(removeslash(nowpath));
-   notify("已删除");
-   pastebtn.style.display='none';
-   copyarray.length=0;
-   console.log(data);
- })
- .catch((error) => {
-   console.error('错误:', error);
- });
 }
-}
+
 
 let pastestatus;
 let copyarray=[];
@@ -524,7 +521,6 @@ switch (pastestatus){
   }
   return response.text();  
 })
- .then(response => response.json())
  .then(data => {
    loadFolder(removeslash(nowpath));
    notify("已复制");
@@ -551,9 +547,7 @@ switch (pastestatus){
     }
     return response.text();  
   })
-   .then(response => response.json())
    .then(data => {
-     loadFolder(nowpath);
      loadFolder(removeslash(nowpath));
      notify("已移动");
      pastebtn.style.display='none';
