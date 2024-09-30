@@ -85,7 +85,7 @@ function lockmove(status){
   switch(status){
     case 0:
       lockpage.style.top='-200px';
-      live2d.style.top='-300px'
+      live2d.style.top='-300px';
       lockpage.style.opacity='0';
       live2d.style.opacity='0'
       lockpage.style.bottom='auto';
@@ -108,6 +108,16 @@ function lockmove(status){
   }
 }
 function comin(){
+  const lockpage=document.getElementById('lock-page');
+  const live2d=document.getElementById('live2d-widget');
+  lockpage.style.display='none';
+  live2d.style.display='none';
+  if (document.referrer) {
+    dockmove(1);
+    widgetmove(1);
+} else {
+    lock(1);
+}
     document.getElementById(`home-bar`).style.top = '0';
     document.querySelector(`.name`).style.width='200px';
     access();
@@ -178,23 +188,31 @@ location.reload();
 }
 
 
-function tonext(path,widget) {
-  widgetopen(widget);
+function tonext(path,widget,place,line) {
+  widgetopen(path,widget,place,line);
 document.getElementById(`home-bar`).style.top = '-150px';
 document.querySelector('.next').style.opacity ='1';
 setTimeout(() => {
 window.location.replace(path);
-}, 300); // 1000 毫秒 = 1 秒
+}, 300);
 }
 // 打开widget
-function widgetopen(widget){
-  // widget.style.position='fixed';
-  // widget.style
+function widgetopen(path,widget,place,line){
   const title= widget.querySelector('.widget-title');
+  const clone = widget.cloneNode(true);
+  const linebox=document.getElementById(line);
+  widget.style.position='absolute'
+  switch(place){
+    case 1:
+      linebox.appendChild(clone);
+  break;
+  case 0:
+    linebox.insertBefore(clone,linebox.firstChild);
+    break;
+  }
   widget.style.transform='scale(7)';
   widget.style.opacity='0';
   title.innerText='';
-
 }
 function handleTopBarButtonClick(index) {
   var buttons = document.querySelectorAll('#topBar button');

@@ -35,6 +35,7 @@
           body::-webkit-scrollbar {
             display: none; /* 隐藏滚动条 */
             }
+           
             #open-side{
               cursor: pointer;
               width: 32px;
