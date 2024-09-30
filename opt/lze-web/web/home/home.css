@@ -35,26 +35,6 @@
           body::-webkit-scrollbar {
             display: none; /* 隐藏滚动条 */
             }
-           
-            #open-side{
-              cursor: pointer;
-              width: 32px;
-              height: 32px;
-              background-position: center;
-              background-repeat: no-repeat;
-              position: absolute;
-              top: 50px;
-              background-image: url(../../icon/option_grey.svg);
-            }
-            #open-side:hover{
-              background-image: url(../../icon/option_white.svg);
-            }
-            #sidepage{
-              background-color: #6a7885b7;
-            }
-            .side-btn:hover{
-              background-color: #5155577c;
-            }
             #lock-page{
               justify-content: center;
               align-items: center;

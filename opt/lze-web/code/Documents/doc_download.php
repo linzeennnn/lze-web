@@ -1,5 +1,15 @@
 <?php
 ini_set('memory_limit', '512M'); // 临时增加内存限制
+function getname($path) {
+    $path = rtrim($path, '/'); // 去掉末尾的斜杠
+    $lastSlashPos = strrpos($path, '/'); // 找到最后一个斜杠的位置
+
+    if ($lastSlashPos !== false) {
+        return substr($path, $lastSlashPos + 1); // 获取最后一个斜杠后面的部分
+    } else {
+        return $path; // 如果没有斜杠，说明整个路径就是文件夹名
+    }
+}
 
 $file = $_GET['file'] ?? '';
 $folder = $_GET['folder'] ?? '';
@@ -14,7 +24,7 @@ if (!file_exists($filePath) || !is_file($filePath)) {
 // 设置响应头以下载文件
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
-header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+header('Content-Disposition: attachment; filename="' . getname($filePath) . '"');
 header('Expires: 0');
 header('Cache-Control: must-revalidate');
 header('Pragma: public');
