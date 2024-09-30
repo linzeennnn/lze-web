@@ -13,9 +13,24 @@
         background-image: url(../../icon/dark/name.svg);
         
       }
-      #myButton {
-          background-color: #57677970 ;
+      #lock-page{
+        background-color: #3f43445b;
       }
+      #home-btn{
+        background-color: #36363a8f;
+      }
+      #home-btn:hover{
+        background-color: #0a0a0e73;
+      }
+      .widget-title{
+        color: #9ba9bd;
+      }
+      .dock-back{
+        background: linear-gradient(#4e4f50,#19191a9f);
+       }
+       #dock{
+      background: #b4c7d45b;
+       }
       #topBar {
           background-color: #2b2b2bdc ;
       }
@@ -32,20 +47,23 @@
         background-color: hsla(200, 33%, 78%, 0.663);
         color: #20021c;
       }
-      #popup1-1{
-      background-image: url(../../wallpaper/dark/pink.svg);
+      #widget1{
+        background-image: url(../../wallpaper/dark/pink.svg);
       }
-      #popup1-2{
-      background-image: url(../../wallpaper/dark/blue.svg);
+      #widget2{
+        background-image: url(../../wallpaper/dark/blue.svg);
       }
-      #popup2-1{
-      background-image: url(../../wallpaper/dark/yellow.svg);
+      #widget3{
+        background-image: url(../../wallpaper/dark/yellow.svg);
       }
-      #popup3-1{
-      background-image: url(../../wallpaper/dark/green.svg);
+      #widget4{
+        background-image: url(../../wallpaper/dark/yellow.svg);
       }
-      #popup4-1{
-      background-image: url(../../wallpaper/dark/red.svg);
+      #widget5{
+        background-image: url(../../wallpaper/dark/green.svg);
+      }
+      #widget6{
+        background-image: url(../../wallpaper/dark/red.svg);
       }
       @media only screen and (max-width: 600px){
         .phone_background {
@@ -56,25 +74,5 @@
       .phone_background .fixed {
         background:no-repeat center center;
         background-image: url(../../wallpaper/dark/home.svg);
-      }
-      #popup1-1{
-      background-image: url(../../wallpaper/dark/pink.svg);
-  }
-  #popup1-2{
-     
-      background-image: url(../../wallpaper/dark/blue.svg);
-      
-  }
-  #popup2-1{
-      background-image: url(../../wallpaper/dark/yellow.svg);
-  }
-
-      #popup3-1{
-      background-image: url(../../wallpaper/dark/green.svg);
-      }
-     
-      #popup4-1{
-      background-image: url(../../wallpaper/dark/red.svg);
-
       }
       }

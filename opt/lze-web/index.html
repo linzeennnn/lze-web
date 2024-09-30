@@ -18,50 +18,39 @@
 <link id="themesheet" rel="stylesheet">
     <link rel="stylesheet" href="web/css/password.css">
     <link rel="stylesheet" href="web/home/home.css">
-    <link rel="stylesheet" href="web/css/sidepage.css">
 </head>
 <body>
+  <div id="lock-page">
+    <div id="home-bar" ></div>
+    <div class="name" title="恩的电脑" onclick="reloadPage()"></div>
+    <div id="home-btn" onclick="lock(0)"><div></div></div>
+  </div>
   <div class="phone_background">
     <div class="fixed"></div>
     <div class="next" ></div>
   </div>
-  <div id="home-bar" >
-    <div id="open-side" class="option-btn" onclick="openside(1)" title="打开导航栏"></div>
-  </div>
-  <div class="name" title="恩的电脑" onclick="reloadPage()"></div>
-        <div>
-        <div id="myButton" onclick="handleButtonClick()" title="开始" ></div>
-        </div>
-        <div id="customPopup">
-      <div id="topBar">
-        <button class="bar-btn" onclick="handleTopBarButtonClick(0)">恩的文件</button>
-        <button class="bar-btn" onclick="handleTopBarButtonClick(1)">恩的终端</button>
-        <button class="bar-btn" onclick="handleTopBarButtonClick(2)">恩的便签</button>
-        <button class="bar-btn" onclick="handleTopBarButtonClick(3)">恩的书签</button>
-      </div>
-      <div class="additionalPopup" id="popup1">
-        <div class="popupContent">
-            <button id="popup1-1" class="entry" onclick="tonext('pink.svg',doc_path,0)" title="进入文件"><div id="folder"></div></button>
-            <button id="popup1-2" class="entry" onclick="tonext('blue.svg',pic_path,0)"  title="进入图库"><div id="photo" ></div></button>
+        <div id="widget-box">
+          <div id="widget-line1" class="widget-line">
+            <div id="widget1" class="widget" onclick="tonext(doc_path,this)"><div id="folder" class="widget-icon"></div><span class="widget-title">恩的文件</span></div>
+            <div id="widget2" class="widget" onclick="tonext(pic_path,this)"><div id="picture" class="widget-icon"></div><span class="widget-title">恩的图库</span></div>
+          </div>
+          <div id="widget-line2" class="widget-line">
+            <div id="widget3" class="widget" onclick="tonext(mon_path,this)"><div id="monitor" class="widget-icon"></div><span class="widget-title">恩的面板</span></div>
+            <div id="widget4" class="widget" onclick="notify('开发中（请联系林泽恩）')"><div id="terminal" class="widget-icon"></div><span class="widget-title">恩的终端</span></div>
+          </div>
+          <div id="widget-line3" class="widget-line">
+            <div id="widget5" class="widget" onclick="tonext(not_path,this)"><div id="note" class="widget-icon"></div><span class="widget-title">恩的便签</span></div>
+            <div id="widget6" class="widget" onclick="tonext(bok_path,this)"><div id="bookmark" class="widget-icon"></div><span class="widget-title">恩的书签</span></div>
           </div>
         </div>
-      <div class="additionalPopup" id="popup2">
-        
-        <div class="popupContent">
-          <button id="popup2-1" class="entry" onclick="tonext('yellow.svg',mon_path,1)"  title="进入终端"><div id="terminal" ></div></button>
+        <div id="dock">
+          <div class="dock-back"><div class="dock-icon" id="login" title="登陆管理" onclick="showlogin(3)"></div></div>
+          <div class="dock-back" id="light-btn" title="切换亮主题" onclick="switchTheme('light');"><div class="dock-icon" id="light-icon"></div></div>
+          <div class="dock-back" id="dark-btn" title="切换暗主题" onclick="switchTheme('dark')"><div class="dock-icon" id="dark-icon"></div></div>
+          <div class="dock-back"><div class="dock-icon" id="trash" title="回收站" onclick="notify('开发中（请联系林泽恩）')"></div></div>
+          <div class="dock-back"><div class="dock-icon" id="lock" title="锁屏" onclick="lock(1)"></div></div>
         </div>
-      </div>
-      <div class="additionalPopup" id="popup3">
-        <div class="popupContent">
-          <button id="popup3-1" class="entry" onclick="tonext('green.svg',not_path,2)"  title="进入便签"><div id="note" ></div></button>
-        </div>
-      </div>
-      <div class="additionalPopup" id="popup4">
-        <div class="popupContent">
-            <button id="popup4-1" class="entry" onclick="tonext('red.svg',bok_path,3)"  title="进入书签"><div id="tag" ></div></button>
-        </div>
-    </div>
-  </div>
+      
 <!-- 登陆页面 -->
 <div id="login-bar"></div>
 <div id="login-page">
@@ -90,10 +79,11 @@
   <div class="next"></div>
 </div>
 <!-- js -->
-  <script src="web/js/sidepage.js"></script>
     <script src="web/home/theme.js"></script>
     <script src="web/home/home.js"></script>
     <script src="web/js/password.js"></script>
-    <!-- <script src="web/logo/autoload.js"></script> -->
+    <script src="cat/L2Dwidget.min.js"></script>
+
+    <script src="cat/init_live2d.js"></script>
 </body>
 </html>

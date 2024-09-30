@@ -1,4 +1,13 @@
- 
+:root {
+  --inshadow:inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+  inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+  inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+  inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+  --outshadow:5px 5px 20px rgba(0, 0, 0, 0.068),   
+  -5px -5px 20px rgba(0, 0, 0, 0.068), 
+  5px -5px 20px rgba(0, 0, 0, 0.068),  
+  -5px 5px 20px rgba(0, 0, 0, 0.068); 
+}
     .ui-tooltip {
               border: none !important;
               font-size: 19px; 
@@ -45,13 +54,46 @@
             .side-btn:hover{
               background-color: #5155577c;
             }
+            #lock-page{
+              justify-content: center;
+              align-items: center;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              position: fixed;
+              display: flex;
+              z-index: 12;
+              transition: top 1s ease,opacity 1s ease;
+            }
+      #home-btn{
+        padding: 7px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 500px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: top 1s ease;
+        box-shadow: var(--outshadow);
+      }
+      #home-btn div{
+        background-image: url(../../icon/power_grey.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 32px;
+        height: 32px;
+      }
       #home-bar {
         display: flex;
         font-size: 70px;
         height: 60px !important;
         padding: 10px;
         text-align: center;
-        position: fixed;
+        position: absolute;
         width: 100%;
         top: -120px;
         z-index: 10;
@@ -60,7 +102,22 @@
         box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.377),   /* 右下方阴影 */
     -5px 5px 20px rgba(0, 0, 0, 0.377);  /* 左下方阴影 */
       }
-     
+      #live2d-widget {
+        width: 300px !important;
+        height: 300px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed !important;
+        top: 200px;
+        bottom: auto !important;
+        transition: top 1s ease,opacity 1s ease;
+    }
+    #live2dcanvas{
+      width: 300px !important;
+      height: 300px !important;
+      position: relative !important;
+    }
       .name{
         position:absolute;
         cursor: pointer;
@@ -73,318 +130,129 @@
         transition: all 1s ease;
         
       }
-      
-     
-      #myButton {
-        transform: translateX(-50%);  
-        background-image: url(../../icon/power_grey.svg);
-        position: absolute;
-        border: none;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-        bottom: -10%;
-        transition:all 1s ease; 
-        border-radius: 50%;
-        z-index: 2;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-      }
-  
-      #myButton:hover {
-        background-color: #1e263094 ;
-        background-image: url(../../icon/power.svg);
-      }
-  
-      #customPopup {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: 0;
-        background-color: #fff;
-        overflow: hidden;
-        transition: height 1s ease; /* 添加过渡效果 */
-        z-index: 11;
-        box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        background-image: url(../../wallpaper/pop.svg);
-        background-size: cover;
-      }
-      #customPopup.active {
-        height: 60%; /* 弹出时的高度 */
-      }
-  
-      #topBar {
-        padding: 10px;
-        text-align: center;
-        display: flex;
-        justify-content: space-between;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-      }
-  
-      .bar-btn {
-        
-        width: 25%;
-        height: 2em;
-        border: none;
-        border-radius: 1em;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin-top: 0;
-        margin: 5px;
-        margin-bottom: 0;
-        font-size: 150%;
-      }
-      .additionalPopup {
-        
-          display: flex;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 80%; /* 弹出时的高度 */
-        background-color: #fff;
-        
-        transition: transform 1s ease, opacity 1s ease; /* 添加过渡效果 */
-        transform-origin: left center;
-        transform: translateX(-100%); /* 初始位置在页面左侧外部 */
-        opacity: 0; /* 初始状态为透明 */
-      }
-  
-      .additionalPopup.active {
-          
-        transform: translateX(0); /* 弹出时的位置 */
-        opacity: 1; /* 显示 */
-      }
-  
-      .additionalPopup.return {
-        transform: translateX(200%); /* 弹回时的位置 */
-        opacity: 0; /* 隐藏 */
-      }
-  
-      .popupContent {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-        font-size: 18px;
-        background-color: transparent;
-        
-      }
-      .popupContent button {
-        
-          width: 100%; /* 按钮宽度占满父容器 */
-          padding: 10px; /* 设置按钮内边距 */
-         
-          }
-  
-  
-  
-      #popup1{
-  
-          background-color: transparent;
-          margin-bottom: 2%;
-          }
-          #popup1-1{
-            border-color: transparent;
-          flex: 1;
-          width: auto;
-          height: 100%;
-          background-color: transparent;
-          background-size: cover;
-          background-position: center;
-          font-size: 300%;
-          color: #2d0a1e;
-          cursor: pointer;
-          border-radius: 1em;
-          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-          }
-          
-          
-  
-      #folder{
-        transform: translateX(-50%);
-        border-color: transparent;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: transparent;
-        margin-left: 50%;
-          width: 100px;
-          height: 100px;
-          background-image: url(../../icon/folder.svg);
-        
-          cursor: pointer;
-      }
-      #popup1-1:hover #folder{
-          background-image: url(../../icon/folder_open.svg);
-      }
-      
-      #popup1-2{
-        border-color: transparent;
-        flex: 1;
-          width: auto;
-          height: 100%;
-          background-size: cover;
-          background-position: center;
-          opacity: 0.8;
-          font-size: 300%;
-          color: #654409;
-          cursor: pointer;
-          border-radius: 1em;
-          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-      }
-     
-      #photo{
-        transform: translateX(-50%);
-        border-color: transparent;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: transparent;
-        margin-left: 50%;
-          width: 100px;
-          height: 100px;
-          background-image: url(../../icon/photo.svg);
-        
-          cursor: pointer;
-      }
-      #popup1-2:hover #photo{
-          background-image: url(../../icon/photo_open.svg);
-      }
-      #popup2{
-          background-color: rgba(255, 255, 255, 0);
-          margin-bottom: 2%;
-      }
-      #popup2-1{
-        border-color: transparent;
-          width: 100%;
-          height: 100%;
-          background-size: cover;
-          background-position: center;
-          font-size: 300%;
-          color: #654409;
-          cursor: pointer;
-          border-radius: 1em;
-          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-  
-          }
-          #terminal{
-        transform: translateX(-50%);
-        border-color: transparent;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: transparent;
-        margin-left: 50%;
-          width: 100px;
-          height: 100px;
-          background-image: url(../../icon/terminal.svg);
-        
-          cursor: pointer;
-      }
-      #popup2-1:hover #terminal{
-          background-image: url(../../icon/terminal_open.svg);
-      }
-  
-          
-      
-  
-  
-      #popup3{
-          background-color: rgba(255, 255, 255, 0);
-          margin-bottom: 2%;
-      }
-      #popup3-1{
-        border-color: transparent;
-          border-radius: 1em;
-          height: 100%;
-          width: 100%;
-          cursor: pointer;
-          background-size: cover;
-          background-position: center;
-          font-size: 300%;
-          color: #024a4d;
-          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-      }
-      
-      #note{
-        transform: translateX(-50%);
-        border-color: transparent;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: transparent;
-        margin-left: 50%;
-          width: 100px;
-          height: 100px;
-          background-image: url(../../icon/note.svg);
-        
-          cursor: pointer;
-      }
-      #popup3-1:hover #note{
-          background-image: url(../../icon/note_open.svg);
-      }
-  
-  
-      #popup4{
-  
-          background-color: rgba(255, 255, 255, 0);
-          margin-bottom: 2%;
-          }
-  
-          #popup4-1{
-            border-color: transparent;
-          flex: 1;
-          width: auto;
-          height: 100%;
-          background-size: cover;
-          background-position: center;
-          font-size: 300%;
-          color: #2d0a1e;
-          cursor: pointer;
-          border-radius: 1em;
-          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
-    -5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-    5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
-    -5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-          }
-          #tag{
-        transform: translateX(-50%);
-        border-color: transparent;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: transparent;
-        margin-left: 50%;
-          width: 100px;
-          height: 100px;
-          background-image: url(../../icon/tag.svg);
-        
-          cursor: pointer;
-      }
-      #popup4-1:hover #tag{
-          background-image: url(../../icon/tag_open.svg);
-      }
-     
-          
+     #dock{
+      display: none;
+      position: fixed;
+      bottom: -100px;
+      display: flex;
+    border-radius: 25px; /* 圆角 */
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    height: 70px;
+    z-index: 8;
+    transition: bottom 1s ease;
+     }
+     .dock-back{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      width: 64px;
+      height: 64px;
+      border-radius: 15px; 
+      margin: 0 15px; 
+      transition: transform 0.3s;
+     }
 
+     .dock-back:hover{
+      transform: scale(1.2);
+     }
+     .dock-icon{
+      width: 40px;
+      height: 40px;
+      background-position: center;
+      background-repeat: no-repeat;
+     }
+     #widget-box{
+      flex-direction: column;
+      display: none;
+      top: 0;
+      bottom: 180px;
+      position: fixed;
+      width: 100%;
+      height: 85%;
+      opacity: 0;
+      transform: scale(2);
+      z-index: 10;
+      transition: transform 1s ease, opacity 1s ease;
+     }
+     .widget-line{
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      height: 30%;
+      width: 100%;
+      display: flex;
+      position: relative;
+      margin-top: 30px;
+    }.widget{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.7;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 15px;
+      cursor: pointer;
+      width: 45%;
+      height: 100%;
+      margin: 10px;
+      margin-bottom: 40px;
+      position: relative;
+      transition: transform 1s ease,opacity 1.5s ease;
+      box-shadow: var(--outshadow);
+    }
+    .widget:hover{
+      opacity: 1;
+      transform: scale(1.1);
+      z-index: 11;
+    }
+    .widget-icon{
+      width: 100px;
+      height: 100px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #folder{
+      background-image: url(../../icon/folder.svg);
+    }
+    #picture{
+      background-image: url(../../icon/picture.svg);
+    }
+    #monitor{
+      background-image: url(../../icon/monitor.svg);
+    }
+    #terminal{
+      background-image: url(../../icon/terminal.svg);
+    }
+    #note{
+      background-image: url(../../icon/note.svg);
+    }
+    #bookmark{
+      background-image: url(../../icon/bookmark.svg);
+    }
+    .widget-title{
+      position: absolute;
+      font-size: 15px;
+      font-weight: bold;
+      bottom: -20px;
+    }
+     #login{
+      background-image: url(../../icon/login_grey.svg);
+     }
+     #light-icon{
+      background-image: url(../../icon/light_grey.svg);
+     }
+     #dark-icon{
+      background-image: url(../../icon/dark_grey.svg);
+     }
+     #trash{
+      background-image: url(../../icon/bin_grey.svg);
+     }
+     #lock{
+      background-image: url(../../icon/power_grey.svg);
+     }
       #notify{
         border-radius: 1em;
         display: flex;
@@ -406,12 +274,32 @@
         font-weight: bold;
         font-size: 20px;
     }
+ 
      
           @media only screen and (max-width: 600px){
+            @media only screen and (max-height: 800px) {
+            .widget{
+              height: 70%;
+            }
+              #dock{
+                height: 60px;
+              }
+              .dock-back{
+                width: 60px;
+                height: 60px;
+              }
+              .dock-icon{
+                width: 32px;
+                height: 32px;
+              }
+            }
             .phone_background {
             position:relative;
             overflow:hidden;
               overflow-x: hidden;
+          }
+          #dock{
+            width: 90%;
           }
           .phone_background .fixed {
             position:fixed;
@@ -448,11 +336,6 @@
               height: 10%;
               padding: auto;
               
-            }
-           
-        
-  
-         
-  
+            }  
           }
   

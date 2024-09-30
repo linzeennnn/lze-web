@@ -13,9 +13,24 @@ body {
   background-image: url(../../icon/light/name.svg);
   
 }
-#myButton {
-    background-color: #5a708877 ;
+#lock-page{
+  background-color: #c0d0d65e;
 }
+#home-btn{
+  background-color: #aeaed38f;
+}
+#home-btn:hover{
+  background-color: #d8d8ff8f;
+}
+.widget-title{
+  color: #3a3f46;
+}
+.dock-back{
+  background: linear-gradient(#dfdfee9f,#a1a6aa);
+ }
+ #dock{
+background: #2c313562;
+ }
 #topBar {
     background-color: #d5d7d8ab ;
 }
@@ -32,20 +47,23 @@ body {
   background-color: #555f64;
   color: #bdd3df;
 }
-#popup1-1{
-background-image: url(../../wallpaper/light/pink.svg);
+#widget1{
+  background-image: url(../../wallpaper/light/pink.svg);
 }
-#popup1-2{
-background-image: url(../../wallpaper/light/blue.svg);
+#widget2{
+  background-image: url(../../wallpaper/light/blue.svg);
 }
-#popup2-1{
-background-image: url(../../wallpaper/light/yellow.svg);
+#widget3{
+  background-image: url(../../wallpaper/light/yellow.svg);
 }
-#popup3-1{
-background-image: url(../../wallpaper/light/green.svg);
+#widget4{
+  background-image: url(../../wallpaper/light/yellow.svg);
 }
-#popup4-1{
-background-image: url(../../wallpaper/light/red.svg);
+#widget5{
+  background-image: url(../../wallpaper/light/green.svg);
+}
+#widget6{
+  background-image: url(../../wallpaper/light/red.svg);
 }
 @media only screen and (max-width: 600px){
   .phone_background {
@@ -56,25 +74,5 @@ background-image: url(../../wallpaper/light/red.svg);
 .phone_background .fixed {
   background:no-repeat center center;
   background-image: url(../../wallpaper/light/home.svg);
-}
-#popup1-1{
-background-image: url(../../wallpaper/light/pink.svg);
-}
-#popup1-2{
-
-background-image: url(../../wallpaper/light/blue.svg);
-
-}
-#popup2-1{
-background-image: url(../../wallpaper/light/yellow.svg);
-}
-
-#popup3-1{
-background-image: url(../../wallpaper/light/green.svg);
-}
-
-#popup4-1{
-background-image: url(../../wallpaper/light/red.svg);
-
 }
 }

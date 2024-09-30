@@ -24,13 +24,92 @@ function notify(text) {
     }, 1500);
   }, 1500);
 }
-
-
+// 锁屏
+function lock(status){
+  const lockpage=document.getElementById('lock-page');
+  const live2d=document.getElementById('live2d-widget');
+  switch(status){
+    case 0:
+      lockmove(0);
+      dockmove(1);
+      widgetmove(1);
+      break;
+    case 1:       
+    lockpage.style.display='';
+    live2d.style.display='';   
+    lockmove(1);
+    dockmove(0); 
+    widgetmove(0);
+      break;
+  }
+}
+function dockmove(status){
+  const dock=document.getElementById('dock');
+  switch(status){
+    case 1:
+      dock.style.display='flex';
+      setTimeout(() => {     
+      dock.style.bottom='20px'  
+        }, 500);
+      break;
+    case 0:       
+    dock.style.bottom='';
+      setTimeout(() => {  
+        dock.style.display='';
+        }, 500);
+      break;
+  }
+}
+function widgetmove(status){
+  const widget=document.getElementById('widget-box');
+  switch(status){
+    case 1:
+      widget.style.display='flex';
+      setTimeout(() => {     
+        widget.style.opacity='1';
+        widget.style.transform='scale(1)';
+        }, 500);
+      break;
+    case 0:       
+    widget.style.opacity='';
+    widget.style.transform='';
+      setTimeout(() => {  
+        widget.style.display='';
+        }, 500);
+      break;
+  }
+}
+function lockmove(status){
+  const lockpage=document.getElementById('lock-page');
+  const live2d=document.getElementById('live2d-widget');
+  switch(status){
+    case 0:
+      lockpage.style.top='-200px';
+      live2d.style.top='-300px'
+      lockpage.style.opacity='0';
+      live2d.style.opacity='0'
+      lockpage.style.bottom='auto';
+      setTimeout(() => {       
+      lockpage.style.display='none';
+      live2d.style.display='none';   
+        }, 500);
+      break;
+    case 1:       
+    lockpage.style.display='';
+    live2d.style.display='';  
+      setTimeout(() => {  
+        lockpage.style.top='';
+        live2d.style.top=''
+        lockpage.style.opacity='';
+        live2d.style.opacity=''
+        lockpage.style.bottom='';
+        }, 500);
+      break;
+  }
+}
 function comin(){
-var button = document.getElementById('myButton');
     document.getElementById(`home-bar`).style.top = '0';
     document.querySelector(`.name`).style.width='200px';
-document.getElementById('myButton').style.bottom='35%';
     access();
     document.addEventListener('click', handleDocumentClick);
 doc_path = `web/doc/doc.html#${ip}`;
@@ -99,45 +178,24 @@ location.reload();
 }
 
 
-function tonext(bodyback,path,bar_type) {
-  buttonState = 2;
-handleButtonClick();
+function tonext(path,widget) {
+  widgetopen(widget);
 document.getElementById(`home-bar`).style.top = '-150px';
-document.getElementById('myButton').style.display = `none`;
-document.querySelector('body').style.backgroundImage = `url(${wallpath}${bodyback})`;
-document.querySelector('.next').style.backgroundImage = `url(${wallpath}${bodyback})`;
 document.querySelector('.next').style.opacity ='1';
 setTimeout(() => {
 window.location.replace(path);
-}, 1000); // 1000 毫秒 = 1 秒
+}, 300); // 1000 毫秒 = 1 秒
 }
+// 打开widget
+function widgetopen(widget){
+  // widget.style.position='fixed';
+  // widget.style
+  const title= widget.querySelector('.widget-title');
+  widget.style.transform='scale(7)';
+  widget.style.opacity='0';
+  title.innerText='';
 
-
-
-
-
-var buttonState = 1; // 初始状态为1
-
-function handleButtonClick() {
-var button = document.getElementById('myButton');
-var popup = document.getElementById('customPopup');
-
-if (buttonState === 1) {
-popup.classList.add('active');
-button.style.bottom = '60%'; // 降落到页面正中心
-buttonState = 2; // 更新状态为2
-} else {
-popup.classList.remove('active');
-button.style.bottom = '35%'; // 升回标题底部
-buttonState = 1; // 更新状态为1
-// 隐藏所有的框
-var additionalPopups = document.querySelectorAll('.additionalPopup');
-additionalPopups.forEach(function (popup) {
-  popup.classList.remove('active', 'return'); // 移除所有类
-});
 }
-}
-
 function handleTopBarButtonClick(index) {
   var buttons = document.querySelectorAll('#topBar button');
   buttons.forEach(function (button, i) {
