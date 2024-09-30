@@ -112,7 +112,9 @@ function comin(){
   const live2d=document.getElementById('live2d-widget');
   lockpage.style.display='none';
   live2d.style.display='none';
-  if (document.referrer) {
+  console.log(document.referrer.split('#')[0]);
+  console.log();
+  if (document.referrer && document.referrer.split('#')[0] !== window.location.href.split('#')[0]) {
     dockmove(1);
     widgetmove(1);
 } else {

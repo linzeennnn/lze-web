@@ -92,7 +92,8 @@
         position: fixed !important;
         top: 200px;
         bottom: auto !important;
-        transition: top 1s ease,opacity 1s ease;
+        z-index: 13 !important;
+        /* transition: top 1s ease,opacity 1s ease; */
     }
     #live2dcanvas{
       width: 300px !important;
