@@ -82,24 +82,27 @@ function widgetmove(status){
 function lockmove(status){
   const lockpage=document.getElementById('lock-page');
   const live2d=document.getElementById('live2d-widget');
+  const btn=document.getElementById('home-btn');
   switch(status){
     case 0:
-      lockpage.style.top='-200px';
-      live2d.style.top='-300px';
+      lockpage.style.top='';
+      live2d.style.top='';
+      btn.style.top='';
       lockpage.style.opacity='0';
       live2d.style.opacity='0'
       lockpage.style.bottom='auto';
       setTimeout(() => {       
-      lockpage.style.display='none';
+      lockpage.style.display='';
       live2d.style.display='none';   
         }, 500);
       break;
     case 1:       
-    lockpage.style.display='';
+    lockpage.style.display='flex';
     live2d.style.display='';  
       setTimeout(() => {  
-        lockpage.style.top='';
-        live2d.style.top=''
+        lockpage.style.top='0';
+        live2d.style.top='200px'
+        btn.style.top='500px';
         lockpage.style.opacity='';
         live2d.style.opacity=''
         lockpage.style.bottom='';
@@ -108,10 +111,6 @@ function lockmove(status){
   }
 }
 function comin(){
-  const lockpage=document.getElementById('lock-page');
-  const live2d=document.getElementById('live2d-widget');
-  lockpage.style.display='none';
-  live2d.style.display='none';
   console.log(document.referrer.split('#')[0]);
   console.log();
   if (document.referrer && document.referrer.split('#')[0] !== window.location.href.split('#')[0]) {
@@ -120,7 +119,6 @@ function comin(){
 } else {
     lock(1);
 }
-    document.getElementById(`home-bar`).style.top = '0';
     document.querySelector(`.name`).style.width='200px';
     access();
     document.addEventListener('click', handleDocumentClick);
