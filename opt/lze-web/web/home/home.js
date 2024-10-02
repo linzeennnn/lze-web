@@ -5,6 +5,7 @@ let pic_path;
 let mon_path;
 let not_path;
 let bok_path;
+let tra_path;
 const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
 
 // notify
@@ -125,8 +126,10 @@ function comin(){
 doc_path = `web/doc/doc.html#${ip}`;
 pic_path = `web/pic/pic.html#${ip}`;
 mon_path = `web/mon/monitor.html#${ip}`;
+tra_path = `web/tra/tra.html#${ip}`; 
 not_path = `web/not/not.html#${ip}`;
 bok_path = `web/bok/bok.html#${ip}`;
+ter_path = `web/ter/ter.html#${ip}`; 
 };
 window.onload = comin;
 function getip() {

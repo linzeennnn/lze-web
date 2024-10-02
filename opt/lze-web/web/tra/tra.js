@@ -170,7 +170,7 @@ window.addEventListener('scroll', handleScroll);
  }
  function loadFolder(folder = '') {
    selectedarray.length = 0;
-   fetch(`${protocol}//${ip}/code/Documents/doc_list.php?folder=` + folder)
+   fetch(`${protocol}//${ip}/code/trash/doc_list.php?folder=` + folder)
  .then(response => {
    fetchnologin(response)
    return response.json();
@@ -270,7 +270,7 @@ window.addEventListener('scroll', handleScroll);
          const downloadLink = document.createElement('a');
          // 修改 downloadLink 的 href 指向 PHP 脚本而不是直接文件路径
          downloadLink.className = 'downloadLink';
-         downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
+         downloadLink.href = `${protocol}//${ip}/code/trash/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
          downloadLink.title = `下载${file}`;
          downloadLink.textContent = `下载 ${file}`;
          downloadLink.addEventListener('click',()=>{
@@ -352,7 +352,7 @@ function selfile() {
       fd.append('nowpath', nowpath);  // 传递 nowpath 变量
 
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', `${protocol}//${ip}/code/Documents/upload.php`, true);
+      xhr.open('POST', `${protocol}//${ip}/code/trash/upload.php`, true);
       xmltoken(xhr);
       xhr.upload.onprogress = function (ev) {
           if (ev.lengthComputable) {
@@ -432,7 +432,7 @@ function newfolder(status){
    if (folderName===""){
      folderName="new_folder";
    }
-   fetch(`${protocol}//${ip}/code/Documents/new_folder.php`, {
+   fetch(`${protocol}//${ip}/code/trash/new_folder.php`, {
      method: 'POST',
      headers: {
        'Authorization': 'Bearer ' + token,
@@ -463,7 +463,7 @@ function del() {
     const dellist = JSON.stringify(selectedarray);
     const requestData = { dellist: dellist };
 
-    fetch(`${protocol}//${ip}/code/Documents/delete.php`, {
+    fetch(`${protocol}//${ip}/code/trash/delete.php`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -527,7 +527,7 @@ function paste() {
 switch (pastestatus){
  case 1:{
   access();
- fetch(`${protocol}//${ip}/code/Documents/copy.php`, {
+ fetch(`${protocol}//${ip}/code/trash/copy.php`, {
    method: 'POST',
    headers: {
      'Authorization': 'Bearer ' + token,
@@ -553,7 +553,7 @@ switch (pastestatus){
  break;
  case 0:{
   access();
-   fetch(`${protocol}//${ip}/code/Documents/move.php`, {
+   fetch(`${protocol}//${ip}/code/trash/move.php`, {
      method: 'POST',
      headers: {
        'Authorization': 'Bearer ' + token,
@@ -646,7 +646,7 @@ files=fileitem.querySelector('.folderLink');
    newname=files.innerText;
    oldpath=nowpath+oldname;
    newpath=nowpath+newname;   
-   fetch(`${protocol}//${ip}/code/Documents/rename.php`, {
+   fetch(`${protocol}//${ip}/code/trash/rename.php`, {
      method: 'POST',
      headers: {
        'Authorization': 'Bearer ' + token,

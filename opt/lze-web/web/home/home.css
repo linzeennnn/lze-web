@@ -209,8 +209,8 @@
     #monitor{
       background-image: url(../../icon/monitor.svg);
     }
-    #terminal{
-      background-image: url(../../icon/terminal.svg);
+    #trash{
+      background-image: url(../../icon/trash.svg);
     }
     #note{
       background-image: url(../../icon/note.svg);
@@ -233,8 +233,8 @@
      #dark-icon{
       background-image: url(../../icon/dark_grey.svg);
      }
-     #trash{
-      background-image: url(../../icon/bin_grey.svg);
+     #system{
+      background-image: url(../../icon/system.svg);
      }
      #lock{
       background-image: url(../../icon/power_grey.svg);

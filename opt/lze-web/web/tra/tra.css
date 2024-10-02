@@ -1,0 +1,661 @@
+.downloadLink {
+  position: fixed;
+    display: inline-block;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    bottom: 10px;
+    opacity: 0.5;
+    background-image: url(../../icon/download_pink.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    text-indent: -9999px; /* Hide text */
+    vertical-align: middle;
+  }
+  .downloadLink:hover {
+    opacity: 1;
+  }
+  .backbtn{
+    background-image: url(../../icon/left_pink.svg);
+    }
+   .ui-tooltip {
+          background: #492e4486; 
+          color: #ffb6d8; 
+      }
+      #upload-area{
+        opacity: 0;
+        background-color: #00000083;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: fixed;
+        pointer-events:none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 15;
+      }
+      #upload-area div{
+        opacity: 0.5;
+        background-image: url(../../icon/upload_pink.svg);
+        width: 30%;
+        height: 30%;
+      }
+      
+      #option-bar{
+        opacity: 0;
+        padding-top: 5%;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        /* justify-content: center; */
+        left: -60px;
+        position: fixed;
+        height: 100%;
+        width: 60px;
+        background-color: #7e6177a6;
+        z-index: 11;
+        box-shadow: var(--outshadow);
+        transition: left 1s ease , opacity 1s ease;
+        
+      }
+      #sidepage{
+        background-color: #664b62b7;
+      }
+      .side-btn:hover{
+        background-color: #85537a7c;
+      }
+      .option-btn{
+        opacity: 0.5;
+          top: 80px;
+          margin-top: 30px;
+          position: relative;
+          cursor: pointer;
+          width: 32px;
+          height: 32px;
+          background-position: center;
+          background-repeat: no-repeat;
+          margin: 10px;
+      }
+      .option-btn:hover{
+        opacity: 1;
+      }
+#open-side{
+  opacity: 0.5;
+  position: absolute;
+  top: 50px;
+  background-image: url(../../icon/option_white.svg);
+}
+#open-side:hover{
+  opacity: 1;
+}
+  .custom-upload-btn {
+    background-image: url(../../icon/upload_pink.svg);
+  }
+  #loadButton{
+    background-image: url(../../icon/load_pink.svg);
+  }
+  #del{
+    background-image: url(../../icon/bin_pink.svg);
+  }
+  #copy{
+    background-image: url(../../icon/copy_pink.svg);
+  }
+  #move{
+    background-image: url(../../icon/move_pink.svg);
+  }
+  #paste{
+    display: none;
+    animation: paste 1s ease-in-out infinite;
+    background-image: url(../../icon/paste_pink.svg);
+  }
+  .edit{
+    opacity: 0.5;
+    background-image: url(../../icon/edit_pink.svg);
+  }
+  .edit:hover{
+    opacity: 1;;
+  }
+  .save{
+    opacity: 0.5;
+    display: none;
+    background-image: url(../../icon/save_pink.svg);
+  }
+  .save:hover{
+    opacity: 1;
+  }
+  #closebar{
+    opacity: 0.5;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    position: absolute;
+    top: 500px;
+    right: 0;
+    background-image: url(../../icon/goleft_pink.svg);
+  }
+  #closebar:hover{
+    opacity: 1;
+  }
+  #openbar{
+    border-radius: 50%;
+    display: none;
+    margin: 0;
+    position: fixed;
+    top: 500px;
+    left: 5px;
+    background-image: url(../../icon/goright_pink.svg);
+    z-index: 9;
+  }
+  #openbar:hover{
+    background-color: #96848c4d;
+  }
+  .li-btn{
+    right: 0;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    right: 10px;
+  }
+  .editing{
+    cursor: text;
+    padding: 10px;
+    border-radius: 1em;
+    border: none;
+    box-shadow: var(--inshadow);
+    animation: edit 2s ease-in-out infinite;
+  }
+  .editing:focus{
+    outline: none;
+    background-color: transparent;
+  }
+  @keyframes edit {
+    0% {
+      background-color: #8d72807e;
+    }
+    50% {
+      background-color: transparent;
+    }
+    100% {
+      background-color: #8d72807e;
+    }
+  }
+  @keyframes paste {
+    0% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+      .main{
+        margin-left: 60px;
+      }
+  body {
+    overflow-x: hidden !important;
+    
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #261b24;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background-image 1s ease;
+  }
+  form {
+    width: 80%;
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #customFileUpload {
+    display: none;
+  }
+  #selectedFileName {
+    height: fit-content;
+    font-size: 20px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #0000008c;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position:relative;
+    max-width: 80%;
+  }
+  #filename{
+    height: fit-content;
+    font-size: 20px;
+    margin-left: 1%;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #0000008c;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position:relative;
+    max-width: 80%;
+  }
+  #fileListContainer {
+    opacity: 0;
+    justify-content: center;
+    display: flex;
+    overflow-y: hidden;
+    margin-top: 150px;
+    width: 100%;
+    position: relative;
+    border: none;
+    background-color: transparent;
+    overflow: hidden;
+    z-index: 2;
+    margin-bottom: 2em;
+    overflow: visible;
+    transition: all 1s ease;
+    
+  }
+  #top-bar{
+    top: -60px;
+    border-radius: 1em;
+     background-color: #815477a6;
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+    display:inline-flex;
+    height: 60px;
+    width: 80%;
+    position: fixed;
+    overflow: hidden;
+    z-index: 10;
+    transition: height 1s ease, top 1s ease , width 1s ease,margin-left 1s ease,background-color 1s ease ;
+    box-shadow: var(--outshadow)  
+  }
+ 
+  .path-bar{
+    background-color: transparent;
+    overflow: hidden;
+    width: 92%;
+    max-width: 95%;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 0.5%;
+    border-radius: 1em;
+    position: relative;
+    z-index: 10;
+    box-shadow: var(--inshadow);
+  }
+  
+  #folder-name-bar{
+    display: none;
+    background-color: transparent;
+    overflow: hidden;
+    width: 92%;
+    max-width: 95%;
+    margin-left: 10px;
+    margin-top: 10px;
+    border: none;
+    color: #e9a1d7;
+    margin-bottom: 10px;
+    margin-right: 0.5%;
+    border-radius: 1em;
+    position: relative;
+
+    z-index: 10;
+    box-shadow: var(--inshadow)
+  }
+  #folder-name-bar:focus{
+  outline: none;
+  background-color: transparent;
+}
+#folder-name-bar::placeholder{
+  color: #e9a1d7;
+}
+  #currentPath{
+    height: fit-content;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: 1%;
+    text-align: left;
+    font-weight: bold;
+    color: #ffb6d8;
+    overflow-x: hidden;
+    z-index: 10;
+  }
+  
+  #upButton{
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    max-height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    z-index: 10;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../../icon/goup_pink.svg);
+  }
+  #upButton:hover{
+    opacity: 1;
+  }
+  #cancel-folder{
+    opacity: 0.5;
+    display: none;
+  background-image: url(../../icon/no_pink.svg);
+  cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    max-height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    z-index: 10;
+    margin-left: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  #cancel-folder:hover{
+    opacity: 1;
+  }
+  #cancel:hover{
+    background-image: url(../../icon/no_white.svg);
+  }
+  #cancel{
+    opacity: 0.5;
+    background-image: url(../../icon/no_pink.svg);
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    z-index: 10;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  #cancel:hover{
+    opacity: 1;
+  }
+  
+#add-folder{
+  opacity: 0.5;
+  background-image: url(../../icon/addfolder_pink.svg);
+  cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    max-height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    z-index: 10;
+    margin-left: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#cancel:hover{
+  opacity: 1;
+}
+#add-folder:hover{
+   opacity: 1;
+}
+#comfirm{
+  background-image: url(../../icon/save_pink.svg);
+  cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: 32px;
+    max-height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    z-index: 10;
+    margin-left: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+}
+#comfirm:hover{
+  background-image: url(../../icon/save_pink.svg);
+}
+  #fileList {
+    width: 80%;
+    padding: 0;
+    list-style: none;
+    position: relative;
+  }
+
+  .files {
+    cursor: pointer;
+    margin-bottom: 1em;
+    display: flex;
+    height: 70px;
+    max-height: 70px;
+    background-color: #85657f86;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 120%;
+    border-bottom: none;
+    padding: 1.4%;
+    position: relative;
+    text-overflow: ellipsis;
+    border-radius: 1em;
+    transition: all 1S ease;
+    box-shadow: var(--outshadow) 
+  }
+ 
+  .files:hover{
+    background-color: #8543799c;
+  }
+.selected{
+  background-color: #8543799c;
+}
+  .fileLink {
+    
+    color: #ffb6d8;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10%;
+    max-width: 100% !important;  
+  }
+  .fileLink:hover,.folderLink:hover{
+    color: #ffffff;
+  }
+  .folderLink {
+    color: #e086b0;
+    text-decoration: underline; /* 添加下划线 */
+    font-weight: bold;
+    margin-right: 10%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100% !important;  
+  }
+
+
+ 
+  .rotate-box{
+    margin-right: 10px;
+    width: 32px;
+    height: 32px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+  .rotate-loading {
+    position: absolute;
+          /* left: 50%; */
+          transform: translate(-50%, -50%);
+          border-radius: 50%/50%;
+          border: 6px solid rgb(241, 111, 187);
+          border-top: 6px solid rgba(141, 12, 87, 0.61);
+          animation: rotate-loading 1s linear infinite;
+          width: 20px;
+          height: 20px;
+          z-index: 10;
+      }
+      #progress{
+  width:100%;
+  height:100%;
+  border:none;
+  overflow: hidden;
+}
+#bar{
+  width:0%;
+  height:100%;
+  background-color: rgba(95, 57, 86, 0.801);
+}
+#percent {
+color: rgb(70, 3, 47);
+font-size: 14px; 
+position: absolute;
+top: 50%; 
+left: 50%; 
+transform: translate(-50%, -50%); 
+white-space: nowrap; 
+}
+
+#top-btn{
+background-image: url(../../icon/toup_pink.svg);
+background-color: #85657f86;
+}
+#top-btn:hover{
+background-color: #6d37569a;
+}
+
+  #notify{
+    background-color: #85657f86;
+  }
+  #notifytext{
+    color: #ffb6d8;
+  }
+      
+      @keyframes rotate-loading {
+          0% {
+              transform: rotate(0deg);
+          }
+
+          100% {
+              /* 顺时针旋转360度 */
+              transform: rotate(360deg);
+          }
+      }
+  @media only screen and (max-width: 600px) {
+    .main{
+      margin-left: 0;
+    }
+  .pc-only{
+    display: none;
+  }
+  .phone_background {
+  position:relative;
+  overflow:hidden;
+  overflow-x: hidden;
+}
+.phone_background .fixed {
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  z-index:-100;
+  overflow:hidden;
+  overflow-x: hidden;
+}
+.next {
+        position:fixed;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:no-repeat center center;
+        background-size:cover;
+          overflow:hidden;
+          overflow-x: hidden; 
+          opacity: 0;
+          transition: opacity 1s ease ; 
+          z-index: 1;
+      }
+  .fileLink {
+    
+
+    max-width: 200px ; 
+}
+
+.path-bar{
+    
+    max-width: 70%;
+    
+  }
+  
+  #option-bar{
+    left: 0;
+    padding-top: 0;
+    align-items: center;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10;
+}
+.option-btn{
+  top: auto;
+  margin-top: 10px;
+  position: relative;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  margin: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#open-side{
+  top: auto;
+  margin-left: 0;
+  left: 5px;
+}
+.files:hover{
+background-color: #85657f86;
+}
+.selected{
+  background-color: #8543799c !important;
+}
+
+  }
