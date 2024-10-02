@@ -673,13 +673,11 @@ document.addEventListener('drop', (e) => {
   const files = dt.files;
 
   if (files.length > 0) {
-      // 将拖拽的文件赋值给文件输入框
       const dataTransfer = new DataTransfer();
       for (let i = 0; i < files.length; i++) {
           dataTransfer.items.add(files[i]);
       }
-      fileInput.files = dataTransfer.files; // 赋值给文件输入框
-      console.log("fileInput.files");
-      selfile(); // 调用 selfile 函数进行上传
+      fileInput.files = dataTransfer.files; 
+      selfile();
   }
   });
