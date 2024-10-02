@@ -654,42 +654,32 @@ function removeslash(path){
 //拖拽上传
 const fileInput = document.getElementById('uploadfile');
 const uploadarea = document.getElementById('upload-area');
-
-// 阻止默认行为
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-    window.addEventListener(eventName, preventDefaults, false);
-    document.body.addEventListener(eventName, preventDefaults, false);
+document.addEventListener('dragover', (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  uploadarea.style.opacity='1';
+});
+document.addEventListener('dragleave', (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  uploadarea.style.opacity='';
 });
 
-// 高亮拖拽区域
-window.addEventListener('dragover', () => {
-    uploadarea.classList.add('hover'); // 添加高亮类
-});
-window.addEventListener('dragleave', () => {
-    uploadarea.classList.remove('hover'); // 移除高亮类
-});
+document.addEventListener('drop', (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  uploadarea.style.opacity='';
+  const dt = e.dataTransfer;
+  const files = dt.files;
 
-// 处理拖拽放置事件
-window.addEventListener('drop', handleDrop, false);
-
-// 防止默认行为
-function preventDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-// 处理文件拖拽放置
-function handleDrop(e) {
-    const dt = e.dataTransfer;
-    const files = dt.files;
-
-    if (files.length > 0) {
-        // 将拖拽的文件赋值给文件输入框
-        const dataTransfer = new DataTransfer();
-        for (let i = 0; i < files.length; i++) {
-            dataTransfer.items.add(files[i]);
-        }
-        fileInput.files = dataTransfer.files; // 赋值给文件输入框
-        selfile(); // 调用 selfile 函数进行上传
-    }
-}
+  if (files.length > 0) {
+      // 将拖拽的文件赋值给文件输入框
+      const dataTransfer = new DataTransfer();
+      for (let i = 0; i < files.length; i++) {
+          dataTransfer.items.add(files[i]);
+      }
+      fileInput.files = dataTransfer.files; // 赋值给文件输入框
+      console.log("fileInput.files");
+      selfile(); // 调用 selfile 函数进行上传
+  }
+  });

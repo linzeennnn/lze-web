@@ -24,17 +24,26 @@
           color: #ffb6d8; 
       }
       #upload-area{
+        opacity: 0;
+        background-color: #00000083;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
         position: fixed;
-        pointer-events: none;
+        pointer-events:none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         z-index: 15;
       }
-      .hover {
-        border-color: #00000081;
-    }
+      #upload-area div{
+        opacity: 0.5;
+        background-image: url(../../icon/upload_pink.svg);
+        width: 30%;
+        height: 30%;
+      }
+      
       #option-bar{
         opacity: 0;
         padding-top: 5%;
