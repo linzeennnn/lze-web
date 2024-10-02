@@ -29,7 +29,7 @@ function showlogin(status){
     switch(status){
         case 1:
             if (enterpass) {
-                document.removeEventListener('keydown', enterpass); // 使用相同的函数引用
+                document.removeEventListener('keydown', enterpass); 
             }
             enterip = function(event) {
                 enter(1, event);

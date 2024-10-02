@@ -5,6 +5,7 @@ lightcolor='#966a85';
 let uploadpath;
 let nowpath="/";//当前目录（要上传的目录）
 let fullPath; 
+let editmode=0;
 //  操作导航栏
 function optionbar(status){
  const optionbar=document.getElementById('option-bar');
@@ -387,6 +388,12 @@ function selfile() {
 }
 
 // 新建文件夹
+// 键盘回车
+function keynewfolder(event) {
+  if (event.key === 'Enter') {
+    newfolder(2);
+  }
+}
 function newfolder(status){
  const pathbar=document.getElementById('path-bar');
  const namebar=document.getElementById('folder-name-bar');
@@ -397,12 +404,18 @@ function newfolder(status){
  let folderName=namebar.value;
  switch (status){
    case 1:
+    if(editmode!=0){
+      notify("请保存正在编辑内容")
+      return;
+    }
+    editmode=1;
  pathbar.style.display='none';
  namebar.style.display='block';
  comfirm.style.display='block'
  cancelfolder.style.display='block'
  upbtn.style.display='none';
  newfod.style.display='none';
+ document.addEventListener('keydown', keynewfolder);
  break;
  case 0:
    pathbar.style.display='';
@@ -411,6 +424,8 @@ function newfolder(status){
    cancelfolder.style.display=''
    upbtn.style.display='';
    newfod.style.display='';
+   editmode=0;
+   document.removeEventListener('keydown', keynewfolder);
    break;
    case 2:
      ifroot();  
@@ -429,6 +444,8 @@ function newfolder(status){
  .then(data => {
      loadFolder(removeslash(nowpath));
      namebar.value="";
+     editmode=0;
+     document.removeEventListener('keydown', keynewfolder);
      notify("新建:"+folderName)
  })
  .catch(error => {
@@ -613,6 +630,11 @@ files=fileitem.querySelector('.folderLink');
  }
  switch(option){
    case 0:
+    if(editmode!=0){
+      notify("请保存正在编辑内容")
+      return;
+    }
+    editmode=1;
      editbtn.style.display="none";
      savebtn.style.display="block";
      files.classList.add('editing');
@@ -638,6 +660,7 @@ files=fileitem.querySelector('.folderLink');
  .then(response => response.text())
  .then(data => {
  loadFolder(removeslash(nowpath))
+ editmode=0;
  notify(data);
  })
  .catch((error) => {
