@@ -18,29 +18,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = file_get_contents("php://input");
     $decodedData = json_decode($data, true); // 转换为 PHP 数组
 
-    $dellist = json_decode($decodedData['dellist'], true); // 获取 copylist
+    $dellist = json_decode($decodedData['dellist'], true); // 获取 dellist
 
     // 设置目标路径
-        $dest = '../../file/trash/';
+    $dest = '../../file/trash/';
     $results = [];
+    $metadata = []; // 存储原始路径的数组
     foreach ($dellist as $path) {
         $source = '../../file/Documents/upload/' . $path; // 源路径
 
         // 检查源路径是文件夹还是文件
         if (is_dir($source)) {
             // 移动文件夹
-            $destDir = getUniqueName($dest . getname($path),getname($path));
+            $destDir = getUniqueName($dest . getname($path), getname($path));
             if (rename($source, $destDir)) {
                 $results[] = "成功移动文件夹: $destDir";
+                $metadata[$destDir] = $source; // 记录原始路径
             } else {
                 $results[] = "移动文件夹失败: $path";
             }
         } elseif (file_exists($source)) {
             // 移动文件
             $fileName = getname($path); // 获取文件名
-            $destinationPath = getUniqueName($dest . $fileName,$fileName);
+            $destinationPath = getUniqueName($dest . $fileName, $fileName);
             if (rename($source, $destinationPath)) {
                 $results[] = "成功移动文件: $destinationPath";
+                $metadata[$destinationPath] = $source; // 记录原始路径
             } else {
                 $results[] = "移动文件失败: $fileName";
             }
@@ -49,12 +52,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // 保存元数据到JSON文件
+    file_put_contents('../../file/data/trash.json', json_encode($metadata));
+
     // 返回结果
     echo json_encode($results);
 }
 
 // 获取唯一名称的函数
-function getUniqueName($path,$basename) {
+function getUniqueName($path, $basename) {
     $info = pathinfo($path);
     $dirname = $info['dirname'];
     $extension = isset($info['extension']) ? '.' . $info['extension'] : '';
@@ -70,7 +76,6 @@ function getUniqueName($path,$basename) {
     }
     return $path;
 }
-
 
 // 递归复制文件夹的函数
 function copyDirectory($source, $dest) {

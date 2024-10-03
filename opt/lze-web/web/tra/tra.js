@@ -106,45 +106,6 @@ window.addEventListener('scroll', handleScroll);
    window.location.replace(`../../index.html#${ip}`);
 }, 1000); // 1000 毫秒 = 1 秒
  }
- function loading(status) {
-  
-   const fileInput = document.getElementById('uploadfile');
-   const load = document.getElementById('loading');
-   const loadbox = document.getElementById('rotate-box');
-   const loadText = document.getElementById('load-text');
-   const upbtn = document.getElementById('up-btn');
-   const goupbtn = document.getElementById('upButton');
-   const path = document.getElementById('currentPath');
-   const cancel = document.getElementById('cancel');
-   const progress = document.getElementById('progress');
-   
-   if (fileInput.files.length === 0) {
-     notify("请先选择一个文件进行上传");
-       return; // 没有选择文件，直接返回
-   }
-   if (status==1){
-   path.style.display = 'none';
-   upbtn.style.display = 'none';
-   goupbtn.style.display = 'none';
-   progress.style.display = 'block';
-   load.style.display = 'block';
-   cancel.style.display = 'block';
-   loadbox.style.display = 'block';
-   }
-   else {
-     path.style.display = '';
-     upbtn.style.display = '';
-     goupbtn.style.display = '';
-     progress.style.display = 'none';
-     load.style.display = 'none';
-     cancel.style.display = 'none';
-     loadbox.style.display = 'none';
-   }
-
- }
- function cancelUpload() {
-   reloadPage();
- }
  function pathlen(textid, text) {
    const barWidth = textid.offsetWidth;
    const tempElement = document.createElement('span');
@@ -187,19 +148,6 @@ window.addEventListener('scroll', handleScroll);
 
        data.folders.forEach(folder => {
          const listItem = document.createElement('li');
-         const editbtn= document.createElement('div');
-         editbtn.className='edit li-btn';
-         editbtn.title = `重命名`;
-         editbtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(0,listItem,2);
-         });
-         const savebtn= document.createElement('div');
-         savebtn.className='save li-btn';
-         savebtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(1,listItem,2);
-         });
          listItem.className = 'files';
          const folderLink = document.createElement('span');
          folderLink.textContent = folder;
@@ -216,26 +164,11 @@ window.addEventListener('scroll', handleScroll);
 
        });
          listItem.appendChild(folderLink);
-         listItem.appendChild(editbtn);
-         listItem.appendChild(savebtn);
          fileList.appendChild(listItem);
        });
 
        data.files.forEach(file => {
          const listItem = document.createElement('li');
-         const editbtn= document.createElement('div');
-         editbtn.className='edit li-btn';
-         editbtn.title = `重命名`;
-         editbtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(0,listItem,1);
-         });
-         const savebtn= document.createElement('div');
-         savebtn.className='save li-btn';
-         savebtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(1,listItem,1);
-         });
          listItem.className = 'files';
          const fileLink = document.createElement('span');
          const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
@@ -264,25 +197,9 @@ window.addEventListener('scroll', handleScroll);
          });
 
          listItem.appendChild(fileLink);
-         listItem.appendChild(editbtn);
-         listItem.appendChild(savebtn);
-
-         const downloadLink = document.createElement('a');
-         // 修改 downloadLink 的 href 指向 PHP 脚本而不是直接文件路径
-         downloadLink.className = 'downloadLink';
-         downloadLink.href = `${protocol}//${ip}/code/trash/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
-         downloadLink.title = `下载${file}`;
-         downloadLink.textContent = `下载 ${file}`;
-         downloadLink.addEventListener('click',()=>{
-           event.stopPropagation(); 
-           notify("开始下载")
-         });
-
-         listItem.appendChild(downloadLink);
 
          fileList.appendChild(listItem);
        });
-
        // 处理返回上级目录按钮
        const upButton = document.getElementById('upButton');
        if (data.currentFolder && data.currentFolder !== '') {
@@ -310,160 +227,15 @@ function ifroot(){
    nowpath=fullPath;
  }
 }
-// 发送文件
-function selfile() {
-  ifroot(); 
-  var files = fileInput.files; // 直接使用 fileInput 的文件
-  if (files.length === 0) {
-      notify("请先选择文件");
-      return;
-  }
-  loading(1);
-  var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
-  var totalFiles = files.length;
-  var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
-  var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
-
-  // 计算每个文件的总块数
-  for (let i = 0; i < totalFiles; i++) {
-      if (files[i].size > 10 * 1024 * 1024) { // 文件大于 10MB
-          totalChunks[i] = Math.ceil(files[i].size / chunkSize);
-      } else {
-          totalChunks[i] = 1; // 小于等于 10MB 的文件只需一次上传
-      }
-  }
-
-  function uploadChunk(fileIndex) {
-      if (fileIndex >= totalFiles) {
-          loading(0);
-          return;
-      }
-
-      var file = files[fileIndex];
-      var start = currentChunks[fileIndex] * chunkSize;
-      var end = Math.min(start + chunkSize, file.size);
-      var chunk = file.slice(start, end);
-
-      var fd = new FormData();
-      fd.append('file', chunk);
-      fd.append('fileName', file.name);
-      fd.append('totalChunks', totalChunks[fileIndex]);
-      fd.append('currentChunk', currentChunks[fileIndex]);
-      fd.append('nowpath', nowpath);  // 传递 nowpath 变量
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', `${protocol}//${ip}/code/trash/upload.php`, true);
-      xmltoken(xhr);
-      xhr.upload.onprogress = function (ev) {
-          if (ev.lengthComputable) {
-              var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
-              var percentElement = document.getElementById('percent');
-              document.getElementById('bar').style.width = percent + '%';
-              percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
-          }
-      };
-
-      xhr.onload = function () {
-          xmlnologin(xhr);
-          if (xhr.status === 200) {
-              currentChunks[fileIndex]++;
-              if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
-                  uploadChunk(fileIndex); // 上传下一个块
-              } else {
-                  // 上传下一个文件
-                  uploadChunk(fileIndex + 1);
-                  notify(`文件 ${file.name} 上传成功`);
-                  uploadpath = xhr.responseText;
-                  console.log(uploadpath);
-                  loadFolder(removeslash(nowpath));
-                  desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
-              }
-          }
-      };
-
-      xhr.send(fd);
-  }
-
-  uploadChunk(0); // 开始上传第一个文件
-}
-
-// 新建文件夹
-// 键盘回车
-function keynewfolder(event) {
-  if (event.key === 'Enter') {
-    newfolder(2);
-  }
-}
-function newfolder(status){
- const pathbar=document.getElementById('path-bar');
- const namebar=document.getElementById('folder-name-bar');
- const comfirm=document.getElementById('comfirm');
- const cancelfolder=document.getElementById('cancel-folder');
- const upbtn=document.getElementById('upButton');
- const newfod=document.getElementById('add-folder');
- let folderName=namebar.value;
- switch (status){
-   case 1:
-    if(editmode!=0){
-      notify("请保存正在编辑内容")
-      return;
-    }
-    editmode=1;
- pathbar.style.display='none';
- namebar.style.display='block';
- comfirm.style.display='block'
- cancelfolder.style.display='block'
- upbtn.style.display='none';
- newfod.style.display='none';
- document.addEventListener('keydown', keynewfolder);
- break;
- case 0:
-   pathbar.style.display='';
-   namebar.style.display='';
-   comfirm.style.display=''
-   cancelfolder.style.display=''
-   upbtn.style.display='';
-   newfod.style.display='';
-   editmode=0;
-   document.removeEventListener('keydown', keynewfolder);
-   break;
-   case 2:
-     ifroot();  
-   if (folderName===""){
-     folderName="new_folder";
-   }
-   fetch(`${protocol}//${ip}/code/trash/new_folder.php`, {
-     method: 'POST',
-     headers: {
-       'Authorization': 'Bearer ' + token,
-         'Content-Type': 'application/json'
-     },
-     body: JSON.stringify({ folderName, nowpath })
- })
- .then(response => response.text())
- .then(data => {
-     loadFolder(removeslash(nowpath));
-     namebar.value="";
-     editmode=0;
-     document.removeEventListener('keydown', keynewfolder);
-     notify("新建:"+folderName)
- })
- .catch(error => {
-     console.error('Error:', error);
- });
- newfolder(0);
-   break;
- }
-}
-// 删除
-function del() {
+// 恢复
+function recover() {
   access();
-  if (confirm('确定要删除所选文件吗')) {
+  if (confirm('确定要恢复所选文件吗')) {
     ifroot();
     const dellist = JSON.stringify(selectedarray);
     const requestData = { dellist: dellist };
 
-    fetch(`${protocol}//${ip}/code/trash/delete.php`, {
+    fetch(`${protocol}//${ip}/code/trash/recover.php`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -489,100 +261,6 @@ function del() {
     });
   }
 }
-
-
-let pastestatus;
-let copyarray=[];
-// 复制
-const pastebtn=document.getElementById('paste');
-function copy(status){
-copyarray.length=0;
-if (selectedarray.length==0){
- notify("请选择文件");
-pastebtn.style.display="none";
- return;
-}
-switch (status){
- case 1:
-   pastestatus=1;
-   break;
- case 0:
- pastestatus=0;
- break;
-}
-copyarray=selectedarray.slice();
-pastebtn.style.display="block";
-}
-// 粘贴
-let copylist;
-function paste() {
- ifroot(); 
- copylist = JSON.stringify(copyarray);
-
- // 创建一个对象，包含 copylist 和 nowpath
- const requestData = {
-   copylist: copylist,
-   nowpath: nowpath
- };
-switch (pastestatus){
- case 1:{
-  access();
- fetch(`${protocol}//${ip}/code/trash/copy.php`, {
-   method: 'POST',
-   headers: {
-     'Authorization': 'Bearer ' + token,
-     'Content-Type': 'application/json',
-   },
-   body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
- })
- .then(response => {
-  if (response.status === 401) {
-    throw new Error('未授权访问');
-  }
-  return response.text();  
-})
- .then(data => {
-   loadFolder(removeslash(nowpath));
-   notify("已复制");
-   pastebtn.style.display='none';
-   copyarray.length=0;
- })
- .catch((error) => {
-   console.error('错误:', error);
- });}
- break;
- case 0:{
-  access();
-   fetch(`${protocol}//${ip}/code/trash/move.php`, {
-     method: 'POST',
-     headers: {
-       'Authorization': 'Bearer ' + token,
-       'Content-Type': 'application/json',
-     },
-     body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
-   })
-   .then(response => {
-    if (response.status === 401) {
-      throw new Error('未授权访问');
-    }
-    return response.text();  
-  })
-   .then(data => {
-     loadFolder(removeslash(nowpath));
-     notify("已移动");
-     pastebtn.style.display='none';
-     copyarray.length=0;
-     console.log(data);
-   })
-   .catch((error) => {
-     console.error('错误:', error);
-   });
- }
- break;
-}
- 
-}
-
 // 选中
 let filesname;
 let selectedpath;
@@ -611,106 +289,8 @@ if (fileitem.classList.contains('selected')) {
 selectedarray.push(selectedpath);
 }
 }
-// 重命名
- let oldname;
- let newname;
-function rename(option,fileitem,type){
- let newpath;
- let oldpath;
- let files;
- const editbtn=fileitem.querySelector('.edit');
- const savebtn=fileitem.querySelector('.save');
- switch (type){
-   case 1:
-files=fileitem.querySelector('.fileLink');
-   break;
-   case 2:    
-files=fileitem.querySelector('.folderLink');
-     break;
- }
- switch(option){
-   case 0:
-    if(editmode!=0){
-      notify("请保存正在编辑内容")
-      return;
-    }
-    editmode=1;
-     editbtn.style.display="none";
-     savebtn.style.display="block";
-     files.classList.add('editing');
-     files.setAttribute('contenteditable', 'true');
- oldname=files.innerText;
-   break;
-   case 1:
-   ifroot();  
-   newname=files.innerText;
-   oldpath=nowpath+oldname;
-   newpath=nowpath+newname;   
-   fetch(`${protocol}//${ip}/code/trash/rename.php`, {
-     method: 'POST',
-     headers: {
-       'Authorization': 'Bearer ' + token,
-         'Content-Type': 'application/json',
-     },
-     body: JSON.stringify({
-         oldpath: oldpath,
-         newpath: newpath
-     }),
- })
- .then(response => response.text())
- .then(data => {
- loadFolder(removeslash(nowpath))
- editmode=0;
- notify(data);
- })
- .catch((error) => {
-     console.log(error);
-     notify(data);;
- });
-     break;
- }
-}
 // 去除最后斜杠
 function removeslash(path){
  return path.endsWith('/') ? path.slice(0, -1) : path;
 }
-//拖拽上传
-const fileInput = document.getElementById('uploadfile');
-const uploadarea = document.getElementById('upload-area');
-const filelist = document.getElementById('fileListContainer');
 
-document.addEventListener('dragover', handleDragOver);
-document.addEventListener('dragleave', handleDragLeave);
-document.addEventListener('drop', handleDrop);
-filelist.addEventListener('dragover', handleDragOver);
-filelist.addEventListener('dragleave', handleDragLeave);
-filelist.addEventListener('drop', handleDrop);
-
-function handleDragOver(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    uploadarea.style.opacity = '1';
-}
-
-function handleDragLeave(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    uploadarea.style.opacity = '';
-}
-
-function handleDrop(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    uploadarea.style.opacity = '';
-    const dt = e.dataTransfer;
-    const files = dt.files;
-
-    if (files.length > 0) {
-        const dataTransfer = new DataTransfer();
-        for (let i = 0; i < files.length; i++) {
-            dataTransfer.items.add(files[i]);
-        }
-        fileInput.files = dataTransfer.files; 
-        selfile();
-    }
-}
