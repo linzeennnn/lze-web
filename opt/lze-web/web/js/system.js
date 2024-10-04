@@ -115,8 +115,8 @@ function getsystem(status){
                             cpuProgress.style.width = cpuValue.textContent;
                             memProgress.style.width = memValue.textContent;
                             diskProgress.style.width = diskValue.textContent;
-                            memspace.textContent = memused + '/' + memall + 'MB';
-                            diskspace.textContent = diskused + '/' + diskall + 'GB';
+                            memspace.textContent = memused + 'MB'+'/' + memall + 'MB';
+                            diskspace.textContent = diskused + 'GB'+'/' + diskall + 'GB';
                             loading.forEach(loading => {
                               loading.style.display = 'none';
                           });
