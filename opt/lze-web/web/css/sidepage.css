@@ -54,7 +54,13 @@
     background-position: center;
     background-repeat: no-repeat;
   }
-
+ #system{
+  width: 32px;
+  height: 32px;
+  background-image: url(../../icon/system.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+ }
   #side-box{
     width: 100%;
     height: fit-content;

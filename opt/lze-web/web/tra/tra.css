@@ -1,23 +1,5 @@
-.downloadLink {
-  position: fixed;
-    display: inline-block;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    bottom: 10px;
-    opacity: 0.5;
-    background-image: url(../../icon/download_pink.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: pointer;
-    text-indent: -9999px; /* Hide text */
-    vertical-align: middle;
-  }
-  .downloadLink:hover {
-    opacity: 1;
-  }
   .backbtn{
-    background-image: url(../../icon/left_pink.svg);
+    background-image: url(../../icon/left_orange.svg);
     }
    .ui-tooltip {
           background: #80655486; 
@@ -74,7 +56,7 @@
   opacity: 1;
 }
   #loadButton{
-    background-image: url(../../icon/load_pink.svg);
+    background-image: url(../../icon/load_orange.svg);
   }
   #recover{
     background-image: url(../../icon/recover_orange.svg);
@@ -87,7 +69,7 @@
     position: absolute;
     top: 500px;
     right: 0;
-    background-image: url(../../icon/goleft_pink.svg);
+    background-image: url(../../icon/goleft_orange.svg);
   }
   #closebar:hover{
     opacity: 1;
@@ -99,7 +81,7 @@
     position: fixed;
     top: 500px;
     left: 5px;
-    background-image: url(../../icon/goright_pink.svg);
+    background-image: url(../../icon/goright_orange.svg);
     z-index: 9;
   }
   #openbar:hover{
@@ -229,7 +211,7 @@
     margin-left: 1%;
     text-align: left;
     font-weight: bold;
-    color: #ffb6d8;
+    color: #ecb791;
     overflow-x: hidden;
     z-index: 10;
   }
@@ -247,7 +229,7 @@
     z-index: 10;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(../../icon/goup_pink.svg);
+    background-image: url(../../icon/goup_orange.svg);
   }
   #upButton:hover{
     opacity: 1;
@@ -310,12 +292,18 @@
     text-overflow: ellipsis;
     max-width: 100% !important;  
   }
+  .oripath{
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 10px;
+    color: #b19e90;
+  }
 #top-btn{
-background-image: url(../../icon/toup_pink.svg);
-background-color: #85657f86;
+background-image: url(../../icon/toup_orange.svg);
+background-color: #85756586;
 }
 #top-btn:hover{
-background-color: #6d37569a;
+background-color: #6d51379a;
 }
 
   #notify{

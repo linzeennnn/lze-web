@@ -2,6 +2,7 @@
 require '../auth/auth.php';
 requireAuth();
 
+
 function getname($path) {
     $path = rtrim($path, '/'); // 去掉末尾的斜杠
     $lastSlashPos = strrpos($path, '/'); // 找到最后一个斜杠的位置
@@ -12,7 +13,6 @@ function getname($path) {
         return $path; // 如果没有斜杠，说明整个路径就是文件夹名
     }
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 获取 JSON 数据
     $data = file_get_contents("php://input");
@@ -23,7 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 设置目标路径
     $dest = '../../file/trash/';
     $results = [];
-    $metadata = []; // 存储原始路径的数组
+    $metadataFile = '../../file/data/deleted_metadata.json';
+    
+    // 读取已存在的元数据
+    $metadata = file_exists($metadataFile) ? json_decode(file_get_contents($metadataFile), true) : [];
+
     foreach ($dellist as $path) {
         $source = '../../file/Documents/upload/' . $path; // 源路径
 
@@ -33,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $destDir = getUniqueName($dest . getname($path), getname($path));
             if (rename($source, $destDir)) {
                 $results[] = "成功移动文件夹: $destDir";
-                $metadata[$destDir] = $source; // 记录原始路径
+                $metadata[getname($destDir)] = $source; // 记录原始路径
             } else {
                 $results[] = "移动文件夹失败: $path";
             }
@@ -43,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $destinationPath = getUniqueName($dest . $fileName, $fileName);
             if (rename($source, $destinationPath)) {
                 $results[] = "成功移动文件: $destinationPath";
-                $metadata[$destinationPath] = $source; // 记录原始路径
+                $metadata[$fileName] = $source; // 记录原始路径
             } else {
                 $results[] = "移动文件失败: $fileName";
             }
@@ -52,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // 保存元数据到JSON文件
-    file_put_contents('../../file/data/trash.json', json_encode($metadata));
+    // 保存合并后的元数据到JSON文件
+    file_put_contents($metadataFile, json_encode($metadata));
 
     // 返回结果
     echo json_encode($results);

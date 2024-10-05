@@ -35,11 +35,18 @@ lightBtn.id = 'light-btn';
 lightBtn.title = '切换亮主题';
 lightBtn.onclick = () => switchTheme('light');
 lightBtn.innerHTML = '<div id="light"></div><span class="side-text">主题</span>';
+// 监视器
+const sysbtn = document.createElement('div');
+sysbtn.className = 'side-btn';
+sysbtn.title = '系统监视器';
+sysbtn.onclick = () => getsystem(1);
+sysbtn.innerHTML = '<div id="system"></div><span class="side-text">系统</span>';
 
 // 将按钮添加到容器中
 sideBox.appendChild(loginBtn);
 sideBox.appendChild(darkBtn);
 sideBox.appendChild(lightBtn);
+sideBox.appendChild(sysbtn);
 
 // 将各部分添加到侧边页面
 sidePage.appendChild(closeside);

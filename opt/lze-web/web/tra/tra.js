@@ -131,7 +131,7 @@ window.addEventListener('scroll', handleScroll);
  }
  function loadFolder(folder = '') {
    selectedarray.length = 0;
-   fetch(`${protocol}//${ip}/code/trash/doc_list.php?folder=` + folder)
+   fetch(`${protocol}//${ip}/code/trash/trash_list.php?folder=` + folder)
  .then(response => {
    fetchnologin(response)
    return response.json();
@@ -151,7 +151,7 @@ window.addEventListener('scroll', handleScroll);
          listItem.className = 'files';
          const folderLink = document.createElement('span');
          folderLink.textContent = folder;
-         folderLink.className = 'folderLink';
+         folderLink.classList.add('folderLink', 'filename');
          listItem.addEventListener('click', function() {
            select(listItem,2);
          });
@@ -171,10 +171,10 @@ window.addEventListener('scroll', handleScroll);
          const listItem = document.createElement('li');
          listItem.className = 'files';
          const fileLink = document.createElement('span');
-         const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
+         const Src = `${protocol}//${ip}/file/trash/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
          const fileListContainer = document.getElementById('fileListContainer');
          fileLink.textContent = file;
-         fileLink.className = 'fileLink';
+         fileLink.classList.add('fileLink', 'filename');
          fileLink.title = `预览${file}`;
          listItem.addEventListener('click', function() {
            select(listItem,1);
@@ -186,7 +186,7 @@ window.addEventListener('scroll', handleScroll);
          }
            let filepath;
            nowpath = fullPath;
-           let rootpath=`${protocol}//${ip}/file/Documents/upload/`;
+           let rootpath=`${protocol}//${ip}/file/trash/`;
            if (nowpath==="/"){
              filepath=rootpath + file;
            }
@@ -209,8 +209,35 @@ window.addEventListener('scroll', handleScroll);
        } else {
          upButton.style.pointerEvents = 'none';
        }
+
+     getpath();
      });
 }
+// 获取原路径
+async function getpath() {
+  const response = await fetch(`${protocol}//${ip}/file/data/deleted_metadata.json`, {
+    method: 'GET',
+    cache: 'no-cache' // 强制不使用缓存
+  });
+  const data = await response.json();
+  const trashfilename = Object.keys(data);
+  const filename=document.querySelectorAll('.filename')
+  filename.forEach(filename => {
+    if (trashfilename.includes(filename.innerText)) {  
+      const oripath = document.createElement('span');
+      oripath.className = 'oripath';    
+      oripath.innerText=data[filename.innerText].replace('../../file/Documents/upload', '') || '/';
+      filename.insertAdjacentElement('afterend', oripath);
+    } else {
+      const oripath = document.createElement('span');
+      oripath.className = 'oripath';    
+      oripath.innerText='/'+filename.innerText;
+      filename.insertAdjacentElement('afterend', oripath);
+    }
+});
+}
+
+
 // 回到上一级
  function goUp() {
    const upButton = document.getElementById('upButton');
@@ -230,67 +257,77 @@ function ifroot(){
 // 恢复
 function recover() {
   access();
+  ifroot();
   if (confirm('确定要恢复所选文件吗')) {
-    ifroot();
-    const dellist = JSON.stringify(selectedarray);
-    const requestData = { dellist: dellist };
-
     fetch(`${protocol}//${ip}/code/trash/recover.php`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestData),
+      body: JSON.stringify(pathsMap),
     })
     .then(response => {
       if (response.status === 401) {
         throw new Error('未授权访问');
       }
-      return response.text();  
     })
-    .then(data => {
+    .then(results => {
+      selectedarray.length==0;
       loadFolder(removeslash(nowpath));
-      notify("已删除");
-      pastebtn.style.display = 'none';
-      copyarray.length = 0;
-      console.log(data);
+      notify("已恢复");
+      selectedarray.length = 0;
     })
     .catch((error) => {
       console.error('错误:', error);
     });
   }
 }
+
 // 选中
 let filesname;
 let selectedpath;
 let selectedarray = [];
 let index;
 let selectcount;
-function select(fileitem,type){
- switch (type){
-   case 1:
-    filesname=fileitem.querySelector('.fileLink');
-   break;
-   case 2:
-      filesname=fileitem.querySelector('.folderLink');
-     break;
- }
-selectedpath = fullPath + filesname.innerText;
-if (fileitem.classList.contains('selected')) {
- notify("取消选择");
- fileitem.classList.remove('selected');
- index = selectedarray.indexOf(selectedpath);
- selectedarray.splice(index, 1);
-} else {
- selectcount=selectedarray.length+1;
- notify("已选择"+selectcount+"个文件");
- fileitem.classList.add('selected');
-selectedarray.push(selectedpath);
+let recoverpath;
+// 用于存储 selectedpath 和 recoverpath 的对象
+let pathsMap = {};
+
+function select(fileitem, type) {
+  let filesname;
+
+  switch (type) {
+    case 1:
+      filesname = fileitem.querySelector('.fileLink');
+      break;
+    case 2:
+      filesname = fileitem.querySelector('.folderLink');
+      break;
+  }
+
+  selectedpath = fullPath + filesname.innerText;
+
+  // 将 selectedpath 作为键，recoverpath 作为值
+  recoverpath = fileitem.querySelector('.oripath').innerText;
+  pathsMap[selectedpath] = recoverpath;
+
+  if (fileitem.classList.contains('selected')) {
+    notify("取消选择");
+    fileitem.classList.remove('selected');
+    index = selectedarray.indexOf(selectedpath);
+    selectedarray.splice(index, 1);
+    delete pathsMap[selectedpath]; // 移除对应的键值对
+  } else {
+    selectcount = selectedarray.length + 1;
+    notify("已选择" + selectcount + "个文件");
+    fileitem.classList.add('selected');
+    selectedarray.push(selectedpath);
+  }
 }
-}
+
 // 去除最后斜杠
-function removeslash(path){
- return path.endsWith('/') ? path.slice(0, -1) : path;
+function removeslash(path) {
+  return path.endsWith('/') ? path.slice(0, -1) : path;
 }
 

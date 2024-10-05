@@ -28,8 +28,8 @@ systemBoxes.forEach(box => {
   const sysProgress = document.createElement('div');
   sysProgress.className = 'sys-progress'; 
   const sysValue = document.createElement('span');
-  const loading = document.createElement('div');
-  loading.className = 'loading';
+  const sysloading = document.createElement('div');
+  sysloading.className = 'sys-loading';
   sysValue.className = 'sys-value';
   netupvalue=document.createElement('span');
   netupvalue.className = 'sys-value';
@@ -61,14 +61,14 @@ systemBoxes.forEach(box => {
   sysBar.appendChild(sysProgress);
   sysBox.appendChild(sysBar);
   sysBox.appendChild(sysValue);
-  sysBox.appendChild(loading);
+  sysBox.appendChild(sysloading);
   }
  if(box.id == "net"){
   sysBox.appendChild(netupicon);
   sysBox.appendChild(netupvalue);
   sysBox.appendChild(netdownicon);
   sysBox.appendChild(netdownvalue);
-  sysBox.appendChild(loading);
+  sysBox.appendChild(sysloading);
  }
 document.body.appendChild(systemPage);
 switch (box.id) {
@@ -87,7 +87,7 @@ switch (box.id) {
 }
 });
 const loadsys=document.querySelectorAll('.sys-value');
-const loading=document.querySelectorAll('.loading');
+const sysloading=document.querySelectorAll('.sys-loading');
 // loadsys.style.display='none';
 // 监视系统
 function getsystem(status){
@@ -101,7 +101,7 @@ function getsystem(status){
                     fetch(`${protocol}//${ip}/code/system/system.php`)
                         .then(response => response.json())
                         .then(data => {
-                            cpuValue.textContent = data.cpuUsage + '%';
+                            cpuValue.textContent = Math.floor(data.cpuUsage)+ '%';
                             memValue.textContent=Math.floor((memused / memall) * 100) + '%';
                             diskValue.textContent=Math.floor((diskused / diskall) * 100) + '%';
                             memall = data.totalMemory;
@@ -110,17 +110,16 @@ function getsystem(status){
                             diskall = Math.floor(data.totalDisk / (1024 * 1024));
                             diskused = Math.floor(data.usedDisk / (1024 * 1024));
                             diskValue.textContent = Math.floor((data.usedDisk / data.totalDisk) * 100) + '%';
-                            netdownvalue.textContent = data.networkRx + "MB/s";
-                            netupvalue.textContent = data.networkTx + "MB/s";
+                            netdownvalue.textContent = data.networkRx + "MB";
+                            netupvalue.textContent = data.networkTx + "MB";
                             cpuProgress.style.width = cpuValue.textContent;
                             memProgress.style.width = memValue.textContent;
                             diskProgress.style.width = diskValue.textContent;
-                            memspace.textContent = memused + 'MB'+'/' + memall + 'MB';
-                            diskspace.textContent = diskused + 'GB'+'/' + diskall + 'GB';
-                            loading.forEach(loading => {
-                              loading.style.display = 'none';
+                            memspace.textContent = memused + 'MB'+' / ' + memall + 'MB';
+                            diskspace.textContent = diskused + 'GB'+' / ' + diskall + 'GB';
+                            sysloading.forEach(sysloading => {
+                              sysloading.style.display = 'none';
                           });
-                            // loadsys.style.display='block';
                         })
                         .catch(error => console.error('Error fetching system info:', error));
                 }, 4000); // 每 4 秒执行一次

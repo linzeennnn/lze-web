@@ -39,6 +39,8 @@
       }
       #upload-area div{
         opacity: 0.5;
+        background-position: center;
+        background-repeat: no-repeat;
         background-image: url(../../icon/upload_pink.svg);
         width: 30%;
         height: 30%;
