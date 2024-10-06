@@ -135,10 +135,10 @@ async function getnote() {
                 titleSpan.innerText=title;
                 titleSpan.title=title;
                 note.appendChild(titleSpan);
-                const textSpan = document.createElement('span');
-                textSpan.className = 'text';
-                textSpan.style.display='none';
-                note.appendChild(textSpan);
+                const textcode = document.createElement('code');
+                textcode.className = 'text';
+                textcode.style.display='none';
+                note.appendChild(textcode);
                 const edit = document.createElement('div');
                 edit.className = 'edit';
                 edit.title='编辑';
@@ -217,10 +217,19 @@ async function getnote() {
         }
     }
     // copy
+    function replaceNbspWithSpace(text) {
+        return text.replace(/\u00A0/g, ' '); // 替换不间断空格为普通空格
+    }
+    
     function copytext(note, text) {
         const copy = note.querySelector('.copy');
+    
+        // 替换不间断空格
+        const cleanedText = replaceNbspWithSpace(text);
+        console.log('清理后的文本:', cleanedText); // 可选，调试信息
+    
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard.writeText(cleanedText).then(() => {
                 copy.style.backgroundImage = 'url(../../icon/yes_green.svg)';
                 notify("成功复制");
                 setTimeout(() => {
@@ -230,9 +239,8 @@ async function getnote() {
                 console.error('Failed to copy text to clipboard: ', err);
             });
         } else {
-            // Safari fallback for unsupported versions
             const textArea = document.createElement("textarea");
-            textArea.value = text;
+            textArea.value = cleanedText;
             document.body.appendChild(textArea);
             textArea.select();
             try {
@@ -248,8 +256,6 @@ async function getnote() {
             document.body.removeChild(textArea);
         }
     }
-    
-    
     // delete note
     async function delnote(fileName) {
         
