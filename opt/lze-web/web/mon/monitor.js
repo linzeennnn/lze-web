@@ -137,7 +137,7 @@ function goBack() {
     const play = document.getElementById('play');
     const pause = document.getElementById('pause');
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `http://${ip}/code/Monitor/media.php`, true);
+    xhr.open("POST", `${protocol}//${ip}/code/Monitor/media.php`, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmltoken(xhr);
     // 定义请求发送时的处理逻辑
@@ -169,7 +169,7 @@ function goBack() {
 function mediatitle() {
     const xhr = new XMLHttpRequest();
     const title =document.getElementById('media-title');
-    xhr.open("POST", `http://${ip}/code/Monitor/media.php`, true);
+    xhr.open("POST", `${protocol}//${ip}/code/Monitor/media.php`, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmltoken(xhr);
     xhr.send("action=title");
@@ -184,7 +184,7 @@ function mediatitle() {
 }
 function mediabutton(button) {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `http://${ip}/code/Monitor/media.php`, true);
+    xhr.open("POST", `${protocol}//${ip}/code/Monitor/media.php`, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmltoken(xhr);
 
@@ -240,7 +240,7 @@ function mediabutton(button) {
 
 function getwin(){
     // Fetch the JSON data from the PHP script
-    fetch(`http://${ip}/code/Monitor/window.php`,fetchtoken())
+    fetch(`${protocol}//${ip}/code/Monitor/window.php`,fetchtoken())
     .then(response => {
         fetchnologin(response)
         return response.json();
@@ -290,7 +290,7 @@ function getwin(){
 
   //close window 
         function closewindow() {
-    fetch(`http://${ip}/code/Monitor/close_window.php`, {
+    fetch(`${protocol}//${ip}/code/Monitor/close_window.php`, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -452,7 +452,7 @@ function getwin(){
         }
         function toolkit(button, value) {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `http://${ip}/code/Monitor/toolkit.php`, true);
+    xhr.open("POST", `${protocol}//${ip}/code/Monitor/toolkit.php`, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xmltoken(xhr);
     let postData;
@@ -474,7 +474,7 @@ function getwin(){
 }
 function getvalue() {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `http://${ip}/code/Monitor/toolkit.php`, true);
+    xhr.open("POST", `${protocol}//${ip}/code/Monitor/toolkit.php`, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmltoken(xhr);
     // 发送键值对的请求体
@@ -491,7 +491,7 @@ function getvalue() {
 }
 // toscreen
 function cleanall(){
-    fetch(`http://${ip}/code/Monitor/cleanfile.php`, {
+    fetch(`${protocol}//${ip}/code/Monitor/cleanfile.php`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -518,7 +518,7 @@ toolbar.style.animation='toscreen 1s infinite';
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `http://${ip}/code/Monitor/toscreen.php`, true);
+    xhr.open('POST', `${protocol}//${ip}/code/Monitor/toscreen.php`, true);
     xmltoken(xhr);
     xhr.onload = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) { // 请求已完成

@@ -146,7 +146,7 @@ function goBack() {
     }
 
     async function getNoteFiles() {
-        const response = await fetch(`http://${ip}/code/Bookmark/bok_getFiles.php`,fetchtoken());
+        const response = await fetch(`${protocol}//${ip}/code/Bookmark/bok_getFiles.php`,fetchtoken());
         const noteFiles = await response.json();
         xmlnologin(response);
         return noteFiles;
@@ -159,7 +159,7 @@ function goBack() {
 
                 for (const file of Object.values(noteFiles)) {
                     const linkname = file.replace(/\.[^/.]+$/, '');
-                    const filePath = `http://${ip}/file/Bookmark/${file}`;
+                    const filePath = `${protocol}//${ip}/file/Bookmark/${file}`;
                     const content = await readFile(filePath);
                     const noteElement = document.createElement('div');
                     noteElement.className = 'note-element';
@@ -174,7 +174,7 @@ function goBack() {
                         const target = event.target;
                         let iframeSrc;
                         if (file.endsWith('.bok')) {
-                            iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+                            iframeSrc = content.startsWith('http') ? content : `${protocol}//${content}`;
                         }
                        else{
                          iframeSrc = content.startsWith('http') ? content : `${filePath}`;
@@ -219,7 +219,7 @@ function goBack() {
 
             let iframeSrc;
                         if (file.endsWith('.bok')) {
-                            iframeSrc = content.startsWith('http') ? content : `http://${content}`;
+                            iframeSrc = content.startsWith('http') ? content : `${protocol}//${content}`;
                         }
                        else{
                          iframeSrc = content.startsWith('http') ? content : `${filePath}`;
@@ -279,7 +279,7 @@ async function addNewNoteRequest(newTitle, newContent) {
     formData.append('newContent', newContent);
 
     try {
-        const response = await fetch(`http://${ip}/code/Bookmark/bok_addNote.php`, {
+        const response = await fetch(`${protocol}//${ip}/code/Bookmark/bok_addNote.php`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -315,7 +315,7 @@ async function addNewNoteRequest(newTitle, newContent) {
         formData.append('fileName', fileName);
 
         try {
-            const response = await fetch(`http://${ip}/code/Bookmark/bok_deleteNote.php`, {
+            const response = await fetch(`${protocol}//${ip}/code/Bookmark/bok_deleteNote.php`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -348,7 +348,7 @@ async function addNewNoteRequest(newTitle, newContent) {
   }
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', `http://${ip}/code/Bookmark/upload.php`, true);
+  xhr.open('POST', `${protocol}//${ip}/code/Bookmark/upload.php`, true);
   xmltoken(xhr);
   xhr.upload.onprogress = function(ev) {
     if (ev.lengthComputable) {

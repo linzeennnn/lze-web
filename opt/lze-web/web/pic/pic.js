@@ -207,7 +207,7 @@ fileInput.addEventListener("change", function () {
 
     for (let i = 0; i < files.length; i++) {
         if (!loadedImageIndices.includes(i)) {
-            var filePath = `http://${ip}/file/Pictures/` + files[i]; // 生成绝对路径
+            var filePath = `${protocol}//${ip}/file/Pictures/` + files[i]; // 生成绝对路径
             var fileName = filePath.split('/').pop(); // 获取文件名
             var fileExtension = filePath.split('.').pop().toLowerCase();
             var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
@@ -261,7 +261,7 @@ function appendVideos(count) {
 
     for (let i = 0; i < files.length; i++) {
         if (!loadedVideoIndices.includes(i)) {
-            var filePath = `http://${ip}/file/Pictures/` + files[i]; // 生成绝对路径
+            var filePath = `${protocol}//${ip}/file/Pictures/` + files[i]; // 生成绝对路径
             var fileName = filePath.split('/').pop(); // 获取文件名
             var fileExtension = filePath.split('.').pop().toLowerCase();
             var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
@@ -313,7 +313,7 @@ function appendVideos(count) {
 
     for (let i = 0; i < screenshotFiles.length; i++) {
         if (!loadedScreenshotsIndices.includes(i)) {
-            var filePath = `http://${ip}/file/Pictures/` + screenshotFiles[i]; // 生成绝对路径
+            var filePath = `${protocol}//${ip}/file/Pictures/` + screenshotFiles[i]; // 生成绝对路径
             var fileName = filePath.split('/').pop(); // 获取文件名
 
             if (loadedScreenshotsCount < count) {
@@ -381,7 +381,7 @@ function appendVideos(count) {
             }
         };
 
-        xmlhttpScreenshot.open("GET", `http://${ip}/code/Pictures/pic_sreenshot_list.php`, true);
+        xmlhttpScreenshot.open("GET", `${protocol}//${ip}/code/Pictures/pic_sreenshot_list.php`, true);
         xmltoken(xmlhttpScreenshot);
         xmlhttpScreenshot.send();
     
@@ -398,7 +398,7 @@ function appendVideos(count) {
             xmlnologin(xmlhttp);
         };
     
-        xmlhttp.open("GET", `http://${ip}/code/Pictures/pic_list.php`, true);
+        xmlhttp.open("GET", `${protocol}//${ip}/code/Pictures/pic_list.php`, true);
         xmltoken(xmlhttp);
         xmlhttp.send();
     
@@ -455,7 +455,7 @@ function appendVideos(count) {
     fd.append('currentChunk', currentChunk);
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `http://${ip}/code/Pictures/upload.php`, true);
+    xhr.open('POST', `${protocol}//${ip}/code/Pictures/upload.php`, true);
     xmltoken(xhr);
     xhr.upload.onprogress = function(ev) {
       if (ev.lengthComputable) {
