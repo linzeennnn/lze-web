@@ -38,9 +38,10 @@ function verifyToken($token) {
 
 function getBearerToken() {
     $headers = getallheaders();
-    if (isset($headers['Authorization'])) {
+    if (isset($headers['Authorization']) || isset($headers['authorization'])) {
         $matches = [];
-        if (preg_match('/Bearer (.+)/', $headers['Authorization'], $matches)) {
+        $headerValue = isset($headers['Authorization']) ? $headers['Authorization'] : $headers['authorization'];
+        if (preg_match('/Bearer (.+)/', $headerValue, $matches)) {
             return $matches[1]; // 返回 Token 部分
         }
     }

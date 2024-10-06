@@ -87,6 +87,9 @@
   #openbar:hover{
     background-color: #96848c4d;
   }
+  #cleanall{
+    background-image: url(../../icon/bin_orange.svg);
+  }
   .li-btn{
     right: 0;
     top: 10px;

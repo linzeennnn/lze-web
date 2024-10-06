@@ -258,7 +258,6 @@ function ifroot(){
 function recover() {
   access();
   ifroot();
-  if (confirm('确定要恢复所选文件吗')) {
     fetch(`${protocol}//${ip}/code/trash/recover.php`, {
       method: 'POST',
       headers: {
@@ -282,7 +281,6 @@ function recover() {
       console.error('错误:', error);
     });
   }
-}
 
 // 选中
 let filesname;
@@ -330,4 +328,28 @@ function select(fileitem, type) {
 function removeslash(path) {
   return path.endsWith('/') ? path.slice(0, -1) : path;
 }
+// 清空
+function cleanall(){
+  if (confirm('确定清空回收站吗')) {
+    ifroot();
+  fetch(`${protocol}//${ip}/code/trash/del.php`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+})
+.then(response => response.json())
+.then(data => {
+    if (data.status === 'success') {
+        console.log(data.message);
+        loadFolder(removeslash(nowpath));
+        notify("已清空");
+    } else {
+        console.error(data.message);
+    }
+})
+.catch(error => console.error('Error:', error));
 
+  }
+}
