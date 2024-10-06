@@ -116,7 +116,7 @@ async function readfile(file) {
 }
 async function getnote() {
     const timestamp = new Date().getTime(); // 获取当前时间戳
-    const response = await fetch(`http://${ip}/code/Note/get_note.php?timestamp=${timestamp}`, fetchtoken());
+    const response = await fetch(`${protocol}//${ip}/code/Note/get_note.php?timestamp=${timestamp}`, fetchtoken());
     const noteFiles = await response.json();
     fetchnologin(response);
     return noteFiles;
@@ -256,7 +256,7 @@ async function getnote() {
         const formData = new FormData();
        formData.append('fileName', fileName);
        try {
-           const response = await fetch(`http://${ip}/code/Note/delnote.php`, {
+           const response = await fetch(`${protocol}//${ip}/code/Note/delnote.php`, {
                method: 'POST',
                headers: {
                    'Authorization': 'Bearer ' + token,
@@ -285,7 +285,7 @@ async function getnote() {
         formData.append('newTitle', title.innerText);
         formData.append('newContent', text.innerText);
         try {
-            const response = await fetch(`http://${ip}/code/Note/${file}`, {
+            const response = await fetch(`${protocol}//${ip}/code/Note/${file}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -357,7 +357,7 @@ async function loadtext(note, file) {
         loading.style.display = 'block'; // 显示loading
 
         const title = note.querySelector('.title').innerText; // 获取标题
-        const filePath = `http://${ip}/file/Note/${title}.txt`; // 构造文件路径
+        const filePath = `${protocol}//${ip}/file/Note/${title}.txt`; // 构造文件路径
 
         try {
             const fileContent = await readfile(filePath); // 读取文件内容
@@ -416,7 +416,7 @@ function selfile() {
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `http://${ip}/code/Note/upload.php`, true);
+    xhr.open('POST', `${protocol}//${ip}/code/Note/upload.php`, true);
     xmltoken(xhr);
     xhr.upload.onprogress = function(ev) {
         if (ev.lengthComputable) {
