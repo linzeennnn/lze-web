@@ -258,4 +258,55 @@ function handleDocumentClick(event) {
     });
   }
 }
+// 鼠标拖拽
+const dock = document.getElementById('dock');
+const widgetLines = document.querySelectorAll('.widget-line');
 
+document.addEventListener('dragstart', handleDragStart);
+widgetLines.forEach(line => {
+    line.addEventListener('dragover', handleDragOver);
+    line.addEventListener('drop', handleDrop);
+});
+
+dock.addEventListener('dragover', handleDragOver);
+dock.addEventListener('drop', handleDockDrop);
+
+function handleDragStart(e) {
+    e.dataTransfer.setData('text', e.target.id); // 存储数据
+    e.target.style.opacity = 0.5; // 设置透明度
+    console.log(e.target.id);
+}
+
+function handleDragOver(e) {
+    e.preventDefault(); // 允许放置
+}
+
+function handleDrop(e) {
+    e.preventDefault(); // 防止默认行为
+    const data = e.dataTransfer.getData('text'); // 获取存储的数据
+    const draggedElement = document.getElementById(data);
+
+    if (e.target.classList.contains('widget-line')) {
+        e.target.appendChild(draggedElement);
+        draggedElement.classList.remove('dock-back'); // 移除 dock-back 类
+        draggedElement.classList.add('widget'); // 添加 widget 类
+    } else if (e.target.classList.contains('widget')) {
+        const parentLine = e.target.parentElement;
+        parentLine.insertBefore(draggedElement, e.target);
+        draggedElement.classList.remove('dock-back'); // 移除 dock-back 类
+        draggedElement.classList.add('widget'); // 添加 widget 类
+    }
+
+    draggedElement.style.opacity = 1; // 恢复透明度
+}
+
+function handleDockDrop(e) {
+    e.preventDefault(); // 防止默认行为
+    const data = e.dataTransfer.getData('text'); // 获取存储的数据
+    const draggedElement = document.getElementById(data);
+
+    dock.appendChild(draggedElement); // 将元素添加到 dock
+    draggedElement.classList.remove('widget'); // 移除 widget 类
+    draggedElement.classList.add('dock-back'); // 添加 dock-back 类
+    draggedElement.style.opacity = 1; // 恢复透明度
+}

@@ -29,7 +29,7 @@ body {
   background: linear-gradient(#dfdfee9f,#a1a6aa);
  }
  #dock{
-background: #2c313562;
+background: #20202073;
  }
 #topBar {
     background-color: #d5d7d8ab ;
@@ -46,6 +46,12 @@ background: #2c313562;
 .bar-btn:hover {
   background-color: #555f64;
   color: #bdd3df;
+}
+.widget{
+  background: linear-gradient(#dfdfee9f,#a1a6aa);
+}
+.dock-btn{
+  background-image: url(../../wallpaper/light/home.svg);
 }
 #widget1{
   background-image: url(../../wallpaper/light/green.svg);

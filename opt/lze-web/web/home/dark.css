@@ -47,6 +47,12 @@
         background-color: hsla(200, 33%, 78%, 0.663);
         color: #20021c;
       }
+      .widget{
+        background: linear-gradient(#4e4f50,#19191a9f);
+      }
+      .dock-btn{
+        background-image: url(../../wallpaper/dark/home.svg);
+      }
       #widget1{
         background-image: url(../../wallpaper/dark/green.svg);
       }
