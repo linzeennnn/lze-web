@@ -87,7 +87,7 @@ body::-webkit-scrollbar {
               bottom: -25%;
               z-index: 10;
               border-radius: 50%;
-              transition: bottom 0.7s ease;
+              transition: bottom 0.7s ease, margin-left 1s ease;
               box-shadow: var(--outshadow)
               }
 @media only screen and (max-width: 600px) {

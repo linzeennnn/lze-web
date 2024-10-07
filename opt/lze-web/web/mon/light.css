@@ -4,10 +4,6 @@ body{
 #cover-bar{
 background-color: #96966a9f;
 }
-
-#name{
-    background-image: url(../../icon/light/name_yellow.svg);
-    }
     @media only screen and (max-width: 600px) {
         .phone_background .fixed{
             background:no-repeat center center;

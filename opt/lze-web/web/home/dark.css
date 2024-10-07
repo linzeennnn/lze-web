@@ -29,7 +29,7 @@
         background: linear-gradient(#4e4f50,#19191a9f);
        }
        #dock{
-      background: #b4c7d45b;
+      background: #bacad42c;
        }
       #topBar {
           background-color: #2b2b2bdc ;
@@ -48,7 +48,7 @@
         color: #20021c;
       }
       #widget1{
-        background-image: url(../../wallpaper/dark/pink.svg);
+        background-image: url(../../wallpaper/dark/green.svg);
       }
       #widget2{
         background-image: url(../../wallpaper/dark/blue.svg);
@@ -60,7 +60,7 @@
         background-image: url(../../wallpaper/dark/orange.svg);
       }
       #widget5{
-        background-image: url(../../wallpaper/dark/green.svg);
+        background-image: url(../../wallpaper/dark/pink.svg);
       }
       #widget6{
         background-image: url(../../wallpaper/dark/red.svg);

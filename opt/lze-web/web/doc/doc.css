@@ -6,7 +6,7 @@
     height: 24px;
     bottom: 10px;
     opacity: 0.5;
-    background-image: url(../../icon/download_pink.svg);
+    background-image: url(../../icon/download_green.svg);
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
@@ -17,11 +17,11 @@
     opacity: 1;
   }
   .backbtn{
-    background-image: url(../../icon/left_pink.svg);
+    background-image: url(../../icon/left_green.svg);
     }
    .ui-tooltip {
-          background: #492e4486; 
-          color: #ffb6d8; 
+          background: #65807ba4; 
+          color: #a7f8e7; 
       }
       #upload-area{
         opacity: 0;
@@ -41,7 +41,7 @@
         opacity: 0.5;
         background-position: center;
         background-repeat: no-repeat;
-        background-image: url(../../icon/upload_pink.svg);
+        background-image: url(../../icon/upload_green.svg);
         width: 30%;
         height: 30%;
       }
@@ -59,17 +59,17 @@
         position: fixed;
         height: 100%;
         width: 60px;
-        background-color: #7e6177a6;
+        background-color: #55796ba6;
         z-index: 11;
         box-shadow: var(--outshadow);
         transition: left 1s ease , opacity 1s ease;
         
       }
       #sidepage{
-        background-color: #664b62b7;
+        background-color: #436354b7;
       }
       .side-btn:hover{
-        background-color: #85537a7c;
+        background-color: #2657427c;
       }
       .option-btn{
         opacity: 0.5;
@@ -96,28 +96,28 @@
   opacity: 1;
 }
   .custom-upload-btn {
-    background-image: url(../../icon/upload_pink.svg);
+    background-image: url(../../icon/upload_green.svg);
   }
   #loadButton{
-    background-image: url(../../icon/load_pink.svg);
+    background-image: url(../../icon/load_green.svg);
   }
   #del{
-    background-image: url(../../icon/bin_pink.svg);
+    background-image: url(../../icon/bin_green.svg);
   }
   #copy{
-    background-image: url(../../icon/copy_pink.svg);
+    background-image: url(../../icon/copy_green.svg);
   }
   #move{
-    background-image: url(../../icon/move_pink.svg);
+    background-image: url(../../icon/move_green.svg);
   }
   #paste{
     display: none;
     animation: paste 1s ease-in-out infinite;
-    background-image: url(../../icon/paste_pink.svg);
+    background-image: url(../../icon/paste_green.svg);
   }
   .edit{
     opacity: 0.5;
-    background-image: url(../../icon/edit_pink.svg);
+    background-image: url(../../icon/edit_green.svg);
   }
   .edit:hover{
     opacity: 1;;
@@ -125,7 +125,7 @@
   .save{
     opacity: 0.5;
     display: none;
-    background-image: url(../../icon/save_pink.svg);
+    background-image: url(../../icon/save_green.svg);
   }
   .save:hover{
     opacity: 1;
@@ -138,7 +138,7 @@
     position: absolute;
     top: 500px;
     right: 0;
-    background-image: url(../../icon/goleft_pink.svg);
+    background-image: url(../../icon/goleft_green.svg);
   }
   #closebar:hover{
     opacity: 1;
@@ -150,11 +150,11 @@
     position: fixed;
     top: 500px;
     left: 5px;
-    background-image: url(../../icon/goright_pink.svg);
+    background-image: url(../../icon/goright_green.svg);
     z-index: 9;
   }
   #openbar:hover{
-    background-color: #96848c4d;
+    background-color: #8496924d;
   }
   .li-btn{
     right: 0;
@@ -180,13 +180,13 @@
   }
   @keyframes edit {
     0% {
-      background-color: #8d72807e;
+      background-color: #728d847e;
     }
     50% {
       background-color: transparent;
     }
     100% {
-      background-color: #8d72807e;
+      background-color: #728d847e;
     }
   }
   @keyframes paste {
@@ -209,7 +209,7 @@
     font-size: 100%;
     margin: 0;
     padding: 0;
-    background-color: #261b24;
+    background-color: #1b2621;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -278,7 +278,7 @@
   #top-bar{
     top: -60px;
     border-radius: 1em;
-     background-color: #815477a6;
+     background-color: #53857ca6;
      backdrop-filter: blur(10px);
      -webkit-backdrop-filter: blur(10px);
     display:inline-flex;
@@ -329,7 +329,7 @@
   background-color: transparent;
 }
 #folder-name-bar::placeholder{
-  color: #e9a1d7;
+  color: #a1e9cd;
 }
   #currentPath{
     height: fit-content;
@@ -338,7 +338,7 @@
     margin-left: 1%;
     text-align: left;
     font-weight: bold;
-    color: #ffb6d8;
+    color: #a7f8e7;
     overflow-x: hidden;
     z-index: 10;
   }
@@ -356,7 +356,7 @@
     z-index: 10;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(../../icon/goup_pink.svg);
+    background-image: url(../../icon/goup_green.svg);
   }
   #upButton:hover{
     opacity: 1;
@@ -364,7 +364,7 @@
   #cancel-folder{
     opacity: 0.5;
     display: none;
-  background-image: url(../../icon/no_pink.svg);
+  background-image: url(../../icon/no_green.svg);
   cursor: pointer;
     background-color: transparent;
     border: none;
@@ -386,7 +386,7 @@
   }
   #cancel{
     opacity: 0.5;
-    background-image: url(../../icon/no_pink.svg);
+    background-image: url(../../icon/no_green.svg);
     cursor: pointer;
     background-color: transparent;
     border: none;
@@ -405,7 +405,7 @@
   
 #add-folder{
   opacity: 0.5;
-  background-image: url(../../icon/addfolder_pink.svg);
+  background-image: url(../../icon/addfolder_green.svg);
   cursor: pointer;
     background-color: transparent;
     border: none;
@@ -426,7 +426,7 @@
    opacity: 1;
 }
 #comfirm{
-  background-image: url(../../icon/save_pink.svg);
+  background-image: url(../../icon/save_green.svg);
   cursor: pointer;
     background-color: transparent;
     border: none;
@@ -442,7 +442,7 @@
     display: none;
 }
 #comfirm:hover{
-  background-image: url(../../icon/save_pink.svg);
+  background-image: url(../../icon/save_green.svg);
 }
   #fileList {
     width: 80%;
@@ -457,7 +457,7 @@
     display: flex;
     height: 70px;
     max-height: 70px;
-    background-color: #85657f86;
+    background-color: #65807ba4;
     justify-content: space-between;
     margin-bottom: 20px;
     align-items: center;
@@ -469,19 +469,19 @@
     position: relative;
     text-overflow: ellipsis;
     border-radius: 1em;
-    transition: all 1S ease;
+    transition: opacity 1S ease;
     box-shadow: var(--outshadow) 
   }
  
   .files:hover{
-    background-color: #8543799c;
+    background-color: #498573a4;
   }
 .selected{
-  background-color: #8543799c;
+  background-color: #498573a4;
 }
   .fileLink {
     
-    color: #ffb6d8;
+    color: #a7f8e7;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -493,7 +493,7 @@
     color: #ffffff;
   }
   .folderLink {
-    color: #e086b0;
+    color: #6ebbaa;
     text-decoration: underline; /* 添加下划线 */
     font-weight: bold;
     margin-right: 10%;
@@ -515,11 +515,10 @@
   }
   .rotate-loading {
     position: absolute;
-          /* left: 50%; */
           transform: translate(-50%, -50%);
           border-radius: 50%/50%;
-          border: 6px solid rgb(241, 111, 187);
-          border-top: 6px solid rgba(141, 12, 87, 0.61);
+          border: 6px solid #7ceccb;
+          border-top: 6px solid #598679;
           animation: rotate-loading 1s linear infinite;
           width: 20px;
           height: 20px;
@@ -534,10 +533,10 @@
 #bar{
   width:0%;
   height:100%;
-  background-color: rgba(95, 57, 86, 0.801);
+  background-color: #8af0d183;
 }
 #percent {
-color: rgb(70, 3, 47);
+color: #b8fde9;
 font-size: 14px; 
 position: absolute;
 top: 50%; 
@@ -547,18 +546,18 @@ white-space: nowrap;
 }
 
 #top-btn{
-background-image: url(../../icon/toup_pink.svg);
-background-color: #85657f86;
+background-image: url(../../icon/toup_green.svg);
+background-color: #65807ba4;
 }
 #top-btn:hover{
-background-color: #6d37569a;
+background-color: #4c555394;
 }
 
   #notify{
-    background-color: #85657f86;
+    background-color: #65807ba4;
   }
   #notifytext{
-    color: #ffb6d8;
+    color: #a7f8e7;
   }
       
       @keyframes rotate-loading {

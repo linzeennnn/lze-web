@@ -1,6 +1,6 @@
 .ui-tooltip {
-    background: #65807ba4; 
-    color: #a7f8e7; 
+    background: #492e4486; 
+    color: #ffb6d8; 
 }
 body{
     overflow-x: hidden !important;
@@ -11,20 +11,20 @@ body{
     font-size: 100%;
     margin: 0;
     padding: 0;
-    background-color: #1b2621;
+    background-color: #261b24;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
    transition: background-image 1s ease;
 }
 .backbtn{
-    background-image: url(../../icon/left_green.svg);
+    background-image: url(../../icon/left_pink.svg);
 }
 #sidepage{
-    background-color: #436354b7;
+    background-color: #664b62b7;
   }
   .side-btn:hover{
-    background-color: #2657427c;
+    background-color: #85537a7c;
   }
 #option-bar{
     opacity: 0;
@@ -39,7 +39,7 @@ body{
     position: fixed;
     height: 100%;
     width: 60px;
-    background-color: #55796ba6;
+    background-color: #7e6177a6;
     z-index: 11;
     box-shadow: var(--outshadow);
     transition: left 1s ease , opacity 1s ease;
@@ -80,13 +80,13 @@ body{
     position: absolute;
     top: 500px;
     right: 0;
-    background-image: url(../../icon/goleft_green.svg);
+    background-image: url(../../icon/goleft_pink.svg);
   }
   #closebar:hover{
     opacity: 1;
   }
   .upload{
-    background-image: url(../../icon/upload_green.svg);
+    background-image: url(../../icon/upload_pink.svg);
   }
   #openbar{
     border-radius: 50%;
@@ -95,7 +95,7 @@ body{
     position: fixed;
     top: 500px;
     left: 5px;
-    background-image: url(../../icon/goright_green.svg);
+    background-image: url(../../icon/goright_pink.svg);
     z-index: 9;
   }
   #openbar:hover{
@@ -105,7 +105,7 @@ body{
     padding: 10px;
     border-radius: 1em;
     position: fixed;
-    background-color: #53857ca6;
+    background-color: #815477a6;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     width: 80%;
@@ -118,7 +118,7 @@ body{
     box-shadow: var(--outshadow);  
 }
 #add{
-    background-image: url(../../icon/add_green.svg);
+    background-image: url(../../icon/add_pink.svg);
 }
 
 #tit-bar{
@@ -130,7 +130,7 @@ body{
     width: 20%;
     max-width: 20%;
     font-weight:bold;
-    color: #bcfdef;
+    color: #ffb6d8;
     min-height: 30px;
     margin-right: 10px;
     margin-left: 10px;
@@ -146,10 +146,10 @@ body{
     background-color: transparent;
 }
 #tit-bar::placeholder{
-    color: #5a998a;
+    color: #ffb6d8;
 }
 #load{
-    background-image: url(../../icon/load_green.svg);
+    background-image: url(../../icon/load_pink.svg);
 }
 #word-bar{
     display: inline-block;
@@ -160,7 +160,7 @@ body{
     border-radius: 1em;
     max-width: 80%;
     width: 80%;
-    color: #bcfdef;
+    color: #ffb6d8;
     margin-right: 10px;
     min-height: 30px;
     font-weight: bold;
@@ -190,7 +190,7 @@ z-index: 2;
     position: relative;
     width: 80%;
     min-height: 80px;
-    background-color: #65807ba4;
+    background-color: #85657f86;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: flex;
@@ -211,7 +211,7 @@ z-index: 2;
     /* transition: all 1s ease; */
 }
 .edit{
-    background-image: url(../../icon/edit_green.svg);
+    background-image: url(../../icon/edit_pink.svg);
     left: 10px;
     bottom: 10px;
     opacity: 0.5;
@@ -222,7 +222,7 @@ z-index: 2;
 .save{
     left: 10px;
     bottom: 10px;
-    background-image: url(../../icon/save_green.svg);
+    background-image: url(../../icon/save_pink.svg);
     opacity: 0.5;
 }
 .save:hover{
@@ -231,7 +231,7 @@ z-index: 2;
 .expend{
     bottom: 10px;
     left: 50%;
-    background-image: url(../../icon/down_green.svg);
+    background-image: url(../../icon/down_pink.svg);
     opacity: 0.5;
 }
 .expend:hover{
@@ -242,10 +242,10 @@ z-index: 2;
     left: 50%;
     width: 20px;
     height: 20px;
-    border: 2px solid #a7f8e7;
-    border-top-color: #a7f8e759;
-    border-right-color: #a7f8e759;
-    border-bottom-color: #a7f8e759;
+    border: 2px solid #f8a7c2;
+    border-top-color: #f8a7d959;
+    border-right-color: #f8a7d959;
+    border-bottom-color: #f8a7d959;
     border-radius: 100%;
     animation: loading infinite 0.5s linear;
   }
@@ -260,7 +260,7 @@ z-index: 2;
 .close{
     bottom: 10px;
     left: 50%;
-    background-image: url(../../icon/up_green.svg);
+    background-image: url(../../icon/up_pink.svg);
     opacity: 0.5;
 }
 .close:hover{
@@ -269,14 +269,14 @@ z-index: 2;
 .del{
     top: 10px;
     right: 10px;
-    background-image: url(../../icon/no_green.svg);
+    background-image: url(../../icon/no_pink.svg);
     opacity: 0.5;
 }
 .del:hover{
     opacity: 1;
 }
 .copy{
-    background-image: url(../../icon/copy_green.svg);
+    background-image: url(../../icon/copy_pink.svg);
     right: 10px;
     bottom: 10px;
     transition:background-image 1s ease ;
@@ -302,7 +302,7 @@ z-index: 2;
     height: fit-content;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #a7f8e7;
+    color: #ffb6d8;
 }
 .text{
     border-top-color:#ffffff10 ;
@@ -312,7 +312,7 @@ z-index: 2;
     font-size: 20px;
     margin-bottom: 40px;
     overflow-wrap: break-word;
-    color: #a7f8cb;
+    color: #ffb6d8;
 }
 .text:focus{
     outline: none;
@@ -325,7 +325,7 @@ z-index: 2;
     right: 0;
     border-radius: 1em;
     width: 80% ;
-    color: #78e7d5;
+    color: #faa8d1;
     margin-right: 10px;
     min-height: 30px;
     font-weight: bold;
@@ -335,11 +335,11 @@ z-index: 2;
 #bar{
 width:0%;
 height:100%;
-background-color: #2b8a6dbd;
+background-color: #8a2b62bd;
 box-shadow: var(--inshadow)
 }
 #percent {
-color: rgb(70, 3, 47);
+color: #faa8d1;
 font-size: 14px; 
 position: absolute;
 top: 50%; 
@@ -348,18 +348,18 @@ transform: translate(-50%, -50%);
 white-space: nowrap; 
 }
 #notify{
-    background-color: #65807ba4;
-}
-#notifytext{
-    color: #a7f8e7;
-}
-#top-btn{
-    background-image: url(../../icon/toup_green.svg);
-    background-color: #65807ba4;
-}
-#top-btn:hover{
-    background-color: #4c555394;
-}
+    background-color: #85657f86;
+  }
+  #notifytext{
+    color: #ffb6d8;
+  }
+  #top-btn{
+    background-image: url(../../icon/toup_pink.svg);
+    background-color: #85657f86;
+    }
+    #top-btn:hover{
+    background-color: #6d37569a;
+    }
     @media only screen and (max-width: 600px) {
         .main{
             margin-left: 0;

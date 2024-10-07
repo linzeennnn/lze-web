@@ -1,7 +1,7 @@
 let darkcolor;
 let lightcolor
-darkcolor='#1c2825';
-lightcolor='#6b9683';
+darkcolor='#271f25';
+lightcolor='#966a85';
 const titbar =document.getElementById('tit-bar');
 const wordbar=document.getElementById('word-bar');
 let oldtitle;

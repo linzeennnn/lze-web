@@ -1,17 +1,13 @@
-body{
-    background-image: url(../../wallpaper/dark/green.svg);
-}
-
-#cover-bar{
-    background-color: #1c28259d;
-    }
-
-#name{
-    background-image: url(../../icon/dark/name_green.svg);
-    }
-@media only screen and (max-width: 600px){
-    .phone_background .fixed {
-        background:no-repeat center center;
-       background-image: url(../../wallpaper/dark/green.svg);
-    }
+body {
+    background-image: url(../../wallpaper/dark/pink.svg);
   }
+
+  #cover-bar{
+    background-color: #271f2596;
+  }
+  @media only screen and (max-width: 600px) {
+  .phone_background .fixed {
+    background:no-repeat center center;
+    background-image: url(../../wallpaper/dark/pink.svg);
+  }
+    }

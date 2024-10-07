@@ -1,7 +1,7 @@
 let darkcolor;
 let lightcolor
-darkcolor='#271f25';
-lightcolor='#966a85';
+darkcolor='#1c2825';
+lightcolor='#6b9683';
 let uploadpath;
 let nowpath="/";//当前目录（要上传的目录）
 let fullPath; 
