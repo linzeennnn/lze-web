@@ -318,7 +318,6 @@ function selfile() {
       notify("请先选择文件");
       return;
   }
-  loading(1);
   var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
   var totalFiles = files.length;
   var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
@@ -326,13 +325,13 @@ function selfile() {
 
   // 计算每个文件的总块数
   for (let i = 0; i < totalFiles; i++) {
-      if (files[i].size > 10 * 1024 * 1024) { // 文件大于 10MB
-          totalChunks[i] = Math.ceil(files[i].size / chunkSize);
-      } else {
-          totalChunks[i] = 1; // 小于等于 10MB 的文件只需一次上传
-      }
-  }
-
+    if (files[i].size === 0) {
+        notify(`${files[i].name} 是空文件，上传失败`);
+        return;
+    }
+    totalChunks[i] = Math.ceil(files[i].size / chunkSize);
+}
+loading(1);
   function uploadChunk(fileIndex) {
       if (fileIndex >= totalFiles) {
           loading(0);
@@ -344,6 +343,7 @@ function selfile() {
       var end = Math.min(start + chunkSize, file.size);
       var chunk = file.slice(start, end);
 
+      console.log(`开始上传文件: ${file.name}, 文件大小: ${file.size} 字节`);
       var fd = new FormData();
       fd.append('file', chunk);
       fd.append('fileName', file.name);
@@ -373,6 +373,7 @@ function selfile() {
                   // 上传下一个文件
                   uploadChunk(fileIndex + 1);
                   notify(`文件 ${file.name} 上传成功`);
+                  console.log(`上传成功: ${file.name}, 文件大小: ${file.size} 字节`);
                   uploadpath = xhr.responseText;
                   console.log(uploadpath);
                   loadFolder(removeslash(nowpath));

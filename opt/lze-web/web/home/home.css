@@ -127,7 +127,7 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     height: 70px;
     z-index: 8;
-    transition: bottom 1s ease;
+    transition: bottom 1s ease,transform 0.3s ease;
      }
      .dock-back{
       display: flex;
@@ -147,7 +147,7 @@
      .dock-back:hover{
       transform: scale(1.2);
      }
-     .dock-icon{
+     .dock-back div{
       width: 40px;
       height: 40px;
       background-position: center;
@@ -177,6 +177,7 @@
       margin-top: 30px;
     }
     .widget{
+      opacity: 0.7;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -190,14 +191,15 @@
       margin: 10px;
       margin-bottom: 40px;
       position: relative;
-      transition: transform 1s ease;
+      transition: transform 0.5s ease;
       box-shadow: var(--outshadow);
     }
     .widget:hover{
+      opacity: 1;
       transform: scale(1.1);
       z-index: 11;
     }
-    .widget-icon{
+    .widget div{
       width: 100px;
       height: 100px;
       background-position: center;
@@ -221,11 +223,14 @@
     #bookmark{
       background-image: url(../../icon/bookmark.svg);
     }
-    .widget-title{
+    .widget span{
       position: absolute;
       font-size: 15px;
       font-weight: bold;
       bottom: -20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
      #login{
       background-image: url(../../icon/user.svg);
@@ -263,7 +268,20 @@
         font-weight: bold;
         font-size: 20px;
     }
- 
+ .preview{
+  display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 15px; 
+ }
+ .preview div{
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+ }
      
           @media only screen and (max-width: 600px){
             @media only screen and (max-height: 800px) {

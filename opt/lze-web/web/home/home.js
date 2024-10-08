@@ -261,6 +261,7 @@ function handleDocumentClick(event) {
 // 鼠标拖拽
 const dock = document.getElementById('dock');
 const widgetLines = document.querySelectorAll('.widget-line');
+let dragImage = null;
 
 document.addEventListener('dragstart', handleDragStart);
 widgetLines.forEach(line => {
@@ -270,15 +271,50 @@ widgetLines.forEach(line => {
 
 dock.addEventListener('dragover', handleDragOver);
 dock.addEventListener('drop', handleDockDrop);
-
+dock.addEventListener('mouseleave', function() {
+  dock.style.transform='';
+});
 function handleDragStart(e) {
     e.dataTransfer.setData('text', e.target.id); // 存储数据
-    e.target.style.opacity = 0.5; // 设置透明度
-    console.log(e.target.id);
+    e.target.style.opacity = 0; // 设置透明度
+
+    dragImage = e.target.cloneNode(true); 
+    dragImage.style.position = 'absolute';
+    dragImage.style.pointerEvents = 'none';
+    dragImage.style.top='-9999px'
+    dragImage.removeAttribute('draggable');
+    dragImage.style.opacity='1';
+
+  dragImage.classList.add('preview');
+if (e.target.classList.contains('widget')){
+    dragImage.classList.remove('widget'); 
+}
+else if(e.target === dock) {
+  dragImage.classList.remove('dock-back'); 
+}
+
+document.body.appendChild(dragImage);
+const offsetX = dragImage.offsetWidth / 2;
+const offsetY = dragImage.offsetHeight / 2;
+// e.dataTransfer.setDragImage(dragImage, offsetX, offsetY);
+e.dataTransfer.setDragImage(dragImage, xOffset, yOffset);
 }
 
 function handleDragOver(e) {
     e.preventDefault(); // 允许放置
+    if (dragImage) {
+      dragImage.style.left = (e.pageX - dragImage.offsetWidth / 2) + 'px';
+      dragImage.style.top = (e.pageY - dragImage.offsetHeight / 2) + 'px';
+  }
+  if (e.target.classList.contains('widget')){
+
+}
+else if(e.target === dock) {
+  dock.style.transform='scale(1.2)';
+}
+else if(e.target !== dock) {
+  dock.style.transform='';
+}
 }
 
 function handleDrop(e) {
@@ -298,15 +334,27 @@ function handleDrop(e) {
     }
 
     draggedElement.style.opacity = 1; // 恢复透明度
+
+    // 移除自定义拖动影像
+    document.body.removeChild(dragImage);
+    dragImage = null;
 }
 
 function handleDockDrop(e) {
     e.preventDefault(); // 防止默认行为
     const data = e.dataTransfer.getData('text'); // 获取存储的数据
     const draggedElement = document.getElementById(data);
-
+    dock.style.transform='';
     dock.appendChild(draggedElement); // 将元素添加到 dock
     draggedElement.classList.remove('widget'); // 移除 widget 类
     draggedElement.classList.add('dock-back'); // 添加 dock-back 类
     draggedElement.style.opacity = 1; // 恢复透明度
+
+    const preview=document.querySelectorAll('.preview')
+    
+    preview.forEach(preview => {
+      document.body.removeChild(preview);
+  });
+    dragImage = null;
 }
+
