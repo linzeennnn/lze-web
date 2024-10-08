@@ -130,11 +130,12 @@ async function getnote() {
                 const title = file.replace(/\.[^/.]+$/, '');
                 const note = document.createElement('div');
                 note.className = 'note';
-                const titleSpan = document.createElement('span');
-                titleSpan.className = 'title';
-                titleSpan.innerText=title;
-                titleSpan.title=title;
-                note.appendChild(titleSpan);
+                const notetitle = document.createElement('input');
+                notetitle.className = 'title';
+                notetitle.value=title;
+                notetitle.title=title;
+                notetitle.disabled = true;
+                note.appendChild(notetitle);
                 const textcode = document.createElement('code');
                 textcode.className = 'text';
                 textcode.style.display='none';
@@ -284,7 +285,7 @@ async function getnote() {
     
     // newnote
     async function addnote(title,text,file) {
-        if (title.innerText.includes('%') || title.innerText.includes('#')) {
+        if (title.value.includes('%') || title.value.includes('#')) {
             notify("标题包含非法字符(#或%)");
             return;
         }
@@ -330,7 +331,8 @@ async function getnote() {
             }
             else{
                 editstatus=1;
-            oldtitle=title.innerText;
+            oldtitle=title.value;
+            title.disabled = false;
         title.contentEditable = 'true';
         text.contentEditable = 'true';
         text.style.borderStyle='none';
@@ -341,7 +343,7 @@ async function getnote() {
         save.style.display='block';}
         }
         else if(status==0){
-            if(title.innerText===oldtitle){
+            if(title.value===oldtitle){
             addnote(title,text,'save.php');
             }
             else{
@@ -366,7 +368,7 @@ async function loadtext(note, file) {
         expend.style.display = 'none'; // 隐藏展开按钮
         loading.style.display = 'block'; // 显示loading
 
-        const title = note.querySelector('.title').innerText; // 获取标题
+        const title = note.querySelector('.title').value; // 获取标题
         const filePath = `${protocol}//${ip}/file/Note/${title}.txt`; // 构造文件路径
 
         try {

@@ -296,6 +296,8 @@ z-index: 2;
     position: relative;
 }
 .title{
+  border: none;
+  background: transparent;
     margin-right: auto;
     margin-left: 4%;
     min-width: 50%;
