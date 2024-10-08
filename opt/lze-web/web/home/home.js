@@ -214,7 +214,7 @@ function widgetopen(path,widget,place,line){
     break;
   }
   widget.style.transform='scale(7)';
-  widget.style.opacity='0';
+  widget.style.opacity='0.5';
   title.innerText='';
 }
 function handleTopBarButtonClick(index) {
@@ -259,102 +259,67 @@ function handleDocumentClick(event) {
   }
 }
 // 鼠标拖拽
+const dockback = document.querySelectorAll('dock-back');
 const dock = document.getElementById('dock');
 const widgetLines = document.querySelectorAll('.widget-line');
-let dragImage = null;
+const line3 = document.getElementById('widget-line3');
 
+document.addEventListener('drop', handleDropCombined);
 document.addEventListener('dragstart', handleDragStart);
+document.addEventListener('dragover', handleDragOver);
+
 widgetLines.forEach(line => {
     line.addEventListener('dragover', handleDragOver);
-    line.addEventListener('drop', handleDrop);
+    line.addEventListener('drop', handleDropCombined);
 });
 
 dock.addEventListener('dragover', handleDragOver);
-dock.addEventListener('drop', handleDockDrop);
+dock.addEventListener('drop', handleDropCombined);
 dock.addEventListener('mouseleave', function() {
-  dock.style.transform='';
+    dock.style.transform = '';
 });
+
 function handleDragStart(e) {
-    e.dataTransfer.setData('text', e.target.id); // 存储数据
-    e.target.style.opacity = 0; // 设置透明度
+  const drag=e.target;
+    e.dataTransfer.setData('text', e.target.id);
+    e.target.style.opacity = 0.5;
 
-    dragImage = e.target.cloneNode(true); 
-    dragImage.style.position = 'absolute';
-    dragImage.style.pointerEvents = 'none';
-    dragImage.style.top='-9999px'
-    dragImage.removeAttribute('draggable');
-    dragImage.style.opacity='1';
-
-  dragImage.classList.add('preview');
-if (e.target.classList.contains('widget')){
-    dragImage.classList.remove('widget'); 
-}
-else if(e.target === dock) {
-  dragImage.classList.remove('dock-back'); 
-}
-
-document.body.appendChild(dragImage);
-const offsetX = dragImage.offsetWidth / 2;
-const offsetY = dragImage.offsetHeight / 2;
-// e.dataTransfer.setDragImage(dragImage, offsetX, offsetY);
-e.dataTransfer.setDragImage(dragImage, xOffset, yOffset);
+    // 设置原生拖拽图像
+    e.dataTransfer.setDragImage(e.target, 32, 32); // 这里的偏移量可以根据需要调整
 }
 
 function handleDragOver(e) {
-    e.preventDefault(); // 允许放置
-    if (dragImage) {
-      dragImage.style.left = (e.pageX - dragImage.offsetWidth / 2) + 'px';
-      dragImage.style.top = (e.pageY - dragImage.offsetHeight / 2) + 'px';
-  }
-  if (e.target.classList.contains('widget')){
-
-}
-else if(e.target === dock) {
-  dock.style.transform='scale(1.2)';
-}
-else if(e.target !== dock) {
-  dock.style.transform='';
-}
-}
-
-function handleDrop(e) {
-    e.preventDefault(); // 防止默认行为
-    const data = e.dataTransfer.getData('text'); // 获取存储的数据
-    const draggedElement = document.getElementById(data);
-
-    if (e.target.classList.contains('widget-line')) {
-        e.target.appendChild(draggedElement);
-        draggedElement.classList.remove('dock-back'); // 移除 dock-back 类
-        draggedElement.classList.add('widget'); // 添加 widget 类
-    } else if (e.target.classList.contains('widget')) {
-        const parentLine = e.target.parentElement;
-        parentLine.insertBefore(draggedElement, e.target);
-        draggedElement.classList.remove('dock-back'); // 移除 dock-back 类
-        draggedElement.classList.add('widget'); // 添加 widget 类
+    e.preventDefault();
+    if (e.target == dock) {
+        dock.style.transform = 'scale(1.2)';
+    } else {
+        dock.style.transform = '';
     }
-
-    draggedElement.style.opacity = 1; // 恢复透明度
-
-    // 移除自定义拖动影像
-    document.body.removeChild(dragImage);
-    dragImage = null;
 }
 
-function handleDockDrop(e) {
-    e.preventDefault(); // 防止默认行为
-    const data = e.dataTransfer.getData('text'); // 获取存储的数据
+function handleDropCombined(e) {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text');
     const draggedElement = document.getElementById(data);
-    dock.style.transform='';
-    dock.appendChild(draggedElement); // 将元素添加到 dock
-    draggedElement.classList.remove('widget'); // 移除 widget 类
-    draggedElement.classList.add('dock-back'); // 添加 dock-back 类
-    draggedElement.style.opacity = 1; // 恢复透明度
+    dock.style.transform = '';
+    draggedElement.style.opacity = 1;
 
-    const preview=document.querySelectorAll('.preview')
-    
-    preview.forEach(preview => {
-      document.body.removeChild(preview);
-  });
-    dragImage = null;
+    if (e.target.classList.contains('widget-line') || e.target.classList.contains('widget')) {
+        if (e.target.classList.contains('widget')) {
+            const parentLine = e.target.parentElement;
+            parentLine.insertBefore(draggedElement, e.target);
+        } else {
+            e.target.appendChild(draggedElement);
+        }
+        draggedElement.classList.remove('dock-back');
+        draggedElement.classList.add('widget');
+    } else if (e.target == dock || e.target == dockback) {
+        dock.appendChild(draggedElement);
+        draggedElement.classList.remove('widget');
+        draggedElement.classList.add('dock-back');
+    } else if (!e.target.classList.contains('widget-line') && !e.target.classList.contains('widget') && e.target != dock) {
+        line3.appendChild(draggedElement);
+        draggedElement.classList.remove('widget');
+        draggedElement.classList.add('dock-back');
+    }
 }
-

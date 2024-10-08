@@ -269,18 +269,22 @@
         font-size: 20px;
     }
  .preview{
+  width: 64px;
+  height: 64px;
   display: flex;
       align-items: center;
       justify-content: center;
-      width: 64px;
-      height: 64px;
       border-radius: 15px; 
+      z-index: 9999;
  }
  .preview div{
   width: 40px;
   height: 40px;
   background-position: center;
   background-repeat: no-repeat;
+ }
+ .preview span{
+  display: none;
  }
      
           @media only screen and (max-width: 600px){
