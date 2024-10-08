@@ -138,6 +138,9 @@ body{
     background-color: transparent;
     box-shadow: var(--inshadow);
 }
+input#tit-bar::placeholder {
+  color: #9e7b8b;
+}
 #tit-bar:focus{
     outline: none;
 }

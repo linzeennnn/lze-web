@@ -182,7 +182,7 @@ async function getnote() {
                     if (confirm('确定要删除这个便签吗？')) {
                         
                     delnote(`${file}`);
-                    reloadnote()
+                    reloadnote();
                     notify("已删除");
                     }}
             }
@@ -226,14 +226,13 @@ async function getnote() {
     
         // 替换不间断空格
         const cleanedText = replaceNbspWithSpace(text);
-        console.log('清理后的文本:', cleanedText); // 可选，调试信息
     
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(cleanedText).then(() => {
-                copy.style.backgroundImage = 'url(../../icon/yes_green.svg)';
+                copy.style.backgroundImage = 'url(../../icon/yes_pink.svg)';
                 notify("成功复制");
                 setTimeout(() => {
-                    copy.style.backgroundImage = 'url(../../icon/copy_green.svg)';
+                    copy.style.backgroundImage = 'url(../../icon/copy_pink.svg)';
                 }, 2000);
             }).catch((err) => {
                 console.error('Failed to copy text to clipboard: ', err);
@@ -245,10 +244,10 @@ async function getnote() {
             textArea.select();
             try {
                 document.execCommand('copy');
-                copy.style.backgroundImage = 'url(../../icon/yes_green.svg)';
+                copy.style.backgroundImage = 'url(../../icon/yes_pink.svg)';
                 notify("成功复制");
                 setTimeout(() => {
-                    copy.style.backgroundImage = 'url(../../icon/copy_green.svg)';
+                    copy.style.backgroundImage = 'url(../../icon/copy_pink.svg)';
                 }, 2000);
             } catch (err) {
                 console.error('Failed to copy text to clipboard: ', err);
@@ -257,38 +256,43 @@ async function getnote() {
         }
     }
     // delete note
-    async function delnote(fileName) {
-        
+    function delnote(fileName) {
         const formData = new FormData();
-       formData.append('fileName', fileName);
-       try {
-           const response = await fetch(`${protocol}//${ip}/code/Note/delnote.php`, {
-               method: 'POST',
-               headers: {
-                   'Authorization': 'Bearer ' + token,
-               },
-               body: formData
-           });
-
-           const result = await response.text();
-           console.log(result);
-           if (result==="success"){
-           }
-       } catch (error) {
-           console.error('Error deleting note:', error);
-       }
-   }
+        formData.append('fileName', fileName);
+    
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `${protocol}//${ip}/code/Note/delnote.php`, true);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const result = xhr.responseText;
+                if (result === "success") {
+                    // 处理成功的情况
+                }
+            } else {
+                console.error('Error deleting note:', xhr.statusText);
+            }
+        };
+    
+        xhr.onerror = function () {
+            console.error('Error deleting note:', xhr.statusText);
+        };
+    
+        xhr.send(formData);
+    }
+    
     // newnote
     async function addnote(title,text,file) {
         if (title.innerText.includes('%') || title.innerText.includes('#')) {
             notify("标题包含非法字符(#或%)");
             return;
         }
-        else if (title.innerText == ''){
-            title.innerText="new_note";
+        else if (title.value == ''){
+            title.value="new_note";
         }
         const formData = new FormData();
-        formData.append('newTitle', title.innerText);
+        formData.append('newTitle', title.value);
         formData.append('newContent', text.innerText);
         try {
             const response = await fetch(`${protocol}//${ip}/code/Note/${file}`, {
@@ -306,7 +310,7 @@ async function getnote() {
             console.log(filename,uploadpath);
                 reloadnote();
                 desktopnot('恩的便签','新便签:',`${filename}`,uploadpath);
-                title.innerText='';
+                title.value='';
                 text.innerText='';
                 notify("保存成功");
             }
