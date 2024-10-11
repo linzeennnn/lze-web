@@ -1,13 +1,12 @@
+:root { 
+  --green:#567260;
+  --back: url('../../wallpaper/dark/home.svg') no-repeat center/cover;
+}
 body {
-    background-image: url(../../wallpaper/dark/green.svg);
+    background:var(--dark);
+    background-color: var(--green);
   }
 
   #cover-bar{
     background-color: #1c28259d;
   }
-  @media only screen and (max-width: 600px) {
-  .phone_background .fixed {
-    background:no-repeat center center;
-    background-image: url(../../wallpaper/dark/green.svg);
-  }
-    }

@@ -3,7 +3,8 @@
           color: #c3c6c9; 
       }
       body {
-        background-image: url(../../wallpaper/dark/home.svg);
+        background: var(--dark);
+        background-blend-mode: overlay;
       }
       #home-bar {
         color: #656d79 ;

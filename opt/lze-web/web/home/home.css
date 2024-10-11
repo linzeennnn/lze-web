@@ -269,8 +269,8 @@
         font-size: 20px;
     }
  .preview{
-  width: 64px;
-  height: 64px;
+  top: -99999px;
+  position: fixed;
   display: flex;
       align-items: center;
       justify-content: center;

@@ -263,7 +263,7 @@ const dockback = document.querySelectorAll('dock-back');
 const dock = document.getElementById('dock');
 const widgetLines = document.querySelectorAll('.widget-line');
 const line3 = document.getElementById('widget-line3');
-
+let dragging;
 document.addEventListener('drop', handleDropCombined);
 document.addEventListener('dragstart', handleDragStart);
 document.addEventListener('dragover', handleDragOver);
@@ -283,13 +283,29 @@ function handleDragStart(e) {
   const drag=e.target;
     e.dataTransfer.setData('text', e.target.id);
     e.target.style.opacity = 0.5;
-
+    const icon=e.target.querySelector('div');
+    const iconstyle = getComputedStyle(icon);
+    const computedstyle = getComputedStyle(e.target);
+    const rect = e.target.getBoundingClientRect();
+    dragging=document.createElement('div');
+    dragging.appendChild(Object.assign(document.createElement('div')));
+    dragging.classList.add('preview');
+    dragging.style.width=Math.floor(rect.width)+'px';
+    dragging.style.height=Math.floor(rect.height)+'px';
+    dragging.style.backgroundImage=computedstyle.backgroundImage;
+    dragging.querySelector('div').style.backgroundImage=iconstyle.backgroundImage;
+    document.body.appendChild(dragging);
     // 设置原生拖拽图像
-    e.dataTransfer.setDragImage(e.target, 32, 32); // 这里的偏移量可以根据需要调整
+    e.dataTransfer.setDragImage(dragging, rect.width / 2, rect.height / 2); 
 }
 
 function handleDragOver(e) {
     e.preventDefault();
+    if (dragging) {
+      dragging.style.left = (e.pageX - dragging.offsetWidth / 2) + 'px';
+      dragging.style.top = (e.pageY - dragging.offsetHeight / 2) + 'px';
+      dock.style.transform = '';
+  }
     if (e.target == dock) {
         dock.style.transform = 'scale(1.2)';
     } else {
@@ -298,12 +314,13 @@ function handleDragOver(e) {
 }
 
 function handleDropCombined(e) {
+  console.log(dragging);
     e.preventDefault();
     const data = e.dataTransfer.getData('text');
     const draggedElement = document.getElementById(data);
     dock.style.transform = '';
     draggedElement.style.opacity = 1;
-
+    document.body.removeChild(dragging);
     if (e.target.classList.contains('widget-line') || e.target.classList.contains('widget')) {
         if (e.target.classList.contains('widget')) {
             const parentLine = e.target.parentElement;
@@ -317,7 +334,7 @@ function handleDropCombined(e) {
         dock.appendChild(draggedElement);
         draggedElement.classList.remove('widget');
         draggedElement.classList.add('dock-back');
-    } else if (!e.target.classList.contains('widget-line') && !e.target.classList.contains('widget') && e.target != dock) {
+    } else if (e.target != dock && !e.target.classList.contains('widget-line')) {
         line3.appendChild(draggedElement);
         draggedElement.classList.remove('widget');
         draggedElement.classList.add('dock-back');

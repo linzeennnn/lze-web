@@ -11,6 +11,10 @@
 body::-webkit-scrollbar {
     display: none; /* 隐藏滚动条 */
     }
+    body{
+        background-blend-mode: overlay;
+        background: var(--back);
+    }
     .backbtn{
         background-position: center;
         background-repeat: no-repeat;
@@ -91,5 +95,8 @@ body::-webkit-scrollbar {
               box-shadow: var(--outshadow)
               }
 @media only screen and (max-width: 600px) {
-   
+    .phone_background .fixed {
+        background:var(--back);
+        background-blend-mode: overlay;
+      }
 }

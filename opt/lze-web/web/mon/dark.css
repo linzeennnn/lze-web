@@ -1,12 +1,7 @@
-body{
-    background-image: url(../../wallpaper/dark/yellow.svg);
-}
+:root { 
+    --yellow:#727256;
+    --back: url('../../wallpaper/dark/home.svg') no-repeat center/cover;
+  }
 #cover-bar{
 background-color: #28281c9a;
 }
-    @media only screen and (max-width: 600px) {
-        .phone_background .fixed{
-            background:no-repeat center center;
-            background-image: url(../../wallpaper/dark/yellow.svg);
-        }
-    }

@@ -1,13 +1,8 @@
 body {
-    background-image: url(../../wallpaper/light/blue.svg);
+    --blue:#97a7bd;
+    --back: url('../../wallpaper/light/home.svg') no-repeat center/cover;
 }
 #cover-bar{
 background-color: #6b75968e;
 }
-    @media only screen and (max-width: 600px) {
-        .phone_background .fixed {
-            background:no-repeat center center;
-            background-image: url(../../wallpaper/light/blue.svg);
-        }
-    }
     

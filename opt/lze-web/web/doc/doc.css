@@ -205,11 +205,10 @@
       }
   body {
     overflow-x: hidden !important;
-    
+    background-color: var(--green);
     font-size: 100%;
     margin: 0;
     padding: 0;
-    background-color: #1b2621;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -494,7 +493,7 @@
     color: #ffffff;
   }
   .folderLink {
-    color: #6ebbaa;
+    color: #9cdfb6;
     text-decoration: underline; /* 添加下划线 */
     font-weight: bold;
     margin-right: 10%;
@@ -653,11 +652,7 @@ background-color: #4c555394;
   margin-left: 0;
   left: 5px;
 }
-.files:hover{
-background-color: #85657f86;
+.phone_background .fixed {
+  background-color: var(--green);
 }
-.selected{
-  background-color: #8543799c !important;
-}
-
   }
