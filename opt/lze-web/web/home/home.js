@@ -17,17 +17,19 @@ function notify(text) {
   notifytext.innerText = text;
   notify.appendChild(notifytext);
   document.body.appendChild(notify);
-  notify.style.opacity = '1';
+  setTimeout(function () {
+    notify.style.opacity = '1';
+    notify.style.top='5px';
+  }, 10);
   setTimeout(function () {
     notify.style.opacity = '';
     setTimeout(function () {
       document.body.removeChild(notify);
-    }, 1500);
-  }, 1500);
+    }, 1000);
+  }, 1000);
 }
 // 锁屏
 function lock(status){
-  const lockpage=document.getElementById('lock-page');
   const live2d=document.getElementById('live2d-widget');
   switch(status){
     case 0:
@@ -36,7 +38,6 @@ function lock(status){
       widgetmove(1);
       break;
     case 1:       
-    lockpage.style.display='';
     live2d.style.display='';   
     lockmove(1);
     dockmove(0); 
@@ -81,33 +82,36 @@ function widgetmove(status){
   }
 }
 function lockmove(status){
-  const lockpage=document.getElementById('lock-page');
   const live2d=document.getElementById('live2d-widget');
+  const homebar=document.getElementById('home-bar');
   const btn=document.getElementById('home-btn');
+  const page=document.getElementById('lock-page');
   switch(status){
     case 0:
-      lockpage.style.top='';
+      page.style.opacity='0';
+      homebar.style.top='';
       live2d.style.top='';
       btn.style.top='';
-      lockpage.style.opacity='0';
       live2d.style.opacity='0'
-      lockpage.style.bottom='auto';
       setTimeout(() => {       
-      lockpage.style.display='';
       live2d.style.display='none';   
+      homebar.style.display='none';
+      btn.style.display='none';
+      page.style.display='';
         }, 500);
       break;
     case 1:       
-    lockpage.style.display='flex';
+    page.style.display='block';
+    homebar.style.display='';
+    btn.style.display='';
     live2d.style.display='';  
       setTimeout(() => {  
-        lockpage.style.top='0';
-        live2d.style.top='200px'
+        live2d.style.top='40px'
         btn.style.top='500px';
-        lockpage.style.opacity='';
         live2d.style.opacity=''
-        lockpage.style.bottom='';
-        }, 500);
+        homebar.style.top='0';
+        page.style.opacity='';
+        }, 50);
       break;
   }
 }
@@ -117,6 +121,7 @@ function comin(){
   if (document.referrer && document.referrer.split('#')[0] !== window.location.href.split('#')[0]) {
     dockmove(1);
     widgetmove(1);
+    lock(0);
 } else {
     lock(1);
 }
@@ -343,11 +348,12 @@ function handleDropCombined(e) {
 // cat
 let observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
-      let cat = document.getElementById('live2d-widget');
+      let cat = document.getElementById('live2dcanvas');
       if (cat) {
-          cat.addEventListener('click', function() {
-              catHandler();
-          });
+          // 先移除可能已经绑定的监听器
+          cat.removeEventListener('click', catHandler); 
+          // 然后再绑定监听器
+          cat.addEventListener('click', catHandler);
           observer.disconnect(); // 找到元素后停止观察
       }
   });
@@ -359,7 +365,7 @@ function catHandler(){
   let random = Math.floor(Math.random() * 4); // 生成 0 到 3 的随机整数
   switch(random) {
       case 0:
-          notify("喵喵～");
+          notify("OMG！");
           break;
       case 1:
           notify("linzeen是大天才");
@@ -368,9 +374,10 @@ function catHandler(){
           notify("哈哈哈哈哈哈哈哈哈");
           break;
       case 3:
-          notify("这是linzeen的website");
+          notify("LZE web");
           break;
       default:
-          console.log("呱呱");
+          console.log("林泽恩");
+          break;
   }
 }

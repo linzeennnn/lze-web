@@ -41,21 +41,25 @@ $(function() {
 });
 // notify
 function notify(text) {
-    const notify = document.createElement('div');
-    notify.id = 'notify';
-    const notifytext = document.createElement('span');
-    notifytext.id = 'notifytext';
-    notifytext.innerText = text;
-    notify.appendChild(notifytext);
-    document.body.appendChild(notify);
+  const notify = document.createElement('div');
+  notify.id = 'notify';
+  const notifytext = document.createElement('span');
+  notifytext.id = 'notifytext';
+  notifytext.innerText = text;
+  notify.appendChild(notifytext);
+  notify.classList.add("main");
+  document.body.appendChild(notify);
+  setTimeout(function () {
     notify.style.opacity = '1';
+    notify.style.top='5px';
+  }, 10);
+  setTimeout(function () {
+    notify.style.opacity = '';
     setTimeout(function () {
-      notify.style.opacity = '';
-      setTimeout(function () {
-        document.body.removeChild(notify);
-      }, 1500);
-    }, 1500);
-  }
+      document.body.removeChild(notify);
+    }, 1000);
+  }, 1000);
+}
 // reload
 function reloadPage() {
     location.reload();

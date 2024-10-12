@@ -70,10 +70,10 @@ body::-webkit-scrollbar {
                 width: fit-content;
                 height: fit-content;
                 position: fixed;
-                top: 30px;
+                top: 150px;
                 z-index: 1000;
                 opacity: 0;
-                transition: opacity 1s ease;
+                transition: opacity 1s ease,top 1s ease;
             }
 #notifytext{
                 padding: 20px;
