@@ -6,6 +6,22 @@
           color: #ffc89c; 
       }
       
+  body {
+    overflow-x: hidden !important;
+    
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--orange);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background-image 1s ease;
+  }
       #option-bar{
         opacity: 0;
         padding-top: 5%;
@@ -103,22 +119,6 @@
       .main{
         margin-left: 60px;
       }
-  body {
-    overflow-x: hidden !important;
-    
-    font-size: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #261b24;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    transition: background-image 1s ease;
-  }
   form {
     width: 80%;
     max-width: 80%;
@@ -414,5 +414,7 @@ background-color: #85657f86;
 .selected{
   background-color: #8543799c !important;
 }
-
+.phone_background .fixed {
+  background-color: var(--orange);
+}
   }

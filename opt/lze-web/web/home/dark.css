@@ -1,3 +1,12 @@
+:root { 
+  --red:#725656;
+  --green:#567260;
+  --blue:#566272;
+  --yellow:#727256;
+  --pink:#705672;
+  --orange:#726756;
+  --back: url('../../wallpaper/dark/home.svg') no-repeat center;
+}
 .ui-tooltip {
           background: #4c646d60; 
           color: #c3c6c9; 
@@ -53,24 +62,6 @@
       }
       .dock-btn{
         background-image: url(../../wallpaper/dark/home.svg);
-      }
-      #widget1{
-        background-image: url(../../wallpaper/dark/green.svg);
-      }
-      #widget2{
-        background-image: url(../../wallpaper/dark/blue.svg);
-      }
-      #widget3{
-        background-image: url(../../wallpaper/dark/yellow.svg);
-      }
-      #widget4{
-        background-image: url(../../wallpaper/dark/orange.svg);
-      }
-      #widget5{
-        background-image: url(../../wallpaper/dark/pink.svg);
-      }
-      #widget6{
-        background-image: url(../../wallpaper/dark/red.svg);
       }
       @media only screen and (max-width: 600px){
         .phone_background {

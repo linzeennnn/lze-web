@@ -8,7 +8,7 @@
             font-size: 100%;
             margin: 0;
             padding: 0;
-            background-color: #271b1b;
+            background-color: var(--red);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -393,6 +393,9 @@
           top: auto;
           margin-left: 0;
           left: 5px;
+        }
+        .phone_background .fixed {
+          background-color: var(--yellow);
         }
             }
             

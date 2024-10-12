@@ -1,5 +1,4 @@
-body{
-            
+body{     
     overflow-x: hidden !important;
     align-items: center;
     background-attachment:fixed;
@@ -28,6 +27,7 @@ body{
     background-color: #8879477c;
   }
 #option-bar{
+  /* top: 0; */
     opacity: 0;
     padding-top: 5%;
     flex-direction: column;
@@ -35,7 +35,6 @@ body{
     align-items: center;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    /* justify-content: center; */
     left: -60px;
     position: fixed;
     height: 100%;

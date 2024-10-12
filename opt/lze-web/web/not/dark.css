@@ -1,13 +1,7 @@
-body {
-    background-image: url(../../wallpaper/dark/pink.svg);
-  }
-
+:root { 
+  --pink:#705672;
+  --back: url('../../wallpaper/dark/home.svg') no-repeat center/cover;
+}
   #cover-bar{
     background-color: #271f2596;
   }
-  @media only screen and (max-width: 600px) {
-  .phone_background .fixed {
-    background:no-repeat center center;
-    background-image: url(../../wallpaper/dark/pink.svg);
-  }
-    }

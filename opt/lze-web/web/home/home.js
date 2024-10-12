@@ -340,3 +340,37 @@ function handleDropCombined(e) {
         draggedElement.classList.add('dock-back');
     }
 }
+// cat
+let observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+      let cat = document.getElementById('live2d-widget');
+      if (cat) {
+          cat.addEventListener('click', function() {
+              catHandler();
+          });
+          observer.disconnect(); // 找到元素后停止观察
+      }
+  });
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+function catHandler(){
+  let random = Math.floor(Math.random() * 4); // 生成 0 到 3 的随机整数
+  switch(random) {
+      case 0:
+          notify("喵喵～");
+          break;
+      case 1:
+          notify("linzeen是大天才");
+          break;
+      case 2:
+          notify("哈哈哈哈哈哈哈哈哈");
+          break;
+      case 3:
+          notify("这是linzeen的website");
+          break;
+      default:
+          console.log("呱呱");
+  }
+}

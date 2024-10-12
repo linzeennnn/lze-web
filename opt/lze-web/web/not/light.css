@@ -1,13 +1,8 @@
-body {
-    background-image: url(../../wallpaper/light/pink.svg);
-  }
-  
+:root { 
+  --pink:#bd97b2;
+  --back: url('../../wallpaper/light/home.svg') no-repeat center/cover;
+}
   #cover-bar{
     background-color: #966a85;
   }
-  @media only screen and (max-width: 600px) {
-  .phone_background .fixed {
-    background:no-repeat center center;
-    background-image: url(../../wallpaper/light/pink.svg);
-  }
-    }
+ 

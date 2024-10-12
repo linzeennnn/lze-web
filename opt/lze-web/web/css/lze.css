@@ -12,6 +12,7 @@ body::-webkit-scrollbar {
     display: none; /* 隐藏滚动条 */
     }
     body{
+        margin: 0;
         background-blend-mode: overlay;
         background: var(--back);
     }
