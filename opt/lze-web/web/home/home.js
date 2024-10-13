@@ -116,8 +116,6 @@ function lockmove(status){
   }
 }
 function comin(){
-  console.log(document.referrer.split('#')[0]);
-  console.log();
   if (document.referrer && document.referrer.split('#')[0] !== window.location.href.split('#')[0]) {
     dockmove(1);
     widgetmove(1);
@@ -197,30 +195,36 @@ location.reload();
 
 
 function tonext(path,widget,place,line) {
-  widgetopen(path,widget,place,line);
-document.getElementById(`home-bar`).style.top = '-150px';
-document.querySelector('.next').style.opacity ='1';
+  widgetopen(path,widget);
 setTimeout(() => {
 window.location.replace(path);
 }, 300);
 }
 // 打开widget
-function widgetopen(path,widget,place,line){
-  const title= widget.querySelector('.widget-title');
-  const clone = widget.cloneNode(true);
-  const linebox=document.getElementById(line);
-  widget.style.position='absolute'
-  switch(place){
-    case 1:
-      linebox.appendChild(clone);
-  break;
-  case 0:
-    linebox.insertBefore(clone,linebox.firstChild);
-    break;
-  }
-  widget.style.transform='scale(7)';
-  widget.style.opacity='0.5';
-  title.innerText='';
+function widgetopen(path,widget){
+  const icon =widget.querySelector('div');
+  const widgetback = window.getComputedStyle(widget).backgroundColor; 
+  const iconback=window.getComputedStyle(icon).backgroundImage;
+  const rect = widget.getBoundingClientRect();
+  const open = document.createElement('div');
+  const openicon = document.createElement('div');
+  open.classList.add('widget-open');
+  open.style.backgroundColor=widgetback;
+  openicon.style.backgroundImage=iconback;
+open.style.width = (rect.width+"px"); 
+open.style.height = (rect.height+"px");
+open.style.top = (rect.top+"px");
+open.style.left = (rect.left+"px");
+open.appendChild(openicon);
+document.body.appendChild(open);
+setTimeout(() => {
+  open.style.top=("50%");
+  open.style.left=("50%");
+  open.style.transform = 'translate(-50%, -50%) scale(10)';
+  open.style.opacity='0';
+
+  open.styletransform=("translate(-50%, -50%)");
+  }, 10);
 }
 function handleTopBarButtonClick(index) {
   var buttons = document.querySelectorAll('#topBar button');
@@ -264,87 +268,126 @@ function handleDocumentClick(event) {
   }
 }
 // 鼠标拖拽
-const dockback = document.querySelectorAll('dock-back');
+const dockback = document.querySelectorAll('.dock-back'); // 使用类选择器
 const dock = document.getElementById('dock');
 const widgetLines = document.querySelectorAll('.widget-line');
-const line3 = document.getElementById('widget-line3');
-let dragging;
-document.addEventListener('drop', handleDropCombined);
-document.addEventListener('dragstart', handleDragStart);
-document.addEventListener('dragover', handleDragOver);
+const line3=document.getElementById('widget-line3');
+let dragmove = null;
+let space = null;
 
+// 为 widgetLines 和 dock 添加事件监听器
 widgetLines.forEach(line => {
-    line.addEventListener('dragover', handleDragOver);
-    line.addEventListener('drop', handleDropCombined);
+  line.addEventListener('dragstart', dragstart);
+  line.addEventListener('dragover', dragover); 
+  line.addEventListener('drop', drop);
 });
-
-dock.addEventListener('dragover', handleDragOver);
-dock.addEventListener('drop', handleDropCombined);
-dock.addEventListener('mouseleave', function() {
-    dock.style.transform = '';
-});
-
-function handleDragStart(e) {
-  const drag=e.target;
-    e.dataTransfer.setData('text', e.target.id);
-    e.target.style.opacity = 0.5;
-    const icon=e.target.querySelector('div');
-    const iconstyle = getComputedStyle(icon);
-    const computedstyle = getComputedStyle(e.target);
-    const rect = e.target.getBoundingClientRect();
-    dragging=document.createElement('div');
-    dragging.appendChild(Object.assign(document.createElement('div')));
-    dragging.classList.add('preview');
-    dragging.style.width=Math.floor(rect.width)+'px';
-    dragging.style.height=Math.floor(rect.height)+'px';
-    dragging.style.backgroundImage=computedstyle.backgroundImage;
-    dragging.querySelector('div').style.backgroundImage=iconstyle.backgroundImage;
-    document.body.appendChild(dragging);
-    // 设置原生拖拽图像
-    e.dataTransfer.setDragImage(dragging, rect.width / 2, rect.height / 2); 
+dock.addEventListener('dragstart', dragstart);
+dock.addEventListener('dragenter', dragenter);
+dock.addEventListener('dragover', dragover); 
+dock.addEventListener('drop', drop);
+document.addEventListener('dragover', dragover); 
+document.addEventListener('drop', drop);
+function dragover(e) {
+  e.preventDefault(); // 允许放置
 }
 
-function handleDragOver(e) {
-    e.preventDefault();
-    if (dragging) {
-      dragging.style.left = (e.pageX - dragging.offsetWidth / 2) + 'px';
-      dragging.style.top = (e.pageY - dragging.offsetHeight / 2) + 'px';
-      dock.style.transform = '';
+function enterline(e) {
+  e.preventDefault();  
+  if (space == null) {
+    space = document.createElement('div');
+    space.classList.add('widget');
+    space.style.opacity = '0';
+    e.target.insertAdjacentElement('afterend', space);
   }
-    if (e.target == dock) {
-        dock.style.transform = 'scale(1.2)';
-    } else {
-        dock.style.transform = '';
-    }
 }
 
-function handleDropCombined(e) {
-  console.log(dragging);
-    e.preventDefault();
-    const data = e.dataTransfer.getData('text');
-    const draggedElement = document.getElementById(data);
-    dock.style.transform = '';
-    draggedElement.style.opacity = 1;
-    document.body.removeChild(dragging);
-    if (e.target.classList.contains('widget-line') || e.target.classList.contains('widget')) {
-        if (e.target.classList.contains('widget')) {
-            const parentLine = e.target.parentElement;
-            parentLine.insertBefore(draggedElement, e.target);
-        } else {
-            e.target.appendChild(draggedElement);
-        }
-        draggedElement.classList.remove('dock-back');
-        draggedElement.classList.add('widget');
-    } else if (e.target == dock || e.target == dockback) {
-        dock.appendChild(draggedElement);
-        draggedElement.classList.remove('widget');
-        draggedElement.classList.add('dock-back');
-    } else if (e.target != dock && !e.target.classList.contains('widget-line')) {
-        line3.appendChild(draggedElement);
-        draggedElement.classList.remove('widget');
-        draggedElement.classList.add('dock-back');
-    }
+function leaveline(e) {
+  e.preventDefault();  
+  space.remove();
 }
+
+function dragstart(e) {
+  const drag = e.target;
+  e.dataTransfer.setData('text', e.target.id);
+  e.target.style.opacity = 0;
+
+  const icon = drag.querySelector('div');
+  const iconback = getComputedStyle(icon).backgroundImage;
+  const dragback = getComputedStyle(drag).backgroundColor;
+  
+  dragmove = document.createElement('div');
+  dragmove.style.backgroundImage = iconback;
+  if (dragback != "rgba(0, 0, 0, 0)") {
+    dragmove.style.backgroundColor = dragback;
+  }
+  dragmove.classList.add('preview');
+  document.body.appendChild(dragmove);
+  
+  e.dataTransfer.setDragImage(dragmove, 50, 50);
+}
+
+function mousemove(e) {
+  if (dragmove) {
+    dragmove.style.left = (e.clientX - dragmove.offsetWidth / 2) + 'px';
+    dragmove.style.top = (e.clientY - dragmove.offsetHeight / 2) + 'px';
+  }
+}
+
+function dragenter(e) {
+  e.preventDefault();  
+  if (e.target == dock) {
+    dock.style.transform = 'scale(1.2)';
+    dragmove.style.width = '64px';
+    dragmove.style.height = '64px';
+  } else {
+    dock.style.transform = '';
+    if (dragmove) {
+      dragmove.style.width = '';
+      dragmove.style.height = '';
+    }
+  }
+}
+
+function drop(e) {
+  e.preventDefault();
+  const data = e.dataTransfer.getData('text');
+  const draggedElement = document.getElementById(data);
+  
+  dock.style.transform = '';
+  draggedElement.style.opacity = '';
+  if(dragmove){
+  document.body.removeChild(dragmove);
+  }
+dragmove=null;
+  if (e.target.classList.contains('widget-line') || e.target.classList.contains('widget')) {
+    if (e.target.classList.contains('widget')) {
+      const parentLine = e.target.parentElement;
+      parentLine.insertBefore(draggedElement, e.target);
+    } else {
+      e.target.appendChild(draggedElement);
+    }
+    draggedElement.classList.remove('dock-back');
+    draggedElement.classList.add('widget');
+  } else if (e.target === dock || e.target === dockback) {
+    if(dock.offsetWidth<= document.body.offsetWidth-84){
+      console.log(document.body.offsetWidth,dock.offsetWidth);
+    dock.appendChild(draggedElement);
+    draggedElement.classList.remove('widget');
+    draggedElement.classList.add('dock-back');
+    }
+    else{
+      console.log(document.body.offsetWidth,dock.offsetWidth);
+      line3.appendChild(draggedElement);
+      draggedElement.classList.remove('dock-back');
+      draggedElement.classList.add('widget');
+    }
+  } else if (e.target !== dock && !e.target.classList.contains('widget-line')) {
+    line3.appendChild(draggedElement);
+    draggedElement.classList.remove('widget');
+    draggedElement.classList.add('dock-back');
+  }
+}
+
 // cat
 let observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
@@ -365,7 +408,7 @@ function catHandler(){
   let random = Math.floor(Math.random() * 4); // 生成 0 到 3 的随机整数
   switch(random) {
       case 0:
-          notify("OMG！");
+          notify("啊哈");
           break;
       case 1:
           notify("linzeen是大天才");

@@ -33,24 +33,24 @@
   </div>
         <div id="widget-box">
           <div id="widget-line1" class="widget-line">
-            <div id="widget1" draggable="true" class="widget" title="文件管理" onclick="tonext(doc_path,this,0,'widget-line1')"><div id="folder" class="widget-icon"></div><span class="widget-title">文件管理</span></div>
-            <div id="widget2" draggable="true" class="widget" title="图库" onclick="tonext(pic_path,this,1,'widget-line1')"><div id="picture" class="widget-icon"></div><span class="widget-title">图库</span></div>
+            <div id="widget1" draggable="true" class="widget app" title="文件管理" onclick="tonext(doc_path,this)"><div id="folder" class="widget-icon"></div><span class="widget-title">文件管理</span></div>
+            <div id="widget2" draggable="true" class="widget app" title="图库" onclick="tonext(pic_path,this)"><div id="picture" class="widget-icon"></div><span class="widget-title">图库</span></div>
           </div>
           <div id="widget-line2" class="widget-line">
-            <div id="widget3" draggable="true" class="widget" title="控制面板" onclick="tonext(mon_path,this,0,'widget-line2')"><div id="monitor" class="widget-icon"></div><span class="widget-title">控制面板</span></div>
-            <div id="widget4" draggable="true" class="widget" title="回收站" onclick="tonext(tra_path,this,1,'widget-line2')"><div id="trash" class="widget-icon"></div><span class="widget-title">回收站</span></div>
+            <div id="widget3" draggable="true" class="widget app" title="控制面板" onclick="tonext(mon_path,this)"><div id="monitor" class="widget-icon"></div><span class="widget-title">控制面板</span></div>
+            <div id="widget4" draggable="true" class="widget app" title="回收站" onclick="tonext(tra_path,this)"><div id="trash" class="widget-icon"></div><span class="widget-title">回收站</span></div>
           </div>
           <div id="widget-line3" class="widget-line">
-            <div id="widget5" draggable="true" class="widget" title="便签" onclick="tonext(not_path,this,0,'widget-line3')"><div id="note" class="widget-icon"></div><span class="widget-title">便签</span></div>
-            <div id="widget6" draggable="true" class="widget" title="网页书签" onclick="tonext(bok_path,this,1,'widget-line3')"><div id="bookmark" class="widget-icon"></div><span class="widget-title">网页书签</span></div>
+            <div id="widget5" draggable="true" class="widget app" title="便签" onclick="tonext(not_path,this)"><div id="note" class="widget-icon"></div><span class="widget-title">便签</span></div>
+            <div id="widget6" draggable="true" class="widget app" title="网页书签" onclick="tonext(bok_path,this)"><div id="bookmark" class="widget-icon"></div><span class="widget-title">网页书签</span></div>
           </div>
         </div>
         <div id="dock">
-          <div class="dock-back dock-btn" draggable="true" id="login-btn" title="登陆管理" onclick="showlogin(3)"><div class="dock-icon" id="login"></div><span class="widget-title">登陆管理</span></div>
-          <div class="dock-back dock-btn" draggable="true" id="light-btn" title="切换亮主题" onclick="switchTheme('light');"><div class="dock-icon" id="light-icon"></div><span class="widget-title">切换亮主题</span></div>
-          <div class="dock-back dock-btn"  draggable="true" id="dark-btn" title="切换暗主题" onclick="switchTheme('dark')"><div class="dock-icon" id="dark-icon"></div><span class="widget-title">切换暗主题</span></div>
-          <div class="dock-back dock-btn" draggable="true" id="system-btn" title="系统监视器" onclick="getsystem(1)"><div class="dock-icon" id="system"></div><span class="widget-title">系统监视器</span></div>
-          <div class="dock-back dock-btn" draggable="true" id="lock-btn" title="锁屏" onclick="lock(1)"><div class="dock-icon" id="lock"></div><span class="widget-title">锁屏</span></div>
+          <div class="dock-back app" draggable="true" id="login-btn" title="登陆管理" onclick="showlogin(3)"><div class="dock-icon" id="login"></div><span class="widget-title">登陆管理</span></div>
+          <div class="dock-back app" draggable="true" id="light-btn" title="切换亮主题" onclick="switchTheme('light');"><div class="dock-icon" id="light-icon"></div><span class="widget-title">切换亮主题</span></div>
+          <div class="dock-back app"  draggable="true" id="dark-btn" title="切换暗主题" onclick="switchTheme('dark')"><div class="dock-icon" id="dark-icon"></div><span class="widget-title">切换暗主题</span></div>
+          <div class="dock-back app" draggable="true" id="system-btn" title="系统监视器" onclick="getsystem(1)"><div class="dock-icon" id="system"></div><span class="widget-title">系统监视器</span></div>
+          <div class="dock-back app" draggable="true" id="lock-btn" title="锁屏" onclick="lock(1)"><div class="dock-icon" id="lock"></div><span class="widget-title">锁屏</span></div>
         </div>
       
 <!-- 登陆页面 -->
