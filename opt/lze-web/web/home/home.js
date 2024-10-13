@@ -386,8 +386,57 @@ dragmove=null;
     draggedElement.classList.remove('widget');
     draggedElement.classList.add('dock-back');
   }
+  saveLayout();
 }
+// 保存布局
+function saveLayout() {
+  const layout = {
+    dock: [],
+    widgetLines: {}
+  };
+  dock.querySelectorAll('.dock-back').forEach(item => {
+    layout.dock.push(item.id);
+  });
+  widgetLines.forEach((line, index) => {
+    layout.widgetLines[index] = [];
+    line.querySelectorAll('.widget').forEach(item => {
+      layout.widgetLines[index].push(item.id);
+    });
+  });
 
+  localStorage.setItem('layout', JSON.stringify(layout));
+}
+// 恢复布局
+document.addEventListener('DOMContentLoaded', loadLayout);
+function loadLayout() {
+  const savedLayout = localStorage.getItem('layout');
+  if (savedLayout) {
+    const layout = JSON.parse(savedLayout);
+    layout.dock.forEach(id => {
+      const item = document.getElementById(id);
+      if (item) {
+        dock.appendChild(item);
+        item.classList.add('dock-back');
+        item.classList.remove('widget');
+      }
+    });
+    widgetLines.forEach((line, index) => {
+      const widgets = layout.widgetLines[index] || [];
+      widgets.forEach(id => {
+        const item = document.getElementById(id);
+        if (item) {
+          line.appendChild(item);
+          item.classList.add('widget');
+          item.classList.remove('dock-back');
+        }
+      });
+    });
+  }
+}
+// 恢复初始布局
+function clearLayout() {
+  localStorage.removeItem('layout');
+}
 // cat
 let observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
