@@ -47,12 +47,15 @@
         </div>
         <div id="dock">
           <div class="dock-back app" draggable="true" id="login-btn" title="登陆管理" onclick="showlogin(3)"><div class="dock-icon" id="login"></div><span class="widget-title">登陆管理</span></div>
-          <div class="dock-back app" draggable="true" id="light-btn" title="切换亮主题" onclick="switchTheme('light');"><div class="dock-icon" id="light-icon"></div><span class="widget-title">切换亮主题</span></div>
-          <div class="dock-back app"  draggable="true" id="dark-btn" title="切换暗主题" onclick="switchTheme('dark')"><div class="dock-icon" id="dark-icon"></div><span class="widget-title">切换暗主题</span></div>
+          <div class="dock-back app" draggable="true" id="theme-btn" title="主题设置" onclick="notify('开发中')"><div class="dock-icon" id="login"></div><span class="widget-title">主题设置</span></div>
           <div class="dock-back app" draggable="true" id="system-btn" title="系统监视器" onclick="getsystem(1)"><div class="dock-icon" id="system"></div><span class="widget-title">系统监视器</span></div>
           <div class="dock-back app" draggable="true" id="lock-btn" title="锁屏" onclick="lock(1)"><div class="dock-icon" id="lock"></div><span class="widget-title">锁屏</span></div>
         </div>
-      
+      <!-- 主题 -->
+       <div id="theme-page">
+        <div class="dock-back app" draggable="true" id="light-btn" title="切换亮主题" onclick="switchTheme('light');"><div class="dock-icon" id="light-icon"></div><span class="widget-title">切换亮主题</span></div>
+        <div class="dock-back app"  draggable="true" id="dark-btn" title="切换暗主题" onclick="switchTheme('dark')"><div class="dock-icon" id="dark-icon"></div><span class="widget-title">切换暗主题</span></div>
+       </div>
 <!-- 登陆页面 -->
 <div id="login-bar"></div>
 <div id="login-page">
