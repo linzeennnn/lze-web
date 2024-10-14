@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="web/css/password.css">
     <link rel="stylesheet" href="web/home/home.css">
     <link rel="stylesheet" href="web/css/system.css">
+    <link rel="stylesheet" href="web/css/theme.css">
 </head>
 <body>
     <div id="lock-page"></div>
@@ -47,15 +48,18 @@
         </div>
         <div id="dock">
           <div class="dock-back app" draggable="true" id="login-btn" title="登陆管理" onclick="showlogin(3)"><div class="dock-icon" id="login"></div><span class="widget-title">登陆管理</span></div>
-          <div class="dock-back app" draggable="true" id="theme-btn" title="主题设置" onclick="notify('开发中')"><div class="dock-icon" id="login"></div><span class="widget-title">主题设置</span></div>
+          <div class="dock-back app" draggable="true" id="theme-btn" title="主题设置" onclick="notify('开发中')"><div class="dock-icon" id="theme"></div><span class="widget-title">主题设置</span></div>
           <div class="dock-back app" draggable="true" id="system-btn" title="系统监视器" onclick="getsystem(1)"><div class="dock-icon" id="system"></div><span class="widget-title">系统监视器</span></div>
           <div class="dock-back app" draggable="true" id="lock-btn" title="锁屏" onclick="lock(1)"><div class="dock-icon" id="lock"></div><span class="widget-title">锁屏</span></div>
         </div>
       <!-- 主题 -->
-       <div id="theme-page">
-        <div class="dock-back app" draggable="true" id="light-btn" title="切换亮主题" onclick="switchTheme('light');"><div class="dock-icon" id="light-icon"></div><span class="widget-title">切换亮主题</span></div>
-        <div class="dock-back app"  draggable="true" id="dark-btn" title="切换暗主题" onclick="switchTheme('dark')"><div class="dock-icon" id="dark-icon"></div><span class="widget-title">切换暗主题</span></div>
-       </div>
+       <!-- <div id="theme-page">
+        <div id="close-theme" title="关闭"></div>
+        <div id="theme-panel">
+        <div class="theme-list" id="light-btn" title="切换亮主题" onclick="switchTheme('light');"><div id="light-icon"></div><span >切换亮主题</span></div>
+        <div class="theme-list" id="dark-btn" title="切换暗主题" onclick="switchTheme('dark')"><div  id="dark-icon"></div><span >切换暗主题</span></div>
+          </div>
+      </div> -->
 <!-- 登陆页面 -->
 <div id="login-bar"></div>
 <div id="login-page">

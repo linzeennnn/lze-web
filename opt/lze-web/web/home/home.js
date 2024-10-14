@@ -411,26 +411,36 @@ document.addEventListener('DOMContentLoaded', loadLayout);
 function loadLayout() {
   const savedLayout = localStorage.getItem('layout');
   if (savedLayout) {
-    const layout = JSON.parse(savedLayout);
-    layout.dock.forEach(id => {
+    let layout = JSON.parse(savedLayout);
+
+    // 清理 dock 中不存在的元素
+    layout.dock = layout.dock.filter(id => {
       const item = document.getElementById(id);
-      if (item) {
+      if (item) { 
         dock.appendChild(item);
         item.classList.add('dock-back');
         item.classList.remove('widget');
+        return true;  // 元素存在，保留在 layout.dock 中
       }
+      return false;  // 元素不存在，移除
     });
+
+    // 清理 widgetLines 中不存在的元素
     widgetLines.forEach((line, index) => {
-      const widgets = layout.widgetLines[index] || [];
-      widgets.forEach(id => {
+      layout.widgetLines[index] = layout.widgetLines[index].filter(id => {
         const item = document.getElementById(id);
-        if (item) {
+        if (item) { 
           line.appendChild(item);
           item.classList.add('widget');
           item.classList.remove('dock-back');
+          return true;  // 元素存在，保留在 layout.widgetLines 中
         }
+        return false;  // 元素不存在，移除
       });
     });
+
+    // 将更新后的布局重新保存到 localStorage
+    localStorage.setItem('layout', JSON.stringify(layout));
   }
 }
 // 恢复初始布局

@@ -296,6 +296,10 @@
     max-width: 100% !important;  
   }
   .oripath{
+    white-space: nowrap;
+    max-width: 30%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: bold;
     font-size: 20px;
     margin-right: 10px;

@@ -266,8 +266,8 @@
      #light-icon{
       background-image: url(../../icon/sun.svg);
      }
-     #dark-icon{
-      background-image: url(../../icon/moon.svg);
+     #theme{
+      background-image: url(../../icon/theme_grey.svg);
      }
      #system{
       background-image: url(../../icon/column.svg);
@@ -366,9 +366,6 @@
             position:relative;
             overflow:hidden;
               overflow-x: hidden;
-          }
-          #dock{
-            width: 90%;
           }
           .phone_background .fixed {
             position:fixed;

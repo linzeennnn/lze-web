@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 根据传入的主题更新 CSS 文件路径
     switch (theme) {
         case 'dark':
+          console.log("111111111111111");
           themesheet.href = 'web/home/dark.css';
           darkbtn.style.display='none';
           lightbtn.style.display='flex';
@@ -36,5 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 保存选择的主题到 localStorage
     localStorage.setItem('theme', theme);
-    window.webkit.messageHandlers.themeColor.postMessage(metaThemeColor.content);
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.themeColor) {
+      window.webkit.messageHandlers.themeColor.postMessage(metaThemeColor.content);
+  }
   }
