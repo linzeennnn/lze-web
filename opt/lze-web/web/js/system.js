@@ -88,7 +88,6 @@ switch (box.id) {
 });
 const loadsys=document.querySelectorAll('.sys-value');
 const sysloading=document.querySelectorAll('.sys-loading');
-// loadsys.style.display='none';
 // 监视系统
 function getsystem(status){
     switch(status){

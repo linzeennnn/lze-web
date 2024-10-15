@@ -16,7 +16,6 @@
 <script src="web/jquery/jquery-ui.min.js"></script>
 <link rel="manifest" href="manifest.json">
 <link id="themesheet" rel="stylesheet">
-<link rel="stylesheet" href="web/css/back.css">
     <link rel="stylesheet" href="web/css/password.css">
     <link rel="stylesheet" href="web/home/home.css">
     <link rel="stylesheet" href="web/css/system.css">
@@ -48,19 +47,29 @@
         </div>
         <div id="dock">
           <div class="dock-back app" draggable="true" id="login-btn" title="登陆管理" onclick="showlogin(3)"><div class="dock-icon" id="login"></div><span class="widget-title">登陆管理</span></div>
-          <div class="dock-back app" draggable="true" id="theme-btn" title="主题设置" onclick="notify('开发中')"><div class="dock-icon" id="theme"></div><span class="widget-title">主题设置</span></div>
+          <div class="dock-back app" draggable="true" id="theme-btn" title="主题设置" onclick="showtheme(1)"><div class="dock-icon" id="theme"></div><span class="widget-title">主题设置</span></div>
           <div class="dock-back app" draggable="true" id="system-btn" title="系统监视器" onclick="getsystem(1)"><div class="dock-icon" id="system"></div><span class="widget-title">系统监视器</span></div>
           <div class="dock-back app" draggable="true" id="lock-btn" title="锁屏" onclick="lock(1)"><div class="dock-icon" id="lock"></div><span class="widget-title">锁屏</span></div>
         </div>
       <!-- 主题 -->
-       <!-- <div id="theme-page">
-        <div id="close-theme" title="关闭"></div>
+       <div id="theme-page">
         <div id="theme-panel">
+          <div id="close-theme" title="关闭" onclick="showtheme(0)"></div>
         <div class="theme-list" id="light-btn" onclick="switchTheme('light');"><div id="light-icon"></div><span >亮模式</span></div>
         <div class="theme-list" id="dark-btn" onclick="switchTheme('dark')"><div  id="dark-icon"></div><span >暗模式</span></div>
         <div class="theme-list" id="recover-theme" onclick="clearLayout()"> <div id="ori-theme"></div><span>还原布局</span></div>
+        <div  id="color-bar"> 
+          <div id="default" class="color" title="默认" onclick="setcolor('default')"></div>
+          <div id="green" class="color" title="绿" onclick="setcolor('green')"></div>
+          <div id="blue" class="color" title="蓝" onclick="setcolor('blue')"></div>
+          <div id="yellow" class="color" title="黄" onclick="setcolor('yellow')"></div>
+          <div id="orange" class="color" title="橙" onclick="setcolor('orange')"></div>
+          <div id="pink" class="color" title="粉" onclick="setcolor('pink')"></div>
+          <div id="red" class="color" title="红" onclick="setcolor('red')"></div>
+        </div>
       </div>
-      </div> -->
+      </div>
+      </div>
 <!-- 登陆页面 -->
 <div id="login-bar"></div>
 <div id="login-page">
@@ -89,7 +98,8 @@
   <div class="next"></div>
 </div>
 <!-- js -->
-    <script src="web/home/theme.js"></script>
+    <script src="web/home/init.js"></script>
+    <script src="web/js/theme.js"></script>
     <script src="cat/L2Dwidget.min.js"></script>
     <script src="web/home/home.js"></script>
     <script src="web/js/password.js"></script>

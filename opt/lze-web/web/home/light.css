@@ -5,6 +5,8 @@
   --yellow:#bdb497;
   --pink:#bd97b2;
   --orange: #bda797;
+  --default:#96a1ac;
+  --borco:#868a94;
   --back: url('../../wallpaper/light/home.svg') no-repeat center;
 }
 .ui-tooltip {
@@ -18,18 +20,11 @@ body {
   color: #656d79 ;
     background-color: #9ea9add2 ;
 }
-.name{
-  background-image: url(../../icon/light/name.svg);
-  
-}
 #lock-page{
   background-color: #c0d0d65e;
 }
 #home-btn{
-  background-color: #aeaed38f;
-}
-#home-btn:hover{
-  background-color: #d8d8ff8f;
+  background-color: #bebec9;
 }
 .widget-title{
   color: #3a3f46;

@@ -16,25 +16,17 @@ sideBox.id = 'side-box';
 const loginBtn = document.createElement('div');
 loginBtn.className = 'side-btn';
 loginBtn.title = '登陆';
-loginBtn.onclick = () => showlogin(3);
+loginBtn.onclick = () => showtheme(1);
+// loginBtn.onclick = () => showlogin(3);
 loginBtn.innerHTML = '<div id="login"></div><span class="side-text">登陆</span>';
 
-// 创建暗主题按钮
-const darkBtn = document.createElement('div');
-darkBtn.className = 'side-btn';
-darkBtn.id = 'dark-btn';
-darkBtn.title = '切换暗主题';
-darkBtn.style.display = 'none';
-darkBtn.onclick = () => switchTheme('dark');
-darkBtn.innerHTML = '<div id="dark"></div><span class="side-text">主题</span>';
-
-// 创建亮主题按钮
-const lightBtn = document.createElement('div');
-lightBtn.className = 'side-btn';
-lightBtn.id = 'light-btn';
-lightBtn.title = '切换亮主题';
-lightBtn.onclick = () => switchTheme('light');
-lightBtn.innerHTML = '<div id="light"></div><span class="side-text">主题</span>';
+// 创建主题按钮
+const themebtn = document.createElement('div');
+themebtn.className = 'side-btn';
+themebtn.id = 'theme-btn';
+themebtn.title = '主题布局';
+themebtn.onclick = () => showtheme(1);
+themebtn.innerHTML = '<div id="theme"></div><span class="side-text">主题</span>';
 // 监视器
 const sysbtn = document.createElement('div');
 sysbtn.className = 'side-btn';
@@ -44,8 +36,7 @@ sysbtn.innerHTML = '<div id="system"></div><span class="side-text">系统</span>
 
 // 将按钮添加到容器中
 sideBox.appendChild(loginBtn);
-sideBox.appendChild(darkBtn);
-sideBox.appendChild(lightBtn);
+sideBox.appendChild(themebtn);
 sideBox.appendChild(sysbtn);
 
 // 将各部分添加到侧边页面

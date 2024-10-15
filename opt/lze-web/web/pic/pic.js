@@ -102,9 +102,6 @@ window.addEventListener('scroll', handleScroll);
        document.getElementById('selectButton').style.width = '0px';
        document.getElementById('buttonA').style.bottom = '-1000px';
        document.querySelector('.top-button').style.top = '-80px';
-       document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
-       document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
-    document.querySelector('.next').style.opacity ='1';  
             setTimeout(() => {
                 window.location.replace(`../../index.html#${ip}`);
 }, 1000);

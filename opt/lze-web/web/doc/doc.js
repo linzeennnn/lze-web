@@ -98,9 +98,6 @@ window.addEventListener('scroll', handleScroll);
  document.getElementById('option-bar').style.opacity='0';
      document.getElementById('top-bar').style.top = `-60px`;
      document.getElementById('top-btn').style.bottom = `-5%`;
-     document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
-     document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
-   document.querySelector('.next').style.opacity ='1';  
    
    setTimeout(() => {
    window.location.replace(`../../index.html#${ip}`);

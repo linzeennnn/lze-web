@@ -1,13 +1,3 @@
-darkcolor='#1f2324';
-lightcolor='#969fa2';
-let doc_path;
-let pic_path;
-let mon_path;
-let not_path;
-let bok_path;
-let tra_path;
-const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
-
 // notify
 function notify(text) {
   const notify = document.createElement('div');
@@ -116,6 +106,8 @@ function lockmove(status){
   }
 }
 function comin(){
+  color = localStorage.getItem('color');
+  setcolor(color);
   if (document.referrer && document.referrer.split('#')[0] !== window.location.href.split('#')[0]) {
     dockmove(1);
     widgetmove(1);
@@ -135,6 +127,7 @@ bok_path = `web/bok/bok.html#${ip}`;
 ter_path = `web/ter/ter.html#${ip}`; 
 };
 window.onload = comin;
+document.addEventListener('DOMContentLoaded', loadLayout);
 function getip() {
 return window.location.hash.substring(1); 
 }
@@ -370,7 +363,6 @@ dragmove=null;
     draggedElement.classList.add('widget');
   } else if (e.target === dock || e.target === dockback) {
     if(dock.offsetWidth<= document.body.offsetWidth-84){
-      console.log(document.body.offsetWidth,dock.offsetWidth);
     dock.appendChild(draggedElement);
     draggedElement.classList.remove('widget');
     draggedElement.classList.add('dock-back');
@@ -387,65 +379,6 @@ dragmove=null;
     draggedElement.classList.add('dock-back');
   }
   saveLayout();
-}
-// 保存布局
-function saveLayout() {
-  const layout = {
-    dock: [],
-    widgetLines: {}
-  };
-  dock.querySelectorAll('.dock-back').forEach(item => {
-    layout.dock.push(item.id);
-  });
-  widgetLines.forEach((line, index) => {
-    layout.widgetLines[index] = [];
-    line.querySelectorAll('.widget').forEach(item => {
-      layout.widgetLines[index].push(item.id);
-    });
-  });
-
-  localStorage.setItem('layout', JSON.stringify(layout));
-}
-// 恢复布局
-document.addEventListener('DOMContentLoaded', loadLayout);
-function loadLayout() {
-  const savedLayout = localStorage.getItem('layout');
-  if (savedLayout) {
-    let layout = JSON.parse(savedLayout);
-
-    // 清理 dock 中不存在的元素
-    layout.dock = layout.dock.filter(id => {
-      const item = document.getElementById(id);
-      if (item) { 
-        dock.appendChild(item);
-        item.classList.add('dock-back');
-        item.classList.remove('widget');
-        return true;  // 元素存在，保留在 layout.dock 中
-      }
-      return false;  // 元素不存在，移除
-    });
-
-    // 清理 widgetLines 中不存在的元素
-    widgetLines.forEach((line, index) => {
-      layout.widgetLines[index] = layout.widgetLines[index].filter(id => {
-        const item = document.getElementById(id);
-        if (item) { 
-          line.appendChild(item);
-          item.classList.add('widget');
-          item.classList.remove('dock-back');
-          return true;  // 元素存在，保留在 layout.widgetLines 中
-        }
-        return false;  // 元素不存在，移除
-      });
-    });
-
-    // 将更新后的布局重新保存到 localStorage
-    localStorage.setItem('layout', JSON.stringify(layout));
-  }
-}
-// 恢复初始布局
-function clearLayout() {
-  localStorage.removeItem('layout');
 }
 // cat
 let observer = new MutationObserver(function(mutations) {

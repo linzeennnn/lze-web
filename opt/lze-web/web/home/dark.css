@@ -5,32 +5,23 @@
   --yellow:#727256;
   --pink:#705672;
   --orange:#726756;
+  --default:#2d3236;
+  --borco:#9fa0a1;
   --back: url('../../wallpaper/dark/home.svg') no-repeat center;
 }
 .ui-tooltip {
           background: #4c646d60; 
           color: #c3c6c9; 
       }
-      body {
-        background: var(--dark);
-        background-blend-mode: overlay;
-      }
       #home-bar {
         color: #656d79 ;
           background-color: #1e2325d2 ;
-      }
-      .name{
-        background-image: url(../../icon/dark/name.svg);
-        
       }
       #lock-page{
         background-color: #3f43445b;
       }
       #home-btn{
-        background-color: #36363a8f;
-      }
-      #home-btn:hover{
-        background-color: #0a0a0e73;
+        background-color: #36363a;
       }
       .widget-title{
         color: #9ba9bd;

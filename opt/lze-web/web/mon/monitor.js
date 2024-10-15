@@ -122,12 +122,9 @@ function goBack() {
     document.querySelector('.backbtn').style.opacity = '0';
     document.getElementById('option-bar').style.left='';
   document.getElementById('option-bar').style.opacity='0';
-    document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
-    document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
       allwindow.style.opacity='';
       topbar.style.top='';
     allwindow.style.right='';
-    document.querySelector('.next').style.opacity ='1';  
     setTimeout(() => {
         window.location.replace(`../../index.html#${ip}`);
 }, 1000);

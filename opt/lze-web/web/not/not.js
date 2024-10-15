@@ -96,9 +96,6 @@ window.addEventListener('scroll', handleScroll);
         document.querySelector('.backbtn').style.left = '';
         document.querySelector('.backbtn').style.opacity = '0';
       document.getElementById('top-btn').style.bottom = `-5%`;
-      document.querySelector('body').style.backgroundImage = `url(${wallpath}home.svg)`;
-      document.querySelector('.next').style.backgroundImage = `url(${wallpath}home.svg)`;
-    document.querySelector('.next').style.opacity ='1';  
         setTimeout(() => {
             window.location.replace(`../../index.html#${ip}`);
 }, 1000); 

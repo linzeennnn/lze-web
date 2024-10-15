@@ -39,21 +39,13 @@
     background-position: center;
     background-repeat: no-repeat;
 }
- 
-  #dark{
-    width: 32px;
-    height: 32px;
-    background-image: url(../../icon/dark_grey.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  #light{
-    width: 32px;
-    height: 32px;
-    background-image: url(../../icon/light_grey.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+#theme{
+  width: 32px;
+  height: 32px;
+  background-image: url(../../icon/theme_grey.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
  #system{
   width: 32px;
   height: 32px;
