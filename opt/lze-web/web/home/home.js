@@ -400,7 +400,7 @@ function catHandler(){
   let random = Math.floor(Math.random() * 4); // 生成 0 到 3 的随机整数
   switch(random) {
       case 0:
-          notify("啊哈");
+          notify("人生何处不青山");
           break;
       case 1:
           notify("linzeen是大天才");
