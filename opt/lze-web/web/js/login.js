@@ -1,4 +1,3 @@
-const createLoginPage = () => {
     const loginPage = document.createElement('div');
     loginPage.id = 'login-page';
   
@@ -102,7 +101,5 @@ const createLoginPage = () => {
     loginPage.appendChild(loginList);
   
     document.body.appendChild(loginPage);
-  };
-  
-  createLoginPage();
+
   
