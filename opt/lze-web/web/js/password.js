@@ -2,7 +2,6 @@ const loginpage=document.getElementById('login-page');
 const passbar=document.getElementById('pass-bar');
 const hostbar=document.getElementById('host-bar');
 const hostbox=document.getElementById('host-box');
-const backlogin=document.getElementById('backlogin');
 let password;
 let ip;
 let logstatus;

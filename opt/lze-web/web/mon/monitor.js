@@ -107,7 +107,7 @@ function comin(){
     mediastatus();
     getvalue();
     topbar.style.top="80px";
-    allwindow.style.right='0';
+    allwindow.style.opacity='1';
     document.getElementById('option-bar').style.left='0';
     document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';

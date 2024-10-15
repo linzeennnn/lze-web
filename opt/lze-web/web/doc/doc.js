@@ -297,7 +297,6 @@ window.addEventListener('scroll', handleScroll);
    const parentFolder = upButton.dataset.parentFolder;
    loadFolder(parentFolder);
  }
-
 // 判断根目录
 function ifroot(){
  if (fullPath=="/"){
