@@ -195,10 +195,12 @@ window.addEventListener('scroll', handleScroll);
          savebtn.className='save li-btn';
          savebtn.addEventListener('click',function(){
            event.stopPropagation(); 
-           rename(1,listItem,2);
+           rename(1,listItem);
          });
          listItem.className = 'files';
          const folderLink = document.createElement('span');
+         const filetit = document.createElement('input');
+         filetit.classList.add('file-tit');
          folderLink.textContent = folder;
          folderLink.className = 'folderLink';
          listItem.addEventListener('click', function() {
@@ -212,6 +214,7 @@ window.addEventListener('scroll', handleScroll);
            loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
 
        });
+        listItem.appendChild(filetit);
          listItem.appendChild(folderLink);
          listItem.appendChild(editbtn);
          listItem.appendChild(savebtn);
@@ -231,10 +234,12 @@ window.addEventListener('scroll', handleScroll);
          savebtn.className='save li-btn';
          savebtn.addEventListener('click',function(){
            event.stopPropagation(); 
-           rename(1,listItem,1);
+           rename(1,listItem);
          });
          listItem.className = 'files';
          const fileLink = document.createElement('span');
+         const filetit = document.createElement('input');
+         filetit.classList.add('file-tit');
          const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
          const fileListContainer = document.getElementById('fileListContainer');
          fileLink.textContent = file;
@@ -260,6 +265,7 @@ window.addEventListener('scroll', handleScroll);
            window.location.href = filepath;
          });
 
+         listItem.appendChild(filetit);
          listItem.appendChild(fileLink);
          listItem.appendChild(editbtn);
          listItem.appendChild(savebtn);
@@ -611,12 +617,13 @@ selectedarray.push(selectedpath);
 // 重命名
  let oldname;
  let newname;
-function rename(option,fileitem,type){
+function rename(option,fileitem,type,event){
  let newpath;
  let oldpath;
  let files;
  const editbtn=fileitem.querySelector('.edit');
  const savebtn=fileitem.querySelector('.save');
+ const filetit=fileitem.querySelector('.file-tit');
  switch (type){
    case 1:
 files=fileitem.querySelector('.fileLink');
@@ -634,13 +641,16 @@ files=fileitem.querySelector('.folderLink');
     editmode=1;
      editbtn.style.display="none";
      savebtn.style.display="block";
-     files.classList.add('editing');
+     files.style.display='none';
+     filetit.style.display='block';
+     filetit.contentEditable = 'true';
+     filetit.value=files.innerText;
      files.setAttribute('contenteditable', 'true');
  oldname=files.innerText;
    break;
    case 1:
    ifroot();  
-   newname=files.innerText;
+   newname=filetit.value;
    oldpath=nowpath+oldname;
    newpath=nowpath+newname;   
    fetch(`${protocol}//${ip}/code/Documents/rename.php`, {

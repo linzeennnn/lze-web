@@ -166,18 +166,6 @@
     position: fixed;
     right: 10px;
   }
-  .editing{
-    cursor: text;
-    padding: 10px;
-    border-radius: 1em;
-    border: none;
-    box-shadow: var(--inshadow);
-    animation: edit 2s ease-in-out infinite;
-  }
-  .editing:focus{
-    outline: none;
-    background-color: transparent;
-  }
   @keyframes edit {
     0% {
       background-color: #728d847e;
@@ -502,8 +490,25 @@
     text-overflow: ellipsis;
     max-width: 100% !important;  
   }
+.file-tit{
+  position: relative;
+  color: #9cdfb6;
+  font-weight: bold;
+  margin-right: 10%;
+  display: none;
+  cursor: text;
+  padding: 10px;
+  border-radius: 1em;
+  border: none;
+  box-shadow: var(--inshadow);
+  animation: edit 2s ease-in-out infinite; 
+  z-index: 20;
+}
 
-
+.file-tit:focus{
+  outline: none;
+  background-color: transparent;
+}
  
   .rotate-box{
     margin-right: 10px;
