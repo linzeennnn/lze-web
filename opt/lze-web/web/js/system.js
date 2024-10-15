@@ -9,13 +9,15 @@ const closeSys = document.createElement('div');
 closeSys.id = 'close-sys';
 closeSys.onclick =  () => getsystem(0);
 closeSys.title='关闭系统监视';
-systemPage.appendChild(closeSys);
 const systemBoxes = [
   { id: 'cpu', title: 'CPU' },
   { id: 'mem', title: '内存' },
   { id: 'disk', title: '磁盘' },
   { id: 'net', title: '网络' }
 ];
+const syslist= document.createElement('div');
+syslist.id = 'sys-list';
+syslist.appendChild(closeSys);
 systemBoxes.forEach(box => {
   const sysBox = document.createElement('div');
   sysBox.className = 'sys-box';
@@ -56,7 +58,7 @@ systemBoxes.forEach(box => {
       break;
   }
   sysBox.appendChild(sysIcon);
-  systemPage.appendChild(sysBox);
+  syslist.appendChild(sysBox);
   if(box.id != "net"){
   sysBar.appendChild(sysProgress);
   sysBox.appendChild(sysBar);
@@ -86,6 +88,7 @@ switch (box.id) {
     break;
 }
 });
+systemPage.appendChild(syslist);
 const loadsys=document.querySelectorAll('.sys-value');
 const sysloading=document.querySelectorAll('.sys-loading');
 // 监视系统

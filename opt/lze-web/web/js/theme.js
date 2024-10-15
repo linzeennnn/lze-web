@@ -122,6 +122,9 @@ function clearLayout() {
   localStorage.removeItem('layout');
   loadLayout();
   notify("已恢复初始布局");
+  if (typeof ishome !== 'undefined' && ishome){
+    reloadPage();
+  }
 }
 // 保存布局
 function saveLayout() {

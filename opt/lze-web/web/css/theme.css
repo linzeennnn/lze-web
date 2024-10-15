@@ -25,7 +25,6 @@
     border-radius: 15px;
     background-color: #61616167;
     box-shadow: var(--outshadow);
-    overflow: hidden;
 }
 #close-theme{
     opacity: 0.7;

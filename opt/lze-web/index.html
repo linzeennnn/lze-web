@@ -51,28 +51,11 @@
           <div class="dock-back app" draggable="true" id="system-btn" title="系统监视器" onclick="getsystem(1)"><div class="dock-icon" id="system"></div><span class="widget-title">系统监视器</span></div>
           <div class="dock-back app" draggable="true" id="lock-btn" title="锁屏" onclick="lock(1)"><div class="dock-icon" id="lock"></div><span class="widget-title">锁屏</span></div>
         </div>
-      <!-- 主题 -->
-       <div id="theme-page">
-        <div id="theme-panel">
-          <div id="close-theme" title="关闭" onclick="showtheme(0)"></div>
-        <div class="theme-list" id="light-btn" onclick="switchTheme('light');"><div id="light-icon"></div><span >亮模式</span></div>
-        <div class="theme-list" id="dark-btn" onclick="switchTheme('dark')"><div  id="dark-icon"></div><span >暗模式</span></div>
-        <div class="theme-list" id="recover-theme" onclick="clearLayout()"> <div id="ori-theme"></div><span>还原布局</span></div>
-        <div  id="color-bar"> 
-          <div id="default" class="color" title="默认" onclick="setcolor('default')"></div>
-          <div id="green" class="color" title="绿" onclick="setcolor('green')"></div>
-          <div id="blue" class="color" title="蓝" onclick="setcolor('blue')"></div>
-          <div id="yellow" class="color" title="黄" onclick="setcolor('yellow')"></div>
-          <div id="orange" class="color" title="橙" onclick="setcolor('orange')"></div>
-          <div id="pink" class="color" title="粉" onclick="setcolor('pink')"></div>
-          <div id="red" class="color" title="红" onclick="setcolor('red')"></div>
-        </div>
-      </div>
-      </div>
-      </div>
 <!-- 登陆页面 -->
-<div id="login-bar"></div>
 <div id="login-page">
+  <div id="login-list">
+    <div id="backlogin" title="关闭页面" onclick="showlogin(0)"></div>
+  <div id="login-bar"></div>
   <div id="ip-status" title="已连接"></div>
   <div id="log-tool">
     <div id="reconnect" title="切换ip" onclick="switchip()"></div>
@@ -84,11 +67,11 @@
   <input id="password" contenteditable="true" class="login-input" placeholder="password" type="password"></input>
   <div id="send-pass" title="连接" class="login-btn" onclick="sendpass()"></div>
 </div>
-<div id="backlogin" onclick="showlogin(0)"></div>
 <div id="hostlist-bar"></div>
 <div id="host-bar" class="login-box">
   <input type="text" id="ip-input" class="login-input" placeholder="输入 IP 地址">
   <div onclick="addhost()" class="login-btn" id="addhost"></div>
+  </div>
 </div>
 <div id="host-box">
   <div id="ipList"></div>
