@@ -732,45 +732,44 @@ function handleDrop(e) {
     }
 }
 // 下载文件夹
-function downfolder(folder){
+function downfolder(folder) {
   if (confirm('确定要下载文件夹吗')) {
-  const name=folder.querySelector('.folderLink').innerText;
-  let path;
-  if(currentPath.innerText=="/"){
-    path=currentPath.innerText+name;
-  }
-  else{
-    path="/"+currentPath.innerText+name;
-  }
+    const name = folder.querySelector('.folderLink').innerText;
+    let path;
+    if (currentPath.innerText == "/") {
+      path = currentPath.innerText + name;
+    } else {
+      path = "/" + currentPath.innerText + name;
+    }
 
-  const formData = new FormData();
+    const formData = new FormData();
     formData.append('folderPath', path);
-    formData.append('zipFileName', name+".zip");
+    formData.append('zipFileName', name + ".zip");
 
-    fetch(`${protocol}//${ip}/code/Documents/down_folder.php`, {
-        method: 'POST',
-        body: formData
+    // 使用 fetch 进行请求
+    fetch(`${protocol}//${ip}/code/Documents/zip_folder.php`, {
+      method: 'POST',
+      body: formData
     })
     .then(response => {
       if (response.ok) {
-          return response.blob();
+        return response.json(); // 解析 JSON 响应
       } else {
-          throw new Error('Download failed');
+        throw new Error('Download failed');
       }
-  })
-  .then(blob => {
-      const url = window.URL.createObjectURL(blob);
+    })
+    .then(data => {
+      // 使用 href 进行下载
       const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = name+".zip"; // 从路径中获取文件名
+      a.href = data.url; // 从响应中获取下载链接
+      console.log(a.href);
+      a.download = name + ".zip"; // 设置下载文件名
       document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      a.remove();
-  })
-  .catch(error => {
+      a.click(); // 触发下载
+      a.remove(); // 移除链接
+    })
+    .catch(error => {
       console.error('Error:', error);
-  });
-}
+    });
+  }
 }
