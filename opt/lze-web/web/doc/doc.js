@@ -733,6 +733,7 @@ function handleDrop(e) {
 }
 // 下载文件夹
 function downfolder(folder){
+  if (confirm('确定要下载文件夹吗')) {
   const name=folder.querySelector('.folderLink').innerText;
   let path;
   if(currentPath.innerText=="/"){
@@ -751,22 +752,25 @@ function downfolder(folder){
         body: formData
     })
     .then(response => {
-        if (response.ok) {
-            return response.blob(); // 解析为 Blob 对象
-        }
-        throw new Error('网络响应不正常');
-    })
-    .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name+".zip"; // 设置下载文件名
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url); // 释放 Blob 对象
-    })
-    .catch(error => {
-        console.error('下载出错:', error);
-    });
+      if (response.ok) {
+          return response.blob();
+      } else {
+          throw new Error('Download failed');
+      }
+  })
+  .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = name+".zip"; // 从路径中获取文件名
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+}
 }
