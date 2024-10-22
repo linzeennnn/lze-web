@@ -185,6 +185,14 @@ window.addEventListener('scroll', handleScroll);
        data.folders.forEach(folder => {
          const listItem = document.createElement('li');
          const editbtn= document.createElement('div');
+         const downbtn= document.createElement('div');
+         downbtn.classList.add('down-btn');
+         downbtn.title=`下载${folder}`;
+         downbtn.addEventListener('click',function(){
+
+          event.stopPropagation(); 
+          downfolder(listItem);
+        });
          editbtn.className='edit li-btn';
          editbtn.title = `重命名`;
          editbtn.addEventListener('click',function(){
@@ -216,6 +224,7 @@ window.addEventListener('scroll', handleScroll);
        });
         listItem.appendChild(filetit);
          listItem.appendChild(folderLink);
+         listItem.appendChild(downbtn);
          listItem.appendChild(editbtn);
          listItem.appendChild(savebtn);
          fileList.appendChild(listItem);
@@ -273,6 +282,7 @@ window.addEventListener('scroll', handleScroll);
          const downloadLink = document.createElement('a');
          // 修改 downloadLink 的 href 指向 PHP 脚本而不是直接文件路径
          downloadLink.className = 'downloadLink';
+         downloadLink.classList.add('down-btn');
          downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
          downloadLink.title = `下载${file}`;
          downloadLink.textContent = `下载 ${file}`;
@@ -720,4 +730,43 @@ function handleDrop(e) {
         fileInput.files = dataTransfer.files; 
         selfile();
     }
+}
+// 下载文件夹
+function downfolder(folder){
+  const name=folder.querySelector('.folderLink').innerText;
+  let path;
+  if(currentPath.innerText=="/"){
+    path=currentPath.innerText+name;
+  }
+  else{
+    path="/"+currentPath.innerText+name;
+  }
+
+  const formData = new FormData();
+    formData.append('folderPath', path);
+    formData.append('zipFileName', name+".zip");
+
+    fetch(`${protocol}//${ip}/code/Documents/down_folder.php`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.blob(); // 解析为 Blob 对象
+        }
+        throw new Error('网络响应不正常');
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name+".zip"; // 设置下载文件名
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url); // 释放 Blob 对象
+    })
+    .catch(error => {
+        console.error('下载出错:', error);
+    });
 }
