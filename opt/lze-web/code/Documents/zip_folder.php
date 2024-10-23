@@ -1,10 +1,12 @@
 <?php
-if (isset($_POST['folderPath']) && isset($_POST['zipFileName'])) {
+if (isset($_POST['folderPath']) && isset($_POST['foldername'])) {
     // 定义基础文件夹路径和临时目录
     $baseFolderPath = '../../file/Documents/upload';
     $tempDir = '../../file/temp/';
-    $folderPath = $baseFolderPath . $_POST['folderPath'];
-    $zipFileName = $_POST['zipFileName'];
+    $foldername = $_POST['foldername'];
+    $folderpath = $_POST['folderPath'];
+    $fullPath = $baseFolderPath.$folderpath.$foldername;
+    $zipFileName = $foldername.".zip";
     $zipFilePath = $tempDir . $zipFileName;
 
     // 检查临时目录是否存在，不存在则创建
@@ -13,23 +15,20 @@ if (isset($_POST['folderPath']) && isset($_POST['zipFileName'])) {
     }
 
     // 检查文件夹是否存在
-    if (!is_dir($folderPath)) {
+    if (!is_dir($fullPath)&&!is_link($fullPath)) {
         http_response_code(404);
         echo json_encode(['error' => '文件夹不存在']);
         exit;
     }
-
-    // 使用 zip 命令压缩文件夹
-    $command = "zip -r " . escapeshellarg($zipFilePath) . " " . escapeshellarg($folderPath);
-    exec($command, $output, $return_var);
-
-    // 检查压缩命令是否成功
-    if ($return_var !== 0) {
-        http_response_code(500);
-        echo json_encode(['error' => '无法创建 ZIP 文件']);
+    if(is_dir($fullPath)&&!is_link($fullPath)){
+    exec("cp -r ".$fullPath." ".$tempDir);
+    exec("cd ".$tempDir." && zip -r -y ".$zipFileName." ".$foldername);
+    exec("cd ".$tempDir." && rm -rf ".$foldername);
+    }
+    else {
+        echo json_encode(['error' => '此文件夹不允许下载']);
         exit;
     }
-
     // 确保文件存在
     if (file_exists($zipFilePath)) {
         // 直接返回下载链接

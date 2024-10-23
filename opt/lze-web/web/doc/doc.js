@@ -737,14 +737,14 @@ function downfolder(folder) {
     const name = folder.querySelector('.folderLink').innerText;
     let path;
     if (currentPath.innerText == "/") {
-      path = currentPath.innerText + name;
+      path = currentPath.innerText;
     } else {
-      path = "/" + currentPath.innerText + name;
+      path = "/" + currentPath.innerText;
     }
 
     const formData = new FormData();
     formData.append('folderPath', path);
-    formData.append('zipFileName', name + ".zip");
+    formData.append('foldername', name);
 
     // 使用 fetch 进行请求
     fetch(`${protocol}//${ip}/code/Documents/zip_folder.php`, {
@@ -753,12 +753,14 @@ function downfolder(folder) {
     })
     .then(response => {
       if (response.ok) {
-        return response.json(); // 解析 JSON 响应
+        return response.json();
+        notify("已压缩文件");
       } else {
-        throw new Error('Download failed');
+        return response.json();
       }
     })
     .then(data => {
+      if(!data.error){
       // 使用 href 进行下载
       const a = document.createElement('a');
       a.href = data.url; // 从响应中获取下载链接
@@ -767,9 +769,10 @@ function downfolder(folder) {
       document.body.appendChild(a);
       a.click(); // 触发下载
       a.remove(); // 移除链接
+      }
+      else{
+        notify(data.error);
+      }
     })
-    .catch(error => {
-      console.error('Error:', error);
-    });
   }
 }
