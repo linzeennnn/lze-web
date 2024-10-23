@@ -1,9 +1,9 @@
     const loginPage = document.createElement('div');
     loginPage.id = 'login-page';
-  
+    loginPage.classList.add('option-page');
     const loginList = document.createElement('div');
     loginList.id = 'login-list';
-  
+    loginList.classList.add('list-page');
     const backLogin = document.createElement('div');
     backLogin.id = 'backlogin';
     backLogin.title = '关闭页面';

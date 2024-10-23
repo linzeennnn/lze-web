@@ -327,23 +327,6 @@
                   .pc-only{
                     display: none;
                   }
-            .phone_background {
-            position:relative;
-            overflow:hidden;
-            overflow-x: hidden;
-        }
-        .phone_background .fixed {
-            position:fixed;
-            left:0;
-            top:0;
-            width:100%;
-            height:100%;
-            background-size:cover;
-            z-index:0;
-            overflow:hidden;
-            overflow-x: hidden;
-        }
-     
         #backButton{
             height: 40px;
         }
@@ -394,8 +377,8 @@
           margin-left: 0;
           left: 5px;
         }
-        .phone_background .fixed {
-          background-color: var(--red);
-        }
+        #phone-back{
+          background-color: var(--red);  
+          }
             }
             

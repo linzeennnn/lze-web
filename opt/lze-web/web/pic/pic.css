@@ -476,15 +476,11 @@ transition: bottom 1s ease;
   margin-left: 0;
   left: 5px;
 }
-.phone_background .fixed {
+#phone-back{
     background-color: var(--blue);
 }
 
     }
-    
-
-
-
 form {
     text-align:center ;
     margin-top: 4%; /* 调整表单与其他元素的间距 */

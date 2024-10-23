@@ -95,9 +95,27 @@ body::-webkit-scrollbar {
               transition: bottom 0.7s ease, margin-left 1s ease;
               box-shadow: var(--outshadow)
               }
+              #phone-back{
+                background: var(--back);
+                display: none;
+              }
 @media only screen and (max-width: 600px) {
     .phone_background .fixed {
         background:var(--back);
+        background-blend-mode: overlay;
+      }
+
+      #phone-back{
+        width: 100%;
+        height: 100%;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        position: fixed;
+        display: block;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
         background-blend-mode: overlay;
       }
 }

@@ -8,6 +8,12 @@
   --default:#2d3236;
   --borco:#9fa0a1;
   --back: url('../../wallpaper/dark/home.svg') no-repeat center;
+  --green-nor:#7eb1974b; 
+  --blue-nor:#86a4b64b; 
+  --yellow-nor:#b1b07e4b; 
+  --orange-nor:#b19b7e4b; 
+  --pink-nor:#b17eaa4b; 
+  --red-nor:#b17e7e4b; 
 }
 .ui-tooltip {
           background: #4c646d60; 
@@ -53,15 +59,4 @@
       }
       .dock-btn{
         background-image: url(../../wallpaper/dark/home.svg);
-      }
-      @media only screen and (max-width: 600px){
-        .phone_background {
-        position:relative;
-        overflow:hidden;
-          overflow-x: hidden;
-      }
-      .phone_background .fixed {
-        background:no-repeat center center;
-        background-image: url(../../wallpaper/dark/home.svg);
-      }
       }

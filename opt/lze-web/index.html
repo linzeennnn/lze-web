@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-  <meta name="theme-color" content="#1f2324"/>
+  <meta name="theme-color" content="#242424"/>
   <title>林泽恩啊哈哈哈哈</title>
   <link rel="icon" href="icon/linzeen.svg" type="image/x-icon">
   <!-- 苹果设备 -->
@@ -22,15 +22,13 @@
     <link rel="stylesheet" href="web/css/theme.css">
 </head>
 <body>
+
+  <div id="phone-back"></div>
     <div id="lock-page"></div>
     <div id="home-bar" >
     <div class="name" title="恩的电脑" onclick="reloadPage()"></div>
   </div>
     <div id="home-btn" onclick="lock(0)"><div></div></div>
-  <div class="phone_background">
-    <div class="fixed"></div>
-    <div class="next" ></div>
-  </div>
         <div id="widget-box">
           <div id="widget-line1" class="widget-line">
             <div id="widget1" draggable="true" class="widget app" title="文件管理" onclick="tonext(doc_path,this)"><div id="folder" class="widget-icon"></div><span class="widget-title">文件管理</span></div>
@@ -51,9 +49,6 @@
           <div class="dock-back app" draggable="true" id="system-btn" title="系统监视器" onclick="getsystem(1)"><div class="dock-icon" id="system"></div><span class="widget-title">系统监视器</span></div>
           <div class="dock-back app" draggable="true" id="lock-btn" title="锁屏" onclick="lock(1)"><div class="dock-icon" id="lock"></div><span class="widget-title">锁屏</span></div>
         </div>
-<div class="phone_background">
-  <div class="fixed"></div>
-</div>
 <!-- js -->
     <script src="web/home/init.js"></script>
     <script src="web/js/login.js"></script>

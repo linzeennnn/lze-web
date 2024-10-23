@@ -1,8 +1,10 @@
 // 创建主题页面
 let themePage = document.createElement('div');
 themePage.id = 'theme-page';
+themePage.classList.add('option-page');
 let themePanel = document.createElement('div');
 themePanel.id = 'theme-panel';
+themePanel.classList.add('list-page');
 let closeTheme = document.createElement('div');
 closeTheme.id = 'close-theme';
 closeTheme.title = '关闭';
@@ -186,22 +188,35 @@ function setcolor(colortheme){
   colbtn.forEach(colbtn => {
     colbtn.style.filter = '';
 });
+const listpage=document.querySelectorAll('.list-page');
+const phoneback=document.getElementById('phone-back');
+const dock=document.getElementById('dock');
   const btn=document.getElementById('home-btn');
 const bar=document.getElementById('home-bar');
   if(colortheme=='default'||!colortheme){
     if (typeof ishome !== 'undefined' && ishome){
     bar.style.backgroundColor='';
     btn.style.backgroundColor='';
+    dock.style.backgroundColor='';
+    listpage.forEach(listpage=> {
+      listpage.style.backgroundColor = '';
+    });
     }
     colbtn=document.getElementById('default');
+    phoneback.style.backgroundColor=``;
     document.body.style.backgroundColor=``;
     localStorage.removeItem(`color`);
   }else{
     if(typeof ishome !== 'undefined' && ishome){
   bar.style.backgroundColor=`var(--${colortheme})`;
   btn.style.backgroundColor=`var(--${colortheme})`;
+  dock.style.backgroundColor=`var(--${colortheme}-nor)`;
+  listpage.forEach(listpage=> {
+    listpage.style.backgroundColor = `var(--${colortheme}-page)`;
+  });
     }
     colbtn=document.getElementById(`${colortheme}`);
+    phoneback.style.backgroundColor=`var(--${colortheme})`;
     document.body.style.backgroundColor=`var(--${colortheme})`;
   localStorage.setItem(`color`, colortheme);
   }

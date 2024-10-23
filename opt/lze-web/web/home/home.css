@@ -212,6 +212,10 @@
       position: relative;
       transition: transform 0.5s ease;
       box-shadow: var(--outshadow);
+      user-select: none; 
+      -webkit-user-select: none; 
+      -moz-user-select: none; 
+      -ms-user-select: none;
     }
     .widget:hover{
       opacity: 1;
@@ -355,6 +359,10 @@
   background-position: center;
   background-repeat: no-repeat;
  }
+ #phone-back{
+  background: var(--back);
+  display: none;          
+ }
           @media only screen and (max-width: 600px){
             @media only screen and (max-height: 800px) {
             .widget{
@@ -372,38 +380,19 @@
                 height: 32px;
               }
             }
-            .phone_background {
-            position:relative;
-            overflow:hidden;
-              overflow-x: hidden;
+          #phone-back{
+            width: 100%;
+            height: 100%;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            position: fixed;
+            display: block;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-blend-mode: overlay;
           }
-          .phone_background .fixed {
-            position:fixed;
-            left:0;
-            top:0;
-            width:100%;
-            height:100%;
-            background-size:cover;
-              overflow:hidden;
-              overflow-x: hidden; 
-              z-index: 0;
-          }
-          
-          .next {
-            position:fixed;
-            left:0;
-            top:0;
-            width:100%;
-            height:100%;
-            background:no-repeat center center;
-            background-size:cover;
-              overflow:hidden;
-              overflow-x: hidden; 
-              opacity: 0;
-              transition: opacity 1s ease ; 
-              z-index: 1;
-          }
-          
             
             #topBar button {
               font-size: 80%;

@@ -1,30 +1,11 @@
-#system-page{
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: fixed;
-    background-color: #6b7a8125;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 100;
-    opacity: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1s ease;
-    flex-direction: column;
-}
 #sys-list{
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     width: 80%;
     height: 80%;
-    box-shadow: var(--outshadow);
-    border-radius: 15px;
-    background-color: #61616167;
 }
 #close-sys{
     cursor: pointer;
@@ -38,6 +19,8 @@
     background-repeat: no-repeat;
 }
 .sys-box{
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 40px;
     display: flex;
     position: relative;

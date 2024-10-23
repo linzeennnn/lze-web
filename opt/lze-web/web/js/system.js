@@ -5,6 +5,7 @@ let intervalId;
 // 创建系统页面的主容器
 const systemPage = document.createElement('div');
 systemPage.id = 'system-page';
+systemPage.classList.add('option-page');
 const closeSys = document.createElement('div');
 closeSys.id = 'close-sys';
 closeSys.onclick =  () => getsystem(0);
@@ -17,6 +18,7 @@ const systemBoxes = [
 ];
 const syslist= document.createElement('div');
 syslist.id = 'sys-list';
+syslist.classList.add('list-page');
 syslist.appendChild(closeSys);
 systemBoxes.forEach(box => {
   const sysBox = document.createElement('div');

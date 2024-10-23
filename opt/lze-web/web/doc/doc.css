@@ -660,4 +660,7 @@ background-color: #4c555394;
 .phone_background .fixed {
   background-color: var(--green);
 }
+#phone-back{
+background-color: var(--green);
+}
   }

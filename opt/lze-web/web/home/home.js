@@ -362,13 +362,12 @@ dragmove=null;
     draggedElement.classList.remove('dock-back');
     draggedElement.classList.add('widget');
   } else if (e.target === dock || e.target === dockback) {
-    if(dock.offsetWidth<= document.body.offsetWidth-84){
+    if(dock.offsetWidth<= document.body.offsetWidth+64){
     dock.appendChild(draggedElement);
     draggedElement.classList.remove('widget');
     draggedElement.classList.add('dock-back');
     }
     else{
-      console.log(document.body.offsetWidth,dock.offsetWidth);
       line3.appendChild(draggedElement);
       draggedElement.classList.remove('dock-back');
       draggedElement.classList.add('widget');
