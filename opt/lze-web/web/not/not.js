@@ -180,8 +180,6 @@ async function getnote() {
                     if (confirm('确定要删除这个便签吗？')) {
                         
                     delnote(`${file}`);
-                    reloadnote();
-                    notify("已删除");
                     }}
             }
             );
@@ -264,9 +262,10 @@ async function getnote() {
     
         xhr.onload = function () {
             if (xhr.status === 200) {
-                const result = xhr.responseText;
-                if (result === "success") {
-                    // 处理成功的情况
+                const result = JSON.parse(xhr.responseText);
+                if (result.status === "success") {
+                    reloadnote();
+                    notify("已删除");
                 }
             } else {
                 console.error('Error deleting note:', xhr.statusText);
@@ -305,7 +304,6 @@ async function getnote() {
             const data = await response.json();
             const filename = data.filename;
             const uploadpath = data.filepath;
-            console.log(filename,uploadpath);
                 reloadnote();
                 desktopnot('恩的便签','新便签:',`${filename}`,uploadpath);
                 title.value='';

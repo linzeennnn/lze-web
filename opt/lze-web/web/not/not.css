@@ -27,22 +27,7 @@ body{
     background-color: #85537a7c;
   }
 #option-bar{
-    opacity: 0;
-    padding-top: 5%;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    /* justify-content: center; */
-    left: -60px;
-    position: fixed;
-    height: 100%;
-    width: 60px;
     background-color: #7e6177a6;
-    z-index: 11;
-    box-shadow: var(--outshadow);
-    transition: left 1s ease , opacity 1s ease;
   }
   .option-btn{
     opacity: 0.5;
@@ -392,23 +377,6 @@ white-space: nowrap;
 h2{
     left: 31%;
     margin-top: 20%;
-}
-#option-bar{
-    left: 0;
-    padding-top: 0;
-    align-items: center;
-    position: fixed;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: 60px;
-    width: 100%;
-    bottom: 0;
-    border-top-left-radius: 1em;
-    border-top-right-radius: 1em;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 10;
 }
 .option-btn{
   top: auto;
