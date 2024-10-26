@@ -122,13 +122,19 @@ const loadpage=document.createElement('div');
 const loadloop=document.createElement('div');
 loadpage.id='load-page';
 loadloop.id='load-loop';
-function pageloading(status){
-switch(status){
-  case 1:
-    loadpage.appendChild(loadloop);
-    document.body.appendChild(loadpage);
-    break;
-  case 0:
-    document.body.removeChild(loadpage);
-}
+function pageloading(status) {
+  switch (status) {
+      case 1:
+          if (!document.getElementById('load-page')) {
+              loadpage.appendChild(loadloop);
+              document.body.appendChild(loadpage);
+          }
+          break;
+      case 0:
+          const existingLoadPage = document.getElementById('load-page');
+          if (existingLoadPage) {
+              document.body.removeChild(existingLoadPage);
+          }
+          break;
+  }
 }

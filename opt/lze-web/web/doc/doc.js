@@ -78,7 +78,6 @@ function handleScroll() {
 window.addEventListener('scroll', handleScroll);
 
  function comin(){
-  pageloading(1) 
   access();
  loadFolder();
  document.querySelector('.backbtn').style.left='5%';
@@ -167,6 +166,7 @@ window.addEventListener('scroll', handleScroll);
    textid.innerText = displayPath;
  }
  function loadFolder(folder = '') {
+  pageloading(1);
    selectedarray.length = 0;
    fetch(`${protocol}//${ip}/code/Documents/doc_list.php?folder=` + folder)
  .then(response => {
@@ -443,6 +443,7 @@ function newfolder(status){
    break;
    case 2:
      ifroot();  
+  pageloading(1);
    if (folderName===""){
      folderName="new_folder";
    }

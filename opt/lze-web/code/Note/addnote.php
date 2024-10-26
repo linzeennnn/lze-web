@@ -3,14 +3,13 @@ header('Content-Type: application/json');
 require '../auth/auth.php';
 requireAuth();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // 获取新便签的标题和内容
     $newTitle = $_POST["newTitle"];
     $newContent = $_POST["newContent"];
 
-    // 生成新的文件名，可以根据需要进行定制
-    $fileName = generateFileName($newTitle);
+    // 将非断行空格替换为普通空格
+    $newContent = str_replace(" ", ' ', $newContent);
 
-    // 拼接文件路径
+    $fileName = generateFileName($newTitle);
     $filePath = "../../file/Note/{$fileName}";
 
     // 将新便签写入文件

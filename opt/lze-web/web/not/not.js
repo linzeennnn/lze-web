@@ -119,6 +119,7 @@ async function getnote() {
     return noteFiles;
 }
     async function creatnote() {
+        pageloading(1);
         const notesContainer = document.getElementById('allnote');
         
         try {
@@ -186,6 +187,8 @@ async function getnote() {
                 note.appendChild(del);
                 notesContainer.appendChild(note);
             }
+
+            pageloading(0);
         } catch (error) {
             console.error('Error reading files:', error);
         }
@@ -214,7 +217,7 @@ async function getnote() {
     }
     // copy
     function replaceNbspWithSpace(text) {
-        return text.replace(/\u00A0/g, ' '); // 替换不间断空格为普通空格
+        return text.replace(/\u00A0/g, ' ');
     }
     
     function copytext(note, text) {
@@ -252,7 +255,8 @@ async function getnote() {
         }
     }
     // delete note
-    function delnote(fileName) {
+    function delnote(fileName,load) {
+        pageloading(1);
         const formData = new FormData();
         formData.append('fileName', fileName);
     
@@ -264,8 +268,10 @@ async function getnote() {
             if (xhr.status === 200) {
                 const result = JSON.parse(xhr.responseText);
                 if (result.status === "success") {
+                    if(load!=0){
                     reloadnote();
                     notify("已删除");
+                    }
                 }
             } else {
                 console.error('Error deleting note:', xhr.statusText);
@@ -288,6 +294,7 @@ async function getnote() {
         else if (title.value == ''){
             title.value="new_note";
         }
+        pageloading(1);
         const formData = new FormData();
         formData.append('newTitle', title.value);
         formData.append('newContent', text.innerText);
@@ -342,7 +349,7 @@ async function getnote() {
             addnote(title,text,'save.php');
             }
             else{
-            delnote(file);
+            delnote(file,0);
             addnote(title,text,'addnote.php');
             }
 
@@ -448,4 +455,11 @@ function selfile() {
 
     xhr.send(fd);
 }
+// 纯文本粘贴
+document.addEventListener('paste', function(event) {
+    event.preventDefault();
+    const text = event.clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+});
+
 
