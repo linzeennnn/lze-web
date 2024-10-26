@@ -78,7 +78,8 @@ function handleScroll() {
 window.addEventListener('scroll', handleScroll);
 
  function comin(){
-   access();
+  pageloading(1) 
+  access();
  loadFolder();
  document.querySelector('.backbtn').style.left='5%';
  document.getElementById('fileListContainer').style.opacity='1';
@@ -295,7 +296,7 @@ window.addEventListener('scroll', handleScroll);
 
          fileList.appendChild(listItem);
        });
-
+       pageloading(0);
        // 处理返回上级目录按钮
        const upButton = document.getElementById('upButton');
        if (data.currentFolder && data.currentFolder !== '') {
@@ -473,6 +474,7 @@ function del() {
   access();
   if (confirm('确定要删除所选文件吗')) {
     ifroot();
+    pageloading(1);
     const dellist = JSON.stringify(selectedarray);
     const requestData = { dellist: dellist };
 
@@ -495,7 +497,6 @@ function del() {
       notify("已删除");
       pastebtn.style.display = 'none';
       copyarray.length = 0;
-      console.log(data);
     })
     .catch((error) => {
       console.error('错误:', error);
@@ -540,6 +541,7 @@ function paste() {
 switch (pastestatus){
  case 1:{
   access();
+  pageloading(1);
  fetch(`${protocol}//${ip}/code/Documents/copy.php`, {
    method: 'POST',
    headers: {
@@ -566,6 +568,7 @@ switch (pastestatus){
  break;
  case 0:{
   access();
+  pageloading(1);
    fetch(`${protocol}//${ip}/code/Documents/move.php`, {
      method: 'POST',
      headers: {
@@ -734,6 +737,7 @@ function handleDrop(e) {
 // 下载文件夹
 function downfolder(folder) {
   if (confirm('确定要下载文件夹吗')) {
+    pageloading(1);
     const name = folder.querySelector('.folderLink').innerText;
     let path;
     if (currentPath.innerText == "/") {
@@ -754,21 +758,20 @@ function downfolder(folder) {
     .then(response => {
       if (response.ok) {
         return response.json();
-        notify("已压缩文件");
       } else {
         return response.json();
       }
     })
     .then(data => {
       if(!data.error){
-      // 使用 href 进行下载
+        pageloading(0);
+        notify("开始下载");
       const a = document.createElement('a');
-      a.href = data.url; // 从响应中获取下载链接
-      console.log(a.href);
-      a.download = name + ".zip"; // 设置下载文件名
+      a.href = data.url; 
+      a.download = name + ".zip";
       document.body.appendChild(a);
-      a.click(); // 触发下载
-      a.remove(); // 移除链接
+      a.click();
+      a.remove();
       }
       else{
         notify(data.error);

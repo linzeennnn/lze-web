@@ -117,4 +117,18 @@ async function desktopnot(title, content, fileName, finalFilePath){
       console.error('Fetch error:', error);
   }
 }
-
+// 加载页
+const loadpage=document.createElement('div');
+const loadloop=document.createElement('div');
+loadpage.id='load-page';
+loadloop.id='load-loop';
+function pageloading(status){
+switch(status){
+  case 1:
+    loadpage.appendChild(loadloop);
+    document.body.appendChild(loadpage);
+    break;
+  case 0:
+    document.body.removeChild(loadpage);
+}
+}
