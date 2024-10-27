@@ -114,8 +114,6 @@ window.addEventListener('scroll', handleScroll);
    const path = document.getElementById('currentPath');
    const cancel = document.getElementById('cancel');
    const progress = document.getElementById('progress');
- 
-   console.log(status);
    switch(status){
     case 1:
       if (fileInput.files.length === 0 && folderInput.files.length === 0) {
@@ -615,57 +613,6 @@ files=fileitem.querySelector('.folderLink');
 // 去除最后斜杠
 function removeslash(path){
  return path.endsWith('/') ? path.slice(0, -1) : path;
-}
-//拖拽上传
-const folderinput = document.getElementById('uploadfolder');
-const fileInput = document.getElementById('uploadfile');
-const uploadarea = document.getElementById('upload-area');
-const filelist = document.getElementById('fileListContainer');
-document.addEventListener('dragover', handleDragOver);
-document.addEventListener('dragleave', handleDragLeave);
-document.addEventListener('drop', handleDrop);
-filelist.addEventListener('dragover', handleDragOver);
-filelist.addEventListener('dragleave', handleDragLeave);
-filelist.addEventListener('drop', handleDrop);
-function handleDragOver(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    uploadarea.style.opacity = '1';
-}
-
-function handleDragLeave(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    uploadarea.style.opacity = '';
-}
-
-function handleDrop(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    uploadarea.style.opacity = '';
-    const dt = e.dataTransfer;
-    const files = dt.files;
-    const items = dt.items;
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        console.log(item.kind);
-
-        // 检查拖拽的项目类型
-        if (item.kind === 'file'&& item.webkitGetAsEntry().isFile) {
-            const file = item.getAsFile();
-            if (file) {
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
-                fileInput.files = dataTransfer.files;
-                selfile();
-            }
-        } else {
-            const folderName = item.getAsString(); 
-            const dataTransfer = new DataTransfer();
-            folderinput.files = dataTransfer.files;
-            uploadFolder();
-        }
-    }
 }
 // 下载文件夹
 function downfolder(folder) {
