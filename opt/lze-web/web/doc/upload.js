@@ -30,7 +30,6 @@ function uploadFolder() {
 
     const uploadFile = (file, index) => {
         let start = 0;
-
         const uploadChunk = (start) => {
             const end = Math.min(start + chunkSize, file.size);
             const chunk = file.slice(start, end);

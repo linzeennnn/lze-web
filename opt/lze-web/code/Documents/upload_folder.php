@@ -1,13 +1,9 @@
 <?php
+session_start(); // 开启会话
 $nowpath = $_POST['nowpath'];
-$rename= $_POST['1st'];
+$rename = $_POST['1st'];
 $folderName = isset($_POST['folderName']) ? $_POST['folderName'] : '';
-$tempFilePath = '../../file/temp/name'; 
-if ($nowpath === "/") {
-    $uploadDir = '../../file/Documents/upload/';
-} else {
-    $uploadDir = '../../file/Documents/upload/' . $nowpath;
-}
+$uploadDir = ($nowpath === "/") ? '../../file/Documents/upload/' : '../../file/Documents/upload/' . $nowpath;
 
 // 检查并创建基础上传目录
 if (!is_dir($uploadDir)) {
@@ -16,23 +12,20 @@ if (!is_dir($uploadDir)) {
 
 if (isset($_FILES['file'])) {
     $relativePath = $_POST['relativePath'];
-
-    // 提取相对路径中的文件夹名
     $pathParts = explode('/', $relativePath);
     $baseFolderName = $pathParts[0];
     $i = 1;
-    if($rename==true){
-    while (is_dir($uploadDir . '/' . $baseFolderName)) {
-        $baseFolderName = $pathParts[0] . "($i)";
-        $i++;
+
+    if ($rename) {
+        while (is_dir($uploadDir . '/' . $baseFolderName)) {
+            $baseFolderName = $pathParts[0] . "($i)";
+            $i++;
+        }
+        $_SESSION['newFolderName'] = $baseFolderName; // 将文件夹名存储在会话中
+    } else {
+        $baseFolderName = isset($_SESSION['newFolderName']) ? $_SESSION['newFolderName'] : $baseFolderName;
     }
-    $file = fopen($tempFilePath, 'w');
-    fwrite($file, $baseFolderName); // 写入内容
-    fclose($file);
-    }
-    else{
-        $baseFolderName =file_get_contents($tempFilePath);
-    }
+
     // 更新第一个块的文件夹名
     $pathParts[0] = $baseFolderName;
     $newRelativePath = implode('/', $pathParts);
