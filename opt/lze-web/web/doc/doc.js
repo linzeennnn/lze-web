@@ -106,36 +106,37 @@ window.addEventListener('scroll', handleScroll);
  function loading(status) {
   
    const fileInput = document.getElementById('uploadfile');
+   const folderInput = document.getElementById('uploadfolder');
    const load = document.getElementById('loading');
    const loadbox = document.getElementById('rotate-box');
    const loadText = document.getElementById('load-text');
-   const upbtn = document.getElementById('up-btn');
    const goupbtn = document.getElementById('upButton');
    const path = document.getElementById('currentPath');
    const cancel = document.getElementById('cancel');
    const progress = document.getElementById('progress');
-   
-   if (fileInput.files.length === 0) {
-     notify("请先选择一个文件进行上传");
-       return; // 没有选择文件，直接返回
-   }
-   if (status==1){
-   path.style.display = 'none';
-   upbtn.style.display = 'none';
-   goupbtn.style.display = 'none';
-   progress.style.display = 'block';
-   load.style.display = 'block';
-   cancel.style.display = 'block';
-   loadbox.style.display = 'block';
-   }
-   else {
-     path.style.display = '';
-     upbtn.style.display = '';
-     goupbtn.style.display = '';
-     progress.style.display = 'none';
-     load.style.display = 'none';
-     cancel.style.display = 'none';
-     loadbox.style.display = 'none';
+ 
+   console.log(status);
+   switch(status){
+    case 1:
+      if (fileInput.files.length === 0 && folderInput.files.length === 0) {
+        notify("请先选择一个文件进行上传");
+          return; // 没有选择文件，直接返回
+      }
+      path.style.display = 'none';
+      goupbtn.style.display = 'none';
+      progress.style.display = 'block';
+      load.style.display = 'block';
+      cancel.style.display = 'block';
+      loadbox.style.display = 'block';
+      break;
+   case 0:
+      path.style.display = '';
+      goupbtn.style.display = '';
+      progress.style.display = 'none';
+      load.style.display = 'none';
+      cancel.style.display = 'none';
+      loadbox.style.display = 'none';
+     break;
    }
 
  }
@@ -279,9 +280,7 @@ window.addEventListener('scroll', handleScroll);
          listItem.appendChild(fileLink);
          listItem.appendChild(editbtn);
          listItem.appendChild(savebtn);
-
          const downloadLink = document.createElement('a');
-         // 修改 downloadLink 的 href 指向 PHP 脚本而不是直接文件路径
          downloadLink.className = 'downloadLink';
          downloadLink.classList.add('down-btn');
          downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
@@ -323,84 +322,6 @@ function ifroot(){
    nowpath=fullPath;
  }
 }
-// 发送文件
-function selfile() {
-  ifroot(); 
-  var files = fileInput.files; // 直接使用 fileInput 的文件
-  if (files.length === 0) {
-      notify("请先选择文件");
-      return;
-  }
-  var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
-  var totalFiles = files.length;
-  var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
-  var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
-
-  // 计算每个文件的总块数
-  for (let i = 0; i < totalFiles; i++) {
-    if (files[i].size === 0) {
-        notify(`${files[i].name} 是空文件，上传失败`);
-        return;
-    }
-    totalChunks[i] = Math.ceil(files[i].size / chunkSize);
-}
-loading(1);
-  function uploadChunk(fileIndex) {
-      if (fileIndex >= totalFiles) {
-          loading(0);
-          return;
-      }
-
-      var file = files[fileIndex];
-      var start = currentChunks[fileIndex] * chunkSize;
-      var end = Math.min(start + chunkSize, file.size);
-      var chunk = file.slice(start, end);
-
-      console.log(`开始上传文件: ${file.name}, 文件大小: ${file.size} 字节`);
-      var fd = new FormData();
-      fd.append('file', chunk);
-      fd.append('fileName', file.name);
-      fd.append('totalChunks', totalChunks[fileIndex]);
-      fd.append('currentChunk', currentChunks[fileIndex]);
-      fd.append('nowpath', nowpath);  // 传递 nowpath 变量
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', `${protocol}//${ip}/code/Documents/upload.php`, true);
-      xmltoken(xhr);
-      xhr.upload.onprogress = function (ev) {
-          if (ev.lengthComputable) {
-              var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
-              var percentElement = document.getElementById('percent');
-              document.getElementById('bar').style.width = percent + '%';
-              percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
-          }
-      };
-
-      xhr.onload = function () {
-          xmlnologin(xhr);
-          if (xhr.status === 200) {
-              currentChunks[fileIndex]++;
-              if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
-                  uploadChunk(fileIndex); // 上传下一个块
-              } else {
-                  // 上传下一个文件
-                  uploadChunk(fileIndex + 1);
-                  notify(`文件 ${file.name} 上传成功`);
-                  console.log(`上传成功: ${file.name}, 文件大小: ${file.size} 字节`);
-                  uploadpath = xhr.responseText;
-                  console.log(uploadpath);
-                  loadFolder(removeslash(nowpath));
-                  desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
-              }
-          }
-      };
-
-      xhr.send(fd);
-  }
-
-  uploadChunk(0); // 开始上传第一个文件
-}
-
 // 新建文件夹
 // 键盘回车
 function keynewfolder(event) {
@@ -696,17 +617,16 @@ function removeslash(path){
  return path.endsWith('/') ? path.slice(0, -1) : path;
 }
 //拖拽上传
+const folderinput = document.getElementById('uploadfolder');
 const fileInput = document.getElementById('uploadfile');
 const uploadarea = document.getElementById('upload-area');
 const filelist = document.getElementById('fileListContainer');
-
 document.addEventListener('dragover', handleDragOver);
 document.addEventListener('dragleave', handleDragLeave);
 document.addEventListener('drop', handleDrop);
 filelist.addEventListener('dragover', handleDragOver);
 filelist.addEventListener('dragleave', handleDragLeave);
 filelist.addEventListener('drop', handleDrop);
-
 function handleDragOver(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -725,14 +645,26 @@ function handleDrop(e) {
     uploadarea.style.opacity = '';
     const dt = e.dataTransfer;
     const files = dt.files;
+    const items = dt.items;
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        console.log(item.kind);
 
-    if (files.length > 0) {
-        const dataTransfer = new DataTransfer();
-        for (let i = 0; i < files.length; i++) {
-            dataTransfer.items.add(files[i]);
+        // 检查拖拽的项目类型
+        if (item.kind === 'file'&& item.webkitGetAsEntry().isFile) {
+            const file = item.getAsFile();
+            if (file) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+                selfile();
+            }
+        } else {
+            const folderName = item.getAsString(); 
+            const dataTransfer = new DataTransfer();
+            folderinput.files = dataTransfer.files;
+            uploadFolder();
         }
-        fileInput.files = dataTransfer.files; 
-        selfile();
     }
 }
 // 下载文件夹
@@ -778,5 +710,34 @@ function downfolder(folder) {
         notify(data.error);
       }
     })
+  }
+}
+// 打开upload页面
+function showupload(status){
+  const page=document.getElementById('upload-page');
+  switch(status){
+    case 0:
+      page.style.opacity='0';
+    setTimeout(() => {      
+      page.style.display='';
+        }, 500);
+      break;
+    case 1:
+      page.style.display='flex';
+      setTimeout(() => {      
+        page.style.opacity='1';
+          }, 10);
+      break;
+  }  
+}
+// 点击事件
+function clickable(status) {
+  switch (status) {
+      case 0:
+          document.body.style.pointerEvents = 'none';
+          break;
+      case 1:
+          document.body.style.pointerEvents = 'auto';
+          break;
   }
 }

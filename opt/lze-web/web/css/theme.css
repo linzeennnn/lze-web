@@ -20,7 +20,7 @@
     display: none;
     align-items: center;
     justify-content: center;
-    transition: all 1s ease;
+    transition: all 0.5s ease;
     flex-direction: column;
 }
 .list-page{

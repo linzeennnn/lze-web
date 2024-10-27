@@ -45,7 +45,62 @@
         width: 30%;
         height: 30%;
       }
-      
+      #upload-page{
+        flex-direction: row !important;
+      }
+    #upload-list{
+      padding: 30px;
+      display: flex;
+      width: fit-content;
+      height:150px;
+      position: relative;
+      flex-direction: row !important;
+    }
+      #close-upload{ 
+        opacity: 0.7;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-image: url(../../icon/no_grey.svg);
+        width: 32px;
+        height: 32px;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      #close-uploa:hover{
+        opacity: 1;
+      }
+      .upload{
+        justify-content: center; 
+        text-align: center;
+        position: relative;
+        display: flex;
+        cursor: pointer;
+        width: 80px;
+        height: 80px;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 20px;
+        margin-top: 20px;
+        transition: transform 0.3s ease;
+      }
+      .upload span{
+        font-weight: bold;
+        bottom: -20px;
+        position: absolute;
+        font-size: 15px;
+        color: #6ca594;
+      }
+      .upload:hover{
+        transform: scale(1.5);
+      }
+      #upload-file{
+        background-image: url(../../icon/file.svg);
+      }
+      #upload-folder{
+        background-image: url(../../icon/folder.svg);
+      }
       #option-bar{
         background-color: #55796ba6;
       }
@@ -79,7 +134,7 @@
 #open-side:hover{
   opacity: 1;
 }
-  .custom-upload-btn {
+  #upload-btn {
     background-image: url(../../icon/upload_green.svg);
   }
   #loadButton{
