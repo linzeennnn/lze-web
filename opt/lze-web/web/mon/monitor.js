@@ -246,39 +246,25 @@ function getwin(){
             const allwindow = document.getElementById('allwindow');
 
             data.forEach(item => {
-                // Create a new div element
                 const window = document.createElement('div');
-                
-                // Add the 'window' class
                 window.className = 'window';
-                
-                // Set the id
                 window.id = item.windowid;
-
-                // Create a span element for the text
+                window.onclick = function() {
+                    notify("进程"+window.id);
+                };
                 const span = document.createElement('span');
-                span.className = 'title';  // Add the 'title' class
-                span.innerText = item.text;  // Set the text inside the span
-                
-                // Append the span to the div
+                span.className = 'title'; 
+                span.innerText = item.text; 
                 window.appendChild(span);
-
-                // Create a button element
                 const close = document.createElement('div');
                 close.className = 'close-win';
-                
-                // Add click event listener to the button
                 close.addEventListener('click', () => {
-                    windowid = window.id; // Set windowid variable to the id of the div
-                    console.log('windowid set to:', windowid); // Optional: log the value to the console
+                    windowid = window.id; 
+                    console.log('windowid set to:', windowid); 
                     allwindow.innerHTML='';
                     closewindow();
                 });
-                
-                // Append the button to the div
                 window.appendChild(close);
-                
-                // Append the div to the allwindow
                 allwindow.appendChild(window);
             });
         })
