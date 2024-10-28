@@ -708,4 +708,10 @@ background-color: #4c555394;
 #phone-back{
 background-color: var(--green);
 }
+.files{
+  width: 35%;
+}
+.folder::before{
+  max-width: 80%;
+}
   }
