@@ -472,21 +472,26 @@
   background-image: url(../../icon/save_green.svg);
 }
   #fileList {
+    margin-top: 45px;
+    margin-left: 1%;
+    display: flex;
     width: 80%;
+    flex-wrap: wrap;
     padding: 0;
     list-style: none;
     position: relative;
   }
 
   .files {
+    margin-left: 30px;
+    width: 120px;
+    height: 100px;
     cursor: pointer;
     margin-bottom: 1em;
     display: flex;
-    height: 70px;
     max-height: 70px;
-    background-color: #65807ba4;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     align-items: center;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -495,7 +500,7 @@
     padding: 1.4%;
     position: relative;
     text-overflow: ellipsis;
-    border-radius: 1em;
+    border-radius: 15px;
     transition: opacity 1S ease;
     box-shadow: var(--outshadow) 
   }
@@ -503,11 +508,29 @@
   .files:hover{
     background-color: #498573a4;
   }
+  .folder{
+    background-color: #65807b88;
+  }
+
+.folder::before {
+  content: '';
+  top: -20px;
+   left: 10px;
+   position: absolute;
+   width: 100px;
+   height: 20px;
+   border-top-left-radius: 8px; /* 左上角圆角 */
+            border-top-right-radius: 8px;
+   background-color:#4a6d67a4 ;
+}
+.file{
+  background-color: #65806b88;
+}
 .selected{
   background-color: #498573a4;
 }
   .fileLink {
-    
+    font-size: 15px;
     color: #a7f8e7;
     font-weight: bold;
     white-space: nowrap;
