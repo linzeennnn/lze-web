@@ -1,13 +1,12 @@
 // 上传文件夹
 function uploadFolder() {
-    ifroot(); 
+    ifroot();
     const input = document.getElementById('uploadfolder');
     const files = input.files;
     // 检查是否选中任何文件
     if (files.length === 0) {
         return; // 取消上传
     }
-
     loading(1);
     showupload(0);
     const chunkSize = 1024 * 1024; // 1MB
@@ -15,31 +14,26 @@ function uploadFolder() {
     let totalChunks = 0;
     let uploadedChunks = 0;
     let completedFiles = 0; // 记录已完成上传的文件数
-
     // 计算所有文件的总块数
     for (let file of files) {
         totalChunks += Math.ceil(file.size / chunkSize);
     }
-
     const percentElement = document.getElementById('percent'); // 进度文本元素
     const updateProgress = () => {
         const percent = (uploadedChunks / totalChunks) * 100;
         document.getElementById('bar').style.width = percent + '%';
         percentElement.innerHTML = parseInt(percent) + '%';
     };
-
     const uploadFile = (file, index) => {
         let start = 0;
         const uploadChunk = (start) => {
             const end = Math.min(start + chunkSize, file.size);
             const chunk = file.slice(start, end);
             const relativePath = file.webkitRelativePath;
-
+            const foldername=files[0].webkitRelativePath.split('/')[0];
             const chunkFormData = new FormData();
             chunkFormData.append('file', chunk, file.name);
             chunkFormData.append('relativePath', relativePath);
-            chunkFormData.append('nowpath', nowpath);
-            chunkFormData.append('folderName', files[0].webkitRelativePath.split('/')[0]);
             chunkFormData.append('start', start);
             chunkFormData.append('total', file.size);
             if (index === 0 && start === 0) {
@@ -51,19 +45,15 @@ function uploadFolder() {
             })
             .then(response => response.text())
             .then(data => {
-                console.log('成功上传块:', data);
                 uploadedChunks++;
                 updateProgress(); // 更新进度
-
                 if (end < file.size) {
-                    uploadChunk(end); 
+                    uploadChunk(end);
                 } else {
-                    console.log('文件上传完成:', file.name);
                     completedFiles++; // 增加已完成文件计数
                     if (completedFiles === totalFiles) {
-                        console.log('所有文件上传完成');
-                        loadFolder(removeslash(nowpath));
-                        loading(0); 
+                        movefolder(foldername,nowpath);
+                        loading(0);
                     }
                 }
             })
@@ -71,20 +61,34 @@ function uploadFolder() {
                 console.error('上传失败:', error);
             });
         };
-
         uploadChunk(start);
     };
-
     for (let i = 0; i < files.length; i++) {
         uploadFile(files[i], i);
     }
-
     input.value = ''; // 重置输入框的值
 }
-
+// 从temp移动文件夹
+function movefolder(foldername,folderpath){
+    fetch(`${protocol}//${ip}/code/Documents/move_folder.php`, {
+        method: 'POST',
+        body: new URLSearchParams({
+            name: foldername,
+            path: folderpath
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+       notify(data);
+       loadFolder(removeslash(folderpath));
+    })
+    .catch(error => {
+        notify(error);
+    });
+}
 // 上传文件
 function selfile() {
-    ifroot(); 
+    ifroot();
     var files = fileInput.files; // 直接使用 fileInput 的文件
     if (files.length === 0) {
         notify("请先选择文件");
@@ -95,7 +99,6 @@ function selfile() {
     var totalFiles = files.length;
     var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
     var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
-  
     // 计算每个文件的总块数
     for (let i = 0; i < totalFiles; i++) {
       if (files[i].size === 0) {
@@ -119,7 +122,7 @@ function selfile() {
         fd.append('fileName', file.name);
         fd.append('totalChunks', totalChunks[fileIndex]);
         fd.append('currentChunk', currentChunks[fileIndex]);
-        fd.append('nowpath', nowpath);  // 传递 nowpath 变量
+        fd.append('nowpath', nowpath); // 传递 nowpath 变量
         var xhr = new XMLHttpRequest();
         xhr.open('POST', `${protocol}//${ip}/code/Documents/upload_file.php`, true);
         xmltoken(xhr);
@@ -147,7 +150,6 @@ function selfile() {
                 }
             }
         };
-  
         xhr.send(fd);
     }
     uploadChunk(0); // 开始上传第一个文件
@@ -168,13 +170,11 @@ function handleDragOver(e) {
     e.preventDefault();
     uploadarea.style.opacity = '1';
 }
-
 function handleDragLeave(e) {
     e.stopPropagation();
     e.preventDefault();
     uploadarea.style.opacity = '';
 }
-
 function handleDrop(e) {
     e.stopPropagation();
     e.preventDefault();
