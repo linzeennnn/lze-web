@@ -52,4 +52,9 @@ function downfolder(folder,homename) {
         }
       })
     }
+    else{
+      if (typeof ishome !== 'undefined' && ishome){
+      document.body.removeChild(document.querySelector('.widget-page'));
+      }
+    }
   }
