@@ -118,6 +118,7 @@ function comin(){
     document.querySelector(`.name`).style.width='200px';
     document.addEventListener('click', handleDocumentClick);
     access();
+    widget("all");
 doc_path = `web/doc/doc.html#${ip}`;
 pic_path = `web/pic/pic.html#${ip}`;
 mon_path = `web/mon/monitor.html#${ip}`;

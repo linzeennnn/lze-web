@@ -1,20 +1,20 @@
 <?php
 $postData = file_get_contents('php://input');
 $data = [];
-    if ($postData=='all'){
-        handleFiles('doc');  
-        handleFiles('not');  
-        handleFiles('bok');  
-        handleFiles('pic');  
-        handleFiles('tra'); 
-        handleFiles('mon'); 
-        handleFiles('disk'); 
-        send();
-    }
-    else{
-        handleFiles($postData); 
-        send();
-    }
+if ($postData == 'all') {
+    handleFiles('doc');  
+    handleFiles('not');  
+    handleFiles('bok');  
+    handleFiles('pic');  
+    handleFiles('tra'); 
+    handleFiles('mon'); 
+    handleFiles('disk'); 
+    send();
+} else {
+    handleFiles($postData); 
+    send();
+}
+
 function handleFiles($type) {
     global $data;
     $file = [];
@@ -79,7 +79,13 @@ function handleFiles($type) {
         if ($type === 'not' || $type === 'bok') {
             $data[$key] = isset($topFiles[array_keys($topFiles)[$i]]) ? pathinfo(array_keys($topFiles)[$i], PATHINFO_FILENAME) : null; // 去除后缀名
         } else {
-            $data[$key] = isset($topFiles[array_keys($topFiles)[$i]]) ? array_keys($topFiles)[$i] : null; // 保留完整文件名
+            $filename = isset($topFiles[array_keys($topFiles)[$i]]) ? array_keys($topFiles)[$i] : null;
+            // 检查是否为文件夹
+            if (is_dir($uploadFolder . $filename)) {
+                $data[$key] = $filename . '/'; // 添加斜杠
+            } else {
+                $data[$key] = $filename; // 保留完整文件名
+            }
         }
     }
 }
@@ -89,5 +95,4 @@ function send() {
     header('Content-Type: application/json');
     echo json_encode($data);
 }
-
 ?>

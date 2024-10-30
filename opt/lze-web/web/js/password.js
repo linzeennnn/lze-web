@@ -326,5 +326,8 @@ function deletehost(index) {
 
 // ipstatus
 function ipstatus(){
-document.getElementById('ip-status').innerText=ip;
-}
+    document.getElementById('ip-status').innerText=ip;
+    if (typeof ishome !== 'undefined' && ishome){
+    document.getElementById('ip-li').innerText=ip;
+    }
+    }

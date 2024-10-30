@@ -616,51 +616,6 @@ files=fileitem.querySelector('.folderLink');
 function removeslash(path){
  return path.endsWith('/') ? path.slice(0, -1) : path;
 }
-// 下载文件夹
-function downfolder(folder) {
-  if (confirm('确定要下载文件夹吗')) {
-    pageloading(1);
-    const name = folder.querySelector('.folderLink').innerText;
-    let path;
-    if (currentPath.innerText == "/") {
-      path = currentPath.innerText;
-    } else {
-      path = "/" + currentPath.innerText;
-    }
-
-    const formData = new FormData();
-    formData.append('folderPath', path);
-    formData.append('foldername', name);
-
-    // 使用 fetch 进行请求
-    fetch(`${protocol}//${ip}/code/Documents/zip_folder.php`, {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return response.json();
-      }
-    })
-    .then(data => {
-      if(!data.error){
-        pageloading(0);
-        notify("开始下载");
-      const a = document.createElement('a');
-      a.href = data.url; 
-      a.download = name + ".zip";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      }
-      else{
-        notify(data.error);
-      }
-    })
-  }
-}
 // 打开upload页面
 function showupload(status){
   const page=document.getElementById('upload-page');

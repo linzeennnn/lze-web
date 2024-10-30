@@ -9,3 +9,4 @@ let tra_path;
 let color;
 const ishome=1;
 const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
+document.getElementById('theme-dis').style.backgroundColor=`var(--default)`;

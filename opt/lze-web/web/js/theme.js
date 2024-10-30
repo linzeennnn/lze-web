@@ -189,36 +189,39 @@ function setcolor(colortheme){
     colbtn.style.filter = '';
 });
 const listpage=document.querySelectorAll('.list-page');
-const phoneback=document.getElementById('phone-back');
-const dock=document.getElementById('dock');
-  const btn=document.getElementById('home-btn');
-const bar=document.getElementById('home-bar');
-  if(colortheme=='default'||!colortheme){
-    if (typeof ishome !== 'undefined' && ishome){
-    bar.style.backgroundColor='';
-    btn.style.backgroundColor='';
-    dock.style.backgroundColor='';
-    listpage.forEach(listpage=> {
-      listpage.style.backgroundColor = '';
-    });
+    const phoneback=document.getElementById('phone-back');
+    const dock=document.getElementById('dock');
+      const btn=document.getElementById('home-btn');
+    const bar=document.getElementById('home-bar');
+    const widget=document.getElementById('theme-dis');
+      if(colortheme=='default'||!colortheme){
+        if (typeof ishome !== 'undefined' && ishome){
+        bar.style.backgroundColor='';
+        btn.style.backgroundColor='';
+        dock.style.backgroundColor='';
+        widget.style.backgroundColor=``;
+        listpage.forEach(listpage=> {
+          listpage.style.backgroundColor = '';
+        });
+        }
+        colbtn=document.getElementById('default');
+        phoneback.style.backgroundColor=``;
+        document.body.style.backgroundColor=``;
+        localStorage.removeItem(`color`);
+      }else{
+        if(typeof ishome !== 'undefined' && ishome){
+      bar.style.backgroundColor=`var(--${colortheme})`;
+      btn.style.backgroundColor=`var(--${colortheme})`;
+      dock.style.backgroundColor=`var(--${colortheme}-nor)`;
+      widget.style.backgroundColor=`var(--${colortheme})`;
+      listpage.forEach(listpage=> {
+        listpage.style.backgroundColor = `var(--${colortheme}-page)`;
+      });
+        }
+        colbtn=document.getElementById(`${colortheme}`);
+        phoneback.style.backgroundColor=`var(--${colortheme})`;
+        document.body.style.backgroundColor=`var(--${colortheme})`;
+      localStorage.setItem(`color`, colortheme);
+      }
+      colbtn.style.filter='brightness(1.5)';
     }
-    colbtn=document.getElementById('default');
-    phoneback.style.backgroundColor=``;
-    document.body.style.backgroundColor=``;
-    localStorage.removeItem(`color`);
-  }else{
-    if(typeof ishome !== 'undefined' && ishome){
-  bar.style.backgroundColor=`var(--${colortheme})`;
-  btn.style.backgroundColor=`var(--${colortheme})`;
-  dock.style.backgroundColor=`var(--${colortheme}-nor)`;
-  listpage.forEach(listpage=> {
-    listpage.style.backgroundColor = `var(--${colortheme}-page)`;
-  });
-    }
-    colbtn=document.getElementById(`${colortheme}`);
-    phoneback.style.backgroundColor=`var(--${colortheme})`;
-    document.body.style.backgroundColor=`var(--${colortheme})`;
-  localStorage.setItem(`color`, colortheme);
-  }
-  colbtn.style.filter='brightness(1.5)';
-}

@@ -22,8 +22,6 @@
     margin: 0 15px; 
     transition: transform 0.3s;
    }
-
-
    .dock-back span{
     display: none;
   }
@@ -147,8 +145,8 @@
     align-items: center;
   }
   .panel{
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -166,98 +164,22 @@
     align-items: center;
     text-indent: 20px;
     width: 100% !important;
-    height: 30px;
+    height: 60px !important;
     transition: transform 0.3s ease;
   }
   .panel-li:hover{
     transform: scale(1.2);
     color: white;
   }
-  .panel-btn{
-    padding-top: 20px;
-    margin-top: 10px;
-    border-radius: 20px;
-    width: 40% !important;
-    height: 30px !important;
-    box-shadow: var(--outshadow);
-    transition: transform 0.3s ease;
-  }
-  .panel-btn:hover{
-    transform: scale(1.2);
-  }
   .doc-li{
     color: #a7f8e7;
     background-color:#65807b88;
     border-radius: 15px;
   }
-  #doc-upload{
-    background-color: #65807b88;
-    background-image: url(../../icon/upload_green.svg);
-  }
-  .panel-input{
-    margin-top: 20px;
-    width: 100% !important;
-    display: flex;
-    flex-direction: row;
-  }
-  .input-tit{
-    min-width: 30% !important;
-    height: 30px !important;
-    border: none;
-  padding: 5px;
-  padding-top: 10px;
-  border-radius: 1em;
-  left: 0;
-  width: 20%;
-  max-width: 20%;
-  font-weight:bold;
-  color: #7c5a7a;
-  min-height: 30px;
-  margin-right: 10px;
-  overflow-wrap: break-word;
-  background-color: transparent;
-  box-shadow: var(--inshadow);
-  }
-  .input-tit:focus{
-    outline: none;
-    background-color: transparent;
-  }
-  .input-text{
-    min-width: 70% !important;
-    height: 30px !important;
-    display: inline-block;
-    border: none;
-    padding: 5px;
-    padding-top: 10px;
-    right: 0;
-    border-radius: 1em;
-    max-width: 80%;
-    width: 80%;
-    color: #7c5a7a;
-    margin-right: 10px;
-    min-height: 30px;
-    font-weight: bold;
-    overflow-wrap: break-word;
-    background-color: transparent;
-    box-shadow: var(--inshadow);
-}
-.input-text:focus{
-    outline: none;
-    background-color: transparent;
-}
   .not-li{
     color: #7c5a7a;
     text-indent: 5px;
     border-bottom: 2px solid #7c5a6a;
-  }
-  #not-add{
-    background-color: #85657f86;
-    background-image: url(../../icon/add_pink.svg);
-  }
-  #bok-add{
-    margin-bottom: 20px;
-    background-color: #7e5d5e93;
-    background-image: url(../../icon/add_red.svg);
   }
   #bok-li{
     text-align: center;
@@ -277,32 +199,22 @@ clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);
     background-color: #56608388;
     border: 10px solid #567c8388;
   }
-  #pic-upload{
-    margin-bottom: 10px;
-    background-color: #56608388;
-    background-image: url(../../icon/upload_blue.svg);
-  }
   #tra-li{
+    overflow: hidden;
     text-align: center;
     justify-content: center;
     border-radius: 15px;   
     color: #f4c59e;
     background-color: #7e6c5d93;
   }
-  #tra-clean{
-    background-color: #7e6c5d93;
-    background-image: url(../../icon/bin_orange.svg);
-  }
   .mon-li{
+    height: 30px !important;
+    margin-top: 30px !important;
     color: #ffd9a5;
     margin: 0 !important;
     border: 2px solid #69663d88;
     background-color: #83805688;
     border-radius: 10px;
-  }
-  #mon-upload{
-    background-color: #83805688;
-    background-image: url(../../icon/toscreen_yellow.svg);
   }
   #reload{
     width: 100% !important;
@@ -319,22 +231,35 @@ clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);
   box-shadow: var(--inshadow);
  }
  #disk-bar{
+  border-radius: 15px;
   position: relative;
   top: 0;
   height: 100% !important;
   width: 50% !important;
-  background-color: #a7f8e7;
+  background-color: #d5f8f0;
  }
  #theme-dis{
+  margin-right: 20px;
   border-radius: 15px;
   height: 60px !important;
   width: 60px !important;
-  background-color: #7c5a6a;
+  background-color: var(--default);
  }
  #ip-panel{
   width: 100% !important;
   font-size: 40px;
   color: #a7f8e7;
+  font-weight: bold;
+ }
+ .home-text{
+  color: #d5f8f0;
+  font-weight: bold;
+ }#bok-text{
+  color: #8a5e5e;
+  font-weight: bold;
+ }
+ #tra-text{
+  color: #8a735e;
   font-weight: bold;
  }
    #login{
@@ -404,6 +329,71 @@ clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);
     background: var(--back);
     display: none;          
    }
+   .widget-page{
+    display: flex !important;
+    opacity: 1 !important;
+    cursor: pointer;
+   }
+   #pre-pic{
+    min-width: 500px;
+    min-height: 500px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+   }
+   #pre-note{
+    cursor: text;
+    overflow: auto;
+    word-wrap: break-word;
+    padding: 20px;
+    border-radius: 15px;
+    width: 70% !important;
+    height: 90% !important;
+    background-color: var(--pink-nor);
+   }
+   #pre-note span{
+    color: #ebb4ce;
+    font-weight: bold;
+   }
+   #pre-bok{
+    width: 100px !important;
+    height: 60px !important;
+    border-radius: 15px;
+    -webkit-clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);
+clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);    
+    background-color: #7e5d5e93;
+   }
+   #pre-doc{
+    position: relative;
+    border-radius: 15px;
+    width: 150px !important;
+    height: 90px !important;
+    background-color: #65807b88;
+  }
+#pre-doc::before {
+  content: '';
+  top: -20px;
+   left: 10px;
+   position: absolute;
+   width: 100px;
+   height: 20px;
+   border-top-left-radius: 8px; /* 左上角圆角 */
+  border-top-right-radius: 8px;
+   background-color:#4a6d67a4 ;
+}
+   .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bfd2db;
+    border-top-color: #69767c;
+    border-right-color: #69767c;
+    border-bottom-color: #69767c;
+    border-radius: 100%;
+    animation: loading infinite 0.5s linear;
+  }
    @media only screen and (max-width: 600px){
     @media only screen and (max-height: 800px) {
     .widget{
