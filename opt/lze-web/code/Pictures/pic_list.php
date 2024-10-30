@@ -1,38 +1,42 @@
 <?php
-header('Content-Type: application/json');
-require '../auth/auth.php';
-requireAuth();
-// 获取文件夹中的所有文件
-$folder = '../../file/Pictures/';
-$files = scandir($folder);
+$baseFolder = '../../file/Pictures';
+$currentFolder = isset($_GET['folder']) ? $_GET['folder'] : '';
+$uploadFolder = $baseFolder . '/' . $currentFolder;
 
-// 用于存储文件路径和最后修改时间的关联数组
-$fileInfo = array();
+// 获取所有文件和文件夹
+$items = array_diff(scandir($uploadFolder), array('.', '..'));
 
-// 遍历文件夹中的每个文件
-foreach ($files as $file) {
-    // 排除当前目录和上级目录
-    if ($file != "." && $file != "..") {
-        // 获取文件路径
-        $filePath = $folder . $file;
-        
-        // 检查是否是文件
-        if (is_file($filePath)) {
-            // 获取文件最后修改时间
-            $lastModified = filemtime($filePath);
-            // 将文件路径和最后修改时间添加到关联数组中
-            $fileInfo[$filePath] = $lastModified;
-        }
+$files = [];
+$folders = [];
+
+// 分别处理文件和文件夹
+foreach ($items as $item) {
+    $itemPath = $uploadFolder . '/' . $item;
+    if (is_file($itemPath)) {
+        $files[$item] = filemtime($itemPath); // 文件的修改时间
+    } elseif (is_dir($itemPath)) {
+        $folders[$item] = filemtime($itemPath); // 文件夹的修改时间
     }
 }
 
-// 根据最后修改时间倒序排序数组
-arsort($fileInfo);
+// 按修改时间倒序排序
+arsort($files);
+arsort($folders);
 
-// 提取排序后的文件路径
-$filePaths = array_keys($fileInfo);
+// 重新构建文件和文件夹数组
+$sortedFiles = array_keys($files);
+$sortedFolders = array_keys($folders);
 
-// 将文件路径以 JSON 格式返回
-header('Content-Type: application/json');
-echo json_encode($filePaths);
+// 获取上级目录
+$parentFolder = dirname($currentFolder);
+if ($parentFolder == '.') {
+    $parentFolder = '';
+}
+
+echo json_encode([
+    'files' => $sortedFiles, 
+    'folders' => $sortedFolders,
+    'currentFolder' => $currentFolder,
+    'parentFolder' => $parentFolder
+]);
 ?>

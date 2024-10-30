@@ -1,20 +1,7 @@
-.ui-tooltip {
-    background: #575d8a8a; 
-    color: #9dcaed; 
-}
-.video-wrapper {
-    max-width: 100%;
-    max-height: 100%;
-    margin: 0;
-}
-.hidden {
-display: none;
-}
 
 body {
-    background-color: var(--blue);
     overflow-x: hidden !important;
-    max-width: 100% !important;
+    background-color: var(--blue);
     font-size: 100%;
     margin: 0;
     padding: 0;
@@ -25,463 +12,396 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    transition:background-image 1s ease ;
-    }
-    body::-webkit-scrollbar {
-display: none; 
+    transition: background-image 1s ease;
+  }
+#oth-btn{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    margin: 10px;
+    margin-top: 15px;
+    opacity: 0.7;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../../icon/folder_blue.svg);
+  }
+#oth-list{
+    display: none;
+    border-radius: 15px;
+    height: 60px;
+    width: 100px;
+    bottom: -70px;
+    position: absolute;
+    background-color: #5a6e8ba9;
 }
-.backbtn{
-    background-image: url(../../icon/left_blue.svg);
-    }
-.main{
-    margin-left: 60px;
-  }
-  #sidepage{
-    background-color: #455470b2;
-  }
-  .side-btn:hover{
-    background-color: #4b628d7c;
-  }
-.option-btn{
-    opacity: 0.5;
-      top: 80px;
-      margin-top: 30px;
-      position: relative;
+#oth-btn:hover{
+    opacity: 1;
+}
+.down-btn {
+    position: fixed;
+      display: inline-block;
+      right: 10px;
+      width: 24px;
+      height: 24px;
+      bottom: 10px;
+      opacity: 0.5;
+      background-image: url(../../icon/download_green.svg);
+      background-repeat: no-repeat;
+      background-position: center;
       cursor: pointer;
-      width: 32px;
-      height: 32px;
+      text-indent: -9999px; /* Hide text */
+      vertical-align: middle;
+    }
+    .downloadLink:hover {
+      opacity: 1;
+    }
+    .backbtn{
+      background-image: url(../../icon/left_green.svg);
+      }
+     .ui-tooltip {
+            background: #65807ba4; 
+            color: #a7f8e7; 
+        }
+        .upload{
+          justify-content: center; 
+          text-align: center;
+          position: relative;
+          display: flex;
+          cursor: pointer;
+          width: 80px;
+          height: 80px;
+          background-position: center;
+          background-repeat: no-repeat;
+          margin: 20px;
+          margin-top: 20px;
+          transition: transform 0.3s ease;
+        }
+        #option-bar{
+          background-color: #55796ba6;
+        }
+        #sidepage{
+          background-color: #436354b7;
+        }
+        .side-btn:hover{
+          background-color: #2657427c;
+        }
+        .option-btn{
+          opacity: 0.5;
+            top: 80px;
+            margin-top: 30px;
+            position: relative;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 10px;
+        }
+        .option-btn:hover{
+          opacity: 1;
+        }
+  #open-side{
+    opacity: 0.5;
+    position: absolute;
+    top: 50px;
+    background-image: url(../../icon/option_white.svg);
+  }
+  #open-side:hover{
+    opacity: 1;
+  }
+    #upload-btn {
+      background-image: url(../../icon/upload_green.svg);
+    }
+    #loadButton{
+      background-image: url(../../icon/load_green.svg);
+    }
+    #closebar{
+      opacity: 0.5;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      position: absolute;
+      top: 500px;
+      right: 0;
+      background-image: url(../../icon/goleft_green.svg);
+    }
+    #closebar:hover{
+      opacity: 1;
+    }
+    #openbar{
+      border-radius: 50%;
+      display: none;
+      margin: 0;
+      position: fixed;
+      top: 500px;
+      left: 5px;
+      background-image: url(../../icon/goright_green.svg);
+      z-index: 9;
+    }
+    #openbar:hover{
+      background-color: #8496924d;
+    }
+    .li-btn{
+      right: 0;
+      top: 10px;
+      width: 20px;
+      height: 20px;
       background-position: center;
       background-repeat: no-repeat;
-      margin: 10px;
-  }
-  #option-bar{
-    background-color: #3b4657a9;
-  }
-  .option-btn:hover{
-    opacity: 1;
-  }
-#open-side{
-opacity: 0.5;
-position: absolute;
-top: 50px;
-background-image: url(../../icon/option_white.svg);
-}
-#open-side:hover{
-opacity: 1;
-}
-#closebar{
-    opacity: 0.5;
-    width: 40px;
-    height: 40px;
-    margin: 0;
-    position: absolute;
-    top: 500px;
-    right: 0;
-    background-image: url(../../icon/goleft_blue.svg);
-  }
-  #closebar:hover{
-    opacity: 1;
-  }
-  #openbar{
-    border-radius: 50%;
-    display: none;
-    margin: 0;
-    position: fixed;
-    top: 500px;
-    left: 5px;
-    background-image: url(../../icon/goright_blue.svg);
-    z-index: 9;
-  }
-  #openbar:hover{
-    background-color: #96848c4d;
-  }
-    input[type="file"] {
-    display: none; 
-}
-.photo{
-    cursor: pointer;
-left: 50%;
-margin-top: 130px;
-width: 100px;
-height: 100px;
-background-image: url(../../icon/photo.svg);
-background-repeat: no-repeat;
-background-position: center;
-z-index: 100;
-}
-.photo:hover{
-    background-image: url(../../icon/photo_open.svg);
-}
-#file-name-display {
-    max-height: 2em;
-    max-width: 10em;
-    margin-top: 0.5em; 
-    font-size: 14px; 
-    color: #333; 
-    overflow: auto;
-}
-
-.file-name-display {
-    margin-top: 20%;
-    font-size: 14px; 
-    color: #333; 
-}
-.gallery-container {
-    opacity: 0;
-    margin-top: 150px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 80%;
-    position: relative;
-    max-width: 80%; 
-    background-color: transparent;
-   margin-bottom: 20px;
-   transition: all 1s ease;
-   z-index: 2;
-    
-}
-
-#button1 {
-    cursor: pointer;
-    background-image: url(../../icon/picture.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: 10px;
-    margin-bottom: 10px;
-    
-    
-}
-#button1:hover{
-   opacity: 1;
-   
-}
-#button1.selected {
-   opacity: 1;
-          
-    
-}
-
-
-#button2 {
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url(../../icon/video.svg);
-    margin: 10px;
-    margin-bottom: 10px;
-}
-
-
-#button2.selected {
-    opacity: 1;
-    
-}
-
-#button2:hover {
-    
-   opacity: 1;
-    
-}
-#button3 {
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url(../../icon/cut.svg);
-    margin: 10px;
-    margin-bottom: 10px;
-    
-}
-#button3:hover{
-   opacity: 1;
-}
-#button3.selected {
-   opacity: 1;
-}
-#load-btn {
-    width: 32px !important;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url(../../icon/load_blue.svg);
-    margin: 10px;
-    margin-bottom: 10px;
-    
-}
-#load-btn:hover{
-   opacity: 1;
-}
-
-label[for="uploadfile"] {
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: 10px;
-    margin-bottom: 10px;
-    background-image: url(../../icon/upload_blue.svg);
-}
-.btn{
-    opacity: 0.5;
-}
-/* 鼠标悬停时的样式 */
-label[for="uploadfile"]:hover {
-   opacity: 1;
-}
-
-.top-button{
-    height: 60px;
-    position: fixed;
-    border-radius: 1em;
-    justify-content: center;
-    align-items: center;
-    background-color:#575d8a8a;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: inline-flex;
-    width: 300px;
-    margin-top: 10px;
-   top: -80px; 
-    z-index: 10;
-    transition: top 1s ease, background-color 1s ease,margin-left 1s ease; 
-}
-.btn{
-    height: 32px;
-    width: 0;
-    transition: width 1s ease;
-}
-
-
-
-.gallery-item {
-    width: 29em;
-    height: 29em;
+      position: fixed;
+      right: 10px;
+    }
+    @keyframes edit {
+      0% {
+        background-color: #728d847e;
+      }
+      50% {
+        background-color: transparent;
+      }
+      100% {
+        background-color: #728d847e;
+      }
+    }
+    @keyframes paste {
+      0% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0.5;
+      }
+    }
+        .main{
+          margin-left: 60px;
+        }
+    form {
+      width: 80%;
+      max-width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #customFileUpload {
+      display: none;
+    }
+    #filename{
+      height: fit-content;
+      font-size: 20px;
+      margin-left: 1%;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: #0000008c;
+      white-space: nowrap;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position:relative;
+      max-width: 80%;
+    }
+    #top-bar{
+      top: -60px;
+      border-radius: 1em;
+       background-color: #53857ca6;
+       backdrop-filter: blur(10px);
+       -webkit-backdrop-filter: blur(10px);
+      display:inline-flex;
+      height: 60px;
+      width: 80%;
+      position: fixed;
+      /* overflow: hidden; */
+      z-index: 10;
+      transition: height 1s ease, top 1s ease , width 1s ease,margin-left 1s ease,background-color 1s ease ;
+      box-shadow: var(--outshadow)  
+    }
+    .path-bar{
+      background-color: transparent;
+      overflow: hidden;
+      width: 92%;
+      max-width: 95%;
+      margin-left: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-right: 0.5%;
+      border-radius: 1em;
+      position: relative;
+      z-index: 10;
+      box-shadow: var(--inshadow);
+    }
+    #currentPath{
+      height: fit-content;
+      font-size: 20px;
+      margin-top: 10px;
+      margin-left: 1%;
+      text-align: left;
+      font-weight: bold;
+      color: #a7f8e7;
+      overflow-x: hidden;
+      z-index: 10;
+    }
+    #upButton{
+      opacity: 0.5;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      width: 32px;
+      max-height: 32px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      z-index: 10;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url(../../icon/goup_green.svg);
+    }
+    #upButton:hover{
+      opacity: 1;
+    }
+    .rotate-box{
+      margin-right: 10px;
+      width: 32px;
+      height: 32px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+    }
+    .rotate-loading {
+      position: absolute;
+            transform: translate(-50%, -50%);
+            border-radius: 50%/50%;
+            border: 6px solid #7ceccb;
+            border-top: 6px solid #598679;
+            animation: rotate-loading 1s linear infinite;
+            width: 20px;
+            height: 20px;
+            z-index: 10;
+        }
+        #progress{
+    width:100%;
+    height:100%;
+    border:none;
     overflow: hidden;
-    border: 10px solid #a7dbfd9d;
-    margin: 5px; 
-    margin-top: 40px !important;
-    border-color: #5a677cbd;
-    border-radius: 1em;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.171),   /* 右下方阴影 */
--5px -5px 20px rgba(0, 0, 0, 0.171), /* 左上方阴影 */
-5px -5px 20px rgba(0, 0, 0, 0.171),  /* 右上方阴影 */
--5px 5px 20px rgba(0, 0, 0, 0.171);  /* 左下方阴影 */
-   
+  }
+  #bar{
+    width:0%;
+    height:100%;
+    background-color: #8af0d183;
+  }
+  #percent {
+  color: #b8fde9;
+  font-size: 14px; 
+  position: absolute;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  white-space: nowrap; 
+  }
   
-}
-
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 图片超出边框的部分不显示 */
-    position: relative;
-    opacity: 0.8;
-
-}
-.gallery-item img:hover{
-    opacity: 1;
-}
-
-.gallery-item video {
-    width: auto;
-    height: auto;
-    object-fit: cover; /* 图片超出边框的部分不显示 */
-    position: relative;
-    opacity: 0.8;
-}
-.gallery-item video:hover{
-    opacity: 1;
-}
-.video-item {
-    width: 100%; 
-    height:fit-content;
-    margin-bottom: 5em;
-}
-
-.video-item video {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    margin-bottom: 0;
-}
-
-.bottom-button {
-    position: relative;
-    cursor: pointer;
-    background-image: url(../../icon/godown_blue.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 50%;
-    margin-bottom: 60px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    width: 50px;
-    height: 50px;
-    background-color: #5a677cbd;
-    border: none;
-    z-index: 10;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),   /* 右下方阴影 */
--5px -5px 20px rgba(0, 0, 0, 0.068), /* 左上方阴影 */
-5px -5px 20px rgba(0, 0, 0, 0.068),  /* 右上方阴影 */
--5px 5px 20px rgba(0, 0, 0, 0.068);  /* 左下方阴影 */
-    
-}
-.bottom-button:hover{
-    background-image: url(../../icon/godown_white.svg);
-    background-color: #01385c77;
-}
-
-#file-name-display {
-    margin-top: 0.5em; /* 调整与其他元素的间距 */
-    font-size: 250%; /* 设置文字大小 */
-    color: #092958; /* 设置文字颜色 */
-    background-color: #31a7c596;
-    border-radius: 1em;
-}
-#progress{
-   border-radius: 1em;
-   width:300px;
-height:30px;
-border:none;
-overflow: hidden;
-box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
-      inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
-      inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
-      inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
-      z-index: 1000;
-
-}
-#bar{
-width: 0%;
-height:100%;
-background-color: rgba(1, 67, 155, 0.801);
-}
-#percent {
-color: rgb(186, 216, 255);
-width: 30px;
-height: 24px;
-margin-top: 10px;
-vertical-align: middle;
-left: 50%;
-transform: translate(-50%); 
-white-space: nowrap; 
-font-size: 14px; 
-position: fixed;
-}
-#buttonA{
-bottom: -1000px;
-transition: bottom 1s ease;
-}
-#top-btn{
-    background-color:#5a677cbd ;
-    background-image: url(../../icon/toup_blue.svg);
-}
-#top-btn:hover{
-    background-color: #4066808e;
-    background-image: url(../../icon/toup_white.svg);
-}
-#nottify{
-    background-color: #575d8a8a;
-}
-#notifytext{
-    color: #9dcaed; 
-}
-@media only screen and (max-width: 600px) {
-    .main{
+  #top-btn{
+  background-image: url(../../icon/toup_green.svg);
+  background-color: #65807ba4;
+  }
+  #top-btn:hover{
+  background-color: #4c555394;
+  }
+  
+    #notify{
+      background-color: #65807ba4;
+    }
+    #notifytext{
+      color: #a7f8e7;
+    }
+        
+        @keyframes rotate-loading {
+            0% {
+                transform: rotate(0deg);
+            }
+  
+            100% {
+                /* 顺时针旋转360度 */
+                transform: rotate(360deg);
+            }
+        }
+    @media only screen and (max-width: 600px) {
+      .main{
         margin-left: 0;
       }
+    .pc-only{
+      display: none;
+    }
     .phone_background {
     position:relative;
     overflow:hidden;
     overflow-x: hidden;
-}
-.pc-only{
-  display: none;
-}
-.next {
-  position:fixed;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:no-repeat center center;
-  background-size:cover;
-    overflow:hidden;
-    overflow-x: hidden; 
-    opacity: 0;
-    transition: opacity 1s ease ; 
-    z-index: 1;
-}
-.backbtn{
-  width: 25% ;
-}
-
-
-.phone_background .fixed {
+  }
+  .phone_background .fixed {
     position:fixed;
     left:0;
     top:0;
     width:100%;
     height:100%;
     background-size:cover;
-    z-index:0;
+    z-index:-100;
     overflow:hidden;
     overflow-x: hidden;
-}
-.option-btn{
-  top: auto;
-  margin-top: 10px;
-  position: relative;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  margin: 15px;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-#open-side{
-  top: auto;
-  margin-left: 0;
-  left: 5px;
-}
-#phone-back{
-    background-color: var(--blue);
-}
-
+  }
+  .next {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+          background:no-repeat center center;
+          background-size:cover;
+            overflow:hidden;
+            overflow-x: hidden; 
+            opacity: 0;
+            transition: opacity 1s ease ; 
+            z-index: 1;
+        }
+    .fileLink {
+      
+  
+      max-width: 200px ; 
+  }
+  
+  .path-bar{
+      
+      max-width: 70%;
+      
     }
-form {
-    text-align:center ;
-    margin-top: 4%; /* 调整表单与其他元素的间距 */
+    
+  .option-btn{
+    top: auto;
+    margin-top: 10px;
     position: relative;
-    z-index: 1;
-}
-
-input[type="file"] {
-    margin: 0.5em;
-    position: relative;
-}
-
-hr {
-    margin: 1em; /* 调整水平线与其他元素的间距 */
-    position: relative;
-}
-
-/* 清除ul的默认样式 */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: relative;
-}
-
-/* 清除li的默认样式 */
-li {
-    padding: 0;
-    margin: 0;
-    position: relative;
-}
-
-
-.gallery-item:hover {
-    border-color: #0000009d; /* 鼠标悬停时边框背景色为黑色 */
-}
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin: 15px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  #open-side{
+    top: auto;
+    margin-left: 0;
+    left: 5px;
+  }
+  .phone_background .fixed {
+    background-color: var(--green);
+  }
+  #phone-back{
+  background-color: var(--green);
+  }
+  .files{
+    width: 35%;
+  }
+  .folder::before{
+    max-width: 80%;
+  }
+    }

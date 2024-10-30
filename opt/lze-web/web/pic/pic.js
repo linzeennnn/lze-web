@@ -1,485 +1,363 @@
 let darkcolor;
 let lightcolor
-darkcolor='#1c1f28';
-lightcolor='#6b7596';
+darkcolor='#1c2825';
+lightcolor='#6b9683';
 let uploadpath;
+let nowpath="/";//当前目录（要上传的目录）
+let fullPath; 
+let editmode=0;
 //  操作导航栏
 function optionbar(status){
-    const optionbar=document.getElementById('option-bar');
-    const openbtn=document.getElementById('openbar');
-  switch(status){
-    case 0:
-      allmove(status);
-      optionstatus=0;
-      openbtn.style.display='block';
-      optionbar.style.left='';
-      setTimeout(() => {
-        optionbar.style.display='none';
-    }, 1000);
-      break;
-    case 1:
-    allmove(status);
-      optionstatus=1;
-      optionbar.style.display='';
-      setTimeout(() => {
-        openbtn.style.display='none';
-        optionbar.style.left='0';
-    }, 10);
-      break;
-  }
-   }
-   //  整体页面的位置
-function allmove(status){
-    const elements = document.querySelectorAll('.main');
-    switch(status){
-      case 1:
-        elements.forEach(function(element, index) {
-            if (element) {
-                element.style.marginLeft = '';
-            } 
-        });
-        break;
-      case 0:
-  elements.forEach(function(element, index) {
-          element.style.marginLeft = '0';
-  });
-        break;
-    }
-  }
-function handleScroll() {
-    var scrollTop = window.scrollY || document.documentElement.scrollTop;
-        if (scrollTop > 100) {
-            document.getElementById('top-btn').style.bottom = '15%';
-          document.querySelector('.backbtn').style.left = '1%';
-          document.querySelector('.backbtn').style.width = '15%';
-          document.querySelector('.top-button').style.top = '5px';
-          document.querySelector('.top-button').style.backdropFilter = `none`;
-          document.querySelector('.top-button').style.webkitBackdropFilter = `none`;
-          document.getElementById('cover-bar').style.top = '0';
-          document.querySelector('.top-button').style.backgroundColor = 'transparent';
-          
-          
-        } else {
-            document.getElementById('top-btn').style.bottom = '';
-          document.querySelector('.backbtn').style.left = '5%';
-          document.querySelector('.top-button').style.top = '80px'
-          document.querySelector('.backbtn').style.width = '';
-          document.querySelector('.top-button').style.backgroundColor = '';
-          document.querySelector('.top-button').style.backdropFilter = ``;
-          document.querySelector('.top-button').style.twebkitBackdropFilter = ``;
-          document.getElementById('cover-bar').style.top = '';
-         
-        }
+ const optionbar=document.getElementById('option-bar');
+ const openbtn=document.getElementById('openbar');
+switch(status){
+ case 0:
+   allmove(status);
+   optionstatus=0;
+   openbtn.style.display='block';
+   optionbar.style.left='';
+   setTimeout(() => {
+     optionbar.style.display='none';
+ }, 1000);
+   break;
+ case 1:
+ allmove(status);
+   optionstatus=1;
+   optionbar.style.display='';
+   setTimeout(() => {
+     openbtn.style.display='none';
+     optionbar.style.left='0';
+ }, 10);
+   break;
 }
+}
+//  整体页面的位置
+function allmove(status){
+ const elements = document.querySelectorAll('.main');
+ switch(status){
+   case 1:
+     elements.forEach(function(element, index) {
+         if (element) {
+             element.style.marginLeft = '';
+         } 
+     });
+     break;
+   case 0:
+elements.forEach(function(element, index) {
+       element.style.marginLeft = '0';
+});
+     break;
+ }
+}
+function handleScroll() {
+   var scrollTop = window.scrollY || document.documentElement.scrollTop;
+       
+       if (scrollTop > 100) {
+         document.getElementById('top-btn').style.bottom = '90px';
+         document.querySelector('.backbtn').style.left = '1%';
+         document.getElementById('top-bar').style.boxShadow = 'none';
+         document.getElementById('top-bar').style.top = '10px';
+         document.getElementById('top-bar').style.backgroundColor = 'transparent';
+         document.getElementById('cover-bar').style.top = '0';
+     document.getElementById('top-bar').style.backdropFilter = `none`;
+     document.getElementById('top-bar').style.webkitBackdropFilter = `none`;
+         
+       } else {
+         document.getElementById('top-btn').style.bottom = '';
+         document.querySelector('.backbtn').style.left = '5%';
+         document.getElementById('top-bar').style.boxShadow = '';
+         document.getElementById('top-bar').style.top = '77px';
+         document.getElementById('top-bar').style.backgroundColor = '';
+         document.getElementById('cover-bar').style.top = '';
+         document.getElementById('top-bar').style.backdropFilter = ``;
+         document.getElementById('top-bar').style.webkitBackdropFilter = ``;
+        
+       }
+}
+
 window.addEventListener('scroll', handleScroll);
 
-        function comin(){
-            document.getElementById('option-bar').style.left='0';
-            document.getElementById('option-bar').style.opacity='1';
-      document.querySelector('.backbtn').style.left = '5%';
-        document.querySelector('.gallery-container').style.opacity = '1';
-       document.getElementById('button1').style.width = '32px';
-       document.getElementById('button2').style.width = '32px';
-       document.getElementById('button3').style.width = '32px';
-       document.getElementById('selectButton').style.width = '32px';
-       document.getElementById('buttonA').style.bottom = '0px';
-       document.querySelector('.top-button').style.top = '80px';
-      loginstatus();
-    };
-    window.onload = comin;
-
-    function goBack() {
-        document.getElementById('top-btn').style.bottom = '';
-        window.removeEventListener('scroll',handleScroll);
-        document.getElementById('cover-bar').style.top = `-80px`;
-            document.querySelector('.backbtn').style.left = '-80%';
-            document.querySelector('.gallery-container').style.opacity = '';
-       document.getElementById('button1').style.width = '0px';
-       document.getElementById('button2').style.width = '0px';
-       document.getElementById('button3').style.width = '0px';
-       document.getElementById('option-bar').style.left='';
-     document.getElementById('option-bar').style.opacity='0';
-       document.getElementById('selectButton').style.width = '0px';
-       document.getElementById('buttonA').style.bottom = '-1000px';
-       document.querySelector('.top-button').style.top = '-80px';
-            setTimeout(() => {
-                window.location.replace(`../../index.html#${ip}`);
-}, 1000);
-        }
-var fileInput = document.getElementById("uploadfile");
-
-// 监听文件输入框的change事件
-fileInput.addEventListener("change", function () {
-            var btn1 = document.getElementById("button1");
-            var btn2 = document.getElementById("button2");
-            var btn3 = document.getElementById("button3");
-            var loadbtn = document.getElementById("load-btn");
-            var progress =document.getElementById("progress");
-            var selectedFile = fileInput.files[0];
-            var filePreviewDisplay = document.getElementById("file-preview-display");
-            filePreviewDisplay.innerHTML = "";
-
-            if (selectedFile) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    var img = document.createElement("img");
-                    img.src = e.target.result;
-                    img.style.maxWidth = "400px";
-                    img.style.maxHeight = "400px";
-                    img.style.borderRadius = "1em";
-                    filePreviewDisplay.appendChild(img);
-                };
-                reader.readAsDataURL(selectedFile);
-                progress.style.display = "block";
-                selectButton.style.display = "none";
-                btn1.style.display = "none";
-                btn2.style.display = "none";
-                btn3.style.display = "none";
-                loadbtn.style.display = "none";
-            } else {
-                progress.style.display = "none";
-                btn1.style.display = "block";
-                btn2.style.display = "block";
-                btn3.style.display = "block";
-                loadbtn.style.display = "block";
-                selectButton.style.display = "block";
-            }
-        });
-        var buttonA = document.getElementById("buttonA");
-        var buttonB = document.getElementById("buttonB");
-        var buttonC = document.getElementById("buttonC");
-        buttonA.style.display = "block";
-        buttonB.style.display = "none";
-        buttonC.style.display = "none";
-    
-        document.getElementById("button1").classList.add("selected");
-        var button1 = document.getElementById("button1");
-        var button2 = document.getElementById("button2");
-        var button3 = document.getElementById("button3");
-    
-        button1.addEventListener("click", function () {
-            if (!button1.classList.contains("selected")) {
-                button1.classList.add("selected");
-                button2.classList.remove("selected");
-                button3.classList.remove("selected");
-                showImages(); // 切换为显示图片
-                buttonA.style.display = "block";
-                buttonB.style.display = "none";
-                buttonC.style.display = "none";
-            }
-        });
-    
-        button2.addEventListener("click", function () {
-            if (!button2.classList.contains("selected")) {
-                button2.classList.add("selected");
-                button1.classList.remove("selected");
-                button3.classList.remove("selected");
-                showVideos(); // 切换为显示视频
-                buttonA.style.display = "none";
-                buttonC.style.display = "none";
-                buttonB.style.display = "block";
-            }
-        });
-        button3.addEventListener("click", function () {
-            if (!button3.classList.contains("selected")) {
-                button3.classList.add("selected");
-                button1.classList.remove("selected");
-                button2.classList.remove("selected");
-                showScreenshots(); // 切换为显示视频
-                buttonA.style.display = "none";
-                buttonB.style.display = "none";
-                buttonC.style.display = "block";
-            }
-        });
-    
-        buttonA.addEventListener("click", function () {
-            loadImages();
-        });
-    
-        var galleryContainer = document.getElementById("gallery-container");
-        var loadedImageIndices = []; // 用于记录已加载的图片索引
-    
-        function appendImages(count) {
-    var loadedImageCount = 0;
-
-    for (let i = 0; i < files.length; i++) {
-        if (!loadedImageIndices.includes(i)) {
-            var filePath = `${protocol}//${ip}/file/Pictures/` + files[i]; // 生成绝对路径
-            var fileName = filePath.split('/').pop(); // 获取文件名
-            var fileExtension = filePath.split('.').pop().toLowerCase();
-            var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
-
-            if (!isVideo && loadedImageCount < count) {
-                var img = document.createElement("a");
-                img.href = filePath;
-                img.setAttribute("data-fancybox", "gallery");
-
-                var imgElement = document.createElement("img");
-                imgElement.src = filePath;
-                img.appendChild(imgElement);
-
-                var galleryItem = document.createElement("div");
-                galleryItem.className = "gallery-item";
-                galleryItem.title = fileName; // 添加title
-                galleryItem.appendChild(img);
-                galleryContainer.appendChild(galleryItem);
-
-                loadedImageIndices.push(i);
-                loadedImageCount++;
-            }
-        }
-    }
-    if (loadedImageCount < count) {
-        buttonA.style.display = "none";
-        notify("已加载全部图片");
-    }
-            $('[data-fancybox="gallery"]').fancybox({
-                loop: true,
-                protect: true,
-                buttons: ["zoom", "share", "slideShow", "fullScreen", "download", "thumbs", "close"],
-            });
-
-            showImages();
-        }
-        function loadImages() {
-            // 追加加载三张新图片
-            appendImages(3);
-        }
-    
-        var loadedVideoIndices = []; // 用于记录已加载的视频索引
-    
-        buttonB.addEventListener("click", function () {
-            loadVideos();
-        });
-    
-        
-function appendVideos(count) {
-    var loadedVideoCount = 0;
-
-    for (let i = 0; i < files.length; i++) {
-        if (!loadedVideoIndices.includes(i)) {
-            var filePath = `${protocol}//${ip}/file/Pictures/` + files[i]; // 生成绝对路径
-            var fileName = filePath.split('/').pop(); // 获取文件名
-            var fileExtension = filePath.split('.').pop().toLowerCase();
-            var isVideo = ['ts','mp4', 'webm', 'mkv', 'avi', 'mov', 'wmv'].includes(fileExtension);
-
-            if (isVideo && loadedVideoCount < count) {
-                var video = document.createElement("video");
-                video.src = filePath;
-                video.controls = true;
-
-                var videoItem = document.createElement("div");
-                videoItem.className = "gallery-item video-item";
-                videoItem.title = fileName; // 添加title
-                videoItem.appendChild(video);
-                galleryContainer.appendChild(videoItem);
-
-                loadedVideoIndices.push(i);
-                loadedVideoCount++;
-
-                captureFrame(filePath).then(frame => {
-                    video.poster = frame.url;
-                });
-            }
-        }
-    }
-    if (loadedVideoCount < count) {
-        buttonB.style.display = "none";
-       notify("已加载全部视频");
-    }
-
-            showVideos();
-        }
-    
-        function loadVideos() {
-            // 追加加载一个新视频
-            appendVideos(1);
-        }
-
-
-        
-       
-        var loadedScreenshotsIndices = []; // 用于记录已加载的视频索引
-        
-        buttonC.addEventListener("click", function () {
-            loadScreenshots();
-        });
-    
-        function appendScreenshots(count) {
-    var loadedScreenshotsCount = 0;
-
-    for (let i = 0; i < screenshotFiles.length; i++) {
-        if (!loadedScreenshotsIndices.includes(i)) {
-            var filePath = `${protocol}//${ip}/file/Pictures/` + screenshotFiles[i]; // 生成绝对路径
-            var fileName = filePath.split('/').pop(); // 获取文件名
-
-            if (loadedScreenshotsCount < count) {
-                var img = document.createElement("a");
-                img.href = filePath;
-                img.setAttribute("data-fancybox", "gallery");
-
-                var imgElement = document.createElement("img");
-                imgElement.src = filePath;
-                img.appendChild(imgElement);
-
-                var galleryItem = document.createElement("div");
-                galleryItem.className = "gallery-item screenshot-item";
-                galleryItem.title = fileName; // 添加title
-                galleryItem.appendChild(img);
-                galleryContainer.appendChild(galleryItem);
-
-                loadedScreenshotsIndices.push(i);
-                loadedScreenshotsCount++;
-            }
-        }
-    }
-    if (loadedScreenshotsCount < count) {
-        buttonC.style.display = "none";
-        notify("已加载全部截图");
-    }
-
-    showScreenshots();
-}
-
-    
-        function loadScreenshots() {
-            // 追加加载一个新视频
-            appendScreenshots(3);
-        }
-        function showImages() {
-            var galleryItems = document.querySelectorAll(".gallery-item");
-            galleryItems.forEach(function (item) {
-                var isVideo = item.classList.contains("video-item");
-                var isScreenshot = item.classList.contains("screenshot-item");
-                item.style.display = isVideo ? "none" : "block";
-                item.style.display = isVideo || isScreenshot ? "none" : "block";
-            });
-        }
-    
-        function showVideos() {
-    var galleryItems = document.querySelectorAll(".gallery-item");
-    galleryItems.forEach(function (item) {
-        var isVideo = item.classList.contains("video-item");
-        item.style.display = isVideo ? "block" : "none";
-    });
-}
-        function showScreenshots() {
-    var galleryItems = document.querySelectorAll(".gallery-item");
-    galleryItems.forEach(function (item) {
-        var isScreenshots = item.classList.contains("screenshot-item");
-        item.style.display = isScreenshots ? "block" : "none";
-    });
-}
-        var xmlhttpScreenshot = new XMLHttpRequest();
-        xmlhttpScreenshot.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                 screenshotFiles = JSON.parse(this.responseText);
-                appendScreenshots(0);
-            }
-        };
-
-        xmlhttpScreenshot.open("GET", `${protocol}//${ip}/code/Pictures/pic_sreenshot_list.php`, true);
-        xmltoken(xmlhttpScreenshot);
-        xmlhttpScreenshot.send();
-    
-        
-    
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = async function () {
-            if (this.readyState == 4 && this.status == 200) {
-                files = JSON.parse(this.responseText);
-    
-                // 初始加载时默认显示图片
-                appendImages(3);
-            }
-            xmlnologin(xmlhttp);
-        };
-    
-        xmlhttp.open("GET", `${protocol}//${ip}/code/Pictures/pic_list.php`, true);
-        xmltoken(xmlhttp);
-        xmlhttp.send();
-    
-        
-    
-        function drawVideo(vdo) {
-            return new Promise(resolve => {
-                const cvs = document.createElement('canvas');
-                const ctx = cvs.getContext('2d');
-                cvs.width = vdo.videoWidth;
-                cvs.height = vdo.videoHeight;
-                ctx.drawImage(vdo, 0, 0, cvs.width, cvs.height);
-                const dataURL = cvs.toDataURL();
-                resolve({ url: dataURL, width: cvs.width, height: cvs.height });
-            });
-        }
-    
-        function captureFrame(videoSrc) {
-            return new Promise(resolve => {
-                const video = document.createElement('video');
-                video.autoplay = true;
-                video.muted = true;
-                video.loop = true;
-                video.addEventListener('loadeddata', async () => {
-                    const frame = await drawVideo(video);
-                    video.pause();
-                    resolve(frame);
-                });
-                video.src = videoSrc;
-                video.load();
-            });
-        }
-        function selfile() {
-  var files = document.getElementById('uploadfile').files;
-  if (files.length === 0) {
-    alert('请先选择文件。');
-    return;
-  }
-
-  var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
-  var file = files[0];
-  var totalChunks = Math.ceil(file.size / chunkSize);
-  var currentChunk = 0;
-
-  function uploadChunk() {
-    var start = currentChunk * chunkSize;
-    var end = Math.min(start + chunkSize, file.size);
-    var chunk = file.slice(start, end);
-
-    var fd = new FormData();
-    fd.append('file', chunk);
-    fd.append('fileName', file.name);
-    fd.append('totalChunks', totalChunks);
-    fd.append('currentChunk', currentChunk);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', `${protocol}//${ip}/code/Pictures/upload.php`, true);
-    xmltoken(xhr);
-    xhr.upload.onprogress = function(ev) {
-      if (ev.lengthComputable) {
-        var percent = ((currentChunk + ev.loaded / ev.total) / totalChunks) * 100;
-        var percentElement = document.getElementById('percent');
-        document.getElementById('bar').style.width = percent + '%';
-        percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
+ function comin(){
+  access();
+ loadFolder();
+ document.querySelector('.backbtn').style.left='5%';
+ document.getElementById('fileListContainer').style.opacity='1';
+ document.getElementById('option-bar').style.left='0';
+ document.getElementById('option-bar').style.opacity='1';
+     document.getElementById('top-bar').style.top = `77px`;
+     loginstatus();
+   };
+   window.onload = comin;
+ function goBack() {
+   window.removeEventListener('scroll',handleScroll);
+   document.getElementById('cover-bar').style.top = `-80px`;
+   document.querySelector('.backbtn').style.left = '';
+   document.querySelector('.backbtn').style.opacity = '0';
+   document.getElementById('fileListContainer').style.opacity = ``;
+   document.getElementById('option-bar').style.left='';
+ document.getElementById('option-bar').style.opacity='0';
+     document.getElementById('top-bar').style.top = `-60px`;
+     document.getElementById('top-btn').style.bottom = `-5%`;
+   
+   setTimeout(() => {
+   window.location.replace(`../../index.html#${ip}`);
+}, 1000); // 1000 毫秒 = 1 秒
+ }
+ function loading(status) {
+  
+   const fileInput = document.getElementById('uploadfile');
+   const folderInput = document.getElementById('uploadfolder');
+   const load = document.getElementById('loading');
+   const loadbox = document.getElementById('rotate-box');
+   const loadText = document.getElementById('load-text');
+   const goupbtn = document.getElementById('upButton');
+   const path = document.getElementById('currentPath');
+   const cancel = document.getElementById('cancel');
+   const progress = document.getElementById('progress');
+   switch(status){
+    case 1:
+      if (fileInput.files.length === 0 && folderInput.files.length === 0) {
+        notify("请先选择一个文件进行上传");
+          return; // 没有选择文件，直接返回
       }
-    };
+      path.style.display = 'none';
+      goupbtn.style.display = 'none';
+      progress.style.display = 'block';
+      load.style.display = 'block';
+      cancel.style.display = 'block';
+      loadbox.style.display = 'block';
+      break;
+   case 0:
+      path.style.display = '';
+      goupbtn.style.display = '';
+      progress.style.display = 'none';
+      load.style.display = 'none';
+      cancel.style.display = 'none';
+      loadbox.style.display = 'none';
+     break;
+   }
 
-    xhr.onload = function() {
-        xmlnologin(xhr);
-      if (xhr.status === 200) {
-        currentChunk++;
-        if (currentChunk < totalChunks) {
-          uploadChunk(); // 上传下一个块
-        } else {
-          uploadpath=xhr.responseText;
-            notify("上传完成");
-          desktopnot('恩的图库','图库新内容:',`${file.name}`,uploadpath);
-          reloadPage(); 
-        }
-      } 
-    };
-
-    xhr.send(fd);
+ }
+//  路径长度
+ function pathlen(textid, text) {
+    const barWidth = textid.offsetWidth;
+    const tempElement = document.createElement('span');
+    tempElement.style.visibility = 'hidden';
+    tempElement.style.position = 'absolute';
+    tempElement.style.font = window.getComputedStyle(textid).font;
+    tempElement.innerText = '字';
+    document.body.appendChild(tempElement);
+    const charWidth = tempElement.offsetWidth;
+    document.body.removeChild(tempElement);
+ 
+    const maxLength = Math.floor(barWidth / (charWidth));
+    let displayPath = text;
+ 
+    if (text.length > maxLength && textid.id === 'currentPath') {
+      displayPath = '...' + text.slice(-maxLength);  
+    }
+    else if(text.length > maxLength){
+      displayPath = text.slice(0,maxLength) +'...' ; 
+    }
+ 
+    textid.innerText = displayPath;
   }
+//  加载文件夹
+ function loadFolder(folder = '') {
+  pageloading(1);
+   fetch(`${protocol}//${ip}/code/Pictures/pic_list.php?folder=` + folder)
+ .then(response => {
+   fetchnologin(response)
+   return response.json();
+ })
+     .then(data => {
+       const fileList = document.getElementById('fileList');
+       fileList.innerHTML = '';
 
-  uploadChunk(); // 开始上传第一个块
+       const currentPath = document.getElementById('currentPath');
+       fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
+       
+       pathlen(currentPath, fullPath);
+       currentPath.title = fullPath;
+
+       data.folders.forEach(folder => {
+         const listItem = document.createElement('li');
+         const editbtn= document.createElement('div');
+         const downbtn= document.createElement('div');
+         downbtn.classList.add('down-btn');
+         downbtn.title=`下载${folder}`;
+         downbtn.addEventListener('click',function(){
+
+          event.stopPropagation(); 
+          downfolder(listItem);
+        });
+         editbtn.className='edit li-btn';
+         editbtn.title = `重命名`;
+         editbtn.addEventListener('click',function(){
+           event.stopPropagation(); 
+           rename(0,listItem,2);
+         });
+         const savebtn= document.createElement('div');
+         savebtn.className='save li-btn';
+         savebtn.addEventListener('click',function(){
+           event.stopPropagation(); 
+           rename(1,listItem);
+         });
+         listItem.className = 'files';
+         listItem.classList.add('folder');
+         const folderLink = document.createElement('span');
+         const filetit = document.createElement('input');
+         filetit.classList.add('file-tit');
+         folderLink.textContent = folder;
+         folderLink.className = 'folderLink';
+         listItem.addEventListener('click', function() {
+         });
+         folderLink.addEventListener('click', function () {
+           event.stopPropagation(); 
+           if (event.target.isContentEditable) {
+             return; 
+         }
+           loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+
+       });
+        listItem.appendChild(filetit);
+         listItem.appendChild(folderLink);
+         listItem.appendChild(downbtn);
+         listItem.appendChild(editbtn);
+         listItem.appendChild(savebtn);
+         fileList.appendChild(listItem);
+       });
+
+       data.files.forEach(file => {
+         const listItem = document.createElement('li');
+         const editbtn= document.createElement('div');
+         editbtn.className='edit li-btn';
+         editbtn.title = `重命名`;
+         editbtn.addEventListener('click',function(){
+           event.stopPropagation(); 
+           rename(0,listItem,1);
+         });
+         const savebtn= document.createElement('div');
+         savebtn.className='save li-btn';
+         savebtn.addEventListener('click',function(){
+           event.stopPropagation(); 
+           rename(1,listItem);
+         });
+         listItem.className = 'files';
+         listItem.classList.add('file');
+         const fileLink = document.createElement('span');
+         const filetit = document.createElement('input');
+         filetit.classList.add('file-tit');
+         const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
+         const fileListContainer = document.getElementById('fileListContainer');
+         fileLink.textContent = file;
+         fileLink.className = 'fileLink';
+         fileLink.title = `预览${file}`;
+         listItem.addEventListener('click', function() {
+         });
+         fileLink.addEventListener('click', function () {
+           event.stopPropagation(); 
+           if (event.target.isContentEditable) {
+             return; 
+         }
+           let filepath;
+           nowpath = fullPath;
+           let rootpath=`${protocol}//${ip}/file/Documents/upload/`;
+           if (nowpath==="/"){
+             filepath=rootpath + file;
+           }
+           else{
+             filepath=rootpath + nowpath + file;
+           }
+           window.location.href = filepath;
+         });
+
+         listItem.appendChild(filetit);
+         listItem.appendChild(fileLink);
+         listItem.appendChild(editbtn);
+         listItem.appendChild(savebtn);
+         const downloadLink = document.createElement('a');
+         downloadLink.className = 'downloadLink';
+         downloadLink.classList.add('down-btn');
+         downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
+         downloadLink.title = `下载${file}`;
+         downloadLink.textContent = `下载 ${file}`;
+         downloadLink.addEventListener('click',()=>{
+           event.stopPropagation(); 
+           notify("开始下载")
+         });
+
+         listItem.appendChild(downloadLink);
+
+         fileList.appendChild(listItem);
+       });
+       pageloading(0);
+       // 处理返回上级目录按钮
+       const upButton = document.getElementById('upButton');
+       if (data.currentFolder && data.currentFolder !== '') {
+         upButton.style.display = 'block';
+         upButton.dataset.parentFolder = data.parentFolder;
+         upButton.style.pointerEvents = 'auto';
+       } else {
+         upButton.style.pointerEvents = 'none';
+       }
+     });
+}
+// 回到上一级
+ function goUp() {
+   const upButton = document.getElementById('upButton');
+   const parentFolder = upButton.dataset.parentFolder;
+   loadFolder(parentFolder);
+ }
+// 判断根目录
+function ifroot(){
+ if (fullPath=="/"){
+   nowpath="";
+ }
+ else {
+   nowpath=fullPath;
+ }
+}
+// 去除最后斜杠
+function removeslash(path){
+ return path.endsWith('/') ? path.slice(0, -1) : path;
+}
+// 打开upload页面
+function showupload(status){
+  const page=document.getElementById('upload-page');
+  switch(status){
+    case 0:
+      page.style.opacity='0';
+    setTimeout(() => {      
+      page.style.display='';
+        }, 500);
+      break;
+    case 1:
+      page.style.display='flex';
+      setTimeout(() => {      
+        page.style.opacity='1';
+          }, 10);
+      break;
+  }  
+}
+// 点击事件
+function clickable(status) {
+  switch (status) {
+      case 0:
+          document.body.style.pointerEvents = 'none';
+          break;
+      case 1:
+          document.body.style.pointerEvents = 'auto';
+          break;
+  }
+}
+// 其他目录
+function showoth(){
+    const dirbar=document.getElementById('oth-list');
+    if(dirbar.style.display=='flex'){
+        dirbar.style.display='none';
+    }
+    else{
+        dirbar.style.display='flex';
+    }
 }
