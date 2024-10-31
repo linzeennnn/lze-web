@@ -3,6 +3,7 @@ async function widget(type) {
     let not = [1, 2, 3].map(i => document.getElementById(`not-li${i}`));
     let mon = [1, 2, 3].map(i => document.getElementById(`mon-li${i}`));
     let pic = document.getElementById(`pic`);
+    let img = document.getElementById(`img`);
     let tra = document.getElementById(`tra-li`);
     let bok = document.getElementById(`bok-li`);
     let disktext = document.getElementById(`disk-li`);
@@ -26,7 +27,7 @@ async function widget(type) {
             });
         }
         if (type == 'all' || type == 'pic') {
-            pic.style.backgroundImage = `url(${protocol}//${ip}/file/Pictures/${data.pic1})`;
+            img.src = `${protocol}//${ip}/file/Pictures/${data.pic1}`;
             pic.title="预览:"+data.pic1;
             pic.style.display='';
         }
@@ -112,9 +113,9 @@ function widpage(status,object){
 }
 // pic
 function pic(){
-        const prepic= document.createElement('div');
+        const prepic= document.createElement('img');
         prepic.id='pre-pic';
-        prepic.style.backgroundImage=document.getElementById('pic').style.backgroundImage;
+        prepic.src=document.getElementById('img').src;
         widpage(1,prepic);
 }
 // not
