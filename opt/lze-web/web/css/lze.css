@@ -28,7 +28,7 @@ body::-webkit-scrollbar {
         opacity: 0.5;
         background-image: url(../../icon/left_pink.svg);
         z-index: 11;
-        transition: all 1s ease;
+        transition: all 1s ease !important; 
         }
         .backbtn:hover{
         opacity: 1;
