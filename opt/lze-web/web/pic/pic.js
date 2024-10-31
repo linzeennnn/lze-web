@@ -224,6 +224,7 @@ window.addEventListener('scroll', handleScroll);
           phoindex++;
         }
         picfile.setAttribute('loading', 'lazy'); 
+        picfile.draggable = false;
         pic.title="查看"+file;
         picfile.src=`${protocol}//${ip}/file/Pictures/${folder}/${file}`;
         pic.append(load);
@@ -423,6 +424,7 @@ function openpic(status,path){
         pic.autoplay = true;
       }
       pic.id='page-pic';
+      pic.draggable = false;
       pic.src=`${protocol}//${ip}/file/Pictures/${path}`;
       bigpic.appendChild(pic);
       if(pagetype=="pho"){

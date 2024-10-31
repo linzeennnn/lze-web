@@ -457,7 +457,6 @@ left: 50%;
 transform: translate(-50%, -50%); 
 white-space: nowrap; 
 }
-
 #top-btn{
 background-image: url(../../icon/toup_blue.svg);
 background-color: #5a677cbd;
@@ -467,10 +466,10 @@ background-color: #4066808e;
 }
 
   #notify{
-    background-color: #65807ba4;
+    background: #575d8a8a; 
   }
   #notifytext{
-    color: #a7f8e7;
+    color: #9dcaed; 
   }
       
       @keyframes rotate-loading {
