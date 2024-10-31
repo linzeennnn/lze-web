@@ -150,6 +150,8 @@ input#tit-bar::placeholder {
     color: #ffb6d8;
     margin-right: 10px;
     min-height: 30px;
+    overflow-y:auto ;
+    max-height: 700px;
     font-weight: bold;
     overflow-wrap: break-word;
     background-color: transparent;
