@@ -83,6 +83,7 @@ width: 100%;
   border-right-color: #3c697e;
   border-bottom-color: #3c697e;
   border-radius: 100%;
+  z-index: 10;
   animation: loading infinite 0.5s linear;
 }
 .pic{
