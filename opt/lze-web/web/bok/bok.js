@@ -121,17 +121,7 @@ function totop() {
     });
   }
 function goBack() {
-    document.getElementById('cover-bar').style.top = `-80px`;
-    document.getElementById('top-bar').style.top ='';
-        document.getElementById(`notes`).style.right='';
-        document.getElementById('option-bar').style.left='';
-      document.getElementById('option-bar').style.opacity='0';
-      document.querySelector('.backbtn').style.left = '';
-      document.querySelector('.backbtn').style.opacity = '0';
-      document.getElementById('top-btn').style.bottom = `-5%`;
-        setTimeout(() => {
             window.location.replace(`../../index.html#${ip}`);
-}, 1000); 
     }
     function reloadPage() {
   location.reload();

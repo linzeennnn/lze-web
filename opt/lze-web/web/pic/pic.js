@@ -6,7 +6,14 @@ let uploadpath;
 let nowpath="/";//当前目录（要上传的目录）
 let fullPath; 
 let editmode=0;
-//  操作导航栏
+let pagenum,phonum,vidnum,curpage;
+let pagetype;
+const pagedis=document.getElementById('page-display');
+const bigpic=document.getElementById('bigpic');
+const lastpic=document.getElementById('last-btn');
+const nextpic=document.getElementById('next-btn');
+const picpage=document.getElementById('bigpic-page');
+// 操作导航栏
 function optionbar(status){
  const optionbar=document.getElementById('option-bar');
  const openbtn=document.getElementById('openbar');
@@ -31,7 +38,7 @@ switch(status){
    break;
 }
 }
-//  整体页面的位置
+// 整体页面的位置
 function allmove(status){
  const elements = document.querySelectorAll('.main');
  switch(status){
@@ -53,7 +60,7 @@ function handleScroll() {
    var scrollTop = window.scrollY || document.documentElement.scrollTop;
        
        if (scrollTop > 100) {
-         document.getElementById('top-btn').style.bottom = '90px';
+         document.getElementById('top-btn').style.bottom = '200px';
          document.querySelector('.backbtn').style.left = '1%';
          document.getElementById('top-bar').style.boxShadow = 'none';
          document.getElementById('top-bar').style.top = '10px';
@@ -75,7 +82,9 @@ function handleScroll() {
        }
 }
 
+
 window.addEventListener('scroll', handleScroll);
+
 
  function comin(){
   access();
@@ -89,19 +98,7 @@ window.addEventListener('scroll', handleScroll);
    };
    window.onload = comin;
  function goBack() {
-   window.removeEventListener('scroll',handleScroll);
-   document.getElementById('cover-bar').style.top = `-80px`;
-   document.querySelector('.backbtn').style.left = '';
-   document.querySelector('.backbtn').style.opacity = '0';
-   document.getElementById('fileListContainer').style.opacity = ``;
-   document.getElementById('option-bar').style.left='';
- document.getElementById('option-bar').style.opacity='0';
-     document.getElementById('top-bar').style.top = `-60px`;
-     document.getElementById('top-btn').style.bottom = `-5%`;
-   
-   setTimeout(() => {
    window.location.replace(`../../index.html#${ip}`);
-}, 1000); // 1000 毫秒 = 1 秒
  }
  function loading(status) {
   
@@ -112,7 +109,6 @@ window.addEventListener('scroll', handleScroll);
    const loadText = document.getElementById('load-text');
    const goupbtn = document.getElementById('upButton');
    const path = document.getElementById('currentPath');
-   const cancel = document.getElementById('cancel');
    const progress = document.getElementById('progress');
    switch(status){
     case 1:
@@ -124,7 +120,6 @@ window.addEventListener('scroll', handleScroll);
       goupbtn.style.display = 'none';
       progress.style.display = 'block';
       load.style.display = 'block';
-      cancel.style.display = 'block';
       loadbox.style.display = 'block';
       break;
    case 0:
@@ -132,13 +127,13 @@ window.addEventListener('scroll', handleScroll);
       goupbtn.style.display = '';
       progress.style.display = 'none';
       load.style.display = 'none';
-      cancel.style.display = 'none';
       loadbox.style.display = 'none';
      break;
    }
 
+
  }
-//  路径长度
+// 路径长度
  function pathlen(textid, text) {
     const barWidth = textid.offsetWidth;
     const tempElement = document.createElement('span');
@@ -162,137 +157,83 @@ window.addEventListener('scroll', handleScroll);
  
     textid.innerText = displayPath;
   }
-//  加载文件夹
+// 加载文件夹
  function loadFolder(folder = '') {
   pageloading(1);
+  curpage=1;
    fetch(`${protocol}//${ip}/code/Pictures/pic_list.php?folder=` + folder)
  .then(response => {
    fetchnologin(response)
    return response.json();
  })
      .then(data => {
-       const fileList = document.getElementById('fileList');
-       fileList.innerHTML = '';
-
+      let phoindex=0,vidindex=0;
+      phonum=1;
+      vidnum=1;
+       const othlist = document.getElementById('oth-list');
+       const picbox = document.getElementById('pic-box');
+       picbox.innerHTML = '';
+       othlist.innerHTML = '';
        const currentPath = document.getElementById('currentPath');
        fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
-       
        pathlen(currentPath, fullPath);
        currentPath.title = fullPath;
-
+// 文件夹
        data.folders.forEach(folder => {
-         const listItem = document.createElement('li');
-         const editbtn= document.createElement('div');
-         const downbtn= document.createElement('div');
-         downbtn.classList.add('down-btn');
-         downbtn.title=`下载${folder}`;
-         downbtn.addEventListener('click',function(){
-
-          event.stopPropagation(); 
-          downfolder(listItem);
-        });
-         editbtn.className='edit li-btn';
-         editbtn.title = `重命名`;
-         editbtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(0,listItem,2);
-         });
-         const savebtn= document.createElement('div');
-         savebtn.className='save li-btn';
-         savebtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(1,listItem);
-         });
-         listItem.className = 'files';
-         listItem.classList.add('folder');
-         const folderLink = document.createElement('span');
-         const filetit = document.createElement('input');
-         filetit.classList.add('file-tit');
-         folderLink.textContent = folder;
-         folderLink.className = 'folderLink';
-         listItem.addEventListener('click', function() {
-         });
-         folderLink.addEventListener('click', function () {
+         const dir = document.createElement('div');
+         dir.classList.add('folder');
+         dir.innerText=folder;
+         dir.title=folder;
+         dir.addEventListener('click', function () {
            event.stopPropagation(); 
            if (event.target.isContentEditable) {
              return; 
          }
            loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
-
        });
-        listItem.appendChild(filetit);
-         listItem.appendChild(folderLink);
-         listItem.appendChild(downbtn);
-         listItem.appendChild(editbtn);
-         listItem.appendChild(savebtn);
-         fileList.appendChild(listItem);
+         othlist.appendChild(dir);
        });
-
+// 文件
        data.files.forEach(file => {
-         const listItem = document.createElement('li');
-         const editbtn= document.createElement('div');
-         editbtn.className='edit li-btn';
-         editbtn.title = `重命名`;
-         editbtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(0,listItem,1);
-         });
-         const savebtn= document.createElement('div');
-         savebtn.className='save li-btn';
-         savebtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(1,listItem);
-         });
-         listItem.className = 'files';
-         listItem.classList.add('file');
-         const fileLink = document.createElement('span');
-         const filetit = document.createElement('input');
-         filetit.classList.add('file-tit');
-         const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
-         const fileListContainer = document.getElementById('fileListContainer');
-         fileLink.textContent = file;
-         fileLink.className = 'fileLink';
-         fileLink.title = `预览${file}`;
-         listItem.addEventListener('click', function() {
-         });
-         fileLink.addEventListener('click', function () {
-           event.stopPropagation(); 
-           if (event.target.isContentEditable) {
-             return; 
-         }
-           let filepath;
-           nowpath = fullPath;
-           let rootpath=`${protocol}//${ip}/file/Documents/upload/`;
-           if (nowpath==="/"){
-             filepath=rootpath + file;
-           }
-           else{
-             filepath=rootpath + nowpath + file;
-           }
-           window.location.href = filepath;
-         });
-
-         listItem.appendChild(filetit);
-         listItem.appendChild(fileLink);
-         listItem.appendChild(editbtn);
-         listItem.appendChild(savebtn);
-         const downloadLink = document.createElement('a');
-         downloadLink.className = 'downloadLink';
-         downloadLink.classList.add('down-btn');
-         downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
-         downloadLink.title = `下载${file}`;
-         downloadLink.textContent = `下载 ${file}`;
-         downloadLink.addEventListener('click',()=>{
-           event.stopPropagation(); 
-           notify("开始下载")
-         });
-
-         listItem.appendChild(downloadLink);
-
-         fileList.appendChild(listItem);
+        const load=document.createElement('div');
+        const pic=document.createElement('div');
+        pic.classList.add('pic');
+        load.classList.add('load-loop');
+        let picfile;
+        pic.addEventListener('click', function () {
+          openpic(1,folder+"/"+file)
+        });
+// 视频
+        if(isvideo(file)==1){
+          pic.classList.add('video')
+          picfile = document.createElement('video');
+          if (vidindex%9==0&&vidindex!=0){
+            vidnum++;
+          }
+          pic.classList.add(`vid-page${vidnum}`);
+          vidindex++;
+        }
+// 图片
+        else{
+          pic.classList.add('photo');
+          picfile = document.createElement('img');
+          if (phoindex%9==0&&phoindex!=0){
+            phonum++;
+          }
+          pic.classList.add(`pho-page${phonum}`);
+          phoindex++;
+        }
+        picfile.setAttribute('loading', 'lazy'); 
+        pic.title="查看"+file;
+        picfile.src=`${protocol}//${ip}/file/Pictures/${folder}/${file}`;
+        pic.append(load);
+        pic.append(picfile);
+        picbox.appendChild(pic);
+        picfile.onload = function() {
+          load.style.display='none';
+        };
        });
        pageloading(0);
-       // 处理返回上级目录按钮
        const upButton = document.getElementById('upButton');
        if (data.currentFolder && data.currentFolder !== '') {
          upButton.style.display = 'block';
@@ -301,6 +242,8 @@ window.addEventListener('scroll', handleScroll);
        } else {
          upButton.style.pointerEvents = 'none';
        }
+     pagenum=phonum;
+     showpic("pho")
      });
 }
 // 回到上一级
@@ -322,24 +265,6 @@ function ifroot(){
 function removeslash(path){
  return path.endsWith('/') ? path.slice(0, -1) : path;
 }
-// 打开upload页面
-function showupload(status){
-  const page=document.getElementById('upload-page');
-  switch(status){
-    case 0:
-      page.style.opacity='0';
-    setTimeout(() => {      
-      page.style.display='';
-        }, 500);
-      break;
-    case 1:
-      page.style.display='flex';
-      setTimeout(() => {      
-        page.style.opacity='1';
-          }, 10);
-      break;
-  }  
-}
 // 点击事件
 function clickable(status) {
   switch (status) {
@@ -352,12 +277,299 @@ function clickable(status) {
   }
 }
 // 其他目录
-function showoth(){
+function showoth(place){
     const dirbar=document.getElementById('oth-list');
-    if(dirbar.style.display=='flex'){
+    if(dirbar.style.display=='flex'||place==1){
         dirbar.style.display='none';
     }
     else{
         dirbar.style.display='flex';
     }
+}
+document.getElementById('oth-btn').addEventListener('click',function(event){
+  event.stopPropagation();
+})
+document.addEventListener('click',function(event){
+  showoth(1);
+})
+// 视频后缀名检查
+function isvideo(name){
+  const ext = ['.mp4', '.avi', '.mov', '.wmv', '.mkv','.ts','.webm', '.flv','.m4v','.3gp','.mpeg','.rmvb','.vob'];
+  const nameext=name.slice(((name.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
+  if (ext.includes(`.${nameext}`)) {
+    return 1;
+} else {
+    return 0;
+}
+}
+// 多页面
+function displaypage(num,cunum,type){
+  document.querySelectorAll(`.${type}-page${cunum}`).forEach(page => {
+    page.style.display = 'none';
+});
+document.querySelectorAll(`.${type}-page${num}`).forEach(page => {
+  page.style.display = 'flex';
+});
+if(cunum==0){
+  pagenumdis(curpage,pagenum);
+}
+}
+// 跳转页面
+function switchpage(status){
+  switch(status){
+    case 1:
+      if(curpage<pagenum){
+        displaypage(curpage+1,curpage,pagetype);
+        curpage++;
+        }
+        else{
+          notify("已是尾页")
+        }
+      break;
+    case 0:
+      if(curpage>1){
+      displaypage(curpage-1,curpage,pagetype);
+      curpage--;
+      }
+      else{
+        notify("已是首页")
+      }
+      break;
+  }
+  pagenumdis(curpage,pagenum);
+}
+// 展示图片视频
+function showpic(type){
+  const pho= document.querySelectorAll(`.photo`);
+  const vid= document.querySelectorAll(`.video`);
+switch(type){
+  case "pho":
+    pagenum=phonum;
+    document.querySelectorAll(`.video`).forEach(page => {
+      page.style.display = 'none';
+    });
+    break;
+  case "vid":
+    pagenum=vidnum;
+    document.querySelectorAll(`.photo`).forEach(page => {
+      page.style.display = 'none';
+    });
+    break;
+}
+curpage=1;
+pagetype=type;
+displaypage(curpage,0,type)
+}
+// 显示页数
+function pagenumdis(cu,tol){
+pagedis.innerText=cu+"页/"+tol+"页";
+}
+// 图片缩放
+let scale = 1;
+bigpic.addEventListener('wheel', (event) => {
+    event.preventDefault(); 
+    if (event.deltaY < 0) {
+        scale += 0.1; 
+    } else {
+        scale -= 0.1; 
+    }
+    scale = Math.min(Math.max(1, scale), 3); 
+    bigpic.style.transform = `scale(${scale})`;
+});
+// 触控缩放
+let initialDistance = null;
+const handleTouchStart = (event) => {
+    if (event.touches.length === 2) {
+        initialDistance = Math.hypot(
+            event.touches[0].clientX - event.touches[1].clientX,
+            event.touches[0].clientY - event.touches[1].clientY
+        );
+    }
+};
+const handleTouchMove = (event) => {
+    if (event.touches.length === 2 && initialDistance !== null) {
+        const currentDistance = Math.hypot(
+            event.touches[0].clientX - event.touches[1].clientX,
+            event.touches[0].clientY - event.touches[1].clientY
+        );
+        const scaleChange = currentDistance / initialDistance;
+        scale *= scaleChange;
+        scale = Math.min(Math.max(1, scale), 3);
+        bigpic.style.transform = `scale(${scale})`;
+        initialDistance = currentDistance; 
+    }
+};
+bigpic.addEventListener('touchstart', handleTouchStart);
+bigpic.addEventListener('touchmove', handleTouchMove);
+// 防止大图片点击影响
+const pagebtn = [bigpic, lastpic, nextpic];
+pagebtn.forEach(pagebtn => {
+  pagebtn.addEventListener('click', event => event.stopPropagation());
+});
+
+// 打开大图片
+let picmap;
+function openpic(status,path){
+  let pic;
+  switch(status){
+    case 1:
+      picpage.style.display='flex';
+      if(pagetype=="pho"){
+        pic=document.createElement('img');
+      }
+      else{
+        pic=document.createElement('video');
+        pic.controls = true; 
+        pic.autoplay = true;
+      }
+      pic.id='page-pic';
+      pic.src=`${protocol}//${ip}/file/Pictures/${path}`;
+      bigpic.appendChild(pic);
+      if(pagetype=="pho"){
+      picmap = Array.from(document.querySelectorAll('img'))
+  .filter(img => img.offsetWidth > 0 && img.offsetHeight > 0)
+  .map(img => img.src);
+      }
+      else{
+        picmap = Array.from(document.querySelectorAll('video'))
+    .filter(video => video.offsetWidth > 0 && video.offsetHeight > 0)
+    .map(video => video.src);
+      }
+      break;
+    case 0:
+      bigpic.removeChild(document.getElementById('page-pic'));
+      picpage.style.display='none';
+      break;
+  }
+}
+// 切换大图片
+function switchpic(status){
+  let link=document.getElementById('page-pic').src;
+  const index = picmap.indexOf(link);
+  switch(status){
+    case 1:
+      if (index < picmap.length - 1) {
+        link = picmap[index + 1];
+    } else {
+      link = picmap[0];
+    }
+      break;
+    case 0:
+      if (index > 0) {
+        link = picmap[index - 1];
+    } else {
+      link = picmap[picmap.length - 1];
+    }
+      break;
+  }
+  document.getElementById('page-pic').src=link;
+}
+// 上传文件
+function selfile() {
+  ifroot();
+  var files = fileInput.files; // 直接使用 fileInput 的文件
+  if (files.length === 0) {
+      notify("请先选择文件");
+      return;
+  }
+  var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
+  var totalFiles = files.length;
+  var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
+  var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
+  // 计算每个文件的总块数
+  for (let i = 0; i < totalFiles; i++) {
+    if (files[i].size === 0) {
+        notify(`${files[i].name} 是空文件，上传失败`);
+        return;
+    }
+    totalChunks[i] = Math.ceil(files[i].size / chunkSize);
+}
+loading(1);
+  function uploadChunk(fileIndex) {
+      if (fileIndex >= totalFiles) {
+          loading(0);
+          return;
+      }
+      var file = files[fileIndex];
+      var start = currentChunks[fileIndex] * chunkSize;
+      var end = Math.min(start + chunkSize, file.size);
+      var chunk = file.slice(start, end);
+      var fd = new FormData();
+      fd.append('file', chunk);
+      fd.append('fileName', file.name);
+      fd.append('totalChunks', totalChunks[fileIndex]);
+      fd.append('currentChunk', currentChunks[fileIndex]);
+      fd.append('nowpath', nowpath); // 传递 nowpath 变量
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', `${protocol}//${ip}/code/Pictures/upload_file.php`, true);
+      xmltoken(xhr);
+      xhr.upload.onprogress = function (ev) {
+          if (ev.lengthComputable) {
+              var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
+              var percentElement = document.getElementById('percent');
+              document.getElementById('bar').style.width = percent + '%';
+              percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
+          }
+      };
+      xhr.onload = function () {
+          xmlnologin(xhr);
+          if (xhr.status === 200) {
+              currentChunks[fileIndex]++;
+              if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
+                  uploadChunk(fileIndex); // 上传下一个块
+              } else {
+                  // 上传下一个文件
+                  uploadChunk(fileIndex + 1);
+                  notify(`文件 ${file.name} 上传成功`);
+                  uploadpath = xhr.responseText;
+                  loadFolder(removeslash(nowpath));
+                  desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
+              }
+          }
+      };
+      xhr.send(fd);
+  }
+  uploadChunk(0); // 开始上传第一个文件
+}
+//拖拽上传
+const fileInput = document.getElementById('uploadfile');
+const uploadarea = document.getElementById('upload-area');
+const picbox = document.getElementById('pic-box');
+document.addEventListener('dragover', handleDragOver);
+document.addEventListener('dragleave', handleDragLeave);
+document.addEventListener('drop', handleDrop);
+picbox.addEventListener('dragover', handleDragOver);
+picbox.addEventListener('dragleave', handleDragLeave);
+picbox.addEventListener('drop', handleDrop);
+function handleDragOver(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  uploadarea.style.opacity = '1';
+}
+function handleDragLeave(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  uploadarea.style.opacity = '';
+}
+function handleDrop(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  uploadarea.style.opacity = '';
+  const dt = e.dataTransfer;
+  const files = dt.files;
+  const items = dt.items;
+  for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.kind === 'file'&& item.webkitGetAsEntry().isFile) {
+          const file = item.getAsFile();
+          if (file) {
+              const dataTransfer = new DataTransfer();
+              dataTransfer.items.add(file);
+              fileInput.files = dataTransfer.files;
+              selfile();
+          }
+      } else {
+         notify("文件夹不支持上传");
+      }
+  }
 }

@@ -115,19 +115,7 @@ function comin(){
     };
     window.onload = comin;
 function goBack() {
-    document.getElementById('top-btn').style.bottom = '';
-    window.removeEventListener('scroll',handleScroll);
-    document.getElementById('cover-bar').style.top = `-80px`;
-    document.querySelector('.backbtn').style.left = '';
-    document.querySelector('.backbtn').style.opacity = '0';
-    document.getElementById('option-bar').style.left='';
-  document.getElementById('option-bar').style.opacity='0';
-      allwindow.style.opacity='';
-      topbar.style.top='';
-    allwindow.style.right='';
-    setTimeout(() => {
         window.location.replace(`../../index.html#${ip}`);
-}, 1000);
     }
 //media status 
     function mediastatus(){
