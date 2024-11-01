@@ -25,25 +25,19 @@
     <div id="option-bar">
       <div id="closebar" title="收起" class="option-btn pc-only" onclick="optionbar(0)"></div>
       <div id="open-side" class="option-btn" onclick="openside(1)" title="打开导航栏"></div>
-      <div id="add" title="添加便签"  class="option-btn" onclick="showAddNoteForm()"></div >
-      <label for="uploadfile" class="custom-upload-btn option-btn" id="up-btn" title="上传文件"></label>
+      <div id="add" title="添加便签"  class="option-btn" onclick="newbok()"></div >
       <div id="load" title="刷新" class="option-btn"  onclick="reloadPage()"></div >
     </div>
     <div class="phone_background">
         <div class="fixed"></div>
     </div>
-    <input type="file" id="uploadfile" name="pic" onchange="selfile();" multiple="multiple" style="display: none;"/>
     <div class="next" ></div>
     <div id="cover-bar"></div>
     <div id="top-bar" class="main">
-        <div id="tit-bar" contenteditable="true" title="标题"></div>
+        <input id="tit-bar" contenteditable="true" title="标题"></input>
         <div id="word-bar" contenteditable="true" title="正文"></div>
-        <div id="progress" style="display: none;">
-            <div id="bar">
-                <div id="percent"></div>
-            </div>
-        </div>
     </div>
+    <div id="bok-box" class="main"></div>
     <div id="top-btn" onclick="totop()" class="main" title="回到顶部"></div>
 <div id="notes" class="main"></div>
 <div class="phone_background">
