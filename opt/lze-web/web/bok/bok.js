@@ -1,7 +1,3 @@
-let darkcolor;
-let lightcolor
-darkcolor='#281c1c';
-lightcolor='#966969';
 //  操作导航栏
 function optionbar(status){
     const optionbar=document.getElementById('option-bar');
@@ -103,6 +99,7 @@ window.addEventListener('scroll', handleScroll);
 window.addEventListener('scroll', handleScroll);
      function comin(){
         showNotes();
+        theme(mode,"red")
         document.getElementById('top-bar').style.top ='100px';
         document.getElementById('option-bar').style.left='0';
         document.getElementById('option-bar').style.opacity='1';

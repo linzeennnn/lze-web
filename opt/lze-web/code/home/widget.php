@@ -15,10 +15,12 @@ if ($postData == 'all') {
     send();
 }
 
+
 function handleFiles($type) {
     global $data;
     $file = [];
     $uploadFolder = '';
+
 
     switch ($type) {
         case 'doc':
@@ -59,11 +61,12 @@ function handleFiles($type) {
             $diskLines = explode("\n", $diskInfo);
             $diskArray = preg_split('/\s+/', trim($diskLines[1])); // 解析第二行数据
             $data['total'] = $diskArray[1];
-            $data['used']  = $diskArray[2];
+            $data['used'] = $diskArray[2];
             return; // 不需要继续执行下面的代码
         default:
             return; // 如果类型不匹配，则直接返回
     }
+
 
     $files = array_diff(scandir($uploadFolder), ['.', '..']);
     foreach ($files as $item) {
@@ -71,14 +74,14 @@ function handleFiles($type) {
         $file[$item] = filemtime($itemPath);
     }
 
+
     arsort($file);
     $topFiles = array_slice($file, 0, $numFiles, true); // 保留键名
 
+
     for ($i = 0; $i < $numFiles; $i++) {
         $key = $keyPrefix . ($i + 1);
-        if ($type === 'not' || $type === 'bok') {
-            $data[$key] = isset($topFiles[array_keys($topFiles)[$i]]) ? pathinfo(array_keys($topFiles)[$i], PATHINFO_FILENAME) : null; // 去除后缀名
-        } else {
+       
             $filename = isset($topFiles[array_keys($topFiles)[$i]]) ? array_keys($topFiles)[$i] : null;
             // 检查是否为文件夹
             if (is_dir($uploadFolder . $filename)) {
@@ -86,9 +89,10 @@ function handleFiles($type) {
             } else {
                 $data[$key] = $filename; // 保留完整文件名
             }
-        }
+        
     }
 }
+
 
 function send() {
     global $data;
@@ -96,3 +100,4 @@ function send() {
     echo json_encode($data);
 }
 ?>
+

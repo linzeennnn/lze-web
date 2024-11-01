@@ -106,8 +106,11 @@ function lockmove(status){
   }
 }
 function comin(){
-  color = localStorage.getItem('color');
-  setcolor(color);
+  localStorage.removeItem('theme');//该名称已废弃不久后将移除
+  if(!color){
+    color="default";
+  }
+  theme(mode,color);
   if (document.referrer && document.referrer.split('#')[0] !== window.location.href.split('#')[0]) {
     dockmove(1);
     widgetmove(1);

@@ -1,9 +1,5 @@
-let darkcolor;
-let lightcolor
-darkcolor='#1c2825';
-lightcolor='#6b9683';
 let uploadpath;
-let nowpath="/";//当前目录（要上传的目录）
+let nowpath="/";
 let fullPath; 
 let editmode=0;
 let pagenum,phonum,vidnum,curpage;
@@ -89,6 +85,7 @@ window.addEventListener('scroll', handleScroll);
  function comin(){
   access();
  loadFolder();
+ theme(mode,"blue")
  document.querySelector('.backbtn').style.left='5%';
  document.getElementById('fileListContainer').style.opacity='1';
  document.getElementById('option-bar').style.left='0';
@@ -158,95 +155,110 @@ window.addEventListener('scroll', handleScroll);
     textid.innerText = displayPath;
   }
 // 加载文件夹
- function loadFolder(folder = '') {
+async function loadFolder(folder = '') {
   pageloading(1);
-  curpage=1;
-   fetch(`${protocol}//${ip}/code/Pictures/pic_list.php?folder=` + folder)
- .then(response => {
-   fetchnologin(response)
-   return response.json();
- })
-     .then(data => {
-      let phoindex=0,vidindex=0;
-      phonum=1;
-      vidnum=1;
-       const othlist = document.getElementById('oth-list');
-       const picbox = document.getElementById('pic-box');
-       picbox.innerHTML = '';
-       othlist.innerHTML = '';
-       const currentPath = document.getElementById('currentPath');
-       fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
-       pathlen(currentPath, fullPath);
-       currentPath.title = fullPath;
-// 文件夹
-       data.folders.forEach(folder => {
-         const dir = document.createElement('div');
-         dir.classList.add('folder');
-         dir.innerText=folder;
-         dir.title=folder;
-         dir.addEventListener('click', function () {
-           event.stopPropagation(); 
-           if (event.target.isContentEditable) {
-             return; 
-         }
-           loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
-       });
-         othlist.appendChild(dir);
-       });
-// 文件
-       data.files.forEach(file => {
-        const load=document.createElement('div');
-        const pic=document.createElement('div');
-        pic.classList.add('pic');
-        load.classList.add('load-loop');
-        let picfile;
-        pic.addEventListener('click', function () {
-          openpic(1,folder+"/"+file)
-        });
-// 视频
-        if(isvideo(file)==1){
-          pic.classList.add('video')
-          picfile = document.createElement('video');
-          if (vidindex%9==0&&vidindex!=0){
-            vidnum++;
-          }
-          pic.classList.add(`vid-page${vidnum}`);
-          vidindex++;
+  curpage = 1;
+
+  try {
+    const response = await fetch(`${protocol}//${ip}/code/Pictures/pic_list.php?folder=` + folder);
+    fetchnologin(response);
+    const data = await response.json();
+    
+    let phoindex = 0, vidindex = 0;
+    phonum = 1;
+    vidnum = 1;
+    
+    const othlist = document.getElementById('oth-list');
+    const picbox = document.getElementById('pic-box');
+    picbox.innerHTML = '';
+    othlist.innerHTML = '';
+    
+    const currentPath = document.getElementById('currentPath');
+    fullPath = (data.currentFolder ? data.currentFolder : '') + '/';
+    pathlen(currentPath, fullPath);
+    currentPath.title = fullPath;
+
+    // 文件夹
+    data.folders.forEach(folder => {
+      const dir = document.createElement('div');
+      dir.classList.add('folder');
+      dir.innerText = folder;
+      dir.title = folder;
+      dir.addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (event.target.isContentEditable) {
+          return;
         }
-// 图片
-        else{
-          pic.classList.add('photo');
-          picfile = document.createElement('img');
-          if (phoindex%9==0&&phoindex!=0){
-            phonum++;
-          }
-          pic.classList.add(`pho-page${phonum}`);
-          phoindex++;
+        loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+      });
+      othlist.appendChild(dir);
+    });
+
+    // 文件
+    data.files.forEach(file => {
+      const load = document.createElement('div');
+      const pic = document.createElement('div');
+      pic.classList.add('pic');
+      load.classList.add('load-loop');
+      let picfile;
+
+      pic.addEventListener('click', function () {
+        openpic(1, folder + "/" + file);
+      });
+
+      // 视频
+      if (isvideo(file) == 1) {
+        pic.classList.add('video');
+        picfile = document.createElement('video');
+        if (vidindex % 9 == 0 && vidindex != 0) {
+          vidnum++;
         }
-        picfile.setAttribute('loading', 'lazy'); 
-        picfile.draggable = false;
-        pic.title="查看"+file;
-        picfile.src=`${protocol}//${ip}/file/Pictures/${folder}/${file}`;
-        pic.append(load);
-        pic.append(picfile);
-        picbox.appendChild(pic);
-        picfile.onload = function() {
-          load.style.display='none';
-        };
-       });
-       pageloading(0);
-       const upButton = document.getElementById('upButton');
-       if (data.currentFolder && data.currentFolder !== '') {
-         upButton.style.display = 'block';
-         upButton.dataset.parentFolder = data.parentFolder;
-         upButton.style.pointerEvents = 'auto';
-       } else {
-         upButton.style.pointerEvents = 'none';
-       }
-     pagenum=phonum;
-     showpic("pho")
-     });
+        pic.classList.add(`vid-page${vidnum}`);
+        vidindex++;
+      } 
+      // 图片
+      else {
+        pic.classList.add('photo');
+        picfile = document.createElement('img');
+        if (phoindex % 9 == 0 && phoindex != 0) {
+          phonum++;
+        }
+        pic.classList.add(`pho-page${phonum}`);
+        phoindex++;
+      }
+
+      picfile.setAttribute('loading', 'lazy');
+      picfile.draggable = false;
+      pic.title = "查看" + file;
+      picfile.src = `${protocol}//${ip}/file/Pictures/${folder}/${file}`;
+      pic.append(load);
+      pic.append(picfile);
+      picbox.appendChild(pic);
+      
+      picfile.onload = function() {
+        load.style.display = 'none';
+      };
+    });
+
+    pageloading(0);
+
+    const upButton = document.getElementById('upButton');
+    if (data.currentFolder && data.currentFolder !== '') {
+      upButton.style.display = 'block';
+      upButton.dataset.parentFolder = data.parentFolder;
+      upButton.style.pointerEvents = 'auto';
+    } else {
+      upButton.style.pointerEvents = 'none';
+    }
+
+    pagenum = phonum;
+    showpic("pho");
+  } catch (error) {
+    console.error("Error loading folder:", error);
+    pageloading(0);
+  }
 }
+
 // 回到上一级
  function goUp() {
    const upButton = document.getElementById('upButton');

@@ -1,5 +1,5 @@
 .down-btn {
-  position: fixed;
+  position: absolute;
     display: inline-block;
     right: 10px;
     width: 24px;
@@ -202,7 +202,7 @@
     height: 20px;
     background-position: center;
     background-repeat: no-repeat;
-    position: fixed;
+    position: absolute;
     right: 10px;
   }
   @keyframes edit {
@@ -493,14 +493,14 @@
     justify-content: space-between;
     margin-bottom: 60px;
     align-items: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     font-size: 120%;
     border-bottom: none;
     padding: 1.4%;
     position: relative;
     text-overflow: ellipsis;
     border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: opacity 1S ease;
     box-shadow: var(--outshadow) 
   }
@@ -519,8 +519,8 @@
    position: absolute;
    width: 100px;
    height: 20px;
-   border-top-left-radius: 8px; /* 左上角圆角 */
-            border-top-right-radius: 8px;
+   border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
    background-color:#4a6d67a4 ;
 }
 .file{

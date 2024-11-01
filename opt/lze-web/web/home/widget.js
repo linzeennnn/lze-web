@@ -19,6 +19,8 @@ async function widget(type) {
         let data = await response.json();
 
 
+
+
         if (type == 'all' || type == 'doc') {
             doc.forEach((el, index) => {
                 el.innerText = data[`doc${index + 1}`];
@@ -33,13 +35,13 @@ async function widget(type) {
         }
         if (type == 'all' || type == 'not') {
             not.forEach((el, index) => {
-            el.innerText = data[`not${index + 1}`]; 
+            el.innerText = removeext(data[`not${index + 1}`]); 
             el.title = data[`not${index + 1}`];
             el.style.display = '';
         });            
         }
         if (type == 'all' || type == 'bok') {
-            bok.innerText = data.bok1;
+            bok.innerText = removeext(data.bok1); 
             bok.title = data.bok1;
             bok.style.display='';
         }
@@ -63,6 +65,10 @@ async function widget(type) {
     } catch (error) {
         console.error('发生错误:', error);
     }
+}
+// 去除后缀名
+function removeext(name){
+    return name.substring(0,name.lastIndexOf('.'));
 }
 // 宽度
 const app = document.querySelectorAll('.app');

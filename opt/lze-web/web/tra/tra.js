@@ -1,7 +1,3 @@
-let darkcolor;
-let lightcolor
-darkcolor='#2e2924';
-lightcolor='#bb9475';
 let uploadpath;
 let nowpath="/";//当前目录（要上传的目录）
 let fullPath; 
@@ -80,6 +76,7 @@ window.addEventListener('scroll', handleScroll);
  function comin(){
    access();
  loadFolder();
+ theme(mode,"orange")
  document.querySelector('.backbtn').style.left='5%';
  document.getElementById('fileListContainer').style.opacity='1';
  document.getElementById('option-bar').style.left='0';
@@ -114,90 +111,94 @@ window.addEventListener('scroll', handleScroll);
 
    textid.innerText = displayPath;
  }
- function loadFolder(folder = '') {
-   selectedarray.length = 0;
-   fetch(`${protocol}//${ip}/code/trash/trash_list.php?folder=` + folder)
- .then(response => {
-   fetchnologin(response)
-   return response.json();
- })
-     .then(data => {
-       const fileList = document.getElementById('fileList');
-       fileList.innerHTML = '';
+ async function loadFolder(folder = '') {
+  selectedarray.length = 0;
 
-       const currentPath = document.getElementById('currentPath');
-       fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
-       
-       pathlen(currentPath, fullPath);
-       currentPath.title = fullPath;
+  try {
+      const response = await fetch(`${protocol}//${ip}/code/trash/trash_list.php?folder=` + folder);
+      fetchnologin(response);
+      const data = await response.json();
 
-       data.folders.forEach(folder => {
-         const listItem = document.createElement('li');
-         listItem.className = 'files';
-         const folderLink = document.createElement('span');
-         folderLink.textContent = folder;
-         folderLink.classList.add('folderLink', 'filename');
-         listItem.addEventListener('click', function() {
-           select(listItem,2);
-         });
-         folderLink.addEventListener('click', function () {
-           event.stopPropagation(); 
-           if (event.target.isContentEditable) {
-             return; 
-         }
-           loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+      const fileList = document.getElementById('fileList');
+      fileList.innerHTML = '';
 
-       });
-         listItem.appendChild(folderLink);
-         fileList.appendChild(listItem);
-       });
+      const currentPath = document.getElementById('currentPath');
+      fullPath = (data.currentFolder ? data.currentFolder : '') + '/';
+      
+      pathlen(currentPath, fullPath);
+      currentPath.title = fullPath;
 
-       data.files.forEach(file => {
-         const listItem = document.createElement('li');
-         listItem.className = 'files';
-         const fileLink = document.createElement('span');
-         const Src = `${protocol}//${ip}/file/trash/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
-         const fileListContainer = document.getElementById('fileListContainer');
-         fileLink.textContent = file;
-         fileLink.classList.add('fileLink', 'filename');
-         fileLink.title = `预览${file}`;
-         listItem.addEventListener('click', function() {
-           select(listItem,1);
-         });
-         fileLink.addEventListener('click', function () {
-           event.stopPropagation(); 
-           if (event.target.isContentEditable) {
-             return; 
-         }
-           let filepath;
-           nowpath = fullPath;
-           let rootpath=`${protocol}//${ip}/file/trash/`;
-           if (nowpath==="/"){
-             filepath=rootpath + file;
-           }
-           else{
-             filepath=rootpath + nowpath + file;
-           }
-           window.location.href = filepath;
-         });
+      data.folders.forEach(folder => {
+          const listItem = document.createElement('li');
+          listItem.className = 'files';
+          const folderLink = document.createElement('span');
+          folderLink.textContent = folder;
+          folderLink.classList.add('folderLink', 'filename');
 
-         listItem.appendChild(fileLink);
+          listItem.addEventListener('click', function() {
+              select(listItem, 2);
+          });
+          folderLink.addEventListener('click', function (event) {
+              event.stopPropagation(); 
+              if (event.target.isContentEditable) {
+                  return; 
+              }
+              loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+          });
 
-         fileList.appendChild(listItem);
-       });
-       // 处理返回上级目录按钮
-       const upButton = document.getElementById('upButton');
-       if (data.currentFolder && data.currentFolder !== '') {
-         upButton.style.display = 'block';
-         upButton.dataset.parentFolder = data.parentFolder;
-         upButton.style.pointerEvents = 'auto';
-       } else {
-         upButton.style.pointerEvents = 'none';
-       }
+          listItem.appendChild(folderLink);
+          fileList.appendChild(listItem);
+      });
 
-     getpath();
-     });
+      data.files.forEach(file => {
+          const listItem = document.createElement('li');
+          listItem.className = 'files';
+          const fileLink = document.createElement('span');
+          const Src = `${protocol}//${ip}/file/trash/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
+          const fileListContainer = document.getElementById('fileListContainer');
+          fileLink.textContent = file;
+          fileLink.classList.add('fileLink', 'filename');
+          fileLink.title = `预览${file}`;
+          
+          listItem.addEventListener('click', function() {
+              select(listItem, 1);
+          });
+          fileLink.addEventListener('click', function (event) {
+              event.stopPropagation(); 
+              if (event.target.isContentEditable) {
+                  return; 
+              }
+              let filepath;
+              nowpath = fullPath;
+              let rootpath = `${protocol}//${ip}/file/trash/`;
+              if (nowpath === "/") {
+                  filepath = rootpath + file;
+              } else {
+                  filepath = rootpath + nowpath + file;
+              }
+              window.location.href = filepath;
+          });
+
+          listItem.appendChild(fileLink);
+          fileList.appendChild(listItem);
+      });
+
+      // 处理返回上级目录按钮
+      const upButton = document.getElementById('upButton');
+      if (data.currentFolder && data.currentFolder !== '') {
+          upButton.style.display = 'block';
+          upButton.dataset.parentFolder = data.parentFolder;
+          upButton.style.pointerEvents = 'auto';
+      } else {
+          upButton.style.pointerEvents = 'none';
+      }
+
+      getpath();
+  } catch (error) {
+      console.error('Error loading folder:', error);
+  }
 }
+
 // 获取原路径
 async function getpath() {
   const response = await fetch(`${protocol}//${ip}/file/data/deleted_metadata.json`, {

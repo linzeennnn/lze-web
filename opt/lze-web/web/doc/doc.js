@@ -1,7 +1,3 @@
-let darkcolor;
-let lightcolor
-darkcolor='#1c2825';
-lightcolor='#6b9683';
 let uploadpath;
 let nowpath="/";//当前目录（要上传的目录）
 let fullPath; 
@@ -50,9 +46,8 @@ elements.forEach(function(element, index) {
  }
 }
 function handleScroll() {
-   var scrollTop = window.scrollY || document.documentElement.scrollTop;
-       
-       if (scrollTop > 100) {
+   var scrollTop = window.scrollY || document.querySelector('.files').scrollTop;
+       if (scrollTop > 80) {
          document.getElementById('top-btn').style.bottom = '90px';
          document.querySelector('.backbtn').style.left = '1%';
          document.getElementById('top-bar').style.boxShadow = 'none';
@@ -61,7 +56,6 @@ function handleScroll() {
          document.getElementById('cover-bar').style.top = '0';
      document.getElementById('top-bar').style.backdropFilter = `none`;
      document.getElementById('top-bar').style.webkitBackdropFilter = `none`;
-         
        } else {
          document.getElementById('top-btn').style.bottom = '';
          document.querySelector('.backbtn').style.left = '5%';
@@ -71,7 +65,6 @@ function handleScroll() {
          document.getElementById('cover-bar').style.top = '';
          document.getElementById('top-bar').style.backdropFilter = ``;
          document.getElementById('top-bar').style.webkitBackdropFilter = ``;
-        
        }
 }
 
@@ -79,6 +72,7 @@ window.addEventListener('scroll', handleScroll);
 
  function comin(){
   access();
+  theme(mode,"green");
  loadFolder();
  document.querySelector('.backbtn').style.left='5%';
  document.getElementById('fileListContainer').style.opacity='1';
@@ -152,149 +146,153 @@ window.addEventListener('scroll', handleScroll);
 
    textid.innerText = displayPath;
  }
- function loadFolder(folder = '') {
+ async function loadFolder(folder = '') {
   pageloading(1);
-   selectedarray.length = 0;
-   fetch(`${protocol}//${ip}/code/Documents/doc_list.php?folder=` + folder)
- .then(response => {
-   fetchnologin(response)
-   return response.json();
- })
-     .then(data => {
-       const fileList = document.getElementById('fileList');
-       fileList.innerHTML = '';
+  selectedarray.length = 0;
+  
+  try {
+    const response = await fetch(`${protocol}//${ip}/code/Documents/doc_list.php?folder=` + folder);
+    fetchnologin(response);
+    const data = await response.json();
 
-       const currentPath = document.getElementById('currentPath');
-       fullPath = (data.currentFolder ? data.currentFolder : '')+'/';
-       
-       pathlen(currentPath, fullPath);
-       currentPath.title = fullPath;
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = '';
 
-       data.folders.forEach(folder => {
-         const listItem = document.createElement('li');
-         const editbtn= document.createElement('div');
-         const downbtn= document.createElement('div');
-         downbtn.classList.add('down-btn');
-         downbtn.title=`下载${folder}`;
-         downbtn.addEventListener('click',function(){
+    const currentPath = document.getElementById('currentPath');
+    const fullPath = (data.currentFolder ? data.currentFolder : '') + '/';
+    
+    pathlen(currentPath, fullPath);
+    currentPath.title = fullPath;
 
-          event.stopPropagation(); 
-          downfolder(listItem);
-        });
-         editbtn.className='edit li-btn';
-         editbtn.title = `重命名`;
-         editbtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(0,listItem,2);
-         });
-         const savebtn= document.createElement('div');
-         savebtn.className='save li-btn';
-         savebtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(1,listItem);
-         });
-         listItem.className = 'files';
-         listItem.classList.add('folder');
-         const folderLink = document.createElement('span');
-         const filetit = document.createElement('input');
-         filetit.classList.add('file-tit');
-         folderLink.textContent = folder;
-         folderLink.className = 'folderLink';
-         listItem.addEventListener('click', function() {
-           select(listItem,2);
-         });
-         folderLink.addEventListener('click', function () {
-           event.stopPropagation(); 
-           if (event.target.isContentEditable) {
-             return; 
-         }
-           loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+    data.folders.forEach(folder => {
+      const listItem = document.createElement('li');
+      const editbtn = document.createElement('div');
+      const downbtn = document.createElement('div');
+      downbtn.classList.add('down-btn');
+      downbtn.title = `下载${folder}`;
+      downbtn.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        downfolder(listItem);
+      });
 
-       });
-        listItem.appendChild(filetit);
-         listItem.appendChild(folderLink);
-         listItem.appendChild(downbtn);
-         listItem.appendChild(editbtn);
-         listItem.appendChild(savebtn);
-         fileList.appendChild(listItem);
-       });
+      editbtn.className = 'edit li-btn';
+      editbtn.title = `重命名`;
+      editbtn.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        rename(0, listItem, 2);
+      });
 
-       data.files.forEach(file => {
-         const listItem = document.createElement('li');
-         const editbtn= document.createElement('div');
-         editbtn.className='edit li-btn';
-         editbtn.title = `重命名`;
-         editbtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(0,listItem,1);
-         });
-         const savebtn= document.createElement('div');
-         savebtn.className='save li-btn';
-         savebtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(1,listItem);
-         });
-         listItem.className = 'files';
-         listItem.classList.add('file');
-         const fileLink = document.createElement('span');
-         const filetit = document.createElement('input');
-         filetit.classList.add('file-tit');
-         const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
-         const fileListContainer = document.getElementById('fileListContainer');
-         fileLink.textContent = file;
-         fileLink.className = 'fileLink';
-         fileLink.title = `预览${file}`;
-         listItem.addEventListener('click', function() {
-           select(listItem,1);
-         });
-         fileLink.addEventListener('click', function () {
-           event.stopPropagation(); 
-           if (event.target.isContentEditable) {
-             return; 
-         }
-           let filepath;
-           nowpath = fullPath;
-           let rootpath=`${protocol}//${ip}/file/Documents/upload/`;
-           if (nowpath==="/"){
-             filepath=rootpath + file;
-           }
-           else{
-             filepath=rootpath + nowpath + file;
-           }
-           window.location.href = filepath;
-         });
+      const savebtn = document.createElement('div');
+      savebtn.className = 'save li-btn';
+      savebtn.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        rename(1, listItem);
+      });
 
-         listItem.appendChild(filetit);
-         listItem.appendChild(fileLink);
-         listItem.appendChild(editbtn);
-         listItem.appendChild(savebtn);
-         const downloadLink = document.createElement('a');
-         downloadLink.className = 'downloadLink';
-         downloadLink.classList.add('down-btn');
-         downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
-         downloadLink.title = `下载${file}`;
-         downloadLink.textContent = `下载 ${file}`;
-         downloadLink.addEventListener('click',()=>{
-           event.stopPropagation(); 
-           notify("开始下载")
-         });
+      listItem.className = 'files';
+      listItem.classList.add('folder');
+      const folderLink = document.createElement('span');
+      const filetit = document.createElement('input');
+      filetit.classList.add('file-tit');
+      folderLink.textContent = folder;
+      folderLink.className = 'folderLink';
+      listItem.addEventListener('click', function () {
+        select(listItem, 2);
+      });
+      folderLink.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        if (event.target.isContentEditable) {
+          return; 
+        }
+        loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+      });
 
-         listItem.appendChild(downloadLink);
+      listItem.appendChild(filetit);
+      listItem.appendChild(folderLink);
+      listItem.appendChild(downbtn);
+      listItem.appendChild(editbtn);
+      listItem.appendChild(savebtn);
+      fileList.appendChild(listItem);
+    });
 
-         fileList.appendChild(listItem);
-       });
-       pageloading(0);
-       // 处理返回上级目录按钮
-       const upButton = document.getElementById('upButton');
-       if (data.currentFolder && data.currentFolder !== '') {
-         upButton.style.display = 'block';
-         upButton.dataset.parentFolder = data.parentFolder;
-         upButton.style.pointerEvents = 'auto';
-       } else {
-         upButton.style.pointerEvents = 'none';
-       }
-     });
+    data.files.forEach(file => {
+      const listItem = document.createElement('li');
+      const editbtn = document.createElement('div');
+      editbtn.className = 'edit li-btn';
+      editbtn.title = `重命名`;
+      editbtn.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        rename(0, listItem, 1);
+      });
+
+      const savebtn = document.createElement('div');
+      savebtn.className = 'save li-btn';
+      savebtn.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        rename(1, listItem);
+      });
+
+      listItem.className = 'files';
+      listItem.classList.add('file');
+      const fileLink = document.createElement('span');
+      const filetit = document.createElement('input');
+      filetit.classList.add('file-tit');
+      const Src = `${protocol}//${ip}/file/Documents/upload/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
+      const fileListContainer = document.getElementById('fileListContainer');
+      fileLink.textContent = file;
+      fileLink.className = 'fileLink';
+      fileLink.title = `预览${file}`;
+      listItem.addEventListener('click', function () {
+        select(listItem, 1);
+      });
+      fileLink.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        if (event.target.isContentEditable) {
+          return; 
+        }
+        let filepath;
+        const nowpath = fullPath;
+        const rootpath = `${protocol}//${ip}/file/Documents/upload/`;
+        filepath = nowpath === "/" ? rootpath + file : rootpath + nowpath + file;
+        window.location.href = filepath;
+      });
+
+      listItem.appendChild(filetit);
+      listItem.appendChild(fileLink);
+      listItem.appendChild(editbtn);
+      listItem.appendChild(savebtn);
+      const downloadLink = document.createElement('a');
+      downloadLink.className = 'downloadLink';
+      downloadLink.classList.add('down-btn');
+      downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
+      downloadLink.title = `下载${file}`;
+      downloadLink.textContent = `下载 ${file}`;
+      downloadLink.addEventListener('click', function (event) {
+        event.stopPropagation(); 
+        notify("开始下载");
+      });
+
+      listItem.appendChild(downloadLink);
+      fileList.appendChild(listItem);
+    });
+
+    pageloading(0);
+
+    // 处理返回上级目录按钮
+    const upButton = document.getElementById('upButton');
+    if (data.currentFolder && data.currentFolder !== '') {
+      upButton.style.display = 'block';
+      upButton.dataset.parentFolder = data.parentFolder;
+      upButton.style.pointerEvents = 'auto';
+    } else {
+      upButton.style.pointerEvents = 'none';
+    }
+  } catch (error) {
+    console.error('Error loading folder:', error);
+    pageloading(0);
+  }
 }
+
 // 回到上一级
  function goUp() {
    const upButton = document.getElementById('upButton');

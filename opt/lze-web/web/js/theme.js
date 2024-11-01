@@ -12,7 +12,7 @@ closeTheme.setAttribute('onclick', 'showtheme(0)');
 let lightBtn = document.createElement('div');
 lightBtn.className = 'theme-list';
 lightBtn.id = 'light-btn';
-lightBtn.setAttribute('onclick', "switchTheme('light')");
+lightBtn.setAttribute('onclick', "theme('light',color)");
 let lightIcon = document.createElement('div');
 lightIcon.id = 'light-icon';
 let lightText = document.createElement('span');
@@ -22,7 +22,7 @@ lightBtn.appendChild(lightText);
 let darkBtn = document.createElement('div');
 darkBtn.className = 'theme-list';
 darkBtn.id = 'dark-btn';
-darkBtn.setAttribute('onclick', "switchTheme('dark')");
+darkBtn.setAttribute('onclick', "theme('dark',color)");
 let darkIcon = document.createElement('div');
 darkIcon.id = 'dark-icon';
 let darkText = document.createElement('span');
@@ -48,7 +48,7 @@ colors.forEach((color, index) => {
     colorDiv.id = color;
     colorDiv.className = 'color';
     colorDiv.title = colorNames[index];
-    colorDiv.setAttribute('onclick', `setcolor('${color}')`);
+    colorDiv.setAttribute('onclick', `theme(mode,'${color}')`);
     colorBar.appendChild(colorDiv);
 });
 themePanel.appendChild(closeTheme);
@@ -59,8 +59,8 @@ themePanel.appendChild(colorBar);
 themePage.appendChild(themePanel);
 document.body.appendChild(themePage);
 
+
 // 正式函数
-let metaThemeColor = document.querySelector('meta[name="theme-color"]');
 const darkbtn=document.getElementById('dark-btn');
 const lightbtn=document.getElementById('light-btn');
 const themepage=document.getElementById('theme-page');
@@ -71,33 +71,83 @@ if(typeof ishome !== 'undefined' && ishome){
 else{
   sheetpath='./'
 }
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    switchTheme(savedTheme);
-  });
-  
-  function switchTheme(theme) {
+// 设置颜色
+function setcolor(colortheme){
+  let colbtn =document.querySelectorAll('.color');
+  colbtn.forEach(colbtn => {
+    colbtn.style.filter = '';
+});
+const listpage=document.querySelectorAll('.list-page');
+    const phoneback=document.getElementById('phone-back');
+    const dock=document.getElementById('dock');
+      const btn=document.getElementById('home-btn');
+    const bar=document.getElementById('home-bar');
+    const widget=document.getElementById('theme-dis');
+      if(colortheme=='default'||!colortheme){
+        color="default";
+        if (typeof ishome !== 'undefined' && ishome){
+              bar.style.backgroundColor='';
+              btn.style.backgroundColor='';
+              dock.style.backgroundColor='';
+              widget.style.backgroundColor=``;
+              listpage.forEach(listpage=> {
+              listpage.style.backgroundColor = '';
+              });
+              }
+        colbtn=document.getElementById('default');
+        phoneback.style.backgroundColor=``;
+        document.body.style.backgroundColor=``;
+        localStorage.removeItem(`color`);
+      }
+      else{
+        color=colortheme;
+        if(typeof ishome !== 'undefined' && ishome){
+            bar.style.backgroundColor=`var(--${colortheme})`;
+            btn.style.backgroundColor=`var(--${colortheme})`;
+            dock.style.backgroundColor=`var(--${colortheme}-nor)`;
+            widget.style.backgroundColor=`var(--${colortheme})`;
+            listpage.forEach(listpage=> {
+              listpage.style.backgroundColor = `var(--${colortheme}-page)`;
+            });
+              }
+        colbtn=document.getElementById(`${colortheme}`);
+        phoneback.style.backgroundColor=`var(--${colortheme})`;
+        document.body.style.backgroundColor=`var(--${colortheme})`;
+      }
+      colbtn.style.filter='brightness(1.5)';
+    }
+// 设置亮暗
+  function setmode(thememode) {
     const themesheet = document.getElementById('themesheet');
-    switch (theme) {
+    switch (thememode) {
         case 'dark':
+          mode=thememode;
           themesheet.href = `${sheetpath}dark.css`;
           darkbtn.style.display='none';
           lightbtn.style.display='flex';
-          metaThemeColor.setAttribute('content', darkcolor);
             break;
         case 'light':
+          mode=thememode;
           themesheet.href = `${sheetpath}light.css`;
           darkbtn.style.display='flex';
           lightbtn.style.display='none';
-          metaThemeColor.setAttribute('content', lightcolor);
             break;
         default:
+          mode="dark";
           themesheet.href = `${sheetpath}dark.css`;
           darkbtn.style.display='none';
           lightbtn.style.display='flex';
-          metaThemeColor.setAttribute('content', darkcolor);
     }
-    localStorage.setItem('theme', theme);
+  }
+  // 存储主题设置
+  function theme(newmode,newcolor){
+    if (typeof ishome !== 'undefined' && ishome){
+      localStorage.setItem(`color`, newcolor);
+    }
+    localStorage.setItem('mode', newmode);
+    setmode(newmode);
+    setcolor(newcolor);
+    document.querySelector('meta[name="theme-color"]').setAttribute('content',metacolor[newmode][newcolor]);
     if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.themeColor) {
       window.webkit.messageHandlers.themeColor.postMessage(metaThemeColor.content);
   }
@@ -144,6 +194,7 @@ function saveLayout() {
     });
   });
 
+
   localStorage.setItem('layout', JSON.stringify(layout));
 }
 // 恢复布局
@@ -151,6 +202,7 @@ function loadLayout() {
   const savedLayout = localStorage.getItem('layout');
   if (savedLayout) {
     let layout = JSON.parse(savedLayout);
+
 
     // 清理 dock 中不存在的元素
     layout.dock = layout.dock.filter(id => {
@@ -164,6 +216,7 @@ function loadLayout() {
       return false;
     });
 
+
     // 清理 widgetLines 中不存在的元素
     widgetLines.forEach((line, index) => {
       layout.widgetLines[index] = layout.widgetLines[index].filter(id => {
@@ -172,56 +225,14 @@ function loadLayout() {
           line.appendChild(item);
           item.classList.add('widget');
           item.classList.remove('dock-back');
-          return true;  // 元素存在，保留在 layout.widgetLines 中
+          return true; // 元素存在，保留在 layout.widgetLines 中
         }
-        return false;  // 元素不存在，移除
+        return false; // 元素不存在，移除
       });
     });
+
 
     // 将更新后的布局重新保存到 localStorage
     localStorage.setItem('layout', JSON.stringify(layout));
   }
 }
-// 设置颜色
-function setcolor(colortheme){
-  let colbtn =document.querySelectorAll('.color');
-  colbtn.forEach(colbtn => {
-    colbtn.style.filter = '';
-});
-const listpage=document.querySelectorAll('.list-page');
-    const phoneback=document.getElementById('phone-back');
-    const dock=document.getElementById('dock');
-      const btn=document.getElementById('home-btn');
-    const bar=document.getElementById('home-bar');
-    const widget=document.getElementById('theme-dis');
-      if(colortheme=='default'||!colortheme){
-        if (typeof ishome !== 'undefined' && ishome){
-        bar.style.backgroundColor='';
-        btn.style.backgroundColor='';
-        dock.style.backgroundColor='';
-        widget.style.backgroundColor=``;
-        listpage.forEach(listpage=> {
-          listpage.style.backgroundColor = '';
-        });
-        }
-        colbtn=document.getElementById('default');
-        phoneback.style.backgroundColor=``;
-        document.body.style.backgroundColor=``;
-        localStorage.removeItem(`color`);
-      }else{
-        if(typeof ishome !== 'undefined' && ishome){
-      bar.style.backgroundColor=`var(--${colortheme})`;
-      btn.style.backgroundColor=`var(--${colortheme})`;
-      dock.style.backgroundColor=`var(--${colortheme}-nor)`;
-      widget.style.backgroundColor=`var(--${colortheme})`;
-      listpage.forEach(listpage=> {
-        listpage.style.backgroundColor = `var(--${colortheme}-page)`;
-      });
-        }
-        colbtn=document.getElementById(`${colortheme}`);
-        phoneback.style.backgroundColor=`var(--${colortheme})`;
-        document.body.style.backgroundColor=`var(--${colortheme})`;
-      localStorage.setItem(`color`, colortheme);
-      }
-      colbtn.style.filter='brightness(1.5)';
-    }

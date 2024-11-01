@@ -1,7 +1,3 @@
-let darkcolor;
-let lightcolor
-darkcolor='#271f25';
-lightcolor='#966a85';
 const titbar =document.getElementById('tit-bar');
 const wordbar=document.getElementById('word-bar');
 let oldtitle;
@@ -78,6 +74,7 @@ window.addEventListener('scroll', handleScroll);
 //  load 
      function comin(){
         creatnote();
+        theme(mode,"pink")
         document.getElementById('allnote').style.right='0';
         document.getElementById('top-bar').style.top ='100px';
         document.getElementById('option-bar').style.left='0';

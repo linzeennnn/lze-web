@@ -1,7 +1,3 @@
-let darkcolor;
-let lightcolor
-darkcolor='#28281c';
-lightcolor='#96966a';
 let volumeValue;
 let brightnessValue;
     let windowid = '';
@@ -106,6 +102,7 @@ function comin(){
     getwin();
     mediastatus();
     getvalue();
+    theme(mode,"yellow")
     topbar.style.top="80px";
     allwindow.style.opacity='1';
     document.getElementById('option-bar').style.left='0';
