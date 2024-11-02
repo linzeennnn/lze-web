@@ -1,0 +1,10 @@
+.tooltip{
+    font-weight: bold;
+    border-radius: 15px;
+    padding: 10px;
+    position: fixed;
+    z-index: 999999;
+    pointer-events: none; 
+    opacity: 0;
+    transition:opacity 1s ease;
+}

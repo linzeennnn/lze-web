@@ -17,10 +17,6 @@ async function widget(type) {
             body: `${type}`,
         });
         let data = await response.json();
-
-
-
-
         if (type == 'all' || type == 'doc') {
             doc.forEach((el, index) => {
                 el.innerText = data[`doc${index + 1}`];
@@ -36,13 +32,13 @@ async function widget(type) {
         if (type == 'all' || type == 'not') {
             not.forEach((el, index) => {
             el.innerText = removeext(data[`not${index + 1}`]); 
-            el.title = data[`not${index + 1}`];
+            el.title = removeext(data[`not${index + 1}`]); 
             el.style.display = '';
         });            
         }
         if (type == 'all' || type == 'bok') {
             bok.innerText = removeext(data.bok1); 
-            bok.title = data.bok1;
+            bok.title = removeext(data.bok1);
             bok.style.display='';
         }
         if (type == 'all' || type == 'tra') {
@@ -162,7 +158,6 @@ return response.text();
 })
 .then(data => {
 loading.style.display='none';
-console.log(data);
 window.location.href = data;
 })
 .catch(error => {

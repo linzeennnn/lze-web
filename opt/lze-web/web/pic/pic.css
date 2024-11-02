@@ -209,7 +209,7 @@ box-shadow: var(--outshadow);
 .backbtn{
   background-image: url(../../icon/left_blue.svg);
   }
-  .ui-tooltip {
+  .tooltip {
     background: #575d8a8a; 
     color: #9dcaed; 
 }

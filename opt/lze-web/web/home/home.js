@@ -136,52 +136,11 @@ function getip() {
 return window.location.hash.substring(1); 
 }
 document.addEventListener('touchmove', function(event) {
-禁用水平滑动
+// 禁用水平滑动
 if (event.scaleX !== 1) {
 event.preventDefault();
 }
 }, { passive: false });
-$(function() {
-var isMobile = /Mobi|Android/i.test(navigator.userAgent);
-
-if (isMobile) {
-    // 对于移动设备，使用长按事件来显示 tooltip
-    var tooltipTrigger = $(".tooltip-trigger");
-    var tooltip = $('<div class="tooltip"></div>').appendTo('body');
-    var timeout;
-
-    tooltipTrigger.on("touchstart", function(event) {
-        timeout = setTimeout(function() {
-            var content = tooltipTrigger.attr("title");
-            tooltip.text(content).fadeIn(200);
-            tooltip.css({
-                left: event.originalEvent.touches[0].pageX + 10 + "px",
-                top: event.originalEvent.touches[0].pageY + 10 + "px"
-            });
-        }, 500); // 长按持续时间 (500ms)
-    }).on("touchend", function() {
-        clearTimeout(timeout);
-        tooltip.fadeOut(200);
-    });
-
-    $(document).on("touchstart", function(event) {
-        if (!tooltipTrigger.is(event.target)) {
-            tooltip.fadeOut(200);
-        }
-    });
-
-} else {
-    // 对于桌面设备，使用 jQuery UI 的 tooltip
-    $(document).tooltip({
-        track: true, // 跟随鼠标移动
-        show: { effect: "blind", duration: 200, delay: 250 },
-        position: {
-            my: "left+15 top+15", // Tooltip 的位置点
-            at: "left bottom"     // 目标元素的位置点
-        }
-    });
-}
-});
 
 function reloadPage() {
 if(logstatus=='1'){

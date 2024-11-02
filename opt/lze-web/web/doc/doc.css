@@ -19,7 +19,7 @@
   .backbtn{
     background-image: url(../../icon/left_green.svg);
     }
-   .ui-tooltip {
+ .tooltip {
           background: #65807ba4; 
           color: #a7f8e7; 
       }

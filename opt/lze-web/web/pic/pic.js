@@ -238,6 +238,9 @@ async function loadFolder(folder = '') {
       picfile.onload = function() {
         load.style.display = 'none';
       };
+      picfile.addEventListener('loadeddata', function() {
+        load.style.display = 'none';
+    });
     });
 
     pageloading(0);

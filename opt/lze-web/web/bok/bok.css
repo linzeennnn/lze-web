@@ -63,7 +63,7 @@ transition: transform 0.3s ease;
 .del:hover{
   opacity: 1;
 }
-.ui-tooltip {
+.tooltip {
             background: #7e5d5e93; 
             color: #fda4a3; 
         }

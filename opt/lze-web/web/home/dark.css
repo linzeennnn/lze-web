@@ -15,7 +15,7 @@
   --pink-nor:#b17eaa4b; 
   --red-nor:#b17e7e4b; 
 }
-.ui-tooltip {
+.tooltip {
           background: #4c646d60; 
           color: #c3c6c9; 
       }

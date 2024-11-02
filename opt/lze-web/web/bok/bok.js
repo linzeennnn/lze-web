@@ -158,7 +158,7 @@ async function getbok() {
                 window.location.href = file.content;                
             });
             del.addEventListener('click', function() {
-                if (confirm(`确定要删除文件 "${titname}" 吗？`)) {
+                if (confirm(`确定要删除书签吗？`)) {
                 delbok(file.name);
                 }
             });
