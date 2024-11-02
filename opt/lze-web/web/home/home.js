@@ -343,7 +343,7 @@ dragmove=null;
   saveLayout();
 }
 // cat
-let observer = new MutationObserver(function(mutations) {
+let findcat = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
       let cat = document.getElementById('live2dcanvas');
       if (cat) {
@@ -351,18 +351,18 @@ let observer = new MutationObserver(function(mutations) {
           cat.removeEventListener('click', catHandler); 
           // 然后再绑定监听器
           cat.addEventListener('click', catHandler);
-          observer.disconnect(); // 找到元素后停止观察
+          findcat.disconnect(); // 找到元素后停止观察
       }
   });
 });
 
-observer.observe(document.body, { childList: true, subtree: true });
+findcat.observe(document.body, { childList: true, subtree: true });
 
 function catHandler(){
   let random = Math.floor(Math.random() * 4); // 生成 0 到 3 的随机整数
   switch(random) {
       case 0:
-          notify("人生何处不青山");
+          notify("喵喵～");
           break;
       case 1:
           notify("linzeen是大天才");
