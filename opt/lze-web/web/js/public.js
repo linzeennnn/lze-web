@@ -1,4 +1,4 @@
-let winstatus=0;
+let winstatus=0,curwin;
 // 颜色
 const metacolor = {
     dark: {
@@ -73,6 +73,9 @@ function newwindow(window, status) {
         case 1:
             winstatus=1;
             window.className = 'window';
+            window.addEventListener('mousedown', function() {
+                winlevel(window);
+            });
             const close = document.createElement('div');
             close.onclick = () => newwindow(window, 0);
             close.className = 'close-win';
@@ -111,4 +114,12 @@ function newwindow(window, status) {
             winstatus=0;
             break;
     }
+}
+// 设置windowzindex
+function winlevel(window){
+    window.style.zIndex = '16'; 
+    if(curwin&&curwin!=window){
+    curwin.style.zIndex='';
+    }
+    curwin=window;
 }

@@ -1,14 +1,6 @@
 // 创建主题页面
-let themePage = document.createElement('div');
-themePage.id = 'theme-page';
-themePage.classList.add('option-page');
+function themepage(){
 let themePanel = document.createElement('div');
-themePanel.id = 'theme-panel';
-themePanel.classList.add('list-page');
-let closeTheme = document.createElement('div');
-closeTheme.id = 'close-theme';
-closeTheme.title = '关闭';
-closeTheme.setAttribute('onclick', 'showtheme(0)');
 let lightBtn = document.createElement('div');
 lightBtn.className = 'theme-list';
 lightBtn.id = 'light-btn';
@@ -51,19 +43,14 @@ colors.forEach((color, index) => {
     colorDiv.setAttribute('onclick', `theme(mode,'${color}')`);
     colorBar.appendChild(colorDiv);
 });
-themePanel.appendChild(closeTheme);
 themePanel.appendChild(lightBtn);
 themePanel.appendChild(darkBtn);
 themePanel.appendChild(recoverTheme);
 themePanel.appendChild(colorBar);
-themePage.appendChild(themePanel);
-document.body.appendChild(themePage);
+newwindow(themePanel, 1)
 
-
+}
 // 正式函数
-const darkbtn=document.getElementById('dark-btn');
-const lightbtn=document.getElementById('light-btn');
-const themepage=document.getElementById('theme-page');
 let sheetpath;
 if(typeof ishome !== 'undefined' && ishome){
   sheetpath='web/home/'
@@ -110,33 +97,27 @@ const listpage=document.querySelectorAll('.list-page');
               listpage.style.backgroundColor = `var(--${colortheme}-page)`;
             });
               }
-        colbtn=document.getElementById(`${colortheme}`);
         phoneback.style.backgroundColor=`var(--${colortheme})`;
         document.body.style.backgroundColor=`var(--${colortheme})`;
       }
-      colbtn.style.filter='brightness(1.5)';
     }
 // 设置亮暗
   function setmode(thememode) {
+    const darkbtn=document.getElementById('dark-btn');
+    const lightbtn=document.getElementById('light-btn');
     const themesheet = document.getElementById('themesheet');
     switch (thememode) {
         case 'dark':
           mode=thememode;
           themesheet.href = `${sheetpath}dark.css`;
-          darkbtn.style.display='none';
-          lightbtn.style.display='flex';
             break;
         case 'light':
           mode=thememode;
           themesheet.href = `${sheetpath}light.css`;
-          darkbtn.style.display='flex';
-          lightbtn.style.display='none';
             break;
         default:
           mode="dark";
           themesheet.href = `${sheetpath}dark.css`;
-          darkbtn.style.display='none';
-          lightbtn.style.display='flex';
     }
   }
   // 存储主题设置
@@ -152,23 +133,7 @@ const listpage=document.querySelectorAll('.list-page');
       window.webkit.messageHandlers.themeColor.postMessage(metaThemeColor.content);
   }
   }
-  // 打开them窗口
-  function showtheme(status){
-    switch(status){
-      case 0:
-      themepage.style.opacity='0';
-      setTimeout(() => {      
-        themepage.style.display='';
-          }, 1000);
-        break;
-      case 1:
-        themepage.style.display='flex';
-        setTimeout(() => {      
-          themepage.style.opacity='1';
-            }, 10);
-        break;
-    }  
-}
+ 
 // 恢复初始布局
 function clearLayout() {
   localStorage.removeItem('layout');
