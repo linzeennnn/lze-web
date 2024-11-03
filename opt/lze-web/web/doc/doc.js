@@ -86,19 +86,7 @@ window.addEventListener('scroll', handleScroll);
    };
    window.onload = comin;
  function goBack() {
-   window.removeEventListener('scroll',handleScroll);
-   document.getElementById('cover-bar').style.top = `-80px`;
-   document.querySelector('.backbtn').style.left = '';
-   document.querySelector('.backbtn').style.opacity = '0';
-   document.getElementById('fileListContainer').style.opacity = ``;
-   document.getElementById('option-bar').style.left='';
- document.getElementById('option-bar').style.opacity='0';
-     document.getElementById('top-bar').style.top = `-60px`;
-     document.getElementById('top-btn').style.bottom = `-5%`;
-   
-   setTimeout(() => {
    window.location.replace(`../../index.html#${ip}`);
-}, 1000); // 1000 毫秒 = 1 秒
  }
  function loading(status) {
   

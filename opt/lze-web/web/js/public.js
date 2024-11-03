@@ -22,8 +22,7 @@ const metacolor = {
   let color = localStorage.getItem('color') || 'default';
   let mode = localStorage.getItem('mode') || 'dark';
   // tooltip
-  if('ontouchstart' in window || navigator.maxTouchPoints > 0){}
-  else{
+  if(window.matchMedia("(pointer: fine)").matches && window.matchMedia("(hover: hover)").matches){
     const tooltip = document.createElement('div');
     tooltip.classList.add('tooltip');
     document.body.appendChild(tooltip);
