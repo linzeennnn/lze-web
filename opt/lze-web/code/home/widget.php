@@ -57,7 +57,7 @@ function handleFiles($type) {
         case 'disk':
             $diskInfo = shell_exec("df /");
             $diskLines = explode("\n", $diskInfo);
-            $diskArray = preg_split('/\s+/', trim($diskLines[1]));
+            $diskArray = preg_split('/\s+/', trim($diskLines[1])); 
             $data['total'] = $diskArray[1];
             $data['used'] = $diskArray[2];
             return;
@@ -68,6 +68,9 @@ function handleFiles($type) {
     $files = array_diff(scandir($uploadFolder), ['.', '..']);
     foreach ($files as $item) {
         $itemPath = $uploadFolder . $item;
+        if ($type === 'pic' && !is_file($itemPath)) {
+            continue; // 对于 pic 类型，跳过文件夹
+        }
         $file[$item] = filemtime($itemPath);
     }
 
@@ -77,18 +80,7 @@ function handleFiles($type) {
     for ($i = 0; $i < $numFiles; $i++) {
         $key = $keyPrefix . ($i + 1);
         $filename = isset($topFiles[array_keys($topFiles)[$i]]) ? array_keys($topFiles)[$i] : null;
-
-        // 如果是 `pic` 类型，不检查是否为文件夹，直接保存文件名
-        if ($type === 'pic') {
-            $data[$key] = $filename;
-        } else {
-            // 对其他类型进行文件夹检查
-            if (is_dir($uploadFolder . $filename)) {
-                $data[$key] = $filename . '/';
-            } else {
-                $data[$key] = $filename;
-            }
-        }
+        $data[$key] = $filename;
     }
 }
 
