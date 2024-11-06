@@ -15,12 +15,10 @@ if ($postData == 'all') {
     send();
 }
 
-
 function handleFiles($type) {
     global $data;
     $file = [];
     $uploadFolder = '';
-
 
     switch ($type) {
         case 'doc':
@@ -55,18 +53,17 @@ function handleFiles($type) {
             for ($i = 0; $i < count($topFiles); $i++) {
                 $data["mon" . ($i + 1)] = isset($topFiles[$i]) ? $topFiles[$i] : null;
             }
-            return; // 不需要继续执行下面的代码
+            return;
         case 'disk':
             $diskInfo = shell_exec("df /");
             $diskLines = explode("\n", $diskInfo);
-            $diskArray = preg_split('/\s+/', trim($diskLines[1])); // 解析第二行数据
+            $diskArray = preg_split('/\s+/', trim($diskLines[1]));
             $data['total'] = $diskArray[1];
             $data['used'] = $diskArray[2];
-            return; // 不需要继续执行下面的代码
+            return;
         default:
-            return; // 如果类型不匹配，则直接返回
+            return;
     }
-
 
     $files = array_diff(scandir($uploadFolder), ['.', '..']);
     foreach ($files as $item) {
@@ -74,25 +71,26 @@ function handleFiles($type) {
         $file[$item] = filemtime($itemPath);
     }
 
-
     arsort($file);
-    $topFiles = array_slice($file, 0, $numFiles, true); // 保留键名
-
+    $topFiles = array_slice($file, 0, $numFiles, true);
 
     for ($i = 0; $i < $numFiles; $i++) {
         $key = $keyPrefix . ($i + 1);
-       
-            $filename = isset($topFiles[array_keys($topFiles)[$i]]) ? array_keys($topFiles)[$i] : null;
-            // 检查是否为文件夹
+        $filename = isset($topFiles[array_keys($topFiles)[$i]]) ? array_keys($topFiles)[$i] : null;
+
+        // 如果是 `pic` 类型，不检查是否为文件夹，直接保存文件名
+        if ($type === 'pic') {
+            $data[$key] = $filename;
+        } else {
+            // 对其他类型进行文件夹检查
             if (is_dir($uploadFolder . $filename)) {
-                $data[$key] = $filename . '/'; // 添加斜杠
+                $data[$key] = $filename . '/';
             } else {
-                $data[$key] = $filename; // 保留完整文件名
+                $data[$key] = $filename;
             }
-        
+        }
     }
 }
-
 
 function send() {
     global $data;
@@ -100,4 +98,3 @@ function send() {
     echo json_encode($data);
 }
 ?>
-

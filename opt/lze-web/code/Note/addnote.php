@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $fileName = generateFileName($newTitle);
     $filePath = "../../file/Note/{$fileName}";
-
     // 将新便签写入文件
     if (file_put_contents($filePath, $newContent) !== false) {
         echo json_encode([

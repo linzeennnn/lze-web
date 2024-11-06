@@ -6,10 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // 获取新便签的标题和内容
     $newTitle = $_POST["newTitle"];
     $newContent = $_POST["newContent"];
-
+    $newContent = str_replace(" ", ' ', $newContent);
     // 生成新的文件名，可以根据需要进行定制
     $fileName = generateFileName($newTitle);
-
     // 拼接文件路径
     $filePath = "../../file/Note/{$fileName}";
 
