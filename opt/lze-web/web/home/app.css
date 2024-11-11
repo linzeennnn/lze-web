@@ -158,6 +158,10 @@
     height: 90% !important;
   }
   .panel-li{
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
     font-weight: bold;
     display: flex;
     margin-top: 10px;

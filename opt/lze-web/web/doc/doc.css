@@ -553,6 +553,7 @@
     max-width: 100% !important;  
   }
 .file-tit{
+  max-width: 80%;
   position: relative;
   color: #9cdfb6;
   font-weight: bold;
