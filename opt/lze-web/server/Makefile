@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -O2
 SRC_DIR = .
-PUBLIC_SRC = $(SRC_DIR)/public/public.c
+PUBLIC_SRC = $(SRC_DIR)/public/*
 OUT_EXT = .cgi
 
 # 查找 src 目录下的所有 .c 文件，排除 public 子目录

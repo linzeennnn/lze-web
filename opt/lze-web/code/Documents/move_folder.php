@@ -3,7 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 获取 JSON 数据
  $name=$_POST['name'];
  $path=$_POST['path'];
-    if ($nowpath === "/") {
+    if ($path === "/") {
         $dest = '../../file/Documents/upload/';
     } else {
         $dest = '../../file/Documents/upload/' . $path;
@@ -59,4 +59,6 @@ function copyDirectory($source, $dest) {
     return true;
 }
 ?>
+
+
 

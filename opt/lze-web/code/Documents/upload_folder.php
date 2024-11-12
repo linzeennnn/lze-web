@@ -1,41 +1,59 @@
 <?php
-$tmpdir='../../file/temp/';
+$tmpdir = '../../file/temp/';
 $uploadDir = '../../file/temp/';
+
+
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0777, true);
 }
+
+
 if (isset($_FILES['file'])) {
     $relativePath = $_POST['relativePath'];
+    $start = $_POST['start'];
+    $total = $_POST['total'];
+    $filename = $_FILES['file']['name'];
+
+
+    // 处理路径
     $pathParts = explode('/', $relativePath);
     $baseFolderName = $pathParts[0];
-    $i = 1;
-    $pathParts[0] = $baseFolderName;
     $newRelativePath = implode('/', $pathParts);
-    $destination = rtrim($uploadDir, '/') . '/' . $newRelativePath;
-    $pathInfo = pathinfo($destination);
+    $destinationDir = rtrim($uploadDir, '/') . '/' . $newRelativePath;
+
+
+    // 创建保存目录
+    $pathInfo = pathinfo($destinationDir);
     if (!is_dir($pathInfo['dirname'])) {
         mkdir($pathInfo['dirname'], 0777, true);
     }
+
+
+    // 临时块文件路径
+    $chunkFile = $destinationDir . ".part";
     $tmpName = $_FILES['file']['tmp_name'];
-    if (move_uploaded_file($tmpName, $destination)) {
-        echo "成功上传块: " . $baseFolderName . "\n";
-    } else {
-        echo "上传失败: $newRelativePath\n";
+
+
+    // 追加写入块文件
+    $fp = fopen($chunkFile, $start == 0 ? 'w' : 'a');
+    if ($fp === false) {
+        echo "无法打开文件进行写入: $chunkFile\n";
+        exit;
     }
-    if (isset($_FILES['other_files'])) {
-        foreach ($_FILES['other_files']['tmp_name'] as $key => $otherTmpName) {
-            $otherRelativePath = $_POST['other_files_relative_path'][$key];
-            $otherDestination = rtrim($uploadDir, '/') . '/' . $newRelativePath; // 使用相同的目录
-            // 移动其他块文件
-            if (move_uploaded_file($otherTmpName, $otherDestination)) {
-                // 只输出一次成功的消息
-                if ($key == 0) {
-                    echo "成功上传块: ". "\n";
-                }
-            } else {
-                echo "上传失败: " . $otherRelativePath . "\n";
-            }
-        }
+
+
+    $chunkData = file_get_contents($tmpName);
+    fwrite($fp, $chunkData);
+    fclose($fp);
+
+
+    // 检查是否所有分片上传完成
+    if (filesize($chunkFile) >= $total) {
+        // 合并完成后，重命名为最终文件名
+        rename($chunkFile, $destinationDir);
+        echo "文件合并完成: $filename\n";
+    } else {
+        echo "成功上传块: " . $start . "\n";
     }
 } else {
     echo "没有文件上传";

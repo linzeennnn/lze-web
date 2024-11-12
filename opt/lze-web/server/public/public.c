@@ -3,7 +3,9 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <string.h>
-void list_directory(const char *path) {
+#include "public.h"
+#include "cJSON.h"
+void list_directory(char *path, cJSON *json) {
     struct dirent *entry;
     struct stat statbuf;
     DIR *dir = opendir(path);
@@ -33,12 +35,14 @@ void list_directory(const char *path) {
 
         // 判断是否为目录
         if (S_ISDIR(statbuf.st_mode)) {
-            printf("[目录] %s\n", entry->d_name);
+             cJSON_AddItemToArray(folders, cJSON_CreateString(entry->d_name));
         } else {
-            printf("[文件] %s\n", entry->d_name);
+           cJSON_AddItemToArray(files, cJSON_CreateString(entry->d_name));
         }
     }
     closedir(dir);
+    cJSON_AddItemToObject(json, "folders", folders);
+    cJSON_AddItemToObject(json, "files", files);
 }
 char * concat_path(char *base_path,char * target_path){
     char *full_path=malloc(strlen(base_path)+strlen(target_path)+1);

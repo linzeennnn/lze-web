@@ -1,6 +1,7 @@
 // 上传文件夹
 function uploadFolder() {
     ifroot();
+    let foldername;
     const input = document.getElementById('uploadfolder');
     const files = input.files;
     // 检查是否选中任何文件
@@ -30,7 +31,9 @@ function uploadFolder() {
             const end = Math.min(start + chunkSize, file.size);
             const chunk = file.slice(start, end);
             const relativePath = file.webkitRelativePath;
-            const foldername=files[0].webkitRelativePath.split('/')[0];
+            if (index === 0 && start === 0) {
+                foldername=files[0].webkitRelativePath.split('/')[0];
+            }
             const chunkFormData = new FormData();
             chunkFormData.append('file', chunk, file.name);
             chunkFormData.append('relativePath', relativePath);
