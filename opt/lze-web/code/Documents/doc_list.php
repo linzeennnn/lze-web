@@ -1,6 +1,7 @@
 <?php
 $baseFolder = '../../file/Documents/upload';
-$currentFolder = isset($_GET['folder']) ? $_GET['folder'] : '';
+$data = json_decode(file_get_contents("php://input"), true);
+$currentFolder = $data['folder'];
 $uploadFolder = $baseFolder . '/' . $currentFolder;
 
 // 获取所有文件和文件夹

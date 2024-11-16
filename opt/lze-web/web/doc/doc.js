@@ -144,14 +144,20 @@ window.addEventListener('scroll', handleScroll);
    textid.innerText = displayPath;
  }
  function loadFolder(folder = '') {
-  pageloading(1);
    selectedarray.length = 0;
-   fetch(`${protocol}//${ip}/code/Documents/doc_list.php?folder=` + folder)
+   fetch(`${protocol}//${ip}/server/doc/list.cgi`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json', 
+    },
+    body: JSON.stringify({ folder: folder }) 
+  })
  .then(response => {
    fetchnologin(response)
    return response.json();
  })
      .then(data => {
+      console.log(data);
        const fileList = document.getElementById('fileList');
        fileList.innerHTML = '';
 

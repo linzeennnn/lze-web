@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "cjson.h": "c",
+        "public.h": "c",
+        "string.h": "c",
+        "stat.h": "c",
+        "dirent.h": "c",
+        "unistd.h": "c"
+    }
+}
