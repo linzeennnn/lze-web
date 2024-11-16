@@ -1,6 +1,10 @@
 <?php
+// 获取 POST 请求中的 JSON 数据
+$data = json_decode(file_get_contents('php://input'), true);
+
+// 获取 folder 参数
+$currentFolder = isset($data['folder']) ? $data['folder'] : '';
 $baseFolder = '../../file/Pictures';
-$currentFolder = isset($_GET['folder']) ? $_GET['folder'] : '';
 $uploadFolder = $baseFolder . '/' . $currentFolder;
 
 // 获取所有文件和文件夹

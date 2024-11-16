@@ -160,13 +160,22 @@ async function loadFolder(folder = '') {
   curpage = 1;
 
   try {
-    const response = await fetch(`${protocol}//${ip}/code/Pictures/pic_list.php?folder=` + folder);
+    const response = await fetch(`${protocol}//${ip}/server/pic/list.cgi`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ folder: folder }),
+    });
+    
     fetchnologin(response);
     const data = await response.json();
+    console.log(data);
     
     let phoindex = 0, vidindex = 0;
     phonum = 1;
     vidnum = 1;
+    
     
     const othlist = document.getElementById('oth-list');
     const picbox = document.getElementById('pic-box');
