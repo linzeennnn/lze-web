@@ -158,7 +158,6 @@ window.addEventListener('scroll', handleScroll);
    return response.json();
  })
      .then(data => {
-      console.log(data);
        const fileList = document.getElementById('fileList');
        fileList.innerHTML = '';
 
