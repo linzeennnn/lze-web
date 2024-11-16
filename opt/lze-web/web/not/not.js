@@ -100,8 +100,9 @@ async function readfile(file) {
 }
 async function getnote() {
     const timestamp = new Date().getTime(); // 获取当前时间戳
-    const response = await fetch(`${protocol}//${ip}/code/Note/get_note.php?timestamp=${timestamp}`, fetchtoken());
+    const response = await fetch(`${protocol}//${ip}/server/not/list.cgi`, fetchtoken());
     const noteFiles = await response.json();
+    console.log(noteFiles);
     fetchnologin(response);
     return noteFiles;
 }

@@ -1,6 +1,9 @@
 <?php
+$data = json_decode(file_get_contents('php://input'), true);
+
+// 获取 folder 参数
+$currentFolder = isset($data['folder']) ? $data['folder'] : '';
 $baseFolder = '../../file/trash';
-$currentFolder = isset($_GET['folder']) ? $_GET['folder'] : '';
 $uploadFolder = $baseFolder . '/' . $currentFolder;
 
 // 获取所有文件和文件夹

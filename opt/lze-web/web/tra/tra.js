@@ -115,7 +115,13 @@ window.addEventListener('scroll', handleScroll);
   selectedarray.length = 0;
 
   try {
-      const response = await fetch(`${protocol}//${ip}/code/trash/trash_list.php?folder=` + folder);
+    const response = await fetch(`${protocol}//${ip}/server/tra/list.cgi`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ folder: folder }),
+    });
       fetchnologin(response);
       const data = await response.json();
 

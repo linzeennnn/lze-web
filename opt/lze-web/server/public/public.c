@@ -28,11 +28,13 @@ void list_directory(char *path, folder_list* folder, file_list* file) {
             continue;
         }
         if (S_ISDIR(statbuf.st_mode)) {
+            if (folder != NULL) {
             folder->next=(folder_list*)malloc(sizeof(folder_list));
             folder->next->name=(char*)malloc(strlen(filename)+1);
             folder->next->name=strcpy(folder->next->name,filename);
             folder->next->next=NULL;
             folder=folder->next;
+            }
         } else {
             file->next=(file_list*)malloc(sizeof(file_list));
             file->next->name=(char*)malloc(strlen(filename)+1);
