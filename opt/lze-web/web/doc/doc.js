@@ -144,6 +144,7 @@ window.addEventListener('scroll', handleScroll);
    textid.innerText = displayPath;
  }
  function loadFolder(folder = '') {
+  pageloading(1);
    selectedarray.length = 0;
    fetch(`${protocol}//${ip}/server/doc/list.cgi`, {
     method: 'POST',
