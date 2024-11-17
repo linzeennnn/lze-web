@@ -59,8 +59,7 @@ int main() {
     cJSON_AddItemToObject(file_message, "currentFolder", cJSON_CreateString(current_folder));
     cJSON_AddItemToObject(file_message, "parentFolder", cJSON_CreateString(parent_folder));
     char *printed_json = cJSON_Print(file_message);
-    printf("Content-Type: application/json\n\n");
-    printf("%s\n", printed_json);
+    http_out("%s\n", printed_json);
     free(dest_path);
     return 0;
 }

@@ -130,11 +130,12 @@ async function getbok() {
     const bokbox=document.getElementById('bok-box');
     bokbox.innerHTML='';
     try {
-        const response = await fetch(`${protocol}//${ip}/code/Bookmark/getbok.php`); 
+        const response = await fetch(`${protocol}//${ip}/server/bok/list.cgi`); 
         if (!response.ok) {
            notify("获取失败");
         }
         const fileData = await response.json();
+        console.log(fileData);
         const fileListElement = document.getElementById('fileList');
         fileData.forEach(file => {
             const bok = document.createElement('div');

@@ -4,8 +4,11 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <unistd.h> 
+#include <stdarg.h>
 #include "public.h"
 #include "cJSON.h"
+
+
 // 扫描目录
 void list_directory(char *path, folder_list* folder, file_list* file) {
     struct dirent *entry;
@@ -45,6 +48,8 @@ void list_directory(char *path, folder_list* folder, file_list* file) {
     }
     closedir(dir);
 }
+
+
 // 加斜杆
 char* end_splash(char* path){
   int lenght=strlen(path)-1;
@@ -56,6 +61,8 @@ else if (path[lenght]==' '&&path[lenght-1]=='/')
     path[lenght]='\0';
   return path;
 }
+
+
 // 获取目录名
 char* get_folder(char* path){
 int end_name=strlen(path)-2,i,head_index,end_index=strlen(path)-1;
@@ -74,6 +81,8 @@ for(i=0;head_index!=end_index;head_index++,i++){
 }
 return folder_name;
 }
+
+
 // 获取父目录
 char * get_parent_folder(char* path){
     char * cpy_path=(char*)malloc(strlen(path));
@@ -85,6 +94,8 @@ char * get_parent_folder(char* path){
     }
     return get_folder(cpy_path);
 }
+
+
 // 判断是否只有多个目录
 int folder_count(char* path){
     int status=0;
@@ -101,6 +112,8 @@ int folder_count(char* path){
     }
     return status;
 }
+
+
 // 拼接路径
 char * concat_path(char *base_path,char * target_path){
     char *full_path=malloc(strlen(base_path)+strlen(target_path)+2);
@@ -108,6 +121,7 @@ char * concat_path(char *base_path,char * target_path){
     strcat(full_path, target_path);
     return full_path;
 }
+
 
 // 获取POST
 int post(char *data, int max_len) {
@@ -130,4 +144,34 @@ int post(char *data, int max_len) {
     }
     data[bytes_read] = '\0'; 
     return bytes_read;
+}
+
+
+// http输出
+void http_out(char *format, ...) {
+    printf("Content-Type: application/json\n\n");
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+    va_end(args);
+}
+
+
+// 读取文件
+char* read_file(char*path){
+    FILE*file=fopen(path,"r");
+    long size=get_file_size(file);
+    char *content=(char*)malloc(size);
+    fgets(content,size,file);
+    fclose(file);
+    return content;
+}
+
+
+// 获取文件大小
+long get_file_size(FILE * file){
+    fseek(file,0,SEEK_END);
+    long size=ftell(file)+1;
+    rewind(file);
+    return size;
 }
