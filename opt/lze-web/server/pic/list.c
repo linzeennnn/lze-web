@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <string.h>
 #include "../public/public.h"
-#include "../public/cJSON.h"
 int main() {
     char post_data[1024];
     int post_len = post(post_data, sizeof(post_data));

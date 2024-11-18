@@ -1,16 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <unistd.h> 
-#include <stdarg.h>
 #include "public.h"
-#include "cJSON.h"
-
-
 // 扫描目录
-void list_directory(char *path, folder_list* folder, file_list* file) {
+void list_directory(char *path, folder_list* folder_head, file_list* file_head) {
+    folder_head->pre=NULL;
+    file_head->pre=NULL;
+    folder_list* folder=folder_head;
+    file_list* file=file_head;
     struct dirent *entry;
     struct stat statbuf;
     DIR *dir = opendir(path);
@@ -35,6 +29,8 @@ void list_directory(char *path, folder_list* folder, file_list* file) {
             folder->next=(folder_list*)malloc(sizeof(folder_list));
             folder->next->name=(char*)malloc(strlen(filename)+1);
             folder->next->name=strcpy(folder->next->name,filename);
+            folder->next->time=statbuf.st_mtime;
+            folder->next->pre=folder;
             folder->next->next=NULL;
             folder=folder->next;
             }
@@ -42,11 +38,99 @@ void list_directory(char *path, folder_list* folder, file_list* file) {
             file->next=(file_list*)malloc(sizeof(file_list));
             file->next->name=(char*)malloc(strlen(filename)+1);
             file->next->name=strcpy(file->next->name,filename);
+            file->next->time=statbuf.st_mtime;
+            file->next->pre=file;
             file->next->next=NULL;
             file=file->next;
         }
     }
+    sort_file(folder_head,file_head);
     closedir(dir);
+}
+
+
+// 文件排序
+void sort_file(folder_list*folder_head,file_list*file_head){
+    folder_list*folder=folder_head->next;
+    file_list*file=file_head->next;
+        if(folder!=NULL){
+            folder_list*head=folder,*move,*rear=folder,*tmp;
+            while (rear->next!=NULL)
+            {
+             rear=rear->next;
+            }
+            while (head!=rear)
+            {
+               if((head->time)<(head->next->time)){
+                    move=head->next;
+                    while (move->pre!=NULL)
+                    {
+                        if((*move).time>(*move->pre).time){
+                            tmp=move->pre;
+                            if(move->next!=NULL){
+                                move->next->pre=move->pre;
+                            }
+                            move->pre->pre=move;
+                            move->pre->next=move->next;
+                            move->next=move->pre;
+                            move->pre=tmp->pre;
+                            move->pre->next=move;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+               }
+               else
+               {
+                head=head->next;
+               }
+            }
+            while (head->pre!=NULL)
+            {
+             head=head->pre;
+            }
+            folder_head->next=head;
+        }
+    if(folder!=NULL){
+            file_list*head=file,*move,*rear=file,*tmp;
+            while (rear->next!=NULL)
+            {
+             rear=rear->next;
+            }
+            while (head!=rear)
+            {
+               if((head->time)<(head->next->time)){
+                    move=head->next;
+                    while (move->pre!=NULL)
+                    {
+                        if((*move).time>(*move->pre).time){
+                            tmp=move->pre;
+                            move->next->pre=move->pre;
+                            move->pre->pre=move;
+                            move->pre->next=move->next;
+                            move->next=move->pre;
+                            move->pre=tmp->pre;
+                            move->pre->next=move;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+               }
+               else
+               {
+                head=head->next;
+               }
+            }
+            while (head->pre!=NULL)
+            {
+             head=head->pre;
+            }
+            file->next=head;
+        }
 }
 
 
@@ -175,3 +259,5 @@ long get_file_size(FILE * file){
     rewind(file);
     return size;
 }
+
+// 保存文件

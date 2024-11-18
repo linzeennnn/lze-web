@@ -1,19 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <string.h>
+#include <stdio.h> 
 #include "../public/public.h"
-#include "../public/cJSON.h"
 int main() {
-    char post_data[1024];
-    int post_len = post(post_data, sizeof(post_data));
-    cJSON *rec_json = cJSON_Parse(post_data);
-    cJSON *folder_item = cJSON_GetObjectItem(rec_json, "folder");
-    char *current_folder= folder_item->valuestring;
+    // char post_data[1024];
+    // int post_len = post(post_data, sizeof(post_data));
+    // cJSON *rec_json = cJSON_Parse(post_data);
+    // cJSON *folder_item = cJSON_GetObjectItem(rec_json, "folder");
+    // char *current_folder= folder_item->valuestring;
     cJSON *file_message=cJSON_CreateObject();
     cJSON *files = cJSON_CreateArray();
     cJSON *folders = cJSON_CreateArray();
+    char current_folder[100];
+    printf("input:");
+    scanf("%s",current_folder);
    folder_list *folder;
    file_list * file;
    folder=(folder_list*)malloc(sizeof(folder_list));

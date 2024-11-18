@@ -269,7 +269,8 @@ window.addEventListener('scroll', handleScroll);
          const downloadLink = document.createElement('a');
          downloadLink.className = 'downloadLink';
          downloadLink.classList.add('down-btn');
-         downloadLink.href = `${protocol}//${ip}/code/Documents/doc_download.php?file=${encodeURIComponent(file)}&folder=${encodeURIComponent(data.currentFolder || '')}`;
+         downloadLink.href = `${protocol}//${ip}/file/Documents/upload/${data.currentFolder}/${file}`;
+         downloadLink.download=file;
          downloadLink.title = `下载${file}`;
          downloadLink.textContent = `下载 ${file}`;
          downloadLink.addEventListener('click',()=>{

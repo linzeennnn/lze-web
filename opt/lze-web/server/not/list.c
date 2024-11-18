@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <string.h>
 #include "../public/public.h"
-#include "../public/cJSON.h"
 int main() {
     int i=0;
     char key[5];

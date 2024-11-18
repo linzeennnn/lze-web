@@ -273,41 +273,47 @@ async function getnote() {
     }
     
     // newnote
-    async function addnote(title,text,file) {
+    async function addnote(title, text, file) {
         if (title.value.includes('%') || title.value.includes('#')) {
             notify("标题包含非法字符(#或%)");
             return;
         }
-        else if (title.value == ''){
-            title.value="new_note";
+        else if (title.value == '') {
+            title.value = "new_note";
         }
         pageloading(1);
-        const formData = new FormData();
-        formData.append('newTitle', title.value);
-        formData.append('newContent', text.innerText);
+    
+        const data = {
+            newTitle: title.value,
+            newContent: text.innerText
+        };
+    
         try {
             const response = await fetch(`${protocol}//${ip}/code/Note/${file}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
                 },
-                body: formData
+                body: JSON.stringify(data)
             });
+    
             fetchnologin(response);
-            if (response.status != 401) {
-            const data = await response.json();
-            const filename = data.filename;
-            const uploadpath = data.filepath;
+            if (response.status !== 401) {
+                const result = await response.json();
+                const filename = result.filename;
+                const uploadpath = result.filepath;
                 reloadnote();
-                desktopnot('恩的便签','新便签:',`${filename}`,uploadpath);
-                title.value='';
-                text.innerText='';
+                desktopnot('恩的便签', '新便签:', `${filename}`, uploadpath);
+                title.value = '';
+                text.innerText = '';
                 notify("保存成功");
             }
         } catch (error) {
             console.error('Error adding new note:', error);
         }
     }
+    
 // edit note
     function editnote(note,status,file){
         const title=note.querySelector('.title');

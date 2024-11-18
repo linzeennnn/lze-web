@@ -1,14 +1,26 @@
 #ifndef PBU_H
 #define PBU_H
-#include <stdio.h>
+#include <stdio.h>          // 标准输入输出
+#include <time.h>           // 时间处理
+#include <stdlib.h>         // 内存管理、程序退出等
+#include <dirent.h>         // 目录操作
+#include <sys/stat.h>       // 文件状态
+#include <string.h>         // 字符串处理
+#include <unistd.h>         // Unix 标准函数
+#include <stdarg.h>         // 可变参数
+#include "cJSON.h"          // cJSON 库
 typedef struct FOLDER
 {
     char *name;
+    time_t time;
+    struct FOLDER *pre;
     struct FOLDER *next;
 }folder_list;
 typedef struct FILE
 {
     char *name;
+    time_t time;
+    struct FILE *pre;
     struct FILE *next;
 }file_list;
 int post(char *data, int max_len);
@@ -21,4 +33,5 @@ int folder_count(char* path);
 void http_out(char *format, ...); 
 char* read_file(char*path);
 long get_file_size(FILE * file);
+void sort_file(folder_list*folder_head,file_list*file_head);
 #endif

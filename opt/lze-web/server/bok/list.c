@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <string.h>
 #include "../public/public.h"
-#include "../public/cJSON.h"
 int main() {
     cJSON *note_list=cJSON_CreateArray();;
     char* path="../../file/Bookmark/";
