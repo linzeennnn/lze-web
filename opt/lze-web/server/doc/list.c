@@ -44,11 +44,13 @@ int main() {
         file=file->next;
     while (folder!=NULL)
     {
+        printf("%s %ld\n",folder->name,(long)folder->time);
         cJSON_AddItemToArray(folders, cJSON_CreateString(folder->name));
         folder=folder->next;
     }
     while (file)
     {
+        printf("%s %ld\n",file->name,(long)file->time);
         cJSON_AddItemToArray(files, cJSON_CreateString(file->name));
         file=file->next;
     }

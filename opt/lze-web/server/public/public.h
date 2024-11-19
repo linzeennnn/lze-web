@@ -13,14 +13,12 @@ typedef struct FOLDER
 {
     char *name;
     time_t time;
-    struct FOLDER *pre;
     struct FOLDER *next;
 }folder_list;
 typedef struct FILE
 {
     char *name;
     time_t time;
-    struct FILE *pre;
     struct FILE *next;
 }file_list;
 int post(char *data, int max_len);
