@@ -289,7 +289,9 @@ async function getnote() {
         };
     
         try {
-            const response = await fetch(`${protocol}//${ip}/code/Note/${file}`, {
+            console.log(JSON.stringify(data));
+            // const response = await fetch(`${protocol}//${ip}/code/Note/${file}`, {
+                const response = await fetch(`${protocol}//${ip}/server/not/add.cgi`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + token,

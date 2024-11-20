@@ -43,23 +43,21 @@ void list_directory(char *path, folder_list* folder_head, file_list* file_head) 
     closedir(dir);
     sort_file(folder_head,file_head);
 }
-
-
 // 文件排序
 void sort_file(folder_list*folder_head,file_list*file_head){
-    folder_list*folder=folder_head->next;
-    file_list*file=file_head->next;
     int swap;
+    if(folder_head!=NULL){
+    folder_list*folder=folder_head->next;
         if(folder!=NULL){
             folder_list*tmp=(folder_list*)malloc(sizeof(folder_list));
             do
             {
                swap=0;
                folder=folder_head->next;
-                while (folder!=NULL)
+                while (folder->next!=NULL)
                 {
                     if (folder->time<folder->next->time)
-                    {   
+                    {
                         swap=1;
                        tmp->name=folder->next->name;
                        tmp->time=folder->next->time;
@@ -72,12 +70,14 @@ void sort_file(folder_list*folder_head,file_list*file_head){
                     else{
                         folder=folder->next;
                     }
-                    
                 }
-                
             } while (swap);
-            
+        free(tmp);
         }
+    }
+    if (file_head!=NULL)
+    {
+    file_list*file=file_head->next;
    if(file!=NULL){
             file_list*tmp=(file_list*)malloc(sizeof(file_list));
             do
@@ -87,7 +87,7 @@ void sort_file(folder_list*folder_head,file_list*file_head){
                 while (file->next!=NULL)
                 {
                     if (file->time<file->next->time)
-                    {   
+                    {
                        swap=1;
                        tmp->name=file->next->name;
                        tmp->time=file->next->time;
@@ -100,15 +100,12 @@ void sort_file(folder_list*folder_head,file_list*file_head){
                     else{
                         file=file->next;
                     }
-                    
                 }
-                
             } while (swap);
-            
+        free(tmp);
         }
+    }
 }
-
-
 // 加斜杆
 char* end_splash(char* path){
   int lenght=strlen(path)-1;
@@ -120,8 +117,6 @@ else if (path[lenght]==' '&&path[lenght-1]=='/')
     path[lenght]='\0';
   return path;
 }
-
-
 // 获取目录名
 char* get_folder(char* path){
 int end_name=strlen(path)-2,i,head_index,end_index=strlen(path)-1;
@@ -140,21 +135,26 @@ for(i=0;head_index!=end_index;head_index++,i++){
 }
 return folder_name;
 }
-
-
 // 获取父目录
-char * get_parent_folder(char* path){
-    char * cpy_path=(char*)malloc(strlen(path));
-    strcpy(cpy_path,path);
-        int i=strlen(cpy_path)-1;
-        cpy_path[i]='\0';
-    for(i;cpy_path[i]!='/';i--){
-        cpy_path[i]='\0';
+void get_parent_folder(char* path){
+    int find=0;
+    char *i=path;
+    while (*i!='\0')
+    {
+       if (*i=='/')
+       {
+        find=1;
+        break;
+       }
+       i++;
     }
-    return get_folder(cpy_path);
+    if(find){
+    char*splash=strrchr(path,'/');
+    *splash='\0';
+    }
+    else
+        *path='\0';
 }
-
-
 // 判断是否只有多个目录
 int folder_count(char* path){
     int status=0;
@@ -162,7 +162,7 @@ int folder_count(char* path){
     path = (path == '/') ? path + 1 : path;
     path[end]=(path[end]=='/')? path[end]='\0':path[end];
     while (*path)
-    {   
+    {
         if(*path=='/'){
             status=1;
             break;;
@@ -171,8 +171,6 @@ int folder_count(char* path){
     }
     return status;
 }
-
-
 // 拼接路径
 char * concat_path(char *base_path,char * target_path){
     char *full_path=malloc(strlen(base_path)+strlen(target_path)+2);
@@ -180,13 +178,10 @@ char * concat_path(char *base_path,char * target_path){
     strcat(full_path, target_path);
     return full_path;
 }
-
-
 // 获取POST
 int post(char *data, int max_len) {
     int content_length = 0;
     char *content_len_str = getenv("CONTENT_LENGTH");
-    
     if (content_len_str != NULL) {
         content_length = atoi(content_len_str);
     }
@@ -201,11 +196,9 @@ int post(char *data, int max_len) {
         }
         bytes_read += n;
     }
-    data[bytes_read] = '\0'; 
+    data[bytes_read] = '\0';
     return bytes_read;
 }
-
-
 // http输出
 void http_out(char *format, ...) {
     printf("Content-Type: application/json\n\n");
@@ -214,8 +207,6 @@ void http_out(char *format, ...) {
     vprintf(format, args);
     va_end(args);
 }
-
-
 // 读取文件
 char* read_file(char*path){
     FILE*file=fopen(path,"r");
@@ -225,8 +216,6 @@ char* read_file(char*path){
     fclose(file);
     return content;
 }
-
-
 // 获取文件大小
 long get_file_size(FILE * file){
     fseek(file,0,SEEK_END);
@@ -234,5 +223,28 @@ long get_file_size(FILE * file){
     rewind(file);
     return size;
 }
+// 去除后缀
+void split_exten(char*name){
+    char*dot=strrchr(name,'.');
+    *dot='\0';
+}
 
-// 保存文件
+// 日志
+void log(const char *format, ...) {
+    // 打开日志文件，如果文件不存在则创建它
+    FILE *log_file = fopen("/etc/lze-web/lze-web.log", "a");
+    if (log_file == NULL) {
+        perror("Unable to open or create log file");
+        return;
+    }
+
+    // 处理可变参数
+    va_list args;
+    va_start(args, format);
+    vfprintf(log_file, format, args);
+    va_end(args);
+
+    // 换行并关闭文件
+    fprintf(log_file, "\n");
+    fclose(log_file);
+}

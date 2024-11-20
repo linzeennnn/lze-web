@@ -26,10 +26,13 @@ void list_directory(char *path, folder_list* folder, file_list* file);
 char * concat_path(char *base_path,char * target_path);
 char* end_splash(char* path);
 char* get_folder(char* path);
-char * get_parent_folder(char* path);
+void get_parent_folder(char* path);
 int folder_count(char* path);
 void http_out(char *format, ...); 
 char* read_file(char*path);
 long get_file_size(FILE * file);
 void sort_file(folder_list*folder_head,file_list*file_head);
+void split_exten(char*name);
+void list_all(char *base_path);
+void log(const char *format, ...);
 #endif
