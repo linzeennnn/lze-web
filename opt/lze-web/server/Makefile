@@ -14,7 +14,7 @@ all: $(OBJS)
 
 # 编译规则，每个 .c 文件链接 public/public.c
 $(SRC_DIR)/%$(OUT_EXT): $(SRC_DIR)/%.c $(PUBLIC_SRC)
-	$(CC) $(CFLAGS) -o $@ $< $(PUBLIC_SRC)
+	$(CC) -g $(CFLAGS) -o $@ $< $(PUBLIC_SRC)
 
 # 清理目标
 clean:

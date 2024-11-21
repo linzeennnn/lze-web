@@ -15,6 +15,6 @@ int main() {
     i++;
     }
     char *printed_json = cJSON_Print(note_list);
-    http_out("%s\n",printed_json);
+    http_out(1,"%s\n",printed_json);
     return 0;
 }

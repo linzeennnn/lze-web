@@ -12,7 +12,6 @@ int main(){
     char *title= tit->valuestring;
     char *content= con->valuestring;
     title=concat_path(title,ext);
-    title=file_exit(title,base_path);
     char *path=concat_path(base_path,title);
     FILE *note=fopen(path,"w");
     fputs(content, note);

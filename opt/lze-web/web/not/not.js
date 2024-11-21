@@ -289,9 +289,7 @@ async function getnote() {
         };
     
         try {
-            console.log(JSON.stringify(data));
-            // const response = await fetch(`${protocol}//${ip}/code/Note/${file}`, {
-                const response = await fetch(`${protocol}//${ip}/server/not/add.cgi`, {
+                const response = await fetch(`${protocol}//${ip}/server/not/${file}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -302,11 +300,7 @@ async function getnote() {
     
             fetchnologin(response);
             if (response.status !== 401) {
-                const result = await response.json();
-                const filename = result.filename;
-                const uploadpath = result.filepath;
                 reloadnote();
-                desktopnot('恩的便签', '新便签:', `${filename}`, uploadpath);
                 title.value = '';
                 text.innerText = '';
                 notify("保存成功");
@@ -341,11 +335,11 @@ async function getnote() {
         }
         else if(status==0){
             if(title.value===oldtitle){
-            addnote(title,text,'save.php');
+            addnote(title,text,'save.cgi');
             }
             else{
             delnote(file,0);
-            addnote(title,text,'addnote.php');
+            addnote(title,text,'add.cgi');
             }
 
             editstatus=0;

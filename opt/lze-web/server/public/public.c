@@ -200,8 +200,19 @@ int post(char *data, int max_len) {
     return bytes_read;
 }
 // http输出
-void http_out(char *format, ...) {
+void http_out(int type,char *format, ...) {
+    switch (type)
+    {
+    case 0:
+    printf("Content-Type: text/plain\n\n");
+        break;
+    case 1:
     printf("Content-Type: application/json\n\n");
+    break;
+    default:
+    printf("Content-Type: text/plain\n\n");
+        break;
+    }
     va_list args;
     va_start(args, format);
     vprintf(format, args);
@@ -226,9 +237,14 @@ long get_file_size(FILE * file){
 // 去除后缀
 void split_exten(char*name){
     char*dot=strrchr(name,'.');
-    *dot='\0';
+    if(dot!=NULL)
+        *dot='\0';
 }
-
+void split_index(char*name){
+    char*splash=strrchr(name,'(');
+    if(splash!=NULL)
+        *splash='\0';
+}
 // 日志
 void log(const char *format, ...) {
     // 打开日志文件，如果文件不存在则创建它
@@ -247,4 +263,77 @@ void log(const char *format, ...) {
     // 换行并关闭文件
     fprintf(log_file, "\n");
     fclose(log_file);
+}
+// 检查文件名存在
+int check_exit(char*list[],char*name,int length){
+    int i;
+    for(i=0;i<=length;i++){
+        if(strcmp(list[i],name)==0)
+            return 1;
+    }
+    return 0;
+}
+// 检查文件存在
+char* file_exit(char*name,char*path){
+    char*ext=strrchr(name,'.');
+    int i=0,fi=0,fo=0;
+    char count[7];
+    char*new_name=(char*)malloc(strlen(name)+7);
+    strcpy(new_name,name);
+    folder_list *folder=(folder_list*)malloc(sizeof(folder_list));
+    file_list* file=(file_list*)malloc(sizeof(file_list));
+    folder_list *folder_count=(folder_list*)malloc(sizeof(folder_list));
+     file_list* file_count=(file_list*)malloc(sizeof(file_list));
+    folder->next=NULL;
+    file->next=NULL;
+    list_directory(path,folder,file);
+    folder_count=folder->next;
+     file_count=file->next;
+     while (folder_count!=NULL||file_count!=NULL)
+     {
+        if(folder_count!=NULL){
+            i++;
+            folder_count=folder_count->next;
+        }
+        if(file_count!=NULL){
+            i++;
+            file_count=file_count->next;
+        }
+     }
+     char*name_list[i];
+     i=0;
+     folder_count=folder->next;
+     file_count=file->next;
+      while (folder_count!=NULL||file_count!=NULL)
+     {
+        if(folder_count!=NULL){
+            fo=1;
+            name_list[i]=folder_count->name;
+            i++;
+            folder_count=folder_count->next;
+        }
+        if(file_count!=NULL){
+            fi=1;
+            name_list[i]=file_count->name;
+            i++;
+            file_count=file_count->next;
+        }
+     }
+    if(fo)
+        i--;
+    if(fi)
+        i--;
+    int length=i;
+     i=0;  
+     check_exit(name_list,new_name,length);
+     while (check_exit(name_list,new_name,length))
+     {  i++;
+        split_exten(new_name);
+        split_index(new_name);
+        sprintf(count, "(%d)", i);
+        strcat(new_name,count);
+        if(ext!=NULL)
+        strcat(new_name,ext);
+     }
+     return new_name;
 }
