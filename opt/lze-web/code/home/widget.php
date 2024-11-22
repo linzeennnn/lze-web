@@ -68,10 +68,13 @@ function handleFiles($type) {
     $files = array_diff(scandir($uploadFolder), ['.', '..']);
     foreach ($files as $item) {
         $itemPath = $uploadFolder . $item;
+        // 如果是目录，在名称后添加 '/'
+        $displayName = is_dir($itemPath) ? $item . '/' : $item;
+
         if ($type === 'pic' && !is_file($itemPath)) {
             continue; // 对于 pic 类型，跳过文件夹
         }
-        $file[$item] = filemtime($itemPath);
+        $file[$displayName] = filemtime($itemPath);
     }
 
     arsort($file);

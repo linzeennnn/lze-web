@@ -135,7 +135,6 @@ async function getbok() {
            notify("获取失败");
         }
         const fileData = await response.json();
-        console.log(fileData);
         const fileListElement = document.getElementById('fileList');
         fileData.forEach(file => {
             const bok = document.createElement('div');
@@ -220,17 +219,15 @@ function newbok() {
     }
     tit.value='';
     link.innerText='';
-    fetch(`${protocol}//${ip}/code/Bookmark/new.php`, {
+    fetch(`${protocol}//${ip}/server/bok/add.cgi`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: name, text: text })
     })
-    .then(response => response.json())
     .then(data => {
-        console.log(data.message);
-       notify(data.message);
+        notify("添加成功");
        getbok();
     })
     .catch(error => {
