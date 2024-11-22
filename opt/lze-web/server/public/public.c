@@ -304,6 +304,9 @@ char* file_exit(char*name,char*path){
      i=0;
      folder_count=folder->next;
      file_count=file->next;
+     if(folder_count==NULL&&file_count==NULL){
+        return name;
+     }
       while (folder_count!=NULL||file_count!=NULL)
      {
         if(folder_count!=NULL){
