@@ -19,49 +19,62 @@ async function widget(type) {
         let data = await response.json();
         if (type == 'all' || type == 'doc') {
             doc.forEach((el, index) => {
-                el.innerText = data[`doc${index + 1}`];
-                el.title = "下载:"+data[`doc${index + 1}`];
-                el.style.display = '';
+                if (el) {
+                    el.innerText = data[`doc${index + 1}`] || '';
+                    el.title = "下载:" + (data[`doc${index + 1}`] || '');
+                    el.style.display = '';
+                }
             });
         }
         if (type == 'all' || type == 'pic') {
-            img.src = `${protocol}//${ip}/file/Pictures/${data.pic1}`;
-            pic.title="预览:"+data.pic1;
-            pic.style.display='';
+            if (img && pic) {
+                img.src = `${protocol}//${ip}/file/Pictures/${data.pic1 || ''}`;
+                pic.title = "预览:" + (data.pic1 || '');
+                pic.style.display = '';
+            }
         }
         if (type == 'all' || type == 'not') {
             not.forEach((el, index) => {
-            el.innerText = removeext(data[`not${index + 1}`]); 
-            el.title = removeext(data[`not${index + 1}`]); 
-            el.style.display = '';
-        });            
+                if (el) {
+                    el.innerText = removeext(data[`not${index + 1}`] || '');
+                    el.title = removeext(data[`not${index + 1}`] || '');
+                    el.style.display = '';
+                }
+            });
         }
         if (type == 'all' || type == 'bok') {
-            bok.innerText = removeext(data.bok1); 
-            bok.title = removeext(data.bok1);
-            bok.style.display='';
+            if (bok) {
+                bok.innerText = removeext(data.bok1 || '');
+                bok.title = removeext(data.bok1 || '');
+                bok.style.display = '';
+            }
         }
         if (type == 'all' || type == 'tra') {
-            tra.innerText = data.tra1;
-            tra.style.display='';
+            if (tra) {
+                tra.innerText = data.tra1 || '';
+                tra.style.display = '';
+            }
         }
         if (type == 'all' || type == 'mon') {
             mon.forEach((el, index) => {
-                el.innerText = data[`mon${index + 1}`];
-                el.title="进程"+data[`mon${index + 1}`];
-        });
-            mon.forEach((el, index) => el.style.display = '');
+                if (el) {
+                    el.innerText = data[`mon${index + 1}`] || '';
+                    el.title = "进程" + (data[`mon${index + 1}`] || '');
+                    el.style.display = '';
+                }
+            });
         }
-        if (type == 'all') {
-            let used = data.used;
-            let tol = data.total;
-            disktext.innerText = (used / Math.pow(10, 6)).toFixed(2) + "G /" + (tol / Math.pow(10, 6)).toFixed(2) + "G";
+        if (type == 'all' && disktext && diskbar) {
+            let used = data.used || 0;
+            let tol = data.total || 1; // 避免除以 0
+            disktext.innerText = (used / Math.pow(10, 6)).toFixed(2) + "G / " + (tol / Math.pow(10, 6)).toFixed(2) + "G";
             diskbar.style.width = (used / tol * 100) + '%';
         }
     } catch (error) {
         console.error('发生错误:', error);
     }
 }
+
 // 去除后缀名
 function removeext(name){
     return name.substring(0,name.lastIndexOf('.'));
