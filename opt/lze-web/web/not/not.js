@@ -288,7 +288,7 @@ async function getnote() {
             newContent: text.innerText
         };
     
-        try {
+        try {console.log(data);
                 const response = await fetch(`${protocol}//${ip}/server/not/${file}`, {
                 method: 'POST',
                 headers: {

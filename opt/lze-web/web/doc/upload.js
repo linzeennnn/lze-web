@@ -147,9 +147,7 @@ function selfile() {
                     // 上传下一个文件
                     uploadChunk(fileIndex + 1);
                     notify(`文件 ${file.name} 上传成功`);
-                    uploadpath = xhr.responseText;
                     loadFolder(removeslash(nowpath));
-                    desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
                 }
             }
         };

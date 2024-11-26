@@ -1,7 +1,7 @@
 #include "../public/public.h"
 #include <signal.h>
 int main(){
-   char post_data[1024];
+   char post_data[1048576];
     int post_len = post(post_data, sizeof(post_data));
      log(post_data); 
     cJSON *rec_json = cJSON_Parse(post_data);

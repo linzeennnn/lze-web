@@ -190,6 +190,8 @@ int post(char *data, int max_len) {
     }
     int bytes_read = 0;
     while (bytes_read < content_length) {
+        log("CONTENT_LENGTH: %d\n", content_length);
+log("Bytes read so far: %d\n", bytes_read);
         int n = read(STDIN_FILENO, data + bytes_read, max_len - bytes_read);
         if (n == -1) {
             return -1;
