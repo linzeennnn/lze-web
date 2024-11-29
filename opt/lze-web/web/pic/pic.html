@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#1c1d26"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>林泽恩的图库</title>
+    <link rel="icon" href="../../icon/linzeen.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/lze.css">
+    <link rel="stylesheet" href="../css/password.css">
+    <link rel="stylesheet" href="../css/sidepage.css">
+    <link rel="stylesheet" href="../css/system.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link id="themesheet" rel="stylesheet">
+</head>
+<body>
+  <div id="phone-back"></div>
+  <div id="upload-area"><div></div></div>
+  <div class="backbtn main" onclick="goBack()" title="返回首页"></div>
+  <div id="openbar" title="打开侧栏" class="option-btn pc-only" onclick="optionbar(1)"></div>
+  <div id="option-bar">
+    <div id="closebar" title="收起" class="option-btn pc-only" onclick="optionbar(0)"></div>
+    <div id="open-side" class="option-btn" onclick="openside(1)" title="打开导航栏"></div>
+    <label id="upload-btn" class="option-btn" for="uploadfile"><span></span></label>
+    <div id="pho-btn" class="option-btn" onclick="showpic('pho')" title="图片"></div>
+    <div id="vid-btn" class="option-btn" onclick="showpic('vid')" title="视频"></div>
+    <div id="loadButton" class="option-btn" onclick="reloadPage()" title="刷新"></div>
+  </div>
+  </div>
+  <div id="cover-bar" class="main"></div>
+  <div id="top-bar" class="main">
+      <button id="upButton" onclick="goUp()" title="返回上一级"></button>
+      <div class="path-bar" id="path-bar">
+        <div class="current-path" id="currentPath" >/</div>
+        <div id="progress" style="display: none;">
+          <div id="bar"><div id="percent"></div></div>
+        </div>
+      </div>
+      <div class="rotate-box" id="rotate-box"style="display: none;"><div class="rotate-loading" id="loading" style="display: none;"></div></div> 
+    <div id="oth-btn" title="其他目录" onclick="showoth()">
+      <div id="oth-list"></div>
+    </div>
+  </div>
+  <div id="pic-box" class="main"></div>
+  <div id="page-bar" class="main">
+    <div id="left-page" class="option-btn" title="上一页" onclick="switchpage(0)"></div>
+    <span id="page-display"></span>
+    <div id="right-page" class="option-btn" title="下一页" onclick="switchpage(1)"></div>
+  </div>
+  <input type="file" id="uploadfile" onchange="selfile();" multiple="multiple" style="display: none;"/>
+  <div id="top-btn" onclick="totop()" title="回到顶部" class="main"></div>
+  <div id="fileListContainer" class="main">
+    <ul id="fileList"></ul>
+  </div> 
+</div>
+</div>
+<div id="bigpic-page" class="option-page" onclick="openpic(0)">
+  <div id="close-pic" class="page-btn" title="关闭"></div  >
+  <div id="last-btn" class="page-btn" title="上一张" onclick="switchpic(0)"></div>
+  <div id="next-btn" class="page-btn" title="下一张" onclick="switchpic(1)"></div>
+  <div id="bigpic"></div>
+</div>
+      <!-- js -->
+    <script src="../js/public.js"></script>
+    <script src="../js/login.js"></script>
+    <script src="../js/sidepage.js"></script>
+    <script src="../js/system.js"></script>
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="pic.css">
+    <script src="../js/password.js"></script>
+            <script src="../js/lze.js"></script>
+            <script src="pic.js"></script>
+        </body>
+</html>
+

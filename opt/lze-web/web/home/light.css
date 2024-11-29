@@ -1,0 +1,65 @@
+:root { 
+  --red:#bd9797;
+  --green:#97bda5;
+  --blue:#97a7bd;
+  --yellow:#bdb497;
+  --pink:#bd97b2;
+  --orange: #bda797;
+  --default:#96a1ac;
+  --borco:#868a94;
+  --back: url('../../wallpaper/light/home.svg') no-repeat center;
+  --green-nor:#435a4e77; 
+  --blue-nor:#434e5a77; 
+  --yellow-nor:#5a5a4377; 
+  --orange-nor:#5a504377; 
+  --pink-nor:#5a435877; 
+  --red-nor:#5a434377; 
+}
+.tooltip {
+    background: #4c646d60; 
+    color: #c3c6c9; 
+}
+body {
+  background-image: url(../../wallpaper/light/home.svg);
+}
+#home-bar {
+  color: #656d79 ;
+    background-color: #9ea9add2 ;
+}
+#lock-page{
+  background-color: #c0d0d65e;
+}
+#home-btn{
+  background-color: #bebec9;
+}
+.widget-title{
+  color: #3a3f46;
+}
+.dock-back{
+  background: linear-gradient(#dfdfee9f,#a1a6aa);
+ }
+ #dock{
+background: #20202073;
+ }
+#topBar {
+    background-color: #d5d7d8ab ;
+}
+.bar-btn {
+  background-color: #afbed1d2;
+  color: #2b3033;
+}
+.bar-btn.selected {
+  background-color: #555f64;
+  color: #bdd3df;
+}
+
+.bar-btn:hover {
+  background-color: #555f64;
+  color: #bdd3df;
+}
+.widget{
+  background: linear-gradient(#dfdfee9f,#a1a6aa);
+}
+.dock-btn{
+  background-image: url(../../wallpaper/light/home.svg);
+}
