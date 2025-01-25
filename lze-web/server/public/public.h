@@ -9,6 +9,7 @@
 #include <unistd.h>         // Unix 标准函数
 #include <stdarg.h>         // 可变参数
 #include "cJSON.h"          // cJSON 库
+#include <libgen.h>  // 包含 basename() 和 dirname() 函数
 typedef struct FOLDER
 {
     char *name;
@@ -39,4 +40,5 @@ char* file_exit(char*name,char*path);
 void list_all(char *base_path);
 void log(const char *format, ...);
 int check_exit(char*list[],char*name,int length);
+int is_file(const char *path);
 #endif

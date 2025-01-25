@@ -2,14 +2,13 @@
     "name": "Linzeen",
     "short_name": "lze",
     "background_color": "#FFFFFF",
-    "display": "minimal-ui",
     "start_url": "/",
     "scope": "/",
     "display":"standalone",
     "icons": [
       
         {
-            "src": "/icon/linzeen_icon.png",
+            "src": "/icon/linzeen.svg",
             "sizes": "512x512",
             "type": "image/png"
           },

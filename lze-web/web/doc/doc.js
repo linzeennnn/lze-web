@@ -478,7 +478,7 @@ switch (pastestatus){
  case 0:{
   access();
   pageloading(1);
-   fetch(`${protocol}//${ip}/code/Documents/move.php`, {
+   fetch(`${protocol}//${ip}/server/doc/move.cgi`, {
      method: 'POST',
      headers: {
        'Authorization': 'Bearer ' + token,

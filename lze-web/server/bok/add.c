@@ -3,7 +3,6 @@
 int main(){
    char post_data[1024];
     int post_len = post(post_data, sizeof(post_data));
-     log(post_data); 
     cJSON *rec_json = cJSON_Parse(post_data);
     cJSON *tit = cJSON_GetObjectItem(rec_json, "name");
     cJSON *con = cJSON_GetObjectItem(rec_json, "text");
