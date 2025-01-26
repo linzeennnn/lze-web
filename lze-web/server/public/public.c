@@ -223,18 +223,11 @@ void http_out(int type,char *format, ...) {
 // 读取文件
 char* read_file(char*path){
     FILE*file=fopen(path,"r");
-    long size=get_file_size(file);
+    long size=get_size(file);
     char *content=(char*)malloc(size);
     fgets(content,size,file);
     fclose(file);
     return content;
-}
-// 获取文件大小
-long get_file_size(FILE * file){
-    fseek(file,0,SEEK_END);
-    long size=ftell(file)+1;
-    rewind(file);
-    return size;
 }
 // 去除后缀
 void split_exten(char*name){
@@ -266,22 +259,36 @@ void log(const char *format, ...) {
     fprintf(log_file, "\n");
     fclose(log_file);
 }
-// 检查文件名存在
-int check_exit(char*list[],char*name,int length){
-    int i;
-    for(i=0;i<=length;i++){
-        if(strcmp(list[i],name)==0)
-            return 1;
-    }
-    return 0;
+// 给文件加序号
+char *add_file_index(char *name,int index){
+    char num[7];
+    sprintf(num,"(%d)",index);
+    return concat_path(name,num);
 }
 // 检查文件存在
 char* file_exit(char*name,char*path){
-    char*ext=strrchr(name,'.');
-    int i=0,fi=0,fo=0;
-    char count[7];
-    char*new_name=(char*)malloc(strlen(name)+7);
-    strcpy(new_name,name);
+   typedef struct list
+    {
+        char *name;
+        struct list *next;
+    }name_list;
+    name_list *list_head=(name_list*)malloc(sizeof(name_list));
+    name_list *list_node;
+    list_head->next=NULL;
+    int count=0;
+    char *base_name=(char*)malloc(strlen(name)+1);
+    strcpy(base_name,name);
+    char*dot=strrchr(name,'.');
+    char ext[strlen(dot)+1];
+    if(dot==NULL||dot==name){
+        *ext='\0';
+    }
+      
+    else 
+        strcpy(ext, dot);
+    char*base_end=strrchr(base_name,'.');
+    if(base_end!=base_name)
+        *base_end='\0';
     folder_list *folder=(folder_list*)malloc(sizeof(folder_list));
     file_list* file=(file_list*)malloc(sizeof(file_list));
     folder_list *folder_count=(folder_list*)malloc(sizeof(folder_list));
@@ -290,55 +297,73 @@ char* file_exit(char*name,char*path){
     file->next=NULL;
     list_directory(path,folder,file);
     folder_count=folder->next;
-     file_count=file->next;
-     while (folder_count!=NULL||file_count!=NULL)
-     {
-        if(folder_count!=NULL){
-            i++;
-            folder_count=folder_count->next;
+    file_count=file->next;
+    while (file_count!=NULL)
+    {   
+        list_node=(name_list*)malloc(sizeof(name_list));
+        list_node->name=file_count->name;
+        list_node->next=list_head->next;
+        list_head->next=list_node;
+        file_count=file_count->next;
+    }
+     while (folder_count!=NULL)
+    {
+        list_node=(name_list*)malloc(sizeof(name_list));
+        list_node->name=folder_count->name;
+        list_node->next=list_head->next;
+        list_head->next=list_node;
+        folder_count=folder_count->next;
+    }
+    list_node=list_head->next;
+    while (list_node!=NULL)
+    {
+        if (strcmp(name,list_node->name)==0)
+        {   
+            count++;
+            name=concat_path(add_file_index(base_name,count),ext);
+            list_node=list_head->next;
         }
-        if(file_count!=NULL){
-            i++;
-            file_count=file_count->next;
-        }
-     }
-     char*name_list[i];
-     i=0;
-     folder_count=folder->next;
-     file_count=file->next;
-     if(folder_count==NULL&&file_count==NULL){
-        return name;
-     }
-      while (folder_count!=NULL||file_count!=NULL)
-     {
-        if(folder_count!=NULL){
-            fo=1;
-            name_list[i]=folder_count->name;
-            i++;
-            folder_count=folder_count->next;
-        }
-        if(file_count!=NULL){
-            fi=1;
-            name_list[i]=file_count->name;
-            i++;
-            file_count=file_count->next;
-        }
-     }
-    if(fo)
-        i--;
-    if(fi)
-        i--;
-    int length=i;
-     i=0;  
-     check_exit(name_list,new_name,length);
-     while (check_exit(name_list,new_name,length))
-     {  i++;
-        split_exten(new_name);
-        split_index(new_name);
-        sprintf(count, "(%d)", i);
-        strcat(new_name,count);
-        if(ext!=NULL)
-        strcat(new_name,ext);
-     }
-     return new_name;
+        
+        list_node=list_node->next;
+    }
+    return name;
+}
+// 复制文件
+void copy (char *source_path,char *dest_path){
+    size_t buffer_size;
+    char *buffer;
+    FILE *source, *dest;
+    source=fopen(source_path,"rb");
+    dest=fopen(dest_path,"wb");
+    long file_size=get_size(source);
+    if(file_size<1024*1024)
+        buffer_size=4096;
+    else if(file_size<10*1024*1024)
+        buffer_size=16384;
+    else if(file_size<100*1024*1024)
+        buffer_size=262144;
+    else if(file_size<500*1024*1024)
+        buffer_size=524288;
+    else if(file_size<1024*1024*1024)
+        buffer_size=1048576;
+    else if(file_size<2048*1024*1024)
+        buffer_size=2097152;
+    else
+        buffer_size=4194304;
+    buffer=(char*)malloc(buffer_size);
+    size_t byte;
+    while ((byte = fread(buffer, 1, buffer_size, source)) > 0)
+    {
+        fwrite(buffer,1,byte,dest);
+    }
+    fclose(source);
+    fclose(dest);
+    free(buffer);
+}
+// 获取文件大小
+long get_size(FILE *file){
+    fseek(file,0,SEEK_END);
+    long size=ftell(file);
+    fseek(file,0,SEEK_SET);
+    return size;
 }
