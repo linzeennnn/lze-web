@@ -43,4 +43,5 @@ int is_file(const char *path);//列出目录所有内容并发送json
 void copy (char *source,char *dest);// 复制文件
 long get_size(FILE *file);// 获取文件大小
 char *add_file_index(char *name,int index);// 给文件加序号
+int check_type(char *path);// 检测是文件还是目录还是符号链接(目录返回1文件返回2链接返回3其他返回0)
 #endif

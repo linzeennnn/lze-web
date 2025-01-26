@@ -279,15 +279,19 @@ char* file_exit(char*name,char*path){
     char *base_name=(char*)malloc(strlen(name)+1);
     strcpy(base_name,name);
     char*dot=strrchr(name,'.');
-    char ext[strlen(dot)+1];
-    if(dot==NULL||dot==name){
+    int ext_length;
+    if(dot)
+        ext_length=strlen(dot)+1;
+    else
+        ext_length=1;
+    char ext[ext_length];
+    if(dot==NULL||dot==name||!dot){
         *ext='\0';
     }
-      
     else 
         strcpy(ext, dot);
     char*base_end=strrchr(base_name,'.');
-    if(base_end!=base_name)
+    if(base_end&&base_end!=base_name)
         *base_end='\0';
     folder_list *folder=(folder_list*)malloc(sizeof(folder_list));
     file_list* file=(file_list*)malloc(sizeof(file_list));
@@ -366,4 +370,20 @@ long get_size(FILE *file){
     long size=ftell(file);
     fseek(file,0,SEEK_SET);
     return size;
+}
+// 检测是文件还是目录还是符号链接(目录返回1文件返回2链接返回3其他返回0)
+int check_type(char *path) {
+    struct stat path_stat;
+    if (lstat(path, &path_stat) != 0) {
+        perror("lstat");
+        return 0;
+    }
+    if (S_ISDIR(path_stat.st_mode))
+        return 1;
+    else if (S_ISREG(path_stat.st_mode)) 
+        return 2;
+    else if (S_ISLNK(path_stat.st_mode)) 
+        return 3;
+    else 
+        return 0; 
 }
