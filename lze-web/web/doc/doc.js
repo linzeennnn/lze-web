@@ -575,7 +575,7 @@ files=fileitem.querySelector('.folderLink');
    newname=filetit.value;
    oldpath=nowpath+oldname;
    newpath=nowpath+newname;   
-   fetch(`${protocol}//${ip}/code/Documents/rename.php`, {
+   fetch(`${protocol}//${ip}/server/doc/rename.cgi`, {
      method: 'POST',
      headers: {
        'Authorization': 'Bearer ' + token,
@@ -590,7 +590,7 @@ files=fileitem.querySelector('.folderLink');
  .then(data => {
  loadFolder(removeslash(nowpath))
  editmode=0;
- notify(data);
+ notify("修改成功");
  })
  .catch((error) => {
      console.log(error);
