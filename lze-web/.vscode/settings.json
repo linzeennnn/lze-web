@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "charconv": "c",
-        "rename": "cpp"
+        "rename": "cpp",
+        "public.h": "c"
     }
 }

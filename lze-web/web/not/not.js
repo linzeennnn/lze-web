@@ -242,35 +242,33 @@ async function getnote() {
         }
     }
     // delete note
-    function delnote(fileName,load) {
+    function delnote(fileName, load) {
         pageloading(1);
-        const formData = new FormData();
-        formData.append('fileName', fileName);
-    
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', `${protocol}//${ip}/code/Note/delnote.php`, true);
-        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-    
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                const result = JSON.parse(xhr.responseText);
-                if (result.status === "success") {
-                    if(load!=0){
-                    reloadnote();
-                    notify("已删除");
+        fetch(`${protocol}//${ip}/server/not/del.cgi`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fileName: fileName })
+        })
+            .then(response => {
+                if (response.ok) {
+                    // 后端返回成功的状态码
+                    if (load != 0) {
+                        reloadnote();
+                        notify("已删除");
                     }
+                } else {
+                    console.error(`Error deleting note: ${response.statusText}`);
                 }
-            } else {
-                console.error('Error deleting note:', xhr.statusText);
-            }
-        };
-    
-        xhr.onerror = function () {
-            console.error('Error deleting note:', xhr.statusText);
-        };
-    
-        xhr.send(formData);
+            })
+            .catch(error => {
+                console.error(`Error deleting note: ${error.message}`);
+            });
     }
+    
+    
     
     // newnote
     async function addnote(title, text, file) {
@@ -288,7 +286,7 @@ async function getnote() {
             newContent: text.innerText
         };
     
-        try {
+        try {console.log(data)
                 const response = await fetch(`${protocol}//${ip}/server/not/${file}`, {
                 method: 'POST',
                 headers: {
