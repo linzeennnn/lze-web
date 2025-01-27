@@ -175,12 +175,12 @@ async function getbok() {
 // 标记最近访问
 async function updatebok(name) {
     try {
-        const response = await fetch(`${protocol}//${ip}/code/Bookmark/update.php`, {
+        const response = await fetch(`${protocol}//${ip}/server/bok/recent.cgi`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(name), 
+            body: JSON.stringify({ filename: name }), 
         });
     } catch (error) {
         notify(error);

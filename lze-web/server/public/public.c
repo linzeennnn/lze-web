@@ -224,8 +224,8 @@ void http_out(int type,char *format, ...) {
 char* read_file(char*path){
     FILE*file=fopen(path,"r");
     long size=get_size(file);
-    char *content=(char*)malloc(size);
-    fgets(content,size,file);
+    char *content=(char*)malloc(size+1);
+    fgets(content,size+1,file);
     fclose(file);
     return content;
 }
