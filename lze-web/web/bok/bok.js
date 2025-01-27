@@ -165,8 +165,8 @@ async function getbok() {
             bok.appendChild(tit);
             bok.appendChild(del);
             bokbox.appendChild(bok);
-            pageloading(0);
         });
+        pageloading(0);
     } catch (error) {
         console.log(error);
         notify(error);
@@ -189,16 +189,15 @@ async function updatebok(name) {
 // 删除
 function delbok(name){
     pageloading(1);
-    fetch(`${protocol}//${ip}/code/Bookmark/del.php`, {
+    fetch(`${protocol}//${ip}/server/bok/del.cgi`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: name }),
     })
-    .then(response => response.json())
     .then(data => {
-        notify(data.message)
+        notify("已删除")
        getbok();
     })
     .catch(error => {
