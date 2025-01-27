@@ -355,7 +355,7 @@ function newfolder(status){
    if (folderName===""){
      folderName="new_folder";
    }
-   fetch(`${protocol}//${ip}/code/Documents/new_folder.php`, {
+   fetch(`${protocol}//${ip}/server/doc/new_folder.cgi`, {
      method: 'POST',
      headers: {
        'Authorization': 'Bearer ' + token,
