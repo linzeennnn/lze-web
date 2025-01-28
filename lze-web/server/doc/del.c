@@ -26,7 +26,7 @@ int main() {
         rename(source_path,concat_path(trash_path,file_name));
         if(par_dir[strlen(par_dir)]=='/')
             par_dir[strlen(par_dir)]='\0';
-        cJSON_AddStringToObject(data,basename(source_path),dirname(par_dir));
+        cJSON_AddStringToObject(data,file_name,dirname(par_dir));
     }
     char *data_new=cJSON_Print(data);
     FILE *data_file=fopen(data_path,"w+");

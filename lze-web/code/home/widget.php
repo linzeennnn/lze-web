@@ -1,19 +1,16 @@
 <?php
 $postData = file_get_contents('php://input');
 $data = [];
-if ($postData == 'all') {
-    handleFiles('doc');  
-    handleFiles('not');  
-    handleFiles('bok');  
-    handleFiles('pic');  
-    handleFiles('tra'); 
-    handleFiles('mon'); 
-    handleFiles('disk'); 
-    send();
-} else {
-    handleFiles($postData); 
-    send();
-}
+
+handleFiles('doc');  
+handleFiles('not');  
+handleFiles('bok');  
+handleFiles('pic');  
+handleFiles('tra'); 
+handleFiles('mon'); 
+handleFiles('disk'); 
+
+send();
 
 function handleFiles($type) {
     global $data;

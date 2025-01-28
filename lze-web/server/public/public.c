@@ -232,11 +232,7 @@ char* read_file(char*path){
         fclose(file);
         return NULL;
     }
-    if (fgets(content, size + 1, file) == NULL) {
-        free(content);
-        fclose(file);
-        return NULL;
-    }
+    fread(content,1,size,file);
     fclose(file);
     return content;
 }

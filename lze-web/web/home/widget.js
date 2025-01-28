@@ -1,4 +1,4 @@
-async function widget(type) {
+async function widget() {
     let doc = [1, 2, 3].map(i => document.getElementById(`doc-li${i}`));
     let not = [1, 2, 3].map(i => document.getElementById(`not-li${i}`));
     let mon = [1, 2, 3].map(i => document.getElementById(`mon-li${i}`));
@@ -8,60 +8,55 @@ async function widget(type) {
     let bok = document.getElementById(`bok-li`);
     let disktext = document.getElementById(`disk-li`);
     let diskbar = document.getElementById(`disk-bar`);
+    
     try {
         let response = await fetch(`${protocol}//${ip}/code/home/widget.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
-            },
-            body: `${type}`,
+            }
         });
         let data = await response.json();
-        if (type == 'all' || type == 'doc') {
-            doc.forEach((el, index) => {
-                el.innerText = data[`doc${index + 1}`];
-                el.title = "下载:"+data[`doc${index + 1}`];
-                el.style.display = '';
-            });
-        }
-        if (type == 'all' || type == 'pic') {
-            img.src = `${protocol}//${ip}/file/Pictures/${data.pic1}`;
-            pic.title="预览:"+data.pic1;
-            pic.style.display='';
-        }
-        if (type == 'all' || type == 'not') {
-            not.forEach((el, index) => {
-            el.innerText = removeext(data[`not${index + 1}`]); 
-            el.title = removeext(data[`not${index + 1}`]); 
+        console.log(data)
+        doc.forEach((el, index) => {
+            el.innerText = data[`doc${index + 1}`];
+            el.title = "下载:" + data[`doc${index + 1}`];
             el.style.display = '';
-        });            
-        }
-        if (type == 'all' || type == 'bok') {
-            bok.innerText = removeext(data.bok1); 
-            bok.title = removeext(data.bok1);
-            bok.style.display='';
-        }
-        if (type == 'all' || type == 'tra') {
-            tra.innerText = data.tra1;
-            tra.style.display='';
-        }
-        if (type == 'all' || type == 'mon') {
-            mon.forEach((el, index) => {
-                el.innerText = data[`mon${index + 1}`];
-                el.title="进程"+data[`mon${index + 1}`];
         });
-            mon.forEach((el, index) => el.style.display = '');
-        }
-        if (type == 'all') {
-            let used = data.used;
-            let tol = data.total;
-            disktext.innerText = (used / Math.pow(10, 6)).toFixed(2) + "G /" + (tol / Math.pow(10, 6)).toFixed(2) + "G";
-            diskbar.style.width = (used / tol * 100) + '%';
-        }
+
+        img.src = `${protocol}//${ip}/file/Pictures/${data.pic1}`;
+        pic.title = "预览:" + data.pic1;
+        pic.style.display = '';
+
+        not.forEach((el, index) => {
+            el.innerText = removeext(data[`not${index + 1}`]);
+            el.title = removeext(data[`not${index + 1}`]);
+            el.style.display = '';
+        });
+
+        bok.innerText = removeext(data.bok1);
+        bok.title = removeext(data.bok1);
+        bok.style.display = '';
+
+        tra.innerText = data.tra1;
+        tra.style.display = '';
+
+        mon.forEach((el, index) => {
+            el.innerText = data[`mon${index + 1}`];
+            el.title = "进程" + data[`mon${index + 1}`];
+            el.style.display = '';
+        });
+
+        let used = data.used;
+        let tol = data.total;
+        disktext.innerText = (used / Math.pow(10, 6)).toFixed(2) + "G /" + (tol / Math.pow(10, 6)).toFixed(2) + "G";
+        diskbar.style.width = (used / tol * 100) + '%';
+
     } catch (error) {
         console.error('发生错误:', error);
     }
 }
+
 // 去除后缀名
 function removeext(name){
     return name.substring(0,name.lastIndexOf('.'));
