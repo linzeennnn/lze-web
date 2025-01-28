@@ -2,6 +2,8 @@
     "files.associations": {
         "charconv": "c",
         "rename": "cpp",
-        "public.h": "c"
+        "public.h": "c",
+        "chrono": "c",
+        "functional": "c"
     }
 }

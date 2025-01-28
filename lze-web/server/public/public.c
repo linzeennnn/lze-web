@@ -223,9 +223,20 @@ void http_out(int type,char *format, ...) {
 // 读取文件
 char* read_file(char*path){
     FILE*file=fopen(path,"r");
-    long size=get_size(file);
-    char *content=(char*)malloc(size+1);
-    fgets(content,size+1,file);
+    if (file == NULL) {
+        return NULL;
+    }
+   long size = get_size(file);
+    char *content = (char *)malloc(size + 1);
+    if (content == NULL) {
+        fclose(file);
+        return NULL;
+    }
+    if (fgets(content, size + 1, file) == NULL) {
+        free(content);
+        fclose(file);
+        return NULL;
+    }
     fclose(file);
     return content;
 }

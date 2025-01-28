@@ -42,7 +42,7 @@ function uploadFolder() {
             if (index === 0 && start === 0) {
                 chunkFormData.append('1st', true);
             }
-            fetch(`${protocol}//${ip}/code/Documents_folder.php`, {
+            fetch(`${protocol}//${ip}/code/Documents/upload_folder.php`, {
                 method: 'POST',
                 body: chunkFormData
             })
@@ -127,7 +127,7 @@ function selfile() {
         fd.append('currentChunk', currentChunks[fileIndex]);
         fd.append('nowpath', nowpath); // 传递 nowpath 变量
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', `${protocol}//${ip}/code/Documents_file.php`, true);
+        xhr.open('POST', `${protocol}//${ip}/code/Documents/upload_file.php`, true);
         xmltoken(xhr);
         xhr.upload.onprogress = function (ev) {
             if (ev.lengthComputable) {

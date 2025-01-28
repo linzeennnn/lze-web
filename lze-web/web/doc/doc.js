@@ -386,8 +386,7 @@ function del() {
     pageloading(1);
     const dellist = JSON.stringify(selectedarray);
     const requestData = { dellist: dellist };
-
-    fetch(`${protocol}//${ip}/code/Documents/delete.php`, {
+    fetch(`${protocol}//${ip}/server/doc/del.cgi`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
