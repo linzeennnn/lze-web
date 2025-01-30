@@ -324,24 +324,18 @@ function removeslash(path) {
 function cleanall(){
   if (confirm('确定清空回收站吗')) {
     ifroot();
-  fetch(`${protocol}//${ip}/code/trash/del.php`, {
+  fetch(`${protocol}//${ip}/server/tra/del.cgi`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
     }
 })
-.then(response => response.json())
-.then(data => {
-    if (data.status === 'success') {
-        console.log(data.message);
-        loadFolder(removeslash(nowpath));
-        notify("已清空");
-    } else {
-        console.error(data.message);
-    }
-})
-.catch(error => console.error('Error:', error));
-
+.then(response => response.text())
+    .then(data => {
+      loadFolder(removeslash(nowpath));
+      notify("已清空");
+    })
+    .catch(error => console.error('Error:', error));
   }
 }
