@@ -1,6 +1,10 @@
 #include "public.h"
 // 扫描目录
-void list_directory(char *path, folder_list* folder_head, file_list* file_head) {
+void list_directory(char *path, folder_list* folder_head, file_list* file_head) {    
+    if (path[strlen(path)-1]!='/')
+    {
+        path=concat_path(path,"/");
+    }
     folder_list* folder=folder_head;
     file_list* file=file_head;
     struct dirent *entry;
@@ -15,6 +19,7 @@ void list_directory(char *path, folder_list* folder_head, file_list* file_head) 
             char *full_path = concat_path(path, filename);
         if (stat(full_path, &statbuf) == -1) {
             perror("获取文件状态失败");
+            printf("%s\n",full_path);
             free(full_path);
             continue;
         }

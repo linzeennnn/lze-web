@@ -11,6 +11,7 @@
         "span": "c",
         "text_encoding": "c",
         "typeinfo": "c",
-        "list": "c"
+        "list": "c",
+        "stdarg.h": "c"
     }
 }

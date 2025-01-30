@@ -20,13 +20,9 @@ int main() {
     for (int i=0;i<cJSON_GetArraySize(dellist_array);i++){
         cJSON *target = cJSON_GetArrayItem(dellist_array, i);
         char *source_path=concat_path(base_path,target->valuestring);
-        char *par_dir=(char*)malloc(strlen(source_path)+1);
-        strcpy(par_dir,source_path);
         char *file_name=file_exit(basename(source_path),trash_path);
         rename(source_path,concat_path(trash_path,file_name));
-        if(par_dir[strlen(par_dir)]=='/')
-            par_dir[strlen(par_dir)]='\0';
-        cJSON_AddStringToObject(data,file_name,dirname(par_dir));
+        cJSON_AddStringToObject(data,file_name,source_path);
     }
     char *data_new=cJSON_Print(data);
     FILE *data_file=fopen(data_path,"w+");

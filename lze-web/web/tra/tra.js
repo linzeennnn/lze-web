@@ -249,8 +249,8 @@ function ifroot(){
 // 恢复
 function recover() {
   access();
-  ifroot();
-    fetch(`${protocol}//${ip}/code/trash/recover.php`, {
+  ifroot()
+    fetch(`${protocol}//${ip}/server/tra/recover.cgi`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -282,7 +282,10 @@ let index;
 let selectcount;
 let recoverpath;
 // 用于存储 selectedpath 和 recoverpath 的对象
-let pathsMap = {};
+let recover_list = [];
+let pathsMap = {
+  recover_list: recover_list
+};
 
 function select(fileitem, type) {
   let filesname;
@@ -298,21 +301,18 @@ function select(fileitem, type) {
 
   selectedpath = fullPath + filesname.innerText;
 
-  // 将 selectedpath 作为键，recoverpath 作为值
-  recoverpath = fileitem.querySelector('.oripath').innerText;
-  pathsMap[selectedpath] = recoverpath;
-
   if (fileitem.classList.contains('selected')) {
     notify("取消选择");
     fileitem.classList.remove('selected');
     index = selectedarray.indexOf(selectedpath);
     selectedarray.splice(index, 1);
-    delete pathsMap[selectedpath]; // 移除对应的键值对
+    recover_list.splice(recover_list.indexOf(selectedpath), 1); // 从 recover 数组移除
   } else {
     selectcount = selectedarray.length + 1;
     notify("已选择" + selectcount + "个文件");
     fileitem.classList.add('selected');
     selectedarray.push(selectedpath);
+    recover_list.push(selectedpath); 
   }
 }
 
