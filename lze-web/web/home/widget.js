@@ -17,7 +17,6 @@ async function widget() {
             }
         });
         let data = await response.json();
-        console.log(data)
         doc.forEach((el, index) => {
             el.innerText = data[`doc${index + 1}`];
             el.title = "下载:" + data[`doc${index + 1}`];
