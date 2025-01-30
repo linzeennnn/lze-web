@@ -10,7 +10,7 @@ async function widget() {
     let diskbar = document.getElementById(`disk-bar`);
     
     try {
-        let response = await fetch(`${protocol}//${ip}/code/home/widget.php`, {
+        let response = await fetch(`${protocol}//${ip}/server/home/widget.cgi`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
