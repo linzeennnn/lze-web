@@ -9,6 +9,7 @@
 #include <unistd.h>         // Unix 标准函数
 #include <stdarg.h>         // 可变参数
 #include "cJSON.h"          // cJSON 库
+#include "cgic.h"           // cgic库
 #include <libgen.h>  // 包含 basename() 和 dirname() 函数
 typedef struct FOLDER
 {

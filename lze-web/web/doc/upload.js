@@ -127,7 +127,7 @@ function selfile() {
         fd.append('currentChunk', currentChunks[fileIndex]);
         fd.append('nowpath', nowpath); // 传递 nowpath 变量
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', `${protocol}//${ip}/code/Documents/upload_file.php`, true);
+        xhr.open('POST', `${protocol}//${ip}/server/doc/upload.cgi`, true);
         xmltoken(xhr);
         xhr.upload.onprogress = function (ev) {
             if (ev.lengthComputable) {
@@ -144,7 +144,6 @@ function selfile() {
                 if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
                     uploadChunk(fileIndex); // 上传下一个块
                 } else {
-                    // 上传下一个文件
                     uploadChunk(fileIndex + 1);
                     notify(`文件 ${file.name} 上传成功`);
                     loadFolder(removeslash(nowpath));
