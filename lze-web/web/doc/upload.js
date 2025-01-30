@@ -37,6 +37,7 @@ function uploadFolder() {
             const chunkFormData = new FormData();
             chunkFormData.append('file', chunk, file.name);
             chunkFormData.append('relativePath', relativePath);
+            console.log(relativePath)
             chunkFormData.append('start', start);
             chunkFormData.append('total', file.size);
             if (index === 0 && start === 0) {
@@ -127,7 +128,7 @@ function selfile() {
         fd.append('currentChunk', currentChunks[fileIndex]);
         fd.append('nowpath', nowpath); // 传递 nowpath 变量
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', `${protocol}//${ip}/server/doc/upload.cgi`, true);
+        xhr.open('POST', `${protocol}//${ip}/server/doc/upload_file.cgi`, true);
         xmltoken(xhr);
         xhr.upload.onprogress = function (ev) {
             if (ev.lengthComputable) {
