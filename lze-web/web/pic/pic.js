@@ -498,7 +498,7 @@ function selfile() {
       notify("请先选择文件");
       return;
   }
-  var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
+  var chunkSize = 20*1024 * 1024; // 每个块的大小（1MB）
   var totalFiles = files.length;
   var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
   var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
@@ -527,7 +527,7 @@ loading(1);
       fd.append('currentChunk', currentChunks[fileIndex]);
       fd.append('nowpath', nowpath); // 传递 nowpath 变量
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', `${protocol}//${ip}/code/Pictures/upload_file.php`, true);
+      xhr.open('POST', `${protocol}//${ip}/server/pic/upload.cgi`, true);
       xmltoken(xhr);
       xhr.upload.onprogress = function (ev) {
           if (ev.lengthComputable) {

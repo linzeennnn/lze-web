@@ -394,14 +394,8 @@ function selfile() {
         var file = files[i];
 
         // 检查文件大小是否超过2MB
-        if (file.size > 2 * 1024 * 1024) {
+        if (file.size >  1024 * 1024) {
             notify("文件不能超过2MB");
-            return;
-        }
-
-        // 检查文件是否为纯文本
-        if (!file.type.match(/text.*/) && file.name.slice(-4) !== '.txt') {
-            notify("不支持类型");
             return;
         }
 
@@ -410,14 +404,14 @@ function selfile() {
             var newFileName = file.name + '.txt';
             var newFile = new Blob([file], { type: file.type });
             newFile = new File([newFile], newFileName, { type: file.type });
-            fd.append('pic[]', newFile);
+            fd.append('new_note', newFile);
         } else {
-            fd.append('pic[]', file);
+            fd.append('new_note', file);
         }
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `${protocol}//${ip}/code/Note/upload.php`, true);
+    xhr.open('POST', `${protocol}//${ip}/server/not/upload.cgi`, true);
     xmltoken(xhr);
     xhr.upload.onprogress = function(ev) {
         if (ev.lengthComputable) {

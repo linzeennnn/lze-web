@@ -99,7 +99,7 @@ function selfile() {
         return;
     }
     showupload(0);
-    var chunkSize = 1024 * 1024; // 每个块的大小（1MB）
+    var chunkSize = 20*1024 * 1024; // 每个块的大小（1MB）
     var totalFiles = files.length;
     var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
     var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
