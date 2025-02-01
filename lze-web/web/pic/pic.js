@@ -170,8 +170,6 @@ async function loadFolder(folder = '') {
     
     fetchnologin(response);
     const data = await response.json();
-    console.log(data);
-    
     let phoindex = 0, vidindex = 0;
     phonum = 1;
     vidnum = 1;
@@ -186,71 +184,71 @@ async function loadFolder(folder = '') {
     fullPath = (data.currentFolder ? data.currentFolder : '') + '/';
     pathlen(currentPath, fullPath);
     currentPath.title = fullPath;
-
-    // 文件夹
-    data.folders.forEach(folder => {
-      const dir = document.createElement('div');
-      dir.classList.add('folder');
-      dir.innerText = folder;
-      dir.title = folder;
-      dir.addEventListener('click', function (event) {
-        event.stopPropagation();
-        if (event.target.isContentEditable) {
-          return;
+    const file_array = data.file_list[0];
+    for (const [name, type] of Object.entries(file_array)) {
+      if(type==="file"||type==="link_file"){
+        const load = document.createElement('div');
+        const pic = document.createElement('div');
+        pic.classList.add('pic');
+        load.classList.add('load-loop');
+        let picfile;
+  
+        pic.addEventListener('click', function () {
+          openpic(1, folder + "/" + name);
+        });
+  
+        // 视频
+        if (isvideo(name) == 1) {
+          pic.classList.add('video');
+          picfile = document.createElement('video');
+          if (vidindex % 9 == 0 && vidindex != 0) {
+            vidnum++;
+          }
+          pic.classList.add(`vid-page${vidnum}`);
+          vidindex++;
+        } 
+        // 图片
+        else {
+          pic.classList.add('photo');
+          picfile = document.createElement('img');
+          if (phoindex % 9 == 0 && phoindex != 0) {
+            phonum++;
+          }
+          pic.classList.add(`pho-page${phonum}`);
+          phoindex++;
         }
-        loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+  
+        picfile.setAttribute('loading', 'lazy');
+        picfile.draggable = false;
+        pic.title = "查看" + name;
+        picfile.src = `${protocol}//${ip}/file/Pictures/${folder}/${name}`;
+        pic.append(load);
+        pic.append(picfile);
+        picbox.appendChild(pic);
+        
+        picfile.onload = function() {
+          load.style.display = 'none';
+        };
+        picfile.addEventListener('loadeddata', function() {
+          load.style.display = 'none';
       });
-      othlist.appendChild(dir);
-    });
-
-    // 文件
-    data.files.forEach(file => {
-      const load = document.createElement('div');
-      const pic = document.createElement('div');
-      pic.classList.add('pic');
-      load.classList.add('load-loop');
-      let picfile;
-
-      pic.addEventListener('click', function () {
-        openpic(1, folder + "/" + file);
-      });
-
-      // 视频
-      if (isvideo(file) == 1) {
-        pic.classList.add('video');
-        picfile = document.createElement('video');
-        if (vidindex % 9 == 0 && vidindex != 0) {
-          vidnum++;
-        }
-        pic.classList.add(`vid-page${vidnum}`);
-        vidindex++;
-      } 
-      // 图片
-      else {
-        pic.classList.add('photo');
-        picfile = document.createElement('img');
-        if (phoindex % 9 == 0 && phoindex != 0) {
-          phonum++;
-        }
-        pic.classList.add(`pho-page${phonum}`);
-        phoindex++;
       }
+      if(type==="folder"||type==="link_dir"){
+        const dir = document.createElement('div');
+        dir.classList.add('folder');
+        dir.innerText = name;
+        dir.title = name;
+        dir.addEventListener('click', function (event) {
+          event.stopPropagation();
+          if (event.target.isContentEditable) {
+            return;
+          }
+          loadFolder(data.currentFolder ? data.currentFolder + '/' + name : name);
+        });
+        othlist.appendChild(dir);
+      }
+    }
 
-      picfile.setAttribute('loading', 'lazy');
-      picfile.draggable = false;
-      pic.title = "查看" + file;
-      picfile.src = `${protocol}//${ip}/file/Pictures/${folder}/${file}`;
-      pic.append(load);
-      pic.append(picfile);
-      picbox.appendChild(pic);
-      
-      picfile.onload = function() {
-        load.style.display = 'none';
-      };
-      picfile.addEventListener('loadeddata', function() {
-        load.style.display = 'none';
-    });
-    });
 
     pageloading(0);
 

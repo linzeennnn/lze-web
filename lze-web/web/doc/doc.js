@@ -284,15 +284,6 @@ window.addEventListener('scroll', handleScroll);
          fileList.appendChild(listItem);
        }
        }
-
-
-      //  data.file_list.forEach(folder => {
-         
-      //  });
-
-      //  data.files.forEach(file => {
-         
-      //  });
        pageloading(0);
        // 处理返回上级目录按钮
        const upButton = document.getElementById('upButton');
