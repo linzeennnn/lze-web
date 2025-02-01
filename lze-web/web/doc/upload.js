@@ -37,7 +37,6 @@ function uploadFolder() {
             const chunkFormData = new FormData();
             chunkFormData.append('file', chunk, file.name);
             chunkFormData.append('relativePath', relativePath);
-            console.log(relativePath)
             chunkFormData.append('start', start);
             chunkFormData.append('total', file.size);
             if (index === 0 && start === 0) {

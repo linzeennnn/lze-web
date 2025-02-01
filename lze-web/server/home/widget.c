@@ -4,99 +4,33 @@ void sort_widget(int time,char*folder_name,int scan_dir,char*json_name,cJSON **j
 char *base_path="../../file/";
 cJSON *data = *json_p;
 folder_list *folder_head;
+link_dir* link_fo_head;
 if(scan_dir){
 folder_head=(folder_list*)malloc(sizeof(folder_list));
+link_fo_head=(link_dir*)malloc(sizeof(link_dir));
 folder_head->next=NULL;
+link_fo_head->next=NULL;
 }
 else{
    folder_head=NULL; 
+   link_fo_head=NULL;
 }
 file_list *file_head=(file_list*)malloc(sizeof(file_list));
+link_file*link_fi_head=(link_file*)malloc(sizeof(link_file));
 file_head->next=NULL;
-folder_list *folder=(folder_list*)malloc(sizeof(folder_list));
-file_list *file=(file_list*)malloc(sizeof(file_list));
-    list_directory(concat_path(base_path,folder_name),folder_head,file_head);
-if(scan_dir)
-    folder=folder_head->next;
-else
-    folder=NULL;
-file=file_head->next; 
+link_fi_head->next=NULL;
+list_directory(concat_path(base_path,folder_name),folder_head,file_head,link_fo_head,link_fi_head);
     char **list = malloc(time * sizeof(char*));
-    file_list *tmp_head=(file_list*)malloc(sizeof(file_list));
-    file_list*tmp=tmp_head;
-    tmp->next=NULL;
-folder_list *fod_p;
-if(scan_dir)
-   fod_p = folder_head->next;
-else
-    fod_p=NULL;
-    file_list *file_p = file_head->next;
-    for (int i = 0; i < time; i++)
-    {
-     if (fod_p!=NULL)
-        {   
-            tmp->next=(file_list*)malloc(sizeof(file_list));
-            tmp=tmp->next;
-            tmp->name=fod_p->name;
-            tmp->time=fod_p->time;
-            tmp->next=NULL;
-            fod_p=fod_p->next;
-        }   
-      else
-        break;
-    }
-    for (int i = 0; i < time; i++)
-    {
-     if (file_p!=NULL)
-        {   
-            tmp->next=(file_list*)malloc(sizeof(file_list));
-            tmp=tmp->next;
-            tmp->name=file_p->name;
-            tmp->time=file_p->time;
-            tmp->next=NULL;
-            file_p=file_p->next;
-        }   
-      else
-        break;
-    }
-    tmp=tmp_head->next;
-    int step,length=0;
-    while (tmp!=NULL)
-    {
-        length++;
-        tmp=tmp->next;
-    }
-    
-    tmp=tmp_head->next;
-    file_list *p= (file_list*)malloc(sizeof(file_list));
-    do
-    {
-            step=0;
-        for (int i = 0; i < length-1; i++)
-        {   
-            if ((tmp->time)<(tmp->next->time))
-            {
-                p->name=tmp->name;
-                p->next=tmp->next;
-                tmp->name=tmp->next->name;
-                tmp->time=tmp->next->time;
-                tmp->next->name=p->name;
-                tmp->next->time=p->time;
-                step=1;
-            }
-                tmp=tmp->next;
-        }
-        tmp=tmp_head->next;
-    } while (step==1);
+   file_array* all_file= sort_all(folder_head,file_head,link_fo_head,link_fi_head)->next;
 for (int i = 0; i < time; i++)
 {
-    if (tmp!=NULL)
-        {
-            list[i]=tmp->name;
-            tmp=tmp->next;
-        }
+    if (all_file!=NULL)
+    {
+        list[i]=all_file->name;
+        all_file=all_file->next;
+    }
     else
-        list[i]=NULL;
+    list[i]=NULL;
     
 }
 char*str_name=concat_path(json_name,"i");

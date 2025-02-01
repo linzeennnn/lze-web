@@ -166,13 +166,80 @@ window.addEventListener('scroll', handleScroll);
        
        pathlen(currentPath, fullPath);
        currentPath.title = fullPath;
+       const file_array = data.file_list[0];
+       for (const [name, type] of Object.entries(file_array)) {
+        if(type==="file"||type==="link_file"){
+          const listItem = document.createElement('li');
+         const editbtn= document.createElement('div');
+         editbtn.className='edit li-btn';
+         editbtn.title = `重命名`;
+         editbtn.addEventListener('click',function(){
+           event.stopPropagation(); 
+           rename(0,listItem,1);
+         });
+         const savebtn= document.createElement('div');
+         savebtn.className='save li-btn';
+         savebtn.addEventListener('click',function(){
+           event.stopPropagation(); 
+           rename(1,listItem);
+         });
+         listItem.className = 'files';
+         listItem.classList.add('file');
+         const fileLink = document.createElement('span');
+         const filetit = document.createElement('input');
+         filetit.classList.add('file-tit');
+         const Src = `${protocol}//${ip}/file/Documents/` + (data.currentFolder ? data.currentFolder + '/' + name : name);
+         const fileListContainer = document.getElementById('fileListContainer');
+         fileLink.textContent = name;
+         fileLink.className = 'fileLink';
+         fileLink.title = `预览${name}`;
+         listItem.addEventListener('click', function() {
+           select(listItem,1);
+         });
+         fileLink.addEventListener('click', function () {
+           event.stopPropagation(); 
+           if (event.target.isContentEditable) {
+             return; 
+         }
+           let filepath;
+           nowpath = fullPath;
+           let rootpath=`${protocol}//${ip}/file/Documents/`;
+           if (nowpath==="/"){
+             filepath=rootpath + name;
+           }
+           else{
+             filepath=rootpath + nowpath + name;
+           }
+           window.location.href = filepath;
+         });
 
-       data.folders.forEach(folder => {
-         const listItem = document.createElement('li');
+         listItem.appendChild(filetit);
+         listItem.appendChild(fileLink);
+         listItem.appendChild(editbtn);
+         listItem.appendChild(savebtn);
+         const downloadLink = document.createElement('a');
+         downloadLink.className = 'downloadLink';
+         downloadLink.classList.add('down-btn');
+         downloadLink.href = `${protocol}//${ip}/file/Documents/${data.currentFolder}/${name}`;
+         downloadLink.download=name;
+         downloadLink.title = `下载${name}`;
+         downloadLink.textContent = `下载 ${name}`;
+         downloadLink.addEventListener('click',()=>{
+           event.stopPropagation(); 
+           notify("开始下载")
+         });
+
+         listItem.appendChild(downloadLink);
+
+         fileList.appendChild(listItem);
+        }
+
+       if(type==="folder"||type==="link_dir"){
+        const listItem = document.createElement('li');
          const editbtn= document.createElement('div');
          const downbtn= document.createElement('div');
          downbtn.classList.add('down-btn');
-         downbtn.title=`下载${folder}`;
+         downbtn.title=`下载${name}`;
          downbtn.addEventListener('click',function(){
 
           event.stopPropagation(); 
@@ -195,9 +262,9 @@ window.addEventListener('scroll', handleScroll);
          const folderLink = document.createElement('span');
          const filetit = document.createElement('input');
          filetit.classList.add('file-tit');
-         folderLink.textContent = folder;
+         folderLink.textContent = name;
          folderLink.className = 'folderLink';
-         folderLink.title='进入'+folder;
+         folderLink.title='进入'+name;
          listItem.addEventListener('click', function() {
            select(listItem,2);
          });
@@ -206,7 +273,7 @@ window.addEventListener('scroll', handleScroll);
            if (event.target.isContentEditable) {
              return; 
          }
-           loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
+           loadFolder(data.currentFolder ? data.currentFolder + '/' + name : name);
 
        });
         listItem.appendChild(filetit);
@@ -215,73 +282,17 @@ window.addEventListener('scroll', handleScroll);
          listItem.appendChild(editbtn);
          listItem.appendChild(savebtn);
          fileList.appendChild(listItem);
-       });
+       }
+       }
 
-       data.files.forEach(file => {
-         const listItem = document.createElement('li');
-         const editbtn= document.createElement('div');
-         editbtn.className='edit li-btn';
-         editbtn.title = `重命名`;
-         editbtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(0,listItem,1);
-         });
-         const savebtn= document.createElement('div');
-         savebtn.className='save li-btn';
-         savebtn.addEventListener('click',function(){
-           event.stopPropagation(); 
-           rename(1,listItem);
-         });
-         listItem.className = 'files';
-         listItem.classList.add('file');
-         const fileLink = document.createElement('span');
-         const filetit = document.createElement('input');
-         filetit.classList.add('file-tit');
-         const Src = `${protocol}//${ip}/file/Documents/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
-         const fileListContainer = document.getElementById('fileListContainer');
-         fileLink.textContent = file;
-         fileLink.className = 'fileLink';
-         fileLink.title = `预览${file}`;
-         listItem.addEventListener('click', function() {
-           select(listItem,1);
-         });
-         fileLink.addEventListener('click', function () {
-           event.stopPropagation(); 
-           if (event.target.isContentEditable) {
-             return; 
-         }
-           let filepath;
-           nowpath = fullPath;
-           let rootpath=`${protocol}//${ip}/file/Documents/`;
-           if (nowpath==="/"){
-             filepath=rootpath + file;
-           }
-           else{
-             filepath=rootpath + nowpath + file;
-           }
-           window.location.href = filepath;
-         });
 
-         listItem.appendChild(filetit);
-         listItem.appendChild(fileLink);
-         listItem.appendChild(editbtn);
-         listItem.appendChild(savebtn);
-         const downloadLink = document.createElement('a');
-         downloadLink.className = 'downloadLink';
-         downloadLink.classList.add('down-btn');
-         downloadLink.href = `${protocol}//${ip}/file/Documents/${data.currentFolder}/${file}`;
-         downloadLink.download=file;
-         downloadLink.title = `下载${file}`;
-         downloadLink.textContent = `下载 ${file}`;
-         downloadLink.addEventListener('click',()=>{
-           event.stopPropagation(); 
-           notify("开始下载")
-         });
+      //  data.file_list.forEach(folder => {
+         
+      //  });
 
-         listItem.appendChild(downloadLink);
-
-         fileList.appendChild(listItem);
-       });
+      //  data.files.forEach(file => {
+         
+      //  });
        pageloading(0);
        // 处理返回上级目录按钮
        const upButton = document.getElementById('upButton');

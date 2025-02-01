@@ -3,7 +3,8 @@ int main() {
     cJSON *note_list=cJSON_CreateArray();;
     char* path="../../file/Bookmark/";
     file_list* note=(file_list*)malloc(sizeof(file_list));
-    list_directory(path,NULL,note);
+    list_directory(path,NULL,note,NULL,NULL);
+    sort_file(NULL,note,NULL,NULL);
     note=note->next;
     while (note!=NULL)
     {

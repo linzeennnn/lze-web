@@ -23,9 +23,28 @@ typedef struct FILE
     time_t time;
     struct FILE *next;
 }file_list;
+typedef struct LINK_DIR
+{
+    char *name;
+    time_t time;
+    struct LINK_DIR *next;
+}link_dir;
+typedef struct LINK_FILE
+{
+    char *name;
+    time_t time;
+    struct LINK_FILE *next;
+}link_file;
+typedef struct FILE_ARRAY
+{
+    char *name;
+    time_t time;
+    char*type;
+    struct FILE_ARRAY *next;
+}file_array;
 
 int post(char *data, int max_len);// 获取POST
-void list_directory(char *path, folder_list* folder, file_list* file); // 扫描目录
+void list_directory(char *path, folder_list* folder_head, file_list* file_head, link_dir *link_dir_head, link_file *link_file_head); // 扫描目录
 char * concat_path(char *base_path,char * target_path);// 拼接路径
 char* end_splash(char* path);// 加斜杆
 char* get_folder(char* path);// 获取目录名
@@ -33,7 +52,8 @@ void get_parent_folder(char* path);// 获取父目录
 int folder_count(char* path);// 判断是否只有多个目录
 void http_out(int type,char *format, ...); // http输出
 char* read_file(char*path);// 读取文件
-void sort_file(folder_list*folder_head,file_list*file_head);// 文件排序
+void sort_file(folder_list* folder_head, file_list* file_head, link_dir* link_dir_head, link_file* link_file_head);// 文件排序
+file_array* sort_all(folder_list* folder_head, file_list* file_head, link_dir* link_dir_head, link_file* link_file_head);//排序所有类型文件
 void split_exten(char*name);// 去除后缀
 void split_index(char*name);
 char* file_exit(char*name,char*path);// 检查文件存在
