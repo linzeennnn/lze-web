@@ -583,14 +583,14 @@ int check_type(char *path) {
         return 0;
 }
 //创建完整路径 
-void*dir_p(char*path){
+void dir_p(char*path){
     char*par_path;
 struct stat st;
     if (stat(path, &st) == 0 && S_ISDIR(st.st_mode)) {
-        mkdir(path,0755);
+        return;
     }
     else{
-        par_path=(char*)malloc(strlen(path));
+        par_path=(char*)malloc(strlen(path)+1);
         strcpy(par_path,path);
         dir_p(dirname(par_path));
         mkdir(path,0755);

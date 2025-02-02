@@ -4,18 +4,26 @@ int cgiMain() {
     char*tmp_path="../../file/temp/";
     char fileName[256];
     char filePath[512];
+    
+    char last[2];
+    char relat_path[1024];
+    char chunk_index[10];
+    int index;
     FILE *fp;
     cgiFilePtr file;
     int totalChunks, currentChunk;
     char nowpath[256];
      cgiHeaderContentType("text/plain");
-     cgiFormString("file", fileName, sizeof(fileName));
-     cgiFormInteger("totalChunks", &totalChunks, 0);
-    cgiFormInteger("currentChunk", &currentChunk, 0);
-    cgiFormString("nowpath", nowpath, sizeof(nowpath));
-    char* full_path=concat_path(base_path,nowpath);
+     cgiFormString("name", fileName, sizeof(fileName));
+    cgiFormString("relativePath", relat_path, sizeof(relat_path));
+    char*par_path=dirname(concat_path(tmp_path,relat_path));
+    cgiFormString("chunkIndex", chunk_index, sizeof(chunk_index));
+    cgiFormString("last", last, sizeof(last));
+    index=atoi(chunk_index);
+    if (index==0)
+        dir_p(par_path);
     cgiFormFileOpen("file", &file);
-    snprintf(filePath, sizeof(filePath), "%s%s.part%d", tmp_path, fileName, currentChunk);
+    snprintf(filePath, sizeof(filePath), "%s%s.part%d", tmp_path, relat_path, index);
     fp = fopen(filePath, "wb");
     char buffer[1024];
     int got;
@@ -24,12 +32,12 @@ int cgiMain() {
     }
     fclose(fp);
     cgiFormFileClose(file);
-  if (currentChunk + 1 == totalChunks) {
-        snprintf(filePath, sizeof(filePath), "%s%s", tmp_path, fileName);
+  if (strcmp(last, "1") == 0) {
+        snprintf(filePath, sizeof(filePath), "%s%s", tmp_path, relat_path);
         FILE *finalFile = fopen(filePath, "wb");
-        for (int i = 0; i < totalChunks; i++) {
+        for (int i = 0; i < index+1; i++) {
             char partPath[512];
-            snprintf(partPath, sizeof(partPath), "%s%s.part%d", tmp_path, fileName, i);
+            snprintf(partPath, sizeof(partPath), "%s%s.part%d", tmp_path, relat_path, i);
             FILE *partFile = fopen(partPath, "rb");
             while ((got = fread(buffer, 1, sizeof(buffer), partFile)) > 0) {
                 fwrite(buffer, 1, got, finalFile);
@@ -38,9 +46,6 @@ int cgiMain() {
             remove(partPath); 
         }
         fclose(finalFile);
-        char*dest_path=concat_path(base_path,nowpath);
-        char *new_name=file_exit(fileName,dest_path);
-        rename(concat_path(tmp_path,fileName),concat_path(dest_path,new_name));
     }     
     return 0;
 }

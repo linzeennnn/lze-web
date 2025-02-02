@@ -65,4 +65,5 @@ void copy (char *source,char *dest);// 复制文件
 long get_size(FILE *file);// 获取文件大小
 char *add_file_index(char *name,int index);// 给文件加序号
 int check_type(char *path);// 检测是文件还是目录还是符号链接(目录返回1文件返回2链接返回3其他返回0)
+void dir_p(char*path);//创建完整路径
 #endif
