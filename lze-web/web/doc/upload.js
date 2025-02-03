@@ -92,6 +92,7 @@ function uploadFolder() {
                     completedFiles++; // 增加已完成文件计数
                     if (completedFiles === totalFiles) {
                         loading(0);
+                        movefolder(foldername,nowpath);
                     }
                 }
             })
@@ -110,23 +111,27 @@ function uploadFolder() {
 }
 
 // 从temp移动文件夹
-function movefolder(foldername,folderpath){
-    fetch(`${protocol}//${ip}/code/Documents/move_folder.php`, {
+function movefolder(foldername, folderpath) {
+    fetch(`${protocol}//${ip}/server/doc/move_folder.cgi`, {
         method: 'POST',
-        body: new URLSearchParams({
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
             name: foldername,
             path: folderpath
         })
     })
     .then(response => response.text())
     .then(data => {
-       notify(data);
-       loadFolder(removeslash(folderpath));
+        notify("上传完成");
+        loadFolder(removeslash(folderpath));
     })
     .catch(error => {
         notify(error);
     });
 }
+
 // 上传文件
 function selfile() {
     ifroot();
