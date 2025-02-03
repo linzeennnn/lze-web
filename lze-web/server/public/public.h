@@ -11,6 +11,8 @@
 #include "cJSON.h"          // cJSON 库
 #include "cgic.h"           // cgic库
 #include <libgen.h>  // 包含 basename() 和 dirname() 函数
+#include <sys/sendfile.h>   //发送文件
+#include <fcntl.h>          //open函数,操作文件
 typedef struct FOLDER
 {
     char *name;

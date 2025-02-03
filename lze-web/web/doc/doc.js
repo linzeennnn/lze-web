@@ -217,16 +217,16 @@ window.addEventListener('scroll', handleScroll);
          listItem.appendChild(fileLink);
          listItem.appendChild(editbtn);
          listItem.appendChild(savebtn);
-         const downloadLink = document.createElement('a');
+         const downloadLink = document.createElement('div');
          downloadLink.className = 'downloadLink';
          downloadLink.classList.add('down-btn');
-         downloadLink.href = `${protocol}//${ip}/file/Documents/${data.currentFolder}/${name}`;
-         downloadLink.download=name;
+        //  downloadLink.href = `${protocol}//${ip}/file/Documents/${data.currentFolder}/${name}`;
+        //  downloadLink.download=name;
          downloadLink.title = `下载${name}`;
          downloadLink.textContent = `下载 ${name}`;
          downloadLink.addEventListener('click',()=>{
            event.stopPropagation(); 
-           notify("开始下载")
+           down_file(data.currentFolder,name)
          });
 
          listItem.appendChild(downloadLink);
@@ -413,7 +413,12 @@ function del() {
     });
   }
 }
-
+// 下载文件
+function down_file(path,name){
+  path=path+'/'+name
+window.location.href = `${protocol}//${ip}/server/doc/download_file.cgi?file_path=${path}`
+notify("开始下载")
+}
 
 let pastestatus;
 let copyarray=[];
