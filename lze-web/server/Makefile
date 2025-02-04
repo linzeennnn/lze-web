@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -O0 -g
+CFLAGS = -Wall -O2 -g
 SRC_DIR = .
 PUBLIC_SRC = $(SRC_DIR)/public/*
 OUT_EXT = .cgi
