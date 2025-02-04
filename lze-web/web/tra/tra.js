@@ -124,7 +124,7 @@ window.addEventListener('scroll', handleScroll);
     });
       fetchnologin(response);
       const data = await response.json();
-
+      const file_array = data.file_list[0];
       const fileList = document.getElementById('fileList');
       fileList.innerHTML = '';
 
@@ -133,38 +133,16 @@ window.addEventListener('scroll', handleScroll);
       
       pathlen(currentPath, fullPath);
       currentPath.title = fullPath;
-
-      data.folders.forEach(folder => {
-          const listItem = document.createElement('li');
-          listItem.className = 'files';
-          const folderLink = document.createElement('span');
-          folderLink.textContent = folder;
-          folderLink.classList.add('folderLink', 'filename');
-
-          listItem.addEventListener('click', function() {
-              select(listItem, 2);
-          });
-          folderLink.addEventListener('click', function (event) {
-              event.stopPropagation(); 
-              if (event.target.isContentEditable) {
-                  return; 
-              }
-              loadFolder(data.currentFolder ? data.currentFolder + '/' + folder : folder);
-          });
-
-          listItem.appendChild(folderLink);
-          fileList.appendChild(listItem);
-      });
-
-      data.files.forEach(file => {
+      for (const [name, type] of Object.entries(file_array)) {
+        if(type==="file"||type==="link_file"){
           const listItem = document.createElement('li');
           listItem.className = 'files';
           const fileLink = document.createElement('span');
-          const Src = `${protocol}//${ip}/file/trash/` + (data.currentFolder ? data.currentFolder + '/' + file : file);
+          const Src = `${protocol}//${ip}/file/trash/` + (data.currentFolder ? data.currentFolder + '/' + name : name);
           const fileListContainer = document.getElementById('fileListContainer');
-          fileLink.textContent = file;
+          fileLink.textContent = name;
           fileLink.classList.add('fileLink', 'filename');
-          fileLink.title = `预览${file}`;
+          fileLink.title = `预览${name}`;
           
           listItem.addEventListener('click', function() {
               select(listItem, 1);
@@ -178,16 +156,38 @@ window.addEventListener('scroll', handleScroll);
               nowpath = fullPath;
               let rootpath = `${protocol}//${ip}/file/trash/`;
               if (nowpath === "/") {
-                  filepath = rootpath + file;
+                  filepath = rootpath + name;
               } else {
-                  filepath = rootpath + nowpath + file;
+                  filepath = rootpath + nowpath + name;
               }
               window.location.href = filepath;
           });
 
           listItem.appendChild(fileLink);
+          fileList.appendChild(listItem);    
+        }
+        if(type==="folder"||type==="link_dir"){
+          const listItem = document.createElement('li');
+          listItem.className = 'files';
+          const folderLink = document.createElement('span');
+          folderLink.textContent = name;
+          folderLink.classList.add('folderLink', 'filename');
+
+          listItem.addEventListener('click', function() {
+              select(listItem, 2);
+          });
+          folderLink.addEventListener('click', function (event) {
+              event.stopPropagation(); 
+              if (event.target.isContentEditable) {
+                  return; 
+              }
+              loadFolder(data.currentFolder ? data.currentFolder + '/' + name : name);
+          });
+
+          listItem.appendChild(folderLink);
           fileList.appendChild(listItem);
-      });
+        }
+      }
 
       // 处理返回上级目录按钮
       const upButton = document.getElementById('upButton');

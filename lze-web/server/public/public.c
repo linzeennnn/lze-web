@@ -542,6 +542,61 @@ void copy (char *source_path,char *dest_path){
     fclose(dest);
     free(buffer);
 }
+//复制链接
+void copy_symlink(const char* source, const char* dest) {
+    char target[1024];
+    ssize_t len = readlink(source, target, sizeof(target) - 1);
+    if (len == -1) {
+        perror("readlink");
+        return;
+    }
+    target[len] = '\0';
+    
+    if (symlink(target, dest) == -1) {
+        perror("symlink");
+    }
+}
+//复制目录
+void cp_dir(char*source,char*dest){
+    mkdir(dest, 0755);
+    printf("%s\n",dest);
+    // folder_list *folder=(folder_list*)malloc(sizeof(folder_list));
+    // file_list* file=(file_list*)malloc(sizeof(file_list));
+    // link_file*link_fi=(link_file*)malloc(sizeof(link_file));
+    // link_dir*link_fo=(link_dir*)malloc(sizeof(link_dir));
+    // folder_list *folder_count=(folder_list*)malloc(sizeof(folder_list));
+    // file_list* file_count=(file_list*)malloc(sizeof(file_list));
+    // link_file* link_file_count = (link_file*)malloc(sizeof(link_file));
+    // link_dir* link_dir_count = (link_dir*)malloc(sizeof(link_dir));
+    // folder->next=NULL;
+    // file->next=NULL;
+    // link_fi->next=NULL;
+    // link_fo->next=NULL;
+    // list_directory(source,folder,file,link_fo,link_fi);
+    // folder_count=folder->next;
+    // file_count=file->next; 
+    // link_file_count=link_fi->next;
+    // link_dir_count=link_fo->next;
+    // while (file_count!=NULL)
+    // {   
+    //     copy(concat_path(source,file_count->name),concat_path(concat_path(dest,"/"),file_count->name));
+    //     file_count=file_count->next;
+    // }
+    // while (link_file_count != NULL) {
+    //     copy_symlink(concat_path(source, link_file_count->name), concat_path(concat_path(dest, "/"), link_file_count->name));
+    //     link_file_count = link_file_count->next;
+    // }
+    // while (link_dir_count != NULL) {
+    //     copy_symlink(concat_path(source, link_dir_count->name), concat_path(concat_path(dest, "/"), link_dir_count->name));
+    //     link_dir_count = link_dir_count->next;
+    // }
+    // while (folder_count!=NULL)
+    // {
+    //     cp_dir(concat_path(source,concat_path(folder_count->name,"/")),concat_path(concat_path(dest,"/"),folder_count->name));
+    //     folder_count=folder_count->next;
+    // }
+}
+   
 // 获取文件大小
 long get_size(FILE *file){
     fseek(file,0,SEEK_END);
@@ -595,4 +650,47 @@ struct stat st;
         dir_p(dirname(par_path));
         mkdir(path,0755);
     }
+}
+// 删除目录
+void delete_directory(char *base_path) {
+    base_path=concat_path(base_path,"/");
+     folder_list *folder_head = (folder_list*)malloc(sizeof(folder_list));
+    file_list *file_head = (file_list*)malloc(sizeof(file_list));
+    link_dir *link_dir_head = (link_dir*)malloc(sizeof(link_dir));
+    link_file *link_file_head = (link_file*)malloc(sizeof(link_file));
+    folder_head->next = NULL;
+    file_head->next = NULL;
+    link_dir_head->next = NULL;
+    link_file_head->next = NULL;
+    folder_list *folder;
+    file_list *file;
+    link_dir *link_dir;
+    link_file *link_file;
+    list_directory(base_path,folder_head,file_head,link_dir_head,link_file_head);
+    file=file_head->next;
+    folder=folder_head->next;
+    link_dir=link_dir_head->next;
+    link_file=link_file_head->next;
+    while (file!=NULL)
+    {
+        remove(concat_path(base_path,file->name));
+        file=file->next;
+    }
+    while (link_dir!=NULL)
+    {
+        remove(concat_path(base_path,link_dir->name));
+        link_dir=link_dir->next;
+    }
+    while (link_file!=NULL)
+    {
+        remove(concat_path(base_path,link_file->name));
+        link_file=link_file->next;
+    }
+    while (folder!=NULL)
+    {   
+        delete_directory(concat_path(base_path,folder->name));
+        rmdir(concat_path(base_path,folder->name));
+        folder=folder->next;
+    }
+    rmdir(base_path);
 }

@@ -12,6 +12,8 @@
         "text_encoding": "c",
         "typeinfo": "c",
         "list": "c",
-        "stdarg.h": "c"
+        "stdarg.h": "c",
+        "sendfile.h": "c",
+        "libgen.h": "c"
     }
 }

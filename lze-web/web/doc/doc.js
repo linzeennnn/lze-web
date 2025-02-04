@@ -220,13 +220,11 @@ window.addEventListener('scroll', handleScroll);
          const downloadLink = document.createElement('div');
          downloadLink.className = 'downloadLink';
          downloadLink.classList.add('down-btn');
-        //  downloadLink.href = `${protocol}//${ip}/file/Documents/${data.currentFolder}/${name}`;
-        //  downloadLink.download=name;
          downloadLink.title = `下载${name}`;
          downloadLink.textContent = `下载 ${name}`;
          downloadLink.addEventListener('click',()=>{
            event.stopPropagation(); 
-           down_file(data.currentFolder,name)
+           download(data.currentFolder,name,"file")
          });
 
          listItem.appendChild(downloadLink);
@@ -243,7 +241,9 @@ window.addEventListener('scroll', handleScroll);
          downbtn.addEventListener('click',function(){
 
           event.stopPropagation(); 
-          downfolder(listItem);
+          if (confirm(`确定要下载`+name+'吗?')) {
+          download(data.currentFolder,name,"folder")
+          }
         });
          editbtn.className='edit li-btn';
          editbtn.title = `重命名`;
@@ -413,13 +413,32 @@ function del() {
     });
   }
 }
-// 下载文件
-function down_file(path,name){
-  path=path+'/'+name
-window.location.href = `${protocol}//${ip}/server/doc/download_file.cgi?file_path=${path}`
-notify("开始下载")
+// 下载
+function download(path,name,type){
+  switch(type){
+  case "file":
+      path=path+'/'+name
+      window.location.href = `${protocol}//${ip}/server/doc/download_file.cgi?file_path=${path}`
+      notify("开始下载")
+      break;
+  case "folder":
+    path=path+'/'+name
+    const zip_name=name+'.zip'
+      fetch(`${protocol}//${ip}/server/doc/zip_folder.cgi`,{
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json" 
+    },
+    body: JSON.stringify({ folder_path: path }) 
+      })
+      .then(() => {
+      window.location.href = `${protocol}//${ip}/server/doc/down_zip.cgi?file_path=${zip_name}`
+      notify("开始下载")
+    })
+    .catch(error => console.error("请求失败:", error));
+      break;
+  }
 }
-
 let pastestatus;
 let copyarray=[];
 // 复制
@@ -457,6 +476,7 @@ switch (pastestatus){
  case 1:{
   access();
   pageloading(1);
+  console.log(JSON.stringify(requestData))
  fetch(`${protocol}//${ip}/server/doc/copy.cgi`, {
    method: 'POST',
    headers: {

@@ -33,7 +33,7 @@ arch(){
   back_path="/etc/httpd/conf/httpd_back.conf"
   if [ ! -e "$back_path" ]; then
        if [ "$os_type" == "desktop" ]; then
-      sudo pacman -S apache php-apache make gcc brightnessctl playerctl
+      sudo pacman -S apache php-apache make gcc brightnessctl playerctl zip
       sudo mv $path $back_path
       sudo cp "config/arch/httpd.conf" $path
      sudo sed -i "s/lze-web-user/$user/g" $path
@@ -48,10 +48,10 @@ fi
 
 }
 redhat(){
-  sudo yum install -y httpd php make gcc
+  sudo yum install -y httpd php make gcc zip
 }
 debian(){
-  sudo apt install -y php apache2 make gcc
+  sudo apt install -y php apache2 make gcc zip
 }
 install(){
   switch_type
