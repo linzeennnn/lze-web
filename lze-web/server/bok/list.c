@@ -15,7 +15,7 @@ int main() {
     cJSON_AddItemToArray(note_list, item);
     note=note->next;
     }
-    char *printed_json = cJSON_Print(note_list);
+    char *printed_json = cJSON_PrintUnformatted(note_list);
     http_out(1,"%s\n",printed_json);
     return 0;
 }

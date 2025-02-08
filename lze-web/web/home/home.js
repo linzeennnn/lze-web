@@ -124,7 +124,7 @@ function comin(){
     widget("all");
 doc_path = `web/doc/doc.html#${ip}`;
 pic_path = `web/pic/pic.html#${ip}`;
-mon_path = `web/mon/monitor.html#${ip}`;
+mon_path = `web/mon/mon.html#${ip}`;
 tra_path = `web/tra/tra.html#${ip}`; 
 not_path = `web/not/not.html#${ip}`;
 bok_path = `web/bok/bok.html#${ip}`;

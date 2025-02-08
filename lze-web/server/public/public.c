@@ -391,6 +391,7 @@ char* read_file(char*path){
     }
     fread(content,1,size,file);
     fclose(file);
+    content[size]='\0';
     return content;
 }
 // 去除后缀

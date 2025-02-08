@@ -2,6 +2,7 @@
 #define PBU_H
 #include <stdio.h>          // 标准输入输出
 #include <time.h>           // 时间处理
+#include <utime.h>          //更新时间
 #include <stdlib.h>         // 内存管理、程序退出等
 #include <dirent.h>         // 目录操作
 #include <sys/stat.h>       // 文件状态

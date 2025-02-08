@@ -89,7 +89,7 @@ while (*disk_out!=' ')
 }
 *disk_out='\0';
 cJSON_AddStringToObject(data, "total", total);
-char*all_data=cJSON_Print(data);
+char*all_data=cJSON_PrintUnformatted(data);
 http_out(1,"%s\n", all_data);
     return 0;
 }

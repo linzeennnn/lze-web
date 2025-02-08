@@ -14,6 +14,7 @@
         "list": "c",
         "stdarg.h": "c",
         "sendfile.h": "c",
-        "libgen.h": "c"
+        "libgen.h": "c",
+        "fcntl.h": "c"
     }
 }

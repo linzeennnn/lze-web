@@ -44,7 +44,7 @@ void list_all(char *base_path) {
     cJSON_AddItemToObject(output,"file_list",file_list);
     cJSON_AddItemToObject(output, "currentFolder", cJSON_CreateString(current_folder));
     cJSON_AddItemToObject(output, "parentFolder", cJSON_CreateString(parent_folder));
-    char *printed_json = cJSON_Print(output);
+    char *printed_json = cJSON_PrintUnformatted(output);
     http_out(1, "%s\n", printed_json);
     free(dest_path);
 }

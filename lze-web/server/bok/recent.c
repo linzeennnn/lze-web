@@ -6,8 +6,10 @@ int main() {
     cJSON *rec_json = cJSON_Parse(post_data);
     cJSON *fileName=cJSON_GetObjectItem(rec_json, "filename");
     char *name=concat_path(base_path,fileName->valuestring);
-    FILE *bookmark=fopen(name,"w");
-    fclose(bookmark);
+    struct utimbuf new_times;
+    new_times.actime = time(NULL);  
+    new_times.modtime = time(NULL); 
+    utime(name, &new_times);
     printf("Content-Type: text/html\n\n");
     return 0;
 }

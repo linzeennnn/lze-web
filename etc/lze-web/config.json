@@ -1,0 +1,120 @@
+{
+	"user":	{
+		"admin":	{
+			"token":	"xxx",
+			"tokentime":	"never",
+			"password":	"12345"
+		},
+		"lze":	{
+			"token":	"kkk",
+			"tokentime":	"111y",
+			"password":	"ggg"
+		},
+		"visitor":	{
+		}
+	},
+	"control":	{
+		"home":	{
+			"name":	"主页",
+			"action":	{
+				"download":	{
+					"name":	"预览文件",
+					"user":	["admin", "visitor"]
+				},
+				"viewnote":	{
+					"name":	"预览便签",
+					"user":	[]
+				}
+			}
+		},
+		"doc":	{
+			"name":	"文件",
+			"action":	{
+				"download":	{
+					"name":	"下载文件文件夹",
+					"user":	["admin", "lze"]
+				},
+				"copy":	{
+					"name":	"复制文件",
+					"user":	[]
+				},
+				"move":	{
+					"name":	"移动文件",
+					"user":	["admin", "lze"]
+				},
+				"rename":	{
+					"name":	"重命名",
+					"user":	["admin", "lze"]
+				},
+				"upload":	{
+					"name":	"上传文件",
+					"user":	["admin"]
+				},
+				"delete":	{
+					"name":	"删除文件",
+					"user":	["admin"]
+				},
+				"newdir":	{
+					"name":	"新建文件夹",
+					"user":	[]
+				}
+			}
+		},
+		"pic":	{
+			"name":	"相册",
+			"action":	{
+				"upload":	{
+					"name":	"上传图片和视频",
+					"user":	["visitor", "admin"]
+				}
+			}
+		},
+		"tra":	{
+			"name":	"回收站",
+			"action":	{
+				"clean":	{
+					"name":	"清空回收站",
+					"user":	["admin"]
+				},
+				"recover":	{
+					"name":	"恢复文件",
+					"user":	["admin"]
+				}
+			}
+		},
+		"not":	{
+			"name":	"便签",
+			"action":	{
+				"edit":	{
+					"name":	"编辑便签",
+					"user":	[]
+				},
+				"delete":	{
+					"name":	"删除便签",
+					"user":	[]
+				},
+				"newnote":	{
+					"name":	"添加便签",
+					"user":	[]
+				},
+				"upload":	{
+					"name":	"上传便签",
+					"user":	[]
+				}
+			}
+		},
+		"bok":	{
+			"name":	"书签",
+			"action":	{
+				"delete":	{
+					"name":	"删除书签",
+					"user":	[]
+				},
+				"newbok":	{
+					"name":	"添加书签",
+					"user":	["admin"]
+				}
+			}
+		}
+	}
+}
