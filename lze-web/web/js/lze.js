@@ -1,25 +1,3 @@
-const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
-// notify
-function notify(text) {
-  const notify = document.createElement('div');
-  notify.id = 'notify';
-  const notifytext = document.createElement('span');
-  notifytext.id = 'notifytext';
-  notifytext.innerText = text;
-  notify.appendChild(notifytext);
-  notify.classList.add("main");
-  document.body.appendChild(notify);
-  setTimeout(function () {
-    notify.style.opacity = '1';
-    notify.style.top='5px';
-  }, 10);
-  setTimeout(function () {
-    notify.style.opacity = '';
-    setTimeout(function () {
-      document.body.removeChild(notify);
-    }, 1000);
-  }, 1000);
-}
 // reload
 function reloadPage() {
     location.reload();
@@ -37,24 +15,6 @@ function totop() {
     return window.location.hash.substring(1); 
 }
 ip = getip();
-token =localStorage.getItem(`authToken_${ip}`)
-// login status
-function loginstatus(){
-  if(!getip()){
-    ip = window.location.hostname;
-    }
-    else {
-    ip =getip();
-    }
-    // 本地打开html
-    if(ip==''){
-      logstatus=0;
-    }else if(ip!=''){
-      logstatus=1;
-      checklogin(0); 
-    }
-  ipstatus();
-}
 // desktop notify
 async function desktopnot(title, content, fileName, finalFilePath){
   const data = new URLSearchParams();

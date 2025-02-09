@@ -102,4 +102,40 @@ void err_401(){
     printf("Status: 401 Unauthorized\r\n");
     printf("Content-Type: text/html\r\n");
     printf("\r\n");
+        exit(0);
+}
+//检测token
+void check_token(char *user,char*token){
+    user_data*data=get_user_all(user);
+    if(!check_time(data->token,data->token_time)||strcmp(token,data->token)!=0){
+        err_401();
+    }
+}
+//检测操作
+void check_action(char*user,char*token,char*control,char*action){
+check_token(user,token);
+int permit=0;
+    char *config_path="/etc/lze-web/config.json";
+    char *config=read_file(config_path);
+    cJSON *json_config=cJSON_Parse(config);
+     cJSON *json_control_list=cJSON_GetObjectItem(json_config,"control");
+     cJSON *json_control=cJSON_GetObjectItem(json_control_list,control);
+     cJSON *json_action_list=cJSON_GetObjectItem(json_control,"action");
+     cJSON *json_action=cJSON_GetObjectItem(json_action_list,action);
+     cJSON *vaild_user=cJSON_GetObjectItem(json_action,"user");
+     cJSON*username=NULL;
+     cJSON_ArrayForEach(username,vaild_user){
+        if (strcmp(username->valuestring,user)==0)
+            permit=1;
+     }
+     switch (permit)
+     {
+     case 0:
+        err_401();
+        break;
+     case 1:
+        printf("Content-Type: text/html\n\n");
+        break;
+     }
+
 }

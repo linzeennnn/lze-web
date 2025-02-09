@@ -84,4 +84,6 @@ char *gen_token();//生成token/
 user_data *get_user_all(char *user);//获取用户所有数据
 void update_token(char*user,char*token);// 更新token
 void err_401();//401
+void check_token(char *user,char*token);//验证token
+void check_action(char*user,char*token,char*control,char*action);//检查操作权限
 #endif

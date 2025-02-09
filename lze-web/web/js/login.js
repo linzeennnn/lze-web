@@ -25,13 +25,20 @@ function send_pass(user, pass) {
     })
     .then(data => {
         notify("已登陆");
-        console.log("Token:", data.token);
+        localStorage.setItem("user", user);
+        localStorage.setItem("token", data.token);
+        reloadPage();
     })
     .catch(error => {
         console.error("Error:", error);
     });
 }
-
+function log_out() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    notify("已登出");
+    reloadPage()
+}
     function loginwindow(){
         const loginBox = document.createElement('div');
         loginBox.id = 'login-box';
@@ -63,15 +70,22 @@ function send_pass(user, pass) {
         userName.id = 'user-name';
         userName.classList.add('log-switch-span');
         userName.title = '切换用户';
-        userName.textContent = 'admin';
-        
+        userName.textContent = user;
+        const logoutbtn=document.createElement('div');
+        logoutbtn.id="logout";
+        logoutbtn.title="退出登陆";
+        logoutbtn.onclick=function(){
+            if(confirm("确定退出登陆吗")){
+            log_out();
+            }
+        }
         logTitBox.appendChild(ipBox);
         ipBox.appendChild(ipIcon);
         ipBox.appendChild(ipBar);
         logTitBox.appendChild(userBox);
         userBox.appendChild(userIcon);
         userBox.appendChild(userName);
-        
+        logTitBox.appendChild(logoutbtn);
         const loginOptBox = document.createElement('div');
         loginOptBox.id = 'login-opt-box';
         

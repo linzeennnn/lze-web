@@ -1,23 +1,4 @@
-// notify
-function notify(text) {
-  const notify = document.createElement('div');
-  notify.id = 'notify';
-  const notifytext = document.createElement('span');
-  notifytext.id = 'notifytext';
-  notifytext.innerText = text;
-  notify.appendChild(notifytext);
-  document.body.appendChild(notify);
-  setTimeout(function () {
-    notify.style.opacity = '1';
-    notify.style.top='5px';
-  }, 10);
-  setTimeout(function () {
-    notify.style.opacity = '';
-    setTimeout(function () {
-      document.body.removeChild(notify);
-    }, 1000);
-  }, 1000);
-}
+
 // 锁屏
 function lock(status){
   const live2d=document.getElementById('live2d-widget');
@@ -120,7 +101,6 @@ function comin(){
 }
     document.querySelector(`.name`).style.width='200px';
     document.addEventListener('click', handleDocumentClick);
-    access();
     widget("all");
 doc_path = `web/doc/doc.html#${ip}`;
 pic_path = `web/pic/pic.html#${ip}`;
@@ -143,9 +123,6 @@ event.preventDefault();
 }, { passive: false });
 
 function reloadPage() {
-if(logstatus=='1'){
-location.hash = `#${ip}`;
-} 
 location.reload();
 }
 

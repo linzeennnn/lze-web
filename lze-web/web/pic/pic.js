@@ -83,7 +83,6 @@ window.addEventListener('scroll', handleScroll);
 
 
  function comin(){
-  access();
  loadFolder();
  theme(mode,"blue")
  document.querySelector('.backbtn').style.left='5%';
@@ -91,7 +90,6 @@ window.addEventListener('scroll', handleScroll);
  document.getElementById('option-bar').style.left='0';
  document.getElementById('option-bar').style.opacity='1';
      document.getElementById('top-bar').style.top = `77px`;
-     loginstatus();
    };
    window.onload = comin;
  function goBack() {
@@ -167,8 +165,6 @@ async function loadFolder(folder = '') {
       },
       body: JSON.stringify({ folder: folder }),
     });
-    
-    fetchnologin(response);
     const data = await response.json();
     let phoindex = 0, vidindex = 0;
     phonum = 1;
@@ -526,7 +522,6 @@ loading(1);
       fd.append('nowpath', nowpath); // 传递 nowpath 变量
       var xhr = new XMLHttpRequest();
       xhr.open('POST', `${protocol}//${ip}/server/pic/upload.cgi`, true);
-      xmltoken(xhr);
       xhr.upload.onprogress = function (ev) {
           if (ev.lengthComputable) {
               var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
@@ -536,7 +531,6 @@ loading(1);
           }
       };
       xhr.onload = function () {
-          xmlnologin(xhr);
           if (xhr.status === 200) {
               currentChunks[fileIndex]++;
               if (currentChunks[fileIndex] < totalChunks[fileIndex]) {

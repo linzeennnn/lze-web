@@ -102,7 +102,6 @@ window.addEventListener('scroll', handleScroll);
         document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';
         document.getElementById(`notes`).style.right='0px';
-        loginstatus();
     };
 
     window.onload = comin;

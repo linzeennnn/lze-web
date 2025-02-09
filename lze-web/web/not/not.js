@@ -80,7 +80,6 @@ window.addEventListener('scroll', handleScroll);
         document.getElementById('option-bar').style.left='0';
         document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';
-      loginstatus();
     };
 
     window.onload = comin;
@@ -100,9 +99,8 @@ async function readfile(file) {
 }
 async function getnote() {
     const timestamp = new Date().getTime(); // 获取当前时间戳
-    const response = await fetch(`${protocol}//${ip}/server/not/list.cgi`, fetchtoken());
+    const response = await fetch(`${protocol}//${ip}/server/not/list.cgi`);
     const noteFiles = await response.json();
-    fetchnologin(response);
     return noteFiles;
 }
     async function creatnote() {
@@ -286,7 +284,7 @@ async function getnote() {
             newContent: text.innerText
         };
     
-        try {console.log(data)
+        try {
                 const response = await fetch(`${protocol}//${ip}/server/not/${file}`, {
                 method: 'POST',
                 headers: {
@@ -295,8 +293,6 @@ async function getnote() {
                 },
                 body: JSON.stringify(data)
             });
-    
-            fetchnologin(response);
             if (response.status !== 401) {
                 reloadnote();
                 title.value = '';
@@ -412,7 +408,6 @@ function selfile() {
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', `${protocol}//${ip}/server/not/upload.cgi`, true);
-    xmltoken(xhr);
     xhr.upload.onprogress = function(ev) {
         if (ev.lengthComputable) {
             var percent = 100 * ev.loaded / ev.total;
@@ -424,7 +419,6 @@ function selfile() {
 
     xhr.onload = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            xmlnologin(xhr);
             if (xhr.status != 401) {
                 notify("添加成功");
                 reloadnote();

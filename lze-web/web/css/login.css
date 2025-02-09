@@ -102,3 +102,16 @@
     flex-direction: column;
     display: flex;
 }
+#logout{
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background-image: url(../../icon/logout_grey.svg);
+}
+#logout:hover{
+    background-color: #4575758f;
+}

@@ -4,6 +4,10 @@ int main() {
     char post_data[1024];
     int post_len = post(post_data, sizeof(post_data));
     cJSON *rec_json = cJSON_Parse(post_data);
+    
+    char*user=cJSON_GetObjectItem(rec_json, "user")->valuestring;
+    char*token=cJSON_GetObjectItem(rec_json, "token")->valuestring;
+    check_action(user,token,"doc","rename");
     cJSON *oldpath=cJSON_GetObjectItem(rec_json, "oldpath");
     cJSON *newpath = cJSON_GetObjectItem(rec_json, "newpath");
     char*source=concat_path(base_path,oldpath->valuestring);

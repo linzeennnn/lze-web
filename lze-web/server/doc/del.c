@@ -5,7 +5,12 @@ int main() {
     char *data_path="../../file/data/deleted_metadata.json";
     char post_data[1048576];
     int post_len = post(post_data, sizeof(post_data));
+
     cJSON *rec_json = cJSON_Parse(post_data);
+
+    char *user=cJSON_GetObjectItem(rec_json, "user")->valuestring;
+    char *token=cJSON_GetObjectItem(rec_json, "token")->valuestring;
+    check_action(user,token,"doc","delete");
     cJSON *dellist=cJSON_GetObjectItem(rec_json, "dellist");
     cJSON *dellist_array = cJSON_Parse(dellist->valuestring);
     char *data_json=read_file(data_path);

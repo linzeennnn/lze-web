@@ -1,4 +1,71 @@
 let winstatus=0,curwin;
+const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
+let user=localStorage.getItem("user");
+let token=localStorage.getItem("token");
+let ip=window.location.hostname;
+if(!user){
+    user='visitor';
+}
+// notify
+function notify(text) {
+    const notify = document.createElement('div');
+    notify.id = 'notify';
+    const notifytext = document.createElement('span');
+    notifytext.id = 'notifytext';
+    notifytext.innerText = text;
+    notify.appendChild(notifytext);
+    document.body.appendChild(notify);
+    setTimeout(function () {
+      notify.style.opacity = '1';
+      notify.style.top='5px';
+    }, 10);
+    setTimeout(function () {
+      notify.style.opacity = '';
+      setTimeout(function () {
+        document.body.removeChild(notify);
+      }, 1000);
+    }, 1000);
+  }
+// token验证
+async function auth(){
+    const auth = {
+        name: user,
+        token: token
+    };
+    try {
+        const response = await fetch(`${protocol}//${ip}/server/login/auth_status.cgi`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(auth)
+        });
+
+        if (response.status==401) {
+            notify("登陆过期");
+            log_out();
+            throw new Error(`错误`);
+        }
+       else if (!response.ok) {
+        notify(`${response.status}错误`);
+        log_out();
+        throw new Error(`HTTP 错误！状态码: ${response.status}`);
+        }
+        else
+        {
+            notify("登陆用户"+user)
+        }
+    } catch (error) {
+        console.error("请求失败:", error);
+        return null;
+    }
+}
+if(user!="visitor"){
+auth();
+}
+else{
+    notify("访客登陆")
+}
 // 颜色
 const metacolor = {
     dark: {

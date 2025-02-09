@@ -74,7 +74,6 @@ function handleScroll() {
 window.addEventListener('scroll', handleScroll);
 
  function comin(){
-   access();
  loadFolder();
  theme(mode,"orange")
  document.querySelector('.backbtn').style.left='5%';
@@ -82,7 +81,6 @@ window.addEventListener('scroll', handleScroll);
  document.getElementById('option-bar').style.left='0';
  document.getElementById('option-bar').style.opacity='1';
      document.getElementById('top-bar').style.top = `77px`;
-     loginstatus();
    };
    window.onload = comin;
  function goBack() {
@@ -122,7 +120,6 @@ window.addEventListener('scroll', handleScroll);
       },
       body: JSON.stringify({ folder: folder }),
     });
-      fetchnologin(response);
       const data = await response.json();
       const file_array = data.file_list[0];
       const fileList = document.getElementById('fileList');
@@ -248,7 +245,6 @@ function ifroot(){
 }
 // 恢复
 function recover() {
-  access();
   ifroot()
     fetch(`${protocol}//${ip}/server/tra/recover.cgi`, {
       method: 'POST',

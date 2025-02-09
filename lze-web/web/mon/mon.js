@@ -101,7 +101,6 @@ window.addEventListener('scroll', handleScroll);
         document.getElementById('option-bar').style.opacity='1';
       document.querySelector('.backbtn').style.left = '5%';
         document.getElementById(`notes`).style.right='0px';
-        loginstatus();
     };
 
     window.onload = comin;
@@ -125,7 +124,6 @@ function goBack() {
         return text;
     }
 // 获取配置
-let user;
 let time=null;
 async function get_data() {
   if(!user)

@@ -81,7 +81,6 @@ window.addEventListener('scroll', handleScroll);
  document.getElementById('option-bar').style.left='0';
  document.getElementById('option-bar').style.opacity='1';
      document.getElementById('top-bar').style.top = `77px`;
-     loginstatus();
    };
    window.onload = comin;
  function goBack() {
@@ -153,7 +152,6 @@ window.addEventListener('scroll', handleScroll);
     body: JSON.stringify({ folder: folder }) 
   })
  .then(response => {
-   fetchnologin(response)
    return response.json();
  })
      .then(data => {
@@ -359,12 +357,18 @@ function newfolder(status){
    fetch(`${protocol}//${ip}/server/doc/new_folder.cgi`, {
      method: 'POST',
      headers: {
-       'Authorization': 'Bearer ' + token,
          'Content-Type': 'application/json'
      },
-     body: JSON.stringify({ folderName, nowpath })
+     body: JSON.stringify({ folderName, nowpath,user,token })
  })
- .then(response => response.text())
+ .then(response => {
+  if (response.status === 401) {
+    notify("无新建文件夹权限")
+    pageloading(0)
+    throw new Error('未授权访问');
+  }
+  return response.text();  
+})
  .then(data => {
      loadFolder(removeslash(nowpath));
      namebar.value="";
@@ -381,22 +385,25 @@ function newfolder(status){
 }
 // 删除
 function del() {
-  access();
   if (confirm('确定要删除所选文件吗')) {
     ifroot();
     pageloading(1);
     const dellist = JSON.stringify(selectedarray);
     const requestData = { dellist: dellist };
+    requestData.user = user;
+    requestData.token = token;
+    console.log(JSON.stringify(requestData))
     fetch(`${protocol}//${ip}/server/doc/del.cgi`, {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestData),
     })
     .then(response => {
       if (response.status === 401) {
+        notify("无删除权限")
+        pageloading(0)
         throw new Error('未授权访问');
       }
       return response.text();  
@@ -469,23 +476,24 @@ function paste() {
  // 创建一个对象，包含 copylist 和 nowpath
  const requestData = {
    copylist: copylist,
-   nowpath: nowpath
+   nowpath: nowpath,
+   user: user,
+   token: token
  };
 switch (pastestatus){
  case 1:{
-  access();
   pageloading(1);
-  console.log(JSON.stringify(requestData))
  fetch(`${protocol}//${ip}/server/doc/copy.cgi`, {
    method: 'POST',
    headers: {
-     'Authorization': 'Bearer ' + token,
      'Content-Type': 'application/json',
    },
-   body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
+   body: JSON.stringify(requestData),  
  })
  .then(response => {
   if (response.status === 401) {
+    notify("无复制权限")
+    pageloading(0)
     throw new Error('未授权访问');
   }
   return response.text();  
@@ -501,18 +509,18 @@ switch (pastestatus){
  });}
  break;
  case 0:{
-  access();
   pageloading(1);
    fetch(`${protocol}//${ip}/server/doc/move.cgi`, {
      method: 'POST',
      headers: {
-       'Authorization': 'Bearer ' + token,
        'Content-Type': 'application/json',
      },
      body: JSON.stringify(requestData),  // 将对象转换为 JSON 字符串
    })
    .then(response => {
     if (response.status === 401) {
+      notify("无移动权限")
+      pageloading(0)
       throw new Error('未授权访问');
     }
     return response.text();  
@@ -603,15 +611,23 @@ files=fileitem.querySelector('.folderLink');
    fetch(`${protocol}//${ip}/server/doc/rename.cgi`, {
      method: 'POST',
      headers: {
-       'Authorization': 'Bearer ' + token,
          'Content-Type': 'application/json',
      },
      body: JSON.stringify({
+        user: user,
+        token: token,
          oldpath: oldpath,
          newpath: newpath
      }),
  })
- .then(response => response.text())
+ .then(response => {
+  if (response.status === 401) {
+    notify("无重命名权限")
+    pageloading(0)
+    throw new Error('未授权访问');
+  }
+  return response.text();  
+})
  .then(data => {
  loadFolder(removeslash(nowpath))
  editmode=0;

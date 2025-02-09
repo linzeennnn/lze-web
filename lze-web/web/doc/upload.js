@@ -171,7 +171,6 @@ function selfile() {
         fd.append('nowpath', nowpath); // 传递 nowpath 变量
         var xhr = new XMLHttpRequest();
         xhr.open('POST', `${protocol}//${ip}/server/doc/upload_file.cgi`, true);
-        xmltoken(xhr);
         xhr.upload.onprogress = function (ev) {
             if (ev.lengthComputable) {
                 var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
@@ -181,7 +180,6 @@ function selfile() {
             }
         };
         xhr.onload = function () {
-            xmlnologin(xhr);
             if (xhr.status === 200) {
                 currentChunks[fileIndex]++;
                 if (currentChunks[fileIndex] < totalChunks[fileIndex]) {

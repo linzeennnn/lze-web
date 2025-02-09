@@ -1,4 +1,5 @@
 async function widget() {
+    document.getElementById('ip-li').innerText=user;
     let doc = [1, 2, 3].map(i => document.getElementById(`doc-li${i}`));
     let not = [1, 2, 3].map(i => document.getElementById(`not-li${i}`));
     let mon = [1, 2, 3].map(i => document.getElementById(`mon-li${i}`));
@@ -68,18 +69,19 @@ function removeext(name){
 const app = document.querySelectorAll('.app');
 const widgetwid = new ResizeObserver(entries => {
     entries.forEach(entry => {
-        // 检查每个 'app' 元素的宽度
-        if (entry.contentRect.width < 400) {
-            const panel = entry.target.querySelectorAll('.panel');
-            panel.forEach(panel => {
-                panel.style.display = 'none';
-            });
-        } else {
-            const panel = entry.target.querySelectorAll('.panel');
-            panel.forEach(panel => {
-                panel.style.display = '';
-            });
-        }
+        requestAnimationFrame(() => { 
+            if (entry.contentRect.width < 400) {
+                const panel = entry.target.querySelectorAll('.panel');
+                panel.forEach(panel => {
+                    panel.style.display = 'none';
+                });
+            } else {
+                const panel = entry.target.querySelectorAll('.panel');
+                panel.forEach(panel => {
+                    panel.style.display = '';
+                });
+            }
+        });
     });
 });
 app.forEach(app => {
