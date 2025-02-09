@@ -22,7 +22,7 @@ async function widget() {
         if (data) {
             doc.forEach((el, index) => {
                 el.innerText = data[`doc${index + 1}`] || '';
-                el.title = "下载:" + (data[`doc${index + 1}`] || '');
+                el.title = "预览:" + (data[`doc${index + 1}`] || '');
                 el.style.display = '';
             });
 
@@ -164,23 +164,44 @@ notify(error);
 }
 // doc
 function doc(docu){
-    let file=docu.innerText;
-    if (file.endsWith('/')) {
+    const file=docu.innerText;
         const predoc= document.createElement('div');
         const loading = document.createElement('div');
         loading.classList.add('loading');
         predoc.id='pre-doc';
         predoc.appendChild(loading);
         widpage(1,predoc);
-        file = file.slice(0, -1);
-        downfolder(file,file)
-    } 
-    else {
-        const link = document.createElement('a');
-        link.download = file;
-        link.href = `${protocol}//${ip}/file/Documents/${file}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const data = {
+            name: file
+          };
+        fetch(`${protocol}//${ip}/server/home/doc_list.cgi`, {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+  .then(response => {
+    return response.json(); 
+  })
+  .then(data => {
+    if(data.type=="file"){
+        const iframe = document.createElement("iframe");
+        iframe.src = `${protocol}//${ip}/file/Documents/${file}`;
+        iframe.classList.add('file-preview');
+        predoc.appendChild(iframe);
     }
+    else if(data.type=="dir"){
+        data.list.forEach(item => {
+            const listpreview = document.createElement("div");
+            listpreview.innerText=item;
+            listpreview.classList.add("list-preview")
+            predoc.appendChild(listpreview);
+        });
+    }
+    loading.style.display='none';
+  })
+  .catch(error => {
+    notify(error);
+  });
 }

@@ -605,7 +605,6 @@ long get_size(FILE *file){
     return size;
 }
 // 检测是文件还是目录还是符号链接(目录返回1文件返回2链接返回3其他返回0)
-
 int check_type(char *path) {
     struct stat path_stat;
     if (lstat(path, &path_stat) != 0) {
@@ -623,19 +622,23 @@ int check_type(char *path) {
             perror("readlink");
             return 0; 
         }
-        target[len] = '\0';
+        target[len] = '\0'; 
         struct stat link_stat;
-        if (lstat(target, &link_stat) == 0) {
+        if (stat(target, &link_stat) == 0) {  
             if (S_ISDIR(link_stat.st_mode)) {
                 return 3; 
             } else if (S_ISREG(link_stat.st_mode)) {
                 return 4; 
+            } else {
+                return 5;  
             }
+        } else {
+            perror("stat failed");
+            return -1;  
         }
-        return 0; 
     }
-    else 
-        return 0;
+    
+    return 0;  // 未知类型
 }
 //创建完整路径 
 void dir_p(char*path){

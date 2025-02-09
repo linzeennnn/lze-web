@@ -16,8 +16,8 @@
   <link rel="stylesheet" href="web/css/public.css">
   <link rel="stylesheet" href="web/home/home.css">
   <link rel="stylesheet" href="web/home/app.css">
-  <link rel="stylesheet" href="web/css/password.css">
   <link rel="stylesheet" href="web/css/system.css">
+  <link rel="stylesheet" href="web/css/login.css">
   <link rel="stylesheet" href="web/css/theme.css">
 </head>
 
@@ -91,11 +91,11 @@
     </div>
   </div>
   <div id="dock">
-    <div class="dock-back app" draggable="true" id="login-btn" title="登陆管理" onclick="showlogin(3)">
+    <div class="dock-back app" draggable="true" id="login-btn" title="登陆管理" onclick="loginwindow()">
       <div class="dock-icon" id="login"></div>
       <div class="panel" id="log-panel">
         <li class="home-text">登陆ip</li>
-        <div class="panel-li home-text" id="ip-li" onclick="showlogin(3)"></div>
+        <div class="panel-li home-text" id="ip-li" onclick="loginwindow()"></div>
       </div>
       <span class="widget-title">登陆管理</span>
     </div>

@@ -49,7 +49,6 @@ function loginstatus(){
     // 本地打开html
     if(ip==''){
       logstatus=0;
-      showlogin(1);
     }else if(ip!=''){
       logstatus=1;
       checklogin(0); 

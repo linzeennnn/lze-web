@@ -74,7 +74,6 @@ function handleScroll() {
 window.addEventListener('scroll', handleScroll);
 
  function comin(){
-  access();
   theme(mode,'green');
  loadFolder();
  document.querySelector('.backbtn').style.left='5%';

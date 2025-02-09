@@ -45,6 +45,12 @@ typedef struct FILE_ARRAY
     char*type;
     struct FILE_ARRAY *next;
 }file_array;
+typedef struct USER_DATA
+{
+    char *token;
+    char *password;
+    char* token_time;
+}user_data;
 
 int post(char *data, int max_len);// 获取POST
 void list_directory(char *path, folder_list* folder_head, file_list* file_head, link_dir *link_dir_head, link_file *link_file_head); // 扫描目录
@@ -69,7 +75,13 @@ void cp_dir(char*source,char*dest);//复制目录
 void copy_symlink(const char* source, const char* dest);//复制链接
 long get_size(FILE *file);// 获取文件大小
 char *add_file_index(char *name,int index);// 给文件加序号
-int check_type(char *path);// 检测是文件还是目录还是符号链接(目录返回1文件返回2链接返回3其他返回0)
+int check_type(char *path);// 检测是文件还是目录还是符号链接(目录返回1文件返回2目录链接返回3文件链接返回4其他返回0)
 void dir_p(char*path);//创建完整路径
 void delete_directory(char *base_path);// 删除目录
+int check_time(char *save_token,char*save_time);//检查过期
+long get_time_stamp();//生成时间戳
+char *gen_token();//生成token/
+user_data *get_user_all(char *user);//获取用户所有数据
+void update_token(char*user,char*token);// 更新token
+void err_401();//401
 #endif

@@ -16,7 +16,7 @@ sideBox.id = 'side-box';
 const loginBtn = document.createElement('div');
 loginBtn.className = 'side-btn';
 loginBtn.title = '登陆';
-loginBtn.onclick = () => showlogin(3);
+loginBtn.onclick = () => loginwindow();
 loginBtn.innerHTML = '<div id="login"></div><span class="side-text">登陆</span>';
 
 // 创建主题按钮

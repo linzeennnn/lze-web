@@ -16,96 +16,7 @@ let enterip = null;
     host: [
     ]
 };
-creatlist();
-function showlogin(status){
-    ipstatus();
-    if(logstatus==0 && status!=0){
-        status=1;
-    }
-    else if(logstatus==1 && passtatus==0 && status!=0){
-        status=2
-    }
-    switch(status){
-        case 1:
-            if (enterpass) {
-                document.removeEventListener('keydown', enterpass); 
-            }
-            enterip = function(event) {
-                enter(1, event);
-            };
-            document.addEventListener('keydown', enterip);
-            notify("输入主机");
-            loginpage.style.display='flex';
-            passbar.style.opacity='';
-            hostbar.style.display='flex';
-            hostbox.style.display='flex';
-            backlogin.style.display='block';
-            setTimeout(function () { 
-            loginpage.style.opacity='1';
-            hostbar.style.opacity='1';
-            hostbox.style.opacity='1';
-            passbar.style.display='';
-            backlogin.style.opacity='1';
-            }, 10);
-            break;
-        case 2: 
-        if (enterip) {
-            document.removeEventListener('keydown', enterip);
-        }
-        enterpass = function(event) {
-            enter(2, event);
-        };
-        document.addEventListener('keydown', enterpass);
-            notify("输入密码");
-            hostbar.style.opacity='';
-            hostbox.style.opacity='';
-        loginpage.style.display='flex';
-        passbar.style.display='flex';
-        backlogin.style.display='block';
-            setTimeout(function () { 
-            hostbar.style.display='';
-            hostbox.style.display='';
-            loginpage.style.opacity='1';
-            passbar.style.opacity='1';
-            backlogin.style.opacity='1';
-            }, 10);
-            break;
-        case 3:
-            notify("已登陆");
-            loginpage.style.display='flex';
-            hostbar.style.display='';
-            passbar.style.display='';
-            hostbox.style.display='';
-            backlogin.style.display='block';
-            setTimeout(function () { 
-            loginpage.style.opacity='1';
-            hostbar.style.opacity='';
-            hostbox.style.opacity='';
-            passbar.style.opacity='';
-            backlogin.style.opacity='1';
-            }, 10);
-            break;
-         case 4:
-                reloadPage();
-                break;
-        case 0:
-            loginpage.style.opacity='';
-            passbar.style.opacity='';
-            hostbar.style.opacity='';
-            hostbox.style.display='';
-            backlogin.style.opacity='';
-        setTimeout(function () { 
-            loginpage.style.display='';
-            passbar.style.display='';
-            hostbox.style.opacity='';
-            hostbar.style.display='';
-            backlogin.style.display='';
-              }, 1000);
-           break;
 
-    }
-   
-}
 // 回车事件
 function enter(status,event){
     switch(status){
@@ -135,12 +46,10 @@ function access(){
         // 本地打开html
         if(ip==''){
           logstatus=0;
-          showlogin(1);
         }else if(ip!=''){
           logstatus=1;
           checklogin(0); 
         }
-      ipstatus();
 }
 function sendpass() {
     const password = btoa(document.getElementById('password').value);
@@ -184,15 +93,9 @@ function checklogin(status) {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     passtatus = 1;
-                    if (status == 0) {
-                        showlogin(0);
-                    } else if (status == 1) {
-                        showlogin(4);
-                    }
                 } else {
                     passtatus = 0;
                     loginicon();
-                    showlogin(2);
                 }
             }
         } 
@@ -244,7 +147,6 @@ function fetchnologin(response){
 // switch ip
 function switchip(){
     logstatus=0;
-    showlogin(1);
 }
 
 // check ip
@@ -278,56 +180,3 @@ function clearData() {
         creatlist();
     }
 }
-
-// 渲染 IP 列表
-function creatlist() {
-    const data = gethost();
-    const ipList = document.getElementById('ipList');
-    ipList.innerHTML = '';
-    data.host.forEach((savehost, index) => {
-        const hostbtn = document.createElement('li');
-        hostbtn.className = 'host-btn';
-        hostbtn.innerHTML = `${savehost} <button class="removehost" onclick="deletehost(${index})"></button>`;
-        hostbtn.addEventListener('click', function() {
-         ip = savehost; // 这里我们直接用savehost的值
-         logstatus=1;
-         checklogin(1);
-        });
-        ipList.appendChild(hostbtn);
-    });
-}
-
-// 添加 IP 地址
-function addhost() {
-    logstatus=0;
-    const ipinput = document.getElementById('ip-input');
-    const hostname = ipinput.value.trim();
-    if (hostname) {
-        const data = gethost();
-        if (!data.host.includes(hostname)) {
-            data.host.push(hostname);
-            savehost(data);
-            creatlist();
-        } 
-        connect();
-        ipinput.value = '';
-    } else {
-        alert('请输入一个有效的 IP 地址。');
-    }
-}
-
-// 删除 IP 地址
-function deletehost(index) {
-    const data = gethost();
-    data.host.splice(index, 1);
-    savehost(data);
-    creatlist();
-}
-
-// ipstatus
-function ipstatus(){
-    document.getElementById('ip-status').innerText=ip;
-    if (typeof ishome !== 'undefined' && ishome){
-    document.getElementById('ip-li').innerText=ip;
-    }
-    }
