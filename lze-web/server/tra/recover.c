@@ -5,6 +5,9 @@ int main() {
     char post_data[1048576];
     int post_len = post(post_data, sizeof(post_data));
     cJSON *rec_json = cJSON_Parse(post_data);
+    char*user=cJSON_GetObjectItem(rec_json, "user")->valuestring;
+    char*token=cJSON_GetObjectItem(rec_json, "token")->valuestring;
+    check_action(user,token,"tra","recover");
     cJSON *recover_list=cJSON_GetObjectItem(rec_json, "recover_list");
     char *data_json=read_file(data_path);
     cJSON *data=cJSON_Parse(data_json);

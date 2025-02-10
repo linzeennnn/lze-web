@@ -392,7 +392,6 @@ function del() {
     const requestData = { dellist: dellist };
     requestData.user = user;
     requestData.token = token;
-    console.log(JSON.stringify(requestData))
     fetch(`${protocol}//${ip}/server/doc/del.cgi`, {
       method: 'POST',
       headers: {

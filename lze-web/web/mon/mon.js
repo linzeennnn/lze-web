@@ -125,9 +125,10 @@ function goBack() {
     }
 // 获取配置
 let time=null;
+let monuser=user;
 async function get_data() {
-  if(!user)
-    user='visitor';
+  if(!monuser)
+    monuser='visitor';
   const save=document.getElementById("save");
     const monbox=document.getElementById("mon-box");
     const userbox=document.getElementById("user-box");
@@ -172,12 +173,12 @@ async function get_data() {
               act.title = '添加' + action[actkey].name + '权限';
           } else{
             action[actkey].user.forEach(permit =>{
-                if(user==permit){
+                if(monuser==permit){
                     act.classList.add("enable");
                     act.title='解除'+action[actkey].name+'权限';
                     return;
                 }
-                else if(!act.classList.contains('enable')&&user!=permit&&!act.classList.contains('disable')){
+                else if(!act.classList.contains('enable')&&monuser!=permit&&!act.classList.contains('disable')){
                   act.classList.add("disable");
                   act.title='添加'+action[actkey].name+'权限';
                 }
@@ -198,7 +199,7 @@ async function get_data() {
       }
       for (let key in userlist) {
         let username = document.createElement('div');
-        if(user==key){
+        if(monuser==key){
           time=userlist[key].tokentime;
         }
         username.id = key;  
@@ -206,13 +207,13 @@ async function get_data() {
         username.title='切换为:'+key; 
         username.className = 'username';   
         username.onclick = function() {
-          user=key;
+          monuser=key;
           get_data();
       };
         userbox.appendChild(username);
 
       }
-      switch_user(user,time);
+      switch_user(monuser,time);
     } catch (error) {
       console.error('请求失败:', error);
     }
@@ -290,14 +291,16 @@ function change_time(){
     alert('格式错误\n正确格式\n小时:数字+h\n天:数字+d\n月:数字+m\n年:数字+y\n永不过期:never')
     return;
   }
-  if(user=='visitor'){
+  if(monuser=='visitor'){
     notify('无登陆');
     return;
   }
   pageloading(1);
   const data = {
-    name: user,
-    time: timebar.value
+    name: monuser,
+    time: timebar.value,
+    token,
+    user
   };
   fetch(`${protocol}//${ip}/server/mon/date.cgi`, {
     method: 'POST', 
@@ -310,9 +313,16 @@ function change_time(){
     if (response.ok) {
       notify("已更新登陆期限");
       get_data();
-    } else {
-      console.error('请求失败，状态码:', response.status);
+    }else if (response.status === 401) {
+      notify("无权限修改")
+      pageloading(0)
+      throw new Error('未授权访问');
     }
+    else  {
+      pageloading(0)
+        notify(response.status+"错误")
+        throw new Error('未授权访问');
+      }
   })
   .catch((error) => {
     console.error('请求失败:', error);
@@ -333,7 +343,9 @@ function change_control(control,action,actel){
   else
     change="add";
 const data = {
-  name: user,
+  name: monuser,
+  token,
+  user,
   change: change,
   control: control,
   action: action
@@ -349,9 +361,17 @@ fetch(`${protocol}//${ip}/server/mon/update_act.cgi`, {
   if (response.ok) {
     notify("已更新权限");
     get_data();
-  } else {
-    console.error('请求失败，状态码:', response.status);
-  }
+  } 
+  else if (response.status === 401) {
+      notify("无权限修改")
+      pageloading(0)
+      throw new Error('未授权访问');
+    }
+    else  {
+      pageloading(0)
+        notify(response.status+"错误")
+        throw new Error('未授权访问');
+      }
 })
 .catch((error) => {
   console.error('请求失败:', error);

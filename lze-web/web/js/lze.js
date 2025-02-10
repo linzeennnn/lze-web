@@ -15,27 +15,6 @@ function totop() {
     return window.location.hash.substring(1); 
 }
 ip = getip();
-// desktop notify
-async function desktopnot(title, content, fileName, finalFilePath){
-  const data = new URLSearchParams();
-  data.append('title', title);
-  data.append('content', content);
-  data.append('fileName', fileName);
-  data.append('finalFilePath', finalFilePath);
-
-  try {
-      const response = await fetch(`${protocol}//${ip}/code/notify/notify.php`, {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + token,
-              'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: data.toString()
-      });
-  } catch (error) {
-      console.error('Fetch error:', error);
-  }
-}
 // 加载页
 const loadpage=document.createElement('div');
 const loadloop=document.createElement('div');

@@ -2,9 +2,12 @@
 int main(){
     char *config_path="/etc/lze-web/config.json";
     char *config=read_file(config_path);
-     char post_data[100];
+     char post_data[1024];
     int post_len = post(post_data, sizeof(post_data));
     cJSON *rec_json = cJSON_Parse(post_data);
+    char *user = cJSON_GetObjectItem(rec_json, "user")->valuestring;
+    char*token=cJSON_GetObjectItem(rec_json, "token")->valuestring;
+    check_action(user,token,"mon","change");
     char *name = cJSON_GetObjectItem(rec_json, "name")->valuestring;
     char *change=cJSON_GetObjectItem(rec_json, "change")->valuestring;
     char *action= cJSON_GetObjectItem(rec_json, "action")->valuestring;

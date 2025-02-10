@@ -540,7 +540,6 @@ function selfile() {
             uploadChunk(fileIndex + 1); // 上传下一个文件
             notify(`文件 ${file.name} 上传成功`);
             loadFolder(removeslash(nowpath));
-            desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
           }
         });
       } else if (response.status === 401) {

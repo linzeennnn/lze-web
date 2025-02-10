@@ -193,12 +193,25 @@ function delbok(name){
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: name }),
+        body: JSON.stringify({ name, user,token}),
     })
-    .then(data => {
-        notify("已删除")
-       getbok();
-    })
+    .then(response => {
+        if(response.ok){
+            notify("删除成功");
+            getbok();
+        }
+       else if (response.status === 401) {
+          notify("无删除权限")
+          pageloading(0)
+          throw new Error('未授权访问');
+        }
+        else  {
+            notify(response.status+"错误")
+            pageloading(0)
+            throw new Error('未授权访问');
+          }
+        return response.text();  
+      })
     .catch(error => {
         console.error('Error:', error);
     });
@@ -222,13 +235,26 @@ function newbok() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: name, text: text })
+        body: JSON.stringify({ name, text,user,token })
     })
-    .then(data => {
-        notify("添加成功");
-       getbok();
-    })
+    .then(response => {
+        if(response.ok){
+            notify("添加成功");
+            getbok();
+        }
+       else if (response.status === 401) {
+          notify("无添加权限")
+          pageloading(0)
+          throw new Error('未授权访问');
+        }
+        else  {
+            notify(response.status+"错误")
+            pageloading(0)
+            throw new Error('未授权访问');
+          }
+        return response.text();  
+      })
     .catch(error => {
-        notify(error);
+        console.log(error);
     });
 }

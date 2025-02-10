@@ -194,6 +194,7 @@ function selfile() {
     function uploadChunk(fileIndex) {
         if (fileIndex >= totalFiles) {
             loading(0);
+            document.getElementsByTagName('input')[0].value = '';
             return;
         }
 

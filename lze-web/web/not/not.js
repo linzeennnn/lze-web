@@ -395,7 +395,7 @@ function reloadnote(){
                     creatnote();
 }
 // upload file
-function selfile() {
+async function selfile() {
     var files = document.getElementsByTagName('input')[0].files;
     if (files.length === 0) {
         notify("请先选择文件");
@@ -404,52 +404,59 @@ function selfile() {
 
     document.getElementById('word-bar').style.display = 'none';
     document.getElementById('progress').style.display = 'block';
+    
     var fd = new FormData();
-
+    fd.append('user', user);
+    fd.append('token', token);
     for (var i = 0; i < files.length; i++) {
         var file = files[i];
-
         // 检查文件大小是否超过2MB
-        if (file.size >  1024 * 1024) {
+        if (file.size > 1024 * 1024) {
             notify("文件不能超过2MB");
             return;
         }
 
         // 检查后缀名
-        if (file.name.slice(-4) !== '.txt') {
+        if (!file.name.endsWith('.txt')) {
             var newFileName = file.name + '.txt';
-            var newFile = new Blob([file], { type: file.type });
-            newFile = new File([newFile], newFileName, { type: file.type });
+            var newFile = new File([file], newFileName, { type: file.type });
             fd.append('new_note', newFile);
         } else {
             fd.append('new_note', file);
         }
     }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', `${protocol}//${ip}/server/not/upload.cgi`, true);
-    xhr.upload.onprogress = function(ev) {
-        if (ev.lengthComputable) {
-            var percent = 100 * ev.loaded / ev.total;
-            var percentElement = document.getElementById('percent');
-            document.getElementById('bar').style.width = percent + '%';
-            percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
-        }
-    };
+    try {
+        const response = await fetch(`${protocol}//${ip}/server/not/upload.cgi`, {
+            method: 'POST',
+            body: fd
+        });
 
-    xhr.onload = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status != 401) {
-                notify("添加成功");
-                reloadnote();
-                document.getElementById('word-bar').style.display = 'block';
-                document.getElementById('progress').style.display = 'none';
-            }
+        if (response.ok) {
+            notify("添加成功");
+            reloadnote();
         }
-    };
+        else if(response.status==401){
+            notify("没有上传权限")
+            reloadnote();
+            throw new Error(response.status);
+        }
+        else{
+            notify(response.status+"错误")
+            reloadnote();
+            throw new Error(response.status);
+        }
 
-    xhr.send(fd);
+        
+    } catch (error) {
+        console.log(error.message);
+    } finally {
+        document.getElementsByTagName('input')[0].value = '';
+        document.getElementById('word-bar').style.display = 'block';
+        document.getElementById('progress').style.display = 'none';
+    }
 }
+
 // 纯文本粘贴
 document.addEventListener('paste', function(event) {
     event.preventDefault();

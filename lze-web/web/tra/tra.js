@@ -243,33 +243,6 @@ function ifroot(){
    nowpath=fullPath;
  }
 }
-// 恢复
-function recover() {
-  ifroot()
-    fetch(`${protocol}//${ip}/server/tra/recover.cgi`, {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(pathsMap),
-    })
-    .then(response => {
-      if (response.status === 401) {
-        throw new Error('未授权访问');
-      }
-    })
-    .then(results => {
-      selectedarray.length==0;
-      loadFolder(removeslash(nowpath));
-      notify("已恢复");
-      selectedarray.length = 0;
-    })
-    .catch((error) => {
-      console.error('错误:', error);
-    });
-  }
-
 // 选中
 let filesname;
 let selectedpath;
@@ -279,9 +252,54 @@ let selectcount;
 let recoverpath;
 // 用于存储 selectedpath 和 recoverpath 的对象
 let recover_list = [];
-let pathsMap = {
-  recover_list: recover_list
+
+// 恢复
+function recover() {
+  if(confirm("确定恢复吗")){
+  ifroot()
+let data = {
+  recover_list: recover_list,
+  user,
+  token
 };
+    fetch(`${protocol}//${ip}/server/tra/recover.cgi`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => {
+      if(response.ok){
+        selectedarray.length==0;
+        loadFolder(removeslash(nowpath));
+        notify("已恢复");
+        selectedarray.length = 0;
+      }
+     else if (response.status === 401) {
+      selectedarray.length==0;
+      loadFolder(removeslash(nowpath));
+        notify("无恢复权限")
+        selectedarray.length = 0;
+        throw new Error('未授权访问');
+      }
+      else  {
+        selectedarray.length==0;
+        loadFolder(removeslash(nowpath));
+          notify(response.status+"错误")
+          selectedarray.length = 0;
+          throw new Error('未授权访问');
+        }
+      })
+    .catch((error) => {
+      console.error('错误:', error);
+    });
+  }
+  }
+
+
+
+
 
 function select(fileitem, type) {
   let filesname;
@@ -324,14 +342,29 @@ function cleanall(){
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    }
-})
-.then(response => response.text())
-    .then(data => {
+    },
+    body: JSON.stringify({user,token}),
+  })
+  .then(response => {
+    if(response.ok){
       loadFolder(removeslash(nowpath));
       notify("已清空");
+    }
+   else if (response.status === 401) {
+    selectedarray.length==0;
+    loadFolder(removeslash(nowpath));
+      notify("无清空权限")
+      throw new Error('未授权访问');
+    }
+    else  {
+      selectedarray.length==0;
+      loadFolder(removeslash(nowpath));
+        notify(response.status+"错误")
+        throw new Error('未授权访问');
+      }
     })
-    .catch(error => console.error('Error:', error));
-  }
+  .catch((error) => {
+    console.error('错误:', error);
+  });
+}
 }
