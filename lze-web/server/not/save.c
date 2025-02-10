@@ -5,6 +5,9 @@ int main(){
     int post_len = post(post_data, sizeof(post_data));
      log(post_data); 
     cJSON *rec_json = cJSON_Parse(post_data);
+    char*user=cJSON_GetObjectItem(rec_json, "user")->valuestring;
+    char*token=cJSON_GetObjectItem(rec_json, "token")->valuestring;
+    check_action(user,token,"not","edit");
     cJSON *tit = cJSON_GetObjectItem(rec_json, "newTitle");
     cJSON *con = cJSON_GetObjectItem(rec_json, "newContent");
     char *base_path="../../file/Note/";

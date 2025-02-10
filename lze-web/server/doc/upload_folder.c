@@ -7,11 +7,14 @@ int cgiMain() {
     char last[2];
     char relat_path[1024];
     char chunk_index[10];
+    char user[10],token[50];
     int index;
     FILE *fp;
     cgiFilePtr file;
     int totalChunks, currentChunk;
-     cgiHeaderContentType("text/plain");
+     cgiFormString("token", token, sizeof(token));
+    cgiFormString("user", user, sizeof(user));
+    check_action(user,token,"doc","updir");
      cgiFormString("name", fileName, sizeof(fileName));
     cgiFormString("relativePath", relat_path, sizeof(relat_path));
     char*par_path=dirname(concat_path(tmp_path,relat_path));
@@ -44,5 +47,6 @@ int cgiMain() {
         }
         fclose(finalFile);
     }  
+     cgiHeaderContentType("text/plain");
     return 0;
 }

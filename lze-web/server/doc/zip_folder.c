@@ -5,6 +5,9 @@ int main(){
     char post_data[1024];
     int post_len = post(post_data, sizeof(post_data));
     cJSON *rec_json = cJSON_Parse(post_data);
+    char *user=cJSON_GetObjectItem(rec_json, "user")->valuestring;
+    char *token=cJSON_GetObjectItem(rec_json, "token")->valuestring;
+    check_action(user,token,"doc","downdir");
     char *folder_path=cJSON_GetObjectItem(rec_json, "folder_path")->valuestring;
     char *folder_name=basename(folder_path);
     char*tmp_dir=concat_path(temp_path,folder_name);

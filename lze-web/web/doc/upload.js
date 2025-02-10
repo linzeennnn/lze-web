@@ -17,6 +17,7 @@ function uploadFolder() {
     let totalChunks = 0;
     let uploadedChunks = 0;
     let completedFiles = 0; // 记录已完成上传的文件数
+    let shouldContinue = true; // 用于控制是否继续上传
 
     // 计算所有文件的总块数
     for (let file of files) {
@@ -60,6 +61,8 @@ function uploadFolder() {
         let chunkIndex = 0;
 
         const uploadChunk = (start) => {
+            if (!shouldContinue) return; // 如果遇到错误，则直接退出
+
             const end = Math.min(start + chunkSize, file.size);
             const chunk = file.slice(start, end);
             const relativePath = file.webkitRelativePath;
@@ -75,14 +78,25 @@ function uploadFolder() {
             chunkFormData.append('start', start);
             chunkFormData.append('chunkIndex', chunkIndex);
             chunkFormData.append('total', file.size);
+            chunkFormData.append('token', token);
+            chunkFormData.append('user', user);
             chunkFormData.append('last', end >= file.size ? 1 : 0);
 
             fetch(`${protocol}//${ip}/server/doc/upload_folder.cgi`, {
                 method: 'POST',
                 body: chunkFormData
             })
-            .then(response => response.text())
+            .then(response => {
+                if (response.status === 401) {
+                  notify("无新建文件夹权限");
+                  loading(0);
+                  shouldContinue = false; // 发生错误，停止上传
+                  throw new Error('未授权访问');
+                }
+                return response.text();  
+              })
             .then(data => {
+                if (!shouldContinue) return; // 如果发生错误，直接停止上传
                 uploadedChunks++;
                 updateProgress(); // 更新进度
                 chunkIndex++;
@@ -92,23 +106,42 @@ function uploadFolder() {
                     completedFiles++; // 增加已完成文件计数
                     if (completedFiles === totalFiles) {
                         loading(0);
-                        movefolder(foldername,nowpath);
+                        movefolder(foldername, nowpath);
                     }
                 }
             })
             .catch(error => {
                 console.error('上传失败:', error);
+                shouldContinue = false; // 发生错误，停止上传
             });
         };
         uploadChunk(start);
     };
 
     for (let i = 0; i < files.length; i++) {
+        if (!shouldContinue) break; // 如果发生错误，停止上传后续文件
         uploadFile(files[i], i);
     }
 
     input.value = ''; // 重置输入框的值
 }
+
+
+// 获取块大小的函数
+function getChunkSize(fileSize) {
+    if (fileSize <= 100 * 1024 * 1024) {
+        return 20 * 1024 * 1024;
+    } else if (fileSize <= 500 * 1024 * 1024) {
+        return 50 * 1024 * 1024;
+    } else if (fileSize <= 1024 * 1024 * 1024) {
+        return 100 * 1024 * 1024;
+    } else if (fileSize <= 3 * 1024 * 1024 * 1024) {
+        return 200 * 1024 * 1024;
+    } else {
+        return 300 * 1024 * 1024;
+    }
+}
+
 
 // 从temp移动文件夹
 function movefolder(foldername, folderpath) {
@@ -135,66 +168,82 @@ function movefolder(foldername, folderpath) {
 // 上传文件
 function selfile() {
     ifroot();
-    var files = fileInput.files; // 直接使用 fileInput 的文件
+    var files = fileInput.files; 
     if (files.length === 0) {
         notify("请先选择文件");
         return;
     }
+
     showupload(0);
-    var chunkSize = 20*1024 * 1024; // 每个块的大小（1MB）
+    var chunkSize = 20 * 1024 * 1024; 
     var totalFiles = files.length;
-    var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
-    var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
+    var totalChunks = Array(totalFiles).fill(0); 
+    var currentChunks = Array(totalFiles).fill(0); 
+
     // 计算每个文件的总块数
     for (let i = 0; i < totalFiles; i++) {
-      if (files[i].size === 0) {
-          notify(`${files[i].name} 是空文件，上传失败`);
-          return;
-      }
-      totalChunks[i] = Math.ceil(files[i].size / chunkSize);
-  }
-  loading(1);
+        if (files[i].size === 0) {
+            notify(`${files[i].name} 是空文件，上传失败`);
+            return;
+        }
+        totalChunks[i] = Math.ceil(files[i].size / chunkSize);
+    }
+
+    loading(1);
+
     function uploadChunk(fileIndex) {
         if (fileIndex >= totalFiles) {
             loading(0);
             return;
         }
+
         var file = files[fileIndex];
         var start = currentChunks[fileIndex] * chunkSize;
         var end = Math.min(start + chunkSize, file.size);
         var chunk = file.slice(start, end);
+
         var fd = new FormData();
         fd.append('file', chunk);
         fd.append('fileName', file.name);
         fd.append('totalChunks', totalChunks[fileIndex]);
         fd.append('currentChunk', currentChunks[fileIndex]);
-        fd.append('nowpath', nowpath); // 传递 nowpath 变量
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', `${protocol}//${ip}/server/doc/upload_file.cgi`, true);
-        xhr.upload.onprogress = function (ev) {
-            if (ev.lengthComputable) {
-                var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
-                var percentElement = document.getElementById('percent');
-                document.getElementById('bar').style.width = percent + '%';
-                percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
-            }
-        };
-        xhr.onload = function () {
-            if (xhr.status === 200) {
+        fd.append('nowpath', nowpath);
+        fd.append('token', token);
+        fd.append('user', user);
+
+        fetch(`${protocol}//${ip}/server/doc/upload_file.cgi`, {
+            method: 'POST',
+            body: fd
+        })
+        .then(response => {
+            if (response.status === 200) {
                 currentChunks[fileIndex]++;
                 if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
-                    uploadChunk(fileIndex); // 上传下一个块
+                    uploadChunk(fileIndex); 
                 } else {
-                    uploadChunk(fileIndex + 1);
                     notify(`文件 ${file.name} 上传成功`);
                     loadFolder(removeslash(nowpath));
+                    uploadChunk(fileIndex + 1); 
                 }
+            } else if (response.status === 401) {
+                notify("没有上传文件权限");
+                loading(0);
+                throw new Error('未授权访问');
+            } else {
+                notify(`${response.status}错误`);
+                loading(0);
+                throw new Error(`HTTP 错误 ${response.status}`);
             }
-        };
-        xhr.send(fd);
+        })
+        .catch(error => {
+            console.error('上传发生错误:', error);
+            loading(0);
+        });
     }
-    uploadChunk(0); // 开始上传第一个文件
-  }
+
+    uploadChunk(0); 
+}
+
   //拖拽上传
 const folderinput = document.getElementById('uploadfolder');
 const fileInput = document.getElementById('uploadfile');

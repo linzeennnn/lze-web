@@ -492,7 +492,7 @@ function selfile() {
       notify("请先选择文件");
       return;
   }
-  var chunkSize = 20*1024 * 1024; // 每个块的大小（1MB）
+  var chunkSize = 20 * 1024 * 1024; // 每个块的大小（1MB）
   var totalFiles = files.length;
   var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
   var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
@@ -503,52 +503,65 @@ function selfile() {
         return;
     }
     totalChunks[i] = Math.ceil(files[i].size / chunkSize);
-}
-loading(1);
-  function uploadChunk(fileIndex) {
-      if (fileIndex >= totalFiles) {
-          loading(0);
-          return;
-      }
-      var file = files[fileIndex];
-      var start = currentChunks[fileIndex] * chunkSize;
-      var end = Math.min(start + chunkSize, file.size);
-      var chunk = file.slice(start, end);
-      var fd = new FormData();
-      fd.append('file', chunk);
-      fd.append('fileName', file.name);
-      fd.append('totalChunks', totalChunks[fileIndex]);
-      fd.append('currentChunk', currentChunks[fileIndex]);
-      fd.append('nowpath', nowpath); // 传递 nowpath 变量
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', `${protocol}//${ip}/server/pic/upload.cgi`, true);
-      xhr.upload.onprogress = function (ev) {
-          if (ev.lengthComputable) {
-              var percent = ((currentChunks[fileIndex] + ev.loaded / ev.total) / totalChunks[fileIndex]) * 100;
-              var percentElement = document.getElementById('percent');
-              document.getElementById('bar').style.width = percent + '%';
-              percentElement.innerHTML = parseInt(percent) + '%'; // 更新百分比显示
-          }
-      };
-      xhr.onload = function () {
-          if (xhr.status === 200) {
-              currentChunks[fileIndex]++;
-              if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
-                  uploadChunk(fileIndex); // 上传下一个块
-              } else {
-                  // 上传下一个文件
-                  uploadChunk(fileIndex + 1);
-                  notify(`文件 ${file.name} 上传成功`);
-                  uploadpath = xhr.responseText;
-                  loadFolder(removeslash(nowpath));
-                  desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
-              }
-          }
-      };
-      xhr.send(fd);
   }
+  loading(1);
+
+  function uploadChunk(fileIndex) {
+    if (fileIndex >= totalFiles) {
+      loading(0);
+      return;
+    }
+
+    var file = files[fileIndex];
+    var start = currentChunks[fileIndex] * chunkSize;
+    var end = Math.min(start + chunkSize, file.size);
+    var chunk = file.slice(start, end);
+    var fd = new FormData();
+    fd.append('file', chunk);
+    fd.append('fileName', file.name);
+    fd.append('totalChunks', totalChunks[fileIndex]);
+    fd.append('currentChunk', currentChunks[fileIndex]);
+    fd.append('nowpath', nowpath);
+    fd.append('user', user); 
+    fd.append('token', token); 
+
+    fetch(`${protocol}//${ip}/server/pic/upload.cgi`, {
+      method: 'POST',
+      body: fd,
+    })
+    .then(function(response) {
+      if (response.ok) {
+        // 读取响应体的文本
+        response.text().then(function(uploadpath) {
+          currentChunks[fileIndex]++;
+          if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
+            uploadChunk(fileIndex); // 上传下一个块
+          } else {
+            uploadChunk(fileIndex + 1); // 上传下一个文件
+            notify(`文件 ${file.name} 上传成功`);
+            loadFolder(removeslash(nowpath));
+            desktopnot('新文件', `新上传文件: ${file.name}`, uploadpath);
+          }
+        });
+      } else if (response.status === 401) {
+        notify(`没有上传相册权限`);
+        loading(0);
+        throw new Error('未授权访问');
+      } else {
+        notify(`${response.status} 错误`);
+        loading(0);
+        throw new Error(response.status);
+      }
+    })
+    .catch(function(error) {
+      console.error('上传过程中发生错误:', error);
+      loading(0);
+    });
+  }
+
   uploadChunk(0); // 开始上传第一个文件
 }
+
 //拖拽上传
 const fileInput = document.getElementById('uploadfile');
 const uploadarea = document.getElementById('upload-area');

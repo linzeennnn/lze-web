@@ -99,9 +99,10 @@ void update_token(char*user,char*token){
 }
 //401
 void err_401(){
+    char *html_path="/etc/lze-web/401.html";
     printf("Status: 401 Unauthorized\r\n");
-    printf("Content-Type: text/html\r\n");
-    printf("\r\n");
+    printf("Content-Type: text/html\n\n");
+    printf("%s\n\n",read_file(html_path));
         exit(0);
 }
 //检测token
@@ -128,14 +129,6 @@ int permit=0;
         if (strcmp(username->valuestring,user)==0)
             permit=1;
      }
-     switch (permit)
-     {
-     case 0:
+     if(permit==0)
         err_401();
-        break;
-     case 1:
-        printf("Content-Type: text/html\n\n");
-        break;
-     }
-
 }

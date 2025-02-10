@@ -248,19 +248,25 @@ async function getnote() {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ fileName: fileName })
+            body: JSON.stringify({ fileName: fileName ,user,token})
         })
-            .then(response => {
-                if (response.ok) {
-                    // 后端返回成功的状态码
-                    if (load != 0) {
-                        reloadnote();
-                        notify("已删除");
-                    }
-                } else {
-                    console.error(`Error deleting note: ${response.statusText}`);
-                }
-            })
+        .then(response => {
+            if (response.status === 401) {
+              notify("无删除权限")
+              pageloading(0)
+              throw new Error('未授权访问');
+            }
+            else if(!response.ok){
+                notify(response.status+"错误")
+                pageloading(0)
+                throw new Error('未授权访问');
+            }
+            return response.text();  
+          })
+          .then(data => {
+            reloadnote();
+            notify("已删除");
+          })
             .catch(error => {
                 console.error(`Error deleting note: ${error.message}`);
             });
@@ -281,23 +287,37 @@ async function getnote() {
     
         const data = {
             newTitle: title.value,
-            newContent: text.innerText
+            newContent: text.innerText,
+            user,token
         };
     
         try {
                 const response = await fetch(`${protocol}//${ip}/server/not/${file}`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer ' + token,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
-            if (response.status !== 401) {
+            if (response.ok) {
                 reloadnote();
                 title.value = '';
                 text.innerText = '';
                 notify("保存成功");
+            }
+            else if(response.status==401){
+                title.value = '';
+                text.innerText = '';
+                notify("没有权限")
+                reloadnote();
+                throw new Error(response.status);
+            }
+            else{
+                title.value = '';
+                text.innerText = '';
+                notify(response.status+"错误")
+                reloadnote();
+                throw new Error(response.status);
             }
         } catch (error) {
             console.error('Error adding new note:', error);

@@ -16,7 +16,10 @@ void send_file(const char *filepath, const char *filename) {
 }
 int cgiMain() {
     char*base_path="../../file/Documents/";
-    char path[1024];
+    char path[1024],token[50],user[10];
+    cgiFormString("token", token, sizeof(token));
+    cgiFormString("user", user, sizeof(user));
+    check_action(user,token,"doc","downfile");
     cgiFormString("file_path", path, sizeof(path));
     send_file(concat_path(base_path,path),basename(path));
     return 0;

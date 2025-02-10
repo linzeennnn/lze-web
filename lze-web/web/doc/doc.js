@@ -424,7 +424,7 @@ function download(path,name,type){
   switch(type){
   case "file":
       path=path+'/'+name
-      window.location.href = `${protocol}//${ip}/server/doc/download_file.cgi?file_path=${path}`
+      window.location.href = `${protocol}//${ip}/server/doc/download_file.cgi?file_path=${path}&token=${token}&user=${user}`
       notify("开始下载")
       break;
   case "folder":
@@ -435,7 +435,15 @@ function download(path,name,type){
         headers: {
         "Content-Type": "application/json" 
     },
-    body: JSON.stringify({ folder_path: path }) 
+    body: JSON.stringify({ folder_path: path ,token,user}) 
+      })
+      .then(response => {
+        if (response.status === 401) {
+          notify("无下载文件夹权限")
+          pageloading(0)
+          throw new Error('未授权访问');
+        }
+        return response.text();  
       })
       .then(() => {
       window.location.href = `${protocol}//${ip}/server/doc/down_zip.cgi?file_path=${zip_name}`

@@ -4,11 +4,14 @@ int cgiMain() {
     char*tmp_path="../../file/temp/";
     char fileName[256];
     char filePath[512];
+    char user[10],token[50];
     FILE *fp;
     cgiFilePtr file;
     int totalChunks, currentChunk;
     char nowpath[256];
-     cgiHeaderContentType("text/plain");
+     cgiFormString("token", token, sizeof(token));
+    cgiFormString("user", user, sizeof(user));
+    check_action(user,token,"pic","upload");
      cgiFormString("fileName", fileName, sizeof(fileName));
      cgiFormInteger("totalChunks", &totalChunks, 0);
     cgiFormInteger("currentChunk", &currentChunk, 0);
@@ -42,5 +45,6 @@ int cgiMain() {
         char *new_name=file_exit(fileName,dest_path);
         rename(concat_path(tmp_path,fileName),concat_path(dest_path,new_name));
     }     
+     cgiHeaderContentType("text/plain");
     return 0;
 }
