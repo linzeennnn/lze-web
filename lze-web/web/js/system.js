@@ -99,7 +99,7 @@ intervalId = setInterval(() => {
   clearInterval(intervalId);
   return;
 }
-  fetch(`${protocol}//${ip}/code/system/system.php`)
+  fetch(`${protocol}//${ip}/server/system/system.cgi`)
     .then(response => response.json())
     .then(data => {
       cpuValue.textContent = Math.floor(data.cpuUsage) + '%';
