@@ -15,7 +15,8 @@ async function widget() {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
-            }
+            },
+            body: JSON.stringify({user}),
         });
         let data = await response.json();
 
@@ -45,8 +46,25 @@ async function widget() {
             tra.style.display = '';
 
             mon.forEach((el, index) => {
-                el.innerText = data[`mon${index + 1}`] || '';
-                el.title = "进程" + (data[`mon${index + 1}`] || '');
+                switch(index){
+                    case 0:
+                    el.innerText ="登陆期限:"+data[`mon${index + 1}`] || '';
+                         break;
+                    case 1:
+                        let time
+                        if(data[`mon${index + 1}`]==-1){
+                            time="永不过期"
+                        }
+                        else if(data[`mon${index + 1}`]==0||!data[`mon${index + 1}`]){
+                            time="无"
+                        }
+                        else time=formathours(data[`mon${index + 1}`])
+                    el.innerText ="剩余时间:"+time;
+                        break;
+                    case 2:
+                        el.innerText ="权限数量:"+data[`mon${index + 1}`];
+                        break;
+                }
                 el.style.display = '';
             });
 
@@ -206,4 +224,28 @@ function doc(docu){
   .catch(error => {
     notify(error);
   });
+}
+//计算小时
+function formathours(hours) {
+    const hoursPerDay = 24;
+    const hoursPerMonth = 30 * hoursPerDay;
+    const hoursPerYear = 365 * hoursPerDay;
+    const years = Math.floor(hours / hoursPerYear);
+    const remainingHoursAfterYear = hours % hoursPerYear;
+
+    if (years > 0) {
+        const days = Math.floor(remainingHoursAfterYear / hoursPerDay);
+        return `${years}年${days}天`;
+    }
+
+    const months = Math.floor(remainingHoursAfterYear / hoursPerMonth);
+    const remainingHoursAfterMonth = remainingHoursAfterYear % hoursPerMonth;
+    const days = Math.floor(remainingHoursAfterMonth / hoursPerDay);
+    const remainingHours = remainingHoursAfterMonth % hoursPerDay;
+    let result = '';
+    if (months > 0) result += `${months}月`;
+    if (days > 0) result += `${days}天`;
+    if (remainingHours > 0 || result === '') result += `${remainingHours}小时`;
+
+    return result;
 }

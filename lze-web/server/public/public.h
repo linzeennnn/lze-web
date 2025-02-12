@@ -51,7 +51,6 @@ typedef struct USER_DATA
     char *password;
     char* token_time;
 }user_data;
-
 int post(char *data, int max_len);// 获取POST
 void list_directory(char *path, folder_list* folder_head, file_list* file_head, link_dir *link_dir_head, link_file *link_file_head); // 扫描目录
 char * concat_path(char *base_path,char * target_path);// 拼接路径
@@ -82,8 +81,10 @@ int check_time(char *save_token,char*save_time);//检查过期
 long get_time_stamp();//生成时间戳
 char *gen_token();//生成token/
 user_data *get_user_all(char *user);//获取用户所有数据
-void update_token(char*user,char*token);// 更新token
+void update_token(char*user,char*token);// 更新配置文件token
 void err_401();//401
 void check_token(char *user,char*token);//验证token
 void check_action(char*user,char*token,char*control,char*action);//检查操作权限
+int login_remain_time(char*token,char*token_time);//剩余时长
+int get_user_access(char*user);//获取用户拥有权限数
 #endif

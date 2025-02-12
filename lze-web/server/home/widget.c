@@ -48,6 +48,10 @@ for (int i = 0; i < time; i++)
 }
 
 int main(){
+    char post_data[30];
+    int post_len = post(post_data, sizeof(post_data));
+    cJSON *rec_json = cJSON_Parse(post_data);
+    char*user=cJSON_GetObjectItem(rec_json, "user")->valuestring;
 cJSON *data = cJSON_CreateObject();
 cJSON **json_p=&data;
 sort_widget(3,"Documents/",1,"doc",json_p);
@@ -56,23 +60,21 @@ sort_widget(1,"Bookmark/",0,"bok",json_p);
 sort_widget(1,"Pictures/",0,"pic",json_p);
 sort_widget(1,"trash/",1,"tra",json_p);
 // mon
-char buffer[50];
-FILE *fp = popen("top -b -n 1 | awk 'NR>7 && $12 !~ /[kK]ernel/ && $12 !~ /irq/ && $12 !~ /kworker/ {print $12}' | sort | uniq", "r");
-char str_name[5]="moni";
-char *index=str_name+3;
-for (int i = 0; i < 3; i++)
-{
-    *index='1'+i;
-    if (fgets(buffer, sizeof(buffer), fp) != NULL) {
-        buffer[strcspn(buffer, "\n")] = '\0';  
-        cJSON_AddStringToObject(data, str_name, buffer);
-    }
-    else
-        cJSON_AddNullToObject(data, str_name);
-}
-pclose(fp);
+
+user_data* da=get_user_all(user);
+int remain_time=login_remain_time(da->token,da->token_time);
+int count=get_user_access(user);
+char*full_time=(char*)malloc(10);
+if(!da->token_time)
+    full_time="none";
+else
+    full_time=da->token_time;
+cJSON_AddStringToObject(data,"mon1",full_time);
+cJSON_AddNumberToObject(data,"mon2",remain_time);
+cJSON_AddNumberToObject(data,"mon3",count);
 // disk
-fp = popen("df / | awk 'NR==2 {print $2, $3}'", "r");
+char buffer[50];
+FILE*fp = popen("df / | awk 'NR==2 {print $2, $3}'", "r");
 char* disk_out=fgets(buffer,sizeof(buffer),fp);
 char*used=disk_out;
 while (*used!=' ')

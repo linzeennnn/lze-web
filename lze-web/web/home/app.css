@@ -218,13 +218,14 @@ clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);
     background-color: #7e6c5d93;
   }
   .mon-li{
+    font-size: 10px;
     height: 30px !important;
     margin-top: 30px !important;
     color: #ffd9a5;
     margin: 0 !important;
     border: 2px solid #69663d88;
     background-color: #83805688;
-    border-radius: 10px;
+    border-radius: 50px;
   }
   #reload{
     width: 100% !important;
@@ -420,10 +421,11 @@ clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);
     box-shadow: var(--outshadow);
   }
   #ip-li{
-    border-radius: 20px;
+    border-radius: 25px;
     background-color: #242b2cb6;
     font-size: 20px;
     display: flex;
+    align-items: center;
     justify-content: center;
     text-align: center;
   }

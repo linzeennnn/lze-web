@@ -26,16 +26,17 @@ char *gen_token(){
 }
 //检查过期
 int check_time(char *token,char*time){
+    if(!token)
+        return 1;
     char *save_token=(char*)malloc(strlen(token)+1);
     char *save_time=(char*)malloc(strlen(time)+1);
     strcpy(save_token,token);
     strcpy(save_time,time);
     long dead_line,start_time,nowtime,count;
-    if(!save_token)
-        return 0;
     char unit=save_time[strlen(save_time)-1];
-if(strcmp(save_time,"never")==0||!save_time)
+if(strcmp(save_time,"never")==0||!save_time){
     return 1;
+}
 else{
         while (*save_token !='_')
         {
@@ -61,10 +62,12 @@ else{
         count=dead_line;
         break;
     }
-    if((nowtime-start_time)<count)
+    if((nowtime-start_time)<count){
         return 1;
-    else
+        }
+    else{
         return 0;
+    }
 }
 }
 //获取用户所有数据
@@ -83,7 +86,7 @@ user_data *get_user_all(char *user){
      data->password=save_password;
     return data;
 }
-// 更新token
+// 更新配置文件token
 void update_token(char*user,char*token){
     char *config_path="/etc/lze-web/config.json";
     char *config=read_file(config_path);
@@ -107,9 +110,11 @@ void err_401(){
 }
 //检测token
 void check_token(char *user,char*token){
+    if(strcmp(user,"visitor")!=0){
     user_data*data=get_user_all(user);
     if(!check_time(data->token,data->token_time)||strcmp(token,data->token)!=0){
         err_401();
+    }
     }
 }
 //检测操作
@@ -131,4 +136,64 @@ int permit=0;
      }
      if(permit==0)
         err_401();
+}
+//获取用户拥有权限数
+int get_user_access(char*user){
+     char*con=read_file("/etc/lze-web/config.json");
+    int count=0;
+    int name_len=strlen(user);
+    cJSON*control=cJSON_GetObjectItem(cJSON_Parse(con),"control");
+    char*match=cJSON_PrintUnformatted(control);
+    while (*(match+name_len-1)!='\0')
+    {
+        if(strncmp(user,match,name_len)==0)
+            {
+                count++;
+                match+=name_len-1;
+            }
+        else
+            match++;
+    }
+    return count;
+}
+//剩余时长
+int login_remain_time(char*token,char*time){
+if(!token)
+        return 0;
+    char *save_token=(char*)malloc(strlen(token)+1);
+    char *save_time=(char*)malloc(strlen(time)+1);
+    strcpy(save_token,token);
+    strcpy(save_time,time);
+    long dead_line,start_time,nowtime,count;
+    char unit=save_time[strlen(save_time)-1];
+if(strcmp(save_time,"never")==0||!save_time){
+    return -1;
+}
+else{
+        while (*save_token !='_')
+        {
+            save_token++;
+        }
+        save_token++;
+        start_time=atol(save_token);
+        nowtime=get_time_stamp();
+    save_time[strlen(save_time)-1]='\0';
+    dead_line=atol(save_time);
+    switch (unit)
+    {
+    case 'y':
+        count=dead_line*24*365;
+        break;
+    case 'm':
+        count=dead_line*24*30;
+        break;
+    case 'd':
+        count=dead_line*24;
+        break;
+    case 'h':
+        count=dead_line;
+        break;
+    }
+        return count-(nowtime-start_time);
+}
 }
