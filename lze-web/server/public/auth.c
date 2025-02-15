@@ -72,8 +72,7 @@ else{
 }
 //获取用户所有数据
 user_data *get_user_all(char *user){
-    char *config_path="/etc/lze-web/config.json";
-    char *config=read_file(config_path);
+    char *config=get_config();
     cJSON *json_config=cJSON_Parse(config);
      cJSON *json_user_list=cJSON_GetObjectItem(json_config,"user");
      cJSON *json_user=cJSON_GetObjectItem(json_user_list,user);
@@ -89,14 +88,14 @@ user_data *get_user_all(char *user){
 // 更新配置文件token
 void update_token(char*user,char*token){
     char *config_path="/etc/lze-web/config.json";
-    char *config=read_file(config_path);
+    char *config=get_config();
     cJSON *json_config=cJSON_Parse(config);
      cJSON *json_user_list=cJSON_GetObjectItem(json_config,"user");
      cJSON *json_user=cJSON_GetObjectItem(json_user_list,user);
      cJSON_ReplaceItemInObject(json_user,"token",cJSON_CreateString(token));
-     char *output=cJSON_Print(json_config);
+     strcpy(config,cJSON_Print(json_config));
      FILE *fp=fopen(config_path,"w");
-     fwrite(output,strlen(output),1,fp);
+     fwrite(config,strlen(config),1,fp);
      fclose(fp);
 
 }
@@ -121,8 +120,7 @@ void check_token(char *user,char*token){
 void check_action(char*user,char*token,char*control,char*action){
 check_token(user,token);
 int permit=0;
-    char *config_path="/etc/lze-web/config.json";
-    char *config=read_file(config_path);
+    char *config=get_config();
     cJSON *json_config=cJSON_Parse(config);
      cJSON *json_control_list=cJSON_GetObjectItem(json_config,"control");
      cJSON *json_control=cJSON_GetObjectItem(json_control_list,control);
@@ -139,7 +137,7 @@ int permit=0;
 }
 //获取用户拥有权限数
 int get_user_access(char*user){
-     char*con=read_file("/etc/lze-web/config.json");
+     char*con=get_config();
     int count=0;
     int name_len=strlen(user);
     cJSON*control=cJSON_GetObjectItem(cJSON_Parse(con),"control");

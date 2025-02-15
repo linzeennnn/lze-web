@@ -11,9 +11,13 @@
 #include <stdarg.h>         // 可变参数
 #include "cJSON.h"          // cJSON 库
 #include "cgic.h"           // cgic库
+#include <sys/shm.h>        //共享内存
+#include <sys/ipc.h>        //共享内存通信
 #include <libgen.h>  // 包含 basename() 和 dirname() 函数
 #include <sys/sendfile.h>   //发送文件
 #include <fcntl.h>          //open函数,操作文件
+#define CON_KEY "/temp/lze_config_key" 
+#define PROJ_ID 77      
 typedef struct FOLDER
 {
     char *name;
@@ -87,4 +91,5 @@ void check_token(char *user,char*token);//验证token
 void check_action(char*user,char*token,char*control,char*action);//检查操作权限
 int login_remain_time(char*token,char*token_time);//剩余时长
 int get_user_access(char*user);//获取用户拥有权限数
+char *get_config();//获取配置
 #endif

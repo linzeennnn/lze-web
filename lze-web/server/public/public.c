@@ -697,3 +697,10 @@ void delete_directory(char *base_path) {
     }
     rmdir(base_path);
 }
+//获取配置
+char *get_config(){
+    key_t shm_key = ftok(CON_KEY, PROJ_ID);
+    int shm_id = shmget(shm_key, 1024, IPC_CREAT | 0666);
+    char *config = (char *)shmat(shm_id, NULL, 0);
+    return config;
+}

@@ -70,6 +70,10 @@ install(){
   mkdir -p $home/Documents/lze-web/
   chmod 770 $home 
   chmod 770 -R $home/Documents $home/Pictures
+  cd source/
+  gcc -o lze-web lze-web.c
+  sudo cp lze-web /usr/bin/
+  sudo chmod +x /usr/bin/lze-web
   cd $home/Documents/lze-web/
     ln -s $home/Documents/ Documents
     ln -s $home/Pictures/ Pictures

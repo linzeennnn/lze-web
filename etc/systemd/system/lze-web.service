@@ -1,0 +1,11 @@
+[Unit]
+Description=lze-web server  
+After=network.target        
+
+[Service]
+ExecStart=/usr/bin/lze-web 
+Restart=always            
+WorkingDirectory=/usr/local/bin
+
+[Install]
+WantedBy=multi-user.target  

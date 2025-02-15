@@ -1,6 +1,6 @@
 #include "../public/public.h"
 int main(){
-    char *json_file=read_file("/etc/lze-web/config.json");
+    char *json_file=get_config();
     cJSON *config = cJSON_Parse(json_file);
     cJSON *user = cJSON_GetObjectItem(config, "user");
     if (user) {
