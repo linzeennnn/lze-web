@@ -2,7 +2,7 @@ let winstatus=0,curwin;
 const protocol = window.location.protocol === 'file:' ? '${protocol}' : window.location.protocol;
 let user=localStorage.getItem("user");
 let token=localStorage.getItem("token");
-let ip=window.location.hostname;
+let ip=window.location.hostname + (window.location.port ? `:${window.location.port}` : '');
 if(!user){
     user='visitor';
 }
