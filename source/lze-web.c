@@ -46,35 +46,33 @@ moudule*get_moudule(char*path){
 }
 void home(struct mg_connection *c, char*act,char*data){
   if(strcmp(act,"widget.cgi")==0){
-    mg_http_reply(c, 200, "Content-Type: text/json\r\n", widget(c,data));
+    mg_http_reply(c, 200, "Content-Type: application/json\r\n","%s\n",widget(c,data));
   }
   else if(strcmp(act,"doc_list.cgi")==0){
-    mg_http_reply(c, 200, "Content-Type: text/json\r\n", home_doc_list(c,data));
+    mg_http_reply(c, 200, "Content-Type: application/json\r\n", "%s\n",home_doc_list(c,data));
   }
 }
 void login(struct mg_connection *c, char*act,char*data){
-  if(strcmp(act,"auth_status.cgi")==0){
-    mg_http_reply(c, 200, "Content-Type: text/json\r\n", widget(c,data));
+  if(strcmp(act,"auth_status")==0){
+   login_auth_status(c,data);
   }
 }
 static void fn(struct mg_connection *c, int ev, void *ev_data) {
   if (ev == MG_EV_HTTP_MSG) {
     struct mg_http_message *hm = (struct mg_http_message *) ev_data;  
-    struct mg_http_serve_opts opts;
-    memset(&opts, 0, sizeof(opts));
-    opts.root_dir = "./web-test";  
-    mg_http_serve_dir(c, hm, &opts);
     char*url_link=get_url(hm->uri.buf);
-    printf("%s\n",url_link);
-    if (strncmp(url_link,"/server",7)==0) {       
+    if (mg_match(hm->uri, mg_str("/server/*/*"), NULL))  {    
           moudule*get_mod=get_moudule(url_link);
-        printf("%s\n",get_mod->action);       
           if(strcmp(get_mod->type,"home")==0)
             home(c,get_mod->action,hm->body.buf);
           else if(strcmp(get_mod->type,"login")==0)
             login(c,get_mod->action,hm->body.buf);
-          mg_http_reply(c, 200, "Content-Type: text/plain\r\n", get_mod->type);
-    } 
+    } else{
+    struct mg_http_serve_opts opts;
+    memset(&opts, 0, sizeof(opts));
+    opts.root_dir = "./web-test";  
+    mg_http_serve_dir(c, hm, &opts);
+    }
   }
 }
 int main() {

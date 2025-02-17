@@ -107,4 +107,5 @@ char *get_config();//获取配置
 //模块函数
 char*widget(struct mg_connection *c,char*post_data);
 char* home_doc_list(struct mg_connection *c,char*post_data);
+void*login_auth_status(struct mg_connection *c,char*post_data);
 #endif
