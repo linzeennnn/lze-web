@@ -158,7 +158,7 @@ async function loadFolder(folder = '') {
   curpage = 1;
 
   try {
-    const response = await fetch(`${protocol}//${ip}/server/pic/list.cgi`, {
+    const response = await fetch(`${protocol}//${ip}/server/pic/list`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -525,7 +525,7 @@ function selfile() {
     fd.append('user', user); 
     fd.append('token', token); 
 
-    fetch(`${protocol}//${ip}/server/pic/upload.cgi`, {
+    fetch(`${protocol}//${ip}/server/pic/upload`, {
       method: 'POST',
       body: fd,
     })

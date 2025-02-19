@@ -129,7 +129,7 @@ async function getbok() {
     const bokbox=document.getElementById('bok-box');
     bokbox.innerHTML='';
     try {
-        const response = await fetch(`${protocol}//${ip}/server/bok/list.cgi`); 
+        const response = await fetch(`${protocol}//${ip}/server/bok/list`); 
         if (!response.ok) {
            notify("获取失败");
         }
@@ -174,7 +174,7 @@ async function getbok() {
 // 标记最近访问
 async function updatebok(name) {
     try {
-        const response = await fetch(`${protocol}//${ip}/server/bok/recent.cgi`, {
+        const response = await fetch(`${protocol}//${ip}/server/bok/recent`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -188,7 +188,7 @@ async function updatebok(name) {
 // 删除
 function delbok(name){
     pageloading(1);
-    fetch(`${protocol}//${ip}/server/bok/del.cgi`, {
+    fetch(`${protocol}//${ip}/server/bok/del`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -230,7 +230,7 @@ function newbok() {
     }
     tit.value='';
     link.innerText='';
-    fetch(`${protocol}//${ip}/server/bok/add.cgi`, {
+    fetch(`${protocol}//${ip}/server/bok/add`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

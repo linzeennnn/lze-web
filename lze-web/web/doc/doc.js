@@ -144,7 +144,7 @@ window.addEventListener('scroll', handleScroll);
  function loadFolder(folder = '') {
   pageloading(1);
    selectedarray.length = 0;
-   fetch(`${protocol}//${ip}/server/doc/list.cgi`, {
+   fetch(`${protocol}//${ip}/server/doc/list`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json', 
@@ -354,7 +354,7 @@ function newfolder(status){
    if (folderName===""){
      folderName="new_folder";
    }
-   fetch(`${protocol}//${ip}/server/doc/new_folder.cgi`, {
+   fetch(`${protocol}//${ip}/server/doc/new_folder`, {
      method: 'POST',
      headers: {
          'Content-Type': 'application/json'
@@ -392,7 +392,7 @@ function del() {
     const requestData = { dellist: dellist };
     requestData.user = user;
     requestData.token = token;
-    fetch(`${protocol}//${ip}/server/doc/del.cgi`, {
+    fetch(`${protocol}//${ip}/server/doc/del`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -423,13 +423,13 @@ function download(path,name,type){
   switch(type){
   case "file":
       path=path+'/'+name
-      window.location.href = `${protocol}//${ip}/server/doc/download_file.cgi?file_path=${path}&token=${token}&user=${user}`
+      window.location.href = `${protocol}//${ip}/server/doc/download_file?file_path=${path}&token=${token}&user=${user}`
       notify("开始下载")
       break;
   case "folder":
     path=path+'/'+name
     const zip_name=name+'.zip'
-      fetch(`${protocol}//${ip}/server/doc/zip_folder.cgi`,{
+      fetch(`${protocol}//${ip}/server/doc/zip_folder`,{
         method: "POST",
         headers: {
         "Content-Type": "application/json" 
@@ -445,7 +445,7 @@ function download(path,name,type){
         return response.text();  
       })
       .then(() => {
-      window.location.href = `${protocol}//${ip}/server/doc/down_zip.cgi?file_path=${zip_name}`
+      window.location.href = `${protocol}//${ip}/server/doc/down_zip?file_path=${zip_name}`
       notify("开始下载")
     })
     .catch(error => console.error("请求失败:", error));
@@ -490,7 +490,7 @@ function paste() {
 switch (pastestatus){
  case 1:{
   pageloading(1);
- fetch(`${protocol}//${ip}/server/doc/copy.cgi`, {
+ fetch(`${protocol}//${ip}/server/doc/copy`, {
    method: 'POST',
    headers: {
      'Content-Type': 'application/json',
@@ -517,7 +517,7 @@ switch (pastestatus){
  break;
  case 0:{
   pageloading(1);
-   fetch(`${protocol}//${ip}/server/doc/move.cgi`, {
+   fetch(`${protocol}//${ip}/server/doc/move`, {
      method: 'POST',
      headers: {
        'Content-Type': 'application/json',
@@ -615,7 +615,7 @@ files=fileitem.querySelector('.folderLink');
    newname=filetit.value;
    oldpath=nowpath+oldname;
    newpath=nowpath+newname;   
-   fetch(`${protocol}//${ip}/server/doc/rename.cgi`, {
+   fetch(`${protocol}//${ip}/server/doc/rename`, {
      method: 'POST',
      headers: {
          'Content-Type': 'application/json',

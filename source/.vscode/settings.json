@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "public.h": "c"
+        "public.h": "c",
+        "utime.h": "c"
     }
 }

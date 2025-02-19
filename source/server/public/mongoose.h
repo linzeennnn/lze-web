@@ -818,7 +818,6 @@ struct timeval {
 // #ifndef MG_HTTP_INDEX
 #define MG_HTTP_INDEX "index.html"
 // #endif
-#define MG_FATFS_ROOT "./web-test"
 
 #ifndef MG_PATH_MAX
 #ifdef PATH_MAX

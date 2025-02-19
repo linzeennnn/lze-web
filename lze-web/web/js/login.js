@@ -9,7 +9,7 @@ function send_pass(user, pass) {
         password: pass
     };
 
-    fetch(`${protocol}//${ip}/server/login/login.cgi`, {
+    fetch(`${protocol}//${ip}/server/login/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

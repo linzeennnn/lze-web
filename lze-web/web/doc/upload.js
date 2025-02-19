@@ -82,7 +82,7 @@ function uploadFolder() {
             chunkFormData.append('user', user);
             chunkFormData.append('last', end >= file.size ? 1 : 0);
 
-            fetch(`${protocol}//${ip}/server/doc/upload_folder.cgi`, {
+            fetch(`${protocol}//${ip}/server/doc/upload_folder`, {
                 method: 'POST',
                 body: chunkFormData
             })
@@ -145,7 +145,7 @@ function getChunkSize(fileSize) {
 
 // 从temp移动文件夹
 function movefolder(foldername, folderpath) {
-    fetch(`${protocol}//${ip}/server/doc/move_folder.cgi`, {
+    fetch(`${protocol}//${ip}/server/doc/move_folder`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -212,7 +212,7 @@ function selfile() {
         fd.append('token', token);
         fd.append('user', user);
 
-        fetch(`${protocol}//${ip}/server/doc/upload_file.cgi`, {
+        fetch(`${protocol}//${ip}/server/doc/upload_file`, {
             method: 'POST',
             body: fd
         })

@@ -11,7 +11,7 @@ async function widget() {
     let diskbar = document.getElementById(`disk-bar`);
     
     try {
-        let response = await fetch(`${protocol}//${ip}/server/home/widget.cgi`, {
+        let response = await fetch(`${protocol}//${ip}/server/home/widget`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -194,7 +194,7 @@ function doc(docu){
         const data = {
             name: file
           };
-        fetch(`${protocol}//${ip}/server/home/doc_list.cgi`, {
+        fetch(`${protocol}//${ip}/server/home/doc_list`, {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json'

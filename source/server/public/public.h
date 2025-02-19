@@ -13,6 +13,8 @@
 #include "cgic.h"           // cgic库
 #include <sys/shm.h>        //共享内存
 #include <sys/ipc.h>        //共享内存通信
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <libgen.h>  // 包含 basename() 和 dirname() 函数
 #include <sys/sendfile.h>   //发送文件
 #include <fcntl.h>          //open函数,操作文件
@@ -107,5 +109,5 @@ char *get_config();//获取配置
 //模块函数
 char*widget(struct mg_connection *c,char*post_data);
 char* home_doc_list(struct mg_connection *c,char*post_data);
-void*login_auth_status(struct mg_connection *c,char*post_data);
+void login_auth_status(struct mg_connection *c,char*post_data);
 #endif

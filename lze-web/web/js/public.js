@@ -33,7 +33,7 @@ async function auth(){
         token: token
     };
     try {
-        const response = await fetch(`${protocol}//${ip}/server/login/auth_status.cgi`, {
+        const response = await fetch(`${protocol}//${ip}/server/login/auth_status`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

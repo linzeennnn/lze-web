@@ -99,7 +99,7 @@ async function readfile(file) {
 }
 async function getnote() {
     const timestamp = new Date().getTime(); // 获取当前时间戳
-    const response = await fetch(`${protocol}//${ip}/server/not/list.cgi`);
+    const response = await fetch(`${protocol}//${ip}/server/not/list`);
     const noteFiles = await response.json();
     return noteFiles;
 }
@@ -242,7 +242,7 @@ async function getnote() {
     // delete note
     function delnote(fileName, load) {
         pageloading(1);
-        fetch(`${protocol}//${ip}/server/not/del.cgi`, {
+        fetch(`${protocol}//${ip}/server/not/del`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -349,11 +349,11 @@ async function getnote() {
         }
         else if(status==0){
             if(title.value===oldtitle){
-            addnote(title,text,'save.cgi');
+            addnote(title,text,'save');
             }
             else{
             delnote(file,0);
-            addnote(title,text,'add.cgi');
+            addnote(title,text,'add');
             }
 
             editstatus=0;
@@ -427,7 +427,7 @@ async function selfile() {
     }
 
     try {
-        const response = await fetch(`${protocol}//${ip}/server/not/upload.cgi`, {
+        const response = await fetch(`${protocol}//${ip}/server/not/upload`, {
             method: 'POST',
             body: fd
         });

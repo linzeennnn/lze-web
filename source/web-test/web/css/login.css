@@ -1,0 +1,117 @@
+#login-box{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.397);
+}
+.log-tit-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.log-switch-box{
+    height: fit-content;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 10px;
+}
+.log-switch-box:hover{
+    background-color: #4b7375a4;
+}
+#user-icon{
+    background-image: url(../../icon/profile_white.svg);
+}
+#ip-icon{
+    background-image: url(../../icon/host_white.svg);
+}
+.log-switch-icon{
+    margin-right: 10px;
+    opacity: 0.7;
+    height: 32px;
+    width: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.log-switch-span{
+    color: #bfd5d6;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.log-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.login-input {
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    width: 250px;
+    height: 60px;
+    padding: 15px;
+    color: #bfd2db;
+    font-weight: bold;
+    border: none;
+    font-size: 20px;
+    background-color: #21232485;
+    border-radius: 50px;
+    box-shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
+                inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
+                inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
+                inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
+}
+
+  .login-input:focus{
+    outline: none;
+    background-color: #4f5e68c4;
+  
+  }
+.log-btn{
+    width: 100px;
+    cursor: pointer;
+    margin: 20px;
+    background-color: #738b8b8f;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    height: 30px;
+}
+.log-btn:hover{
+    background-color: #4575758f;
+}
+.send-icon{
+    width: 32px;
+    height: 32px;
+    background-image: url(../../icon/right_grey.svg);
+}
+#login-opt-box{
+    flex-direction: column;
+    display: flex;
+}
+#logout{
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background-image: url(../../icon/logout_grey.svg);
+}
+#logout:hover{
+    background-color: #4575758f;
+}

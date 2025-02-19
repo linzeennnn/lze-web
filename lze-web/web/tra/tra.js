@@ -113,7 +113,7 @@ window.addEventListener('scroll', handleScroll);
   selectedarray.length = 0;
 
   try {
-    const response = await fetch(`${protocol}//${ip}/server/tra/list.cgi`, {
+    const response = await fetch(`${protocol}//${ip}/server/tra/list`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -262,7 +262,7 @@ let data = {
   user,
   token
 };
-    fetch(`${protocol}//${ip}/server/tra/recover.cgi`, {
+    fetch(`${protocol}//${ip}/server/tra/recover`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -338,7 +338,7 @@ function removeslash(path) {
 function cleanall(){
   if (confirm('确定清空回收站吗')) {
     ifroot();
-  fetch(`${protocol}//${ip}/server/tra/del.cgi`, {
+  fetch(`${protocol}//${ip}/server/tra/del`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',

@@ -142,7 +142,7 @@ async function get_data() {
       timebar.classList.remove('edit'); 
     }
     try {
-      const response = await fetch(`${protocol}//${ip}/server/mon/list.cgi`);
+      const response = await fetch(`${protocol}//${ip}/server/mon/list`);
       if (!response.ok) {
         throw new Error('网络响应失败');
       }
@@ -302,7 +302,7 @@ function change_time(){
     token,
     user
   };
-  fetch(`${protocol}//${ip}/server/mon/date.cgi`, {
+  fetch(`${protocol}//${ip}/server/mon/date`, {
     method: 'POST', 
     headers: {
       'Content-Type': 'application/json'
@@ -350,7 +350,7 @@ const data = {
   control: control,
   action: action
 };
-fetch(`${protocol}//${ip}/server/mon/update_act.cgi`, {
+fetch(`${protocol}//${ip}/server/mon/update_act`, {
   method: 'POST', 
   headers: {
     'Content-Type': 'application/json'
