@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "public.h": "c",
+        "signal.h": "c"
+    }
+}
