@@ -17,16 +17,19 @@
 #include <libgen.h>  // 包含 basename() 和 dirname() 函数
 #include <sys/sendfile.h>   //发送文件
 #include <fcntl.h>          //open函数,操作文件
+#define TURE 1
+#define FALSE 0
 #define CON_KEY "/temp/lze_config_key" 
 #define PROJ_ID 77     
-#define HOME_PATH "/opt/lze-web/file/"
-#define DOC_PATH "/opt/lze-web/file/Documents/"
-#define PIC_PATH "/opt/lze-web/file/Pictures/"
-#define NOT_PATH "/opt/lze-web/file/Note/"
-#define BOK_PATH "/opt/lze-web/file/Bookmark/"
-#define TRA_PATH "/opt/lze-web/file/trash/"
-#define DATA_PATH "/opt/lze-web/file/data/"
-#define TMP_PATH "/opt/lze-web/file/temp/" 
+#define ROOT "/home/linzeen/Documents/github/lze-web/web-test/"
+#define HOME_PATH ROOT"file/"
+#define DOC_PATH HOME_PATH"Documents/"
+#define PIC_PATH HOME_PATH"Pictures/"
+#define NOT_PATH HOME_PATH"Note/"
+#define BOK_PATH HOME_PATH"Bookmark/"
+#define TRA_PATH HOME_PATH"trash/"
+#define DATA_PATH HOME_PATH"data/"
+#define TMP_PATH HOME_PATH"temp/" 
 typedef struct FOLDER
 {
     char *name;
@@ -102,7 +105,6 @@ int login_remain_time(char*token,char*token_time);//剩余时长
 int get_user_access(char*user);//获取用户拥有权限数
 char *get_config();//获取配置
 void free_filelist(folder_list* folder_head, file_list* file_head, link_dir* link_dir_head, link_file* link_file_head);//释放文件链表内存
-
-
-void not_upload(struct mg_http_message *hm);
+char *split_long_string(char*ori);//分离带换行长字符串
+char *get_cmd_output(char*cmd);//获取命令输出
 #endif

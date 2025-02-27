@@ -444,6 +444,7 @@ char *add_file_index(char *name,int index){
 }
 // 检查文件存在
 char* file_exit(char* ori_name, char* path) {
+    char*name_count;
     char*name=(char*)malloc(strlen(ori_name)+1);
     strcpy(name,ori_name);
     typedef struct list {
@@ -474,6 +475,10 @@ char* file_exit(char* ori_name, char* path) {
     file_list *file = (file_list*)malloc(sizeof(file_list));
     link_dir *link_dir_head = (link_dir*)malloc(sizeof(link_dir));
     link_file *link_file_head = (link_file*)malloc(sizeof(link_file));
+    folder->name = NULL;
+    file->name = NULL;
+    link_dir_head->name = NULL;
+    link_file_head->name = NULL;
     folder->next = NULL;
     file->next = NULL;
     link_dir_head->next = NULL;
@@ -515,7 +520,10 @@ char* file_exit(char* ori_name, char* path) {
     while (list_node != NULL) {
         if (strcmp(name, list_node->name) == 0) {   
             count++;
-            name = concat_path(add_file_index(base_name, count), ext);
+            name_count=add_file_index(base_name, count);
+            free(name);
+            name = concat_path(name_count, ext);
+            free(name_count);
             list_node = list_head->next; // 重新检查
         }
         else
@@ -727,29 +735,64 @@ char *get_config(){
     return config;
 }
 //释放文件列表
-void free_filelist(folder_list* folder_head, file_list* file_head, link_dir* link_dir_head, link_file* link_file_head){
+void free_filelist(folder_list* folder_head, file_list* file_head, link_dir* link_dir_head, link_file* link_file_head) {
     folder_list* fod_tmp;
     file_list* fi_tmp;
     link_dir* li_dir_tmp;
     link_file* li_fi_tmp;
+
     while (folder_head != NULL) {   
         fod_tmp = folder_head;
         folder_head = folder_head->next;
-        free(fod_tmp);
+        if(fod_tmp->name!=NULL)
+            free(fod_tmp->name);  
+        free(fod_tmp);       
     }
     while (file_head != NULL) {
         fi_tmp = file_head;
         file_head = file_head->next;
+        if(fi_tmp->name!=NULL)
+            free(fi_tmp->name);
         free(fi_tmp);
     }
     while (link_dir_head != NULL) {
         li_dir_tmp = link_dir_head;
         link_dir_head = link_dir_head->next;
+        if(li_dir_tmp->name!=NULL)
+            free(li_dir_tmp->name);
         free(li_dir_tmp);
     }
     while (link_file_head != NULL) {
         li_fi_tmp = link_file_head;
         link_file_head = link_file_head->next;
+        if(li_fi_tmp->name!=NULL)
+            free(li_fi_tmp->name);
         free(li_fi_tmp);
     }
+}
+
+//分离带换行长字符串
+char* split_long_string(char* ori) {
+    if (ori == NULL) return NULL; 
+
+    char* next = ori;
+    while (*next != '\n' && *next != '\0') {
+        next++;
+    }
+    if (*next == '\n') {
+        *next = '\0';
+        next++;  
+    } else {
+        next = NULL;
+    }
+
+    return next;
+}
+//获取命令输出
+char *get_cmd_output(char*cmd){
+char *output=(char*)malloc(1024);
+FILE *fp = popen(cmd, "r");
+fread(output,1,1024,fp);
+pclose(fp);
+return output;
 }
