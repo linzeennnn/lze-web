@@ -8,8 +8,8 @@ int main(int argc,char*argv[]){
     share[0]=argv[1];
     share[1]=argv[2];
     char*file_name=post_data;
-    char*user=split_long_string(file_name);
-    char*token=split_long_string(user);
+    char*user=split_long_string(file_name,'\n');
+    char*token=split_long_string(user,'\n');
     check_action(share,user,token,"not","upload");
     char*tmp_dir=TMP_PATH;
     char*dest_dir=NOT_PATH;

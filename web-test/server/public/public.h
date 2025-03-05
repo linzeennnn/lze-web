@@ -81,8 +81,8 @@ file_array* sort_all(folder_list* folder_head, file_list* file_head, link_dir* l
 void split_exten(char*name);// 去除后缀
 void split_index(char*name);
 char* file_exit(char* ori_name, char* path);// 检查文件存在
-void list_all(char *base_path);
-void log(const char *string);// 日志
+void list_all(char*share[], char *base_path);
+void lze_log(const char *format, ...);// 日志
 int check_exit(char*list[],char*name,int length);// 检查文件名存在
 int is_file(const char *path);//列出目录所有内容并发送json
 void copy (char *source,char *dest);// 复制文件
@@ -105,6 +105,10 @@ int login_remain_time(char*token,char*token_time);//剩余时长
 int get_user_access(char*user);//获取用户拥有权限数
 char *get_config();//获取配置
 void free_filelist(folder_list* folder_head, file_list* file_head, link_dir* link_dir_head, link_file* link_file_head);//释放文件链表内存
-char *split_long_string(char*ori);//分离带换行长字符串
+char *split_long_string(char* ori,char split);//分离带换行长字符串
 char *get_cmd_output(char*cmd);//获取命令输出
+//lze-web专用
+key_t gen_key();//生成key
+char* upload(struct mg_http_message *hm,char*link);//上传操作
+char* download_file(struct mg_connection *c,struct mg_http_message *hm);//下载
 #endif

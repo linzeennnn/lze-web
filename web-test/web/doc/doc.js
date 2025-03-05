@@ -423,6 +423,7 @@ function download(path,name,type){
   switch(type){
   case "file":
       path=path+'/'+name
+      console.log(`${protocol}//${ip}/server/doc/download_file?file_path=${path}&token=${token}&user=${user}`)
       window.location.href = `${protocol}//${ip}/server/doc/download_file?file_path=${path}&token=${token}&user=${user}`
       notify("开始下载")
       break;

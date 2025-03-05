@@ -412,7 +412,7 @@ async function selfile() {
         var file = files[i];
         // 检查文件大小是否超过2MB
         if (file.size > 1024 * 1024) {
-            notify("文件不能超过2MB");
+            notify("文件不能超过1MB");
             return;
         }
 

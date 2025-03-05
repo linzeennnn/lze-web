@@ -426,14 +426,26 @@ void split_index(char*name){
         *splash='\0';
 }
 // 日志
-void log(const char *string) {
-    // 打开日志文件，如果文件不存在则创建它
+void lze_log(const char *format, ...) {
     FILE *log_file = fopen("/etc/lze-web/lze-web.log", "a");
     if (log_file == NULL) {
         perror("Unable to open or create log file");
         return;
     }
-fwrite(string,1,strlen(string),log_file);
+    
+    va_list args;
+    va_start(args, format);
+    int needed_length = vsnprintf(NULL, 0, format, args) + 2;
+    va_end(args);
+    
+    char log_string[needed_length];
+    va_start(args, format);
+    vsnprintf(log_string, needed_length, format, args);
+    va_end(args);
+    
+    strcat(log_string, "\n"); 
+    
+    fwrite(log_string, 1, strlen(log_string), log_file);
     fclose(log_file);
 }
 // 给文件加序号
@@ -772,14 +784,14 @@ void free_filelist(folder_list* folder_head, file_list* file_head, link_dir* lin
 }
 
 //分离带换行长字符串
-char* split_long_string(char* ori) {
+char* split_long_string(char* ori,char split) {
     if (ori == NULL) return NULL; 
 
     char* next = ori;
-    while (*next != '\n' && *next != '\0') {
+    while (*next != split && *next != '\0') {
         next++;
     }
-    if (*next == '\n') {
+    if (*next == split) {
         *next = '\0';
         next++;  
     } else {

@@ -81,7 +81,6 @@ function uploadFolder() {
             chunkFormData.append('token', token);
             chunkFormData.append('user', user);
             chunkFormData.append('last', end >= file.size ? 1 : 0);
-
             fetch(`${protocol}//${ip}/server/doc/upload_folder`, {
                 method: 'POST',
                 body: chunkFormData

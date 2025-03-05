@@ -72,16 +72,15 @@ function uploadFolder() {
             }
 
             const chunkFormData = new FormData();
+            chunkFormData.append('start', start);
+            chunkFormData.append('total', file.size);
             chunkFormData.append('file', chunk);
             chunkFormData.append('name', file.name);
             chunkFormData.append('relativePath', relativePath);
-            chunkFormData.append('start', start);
-            chunkFormData.append('chunkIndex', chunkIndex);
-            chunkFormData.append('total', file.size);
             chunkFormData.append('token', token);
+            chunkFormData.append('chunkIndex', chunkIndex);
             chunkFormData.append('user', user);
             chunkFormData.append('last', end >= file.size ? 1 : 0);
-
             fetch(`${protocol}//${ip}/server/doc/upload_folder`, {
                 method: 'POST',
                 body: chunkFormData

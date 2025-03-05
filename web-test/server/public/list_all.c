@@ -1,8 +1,10 @@
 #include "public.h"
 
-void list_all(char *base_path) {
-    char post_data[1024];
-    int post_len = post(post_data, sizeof(post_data));
+void list_all(char*share[], char *base_path) {
+    key_t key=atol(share[0]);
+    size_t body_size=atol(share[1]);
+    int shmid = shmget(key, body_size, 0666); 
+    char *post_data = (char *)shmat(shmid, NULL, 0); 
     cJSON *rec_json = cJSON_Parse(post_data);
     cJSON *folder_item = cJSON_GetObjectItem(rec_json, "folder");
     char *current_folder = folder_item->valuestring;
@@ -45,6 +47,7 @@ void list_all(char *base_path) {
     cJSON_AddItemToObject(output, "currentFolder", cJSON_CreateString(current_folder));
     cJSON_AddItemToObject(output, "parentFolder", cJSON_CreateString(parent_folder));
     char *printed_json = cJSON_PrintUnformatted(output);
-    http_out(1, "%s\n", printed_json);
     free(dest_path);
+    strcpy(post_data,printed_json);
+        shmdt(post_data);
 }
