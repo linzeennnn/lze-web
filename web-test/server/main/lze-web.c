@@ -29,10 +29,10 @@ char* upload(struct mg_http_message *hm,char*link) {
     type=PIC_UPLOAD;
   else if(strcmp(link,"server/not/upload")==0)
     type=NOT_UPLOAD;
-  else if(strcmp(link,"server/doc_upload_folder")==0)
+  else if(strcmp(link,"server/doc/upload_folder")==0)
     type=DOC_DIR_UPLOAD;
   int err=FALSE;
-    char fileName[25];
+    char fileName[100];
     char user[11],token[40];
     char nowpath[256],relat_path[256];
     char totalChunks[10],currentChunk[10],chunk_index[10];
@@ -60,7 +60,7 @@ struct mg_http_part part;
         if(strncmp(part.name.buf,"chunkIndex",10)==0)//doc_dir
           snprintf(chunk_index,part.body.len+1,part.body.buf);
         if(strncmp(part.name.buf,"relativePath",12)==0)//doc_dir
-          snprintf(chunk_index,part.body.len+1,part.body.buf);
+          snprintf(relat_path,part.body.len+1,part.body.buf);
         if(strncmp(part.name.buf,"last",4)==0)//doc_dir
           snprintf(last,part.body.len+1,part.body.buf);
         if(strncmp(part.name.buf,"new_note",8)==0){//not
@@ -72,7 +72,6 @@ struct mg_http_part part;
           file_body=part.body.buf;
           body_len=(unsigned long)part.body.len;
         }
-        lze_log(fileName);
       }
       long send_len;
       char*share_data;
