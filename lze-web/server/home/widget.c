@@ -64,7 +64,7 @@ sort_widget(1,"trash/",1,"tra",json_p);
 user_data* da=get_user_all(user);
 int remain_time=login_remain_time(da->token,da->token_time);
 int count=get_user_access(user);
-char*full_time=(char*)malloc(10);
+char*full_time=(char*)malloc(10); 
 if(!da->token_time)
     full_time="none";
 else

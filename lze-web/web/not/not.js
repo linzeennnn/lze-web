@@ -109,7 +109,7 @@ async function getnote() {
         
         try {
             const noteFiles = await getnote();
-            for (const file of Object.values(noteFiles)) {
+            for (const file of noteFiles.list) {
                 const title = file.replace(/\.[^/.]+$/, '');
                 const note = document.createElement('div');
                 note.className = 'note';
