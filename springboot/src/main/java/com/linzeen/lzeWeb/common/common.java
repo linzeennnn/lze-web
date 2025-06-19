@@ -230,4 +230,26 @@ public static ResponseEntity<String> response(int statusCode, String content) {
         }
         return file_list;
     }
+// 获取唯一文件名
+    public static String unique_name(String path, String name) {
+        File file = new File(path, name);
+        if (!file.exists()) {
+            return name; // 如果文件不存在，直接返回原始名称
+        }
+
+        String baseName = name;
+        String extension = "";
+        int dotIndex = name.lastIndexOf('.');
+        if (dotIndex != -1) {
+            baseName = name.substring(0, dotIndex);
+            extension = name.substring(dotIndex); // 包含点
+        }
+
+        int counter = 1;
+        while (file.exists()) {
+            file = new File(path, baseName + "(" + counter + ")" + extension);
+            counter++;
+        }
+        return file.getName(); // 返回唯一的文件名
+    }
 }

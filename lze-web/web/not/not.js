@@ -353,7 +353,7 @@ async function getnote() {
             }
             else{
             delnote(file,0);
-            addnote(title,text,'add');
+            addnote(title,text,'save');
             }
 
             editstatus=0;
