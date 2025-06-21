@@ -39,9 +39,19 @@ func Widget(c *gin.Context) {
 
 func getFileList(path string, count int) []string {
 	fileList := global.ScanDir(path)
+	length := len(fileList)
 	result := make([]string, 0, count)
-	for i := 0; i < count && i < len(fileList); i++ {
-		result = append(result, fileList[i].Name)
+	if length >= count {
+		for i := 0; i < count; i++ {
+			result = append(result, fileList[i].Name)
+		}
+	} else {
+		for i := 0; i < length; i++ {
+			result = append(result, fileList[i].Name)
+		}
+		for i := length; i < count; i++ {
+			result = append(result, "")
+		}
 	}
 	return result
 }
