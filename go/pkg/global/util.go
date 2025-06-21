@@ -3,8 +3,10 @@ package global
 import (
 	"encoding/json"
 	"fmt"
+	fileSystem "lze-web/model/other/fs"
 	"os"
 	"path/filepath"
+	"sort"
 	"time"
 )
 
@@ -67,4 +69,57 @@ func JsonToMap(jsonStr string) map[string]interface{} {
 		panic(err)
 	}
 	return data
+}
+
+// 扫描目录
+func ScanDir(path string) []fileSystem.Files {
+	fileList := []fileSystem.Files{}
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		panic(err)
+	}
+	for _, entry := range entries {
+		filePath := path + "/" + entry.Name()
+		fileType := FileType(filePath)
+		info, err := os.Lstat(filePath)
+		if err != nil {
+			continue
+		}
+		fileList = append(fileList, fileSystem.Files{
+			Name:     entry.Name(),
+			FileType: fileType,
+			ModTime:  info.ModTime().Unix(),
+		})
+	}
+	sort.Slice(fileList, func(i, j int) bool {
+		return fileList[i].ModTime > fileList[j].ModTime
+	})
+	return fileList
+}
+
+// 文件类型重命名
+func FileType(path string) string {
+	info, err := os.Lstat(path)
+	if err != nil {
+		panic(err)
+	}
+	mode := info.Mode()
+	switch {
+	case mode.IsRegular():
+		return "file"
+	case mode.IsDir():
+		return "dir"
+	case mode&os.ModeSymlink != 0:
+		target, err := os.Stat(path)
+		if err == nil {
+			if target.IsDir() {
+				return "dir_link"
+			} else {
+				return "file_link"
+			}
+		}
+		return "unknow"
+	default:
+		return "other"
+	}
 }

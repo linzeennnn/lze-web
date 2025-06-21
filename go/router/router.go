@@ -20,6 +20,6 @@ func Router() *gin.Engine {
 	})
 	// ******************测试api****************
 	RouterLogin(r)
-
+	RouterHome(r)
 	return r
 }

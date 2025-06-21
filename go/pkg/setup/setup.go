@@ -25,7 +25,7 @@ func Setup() {
 	global.DocPath = setPath("doc_path", "Documents", WorkConfig)
 	global.PicPath = setPath("pic_path", "Pictures", WorkConfig)
 	global.NotPath = setPath("not_path", "Note", WorkConfig)
-	global.BokPath = setPath("bok_path", "BookMark", WorkConfig)
+	global.BokPath = setPath("bok_path", "Bookmark", WorkConfig)
 	global.TraPath = setPath("tra_path", "trash", WorkConfig)
 	global.TempPath = setPath("tmp_path", "temp", WorkConfig)
 
