@@ -1,6 +1,8 @@
 package global
 
 import (
+	"encoding/json"
+	"math/rand"
 	"strconv"
 	"strings"
 	"time"
@@ -59,6 +61,44 @@ func CheckToken(username, token string) bool {
 		return false
 	}
 	return true
+}
+
+// 检查密码
+func CheckPassword(username, password string) (string, bool) {
+	username = SetUsername(username)
+	if username == "visitor" {
+		return "", true
+	}
+	userModule := UserConfig["user"].(map[string]interface{})
+	userMes := userModule[username].(map[string]interface{})
+	savePassword := userMes["password"].(string)
+	if password != savePassword {
+		return "", false
+	}
+	if CheckTokenTime(username) < 0 {
+		token := GenToken()
+		userMes["token"] = token
+		userJson, err := json.MarshalIndent(UserConfig, "", "  ")
+		if err != nil {
+			panic(err)
+		}
+		WriteText(WorkDir+"config/user_config.json", string(userJson))
+		return token, true
+	}
+	saveToken := userMes["token"].(string)
+	return saveToken, true
+}
+
+// 生成token
+func GenToken() string {
+	dict := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+	var builder strings.Builder
+	for i := 0; i < 32; i++ {
+		index := rand.Intn(32)
+		builder.WriteRune(dict[index])
+	}
+	return builder.String() + "_" + strconv.FormatInt(GetTimeStamp(), 10)
 }
 
 // 设置用户名
