@@ -23,5 +23,6 @@ func Router() *gin.Engine {
 	})
 	RouterLogin(r)
 	RouterHome(r)
+	RouterSystem(r)
 	return r
 }
