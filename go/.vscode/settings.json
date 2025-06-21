@@ -1,0 +1,9 @@
+{
+    "gopls": {
+        "directoryFilters": [
+    "-build",
+    "-node_modules",
+    "-bin"
+  ]
+    }
+}
