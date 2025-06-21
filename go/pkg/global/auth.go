@@ -9,7 +9,7 @@ import (
 // 计算剩余登陆时间
 func CheckTokenTime(username string) int {
 	username = SetUsername(username)
-	if username == "vistor" {
+	if username == "visitor" {
 		return 0
 	}
 	userModule := UserConfig["user"].(map[string]interface{})
@@ -46,7 +46,7 @@ func CheckTokenTime(username string) int {
 // 检查token
 func CheckToken(username, token string) bool {
 	username = SetUsername(username)
-	if username == "vistor" {
+	if username == "visitor" {
 		return true
 	}
 	userModule := UserConfig["user"].(map[string]interface{})
@@ -71,7 +71,7 @@ func SetUsername(username string) string {
 		}
 	}
 	if !isUser {
-		return "vistor"
+		return "visitor"
 	}
 	return username
 

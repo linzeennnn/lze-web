@@ -17,6 +17,7 @@ func Widget(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
 	var files widget.Send
 	docList := getFileList(global.DocPath, 3)
 	picLIst := getFileList(global.PicPath, 1)
@@ -56,8 +57,14 @@ func getFileList(path string, count int) []string {
 	return result
 }
 func monData(username string) (string, int, int) {
+	var tokenTime string
+	username = global.SetUsername(username)
 	userData := global.UserConfig["user"].(map[string]interface{})
-	tokenTime := userData[username].(map[string]interface{})["tokentime"].(string)
+	if username == "visitor" {
+		tokenTime = "0"
+	} else {
+		tokenTime = userData[username].(map[string]interface{})["tokentime"].(string)
+	}
 	avaTime := global.CheckTokenTime(username)
 	controlDataMap := global.UserConfig["control"].(map[string]interface{})
 	controlJson, err := json.Marshal(controlDataMap)
