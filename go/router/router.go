@@ -13,5 +13,6 @@ func Router() *gin.Engine {
 	RouterHome(r)
 	RouterSystem(r)
 	RouterBok(r)
+	RouterNot(r)
 	return r
 }

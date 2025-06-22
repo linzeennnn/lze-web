@@ -241,6 +241,7 @@ async function getnote() {
     }
     // delete note
     function delnote(fileName, load) {
+        
         pageloading(1);
         fetch(`${protocol}//${ip}/server/not/del`, {
             method: 'POST',
