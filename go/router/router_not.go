@@ -13,6 +13,7 @@ func RouterNot(r *gin.Engine) {
 		loginGroup.POST("/del", not.Del)
 		loginGroup.POST("/add", not.Add)
 		loginGroup.POST("/save", not.Save)
+		loginGroup.POST("/upload", not.Upload)
 	}
 
 }
