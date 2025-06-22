@@ -121,3 +121,22 @@ func SetUsername(username string) string {
 func GetTimeStamp() int64 {
 	return time.Now().Unix() / 3600
 }
+
+// 检查操作权限
+func CheckPermit(username, token, control, action string) bool {
+	username = SetUsername(username)
+	if !CheckToken(username, token) {
+		return false
+	}
+	controlModule := UserConfig["control"].(map[string]interface{})
+	controlMes := controlModule[control].(map[string]interface{})
+	actionModule := controlMes["action"].(map[string]interface{})
+	actionMes := actionModule[action].(map[string]interface{})
+	userAction := actionMes["user"].([]interface{})
+	for _, avaUser := range userAction {
+		if avaUser == username {
+			return true
+		}
+	}
+	return false
+}
