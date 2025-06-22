@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -122,4 +123,22 @@ func FileType(path string) string {
 	default:
 		return "other"
 	}
+}
+
+// 获取唯一文件名
+func UniqueName(path, fileName string) string {
+	fullPath := filepath.Join(path, fileName)
+	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+		return fileName
+	}
+	ext := filepath.Ext(fileName)
+	name := strings.TrimSuffix(fileName, ext)
+	for i := 1; ; i++ {
+		newName := fmt.Sprintf("%s(%d)%s", name, i, ext)
+		fullPath = filepath.Join(path, newName)
+		if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+			return newName
+		}
+	}
+
 }
