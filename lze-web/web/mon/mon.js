@@ -118,11 +118,6 @@ function goBack() {
     function reloadPage() {
   location.reload();
 }
-    async function readFile(file) {
-        const response = await fetch(file);
-        const text = await response.text();
-        return text;
-    }
 // 获取配置
 let time=null;
 let monuser=user;

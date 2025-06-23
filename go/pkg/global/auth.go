@@ -78,11 +78,7 @@ func CheckPassword(username, password string) (string, bool) {
 	if CheckTokenTime(username) < 0 {
 		token := GenToken()
 		userMes["token"] = token
-		userJson, err := json.MarshalIndent(UserConfig, "", "  ")
-		if err != nil {
-			panic(err)
-		}
-		WriteText(WorkDir+"config/user_config.json", string(userJson))
+		SaveUserConfig()
 		return token, true
 	}
 	saveToken := userMes["token"].(string)
@@ -139,4 +135,14 @@ func CheckPermit(username, token, control, action string) bool {
 		}
 	}
 	return false
+}
+
+// 保存用户配置
+func SaveUserConfig() {
+	userJson, err := json.MarshalIndent(UserConfig, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	WriteText(WorkDir+"config/user_config.json", string(userJson))
+
 }
