@@ -156,7 +156,7 @@ window.addEventListener('scroll', handleScroll);
 async function loadFolder(folder = '') {
   pageloading(1);
   curpage = 1;
-
+  
   try {
     const response = await fetch(`${protocol}//${ip}/server/pic/list`, {
       method: 'POST',

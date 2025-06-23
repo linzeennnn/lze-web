@@ -15,5 +15,6 @@ func Router() *gin.Engine {
 	RouterBok(r)
 	RouterNot(r)
 	RouterMon(r)
+	RouterPic(r)
 	return r
 }
