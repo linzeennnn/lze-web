@@ -4,7 +4,7 @@ var (
 	UserConfig    map[string]interface{}
 	UserList      []string
 	Port          string
-	MaxUploadSize string
+	MaxUploadSize int64
 	// 路径相关
 	WorkDir  string
 	DocPath  string

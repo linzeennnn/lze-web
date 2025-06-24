@@ -24,6 +24,6 @@ func List(c *gin.Context) {
 	var sendData list.Send
 	sendData.FileList = picList
 	sendData.CurrentFolder = rec.Folder
-	sendData.ParentFolder = filepath.Base(rec.Folder)
+	sendData.ParentFolder = filepath.Dir(rec.Folder)
 	c.JSON(200, sendData)
 }

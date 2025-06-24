@@ -154,6 +154,7 @@ window.addEventListener('scroll', handleScroll);
   }
 // 加载文件夹
 async function loadFolder(folder = '') {
+
   pageloading(1);
   curpage = 1;
   

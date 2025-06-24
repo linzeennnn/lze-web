@@ -3,6 +3,7 @@ package setup
 import (
 	"lze-web/pkg/global"
 	"path/filepath"
+	"strconv"
 )
 
 func Setup() {
@@ -16,7 +17,8 @@ func Setup() {
 	}
 	WorkConfig := global.JsonToMap(workConfigStr)
 	global.Port = WorkConfig["port"].(string)
-	global.MaxUploadSize = WorkConfig["max_size"].(string)
+	maxSiztStr := WorkConfig["max_size"].(string)
+	global.MaxUploadSize, _ = strconv.ParseInt(maxSiztStr, 10, 64)
 	global.FilePath = WorkConfig["file_path"].(string)
 	if global.FilePath == "default" {
 		global.FilePath = filepath.Join(global.WorkDir, "file")
