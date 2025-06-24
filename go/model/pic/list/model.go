@@ -10,4 +10,5 @@ type FileList struct {
 type Send struct {
 	FileList      []FileList `json:"filelist"`
 	CurrentFolder string     `json:"currentFolder"`
+	ParentFolder  string     `json:"parentFolder"`
 }

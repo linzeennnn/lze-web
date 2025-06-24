@@ -3,6 +3,7 @@ package global
 import (
 	"encoding/json"
 	"math/rand"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -143,6 +144,6 @@ func SaveUserConfig() {
 	if err != nil {
 		panic(err)
 	}
-	WriteText(WorkDir+"config/user_config.json", string(userJson))
+	WriteText(filepath.Join(WorkDir, "config", "user_config.json"), string(userJson))
 
 }

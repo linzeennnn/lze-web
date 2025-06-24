@@ -3,7 +3,7 @@ package pic
 import (
 	"lze-web/model/pic/list"
 	"lze-web/pkg/global"
-	"strings"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,17 +14,16 @@ func List(c *gin.Context) {
 		c.JSON(200, err)
 		return
 	}
-	files := global.ScanDir(global.PicPath + rec.Folder + "/")
+	files := global.ScanDir(filepath.Join(global.PicPath, filepath.FromSlash(rec.Folder)))
 	length := len(files)
 	picList := make([]list.FileList, length)
 	for i := 0; i < length; i++ {
 		picList[i].Name = files[i].Name
 		picList[i].Type = files[i].FileType
 	}
-	cleanPath := strings.Trim(rec.Folder, "/")
-	curFolder := strings.Split(cleanPath, "/")[0]
 	var sendData list.Send
 	sendData.FileList = picList
-	sendData.CurrentFolder = curFolder
+	sendData.CurrentFolder = rec.Folder
+	sendData.ParentFolder = filepath.Base(rec.Folder)
 	c.JSON(200, sendData)
 }

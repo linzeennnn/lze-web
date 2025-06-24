@@ -3,10 +3,13 @@ package global
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	fileSystem "lze-web/model/other/fs"
 	"os"
+	"path"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -17,8 +20,8 @@ func GetWorkDir() string {
 	if err != nil {
 		panic(err)
 	}
-	exeDir := filepath.Dir(exePath) + "/"
-	return exeDir
+	runDir := filepath.Dir(exePath)
+	return runDir
 }
 
 // 从文件读取文本
@@ -80,7 +83,7 @@ func ScanDir(path string) []fileSystem.Files {
 		panic(err)
 	}
 	for _, entry := range entries {
-		filePath := path + "/" + entry.Name()
+		filePath := filepath.Join(path, entry.Name())
 		fileType := FileType(filePath)
 		info, err := os.Lstat(filePath)
 		if err != nil {
@@ -141,4 +144,28 @@ func UniqueName(path, fileName string) string {
 		}
 	}
 
+}
+
+// 合并文件
+func MergeFile(tempPath string, total int64) string {
+	fileName := path.Base(tempPath)
+	os.Mkdir(filepath.Join(tempPath, "target"), 0755)
+	targetFile := filepath.Join(tempPath, "target", fileName)
+	output, err := os.Create(targetFile)
+	if err != nil {
+		return ""
+	}
+	defer output.Close()
+	var i int64
+	for i = 0; i < total; i++ {
+		chunkPath := filepath.Join(tempPath, strconv.FormatInt(i, 10))
+		chunk, err := os.Open(chunkPath)
+		if err != nil {
+			return ""
+		}
+		io.Copy(output, chunk)
+		chunk.Close()
+		os.Remove(chunkPath)
+	}
+	return targetFile
 }

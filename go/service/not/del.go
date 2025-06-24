@@ -4,6 +4,7 @@ import (
 	"lze-web/model/not/del"
 	"lze-web/pkg/global"
 	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +16,7 @@ func Del(c *gin.Context) {
 		return
 	}
 	if global.CheckPermit(rec.User, rec.Token, "not", "delete") {
-		err := os.Remove(global.NotPath + rec.FileName)
+		err := os.Remove(filepath.Join(global.NotPath, rec.FileName))
 		if err != nil {
 			c.String(400, "删除失败"+err.Error())
 		} else {

@@ -2,6 +2,7 @@ package not
 
 import (
 	"lze-web/pkg/global"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,11 +13,11 @@ func Upload(c *gin.Context) {
 	if global.CheckPermit(username, token, "not", "upload") {
 		file, err := c.FormFile("new_note")
 		if err != nil {
-			c.JSON(400, gin.H{"error": "上传失败：" + err.Error()})
+			c.String(400, err.Error())
 			return
 		}
 		name := global.UniqueName(global.NotPath, file.Filename)
-		if err := c.SaveUploadedFile(file, global.NotPath+name); err != nil {
+		if err := c.SaveUploadedFile(file, filepath.Join(global.NotPath, name)); err != nil {
 			c.JSON(400, err)
 			return
 		}
