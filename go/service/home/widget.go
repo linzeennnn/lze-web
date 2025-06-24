@@ -19,11 +19,11 @@ func Widget(c *gin.Context) {
 	}
 
 	var files widget.Send
-	docList := getFileList(global.DocPath, 3)
-	picLIst := getFileList(global.PicPath, 1)
-	notList := getFileList(global.NotPath, 3)
-	bokList := getFileList(global.BokPath, 1)
-	traList := getFileList(global.TraPath, 1)
+	docList := getFileList(global.DocPath, 3, false)
+	picLIst := getFileList(global.PicPath, 1, true)
+	notList := getFileList(global.NotPath, 3, true)
+	bokList := getFileList(global.BokPath, 1, true)
+	traList := getFileList(global.TraPath, 1, false)
 	files.Doc1 = docList[0]
 	files.Doc2 = docList[1]
 	files.Doc3 = docList[2]
@@ -38,24 +38,28 @@ func Widget(c *gin.Context) {
 	c.JSON(200, files)
 }
 
-func getFileList(path string, count int) []string {
+func getFileList(path string, count int, ignoreDir bool) []string {
 	fileList := global.ScanDir(path)
-	length := len(fileList)
 	result := make([]string, 0, count)
-	if length >= count {
-		for i := 0; i < count; i++ {
-			result = append(result, fileList[i].Name)
+
+	for _, f := range fileList {
+		if ignoreDir && (f.FileType == "dir" || f.FileType == "dir_link") {
+			continue
 		}
-	} else {
-		for i := 0; i < length; i++ {
-			result = append(result, fileList[i].Name)
-		}
-		for i := length; i < count; i++ {
-			result = append(result, "")
+		result = append(result, f.Name)
+		if len(result) >= count {
+			break
 		}
 	}
+
+	// 补足空位
+	for len(result) < count {
+		result = append(result, "")
+	}
+
 	return result
 }
+
 func monData(username string) (string, int, int) {
 	var tokenTime string
 	username = global.SetUsername(username)

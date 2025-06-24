@@ -37,6 +37,7 @@ func Upload(c *gin.Context) {
 			os.Rename(targetFile, filepath.Join(global.PicPath, nowpath, saveName))
 			os.RemoveAll(tempPath)
 		}
+		c.Status(200)
 	} else {
 		c.Status(401)
 	}
