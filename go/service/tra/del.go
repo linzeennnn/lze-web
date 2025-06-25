@@ -17,6 +17,7 @@ func Del(c *gin.Context) {
 	if global.CheckPermit(rec.User, rec.Token, "tra", "clean") {
 		os.RemoveAll(global.TraPath)
 		os.MkdirAll(global.TraPath, 0755)
+		global.CleanDelData()
 	} else {
 		c.Status(401)
 	}

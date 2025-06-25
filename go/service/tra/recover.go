@@ -1,7 +1,6 @@
 package tra
 
 import (
-	"encoding/json"
 	"lze-web/model/tra/recover"
 	"lze-web/pkg/global"
 	"os"
@@ -18,7 +17,7 @@ func Recover(c *gin.Context) {
 	}
 	if global.CheckPermit(rec.User, rec.Token, "tra", "recover") {
 		if rec.SourcePath {
-			delData := getDeldata()
+			delData := global.GetDeldata()
 			for _, files := range rec.RecoverList {
 				oriPathStr := delData[filepath.Base(files)].(string)
 				oriPath := filepath.FromSlash(oriPathStr)
@@ -31,7 +30,7 @@ func Recover(c *gin.Context) {
 				os.Rename(source, targetPath)
 				delete(delData, filepath.Base(files))
 			}
-			saveDelData(delData)
+			global.SaveDelData(delData)
 		} else {
 			for _, files := range rec.RecoverList {
 				dest := filepath.Join(global.DocPath, "Recover_file")
@@ -46,13 +45,4 @@ func Recover(c *gin.Context) {
 	} else {
 		c.Status(401)
 	}
-}
-func saveDelData(delData map[string]interface{}) {
-
-	userJson, err := json.MarshalIndent(delData, "", "  ")
-	if err != nil {
-		panic(err)
-	}
-	global.WriteText(filepath.Join(global.WorkDir, "config", "del_data.json"), string(userJson))
-
 }

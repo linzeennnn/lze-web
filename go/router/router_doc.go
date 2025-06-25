@@ -20,5 +20,6 @@ func RouterDoc(r *gin.Engine) {
 		loginGroup.POST("/zip_folder", doc.ZipFolder)
 		loginGroup.GET("/down_zip", doc.DownZip)
 		loginGroup.GET("/download_file", doc.DownloadFile)
+		loginGroup.POST("/del", doc.Del)
 	}
 }
