@@ -181,9 +181,9 @@ async function loadFolder(folder = '') {
     fullPath = (data.currentFolder ? data.currentFolder : '') + '/';
     pathlen(currentPath, fullPath);
     currentPath.title = fullPath;
-    const file_array = data.file_list[0];
-    for (const [name, type] of Object.entries(file_array)) {
-      if(type==="file"||type==="link_file"){
+    const file_array = data.filelist;
+    for (const pic_file of file_array) {
+      if(pic_file.type==="file"||pic_file.type==="file_link"){
         const load = document.createElement('div');
         const pic = document.createElement('div');
         pic.classList.add('pic');
@@ -191,11 +191,11 @@ async function loadFolder(folder = '') {
         let picfile;
   
         pic.addEventListener('click', function () {
-          openpic(1, folder + "/" + name);
+          openpic(1, folder + "/" + pic_file.name);
         });
   
         // 视频
-        if (isvideo(name) == 1) {
+        if (isvideo(pic_file.name) == 1) {
           pic.classList.add('video');
           picfile = document.createElement('video');
           if (vidindex % 9 == 0 && vidindex != 0) {
@@ -217,8 +217,8 @@ async function loadFolder(folder = '') {
   
         picfile.setAttribute('loading', 'lazy');
         picfile.draggable = false;
-        pic.title = "查看" + name;
-        picfile.src = `${protocol}//${ip}/file/Pictures/${folder}/${name}`;
+        pic.title = "查看" + pic_file.name;
+        picfile.src = `${protocol}//${ip}/file/Pictures/${folder}/${pic_file.name}`;
         pic.append(load);
         pic.append(picfile);
         picbox.appendChild(pic);
@@ -230,17 +230,17 @@ async function loadFolder(folder = '') {
           load.style.display = 'none';
       });
       }
-      if(type==="folder"||type==="link_dir"){
+      if(pic_file.type==="dir"||pic_file.type==="dir_link"){
         const dir = document.createElement('div');
         dir.classList.add('folder');
-        dir.innerText = name;
-        dir.title = name;
+        dir.innerText = pic_file.name;
+        dir.title = pic_file.name;
         dir.addEventListener('click', function (event) {
           event.stopPropagation();
           if (event.target.isContentEditable) {
             return;
           }
-          loadFolder(data.currentFolder ? data.currentFolder + '/' + name : name);
+          loadFolder(data.currentFolder ? data.currentFolder + '/' + pic_file.name : pic_file.name);
         });
         othlist.appendChild(dir);
       }
@@ -488,28 +488,45 @@ function switchpic(status){
 // 上传文件
 function selfile() {
   ifroot();
-  var files = fileInput.files; // 直接使用 fileInput 的文件
+  var files = fileInput.files;
   if (files.length === 0) {
-      notify("请先选择文件");
-      return;
+    notify("请先选择文件");
+    return;
   }
-  var chunkSize = 20 * 1024 * 1024; // 每个块的大小（1MB）
+
+  var chunkSize = 20*1024 * 1024;
   var totalFiles = files.length;
-  var totalChunks = Array(totalFiles).fill(0); // 存储每个文件的总块数
-  var currentChunks = Array(totalFiles).fill(0); // 存储每个文件的当前块数
-  // 计算每个文件的总块数
+  var totalChunks = Array(totalFiles).fill(0);
+  var currentChunks = Array(totalFiles).fill(0);
+
   for (let i = 0; i < totalFiles; i++) {
     if (files[i].size === 0) {
-        notify(`${files[i].name} 是空文件，上传失败`);
-        return;
+      notify(`${files[i].name} 是空文件，上传失败`);
+      return;
     }
     totalChunks[i] = Math.ceil(files[i].size / chunkSize);
   }
+
+  // 显示进度条
+  document.getElementById("progress").style.display = "block";
+  updateProgress(0); // 初始化为 0%
+
   loading(1);
+
+  function updateProgress(percent) {
+    let bar = document.getElementById("bar");
+    let text = document.getElementById("percent");
+    bar.style.width = percent + "%";
+    text.textContent = percent.toFixed(1) + "%";
+  }
 
   function uploadChunk(fileIndex) {
     if (fileIndex >= totalFiles) {
       loading(0);
+      updateProgress(100); // 完成上传
+      setTimeout(() => {
+        document.getElementById("progress").style.display = "none";
+      }, 500);
       return;
     }
 
@@ -523,8 +540,8 @@ function selfile() {
     fd.append('totalChunks', totalChunks[fileIndex]);
     fd.append('currentChunk', currentChunks[fileIndex]);
     fd.append('nowpath', nowpath);
-    fd.append('user', user); 
-    fd.append('token', token); 
+    fd.append('user', user);
+    fd.append('token', token);
 
     fetch(`${protocol}//${ip}/server/pic/upload`, {
       method: 'POST',
@@ -532,34 +549,46 @@ function selfile() {
     })
     .then(function(response) {
       if (response.ok) {
-        // 读取响应体的文本
         response.text().then(function(uploadpath) {
           currentChunks[fileIndex]++;
+
+          // 计算总体进度（所有文件）
+          let totalUploaded = 0;
+          for (let i = 0; i < totalFiles; i++) {
+            totalUploaded += currentChunks[i];
+          }
+          let totalToUpload = totalChunks.reduce((a, b) => a + b, 0);
+          let progress = (totalUploaded / totalToUpload) * 100;
+          updateProgress(progress);
+
           if (currentChunks[fileIndex] < totalChunks[fileIndex]) {
-            uploadChunk(fileIndex); // 上传下一个块
+            uploadChunk(fileIndex); // 继续下一个块
           } else {
-            uploadChunk(fileIndex + 1); // 上传下一个文件
             notify(`文件 ${file.name} 上传成功`);
             loadFolder(removeslash(nowpath));
+            uploadChunk(fileIndex + 1); // 下一个文件
           }
         });
       } else if (response.status === 401) {
         notify(`没有上传相册权限`);
         loading(0);
+        document.getElementById("progress").style.display = "none";
         throw new Error('未授权访问');
       } else {
         notify(`${response.status} 错误`);
         loading(0);
+        document.getElementById("progress").style.display = "none";
         throw new Error(response.status);
       }
     })
     .catch(function(error) {
       console.error('上传过程中发生错误:', error);
       loading(0);
+      document.getElementById("progress").style.display = "none";
     });
   }
 
-  uploadChunk(0); // 开始上传第一个文件
+  uploadChunk(0);
 }
 
 //拖拽上传

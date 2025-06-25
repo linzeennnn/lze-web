@@ -163,9 +163,9 @@ window.addEventListener('scroll', handleScroll);
        
        pathlen(currentPath, fullPath);
        currentPath.title = fullPath;
-       const file_array = data.file_list[0];
-       for (const [name, type] of Object.entries(file_array)) {
-        if(type==="file"||type==="link_file"){
+       const file_array = data.filelist;
+       for (const files of file_array) {
+        if(files.type==="file"||files.type==="file_link"){
           const listItem = document.createElement('li');
          const editbtn= document.createElement('div');
          editbtn.className='edit li-btn';
@@ -187,9 +187,9 @@ window.addEventListener('scroll', handleScroll);
          filetit.classList.add('file-tit');
          const Src = `${protocol}//${ip}/file/Documents/` + (data.currentFolder ? data.currentFolder + '/' + name : name);
          const fileListContainer = document.getElementById('fileListContainer');
-         fileLink.textContent = name;
+         fileLink.textContent = files.name;
          fileLink.className = 'fileLink';
-         fileLink.title = `预览${name}`;
+         fileLink.title = `预览${files.name}`;
          listItem.addEventListener('click', function() {
            select(listItem,1);
          });
@@ -202,10 +202,10 @@ window.addEventListener('scroll', handleScroll);
            nowpath = fullPath;
            let rootpath=`${protocol}//${ip}/file/Documents/`;
            if (nowpath==="/"){
-             filepath=rootpath + name;
+             filepath=rootpath + files.name;
            }
            else{
-             filepath=rootpath + nowpath + name;
+             filepath=rootpath + nowpath + files.name;
            }
            window.location.href = filepath;
          });
@@ -217,11 +217,11 @@ window.addEventListener('scroll', handleScroll);
          const downloadLink = document.createElement('div');
          downloadLink.className = 'downloadLink';
          downloadLink.classList.add('down-btn');
-         downloadLink.title = `下载${name}`;
-         downloadLink.textContent = `下载 ${name}`;
+         downloadLink.title = `下载${files.name}`;
+         downloadLink.textContent = `下载 ${files.name}`;
          downloadLink.addEventListener('click',()=>{
            event.stopPropagation(); 
-           download(data.currentFolder,name,"file")
+           download(data.currentFolder,files.name,"file")
          });
 
          listItem.appendChild(downloadLink);
@@ -229,17 +229,17 @@ window.addEventListener('scroll', handleScroll);
          fileList.appendChild(listItem);
         }
 
-       if(type==="folder"||type==="link_dir"){
+       if(files.type==="dir"||files.type==="dir_link"){
         const listItem = document.createElement('li');
          const editbtn= document.createElement('div');
          const downbtn= document.createElement('div');
          downbtn.classList.add('down-btn');
-         downbtn.title=`下载${name}`;
+         downbtn.title=`下载${files.name}`;
          downbtn.addEventListener('click',function(){
 
           event.stopPropagation(); 
-          if (confirm(`确定要下载`+name+'吗?')) {
-          download(data.currentFolder,name,"folder")
+          if (confirm(`确定要下载`+files.name+'吗?')) {
+          download(data.currentFolder,files.name,"folder")
           }
         });
          editbtn.className='edit li-btn';
@@ -259,9 +259,9 @@ window.addEventListener('scroll', handleScroll);
          const folderLink = document.createElement('span');
          const filetit = document.createElement('input');
          filetit.classList.add('file-tit');
-         folderLink.textContent = name;
+         folderLink.textContent = files.name;
          folderLink.className = 'folderLink';
-         folderLink.title='进入'+name;
+         folderLink.title='进入'+files.name;
          listItem.addEventListener('click', function() {
            select(listItem,2);
          });
@@ -270,7 +270,7 @@ window.addEventListener('scroll', handleScroll);
            if (event.target.isContentEditable) {
              return; 
          }
-           loadFolder(data.currentFolder ? data.currentFolder + '/' + name : name);
+           loadFolder(data.currentFolder ? data.currentFolder + '/' + files.name : files.name);
 
        });
         listItem.appendChild(filetit);
@@ -354,6 +354,11 @@ function newfolder(status){
    if (folderName===""){
      folderName="new_folder";
    }
+   if (folderName.includes('/') || folderName.includes('\\')) {
+        notify("文件夹名称不能包含 / 或 \\");
+        pageloading(0);
+        return;
+      }
    fetch(`${protocol}//${ip}/server/doc/new_folder`, {
      method: 'POST',
      headers: {
@@ -388,10 +393,11 @@ function del() {
   if (confirm('确定要删除所选文件吗')) {
     ifroot();
     pageloading(1);
-    const dellist = JSON.stringify(selectedarray);
+    const dellist = selectedarray;
     const requestData = { dellist: dellist };
     requestData.user = user;
     requestData.token = token;
+    
     fetch(`${protocol}//${ip}/server/doc/del`, {
       method: 'POST',
       headers: {
@@ -420,15 +426,16 @@ function del() {
 }
 // 下载
 function download(path,name,type){
+  pageloading(1);
   switch(type){
   case "file":
       path=path+'/'+name
       window.location.href = `${protocol}//${ip}/server/doc/download_file?file_path=${path}&token=${token}&user=${user}`
       notify("开始下载")
+      pageloading(0);
       break;
   case "folder":
     path=path+'/'+name
-    const zip_name=name+'.zip'
       fetch(`${protocol}//${ip}/server/doc/zip_folder`,{
         method: "POST",
         headers: {
@@ -444,9 +451,11 @@ function download(path,name,type){
         }
         return response.text();  
       })
-      .then(() => {
-      window.location.href = `${protocol}//${ip}/server/doc/down_zip?file_path=${zip_name}`
+      .then(text => {
+        downToken=text
+      window.location.href = `${protocol}//${ip}/server/doc/down_zip?downToken=${downToken}`
       notify("开始下载")
+      pageloading(0);
     })
     .catch(error => console.error("请求失败:", error));
       break;
@@ -478,7 +487,7 @@ pastebtn.style.display="block";
 let copylist;
 function paste() {
  ifroot(); 
- copylist = JSON.stringify(copyarray);
+ copylist = copyarray;
 
  // 创建一个对象，包含 copylist 和 nowpath
  const requestData = {
@@ -487,6 +496,7 @@ function paste() {
    user: user,
    token: token
  };
+ 
 switch (pastestatus){
  case 1:{
   pageloading(1);
@@ -615,6 +625,7 @@ files=fileitem.querySelector('.folderLink');
    newname=filetit.value;
    oldpath=nowpath+oldname;
    newpath=nowpath+newname;   
+   
    fetch(`${protocol}//${ip}/server/doc/rename`, {
      method: 'POST',
      headers: {

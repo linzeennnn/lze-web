@@ -2,6 +2,7 @@ let uploadpath;
 let nowpath="/";//当前目录（要上传的目录）
 let fullPath; 
 let editmode=0;
+let source_path=false
 //  操作导航栏
 function optionbar(status){
  const optionbar=document.getElementById('option-bar');
@@ -110,6 +111,11 @@ window.addEventListener('scroll', handleScroll);
    textid.innerText = displayPath;
  }
  async function loadFolder(folder = '') {
+  if (folder == "/" || folder == "" || folder == " " || folder == ".")
+      source_path=true
+  else
+      source_path=false
+  recover_list.length=0
   selectedarray.length = 0;
 
   try {
@@ -121,7 +127,7 @@ window.addEventListener('scroll', handleScroll);
       body: JSON.stringify({ folder: folder }),
     });
       const data = await response.json();
-      const file_array = data.file_list[0];
+      const file_array = data.filelist;
       const fileList = document.getElementById('fileList');
       fileList.innerHTML = '';
 
@@ -130,16 +136,16 @@ window.addEventListener('scroll', handleScroll);
       
       pathlen(currentPath, fullPath);
       currentPath.title = fullPath;
-      for (const [name, type] of Object.entries(file_array)) {
-        if(type==="file"||type==="link_file"){
+      for (const files of file_array) {
+        if(files.type==="file"||files.type==="file_link"){
           const listItem = document.createElement('li');
           listItem.className = 'files';
           const fileLink = document.createElement('span');
-          const Src = `${protocol}//${ip}/file/trash/` + (data.currentFolder ? data.currentFolder + '/' + name : name);
+          const Src = `${protocol}//${ip}/file/trash/` + (data.currentFolder ? data.currentFolder + '/' + files.name : files.name);
           const fileListContainer = document.getElementById('fileListContainer');
-          fileLink.textContent = name;
+          fileLink.textContent = files.name;
           fileLink.classList.add('fileLink', 'filename');
-          fileLink.title = `预览${name}`;
+          fileLink.title = `预览${files.name}`;
           
           listItem.addEventListener('click', function() {
               select(listItem, 1);
@@ -153,21 +159,28 @@ window.addEventListener('scroll', handleScroll);
               nowpath = fullPath;
               let rootpath = `${protocol}//${ip}/file/trash/`;
               if (nowpath === "/") {
-                  filepath = rootpath + name;
+                  filepath = rootpath + files.name;
               } else {
-                  filepath = rootpath + nowpath + name;
+                  filepath = rootpath + nowpath + files.name;
               }
               window.location.href = filepath;
           });
-
+          const oripath = document.createElement('span');
+          oripath.className = 'oripath';    
+          if(files.delData==""||files.delData==null||files.delData==undefined)
+                oripath.innerText="/";
+          else  
+                oripath.innerText=files.delData;
+          oripath.title=`原路径${files.delData}`;
           listItem.appendChild(fileLink);
+          listItem.appendChild(oripath);
           fileList.appendChild(listItem);    
         }
-        if(type==="folder"||type==="link_dir"){
+        if(files.type==="dir"||files.type==="ldir_link"){
           const listItem = document.createElement('li');
           listItem.className = 'files';
           const folderLink = document.createElement('span');
-          folderLink.textContent = name;
+          folderLink.textContent = files.name;
           folderLink.classList.add('folderLink', 'filename');
 
           listItem.addEventListener('click', function() {
@@ -178,10 +191,18 @@ window.addEventListener('scroll', handleScroll);
               if (event.target.isContentEditable) {
                   return; 
               }
-              loadFolder(data.currentFolder ? data.currentFolder + '/' + name : name);
+              loadFolder(data.currentFolder ? data.currentFolder + '/' + files.name : files.name);
           });
+          const oripath = document.createElement('span');
+          oripath.className = 'oripath';    
+          if(files.delData==""||files.delData==null||files.delData==undefined)
+                oripath.innerText="/";
+          else  
+                oripath.innerText=files.delData;
 
+          oripath.title=`原路径${files.delData}`;
           listItem.appendChild(folderLink);
+          listItem.appendChild(oripath);
           fileList.appendChild(listItem);
         }
       }
@@ -195,35 +216,9 @@ window.addEventListener('scroll', handleScroll);
       } else {
           upButton.style.pointerEvents = 'none';
       }
-
-      getpath();
   } catch (error) {
       console.error('Error loading folder:', error);
   }
-}
-
-// 获取原路径
-async function getpath() {
-  const response = await fetch(`${protocol}//${ip}/file/data/deleted_metadata.json`, {
-    method: 'GET',
-    cache: 'no-cache' // 强制不使用缓存
-  });
-  const data = await response.json();
-  const trashfilename = Object.keys(data);
-  const filename=document.querySelectorAll('.filename')
-  filename.forEach(filename => {
-    if (trashfilename.includes(filename.innerText)) {  
-      const oripath = document.createElement('span');
-      oripath.className = 'oripath';    
-      oripath.innerText=data[filename.innerText].replace('../../file/Documents', '') || '/';
-      filename.insertAdjacentElement('afterend', oripath);
-    } else {
-      const oripath = document.createElement('span');
-      oripath.className = 'oripath';    
-      oripath.innerText='/'+filename.innerText;
-      filename.insertAdjacentElement('afterend', oripath);
-    }
-});
 }
 
 
@@ -260,8 +255,10 @@ function recover() {
 let data = {
   recover_list: recover_list,
   user,
-  token
+  token,
+  source_path
 };
+
     fetch(`${protocol}//${ip}/server/tra/recover`, {
       method: 'POST',
       headers: {
@@ -295,6 +292,7 @@ let data = {
       console.error('错误:', error);
     });
   }
+
   }
 
 

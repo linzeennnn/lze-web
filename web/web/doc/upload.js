@@ -75,12 +75,10 @@ function uploadFolder() {
             chunkFormData.append('file', chunk);
             chunkFormData.append('name', file.name);
             chunkFormData.append('relativePath', relativePath);
-            chunkFormData.append('start', start);
-            chunkFormData.append('chunkIndex', chunkIndex);
-            chunkFormData.append('total', file.size);
+            chunkFormData.append('currentChunk', chunkIndex);
+            chunkFormData.append('totalChunks', Math.ceil(file.size / chunkSize));
             chunkFormData.append('token', token);
             chunkFormData.append('user', user);
-            chunkFormData.append('last', end >= file.size ? 1 : 0);
             fetch(`${protocol}//${ip}/server/doc/upload_folder`, {
                 method: 'POST',
                 body: chunkFormData
@@ -132,12 +130,9 @@ function getChunkSize(fileSize) {
         return 20 * 1024 * 1024;
     } else if (fileSize <= 500 * 1024 * 1024) {
         return 50 * 1024 * 1024;
-    } else if (fileSize <= 1024 * 1024 * 1024) {
-        return 100 * 1024 * 1024;
-    } else if (fileSize <= 3 * 1024 * 1024 * 1024) {
-        return 200 * 1024 * 1024;
-    } else {
-        return 300 * 1024 * 1024;
+    } else  {
+        return 99 * 1024 * 1024;
+        
     }
 }
 
