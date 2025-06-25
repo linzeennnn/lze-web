@@ -1,3 +1,0 @@
-ErrorDocument 401 /web/erro/401.html
-ErrorDocument 404 /web/erro/404.html
-ErrorDocument 403 /web/erro/403.html

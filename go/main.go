@@ -7,7 +7,9 @@ import (
 )
 
 func main() {
+	setup.CheckConfig()
 	setup.Setup()
+	setup.CheckFilePath()
 	r := router.Router()
 	r.Run(":" + global.Port)
 }

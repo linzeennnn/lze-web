@@ -218,7 +218,7 @@ async function get_data() {
     const userbar=document.getElementById('user-bar');
     const timebar=document.getElementById('time-bar');
     userbar.title="当前用户:"+name
-    if (name!='admin'&&name!='lze') {
+    if (name==visitor) {
       userbar.innerText='访客';
     }
     else

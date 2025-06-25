@@ -3,7 +3,9 @@
         "directoryFilters": [
     "-build",
     "-node_modules",
-    "-bin"
+    "-bin",
+    "-workdir"
   ]
-    }
+    },
+    "go.formatTool": "goimports"
 }

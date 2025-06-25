@@ -109,6 +109,7 @@ async function getnote() {
         
         try {
             const noteFiles = await getnote();
+            if(noteFiles.list!=null){
             for (const file of noteFiles.list) {
                 const title = file.replace(/\.[^/.]+$/, '');
                 const note = document.createElement('div');
@@ -172,7 +173,7 @@ async function getnote() {
                 note.appendChild(del);
                 notesContainer.appendChild(note);
             }
-
+        }
             pageloading(0);
         } catch (error) {
             console.error('Error reading files:', error);

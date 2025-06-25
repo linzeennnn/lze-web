@@ -27,8 +27,8 @@ async function widget() {
                 el.title = "预览:" + (data[`doc${index + 1}`] || '');
                 el.style.display = '';
             });
-
-            img.src = `${protocol}//${ip}/file/Pictures/${data.pic1 || ''}`;
+            if (data.pic1!=null&&data.pic1!="")
+                img.src = `${protocol}//${ip}/file/Pictures/${data.pic1 || ''}`;
             pic.title = "预览:" + (data.pic1 || '');
             pic.style.display = '';
 
