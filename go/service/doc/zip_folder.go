@@ -7,7 +7,6 @@ import (
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,8 +31,10 @@ func ZipFolder(c *gin.Context) {
 	}
 }
 func compress(src_dir string, zip_file_name string) {
-	os.RemoveAll(zip_file_name)
-	zipfile, _ := os.Create(zip_file_name)
+	zipfile, err := os.Create(zip_file_name)
+	if err != nil {
+		return
+	}
 	defer zipfile.Close()
 	archive := zip.NewWriter(zipfile)
 	defer archive.Close()
@@ -42,7 +43,12 @@ func compress(src_dir string, zip_file_name string) {
 			return nil
 		}
 		header, _ := zip.FileInfoHeader(info)
-		header.Name = strings.TrimPrefix(path, src_dir+`/`)
+		relPath, err := filepath.Rel(src_dir, path)
+		if err != nil {
+			return err
+		}
+		header.Name = filepath.ToSlash(relPath)
+
 		if info.IsDir() {
 			header.Name += `/`
 		} else {

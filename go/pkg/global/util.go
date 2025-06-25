@@ -6,7 +6,6 @@ import (
 	"io"
 	fileSystem "lze-web/model/other/fs"
 	"os"
-	"path"
 	"path/filepath"
 	"sort"
 	"strconv"
@@ -148,7 +147,7 @@ func UniqueName(path, fileName string) string {
 
 // 合并文件
 func MergeFile(tempPath string, total int64) string {
-	fileName := path.Base(tempPath)
+	fileName := filepath.Base(tempPath)
 	os.Mkdir(filepath.Join(tempPath, "target"), 0755)
 	targetFile := filepath.Join(tempPath, "target", fileName)
 	output, err := os.Create(targetFile)
