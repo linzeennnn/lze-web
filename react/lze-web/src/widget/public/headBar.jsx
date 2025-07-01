@@ -1,7 +1,8 @@
+import '../../css/public/headBar.css'
 function HeadBar(){
-
+return(
     <div id="head-bar">
         
-    </div>
+    </div>)
 }
 export default HeadBar;

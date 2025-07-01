@@ -1,7 +1,7 @@
 function TopBar(){
-
+return(
     <div id="top-bar">
         
-    </div>
+    </div>)
 }
 export  default TopBar

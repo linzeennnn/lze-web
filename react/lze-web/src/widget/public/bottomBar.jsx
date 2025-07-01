@@ -1,6 +1,7 @@
-function BottomBar(){
+import '../../css/public/bottomBar.css'
+function BottomBar(){return(
     <div id="bottom-bar">
-        
-    </div>
+
+    </div>)
 }
 export  default BottomBar;

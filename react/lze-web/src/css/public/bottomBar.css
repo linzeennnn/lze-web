@@ -1,0 +1,10 @@
+#bottom-bar{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 60px;
+    background-color: #373333;
+    z-index: 9;
+}

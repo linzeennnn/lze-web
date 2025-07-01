@@ -1,7 +1,7 @@
 function Content(){
-
+return(
     <div id="content">
         
-    </div>
+    </div>)
 }
 export default Content;

@@ -10,5 +10,5 @@ createRoot(document.getElementById('root')).render(
         <TopBar/>
         <BottomBar/>
         <Content/>
-  </StrictMode>,
+  </StrictMode>
 )
