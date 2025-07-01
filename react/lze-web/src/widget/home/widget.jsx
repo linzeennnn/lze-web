@@ -1,4 +1,4 @@
-import './fun'
+import * as fun from './fun.js';
 import '../../css/home/widget.css'
 function Widget() {
     const widget = [
@@ -20,7 +20,7 @@ function Widget() {
             {rows.map((row, index) => (
                 <div key={`line${index}`} className="widget-line">
                     {row.map((item) => (
-                        <div key={item.id} id={item.id} className="widget-item" onClick={to_next(item.id)}>
+                        <div key={item.id} id={item.id} className="widget-item" onClick={()=>fun.to_next(item.id)}>
                             <span className="widget-title">{item.name}</span>
                         </div>
                     ))}
