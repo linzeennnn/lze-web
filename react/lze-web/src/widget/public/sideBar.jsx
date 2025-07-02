@@ -1,4 +1,4 @@
-import '../../css/public/sideBar.css'
+import '../../css/public/page.css'
 function SideBar(){
 return(
     <div id="side-bar">

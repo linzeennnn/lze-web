@@ -1,0 +1,78 @@
+#top-bar{
+    color: aliceblue;
+    height: 60px;
+    margin-left: 70px;
+    background-color: #916f6f;
+    position: fixed;
+    z-index: 10;
+    border-radius: 15px;
+    top: 80px;
+    width: 80%;
+    transition: all  0.7s ease-in-out;
+}
+.scroll-top-bar{
+    top: 0 !important;
+    background-color: transparent !important;
+}
+#side-bar{
+    position: fixed;
+    height: 100vh;
+    background-color: #587283;
+    width: 60px;
+    padding: 5px;
+    left: 0;
+    bottom: 0;
+    z-index: 8;
+}
+#head-bar{
+    position: fixed;
+    top: -70px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 60px;
+    background-color: #373333;
+    transition: top 0.7s ease-in-out;
+    z-index: 9;
+}
+#content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 170px;
+    background-color: aquamarine;
+    width: 80%;
+    min-height: 30vh;
+    position: relative;
+    margin-left: 70px;
+    transition: margin-left 0.7s ease-in-out;
+}
+#go-top-btn{
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    position: fixed;
+    bottom: -40px;
+    background-color: #373333;
+    border-radius: 50%;
+    transition: bottom 0.7s ease-in-out;
+    z-index: 10;
+}
+.scroll-head-bar{
+    top: 0 !important;
+}
+.scroll-go-top-btn{
+    bottom: 80px !important;
+}
+@media (max-width: 500px) {
+  #side-bar{
+    width: 100vw;
+    height: 60px;
+  }
+  #top-bar{
+    margin-left: 0;
+  }
+  #content{
+    margin-left: 0;
+  }
+}
