@@ -1,5 +1,32 @@
-#doc-list{
-    width: 100%;
-    height: 100%;
-    background-color: antiquewhite;
+#content{
+    display: flex;
+    flex-wrap: wrap;
+}
+.doc-list{
+    display: flex;
+    position: relative;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 80px;
+    background-color: aqua;
+    border-radius: 15px;
+    margin-left: 30px;
+}
+.file-list-text{
+    cursor: pointer;
+}
+.dir-text{
+    text-decoration: underline;
+}
+#top-bar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+#go-up{
+    background-image: url(../../assets/icon/goup_green.svg);
+    margin-left: 10px;
 }

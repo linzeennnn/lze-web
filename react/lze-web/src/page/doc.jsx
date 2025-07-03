@@ -1,18 +1,20 @@
 import {HeadBar, SideBar, TopBar ,Content,GoTopBtn,ScrollTop} from '../widget/public'
-import { StrictMode } from 'react'
+import { createContext, StrictMode, useContext } from 'react'
 import { createRoot } from 'react-dom/client'
-import DocList from '../widget/doc/docList'
-
+import {DocList,GoUp} from '../widget/doc'
+import {GlobalProvider} from '../widget/doc/docFun'
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
+    <GlobalProvider>
       <ScrollTop>
         <HeadBar/>
-        <TopBar/>
+        <TopBar>
+          <GoUp/>
+        </TopBar>
         <GoTopBtn></GoTopBtn>
       </ScrollTop>
         <SideBar/>
         <Content>
-        <DocList/>
+        <DocList ref={docListRef}/>
         </Content>
-  </StrictMode>
+  </GlobalProvider>
 )

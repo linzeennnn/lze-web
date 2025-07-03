@@ -24,6 +24,11 @@ func List(c *gin.Context) {
 	var sendData list.Send
 	sendData.FileList = docList
 	sendData.CurrentFolder = rec.Folder
-	sendData.ParentFolder = filepath.Dir(rec.Folder)
+	par_dir := filepath.Dir(rec.Folder)
+	if par_dir == "." {
+		sendData.ParentFolder = ""
+	} else {
+		sendData.ParentFolder = par_dir
+	}
 	c.JSON(200, sendData)
 }
