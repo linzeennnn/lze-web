@@ -13,23 +13,6 @@
     top: 0 !important;
     background-color: transparent !important;
 }
-button {
-  all: unset;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.btn{
-  opacity: 0.7;
-  width: 32px;
-  height: 32px;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.btn:hover{
-opacity: 1;
-}
 #side-bar{
     position: fixed;
     height: 100vh;

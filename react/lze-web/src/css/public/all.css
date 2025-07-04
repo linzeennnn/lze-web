@@ -1,0 +1,48 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+#root{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+button {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn{
+  opacity: 0.7;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(165, 42, 42, 0.716);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.btn:hover{
+opacity: 1;
+}
+#notify{
+  left: 50%;
+  transform: translateX(-50%);
+  position: fixed;
+  min-width: 30px;
+  width: fit-content;
+  padding: 10px;
+  min-height: 30px;
+  height: fit-content;
+  border-radius: 15px;
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: top 0.5s ease, opacity 0.5s ease;
+}
+#notify-text{
+  color: aliceblue;
+}

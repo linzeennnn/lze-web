@@ -1,5 +1,5 @@
 import * as fun from './fun.js';
-import '../../css/home/widget.css'
+import {notify} from '../public/notify.jsx'
 function Widget() {
     const widget = [
         { id: 'doc', name: '文件管理' },
@@ -20,7 +20,10 @@ function Widget() {
             {rows.map((row, index) => (
                 <div key={`line${index}`} className="widget-line">
                     {row.map((item) => (
-                        <div key={item.id} id={item.id} className="widget-item" onClick={()=>fun.to_next(item.id)}>
+                        <div key={item.id} id={item.id} className="widget-item"
+                         onClick={
+                            ()=>fun.to_next(item.id)
+                            }>
                             <span className="widget-title">{item.name}</span>
                         </div>
                     ))}
