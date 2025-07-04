@@ -1,13 +1,12 @@
 import {Widget,Dock} from '../widget/home'
 import '../css/page/home.css'
 import '../css/public/all.css'
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-
+import { GlobalProvider } from '../widget/home/global'
 
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
+    <GlobalProvider>
      <Widget /> 
      <Dock/>
-  </StrictMode>,
+  </GlobalProvider>
 )

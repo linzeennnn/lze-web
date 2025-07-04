@@ -1,6 +1,6 @@
 import {  useState } from "react"
-
-export default function Dock({children}){
+import Login from "./login"
+export default function Dock(){
     const [dockData,setDockData]=useState({
         showWin:false,
         appType:""
@@ -31,7 +31,10 @@ const close_dock=()=>{
             id="close-win" 
             title="关闭"
             onClick={()=>close_dock()}></button>
-            {children}
+            {
+            
+                dockData.appType=="login"?(<Login/>):null
+            }
         </div>
         </div>):null}
         <div id="dock">
