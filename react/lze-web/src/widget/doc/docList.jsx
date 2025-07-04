@@ -1,20 +1,14 @@
 import * as docFun  from './docFun'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useGlobal } from'./global'
 function DocList(){
-    const [data,setData]=useState(null)
-    const readLoad_dir=(dirname)=>{
-        docFun.list(dirname)
-        .then(res=>{
-            setData(res)
-        })
-    }
+      const { value: globalData } = useGlobal();
     useEffect(()=>{
-        readLoad_dir("/")
+        docFun.list("/")
     },[])
     return(
         <>{
-            data?data.filelist.map((item,index)=>{
-                console.log(JSON.stringify(data));
+            globalData.fileList.map((item,index)=>{
                 
             let type;
             if (item.type=="dir"||item.type=="dir_link"){
@@ -22,17 +16,21 @@ function DocList(){
             }
             if (item.type=="file"||item.type=="file_link"){
                 type="file-text"
-            }
+            } 
 
            return( 
         <div key={"doclist"+index} className='doc-list'>
             <span className={type +` file-list-text`}
             title={item.name}
-            onClick={()=>{readLoad_dir(data.currentFolder+"/"+item.name)}}
+            onClick={()=>{
+                let dir_path;
+                dir_path=(globalData.nowPath=="/"?
+                    globalData.nowPath+item.name:
+                    globalData.nowPath+"/"+item.name)
+                docFun.list(dir_path)}}
             >{item.name}</span>
         </div>
-        )})
-        :null}
+        )})}
         </>
     )
 }

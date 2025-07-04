@@ -30,3 +30,11 @@
     background-image: url(../../assets/icon/goup_green.svg);
     margin-left: 10px;
 }
+.go-up-disable:hover{
+    cursor:default;
+    opacity: 0.7 !important;
+
+}
+#show-path{
+    margin-left: 10px;
+}
