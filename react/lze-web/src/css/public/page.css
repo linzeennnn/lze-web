@@ -71,6 +71,13 @@ opacity: 1;
     transition: bottom 0.7s ease-in-out;
     z-index: 10;
 }
+#go-back{
+  background-color: #916f6f;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 12;
+}
 .scroll-head-bar{
     top: 0 !important;
 }
