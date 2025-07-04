@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-
+import { auth } from './fun';
 // 创建 Context
 const GlobalContext = createContext();
 
@@ -17,6 +17,8 @@ export const GlobalProvider = ({ children }) => {
         localStorage.setItem('token','')
         token=''
     }
+  
+  auth()
   const [value, setValue] = useState({
     userName:userName,
     token:token

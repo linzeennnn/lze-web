@@ -10,12 +10,12 @@ export default defineConfig({
     strictPort: true, 
     proxy: {
       '/server': {
-        target: 'http://127.0.0.1',
+        target: 'http://127.0.0.1:8888',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/server/, '/server'),
       },
       '/file': {
-        target: 'http://127.0.0.1',
+        target: 'http://127.0.0.1:8888',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/file/, '/file'),
       },

@@ -68,7 +68,7 @@ func CheckToken(username, token string) bool {
 func CheckPassword(username, password string) (string, bool) {
 	username = SetUsername(username)
 	if username == "visitor" {
-		return "", true
+		return "", false
 	}
 	userModule := UserConfig["user"].(map[string]interface{})
 	userMes := userModule[username].(map[string]interface{})
