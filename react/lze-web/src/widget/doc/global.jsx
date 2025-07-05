@@ -10,9 +10,13 @@ let globalValue = null;
 // Provider 组件
 export const GlobalProvider = ({ children }) => {
   const [value, setValue] = useState({
+    userName:window.localStorage.getItem('userName'),
+    token:window.localStorage.getItem('token'),
     nowPath:'/',
     parentPath:'/',
-    fileList:[]
+    fileList:[],
+    creating:false,
+    uploading:false
   }); 
 
   // 存储当前值和setter到外部变量

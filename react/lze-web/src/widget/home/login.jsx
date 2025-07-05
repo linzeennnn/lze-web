@@ -3,7 +3,8 @@ import { useGlobal } from "./global";
 import { login, logout } from './fun';
 
 export default function Login() {
-  const { data, setData } = useGlobal();
+  const[win1, setWin1] = useState(true)
+  const { globalData, setGlobalData } = useGlobal();
   const [userData, setUserData] = useState({
     userName: '',
     password: ''
@@ -24,14 +25,14 @@ export default function Login() {
   };
 
   return (
-    <div className="win-box">
-      <div id="login-win1">
-        <button id="switch-user" className="btn" title="切换用户">
+    <>{win1?
+    <div id="login-win1">
+        <button id="switch-user" className="btn" title="切换用户" onClick={()=>{setWin1(false)}}>
             <div id="switch-user-icon"></div>
-            <span>{window.localStorage.getItem('userName')}</span>
+            <span>{globalData.userName}</span>
         </button>
         <button id="logout" className="btn" title="退出登录" onClick={() => logout()}></button>
-      </div>
+      </div>:
       <div id="login-win2" onKeyDown={handleKeyDown}>
         <input className="login-input" type="text" name="userName"
           placeholder="用户名"
@@ -47,7 +48,7 @@ export default function Login() {
         <button id="login-send" className="btn" title="登录"
           onClick={() => login(userData.userName, userData.password)}
         ></button>
-      </div>
-    </div>
+      </div>}
+    </>
   );
 }

@@ -21,7 +21,8 @@ function Widget() {
                 <div key={`line${index}`} className="widget-line">
                     {row.map((item) => (
                         <div key={item.id} id={item.id} className="widget-item"
-                         onClick={
+                        title={'进入'+item.name} 
+                        onClick={
                             ()=>fun.to_next(item.id)
                             }>
                             <span className="widget-title">{item.name}</span>

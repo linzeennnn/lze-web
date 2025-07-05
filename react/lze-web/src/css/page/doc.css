@@ -36,5 +36,48 @@
 
 }
 #show-path{
+    cursor: default;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    width: 100%;
+    height: 100%;
     margin-left: 10px;
+  white-space: nowrap;       
+  overflow: hidden;           
+  text-overflow: ellipsis; 
+}
+#top-bar-box{
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 70%;
+    position: relative;
+    width: 80%;
+    background-color: aquamarine;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    overflow: hidden;
+}
+#progress{
+    position: absolute;
+    background-color: antiquewhite;
+    height: 100%;
+    width: 15%;
+    border-radius: 15px;
+}
+#new-dir-input{
+    padding-left: 10px;
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+#new-dir-save{
+    right: 10px;
+    position: absolute;
+}
+.new-dir-btn{
+    margin-right: 10px;
 }

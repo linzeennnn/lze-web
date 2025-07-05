@@ -9,27 +9,24 @@ let globalValue = null;
 
 // Provider 组件
 export const GlobalProvider = ({ children }) => {
-    let userName=localStorage.getItem('userName');
-    let token=localStorage.getItem('token')
-    if(!userName){
-        userName='visitor'
-        localStorage.setItem('userName',userName)
-        localStorage.setItem('token','')
-        token=''
-    }
   
-  auth()
-  const [value, setValue] = useState({
+  
+    let userName=window.localStorage.getItem('userName');
+    let token=window.localStorage.getItem('token');
+    userName=userName?userName:'visitor';
+    token=token?token:'';
+  const [globalData, setGlobalData] = useState({
     userName:userName,
     token:token
   }); 
 
+  auth(userName,token)
   // 存储当前值和setter到外部变量
-  globalSetter = setValue;
-  globalValue = value;
+  globalSetter = setGlobalData;
+  globalValue = globalData;
  
   return (
-    <GlobalContext.Provider value={{ value, setValue }}>
+    <GlobalContext.Provider value={{ globalData, setGlobalData }}>
       {children}
     </GlobalContext.Provider>
   );
@@ -40,11 +37,10 @@ export const useGlobal = () => useContext(GlobalContext);
 
 export const getGlobal = () => globalValue;
 
-
 export const setGlobal = (newValue) => {
   if (globalSetter) {
     globalSetter(newValue);
-    globalValue = newValue; // 同步更新 globalValue
+    globalValue = newValue;
   } else {
     console.warn("AppContext 尚未初始化，无法设置");
   }

@@ -1,21 +1,17 @@
-import {  useState } from "react"
+import {  useContext, useState } from "react"
 import Login from "./login"
+import { useGlobal } from "./global"
+import {WinBgContext} from '../public/winBg'
 export default function Dock(){
-    const [dockData,setDockData]=useState({
-        showWin:false,
-        appType:""
-    })
+   const{showBg,setBg}=useContext(WinBgContext)
+   const [appType, setAppType] = useState("")
 const open_dock=(type)=>{
-    setDockData({
-        showWin:true,
-        appType:type
-    })
+    setAppType(type)
+    setBg(true)
 }
 const close_dock=()=>{
-    setDockData({
-        showWin:false,
-        appType:""
-    })
+    setBg(false)
+    setAppType("")
 }
    const dockList=[
     {id:"login",name:"登陆管理"},
@@ -25,17 +21,15 @@ const close_dock=()=>{
 ]
     return(
         <>{
-       dockData.showWin? (<div id="app-win-back">
-        <div id="app-win">
+       showBg? (<div className={`app-win ${ showBg?"float-win":""}`}>
             <button className="btn" 
             id="close-win" 
             title="关闭"
             onClick={()=>close_dock()}></button>
             {
             
-                dockData.appType=="login"?(<Login/>):null
+                appType=="login"?(<Login />):null
             }
-        </div>
         </div>):null}
         <div id="dock">
             {dockList.map((item)=>{

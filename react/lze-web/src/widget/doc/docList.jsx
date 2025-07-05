@@ -23,7 +23,7 @@ function DocList(){
            return( 
         <div key={"doclist"+index} className='doc-list'>
             <span className={type +` file-list-text`}
-            title={item.name}
+            title={"查看"+item.name}
             onClick={()=>{
                 if (item.type=="dir"||item.type=="dir_link"){
                 let dir_path;

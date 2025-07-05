@@ -1,4 +1,5 @@
-import { notify } from '../public/notify.jsx';
+import { notify } from '../public/notify.jsx'
+import { getGlobal ,setGlobal} from './global.jsx';
 // 跳转页面
 export function to_next(type){
 window.location.href=type+'.html';
@@ -37,9 +38,9 @@ export function login(name,password){
 
 }
 // 验证用户
-export function auth(){
-    let name=window.localStorage.getItem('userName');
-    let token=window.localStorage.getItem('token');
+export function auth(name,token){
+    name=name?name:"visitor";
+    token=token?token:"";
     fetch(window.location.origin+'/server/login/auth_status',
         {
         method:'POST',
@@ -65,7 +66,6 @@ export function auth(){
             throw new Error(`请求失败，状态码：${res.status}`);
         }
         notify("登录用户:"+(name=="visitor"?"游客":name))
-
     })
 }
 // 登出
