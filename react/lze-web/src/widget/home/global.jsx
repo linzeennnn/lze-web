@@ -1,47 +1,31 @@
-import React, { createContext, useContext, useState } from 'react';
+import { create } from 'zustand';
 import { auth } from './fun';
-// 创建 Context
-const GlobalContext = createContext();
 
-// 内部变量用来临时存储 setter
-let globalSetter = null;
-let globalValue = null;
+const useGlobal = create((set, get) => {
+  let userName = window.localStorage.getItem('userName') || 'visitor';
+  let token = window.localStorage.getItem('token') || '';
 
-// Provider 组件
-export const GlobalProvider = ({ children }) => {
-  
-  
-    let userName=window.localStorage.getItem('userName');
-    let token=window.localStorage.getItem('token');
-    userName=userName?userName:'visitor';
-    token=token?token:'';
-  const [globalData, setGlobalData] = useState({
-    userName:userName,
-    token:token
-  }); 
+  // 调用 auth 只一次（等价于 useEffect）
+  auth(userName, token);
 
-  auth(userName,token)
-  // 存储当前值和setter到外部变量
-  globalSetter = setGlobalData;
-  globalValue = globalData;
- 
-  return (
-    <GlobalContext.Provider value={{ globalData, setGlobalData }}>
-      {children}
-    </GlobalContext.Provider>
-  );
-};
+  return {
+    userName,
+    token,
+    showBg: false,
 
-export const useGlobal = () => useContext(GlobalContext);
+    // 合并式更新
+    setGlobal: (partial) => {
+      set((state) => ({ ...state, ...partial }));
+    },
 
+    // 替代 getGlobal()
+    getGlobal: () => get(),
 
-export const getGlobal = () => globalValue;
+    // 替代 setGlobal()
+    replaceGlobal: (newState) => {
+      set(() => ({ ...newState }));
+    },
+  };
+});
 
-export const setGlobal = (newValue) => {
-  if (globalSetter) {
-    globalSetter(newValue);
-    globalValue = newValue;
-  } else {
-    console.warn("AppContext 尚未初始化，无法设置");
-  }
-};
+export default useGlobal;

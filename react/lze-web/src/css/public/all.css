@@ -38,6 +38,25 @@ input{
 .btn:hover{
 opacity: 1;
 }
+.loading {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    z-index: 100;
+    background: conic-gradient(
+        rgba(100, 149, 237, 0.2),
+        rgba(100, 149, 237, 0.8),
+        rgba(100, 149, 237, 0.2)
+    );
+    mask: radial-gradient(transparent 55%, #000 56%);
+    -webkit-mask: radial-gradient(transparent 55%, #000 56%);
+    animation: load 0.7s linear infinite;
+      }
+
+      @keyframes load {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
 .bg-enable{
   background-color: #000000a2;
   position: fixed;
@@ -70,7 +89,7 @@ opacity: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
   transition: top 0.5s ease, opacity 0.5s ease;
 }
 #notify-text{

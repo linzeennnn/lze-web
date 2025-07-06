@@ -3,6 +3,7 @@
     flex-wrap: wrap;
 }
 .doc-list{
+    cursor: pointer;
     display: flex;
     position: relative;
     margin-bottom: 10px;
@@ -14,8 +15,35 @@
     border-radius: 15px;
     margin-left: 30px;
 }
+.doc-list:hover{
+    background-color: #2d8173a2;
+}
+.doc-list-selected{
+    background-color: #2d8173a2;
+}
 .file-list-text{
     cursor: pointer;
+}
+.file-list-input{
+    cursor: text;
+}
+.file-edit-btn{
+    background-color: antiquewhite;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+#list-loading{
+    position: fixed;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+    background: conic-gradient(
+        #bbfff4a2,
+        #41ad9ba2,
+        #bbfff4a2
+    );
 }
 .dir-text{
     text-decoration: underline;

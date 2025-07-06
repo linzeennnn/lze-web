@@ -1,46 +1,28 @@
-import React, { createContext, useContext, useState } from 'react';
+import { create } from 'zustand';
 
-// 创建 Context
-const GlobalContext = createContext();
+const useGlobal = create((set, get) => ({
+  userName: window.localStorage.getItem('userName'),
+  token: window.localStorage.getItem('token'),
+  nowPath: '/',
+  parentPath: '/',
+  fileList: [],
+  creating: false,
+  uploading: false,
+  showBg: false,
+  loading: false,
+  selected: [],
 
-// 内部变量用来临时存储 setter
-let globalSetter = null;
-let globalValue = null;
+  // 通用 setter（合并更新）
+  setGlobal: (partial) => {
+    set((state) => ({ ...state, ...partial }));
+  },
 
-// Provider 组件
-export const GlobalProvider = ({ children }) => {
-  const [value, setValue] = useState({
-    userName:window.localStorage.getItem('userName'),
-    token:window.localStorage.getItem('token'),
-    nowPath:'/',
-    parentPath:'/',
-    fileList:[],
-    creating:false,
-    uploading:false
-  }); 
+  // 直接替换整个 global 状态（慎用）
+  replaceGlobal: (newState) => {
+    set(() => ({ ...newState }));
+  },
 
-  // 存储当前值和setter到外部变量
-  globalSetter = setValue;
-  globalValue = value;
- 
-  return (
-    <GlobalContext.Provider value={{ value, setValue }}>
-      {children}
-    </GlobalContext.Provider>
-  );
-};
-
-export const useGlobal = () => useContext(GlobalContext);
-
-
-export const getGlobal = () => globalValue;
-
-
-export const setGlobal = (newValue) => {
-  if (globalSetter) {
-    globalSetter(newValue);
-    globalValue = newValue; // 同步更新 globalValue
-  } else {
-    console.warn("AppContext 尚未初始化，无法设置");
-  }
-};
+  // 类似 getGlobal
+  getGlobal: () => get(),
+}));
+export default useGlobal;

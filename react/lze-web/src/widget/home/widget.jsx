@@ -1,5 +1,4 @@
 import * as fun from './fun.js';
-import {notify} from '../public/notify.jsx'
 function Widget() {
     const widget = [
         { id: 'doc', name: '文件管理' },
