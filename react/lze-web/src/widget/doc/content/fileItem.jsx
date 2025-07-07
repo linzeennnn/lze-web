@@ -2,7 +2,7 @@ import FileText from "./fileText"
 import EditBtn from "./editBtn"
 import DownloadBtn from "./downloadBtn"
 import { useState } from "react";
-import { useGlobal,list } from "../global";
+import { useGlobal,list,loadPage } from "../global";
 import { notify } from "../../public/notify";
 export default function FileItem({ fileMes, selected, docClick}){
     const [editMode, setEditMode] = useState(false);
@@ -23,10 +23,7 @@ export default function FileItem({ fileMes, selected, docClick}){
 }
 function rename(oldname,newname){
     const global=useGlobal.getState()
-      useGlobal.setState({
-        loading: true,
-        showBg: true
-    });
+      loadPage(true)
     const oldpath=global.nowPath+"/"+oldname
     const newpath=global.nowPath+"/"+newname
     const send_data=JSON.stringify({
@@ -34,7 +31,6 @@ function rename(oldname,newname){
             user:global.userName,
             token:global.token
         })
-        console.log(send_data);
         
     fetch(global.docUrl+"rename",{
         method:"POST",
@@ -55,10 +51,7 @@ function rename(oldname,newname){
             else{
                 notify(res.status+"错误")
             }
-              useGlobal.setState({
-                loading: false,
-                showBg: false
-            });
+             loadPage(false)
         }
     })
 }

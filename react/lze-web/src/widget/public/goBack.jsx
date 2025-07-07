@@ -3,6 +3,7 @@ export default function GoBack() {
     <button
       id="go-back"
       className="btn"
+      title="返回主页"
       onClick={() => {
         const referrer = document.referrer;
         const currentHost = window.location.host;

@@ -16,11 +16,11 @@ export default function App() {
       <div className="loading" id="list-loading" style={loading ? { display: "block" } : { display: "none" }}></div>
       <ScrollTop>
         <HeadBar />
+      <DocTopBar />
         <GoBack />
         <GoTopBtn />
       </ScrollTop>
       <DocSideBar />
-      <DocTopBar />
       <DocContent />
       <WinBg showBg={showBg} />
     </>

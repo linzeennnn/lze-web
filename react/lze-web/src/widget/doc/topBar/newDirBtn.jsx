@@ -1,8 +1,7 @@
 import {useGlobal} from '../global';
 
-export default function NewDirBtn() {
-  const creating = useGlobal((state) => state.creating);
-  const setGlobal = useGlobal((state) => state.setGlobal);
+export default function NewDirBtn({createStatus}) {
+  const [creating, setCreating] = createStatus
 
   return (
     <>
@@ -11,14 +10,14 @@ export default function NewDirBtn() {
           id="new-dir-btn"
           className="btn new-dir-btn"
           title="创建新文件夹"
-          onClick={() => setGlobal({ creating: true })}
+          onClick={() => setCreating(true)}
         ></button>
       ) : (
         <button
           id="new-dir-cancel"
           className="btn new-dir-btn"
           title="取消"
-          onClick={() => setGlobal({ creating: false })}
+          onClick={() => setCreating(false)}
         ></button>
       )}
     </>

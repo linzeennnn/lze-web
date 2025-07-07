@@ -119,15 +119,6 @@
 .new-dir-btn{
     margin-right: 10px;
 }
-#new-dir-btn{
-    background-image: url(../../assets//icon/addfolder_green.svg);
-}
-#new-dir-cancel{
-    background-image: url(../../assets//icon/no_green.svg);
-}
-#new-dir-save{
-    background-image: url(../../assets/icon/save_green.svg);
-}
 .down-btn{
     background-image: url(../../assets/icon/download_green.svg);
     width: 20px!important;
@@ -136,9 +127,20 @@
     bottom: 10px;
     right: 10px;
 }
-.edit-name{
-    background-image: url(../../assets/icon/edit_green.svg);
+.side-btn{
+    margin: 10px;
 }
-.save-name{
-    background-image: url(../../assets/icon/save_green.svg);
-}
+#new-dir-btn{background-image: url(../../assets//icon/addfolder_green.svg);}
+#new-dir-cancel{background-image: url(../../assets//icon/no_green.svg);}
+#new-dir-save{background-image: url(../../assets/icon/save_green.svg);}
+#go-back{background-image: url(../../assets/icon/left_green.svg);}
+.edit-name{background-image: url(../../assets/icon/edit_green.svg);}
+.save-name{background-image: url(../../assets/icon/save_green.svg);}
+#copy{background-image:url(../../assets/icon/copy_green.svg);}
+#del{background-image:url(../../assets/icon/bin_green.svg);}
+#move{background-image:url(../../assets/icon/move_green.svg);}
+#paste{background-image:url(../../assets/icon/paste_green.svg);}
+#reload{background-image:url(../../assets/icon/load_green.svg);}
+#upload{background-image:url(../../assets/icon/upload_green.svg);}
+
+

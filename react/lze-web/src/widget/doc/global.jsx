@@ -6,7 +6,6 @@ export const useGlobal = create((set, get) => ({
   nowPath: '/',
   parentPath: '/',
   fileList: [],
-  creating: false,
   uploading: false,
   showBg: false,
   loading: false,
@@ -27,10 +26,7 @@ export function list(path) {
   const sendData = { folder: path };
   const url = useGlobal.getState().docUrl;
 
-  useGlobal.setState({
-    loading: true,
-    showBg: true
-  });
+  loadPage(true)
 
   fetch(`${url}list`, {
     method: 'POST',
@@ -41,13 +37,20 @@ export function list(path) {
   })
     .then((res) => res.json())
     .then((data) => {
+      loadPage(false)
       useGlobal.setState({
         fileList: data.filelist,
         nowPath: data.currentFolder,
         parentPath: data.parentFolder,
-        loading: false,
-        showBg: false,
         selected: [],
       });
     });
+}
+
+// 加载页面
+export function loadPage(isLoad){
+  useGlobal.setState({
+    loading: isLoad,
+    showBg: isLoad
+  });
 }

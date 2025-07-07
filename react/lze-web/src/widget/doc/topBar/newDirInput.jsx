@@ -1,7 +1,7 @@
 import { useState } from "react"
-import {useGlobal,list} from '../global'; 
+import {useGlobal,list,loadPage} from '../global'; 
 import { notify } from '../../public/notify';
-export default function NewDirInput(props) {
+export default function NewDirInput({setCreate}) {
     const[newName,setNewName]=useState("")
      const nameChange = (e) => {
     const { value } = e.target;
@@ -9,6 +9,7 @@ export default function NewDirInput(props) {
   };
    const newDirKeyDown = (e) => {
       if (e.key === 'Enter') {
+      setCreate(false)
         NewDir(newName)
       }
     };
@@ -19,7 +20,9 @@ export default function NewDirInput(props) {
         >
         </input >
             <button id="new-dir-save" className="btn" 
-            title="保存" onClick={()=>{NewDir(newName)} }  >
+            title="保存" onClick={()=>{
+              setCreate(false)
+              NewDir(newName)} }  >
             </button> 
             </>
     )
@@ -44,11 +47,7 @@ export function NewDir(folderName) {
     token: global.token,
   };
 
-  useGlobal.setState({
-    loading: true,
-    showBg: true,
-    creating: false
-  });
+  loadPage(true)
 
   fetch(`${global.docUrl}new_folder`, {
     method: 'POST',
@@ -65,11 +64,7 @@ export function NewDir(folderName) {
           notify(res.status + ' 错误');
         }
 
-        useGlobal.setState({ creating: false,
-        loading: false,
-        showBg: false,
-
-         });
+        loadPage(false)
         return;
       }
 
