@@ -18,8 +18,10 @@ func Rename(c *gin.Context) {
 	if global.CheckPermit(rec.User, rec.Token, "doc", "rename") {
 		oldpath := filepath.FromSlash(rec.OldPath)
 		newpath := filepath.FromSlash(rec.NewPath)
+		filePath := filepath.Join(global.DocPath, filepath.Dir(newpath))
+		fileName := global.UniqueName(filePath, filepath.Base(newpath))
 		source := filepath.Join(global.DocPath, oldpath)
-		dest := filepath.Join(global.DocPath, newpath)
+		dest := filepath.Join(filePath, fileName)
 		os.Rename(source, dest)
 	} else {
 		c.Status(401)

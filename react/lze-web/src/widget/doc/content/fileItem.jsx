@@ -29,16 +29,19 @@ function rename(oldname,newname){
     });
     const oldpath=global.nowPath+"/"+oldname
     const newpath=global.nowPath+"/"+newname
+    const send_data=JSON.stringify({
+            oldpath,newpath,
+            user:global.userName,
+            token:global.token
+        })
+        console.log(send_data);
+        
     fetch(global.docUrl+"rename",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
         },
-        body:JSON.stringify({
-            oldpath,newpath,
-            user:global.userName,
-            token:global.token
-        })
+        body:send_data
     })
     .then(res=>{
         if(res.ok){
