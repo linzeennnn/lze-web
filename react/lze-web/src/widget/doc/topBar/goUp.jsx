@@ -1,5 +1,4 @@
-import useGlobal from './global';
-import { list } from './docFun';
+import {useGlobal,list} from '../global';
 
 export default function GoUp() {
   const nowPath = useGlobal((state) => state.nowPath);

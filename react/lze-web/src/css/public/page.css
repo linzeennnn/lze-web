@@ -38,7 +38,6 @@
     top: 170px;
     background-color: aquamarine;
     width: 80%;
-    min-height: 30vh;
     position: relative;
     margin-left: 70px;
     transition: margin-left 0.7s ease-in-out;

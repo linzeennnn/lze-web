@@ -1,38 +1,31 @@
-import useGlobal from './global'; // 引入 zustand 的 store
-import { notify } from '../public/notify';
+import { useState } from "react"
+import {useGlobal,list} from '../global'; 
+import { notify } from '../../public/notify';
+export default function NewDirInput(props) {
+    const[newName,setNewName]=useState("")
+     const nameChange = (e) => {
+    const { value } = e.target;
+    setNewName(value)
+  };
+   const newDirKeyDown = (e) => {
+      if (e.key === 'Enter') {
+        NewDir(newName)
+      }
+    };
+    return(
+        <>
+        <input placeholder="输入文件夹名称" id="new-dir-input"
+        onChange={nameChange} value={newName} onKeyDown={newDirKeyDown}
+        >
+        </input >
+            <button id="new-dir-save" className="btn" 
+            title="保存" onClick={()=>{NewDir(newName)} }  >
+            </button> 
+            </>
+    )
+ }
 
-// 扫描目录
-export function list(path) {
-  const sendData = { folder: path };
-
-  const global = useGlobal.getState();
-
-  useGlobal.setState({
-    loading: true,
-    showBg: true
-  });
-
-  fetch(`${window.location.origin}/server/doc/list`, {
-    method: 'POST',
-    body: JSON.stringify(sendData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      useGlobal.setState({
-        fileList: data.filelist,
-        nowPath: data.currentFolder,
-        parentPath: data.parentFolder,
-        loading: false,
-        showBg: false,
-        selected: [],
-      });
-    });
-}
-
-// 创建新目录
+ // 创建新目录
 export function NewDir(folderName) {
   if (folderName.includes('/') || folderName.includes('\\')) {
     notify('文件夹名不能包含/或\\');
@@ -57,7 +50,7 @@ export function NewDir(folderName) {
     creating: false
   });
 
-  fetch(`${window.location.origin}/server/doc/new_folder`, {
+  fetch(`${global.docUrl}new_folder`, {
     method: 'POST',
     body: JSON.stringify(sendData),
     headers: {
@@ -72,7 +65,11 @@ export function NewDir(folderName) {
           notify(res.status + ' 错误');
         }
 
-        useGlobal.setState({ creating: false });
+        useGlobal.setState({ creating: false,
+        loading: false,
+        showBg: false,
+
+         });
         return;
       }
 

@@ -1,4 +1,6 @@
 #content{
+    justify-content: center;
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
 }
@@ -11,9 +13,10 @@
     align-items: center;
     width: 120px;
     height: 80px;
+    padding: 10px;
     background-color: aqua;
     border-radius: 15px;
-    margin-left: 30px;
+    margin: 10px;
 }
 .doc-list:hover{
     background-color: #2d8173a2;
@@ -21,13 +24,20 @@
 .doc-list-selected{
     background-color: #2d8173a2;
 }
-.file-list-text{
+.file-list-text {
     cursor: pointer;
+    width: 80%;
+    white-space: nowrap;       
+    overflow: hidden;
+    text-overflow: ellipsis;  
 }
+
 .file-list-input{
     cursor: text;
 }
 .file-edit-btn{
+    width: 20px !important;
+    height: 20px !important;
     background-color: antiquewhite;
     position: absolute;
     right: 10px;
@@ -108,4 +118,27 @@
 }
 .new-dir-btn{
     margin-right: 10px;
+}
+#new-dir-btn{
+    background-image: url(../../assets//icon/addfolder_green.svg);
+}
+#new-dir-cancel{
+    background-image: url(../../assets//icon/no_green.svg);
+}
+#new-dir-save{
+    background-image: url(../../assets/icon/save_green.svg);
+}
+.down-btn{
+    background-image: url(../../assets/icon/download_green.svg);
+    width: 20px!important;
+    height: 20px!important;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.edit-name{
+    background-image: url(../../assets/icon/edit_green.svg);
+}
+.save-name{
+    background-image: url(../../assets/icon/save_green.svg);
 }

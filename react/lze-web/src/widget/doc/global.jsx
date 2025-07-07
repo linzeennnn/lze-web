@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-
-const useGlobal = create((set, get) => ({
+// 全局变量
+export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
   token: window.localStorage.getItem('token'),
   nowPath: '/',
@@ -11,18 +11,43 @@ const useGlobal = create((set, get) => ({
   showBg: false,
   loading: false,
   selected: [],
-
-  // 通用 setter（合并更新）
+  docUrl:`${window.location.origin}/server/doc/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
-
-  // 直接替换整个 global 状态（慎用）
   replaceGlobal: (newState) => {
     set(() => ({ ...newState }));
   },
-
-  // 类似 getGlobal
   getGlobal: () => get(),
 }));
-export default useGlobal;
+
+
+// 扫描目录
+export function list(path) {
+  const sendData = { folder: path };
+  const url = useGlobal.getState().docUrl;
+
+  useGlobal.setState({
+    loading: true,
+    showBg: true
+  });
+
+  fetch(`${url}list`, {
+    method: 'POST',
+    body: JSON.stringify(sendData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      useGlobal.setState({
+        fileList: data.filelist,
+        nowPath: data.currentFolder,
+        parentPath: data.parentFolder,
+        loading: false,
+        showBg: false,
+        selected: [],
+      });
+    });
+}

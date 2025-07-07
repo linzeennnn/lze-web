@@ -1,4 +1,4 @@
-import useGlobal from './global';
+import {useGlobal} from '../global';
 
 export default function ShowPath() {
   const nowPath = useGlobal((state) => state.nowPath);

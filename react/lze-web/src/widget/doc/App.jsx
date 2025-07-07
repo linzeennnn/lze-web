@@ -1,44 +1,27 @@
-import {
-  HeadBar,
-  SideBar,
-  TopBar,
-  Content,
-  GoTopBtn,
-  ScrollTop,
-  GoBack,
-  WinBg
-} from '../public';
-
-import {
-  DocList,
-  GoUp,
-  TopBarBox,
-  NewDirBtn
-} from '.';
-
+import DocContent from './content/docContent';
+import DocTopBar from './topBar/docTopBar';
+import DocSideBar from './sideBar/docSideBar';
+import {ScrollTop,GoTopBtn,HeadBar,GoBack,WinBg} from '../public'
+import {useGlobal}from './global'; // 注意这里是 zustand store
 import '../../css/page/doc.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
 
-import useGlobal from './global'; // 注意这里是 zustand store
 
 export default function App() {
   const showBg = useGlobal((state) => state.showBg);
-  return (  <>
+  const loading = useGlobal((state) => state.loading);
+  return ( 
+     <>
+      <div className="loading" id="list-loading" style={loading ? { display: "block" } : { display: "none" }}></div>
       <ScrollTop>
         <HeadBar />
         <GoBack />
-        <TopBar>
-          <GoUp />
-          <TopBarBox />
-          <NewDirBtn />
-        </TopBar>
         <GoTopBtn />
       </ScrollTop>
-      <SideBar />
-      <Content>
-        <DocList />
-      </Content>
+      <DocSideBar />
+      <DocTopBar />
+      <DocContent />
       <WinBg showBg={showBg} />
     </>
   );
