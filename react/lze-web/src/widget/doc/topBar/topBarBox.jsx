@@ -1,7 +1,7 @@
 import ShowPath from './showPath';
 import Progress from './progress';
 import NewDirInput from './newDirInput';
-import {useGlobal} from '../global';
+import {useGlobal,list} from '../global';
 
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus
@@ -9,6 +9,9 @@ export default function TopBarBox({ createStatus }) {
 
   return (
     <div id="top-bar-box">
+      <button id='home-icon' className='btn'
+      title='回到主目录' onClick={()=>{list('')}}
+      ></button>
       {!creating && <ShowPath />}
       {uploading && <Progress />}
       {creating && <NewDirInput setCreate={setCreating}/>}

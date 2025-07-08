@@ -24,12 +24,12 @@ export default function FileText({fileMes,editMode,nameEdit,rename}){
                 e.stopPropagation();
 
                 if (fileMes.type === "dir" || fileMes.type === "dir_link") {
-                const dir_path = nowPath === "/" ? nowPath + fileMes.name : nowPath + "/" + fileMes.name;
+                const dir_path = nowPath + "/" + fileMes.name;
                 list(dir_path);
                 }
 
                 if (fileMes.type === "file" || fileMes.type === "file_link") {
-                const file_path = nowPath === "/" ? nowPath + fileMes.name : nowPath + "/" + fileMes.name;
+                const file_path =  nowPath + "/" + fileMes.name;
                 window.location.href = window.location.origin + "/file/Documents" + file_path;
                 }
             }}

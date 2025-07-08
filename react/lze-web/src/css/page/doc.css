@@ -130,6 +130,38 @@
 .side-btn{
     margin: 10px;
 }
+#paste{
+    background-image:url(../../assets/icon/paste_green.svg);
+    animation: paste 1s ease-in-out infinite;
+}
+#home-icon{
+    position: relative;
+    left: 10px;
+    background-image: url(../../assets/icon/home.svg);
+    margin-right: 5px;
+    width: 32px;
+    height: 32px;
+    opacity: 1;
+}
+#upload-opt{
+    width: 500px;
+    height: 300px;
+    position: fixed;
+    display: flex;
+    top: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: bisque;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+}
+#close-upload{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-image: url(../../assets/icon/no_green.svg);
+}
 #new-dir-btn{background-image: url(../../assets//icon/addfolder_green.svg);}
 #new-dir-cancel{background-image: url(../../assets//icon/no_green.svg);}
 #new-dir-save{background-image: url(../../assets/icon/save_green.svg);}
@@ -139,8 +171,18 @@
 #copy{background-image:url(../../assets/icon/copy_green.svg);}
 #del{background-image:url(../../assets/icon/bin_green.svg);}
 #move{background-image:url(../../assets/icon/move_green.svg);}
-#paste{background-image:url(../../assets/icon/paste_green.svg);}
 #reload{background-image:url(../../assets/icon/load_green.svg);}
 #upload{background-image:url(../../assets/icon/upload_green.svg);}
 
 
+  @keyframes paste {
+    0% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }

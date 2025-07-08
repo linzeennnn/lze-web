@@ -11,14 +11,15 @@ export default function DocSidepBar(){
         type:"",
         status:false
     })
+    const [copyList,setCopyList]=useState([])
 return (
     <SideBar>
       <Upload />
       <Relaod />
       <Del />
-        <Copy setPaste={setPastestatus}/>
-      <Move setPaste={setPastestatus}/>
-      <Paste paste={[pastestatus,setPastestatus]}/>
+        <Copy setPaste={setPastestatus} setCopyList={setCopyList}/>
+      <Move setPaste={setPastestatus} setCopyList={setCopyList}/>
+      <Paste paste={[pastestatus,setPastestatus]} copyList={copyList}/>
     </SideBar>
 )
 }

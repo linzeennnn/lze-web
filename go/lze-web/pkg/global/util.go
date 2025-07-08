@@ -168,3 +168,27 @@ func MergeFile(tempPath string, total int64) string {
 	}
 	return targetFile
 }
+
+// 判断粘贴目标路径是否是其子目录
+func IsSub(oldPath, newPath string) bool {
+	absOld, err := filepath.Abs(oldPath)
+	if err != nil {
+		fmt.Println("源路径解析失败:", err)
+		return false
+	}
+	absNew, err := filepath.Abs(newPath)
+	if err != nil {
+		fmt.Println("目标路径解析失败:", err)
+		return false
+	}
+	absOld = filepath.Clean(absOld)
+	absNew = filepath.Clean(absNew)
+	if absOld == absNew {
+		return true
+	}
+	if strings.HasPrefix(absNew, absOld+string(filepath.Separator)) {
+		return true
+	}
+
+	return false
+}

@@ -20,7 +20,10 @@ func Copy(c *gin.Context) {
 		for _, files := range rec.CopyList {
 			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(files))
 			filename := global.UniqueName(destPath, filepath.Base(files))
-			copy.Copy(sourcePath, filepath.Join(destPath, filename))
+			destPath := filepath.Join(destPath, filename)
+			if !global.IsSub(sourcePath, destPath) {
+				copy.Copy(sourcePath, destPath)
+			}
 		}
 	} else {
 		c.Status(401)

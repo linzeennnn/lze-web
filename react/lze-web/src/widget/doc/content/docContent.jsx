@@ -9,10 +9,10 @@ export default function DocContent(){
       let tmp = [...selected];
       if (tmp.includes(name)) {
         tmp.splice(tmp.indexOf(name), 1);
-        notify("取消选中[" + name + "]");
+        notify("取消选中");
       } else {
         tmp.push(name);
-        notify("选中[" + name + "]");
+        notify("已选择"+tmp.length+"个文件")
       }
       setGlobal({ selected: tmp }); // 更新 selected
     };
@@ -20,7 +20,7 @@ export default function DocContent(){
   const selected = useGlobal((state) => state.selected);
     const setGlobal = useGlobal((state) => state.setGlobal);
   useEffect(() => {
-    list("/");
+    list("");
   }, []);
     return(
         <Content>
