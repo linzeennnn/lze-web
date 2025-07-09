@@ -171,7 +171,6 @@
     position: absolute;
     background-color: rgb(204, 132, 38);
     height: 100%;
-    width:15%;
     border-radius: 15px;
     left: 0;
     right: 0;
@@ -183,7 +182,6 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #be1e1ea2;
     z-index: 99;
 }
 #upload-dir{background-image: url(../../assets//icon/folder.svg);}

@@ -1,9 +1,21 @@
-import { useGlobal } from "../global";
+import { useGlobal ,Upload} from "../global";
 import { WinBg } from "../../public";
 import {notify} from "../../public/notify";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useGlobal((state) => state.upload); 
+    const fileChange=(e)=>{
+        setGlobal({upload:{
+            ...upload,
+            status:true
+        }})
+        const fileArr=Array.from(e.target.files);
+        fileArr.forEach((file,i)=>{
+            Upload(file)
+            
+        })
+        
+    }
     return(
         <>
     {upload.win?(<div id="upload-opt">
@@ -14,9 +26,11 @@ export default function UploadWin() {
             win:false
         }})}}
             ></button>
-            <button id="upload-file" className="btn upload-opt-btn"
-            title="上传文件" onClick={()=>{upload_ile()}}
-            ></button>
+            <input id="upFile" style={{display:"none"}} 
+            type="file" multiple onChange={fileChange}/>
+            <label id="upload-file" className="btn upload-opt-btn"
+            title="上传文件" htmlFor="upFile"
+            ></label>
             <button id="upload-dir" className="btn upload-opt-btn"
             title="上传文件夹"
             ></button>
@@ -25,34 +39,4 @@ export default function UploadWin() {
     {upload.status?(<div id="uploading-back"></div>):null}
         </>
     )
-}
-function upload_ile(){
-    var files = fileInput.files; 
-    if (files.length === 0) {
-        notify("请先选择文件");
-        return;
-    }
-    const setGlobal=useGlobal.setState
-    const upload = useGlobal.getState().upload;
-    setGlobal({upload:{
-            ...upload,
-            status:true,
-            win:false
-        }})
-    var chunkSize = getChunkSize(files[0].size);
-    var totalFiles = files.length;
-    var totalChunks = Array(totalFiles).fill(0); 
-    var currentChunks = Array(totalFiles).fill(0); 
-    
-}
-// 获取块大小
-function getChunkSize(fileSize) {
-    const mb=1024*1024
-    if (fileSize <= 1024 * mb) {
-        return 10 * mb;
-    } else if (fileSize <= 5120 * mb) {
-        return 50 * mb;
-    } else {
-        return 100 * mb;
-    }
 }

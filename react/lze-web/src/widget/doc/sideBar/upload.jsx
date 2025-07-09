@@ -10,7 +10,6 @@ export default function Upload(){
             ...upload,
             win:true
         }})
-    console.log(JSON.stringify(upload));
     
     }}
     ></button>
