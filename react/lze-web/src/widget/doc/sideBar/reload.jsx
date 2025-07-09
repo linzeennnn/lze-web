@@ -5,7 +5,6 @@ export default function Relaod(){
         <button id="reload" className="btn side-btn" 
         title="刷新" onClick={()=>{
             list(useGlobal.getState().nowPath)
-            notify("刷新成功")
         }}
         ></button>
     )

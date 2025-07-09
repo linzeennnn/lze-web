@@ -4,7 +4,7 @@ export default function GoUp() {
   const nowPath = useGlobal((state) => state.nowPath);
   const parentPath = useGlobal((state) => state.parentPath);
 
-  const isRoot = nowPath === '/';
+  const isRoot = (nowPath === '/')||(nowPath === '');
 
   return (
     <button

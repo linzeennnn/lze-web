@@ -84,6 +84,7 @@
   white-space: nowrap;       
   overflow: hidden;           
   text-overflow: ellipsis; 
+  z-index: 2;
 }
 #top-bar-box{
     flex: 1;
@@ -135,6 +136,7 @@
     width: 32px;
     height: 32px;
     opacity: 1;
+    z-index: 2;
 }
 #upload-opt{
     width: 400px;
@@ -148,6 +150,7 @@
     border-radius: 15px;
     justify-content: center;
     align-items: center;
+    z-index: 100;
 }
 #close-upload{
     position: absolute;
@@ -164,30 +167,24 @@
 .upload-opt-btn:hover{
     transform: scale(1.2);
 }
-#loading-win{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    z-index: 100000 !important;
-}
-#upload-box{
-    margin-bottom: 20px;
-    overflow: hidden;
-    position: relative;
-    background-color: aqua;
-    width: 90%;
-    height: 10px;
-    border-radius: 15px;
-}
 #progress{
     position: absolute;
     background-color: rgb(204, 132, 38);
     height: 100%;
-    width: 15%;
+    width:15%;
     border-radius: 15px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+#uploading-back{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #be1e1ea2;
+    z-index: 99;
 }
 #upload-dir{background-image: url(../../assets//icon/folder.svg);}
 #upload-file{background-image: url(../../assets/icon/file.svg);}

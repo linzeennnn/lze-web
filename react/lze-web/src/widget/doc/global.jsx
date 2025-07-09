@@ -9,6 +9,11 @@ export const useGlobal = create((set, get) => ({
   uploading: false,
   showBg: false,
   loading: false,
+  upload:{
+    win:false,
+    status:false,
+    percent:"0%"
+  },
   selected: [],
   docUrl:`${window.location.origin}/server/doc/`,
   setGlobal: (partial) => {

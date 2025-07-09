@@ -4,14 +4,16 @@ import {useGlobal,list} from '../global';
 
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus
-  const uploading = useGlobal((state) => state.uploading);
+    const upload=useGlobal((state) => state.upload); 
 
   return (
     <div id="top-bar-box">
-      <button id='home-icon' className='btn'
+     
+      {!creating &&  (<button id='home-icon' className='btn'
       title='回到主目录' onClick={()=>{list('')}}
-      ></button>
+      ></button>)}
       {!creating && <ShowPath />}
+      {upload.status&&(<div id='progress'></div>)}
       {creating && <NewDirInput setCreate={setCreating}/>}
     </div>
   );
