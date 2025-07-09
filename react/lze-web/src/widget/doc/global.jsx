@@ -78,6 +78,7 @@ export async function Upload(file) {
     const chunk = file.slice(start, start + chunkSize);
     const curChunk=Math.floor(start / chunkSize);
     const formData = new FormData();
+    let percent
     formData.append('file', chunk);
     formData.append('fileName', file.name);
     formData.append('totalChunks', totalChunks);
@@ -88,14 +89,21 @@ export async function Upload(file) {
     var xhr = new XMLHttpRequest();
     xhr.upload.onprogress = function(event) {
     if (event.lengthComputable) {
-      if(sendSize==chunkSize){
+      if(event.loaded>=chunkSize){
+        console.log(11111);
+        
       sendSize+=event.loaded;
+     percent = Math.ceil((sendSize/ file.size )*100);
       }
-      var percent = Math.ceil((sendSize / file.size )*100)+"%";
-      console.log("上传进度：" + percent);
+      else{
+     percent = Math.ceil(((sendSize + event.loaded)/ file.size )*100);
+      }
+      percent=percent>100?100:percent
+     const percentStr=percent+"%"
+      console.log("上传进度：" + percentStr);
       setGlobal({upload:{
         ...upload,
-        percent:percent
+        percent:percentStr
       }})
     }
   };
