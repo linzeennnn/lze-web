@@ -1,20 +1,30 @@
-import { useGlobal ,Upload} from "../global";
+import { useGlobal ,Upload,list} from "../global";
 import { WinBg } from "../../public";
 import {notify} from "../../public/notify";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useGlobal((state) => state.upload); 
+    const nowPath=useGlobal((state) => state.nowPath); 
     const fileChange=(e)=>{
         setGlobal({upload:{
             ...upload,
-            status:true
+            status:true,
+            win:false
         }})
         const fileArr=Array.from(e.target.files);
+        const len=fileArr.length;
+        let uploadData={
+            totalSize:0,
+            sendSize:0
+        }
         fileArr.forEach((file,i)=>{
-            Upload(file)
-            
+           uploadData.totalSize+=file.size
+           
         })
         
+        fileArr.forEach((file,i)=>{
+            Upload(file,uploadData) 
+        })
     }
     return(
         <>

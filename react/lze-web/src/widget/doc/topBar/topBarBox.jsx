@@ -14,7 +14,7 @@ export default function TopBarBox({ createStatus }) {
       ></button>)}
       {!creating && !upload.status&&<ShowPath />}
       {upload.status&&(<div id='progress'
-      style={{width:upload.progress}}>
+      style={{width:upload.percent}}>
         <span>{upload.progress}</span>
       </div>)}
       {creating && <NewDirInput setCreate={setCreating}/>}
