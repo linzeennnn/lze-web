@@ -9,15 +9,20 @@ export default function TopBarBox({ createStatus }) {
   return (
     <div id="top-bar-box">
      
-      {!creating &&  (<button id='home-icon' className='btn'
+      {!creating && !upload.status&& (<button id='home-icon' className='btn'
       title='回到主目录' onClick={()=>{list('')}}
       ></button>)}
       {!creating && !upload.status&&<ShowPath />}
-      {upload.status&&(<div id='progress'
-      style={{width:upload.percent}}>
-        <span>{upload.progress}</span>
-      </div>)}
-      {creating && <NewDirInput setCreate={setCreating}/>}
+        {}
+      {
+        upload.status && (
+    <>
+      <div id='progress' style={{ width: upload.percent }}></div>
+      <span id='progress-text'>{upload.percent}</span>
+    </>
+  )
+      }
+      {creating && !upload.status&&<NewDirInput setCreate={setCreating}/>}
     </div>
   );
 }

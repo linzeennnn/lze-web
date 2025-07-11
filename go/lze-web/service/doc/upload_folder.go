@@ -18,7 +18,7 @@ func UploadFolder(c *gin.Context) {
 			c.String(400, err.Error())
 			return
 		}
-		filename := c.PostForm("name")
+		filename := c.PostForm("fileName")
 		tempPath := filepath.Join(global.TempPath, relativePath)
 		if curChunkStr == "0" {
 			os.MkdirAll(tempPath, 0755)

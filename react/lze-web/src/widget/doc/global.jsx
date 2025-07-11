@@ -10,6 +10,7 @@ export const useGlobal = create((set, get) => ({
   uploading: false,
   showBg: false,
   loading: false,
+  dragWin:false,
   upload:{
     win:false,
     status:false,
@@ -61,83 +62,116 @@ export function loadPage(isLoad){
   });
 }
 
+// 上传文件
+export function Upload(file, uploadData, type) {
+  if (file.size == 0) {
+    notify(file.name + "是空文件,无法上传");
+    return;
+  }
 
-export function Upload(file,uploadData) {
   const global = useGlobal.getState();
   const user = global.userName;
   const token = global.token;
-  const url = global.docUrl + "upload_file";
   const nowPath = global.nowPath;
   const upload = global.upload;
   const setGlobal = useGlobal.setState;
+
+  const url =
+    type === "file"
+      ? global.docUrl + "upload_file"
+      : global.docUrl + "upload_folder";
 
   const chunkSize = getChunkSize(file.size);
   const totalChunks = Math.ceil(file.size / chunkSize);
   let start = 0;
 
   function uploadChunk() {
-    if(uploadData.sendSize>=uploadData.totalSize){
-        setGlobal({upload:{
+    if (uploadData.sendSize >= uploadData.totalSize) {
+      setGlobal({
+        upload: {
           ...upload,
-          status:false
-        }})
-        notify("上传完成")
-        list(nowPath)
+          status: false,
+        },
+      });
+
+      if (type === "file") {
+        notify("上传完成");
+        list(nowPath);
+      } else if (type === "dir") {
+        const foldername = file.webkitRelativePath.split("/")[0];
+        movefolder(foldername);
+      }
+
       return;
     }
+
     if (start >= file.size) {
       return;
     }
 
     const chunk = file.slice(start, start + chunkSize);
     const curChunk = Math.floor(start / chunkSize);
-
     const formData = new FormData();
+
     formData.append("file", chunk);
     formData.append("fileName", file.name);
     formData.append("totalChunks", totalChunks);
-    formData.append("currentChunk", curChunk); // 从 0 开始
+    formData.append("currentChunk", curChunk);
     formData.append("user", user);
     formData.append("token", token);
-    formData.append("nowpath", nowPath);
+
+    if (type === "dir") {
+      const relativePath = file.webkitRelativePath;
+      formData.append("relativePath", relativePath);
+    }
+
+    if (type === "file") {
+      formData.append("nowpath", nowPath);
+    }
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
-xhr.upload.onprogress = function (event) {
+
+    xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        const uploadingData={
+        const uploadingData = {
           loaded: event.loaded,
           fileSize: file.size,
           totalChunk: totalChunks,
           curChunk: curChunk,
           chunkSize: chunkSize,
-        }
-        let percent=Math.floor(count_percent(uploadingData,uploadData))+"%"
-        setGlobal({upload:{
-          ...upload,
-          percent:percent
-        }})
-        
+        };
+        let percent =
+          Math.floor(count_percent(uploadingData, uploadData)) + "%";
+        setGlobal({
+          upload: {
+            ...upload,
+            percent: percent,
+          },
+        });
       }
     };
+
     xhr.onload = function () {
       if (xhr.status != 200) {
-        if(xhr.status==401){
-          notify("无上传权限")
+        if (xhr.status == 401) {
+          notify("无上传权限");
+        } else {
+          notify("上传失败:" + xhr.status + "错误");
         }
-        else{
-          notify("上传失败:"+xhr.status+"错误")
-        }
-        setGlobal({upload:{
-          ...upload,
-          status:false
-        }})
-        return
+        setGlobal({
+          upload: {
+            ...upload,
+            status: false,
+          },
+        });
+        return;
       } else {
         start += chunkSize;
         uploadChunk();
       }
     };
+
     xhr.onerror = function () {
       console.error(`Chunk ${curChunk + 1} upload encountered error.`);
       setGlobal({ upload: false });
@@ -145,7 +179,32 @@ xhr.upload.onprogress = function (event) {
 
     xhr.send(formData);
   }
+
   uploadChunk();
+}
+
+// 从temp移动文件夹
+function movefolder(foldername) {
+  const global = useGlobal.getState();
+  const url=global.docUrl+"move_folder"
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: foldername,
+            path: global.nowPath
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        notify("上传完成");
+        list(global.nowPath)
+    })
+    .catch(error => {
+        notify(error);
+    });
 }
 // 计算百分比
 function count_percent(uploadindData,data){
@@ -180,4 +239,88 @@ function getChunkSize(fileSize) {
     } else {
         return 100 * mb;
     }
+}
+//拖拽上传
+export function DragOver(e) {
+  
+    useGlobal.setState({ dragWin: true });
+    e.stopPropagation();
+    e.preventDefault();
+}
+export function DragLeave(e) {
+    useGlobal.setState({ dragWin: false });
+    e.stopPropagation();
+    e.preventDefault();
+}
+export function Drop(e) {
+  const global = useGlobal.getState();
+  const upload = global.upload;
+  const setGlobal = useGlobal.setState;
+
+  setGlobal({ dragWin: false });
+
+  e.stopPropagation();
+  e.preventDefault();
+
+  const items = e.dataTransfer.items;
+  const fileList = [];
+  let totalSize = 0;
+
+  let pending = 0;
+
+  function traverseFileTree(item, path = "") {
+    if (item.isFile) {
+      pending++;
+      item.file((file) => {
+        if (path) {
+          Object.defineProperty(file, "webkitRelativePath", {
+            value: path + file.name,
+          });
+        }
+        fileList.push(file);
+        totalSize += file.size;
+        pending--;
+        maybeUpload();
+      });
+    } else if (item.isDirectory) {
+      const dirReader = item.createReader();
+      pending++;
+      dirReader.readEntries((entries) => {
+        pending--;
+        for (const entry of entries) {
+          traverseFileTree(entry, path + item.name + "/");
+        }
+        maybeUpload();
+      });
+    }
+  }
+  function maybeUpload() {
+    if (pending === 0) {
+      if (fileList.length === 0) {
+        notify("没有可上传的文件");
+        return;
+      }
+      setGlobal({
+        upload: {
+          ...upload,
+          status: true,
+          win: false,
+        },
+      });
+      const uploadData = {
+        totalSize: totalSize,
+        sendSize: 0,
+      };
+      fileList.forEach((file) => {
+        const type = file.webkitRelativePath ? "dir" : "file";
+        Upload(file, uploadData, type);
+      });
+    }
+  }
+  for (let i = 0; i < items.length; i++) {
+    const entry = items[i].webkitGetAsEntry();
+    if (entry) {
+      traverseFileTree(entry);
+    }
+  }
 }

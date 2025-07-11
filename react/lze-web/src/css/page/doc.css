@@ -168,6 +168,10 @@
     transform: scale(1.2);
 }
 #progress{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     position: absolute;
     background-color: rgb(204, 132, 38);
     height: 100%;
@@ -175,6 +179,11 @@
     left: 0;
     right: 0;
     z-index: 1;
+}
+#progress-text{
+    position: absolute;
+    left: 50%;
+    z-index: 2;
 }
 #uploading-back{
     position: fixed;
@@ -192,7 +201,7 @@
     right: 0;
     z-index: 100;
     display: flex;
-    pointer-events: auto;
+    pointer-events: none;
     justify-content: center;
     align-items: center;
     background-color: #03231ea2;
