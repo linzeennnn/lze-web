@@ -1,7 +1,6 @@
 package doc
 
 import (
-	"fmt"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -36,7 +35,6 @@ func UploadFile(c *gin.Context) {
 			targetFile := global.MergeFile(tempPath, total)
 			targetPath := filepath.Join(global.DocPath, nowpath)
 			saveName := global.UniqueName(targetPath, filename)
-			fmt.Println(saveName + ":" + filename)
 			os.Rename(targetFile, filepath.Join(global.DocPath, nowpath, saveName))
 			os.RemoveAll(tempPath)
 		}

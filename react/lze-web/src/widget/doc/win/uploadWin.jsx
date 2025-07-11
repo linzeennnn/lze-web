@@ -1,10 +1,12 @@
 import { useGlobal ,Upload,list} from "../global";
 import { WinBg } from "../../public";
 import {notify} from "../../public/notify";
+import { useState } from "react";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useGlobal((state) => state.upload); 
     const nowPath=useGlobal((state) => state.nowPath); 
+    const [dragWin, setDragWin]=useState(false)
     const fileChange=(e)=>{
         setGlobal({upload:{
             ...upload,
@@ -47,6 +49,9 @@ export default function UploadWin() {
     </div>):null}
     <WinBg showBg={upload.win} />
     {upload.status?(<div id="uploading-back"></div>):null}
+        <div id="drag-win">
+            <div></div>
+        </div>
         </>
     )
 }

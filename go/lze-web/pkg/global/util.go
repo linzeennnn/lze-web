@@ -82,6 +82,9 @@ func ScanDir(path string) []fileSystem.Files {
 		panic(err)
 	}
 	for _, entry := range entries {
+		if strings.HasPrefix(entry.Name(), ".") {
+			continue
+		}
 		filePath := filepath.Join(path, entry.Name())
 		fileType := FileType(filePath)
 		info, err := os.Lstat(filePath)

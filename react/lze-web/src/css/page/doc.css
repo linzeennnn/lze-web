@@ -184,6 +184,26 @@
     right: 0;
     z-index: 99;
 }
+#drag-win{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    pointer-events: auto;
+    justify-content: center;
+    align-items: center;
+    background-color: #03231ea2;
+}
+#drag-win div{
+    width: 200px;
+    height: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../../assets/icon/upload_green.svg);
+}
 #upload-dir{background-image: url(../../assets//icon/folder.svg);}
 #upload-file{background-image: url(../../assets/icon/file.svg);}
 #new-dir-btn{background-image: url(../../assets//icon/addfolder_green.svg);}
