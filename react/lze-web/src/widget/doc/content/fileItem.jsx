@@ -24,6 +24,9 @@ export default function FileItem({ fileMes, selected, docClick}){
     )
 }
 function rename(oldname,newname){
+    if(oldname==newname){
+        return
+    }
     const global=useGlobal.getState()
       loadPage(true)
     const oldpath=global.nowPath+"/"+oldname

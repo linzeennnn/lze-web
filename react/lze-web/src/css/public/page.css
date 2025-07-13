@@ -1,6 +1,6 @@
 #top-bar{
     height: 60px;
-    margin-left: 70px;
+    margin-left: 60px;
     background-color: #916f6f;
     position: fixed;
     z-index: 10;
@@ -26,6 +26,9 @@
     bottom: 0;
     z-index: 8;
 }
+.side-btn{
+    margin: 10px;
+}
 #head-bar{
     position: fixed;
     top: -70px;
@@ -42,7 +45,7 @@
     background-color: aquamarine;
     width: 80%;
     position: relative;
-    margin-left: 70px;
+    margin-left: 60px;
     transition: margin-left 0.7s ease-in-out;
 }
 #go-top-btn{
@@ -67,7 +70,22 @@
     top: 0 !important;
 }
 .scroll-go-top-btn{
-    bottom: 80px !important;
+    bottom: 200px !important;
+}
+#notify{
+  left: calc(60px + (100% - 60px)/2) !important;
+}
+#list-loading{
+    position: fixed;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+    background: conic-gradient(
+        #bbfff4a2,
+        #41ad9ba2,
+        #bbfff4a2
+    );
 }
 @media (max-width: 600px) {
   #side-bar{
@@ -81,4 +99,7 @@
   #content{
     margin-left: 0;
   }
+#notify{
+  left: 50% !important;
+}
 }

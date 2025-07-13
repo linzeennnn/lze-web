@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>交互式 json 构建器（支持嵌套）</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    .entry, .item { margin: 5px 0; padding-left: 20px; border-left: 2px solid #ccc; }
+    input, select, button { margin: 4px; padding: 4px; }
+    .container { margin-left: 20px; }
+    pre { background: #eee; padding: 10px; border-radius: 5px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h2>json 构建器（支持无限嵌套）</h2>
+<label for="serverHost">服务器地址：</label>
+<input id="serverHost" placeholder="例如：127.0.0.1:8000">
+<div style="margin-top: 10px;">
+  <strong>历史服务器地址：</strong>
+  <div id="hostHistoryList"></div>
+</div>
+
+  <input type="text" id="apiPath" placeholder="例如 /api/data/submit" style="width: 60%;">
+  <div id="apiHistoryList"></div>
+
+
+
+  <div id="root" class="entry"></div>
+  <button onclick="createField(document.getElementById('root'))">➕ 添加字段</button>
+  <button onclick="generateJSON()">🚀 生成 JSON</button>
+  <button onclick="copyJSON()">📋 复制到剪贴板</button>
+  <button onclick="sendJSON()">📤 发送到服务器</button>
+<button onclick="sendGet()">🌐 GET 方式发送</button>
+<a href="./web/test.html" >跳转测试</a>
+
+  <h3>生成结果：</h3>
+  <pre id="output">{}</pre>
+
+  <h3>服务器返回：</h3>
+  <pre id="response">(等待发送...)</pre>
+
+ <script>
+  function getServerURL() {
+    const host = document.getElementById('serverHost').value.trim() || window.location.host;
+    return "http://" + host;
+  }
+
+  function createField(parent) {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <input type="text" placeholder="键名" class="key">
+      <select class="type" onchange="handleTypeChange(this)">
+        <option value="string">字符串</option>
+        <option value="number">数字</option>
+        <option value="boolean">布尔</option>
+        <option value="object">对象</option>
+        <option value="array">数组</option>
+      </select>
+      <input type="text" class="value" placeholder="值">
+      <button onclick="removeField(this)">❌ 删除</button>
+      <div class="container"></div>
+      <button onclick="addSubField(this)" style="display:none">➕ 添加子项</button>
+    `;
+    parent.appendChild(div);
+  }
+
+  function handleTypeChange(select) {
+    const type = select.value;
+    const parent = select.closest('.item');
+    const valueInput = parent.querySelector('.value');
+    const subBtn = parent.querySelector('button[onclick^="addSubField"]');
+    const subContainer = parent.querySelector('.container');
+
+    if (type === 'object' || type === 'array') {
+      valueInput.style.display = 'none';
+      subBtn.style.display = 'inline';
+      if (!subContainer.children.length) {
+        createField(subContainer);
+      }
+    } else {
+      valueInput.style.display = 'inline';
+      subBtn.style.display = 'none';
+      subContainer.innerHTML = '';
+    }
+  }
+
+  function addSubField(btn) {
+    const container = btn.parentElement.querySelector('.container');
+    createField(container);
+  }
+
+  function removeField(btn) {
+    const item = btn.closest('.item');
+    item.remove();
+  }
+
+  function sendGet() {
+    const fullURL = getServerURL() + document.getElementById('apiPath').value;
+    fetch(fullURL, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(async res => {
+      const text = await res.text();
+      const status = res.status + ' ' + res.statusText;
+      document.getElementById('response').textContent = `状态码: ${status}\n返回内容:\n${text}`;
+    })
+    .catch(err => {
+      document.getElementById('response').textContent = '请求失败：' + err;
+    });
+  }
+
+  function parseEntry(entry) {
+    const result = {};
+    const items = entry.children;
+    for (let item of items) {
+      const key = item.querySelector('.key')?.value;
+      const type = item.querySelector('.type')?.value;
+      const valueInput = item.querySelector('.value');
+      const subContainer = item.querySelector('.container');
+
+      if (!key) continue;
+
+      let value;
+      if (type === 'object') {
+        value = parseEntry(subContainer);
+      } else if (type === 'array') {
+        const arr = [];
+        const subs = subContainer.children;
+        for (let sub of subs) {
+          const subType = sub.querySelector('.type')?.value;
+          const subValueInput = sub.querySelector('.value');
+          const subContainer2 = sub.querySelector('.container');
+
+          if (subType === 'object') {
+            arr.push(parseEntry(subContainer2));
+          } else if (subType === 'array') {
+            arr.push(parseEntry(subContainer2));
+          } else {
+            const raw = subValueInput?.value;
+            arr.push(convertType(raw, subType));
+          }
+        }
+        value = arr;
+      } else {
+        const raw = valueInput?.value;
+        value = convertType(raw, type);
+      }
+
+      result[key] = value;
+    }
+    return result;
+  }
+
+  function convertType(val, type) {
+    if (type === 'number') return Number(val);
+    if (type === 'boolean') return val === 'true';
+    return val;
+  }
+
+  function generateJSON() {
+    const root = document.getElementById('root');
+    const json = parseEntry(root);
+    document.getElementById('output').textContent = JSON.stringify(json, null, 2);
+    return json;
+  }
+
+  function copyJSON() {
+    const text = document.getElementById('output').textContent;
+    navigator.clipboard.writeText(text).then(() => alert('JSON 已复制！'));
+  }
+
+  function sendJSON() {
+    const json = generateJSON();
+    const apiPath = document.getElementById('apiPath').value.trim();
+    const url = getServerURL() + apiPath;
+
+    if (apiPath) saveAPIToHistory(apiPath);
+    saveServerHost();
+
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(json)
+    })
+    .then(async res => {
+      const text = await res.text();
+      const status = res.status + ' ' + res.statusText;
+      document.getElementById('response').textContent = `状态码: ${status}\n返回内容:\n${text}`;
+    })
+    .catch(err => {
+      document.getElementById('response').textContent = '请求失败：' + err;
+    });
+  }
+
+  function saveAPIToHistory(api) {
+    let history = JSON.parse(localStorage.getItem('apiHistory') || '[]');
+    if (!history.includes(api)) {
+      history.push(api);
+      localStorage.setItem('apiHistory', JSON.stringify(history));
+      updateHistorySelect();
+    }
+  }
+
+  function updateHistorySelect() {
+    const container = document.getElementById('apiHistoryList');
+    const history = JSON.parse(localStorage.getItem('apiHistory') || '[]');
+    container.innerHTML = '';
+
+    history.forEach((api, index) => {
+      const entry = document.createElement('div');
+      entry.style.margin = '5px 0';
+
+      const link = document.createElement('a');
+      link.href = 'javascript:void(0)';
+      link.textContent = api;
+      link.style.marginRight = '10px';
+      link.onclick = () => {
+        document.getElementById('apiPath').value = api;
+      };
+
+      const del = document.createElement('button');
+      del.textContent = '❌';
+      del.style.color = 'red';
+      del.onclick = () => {
+        deleteAPIFromHistory(index);
+      };
+
+      entry.appendChild(link);
+      entry.appendChild(del);
+      container.appendChild(entry);
+    });
+  }
+
+  function deleteAPIFromHistory(index) {
+    let history = JSON.parse(localStorage.getItem('apiHistory') || '[]');
+    history.splice(index, 1);
+    localStorage.setItem('apiHistory', JSON.stringify(history));
+    updateHistorySelect();
+  }
+
+  function saveServerHost() {
+    const host = document.getElementById('serverHost').value.trim();
+    if (!host) return;
+
+    let history = JSON.parse(localStorage.getItem('hostHistory') || '[]');
+    if (!history.includes(host)) {
+      history.push(host);
+      localStorage.setItem('hostHistory', JSON.stringify(history));
+      updateHostHistory();
+    }
+  }
+
+  function updateHostHistory() {
+    const container = document.getElementById('hostHistoryList');
+    const history = JSON.parse(localStorage.getItem('hostHistory') || '[]');
+    container.innerHTML = '';
+
+    history.forEach((host, index) => {
+      const entry = document.createElement('div');
+      entry.style.margin = '5px 0';
+
+      const link = document.createElement('a');
+      link.href = 'javascript:void(0)';
+      link.textContent = host;
+      link.style.marginRight = '10px';
+      link.onclick = () => {
+        document.getElementById('serverHost').value = host;
+      };
+
+      const del = document.createElement('button');
+      del.textContent = '❌';
+      del.style.color = 'red';
+      del.onclick = () => {
+        deleteHostFromHistory(index);
+      };
+
+      entry.appendChild(link);
+      entry.appendChild(del);
+      container.appendChild(entry);
+    });
+  }
+
+  function deleteHostFromHistory(index) {
+    let history = JSON.parse(localStorage.getItem('hostHistory') || '[]');
+    history.splice(index, 1);
+    localStorage.setItem('hostHistory', JSON.stringify(history));
+    updateHostHistory();
+  }
+
+  window.onload = () => {
+    createField(document.getElementById('root'));
+    updateHistorySelect();
+    updateHostHistory();
+    document.getElementById('serverHost').value = window.location.host;
+  };
+</script>
+<style>
+  body{
+    background-color: #979797;
+  }
+</style>
+</body>
+</html>

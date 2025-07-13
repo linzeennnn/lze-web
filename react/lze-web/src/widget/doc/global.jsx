@@ -4,8 +4,8 @@ import { notify } from '../public/notify';
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
   token: window.localStorage.getItem('token'),
-  nowPath: '/',
-  parentPath: '/',
+  nowPath: "",
+  parentPath: "",
   fileList: [],
   uploading: false,
   showBg: false,
@@ -26,33 +26,6 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
-// 压缩目录
-export function ZipDir(fileName){
-  loadPage(true)
-  const global = useGlobal.getState();
-  const token =global.token
-  const user = global.userName
-        fetch(global.docUrl+"zip_folder",{
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json" 
-    },
-    body: JSON.stringify({ folder_path: global.nowPath+fileName ,token,user}) 
-      })
-      .then(response => {
-        if (response.status === 401) {
-          notify("无下载文件夹权限")
-          pageloading(0)
-          throw new Error('未授权访问');
-        }
-        return response.text();  
-      })
-      .then(text => {
-      window.location.href = global.docUrl+"down_zip?downToken="+text
-      notify("开始下载,请在10秒内下载")
-     loadPage(false)
-    })
-    }
 
 // 扫描目录
 export function list(path) {

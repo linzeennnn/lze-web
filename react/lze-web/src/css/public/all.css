@@ -6,6 +6,11 @@ html, body {
   bottom: 0;
   left: 0;
   right: 0;
+  scrollbar-width: none;         
+  -ms-overflow-style: none; 
+}
+body::-webkit-scrollbar{
+  display: none;
 }
 .hide-scrollbar {
   overflow: auto;             
@@ -33,6 +38,7 @@ input{
   all:unset;
 }
 .btn{
+  cursor: pointer;
   opacity: 0.7;
   width: 32px;
   height: 32px;
@@ -90,7 +96,7 @@ opacity: 1;
   min-height: 30px;
   height: fit-content;
   border-radius: 15px;
-  background-color: blue;
+  background-color: rgba(0, 0, 255, 0.459);
   display: flex;
   justify-content: center;
   align-items: center;

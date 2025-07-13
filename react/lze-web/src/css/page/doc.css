@@ -43,18 +43,6 @@
     right: 10px;
     top: 10px;
 }
-#list-loading{
-    position: fixed;
-    top: 50%;
-    bottom: 50%;
-    left: 50%;
-    right: 50%;
-    background: conic-gradient(
-        #bbfff4a2,
-        #41ad9ba2,
-        #bbfff4a2
-    );
-}
 .dir-text{
     text-decoration: underline;
 }
@@ -120,9 +108,6 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-}
-.side-btn{
-    margin: 10px;
 }
 #paste{
     background-image:url(../../assets/icon/paste_green.svg);

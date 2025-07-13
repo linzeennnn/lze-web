@@ -1,5 +1,4 @@
 import {list,useGlobal} from '../global'
-import { useState } from "react";
 export default function FileText({fileMes,editMode,nameEdit,rename}){
     const[nameInput,setNameInput]=nameEdit
     const nowPath = useGlobal((state) => state.nowPath);

@@ -3,6 +3,7 @@ package pic
 import (
 	"lze-web/pkg/global"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 
@@ -12,6 +13,11 @@ import (
 func Upload(c *gin.Context) {
 	if global.CheckPermit(c.PostForm("user"), c.PostForm("token"), "pic", "upload") {
 		filename := c.PostForm("fileName")
+		checkName := CheckType(filename)
+		if checkName == "" {
+			c.String(400, filename+":不支持文件类型")
+			return
+		}
 		nowpath := filepath.FromSlash(c.PostForm("nowpath"))
 		tempPath := filepath.Join(global.TempPath, filename)
 		cur := c.PostForm("currentChunk")
@@ -33,8 +39,9 @@ func Upload(c *gin.Context) {
 		curCount, _ := strconv.ParseInt(cur, 10, 0)
 		if curCount == total-1 {
 			targetFile := global.MergeFile(tempPath, total)
-			saveName := global.UniqueName(global.PicPath, filename)
-			os.Rename(targetFile, filepath.Join(global.PicPath, nowpath, saveName))
+			targetDir := path.Join(global.PicPath, nowpath)
+			saveName := global.UniqueName(targetDir, filename)
+			os.Rename(targetFile, filepath.Join(targetDir, saveName))
 			os.RemoveAll(tempPath)
 		}
 		c.Status(200)

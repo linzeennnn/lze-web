@@ -15,7 +15,6 @@ export default function App() {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
     window.addEventListener('drop', Drop);
-
     return () => {
       window.removeEventListener('dragover', DragOver);
       window.removeEventListener('dragleave', DragLeave);
