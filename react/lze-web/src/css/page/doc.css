@@ -26,7 +26,8 @@
 }
 .file-list-text {
     cursor: pointer;
-    width: 80%;
+    width: fit-content;
+    max-width: 80%;
     white-space: nowrap;       
     overflow: hidden;
     text-overflow: ellipsis;  
