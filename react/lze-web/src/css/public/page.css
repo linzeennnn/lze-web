@@ -47,6 +47,7 @@
     position: relative;
     margin-left: 60px;
     z-index: 7;
+    margin-bottom: 250px;
     transition: margin-left 0.7s ease-in-out;
 }
 #go-top-btn{

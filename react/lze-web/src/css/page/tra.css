@@ -12,7 +12,7 @@
     align-items: center;
     text-align: center;
     background-color: rgba(230, 146, 50, 0.605);
-    width: 40%;
+    width: 35%;
     height: 100px;
     border-radius: 15px;
     margin: 10px;
@@ -47,3 +47,30 @@
 .tra-list-selected{
     background-color: rgb(167, 116, 23);
 }
+.go-up-disable:hover{
+    cursor:default;
+    opacity: 0.7 !important;
+
+}
+#top-bar{
+    display: flex;
+    align-items: center;
+}
+.top-bar-widget{
+    margin: 10px;
+}
+#show-path{
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 30px;
+    flex: 1;
+    background-color: antiquewhite;
+    border-radius: 15px;
+}
+#go-home{background-image: url(../../assets//icon/home_orange.svg);}
+#go-up{background-image: url(../../assets/icon/go_up_orange.svg);}
+#load{background-image: url(../../assets/icon/load_orange.svg);}
+#del{background-image: url(../../assets/icon/bin_orange.svg);}
+#recover{background-image: url(../../assets/icon/recover_orange.svg);}

@@ -11,7 +11,8 @@ export const useGlobal = create((set, get) => ({
   showBg: false,
   loading: false,
   selected: [],
-  docUrl:`${window.location.origin}/server/tra/`,
+  source_path:true,
+  traUrl:`${window.location.origin}/server/tra/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -24,7 +25,7 @@ export const useGlobal = create((set, get) => ({
 // 扫描目录
 export function list(path) {
   const sendData = { folder: path };
-  const url = useGlobal.getState().docUrl;
+  const url = useGlobal.getState().traUrl;
 
   loadPage(true)
 
@@ -38,10 +39,17 @@ export function list(path) {
     .then((res) => res.json())
     .then((data) => {
       loadPage(false)
+      let sourcePath
+      if(data.currentFolder==""){
+        sourcePath = true
+      }else{
+        sourcePath = false
+      }
       useGlobal.setState({
         fileList: data.filelist,
         nowPath: data.currentFolder,
         parentPath: data.parentFolder,
+        source_path:sourcePath,
         selected: [],
       });
     });

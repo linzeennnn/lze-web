@@ -1,6 +1,7 @@
 package tra
 
 import (
+	"fmt"
 	"lze-web/model/tra/recover"
 	"lze-web/pkg/global"
 	"os"
@@ -17,6 +18,7 @@ func Recover(c *gin.Context) {
 	}
 	if global.CheckPermit(rec.User, rec.Token, "tra", "recover") {
 		if rec.SourcePath {
+			fmt.Println("source")
 			delData := global.GetDeldata()
 			for _, files := range rec.RecoverList {
 				oriPathStr := delData[filepath.Base(files)].(string)
@@ -32,6 +34,7 @@ func Recover(c *gin.Context) {
 			}
 			global.SaveDelData(delData)
 		} else {
+			fmt.Println("no source")
 			for _, files := range rec.RecoverList {
 				dest := filepath.Join(global.DocPath, "Recover_file")
 				os.Mkdir(dest, 0755)
