@@ -9,7 +9,7 @@ export default function VidPage(){
     return(
         <>{vidList[pageNum-1]?
             (vidList[pageNum-1].map((name,index)=>{
-               return <PicItem url={url+name} type="vid" key={url+name}/>
+               return <PicItem url={url} name={name} type="vid" key={url+name} index={index}/>
             })):null
         }</>
     )

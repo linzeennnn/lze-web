@@ -22,7 +22,7 @@ export default function PageBar(){
             <button className="btn" id="last-page"
             onClick={()=>{jumpPage(pageNum==1?totalPage:pageNum-1)}}
             ></button>
-            <span id="page-num">{pageNum+"/"+totalPage}</span>
+            <span id="page-num">{pageNum+"/"+(totalPage==0?1:totalPage)}</span>
             <div id="jump-page">
             <input id="page-input" value={inputPage}  type="text" 
             placeholder="页码"

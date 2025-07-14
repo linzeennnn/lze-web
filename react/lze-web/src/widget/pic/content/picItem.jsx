@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useGlobal } from "../global";
 
-export default function PicItem({ url, type }) {
+export default function PicItem({ url,name, type ,index}) {
   const [loading, setLoading] = useState(true);
   const [loaded, setLoaded] = useState(false);
 
@@ -14,7 +15,7 @@ export default function PicItem({ url, type }) {
     if (loaded) {
       timer = setTimeout(() => {
         setLoading(false);
-      }, 2000);
+      }, 100);
     }
     return () => clearTimeout(timer);
   }, [loaded]);
@@ -22,15 +23,25 @@ export default function PicItem({ url, type }) {
   const handleLoad = () => {
     setLoaded(true);
   };
-
   return (
-    <div className="pic-item" key={url}>
+    <div className="pic-item" key={url} 
+    onClick={()=>{openMedia(url,type,index)}}
+    >
       {loading && <div className="media-loading loading"></div>}
       {type === "img" ? (
-        <img src={url} loading="lazy" onLoad={handleLoad} />
+        <img src={url+name} loading="lazy" onLoad={handleLoad} />
       ) : (
-        <video src={url} onLoadedData={handleLoad} />
+        <video src={url+name} onLoadedData={handleLoad} />
       )}
     </div>
   );
+}
+function openMedia(url,type,index){
+const setGlobal=useGlobal.setState
+setGlobal({mediaWin:{
+    url:url,
+    img:type=="img"?true:false,
+    status:true,
+    index:index
+}})
 }

@@ -1,12 +1,12 @@
 import LoadWin from "./loadWin";
 import UploadWin from "./uploadWin";
-import MediaaWin from "./mediaaWin";
+import MediaWin from "./mediaWin";
 export default function PicWin() {
     return(
         <>
         <LoadWin/>
         <UploadWin/>
-        <MediaaWin/>
+        <MediaWin/>
         </>
     )
 }

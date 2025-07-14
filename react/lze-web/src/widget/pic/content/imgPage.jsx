@@ -8,7 +8,7 @@ export default function ImgPage(){
     return(
         <>{imgList[pageNum-1]?
             (imgList[pageNum-1].map((name,index)=>{
-               return <PicItem url={url+name} type="img" key={url+name}/>
+               return <PicItem url={url} name={name} type="img" key={url+name} index={index}/>
             })):null
         }</>
     )

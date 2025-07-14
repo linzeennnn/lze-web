@@ -15,6 +15,12 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   dragWin:false,
   imgPage:true,
+  mediaWin:{
+    status:false,
+    img:true,
+    path:window.location.origin+"/file/Pictures/",
+    index:0
+  },
   upload:{
     status:false,
     percent:"0%"
@@ -87,6 +93,7 @@ export function list(path) {
         nowPath: data.currentFolder,
         parentPath: data.parentFolder,
         selected: [],
+        imgPage: true,
       });
       loadPage(false)
     });
