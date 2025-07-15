@@ -8,7 +8,7 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   controlList:null,
   userList:null,
-  nowuser:"",
+  nowuser:window.localStorage.getItem('userName'),
   monUrl:`${window.location.origin}/server/mon/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));

@@ -9,11 +9,11 @@ export default function TimeBar() {
         m: "月",
         y: "年"
     };
-
+    const userconfig=useGlobal((state)=>state.userList)
     // 所有单位键的数组
     const unitKeys = Object.keys(unitList);
     const [unit, setUnit] = useState("h");
-
+    const [showEdit, setShowEdit] = useState(false)
     // 切换单位函数
     const switchUnit = () => {
         const currentIndex = unitKeys.indexOf(unit);
@@ -23,23 +23,30 @@ export default function TimeBar() {
 
     return (
         <div id="time-box">
-            <button id="time-btn" className="btn" title="修改登录时限"></button>
+            <button id="time-btn" className="btn" title="修改登录时限"
+            onClick={()=>setShowEdit(showEdit?false:true)}
+            ></button>
 
-            <div id="time-input-box" className="time-text">
+            {showEdit?(  <>
+                <div id="time-input-box" className="time-text">
                 <input id="time-input" />
-                <button className="btn" id="save-time" title="保存"></button>
+                <button className="btn mini-btn" id="save-time" title="保存"></button>
             </div>
 
             <div id="unit-box">
-                <span id="unit-text">{unitList[unit]}</span>
+                <div id="unit-text">
+                <span>{unitList[unit]}</span>
                 <button
-                    className="btn"
+                    className="btn mini-btn"
                     id="switch-unit"
                     title="切换时间单位"
                     onClick={switchUnit}
                 >
                 </button>
+                </div>
             </div>
+            </>):
+           ( <span className="time-text" id="display-time" title="允许登陆时长">111y</span>)}
         </div>
     );
 }
