@@ -10,6 +10,7 @@ export default function TimeBar() {
         y: "年"
     };
     const userconfig=useGlobal((state)=>state.userList)
+    const nowuser=useGlobal((state)=>state.nowuser)
     // 所有单位键的数组
     const unitKeys = Object.keys(unitList);
     const [unit, setUnit] = useState("h");
@@ -22,7 +23,7 @@ export default function TimeBar() {
     };
 
     return (
-        <div id="time-box">
+      userconfig? ( <div id="time-box">
             <button id="time-btn" className="btn" title="修改登录时限"
             onClick={()=>setShowEdit(showEdit?false:true)}
             ></button>
@@ -37,7 +38,7 @@ export default function TimeBar() {
                 <div id="unit-text">
                 <span>{unitList[unit]}</span>
                 <button
-                    className="btn mini-btn"
+                  className="btn mini-btn"
                     id="switch-unit"
                     title="切换时间单位"
                     onClick={switchUnit}
@@ -46,7 +47,25 @@ export default function TimeBar() {
                 </div>
             </div>
             </>):
-           ( <span className="time-text" id="display-time" title="允许登陆时长">111y</span>)}
-        </div>
+           ( <span className="time-text" id="display-time" title="允许登陆时长">{
+            getTime(userconfig[nowuser].tokentime)+
+            unitList[getUnit(userconfig[nowuser].tokentime)]
+           }</span>)}
+        </div>):null
     );
 }
+function getTime(str) {
+    console.log(str);
+    
+  if(str=="never"||str==""||!str){
+      return ""
+  }
+  return parseInt(str.slice(0, -1));
+}
+function getUnit(str) {
+  if(str=="never"||str==""||!str){
+      return "never"
+  }
+  return str.slice(-1);
+}
+
