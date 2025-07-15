@@ -6,7 +6,9 @@ export const useGlobal = create((set, get) => ({
   token: window.localStorage.getItem('token'),
   showBg: false,
   loading: false,
-  config:null,
+  controlList:null,
+  userList:null,
+  nowuser:"",
   monUrl:`${window.location.origin}/server/mon/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
@@ -36,7 +38,7 @@ fetch(url,{
 }).then(res=>res.json())
 .then(data=>{
   
-    useGlobal.setState({config:data})
+    useGlobal.setState({controlList:data.control,userList:data.user})
   loadPage(false)
 })
 }

@@ -6,11 +6,11 @@ export default function MonContent(){
     useEffect(()=>{
         list()
     },[])
-    const config=useGlobal((state)=>state.config)
+    const controlList=useGlobal((state)=>state.controlList)
     return(
         <Content>
-            {config?
-                Object.entries(config.control).map(([key,Mes])=>{
+            {controlList?
+                Object.entries(controlList).map(([key,Mes])=>{
                     return (<ControlBar
                     keyName={key} Mes={Mes} key={key}
                     />)

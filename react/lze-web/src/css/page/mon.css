@@ -4,15 +4,21 @@
     justify-content: center;
     align-items: center;
 }
+#top-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 .control-bar{
     position: relative;
-    padding: 10px;
+    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100%;
-    min-height: 100px;
+    min-height: 30px;
     height: fit-content;
     background-color: antiquewhite;
     border-radius: 50px;
@@ -48,3 +54,84 @@
 .action-bar:hover{
     background-color: rgb(151, 149, 3);
 }
+#user-box{
+    display: flex;
+    flex: 1;
+    justify-content: left;
+    align-items: center;
+    margin: 5px;
+    margin-left: 10px;
+}
+#user-text{
+    margin-left: 5px;
+}
+#user-list{
+    border-radius: 15px;
+    top: 50px;
+    position: absolute;
+    width: 100px;
+    min-height: 60px;
+    background-color: rgb(213, 193, 62);
+    z-index: 2;
+}
+#user-back{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+#time-box{
+    display: flex;
+    flex: 1;
+    margin-right: 10px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.time-text{
+    width: 50px;
+    margin-left: 5px;
+    border-radius: 15px;
+    position: relative;
+}
+#time-input{
+    width: 100%;
+}
+#time-input-box{
+    height: fit-content;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: antiquewhite;
+}
+#save-time{
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background-image: url(../../assets/icon/save_yellow.svg);
+}
+#time-btn{
+    background-image: url(../../assets/icon/time_yellow.svg);
+}
+#unit-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+    border-radius: 15px;
+    padding: 5px;
+    margin: 5px;
+    width: 30px;
+    font-size: 10px;
+}
+#unit-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#user-btn{background-image: url(../../assets/icon/user_yellow.svg);}
+#switch-unit{background-image: url(../../assets/icon/switch_yellow.svg);}

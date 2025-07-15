@@ -1,6 +1,13 @@
 import {TopBar} from '../../public'
+import UserPro from './userPro'
+import TimeBar from '../content/timeBar'
+import { useGlobal } from '../global'
 export default function MonTopBar(){
+    const userList=useGlobal((state)=>state.userList)
     return(
-        <TopBar></TopBar>
+        <TopBar>
+            <UserPro Mes={userList}/>
+            <TimeBar/>
+        </TopBar>
     )
 }
