@@ -22,8 +22,8 @@ export default function FileText({fileMes}){
             >
             {fileMes.name}
             </span>
-            <span className='ori-path' title={"原路径:"+fileMes.delData}
-            >{fileMes.delData}</span>
+            <span className='ori-path' title={"原路径:"+fileMes.delData==""?"/":fileMes.delData}
+            >{fileMes.delData==""?"/":fileMes.delData}</span>
         </>
     )
 }
