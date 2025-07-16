@@ -12,7 +12,7 @@
 }
 .note{
     position: relative;
-    background-color: rgba(226, 43, 162, 0.651);
+    background-color: rgba(160, 64, 126, 0.692);
     border-radius: 15px;
     width: 100%;
     margin: 10px;
@@ -32,6 +32,21 @@
     width: 100%;
     min-height: 100px;
 }
+.hljs {
+background-color: transparent;
+}
+/* .text {
+    border-top-color: #ffffff10;
+    border-top-style: solid;
+    width: 90%;
+    margin-top: 10px;
+    font-size: 20px;
+    margin-bottom: 40px;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1;
+    color: #ffb6d8;
+} */
 .note-loading{
     width: 32px !important;
     height: 32px !important;

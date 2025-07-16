@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { notify } from "../../public/notify";
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.min.css';
 import { list, loadPage, useGlobal } from "../global";
 export default function Note({name}){
     const oldTitle=remove_ext(name)
@@ -9,6 +11,13 @@ export default function Note({name}){
     const[isCopy,setIsCopy]=useState(false)
     const[editMode, setEditMode] = useState(false)
     const[title,setTitle]=useState(remove_ext(name))
+
+    useEffect(()=>{
+        document.querySelectorAll("pre").forEach(block => {
+             hljs.highlightElement(block)
+        });
+    });
+
     const key_save=(e)=>{
     const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
     const isCtrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
@@ -62,7 +71,7 @@ export default function Note({name}){
             onChange={(e)=>setText(e.target.value)}
             onKeyDown={key_save}
             />:
-            <code className="text">{text}</code>):
+            <pre><code className="text">{text}</code></pre>):
             <div className="loading note-loading"></div>}
         
         </div>
