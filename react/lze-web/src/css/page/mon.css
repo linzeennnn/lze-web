@@ -43,7 +43,6 @@
     margin: 10px;
     border-radius: 15px;
     height: 40px;
-    background-color: rgb(190, 202, 84);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,6 +51,12 @@
     padding: 5px;
 }
 .action-bar:hover{
+    background-color: rgb(151, 149, 3);
+}
+.no-action{
+    background-color: rgb(190, 202, 84);
+}
+.have-action{
     background-color: rgb(151, 149, 3);
 }
 #user-box{
@@ -66,11 +71,13 @@
     margin-left: 5px;
 }
 #user-list{
+    overflow-y: auto;
     border-radius: 15px;
-    top: 50px;
+    top: 70px;
     position: absolute;
     width: 100px;
     min-height: 60px;
+    max-height: 300px;
     background-color: rgb(213, 193, 62);
     z-index: 2;
 }
@@ -98,6 +105,11 @@
 }
 #time-input{
     width: 100%;
+    font-size: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 #time-input-box{
     height: fit-content;
@@ -138,6 +150,16 @@
     justify-content: center;
     align-items: center;
 }
+.name-item{
+    cursor: pointer;
+    border-radius: 15px;
+    margin: 10px;
+    background-color: royalblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#load{background-image: url(../../assets/icon/load_yellow.svg);}
 #save-time{background-image: url(../../assets/icon/save_yellow.svg);}
 #user-btn{background-image: url(../../assets/icon/user_yellow.svg);}
 #switch-unit{background-image: url(../../assets/icon/switch_yellow.svg);}

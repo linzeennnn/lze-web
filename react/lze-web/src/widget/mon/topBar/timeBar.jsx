@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useGlobal } from "../global";
-
+import { useGlobal,list,loadPage } from "../global";
+import { notify } from "../../public/notify";
 export default function TimeBar() {
     const unitList = {
         never: "不过期",
@@ -15,13 +15,38 @@ export default function TimeBar() {
     const unitKeys = Object.keys(unitList);
     const [unit, setUnit] = useState("h");
     const [showEdit, setShowEdit] = useState(false)
+        const [editTime,setEditTime]=useState("")
     // 切换单位函数
     const switchUnit = () => {
         const currentIndex = unitKeys.indexOf(unit);
         const nextIndex = (currentIndex + 1) % unitKeys.length;
         setUnit(unitKeys[nextIndex]);
     };
+    const timeChange=(e)=>{
+        const {value}=e.target
+        setEditTime(value)
+    }
+    const keyDown=(e)=>{
+        if(e.key==='Enter'){
+            saveTime(editTime,unit)
+        }
+    }
+    const saveTime=(num,unit)=>{
+        let timeStr
+        if(unit=="never"){
+            timeStr="never"
+        }else{
+            if(!(num>=0)){
+                notify("输入时间无效")
+                return
+            }
 
+            timeStr=num+unit
+        }
+        setShowEdit(false)
+        setEditTime("")
+        updata_time(nowuser,timeStr)
+    }
     return (
       userconfig? ( <div id="time-box">
             <button id="time-btn" className="btn" title="修改登录时限"
@@ -30,8 +55,13 @@ export default function TimeBar() {
 
             {showEdit?(  <>
                 <div id="time-input-box" className="time-text">
-                <input id="time-input" />
-                <button className="btn mini-btn" id="save-time" title="保存"></button>
+                <input id="time-input" placeholder="数字"
+                 value={editTime} onChange={timeChange}
+                 onKeyDown={keyDown}
+                />
+                <button className="btn mini-btn" id="save-time" title="保存"
+                onClick={()=>{saveTime(editTime,unit)}}
+                ></button>
             </div>
 
             <div id="unit-box">
@@ -54,9 +84,40 @@ export default function TimeBar() {
         </div>):null
     );
 }
-function getTime(str) {
-    console.log(str);
+function updata_time(name,time){
+    loadPage(true)
+    const globale=useGlobal.getState()
+    const token=globale.token
+    const user=globale.userName
+    const url=globale.monUrl+"date"
+    fetch(url,{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json",
+        },
     
+        body:JSON.stringify({
+            token,user,
+            name:name,
+            time:time
+        })
+    }
+    ).then(res=>{
+        if(!res.ok){
+            if(res.status==401){
+                notify("无修改时间权限")
+            }else{
+                notify("修改失败"+res.status+"错误")
+            }
+            loadPage(false)
+            return
+        }
+        notify("已更新时间")
+        list()
+    })
+    
+}
+function getTime(str) {
   if(str=="never"||str==""||!str){
       return ""
   }

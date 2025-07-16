@@ -20,14 +20,16 @@ export default function UserPro({Mes}){
         >{nowuser}</span>
         {showuser?(<><div id="user-list">
             {Object.entries(userconfig).map(([name])=>{
-                return(<div className="name-item" 
+                return(
+                <div className="name-item" 
                 key={name+"nameList"} onClick={()=>{
                     setGlobal({nowuser:name})
                     setShowUser(false)
                 }}
                 >
                     <span>{name}</span>
-                </div>)
+                </div>
+                )
             })}
         </div>
         <div id="user-back"
