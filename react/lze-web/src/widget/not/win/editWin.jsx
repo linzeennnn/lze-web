@@ -19,25 +19,31 @@ const key_save=(e)=>{
         save_note(edit.title,title,text)
     }
     }
+const enter_save=(e)=>{
+    if(e.key==="Enter"){
+        save_note(edit.title,title,text)
+    }
+}
 return(
     <WinBg showBg={edit.mode?true:false}>
-        <div id="edit-back">
+        <div id="edit-back"
+                onKeyDown={key_save}
+                >
         <button className="btn" id="close-edit" title="关闭"
         onClick={()=>setGlobal({edit:{mode:false}})}
         ></button>
-        <button className="btn" id="save-edit" title="保存"
+        <button className="btn save" id="save-edit" title="保存"
          onClick={()=>{
             save_note(edit.title,title,text)
             }}></button>
          <input value={title} 
          onChange={(e)=>setTitle(e.target.value)} 
-                onKeyDown={key_save}
+                onKeyDown={enter_save}
             id="edit-title" type="text" placeholder="标题"/>
              <textarea value={text}
             id="edit-text"
             placeholder="输入内容...."
             onChange={(e)=>setText(e.target.value)}
-            onKeyDown={key_save}
             />
             </div>
     </WinBg>

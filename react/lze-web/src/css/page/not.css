@@ -100,6 +100,11 @@ background-color: transparent;
     height: 80%;
     flex: 1;
 }
+#save-edit{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
 .save{background-image: url(../../assets/icon/save_pink.svg);}
 .edit{background-image: url(../../assets/icon/edit_pink.svg);}
 .copy-ok{background-image: url(../../assets/icon/yes_pink.svg) !important;}

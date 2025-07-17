@@ -12,7 +12,8 @@ export const useGlobal = create((set, get) => ({
   edit:{
     mode:false,
     title:"",
-    text:""
+    text:"",
+    type:""
   },
   upload:{
     status:false,
