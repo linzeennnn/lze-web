@@ -1,3 +1,6 @@
+textarea{
+    all: unset;
+}
 #content{
     display: flex;
     flex-direction: column;
@@ -31,6 +34,7 @@
     align-items: center;
     width: 100%;
     min-height: 100px;
+    height: fit-content;
 }
 .hljs {
     white-space: pre-wrap;      
@@ -41,6 +45,10 @@
     width: 90%;
     font-size: 20px;
 background-color: transparent;
+}
+.text{
+    /* 设置初始文本颜色为透明,防止高亮还没渲染完就出现原始文本 */
+    color: transparent;
 }
 .note-loading{
     width: 32px !important;
@@ -59,6 +67,38 @@ background-color: transparent;
     position: absolute;
     bottom: 0;
     left: 10px;
+}
+#close-edit{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-image: url(../../assets/icon/no_pink.svg);
+}
+#edit-back{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+#edit-title{
+    margin-top: 60px;
+    text-align: center;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    background-color: rgba(116, 43, 90, 0.575);
+    width: 100%;
+    height: 60px;
+}
+#edit-text{
+    white-space: pre-wrap;      
+  word-break: break-word;     
+  overflow-wrap: break-word; 
+    margin: 10px;
+    width: 90%;
+    height: 80%;
+    flex: 1;
 }
 .save{background-image: url(../../assets/icon/save_pink.svg);}
 .edit{background-image: url(../../assets/icon/edit_pink.svg);}

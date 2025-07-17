@@ -9,6 +9,11 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   dragWin:false,
   notList:[],
+  edit:{
+    mode:false,
+    title:"",
+    text:""
+  },
   upload:{
     status:false,
     percent:"0%"
@@ -26,6 +31,7 @@ export const useGlobal = create((set, get) => ({
 export function list(){
   loadPage(true)
 const url =useGlobal.getState().notUrl+'list'
+const edit =useGlobal.getState().edit
 fetch(url,{
     method:'GET',
   headers:{
@@ -33,8 +39,15 @@ fetch(url,{
   }
 }).then(res=>res.json())
 .then(data=>{
-  
-    useGlobal.setState({notList:data.list})
+    useGlobal.setState({
+      notList:data.list,
+      edit:{
+        mode:false,
+        title:"",
+        text:""
+      }
+
+    })
   loadPage(false)
 })
 }

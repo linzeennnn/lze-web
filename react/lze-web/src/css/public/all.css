@@ -9,6 +9,10 @@ html, body {
   scrollbar-width: none;         
   -ms-overflow-style: none; 
 }
+body.no-scroll {
+  overflow: hidden;
+}
+
 body::-webkit-scrollbar{
   display: none;
 }
