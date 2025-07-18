@@ -1,23 +1,28 @@
 import { create } from 'zustand';
 import { notify } from '../public/notify';
 // 全局变量
-export const useGlobal = create((set, get) => ({
-  userName: window.localStorage.getItem('userName'),
-  token: window.localStorage.getItem('token'),
-  showBg: false,
-  loading: false,
-  controlList:null,
-  userList:null,
-  nowuser:window.localStorage.getItem('userName'),
-  monUrl:`${window.location.origin}/server/mon/`,
-  setGlobal: (partial) => {
-    set((state) => ({ ...state, ...partial }));
-  },
-  replaceGlobal: (newState) => {
-    set(() => ({ ...newState }));
-  },
-  getGlobal: () => get(),
-}));
+export const useGlobal = create((set, get) => {
+  const storedUser = window.localStorage.getItem('userName');
+  const storedToken = window.localStorage.getItem('token');
+  return {
+    userName: storedUser,
+    token: storedToken,
+    nowuser: storedUser?.trim() || 'visitor',
+    showBg: false,
+    loading: false,
+    controlList: null,
+    userList: null,
+    monUrl: `${window.location.origin}/server/mon/`,
+    setGlobal: (partial) => {
+      set((state) => ({ ...state, ...partial }));
+    },
+    replaceGlobal: (newState) => {
+      set(() => ({ ...newState }));
+    },
+    getGlobal: () => get(),
+  };
+});
+
 
 // 加载页面
 export function loadPage(isLoad){
@@ -37,7 +42,6 @@ fetch(url,{
   }
 }).then(res=>res.json())
 .then(data=>{
-  
     useGlobal.setState({controlList:data.control,userList:data.user})
   loadPage(false)
 })

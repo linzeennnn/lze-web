@@ -28,6 +28,17 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
+//初始化编辑数据
+function init_edit(){
+  const edit = useGlobal.getState().edit;
+  const setGlobal = useGlobal.setState;
+  setGlobal({edit:{
+    mode:false,
+    title:"",
+    text:"",
+    type:""
+  }})
+}
 // 扫描目录
 export function list(){
   loadPage(true)
@@ -42,17 +53,54 @@ fetch(url,{
 .then(data=>{
     useGlobal.setState({
       notList:data.list,
-      edit:{
-        mode:false,
-        title:"",
-        text:""
-      }
-
     })
+    init_edit()
   loadPage(false)
 })
 }
-
+// 保存文件
+export function Save_note(newTitle,newContent){
+    if(!confirm("确定保存吗"))
+        return
+    loadPage(true)
+    const user=useGlobal.getState().userName
+    const token=useGlobal.getState().token
+    const edit=useGlobal.getState().edit
+    const oldTitle=edit.title
+    newTitle=newTitle==""?"new_note":newTitle
+    let api;
+    switch(edit.type){
+      case "edit":
+        api="edit"
+        break;
+      case "add":
+        api="add"
+        break;
+    }
+    const url=useGlobal.getState().notUrl+api
+    const send_data={user,token,oldTitle,newTitle,newContent}
+    fetch(url,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(send_data)
+    }).then((res) => {
+        if(!res.ok){
+            if(res.status===401){
+                notify("无权限")
+            }
+            else{
+                notify("保存失败"+res.status+"错误")
+            }
+            loadPage(false)
+            return
+        }
+        notify("保存成功")
+        loadPage(false)
+        list()
+    })
+}
 // 加载页面
 export function loadPage(isLoad){
   useGlobal.setState({

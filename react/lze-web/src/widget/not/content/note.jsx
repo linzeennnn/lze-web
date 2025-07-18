@@ -17,7 +17,7 @@ export default function Note({name}){
     codeRef.current.innerHTML = result.value;
     codeRef.current.className = 'hljs';
   }
-}, [text, show]);
+}, [text, show,loaded]);
 
     const get_note=()=>{
         fetch(`${window.location.origin}/file/Note/${name}`,{ cache: "no-store" })
@@ -39,7 +39,8 @@ export default function Note({name}){
         setGlobal({edit:{
         mode:true,
         title:title,
-        text:text
+        text:text,
+        type:"edit"
        }})}}
        ></button>
        <button className={"btn note-btn copy "+(isCopy?"copy-ok":"")} title="复制内容"
