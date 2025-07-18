@@ -180,8 +180,17 @@ background-color: transparent;
 .default-text{
     color: rgb(90, 86, 86);
 }
+#del-btn{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-image: url(../../assets/icon/no_pink.svg);
+}
 .save{background-image: url(../../assets/icon/save_pink.svg);}
 .edit{background-image: url(../../assets/icon/edit_pink.svg);}
 .copy-ok{background-image: url(../../assets/icon/yes_pink.svg) !important;}
 .open-note{background-image: url(../../assets/icon/down_pink.svg);}
 .close-note{background-image: url(../../assets/icon/up_pink.svg);}
+#add-btn{background-image: url(../../assets/icon/add_pink.svg);}
+#load-btn{background-image: url(../../assets/icon/load_pink.svg);}
+#upload-btn{background-image: url(../../assets/icon/upload_pink.svg);}

@@ -1,5 +1,6 @@
 import { useState,useEffect, useRef } from "react";
 import { notify } from "../../public/notify";
+import Del from "./del";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.min.css';
 import { list, loadPage, useGlobal } from "../global";
@@ -29,6 +30,7 @@ export default function Note({name}){
     }
     return(
         <div className="note">
+            <Del name={name}/>
             <span className="title title-show">{title}</span>
        {show? 
        <>
