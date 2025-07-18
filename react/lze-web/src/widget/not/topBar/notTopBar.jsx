@@ -15,10 +15,39 @@ export default function NotTopBar(){
         el.selectionStart = el.selectionEnd = el.value.length;
     }
 }, [textInput]);
+const key_c_s=(e)=>{
+    const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+    const isCtrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
+    if (isCtrlOrCmd && e.key.toLowerCase() === "s") {
+        e.preventDefault(); 
+        save_add()
+    }
+}
+const key_enter=(e)=>{
+    if(e.key==="Enter"){
+        save_add()
+    }
+}
+const save_add=()=>{
+    if(!confirm("确定保存吗"))
+        return
+    setText("")
+    setTitle("")
+    setTextInput(false)
+    useGlobal.setState({edit:{
+        ...edit,
+        type:"add"
+    }})
+    Save_note(title,text)
+}
     return(
         <TopBar>
+            <div id="top-bar-box"
+                onKeyDown={key_c_s}
+            >
             <div id="add-title-box">
                 <input placeholder="标题" 
+                onKeyDown={key_enter}
                 value={title}
                 onChange={(e)=>{
                     setTitle(e.target.value)
@@ -28,13 +57,7 @@ export default function NotTopBar(){
                 title="保存"
                 className="btn save"
                 onClick={()=>{
-                    setText("")
-                    setTitle("")
-                    useGlobal.setState({edit:{
-                        ...edit,
-                        type:"add"
-                    }})
-                    Save_note(title,text)
+                    save_add()
                 }}
                 ></button>
             </div>
@@ -68,6 +91,7 @@ export default function NotTopBar(){
                 (text==''?<span>输入内容</span>:
                 <span>{text}</span>)
                 }
+            </div>
             </div>
         </TopBar>
     )

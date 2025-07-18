@@ -16,13 +16,19 @@ const key_save=(e)=>{
     const isCtrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
     if (isCtrlOrCmd && e.key.toLowerCase() === "s") {
         e.preventDefault(); 
-        Save_note(title,text)
+        save_edit()
     }
     }
 const enter_save=(e)=>{
     if(e.key==="Enter"){
-        Save_note(title,text)
+        save_edit()
     }
+}
+
+const save_edit=()=>{
+    if(!confirm("确定保存吗"))
+        return
+        Save_note(title,text)
 }
 return(
     <WinBg showBg={edit.mode?true:false}>
@@ -34,7 +40,7 @@ return(
         ></button>
         <button className="btn save" id="save-edit" title="保存"
          onClick={()=>{
-            Save_note(title,text)
+        save_edit()
             }}></button>
          <input value={title} 
          onChange={(e)=>setTitle(e.target.value)} 

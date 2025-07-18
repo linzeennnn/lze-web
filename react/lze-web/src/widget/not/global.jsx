@@ -60,8 +60,6 @@ fetch(url,{
 }
 // 保存文件
 export function Save_note(newTitle,newContent){
-    if(!confirm("确定保存吗"))
-        return
     loadPage(true)
     const user=useGlobal.getState().userName
     const token=useGlobal.getState().token
