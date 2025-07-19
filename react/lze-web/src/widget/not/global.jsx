@@ -108,16 +108,40 @@ export function loadPage(isLoad){
 }
 // 上传文件
 export function Upload(file, uploadData) {
+  let percent = 0;
+  const setGlobal = useGlobal.setState;
+  const upload = useGlobal.getState().upload;
+  const url=useGlobal.getState().notUrl+'upload'
   const xhr = new XMLHttpRequest();
   const formData = new FormData();
-
+    const user=useGlobal.getState().userName
+    const token=useGlobal.getState().token
+  if (!file.name.endsWith('.txt')) {
+            var newFileName = file.name + '.txt';
+            var newFile = new File([file], newFileName, { type: file.type });
+            formData.append('new_note', newFile);
+        } else {
+            formData.append('new_note', file);
+        }
   formData.append("token", token);
   formData.append("user", user);
 
   xhr.upload.onprogress = function (event) {
     if (event.lengthComputable) {
-      percent = Math.round((event.loaded / event.total) * 100);
-      console.log(`上传进度：${percent}%`);
+
+      if(event.loaded>=file.size){
+        uploadData.sendSize+=event.loaded
+      percent = Math.floor((uploadData.sendSize / uploadData.totalSize) * 100);
+      }else{
+      percent = Math.floor(((uploadData.sendSize+ event.loaded) / uploadData.totalSize) * 100);
+      }
+      setGlobal({
+        upload: {
+          ...upload,
+          percent: percent + '%',
+        },
+      })
+      console.log(upload.percent);
     }
   };
 
@@ -136,7 +160,7 @@ export function Upload(file, uploadData) {
       });
       return;
     }
-
+if(uploadData.sendSize>=uploadData.totalSize){
     setGlobal({
       upload: {
         ...upload,
@@ -145,9 +169,9 @@ export function Upload(file, uploadData) {
     });
 
     notify("上传完成");
-    list(nowPath);
+    list();
   };
-
+  }
   xhr.onerror = function () {
     notify("上传出错");
     setGlobal({
@@ -159,33 +183,10 @@ export function Upload(file, uploadData) {
   };
 
   // 发送 POST 请求到 not/upload
-  xhr.open("POST", "not/upload");
+  xhr.open("POST", url);
   xhr.send(formData);
 }
 
-
-// 计算百分比
-function count_percent(uploadindData,data){
-    let remain_size=uploadindData.fileSize-(uploadindData.totalChunk-1)* uploadindData.chunkSize
-    if(uploadindData.curChunk==uploadindData.totalChunk-1){//判断是否上传到最后一块
-      if(uploadindData.loaded>=remain_size){//判断当前块是否上传完
-        
-        data.sendSize+=uploadindData.loaded
-        return data.sendSize/data.totalSize *100
-      }
-      else
-        return (data.sendSize+uploadindData.loaded)/data.totalSize *100
-    }
-    else{
-      if(uploadindData.loaded>=uploadindData.chunkSize){//判断当前块是否上传完
-        data.sendSize+=uploadindData.loaded
-        return data.sendSize/data.totalSize *100
-      }
-      else
-        return (data.sendSize+uploadindData.loaded)/data.totalSize *100
-      
-    }
-}
 
 // 获取块大小
 function getChunkSize(fileSize) {

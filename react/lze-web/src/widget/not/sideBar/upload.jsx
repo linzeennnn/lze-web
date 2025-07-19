@@ -1,4 +1,7 @@
-export default function Upload(){
+import { useGlobal,Upload } from "../global";
+export default function UploadBtn(){
+    const setGlobal = useGlobal.setState;
+    const upload = useGlobal((state)=> state.upload);
       const uploadChange=(e)=>{
             setGlobal({upload:{
                 ...upload,
