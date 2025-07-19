@@ -117,7 +117,7 @@ const switchPic=(action)=>{
         {mediaWin.img ? (
           <img loading="lazy" src={mediaWin.url+picList[mediaWin.index]} />
         ) : (
-          <video src={mediaWin.url+picList[mediaWin.index]} controls autoPlay />
+          <video src={mediaWin.url+picList[mediaWin.index]} controls autoPlay loop />
         )}
       </div>
     <div id="zoom-bar" className="media-widget">

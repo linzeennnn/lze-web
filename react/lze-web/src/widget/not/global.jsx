@@ -107,38 +107,74 @@ export function loadPage(isLoad){
   });
 }
 // 上传文件
-export function Upload(file, uploadData) {
-  let tmp_send_size=0
-  let percent = "";
+export async function Upload(file, uploadData) {
   const setGlobal = useGlobal.setState;
   const upload = useGlobal.getState().upload;
-  const url=useGlobal.getState().notUrl+'upload'
+  
+  if (file.size === 0) {
+    notify("文件为空，无法上传");
+    setGlobal({
+      upload: {
+        ...upload,
+        status: false
+      }
+    });
+    return;
+  }
+
+  if (file.size > 1024 * 1024) { 
+    notify("文件不允许超过1MB");
+    setGlobal({
+      upload: {
+        ...upload,
+        status: false
+      }
+    });
+    return;
+  }
+
+  const isTextFile = await isText(file);
+  if (!isTextFile) {
+    notify("仅支持上传文本文件");
+    setGlobal({
+      upload: {
+        ...upload,
+        status: false
+      }
+    });
+    return;
+  }
+
+  let tmp_send_size = 0;
+  let percent = "";
+  const url = useGlobal.getState().notUrl + 'upload';
   const xhr = new XMLHttpRequest();
   const formData = new FormData();
-    const user=useGlobal.getState().userName
-    const token=useGlobal.getState().token
+  const user = useGlobal.getState().userName;
+  const token = useGlobal.getState().token;
+
   if (!file.name.endsWith('.txt')) {
-            var newFileName = file.name + '.txt';
-            var newFile = new File([file], newFileName, { type: file.type });
-            formData.append('new_note', newFile);
-        } else {
-            formData.append('new_note', file);
-        }
+    var newFileName = file.name + '.txt';
+    var newFile = new File([file], newFileName, { type: file.type });
+    formData.append('new_note', newFile);
+  } else {
+    formData.append('new_note', file);
+  }
+
   formData.append("token", token);
   formData.append("user", user);
 
   xhr.upload.onprogress = function (event) {
     if (event.lengthComputable) {
-
-        uploadData.sendSize=event.loaded+uploadData.sendSize-tmp_send_size
-        tmp_send_size=event.loaded
+      uploadData.sendSize = event.loaded + uploadData.sendSize - tmp_send_size;
+      tmp_send_size = event.loaded;
       percent = Math.floor((uploadData.sendSize / uploadData.totalSize) * 100);
       setGlobal({
         upload: {
           ...upload,
           percent: percent + '%',
         },
-      })
+      });
     }
   };
 
@@ -157,18 +193,19 @@ export function Upload(file, uploadData) {
       });
       return;
     }
-if(uploadData.sendSize>=uploadData.totalSize){
-    setGlobal({
-      upload: {
-        ...upload,
-        status: false,
-      },
-    });
 
-    notify("上传完成");
-    list();
+    if (uploadData.sendSize >= uploadData.totalSize) {
+      setGlobal({
+        upload: {
+          ...upload,
+          status: false,
+        },
+      });
+      notify("上传完成");
+      list();
+    }
   };
-  }
+
   xhr.onerror = function () {
     notify("上传出错");
     setGlobal({
@@ -179,23 +216,10 @@ if(uploadData.sendSize>=uploadData.totalSize){
     });
   };
 
-  // 发送 POST 请求到 not/upload
   xhr.open("POST", url);
   xhr.send(formData);
 }
 
-
-// 获取块大小
-function getChunkSize(fileSize) {
-    const mb=1024*1024
-    if (fileSize <= 1024 * mb) {
-        return 10 * mb;
-    } else if (fileSize <= 5120 * mb&&fileSize>1024 * mb) {
-        return 50 * mb;
-    } else {
-        return 100 * mb;
-    }
-}
 //拖拽上传
 export function DragOver(e) {
   
@@ -273,4 +297,31 @@ export function Drop(e) {
   for (let i = 0; i < items.length; i++) {
     handleItem(items[i]);
   }
+}
+function isText(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    const sampleSize = 512;
+    const blob = file.slice(0, sampleSize);
+
+    reader.onload = () => {
+      const text = reader.result;
+      let nonPrintable = 0;
+      for (let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        // 排除换行、回车、制表符
+        if (code < 32 && code !== 9 && code !== 10 && code !== 13) {
+          nonPrintable++;
+        }
+      }
+      const ratio = nonPrintable / text.length;
+      resolve(ratio < 0.1); // 不可打印字符比例小于 10% 认为是文本
+    };
+
+    reader.onerror = () => {
+      resolve(false);
+    };
+
+    reader.readAsText(blob); // 使用 UTF-8 解码尝试读取为文本
+  });
 }

@@ -212,7 +212,7 @@
     height: 200px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../../assets/icon/upload_green.svg);
+    background-image: url(../../assets/icon/upload_blue.svg);
 }
 .media-loading{
     position: absolute;
