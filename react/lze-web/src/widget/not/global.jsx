@@ -108,123 +108,59 @@ export function loadPage(isLoad){
 }
 // 上传文件
 export function Upload(file, uploadData) {
-  if (file.size == 0) {
-    notify(file.name + " 是空文件，无法上传");
-    return;
-  }
-  const global = useGlobal.getState();
-  const user = global.userName;
-  const token = global.token;
-  const nowPath = global.nowPath;
-  const upload = global.upload;
-  const setGlobal = useGlobal.setState;
-const imageExts = ["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg", "ico", "apng", "avif"];
-const videoExts = ["mp4", "webm", "ogg", "ogv", "mov", "m4v", "avi", "3gp", "mkv"];
-const ext = file.name.split(".").pop().toLowerCase();
-  if (imageExts.includes(ext)) {
-    setGlobal({
-      imgPage: true
-    });
-  } else if (videoExts.includes(ext)) {
-    setGlobal({
-      imgPage: false
-    });
-  } 
-  else {
-    notify(file.name + ":不支持类型")
-    setGlobal({
-      upload:{
-          ...upload,
-          status: false,
+  const xhr = new XMLHttpRequest();
+  const formData = new FormData();
+
+  formData.append("token", token);
+  formData.append("user", user);
+
+  xhr.upload.onprogress = function (event) {
+    if (event.lengthComputable) {
+      percent = Math.round((event.loaded / event.total) * 100);
+      console.log(`上传进度：${percent}%`);
+    }
+  };
+
+  xhr.onload = function () {
+    if (xhr.status !== 200) {
+      if (xhr.status === 401) {
+        notify("无上传权限");
+      } else {
+        notify("上传失败：" + xhr.status + " 错误:" + xhr.responseText);
       }
-    });
-    return; 
-  }
-  const url = global.picUrl + "upload";
-
-  const chunkSize = getChunkSize(file.size);
-  const totalChunks = Math.ceil(file.size / chunkSize);
-  let start = 0;
-
-  function uploadChunk() {
-    if (uploadData.sendSize >= uploadData.totalSize) {
       setGlobal({
         upload: {
           ...upload,
           status: false,
         },
       });
-
-      notify("上传完成");
-      list(nowPath);
       return;
     }
 
-    if (start >= file.size) return;
+    setGlobal({
+      upload: {
+        ...upload,
+        status: false,
+      },
+    });
 
-    const chunk = file.slice(start, start + chunkSize);
-    const curChunk = Math.floor(start / chunkSize);
-    const formData = new FormData();
+    notify("上传完成");
+    list(nowPath);
+  };
 
-    formData.append("file", chunk);
-    formData.append("fileName", file.name);
-    formData.append("totalChunks", totalChunks);
-    formData.append("currentChunk", curChunk);
-    formData.append("user", user);
-    formData.append("token", token);
-    formData.append("nowpath", nowPath);
+  xhr.onerror = function () {
+    notify("上传出错");
+    setGlobal({
+      upload: {
+        ...upload,
+        status: false,
+      },
+    });
+  };
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-
-    xhr.upload.onprogress = function (event) {
-      if (event.lengthComputable) {
-        const uploadingData = {
-          loaded: event.loaded,
-          fileSize: file.size,
-          totalChunk: totalChunks,
-          curChunk: curChunk,
-          chunkSize: chunkSize,
-        };
-        const percent = Math.floor(count_percent(uploadingData, uploadData)) + "%";
-        setGlobal({
-          upload: {
-            ...upload,
-            percent: percent,
-          },
-        });
-      }
-    };
-
-    xhr.onload = function () {
-      if (xhr.status !== 200) {
-        if (xhr.status === 401) {
-          notify("无上传权限");
-        } else {
-          notify("上传失败：" + xhr.status + " 错误:"+ xhr.responseText);
-        }
-        setGlobal({
-          upload: {
-            ...upload,
-            status: false,
-          },
-        });
-        return;
-      }
-
-      start += chunkSize;
-      uploadChunk();
-    };
-
-    xhr.onerror = function () {
-      console.error(`Chunk ${curChunk + 1} upload encountered error.`);
-      setGlobal({ upload: false });
-    };
-
-    xhr.send(formData);
-  }
-
-  uploadChunk();
+  // 发送 POST 请求到 not/upload
+  xhr.open("POST", "not/upload");
+  xhr.send(formData);
 }
 
 
