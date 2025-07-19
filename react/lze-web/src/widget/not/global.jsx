@@ -108,7 +108,8 @@ export function loadPage(isLoad){
 }
 // 上传文件
 export function Upload(file, uploadData) {
-  let percent = 0;
+  let tmp_send_size=0
+  let percent = "";
   const setGlobal = useGlobal.setState;
   const upload = useGlobal.getState().upload;
   const url=useGlobal.getState().notUrl+'upload'
@@ -129,19 +130,15 @@ export function Upload(file, uploadData) {
   xhr.upload.onprogress = function (event) {
     if (event.lengthComputable) {
 
-      if(event.loaded>=file.size){
-        uploadData.sendSize+=event.loaded
+        uploadData.sendSize=event.loaded+uploadData.sendSize-tmp_send_size
+        tmp_send_size=event.loaded
       percent = Math.floor((uploadData.sendSize / uploadData.totalSize) * 100);
-      }else{
-      percent = Math.floor(((uploadData.sendSize+ event.loaded) / uploadData.totalSize) * 100);
-      }
       setGlobal({
         upload: {
           ...upload,
           percent: percent + '%',
         },
       })
-      console.log(upload.percent);
     }
   };
 

@@ -186,6 +186,15 @@ background-color: transparent;
     left: 10px;
     background-image: url(../../assets/icon/no_pink.svg);
 }
+#not-upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#upload-percent{
+    position: absolute;
+    color: rgb(250, 192, 250);
+}
 .save{background-image: url(../../assets/icon/save_pink.svg);}
 .edit{background-image: url(../../assets/icon/edit_pink.svg);}
 .copy-ok{background-image: url(../../assets/icon/yes_pink.svg) !important;}

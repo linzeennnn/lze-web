@@ -107,7 +107,8 @@ export function Upload(file, uploadData, type) {
     if (start >= file.size) {
       return;
     }
-
+    let tmp_send_size=0
+    let percent=0
     const chunk = file.slice(start, start + chunkSize);
     const curChunk = Math.floor(start / chunkSize);
     const formData = new FormData();
@@ -133,21 +134,16 @@ export function Upload(file, uploadData, type) {
 
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        const uploadingData = {
-          loaded: event.loaded,
-          fileSize: file.size,
-          totalChunk: totalChunks,
-          curChunk: curChunk,
-          chunkSize: chunkSize,
-        };
-        let percent =
-          Math.floor(count_percent(uploadingData, uploadData)) + "%";
+        uploadData.sendSize=uploadData.sendSize+event.loaded -tmp_send_size
+        tmp_send_size=event.loaded
+         percent =Math.floor(uploadData.sendSize / uploadData.totalSize * 100) + "%";
         setGlobal({
           upload: {
             ...upload,
             percent: percent,
           },
         });
+        
       }
     };
 
@@ -178,7 +174,6 @@ export function Upload(file, uploadData, type) {
 
     xhr.send(formData);
   }
-
   uploadChunk();
 }
 
@@ -205,29 +200,6 @@ function movefolder(foldername) {
         notify(error);
     });
 }
-// 计算百分比
-function count_percent(uploadindData,data){
-    let remain_size=uploadindData.fileSize-(uploadindData.totalChunk-1)* uploadindData.chunkSize
-    if(uploadindData.curChunk==uploadindData.totalChunk-1){//判断是否上传到最后一块
-      if(uploadindData.loaded>=remain_size){//判断当前块是否上传完
-        
-        data.sendSize+=uploadindData.loaded
-        return data.sendSize/data.totalSize *100
-      }
-      else
-        return (data.sendSize+uploadindData.loaded)/data.totalSize *100
-    }
-    else{
-      if(uploadindData.loaded>=uploadindData.chunkSize){//判断当前块是否上传完
-        data.sendSize+=uploadindData.loaded
-        return data.sendSize/data.totalSize *100
-      }
-      else
-        return (data.sendSize+uploadindData.loaded)/data.totalSize *100
-      
-    }
-}
-
 // 获取块大小
 function getChunkSize(fileSize) {
     const mb=1024*1024

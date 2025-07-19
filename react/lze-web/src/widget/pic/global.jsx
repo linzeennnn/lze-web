@@ -35,7 +35,7 @@ export const useGlobal = create((set, get) => ({
   getGlobal: () => get(),
 }));
 // 扫描目录
-export function list(path) {
+export function list(path,showVideo) {
   const sendData = { folder: path };
   const url = useGlobal.getState().picUrl+"list";
 
@@ -93,7 +93,7 @@ export function list(path) {
         nowPath: data.currentFolder,
         parentPath: data.parentFolder,
         selected: [],
-        imgPage: true,
+        imgPage: showVideo ? false : true,
       });
       loadPage(false)
     });
@@ -112,6 +112,7 @@ export function Upload(file, uploadData) {
     notify(file.name + " 是空文件，无法上传");
     return;
   }
+  let showVideo
   const global = useGlobal.getState();
   const user = global.userName;
   const token = global.token;
@@ -122,10 +123,12 @@ const imageExts = ["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg", "ico", "ap
 const videoExts = ["mp4", "webm", "ogg", "ogv", "mov", "m4v", "avi", "3gp", "mkv"];
 const ext = file.name.split(".").pop().toLowerCase();
   if (imageExts.includes(ext)) {
+    showVideo = false;
     setGlobal({
       imgPage: true
     });
   } else if (videoExts.includes(ext)) {
+    showVideo = true;
     setGlobal({
       imgPage: false
     });
@@ -156,12 +159,13 @@ const ext = file.name.split(".").pop().toLowerCase();
       });
 
       notify("上传完成");
-      list(nowPath);
+      list(nowPath,showVideo);
       return;
     }
 
     if (start >= file.size) return;
-
+    let percent = "";
+    let tmp_send_size=0
     const chunk = file.slice(start, start + chunkSize);
     const curChunk = Math.floor(start / chunkSize);
     const formData = new FormData();
@@ -179,14 +183,9 @@ const ext = file.name.split(".").pop().toLowerCase();
 
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        const uploadingData = {
-          loaded: event.loaded,
-          fileSize: file.size,
-          totalChunk: totalChunks,
-          curChunk: curChunk,
-          chunkSize: chunkSize,
-        };
-        const percent = Math.floor(count_percent(uploadingData, uploadData)) + "%";
+        uploadData.sendSize=uploadData.sendSize+event.loaded -tmp_send_size
+        tmp_send_size=event.loaded
+         percent =Math.floor(uploadData.sendSize / uploadData.totalSize * 100) + "%";
         setGlobal({
           upload: {
             ...upload,
@@ -226,31 +225,6 @@ const ext = file.name.split(".").pop().toLowerCase();
 
   uploadChunk();
 }
-
-
-// 计算百分比
-function count_percent(uploadindData,data){
-    let remain_size=uploadindData.fileSize-(uploadindData.totalChunk-1)* uploadindData.chunkSize
-    if(uploadindData.curChunk==uploadindData.totalChunk-1){//判断是否上传到最后一块
-      if(uploadindData.loaded>=remain_size){//判断当前块是否上传完
-        
-        data.sendSize+=uploadindData.loaded
-        return data.sendSize/data.totalSize *100
-      }
-      else
-        return (data.sendSize+uploadindData.loaded)/data.totalSize *100
-    }
-    else{
-      if(uploadindData.loaded>=uploadindData.chunkSize){//判断当前块是否上传完
-        data.sendSize+=uploadindData.loaded
-        return data.sendSize/data.totalSize *100
-      }
-      else
-        return (data.sendSize+uploadindData.loaded)/data.totalSize *100
-      
-    }
-}
-
 // 获取块大小
 function getChunkSize(fileSize) {
     const mb=1024*1024
