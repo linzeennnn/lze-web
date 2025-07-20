@@ -195,3 +195,12 @@ func IsSub(oldPath, newPath string) bool {
 
 	return false
 }
+
+// 去除后缀名
+func SplitExt(fileName string) string {
+	ext := filepath.Ext(fileName)
+	if ext == "" {
+		return fileName
+	}
+	return strings.TrimSuffix(fileName, ext)
+}

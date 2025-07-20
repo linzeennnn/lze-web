@@ -16,9 +16,12 @@ func Add(c *gin.Context) {
 	}
 	name := global.UniqueName(global.BokPath, rec.Name)
 	if global.CheckPermit(rec.User, rec.Token, "bok", "newbok") {
-		global.WriteText(filepath.Join(global.BokPath, name), rec.Text)
+		global.WriteText(filepath.Join(global.BokPath, name+".html"), genBokText(rec.Text))
 		c.Status(200)
 	} else {
 		c.Status(401)
 	}
+}
+func genBokText(text string) string {
+	return `<meta http-equiv="refresh" content="0;url=` + text + `">`
 }
