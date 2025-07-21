@@ -1,37 +1,22 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useGlobal } from "../global"
 
 export default function LockPage(){
-    const headRef=useRef(null)
-    const lockPageRef=useRef(null)
-     useEffect(() => {
-    const headBar = headRef.current;
-    const lockPage = lockPageRef.current;
-    if (headBar&& lockPage) {
-        setTimeout(() => {
-      headBar.classList.add('head-bar-load');
-      lockPage.classList.add('lock-page-load');
-            
-        }, 100);
-    }
-  }, []);
+    const locked =useGlobal(state => state.locked);
+      const[tmpLoad,setTmpLoad]=useState(true)
     return(
-        <div id="lock-page"
-        ref={lockPageRef}
-        >
-            <div id="head-bar"
-            ref={headRef}
-            >
+        <div id="lock-page" className={(locked&&tmpLoad)?"lock-page-load":""}>
+            <div id="head-bar" className={(locked&&tmpLoad)?"head-bar-load":""}>
                 <div id="head-name"></div>
             </div>
             <button className="btn" id="unlock-btn" title="开始"
             onClick={()=>{
-                headRef.current.classList.remove('head-bar-load');
-                lockPageRef.current.classList.remove('lock-page-load');
+                setTmpLoad(false)
                 setTimeout(() => {
                         useGlobal.setState({locked:false})
+                    setTmpLoad(true)
                     
-                }, 1000);
+                }, 500);
                     }}
             ></button>
         </div>

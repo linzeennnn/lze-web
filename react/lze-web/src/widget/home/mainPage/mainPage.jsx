@@ -8,16 +8,12 @@ import { useEffect, useState } from 'react'
 
 export default function MainPage() {
     const showBg = useGlobal(state => state.showBg)
-    useEffect(()=>{
-        setTimeout(() => {
-        setMainLoad(true)
-        }, 10);
-    },[])
+  const[tmpLoad,setTmpLoad]=useState(true)
    return (
     <>
       <WinBg showBg={showBg} />
-      <Widget />
-      <Dock  />
+      <Widget tmpLoad={tmpLoad}/>
+      <Dock  tmpLoad={tmpLoad} setTmpLoad={setTmpLoad}/>
     </>
   )
 }

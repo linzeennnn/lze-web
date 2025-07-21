@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import Login from "./dockApp/login";
 import {useGlobal} from "../global";
 
-export default function Dock({load,setLoad}) {
+export default function Dock({tmpLoad,setTmpLoad}) {
   const showBg = useGlobal(state => state.showBg);
   const setGlobal = useGlobal(state => state.setGlobal);
+  const locked =useGlobal(state => state.locked);
   const [appType, setAppType] = useState("");
   const open_dock = (type) => {
     setAppType(type);
@@ -35,7 +36,7 @@ export default function Dock({load,setLoad}) {
           {appType === "login" && <Login />}
         </div>
       )}
-      <div id="dock" className={load?"dock-load":""}>
+      <div id="dock" className={(!locked&&tmpLoad)?"dock-load":""}>
         {dockList.map((item) => (
           <div
             id={item.id}
@@ -44,10 +45,11 @@ export default function Dock({load,setLoad}) {
             className="dock-app"
             onClick={() => {
               if(item.id=="lock"){
-                setLoad(false)
+                  setTmpLoad(false)
                 setTimeout(() => {
                 setGlobal({ locked: true })
-                }, 1000);
+                setTmpLoad(true)
+                }, 500);
               }
               else
                 open_dock(item.id)

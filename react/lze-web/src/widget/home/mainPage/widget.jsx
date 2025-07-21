@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGlobal } from "../global";
-export default function Widget() {
+export default function Widget({tmpLoad}) {
     const locked = useGlobal(state => state.locked);
     const widget = [
         { id: 'doc', name: '文件管理' },
@@ -12,12 +12,15 @@ export default function Widget() {
     ];
 
     const rows = [];
+    useEffect(() => {
+}, [locked, tmpLoad]);
+
     for (let i = 0; i < widget.length; i += 2) {
         rows.push(widget.slice(i, i + 2));
     }
     return (
         <div id='widget'
-        className={locked?"":"widget-load"}
+        className={(!locked&&tmpLoad)?"widget-load":""}
         >
             {rows.map((row, index) => (
                 <div key={`line${index}`} className="widget-line">
