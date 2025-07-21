@@ -1,6 +1,5 @@
 import { useState } from "react";
-import useGlobal from "./global";
-import { login, logout } from './fun';
+import {useGlobal} from "../../global";
 
 export default function Login() {
   const [win1, setWin1] = useState(true);
@@ -72,4 +71,42 @@ export default function Login() {
       )}
     </>
   );
+}
+function login(name,password){
+    fetch(window.location.origin+'/server/login/login',
+        {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+           name,password
+        })
+    }
+    )
+    .then(res=>{
+        if(!res.ok){
+            if(res.status===401){
+                notify("账号或密码错误")
+            }
+            else{
+                notify(res.status+"错误")
+            }
+            throw new Error(`请求失败，状态码：${res.status}`);
+        }
+        
+        return res.json()})
+    .then(data=>{
+        window.localStorage.setItem('userName',name);
+        window.localStorage.setItem('token',data.token);
+                window.location.reload();
+
+    })
+
+}
+function logout(){
+    if (confirm("确定退出登录吗？")) {
+    localStorage.clear();
+    window.location.reload();
+    }
 }

@@ -1,11 +1,20 @@
 #widget{
-    display: flex;
+    position: fixed;
+    display: none;
     width: 100%;
-    height: 80vh;
-    margin-top: 20px;
+    height: 85vh;
+    top: 20px;
+    opacity: 0 ;
+    transform: scale(7);
     justify-content: center;
     align-items: center;
     flex-direction: column;
+transition: transform 0.7s ease-in, opacity 0.7s ease-in;
+}
+.widget-load{
+    display: flex;
+    opacity: 0.7 !important;
+    transform: scale(1) !important;
 }
 .widget-line{
     height: 30%;
@@ -30,7 +39,7 @@ justify-content: center;
 align-items: center;
 background-color: #4f84a8;
 border-radius: 15px;
-transition: transform 0.4s;
+transition: transform 0.3s ease-in;
 }
 .widget-item:hover{
     opacity: 1;
@@ -50,14 +59,18 @@ align-items: center;
     background-color: #363e43a6;
       min-width: 80px;
       position: fixed;
-      bottom: 10px;
+      bottom: -90px;
       display: flex;
       justify-content: center;
       align-items: center;
     border-radius: 25px; 
     padding: 10px;
     height: 70px;
+    transition: bottom 0.5s ease-in-out;
     z-index: 10;
+}
+.dock-load{
+    bottom: 10px !important;
 }
 .dock-app{
     background-color: #588370;
@@ -99,4 +112,50 @@ align-items: center;
 #switch-user{
     display: flex;
     flex-direction: row;
+}
+#head-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background-color: rgb(54, 66, 66);
+    width: 100%;
+    top: -150px;
+    height: 80px;
+    transition:  top 0.5s ease-in-out;
+    z-index: 3;
+}
+#head-name{
+    bottom: -40px;
+    width: 200px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    background-image: url(../../assets/icon/name.svg);
+}
+.head-bar-load{
+    top: 0 !important;
+}
+#lock-page{
+    background-color: #4f84a8;
+    position: fixed;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    top: -100%;
+    display: flex;
+    transition:  top 0.5s ease-in-out;
+    justify-content: center;
+    align-items: center;
+}
+.lock-page-load{
+top: 0 !important;
+}
+#unlock-btn{
+width: 46px !important;
+height: 46px !important;
+border-radius: 50%;
+background-color: #588370;
+background-image: url(../../assets/icon/power.svg);
 }

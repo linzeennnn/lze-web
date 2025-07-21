@@ -1,17 +1,15 @@
-import { useState } from "react";
-import Login from "./login";
-import useGlobal from "./global";
+import { useEffect, useState } from "react";
+import Login from "./dockApp/login";
+import {useGlobal} from "../global";
 
-export default function Dock() {
+export default function Dock({load,setLoad}) {
   const showBg = useGlobal(state => state.showBg);
   const setGlobal = useGlobal(state => state.setGlobal);
   const [appType, setAppType] = useState("");
-
   const open_dock = (type) => {
     setAppType(type);
     setGlobal({ showBg: true });
   };
-
   const close_dock = () => {
     setGlobal({ showBg: false });
     setAppType("");
@@ -37,14 +35,23 @@ export default function Dock() {
           {appType === "login" && <Login />}
         </div>
       )}
-      <div id="dock">
+      <div id="dock" className={load?"dock-load":""}>
         {dockList.map((item) => (
           <div
             id={item.id}
             key={item.id}
             title={item.name}
             className="dock-app"
-            onClick={() => open_dock(item.id)}
+            onClick={() => {
+              if(item.id=="lock"){
+                setLoad(false)
+                setTimeout(() => {
+                setGlobal({ locked: true })
+                }, 1000);
+              }
+              else
+                open_dock(item.id)
+            }}
           >
             <div id={item.id + "icon"}></div>
           </div>
