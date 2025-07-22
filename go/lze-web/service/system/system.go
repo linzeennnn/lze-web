@@ -1,9 +1,11 @@
 package system
 
 import (
+	"fmt"
 	sys "lze-web/model/system/system"
 	"math"
 	"runtime"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -15,27 +17,36 @@ import (
 
 func System(c *gin.Context) {
 	var sendData sys.Send
-	sendData.CPUUsage = cpuData()
-	sendData.TotalMemory, sendData.UsedMemory = memData()
-	sendData.TotalDisk, sendData.UsedDisk = diskData()
-	sendData.NetworkTx, sendData.NetworkRx = netData()
+	sendData.CpuPercent = cpuData()
+	sendData.MemData, sendData.MemPercent = memData()
+	sendData.DiskData, sendData.DiskPercent = diskData()
+	sendData.NetUp, sendData.NetDown = netData()
 	c.JSON(200, sendData)
 }
-func cpuData() float64 {
+func cpuData() string {
 	cpuUsage, err := cpu.Percent(time.Millisecond*100, false)
 	if err != nil {
 		panic(err)
 	}
-	return math.Round(cpuUsage[0]*100) / 100
+	percent := int(math.Round(cpuUsage[0]*100) / 100)
+	return strconv.Itoa(percent) + "%"
 }
-func memData() (uint64, uint64) {
+func memData() (string, string) {
 	mem, err := mem.VirtualMemory()
 	if err != nil {
 		panic(err)
 	}
-	return mem.Total / 1024 / 1024, mem.Used / 1024 / 1024
+	total := mem.Total / 1024 / 1024
+	used := mem.Used / 1024 / 1024
+
+	data := strconv.FormatUint(used, 10) + "MB/" +
+		strconv.FormatUint(total, 10) + "MB"
+
+	percent := int(float64(mem.Used) / float64(mem.Total) * 100)
+	return data, strconv.Itoa(percent) + "%"
 }
-func diskData() (uint64, uint64) {
+
+func diskData() (string, string) {
 	var diskPath string
 	if runtime.GOOS == "windows" {
 		diskPath = `C:\`
@@ -46,9 +57,17 @@ func diskData() (uint64, uint64) {
 	if err != nil {
 		panic(err)
 	}
-	return usage.Total / 1024, usage.Used / 1024
+	total := usage.Total / 1024 / 1024 / 1024
+	used := usage.Used / 1024 / 1024 / 1024
+
+	data := strconv.FormatUint(used, 10) + "GB/" +
+		strconv.FormatUint(total, 10) + "GB"
+
+	percent := int(float64(usage.Used) / float64(usage.Total) * 100)
+	return data, strconv.Itoa(percent) + "%"
 }
-func netData() (float64, float64) {
+
+func netData() (string, string) {
 	io1, err := net.IOCounters(false)
 	if err != nil {
 		panic(err)
@@ -64,7 +83,10 @@ func netData() (float64, float64) {
 	if len(io1) > 0 && len(io2) > 0 {
 		bytesSent := io2[0].BytesSent - io1[0].BytesSent
 		bytesRecv := io2[0].BytesRecv - io1[0].BytesRecv
-		return math.Round(float64(bytesSent)/1024*100) / 100, math.Round(float64(bytesRecv)/1024*100) / 100
+		sentMB := math.Round(float64(bytesSent)/1024/1024*100) / 100
+		recvMB := math.Round(float64(bytesRecv)/1024/1024*100) / 100
+		return fmt.Sprintf("%.2fMB", sentMB), fmt.Sprintf("%.2fMB", recvMB)
 	}
-	return 0, 0
+
+	return "0.00MB", "0.00MB"
 }
