@@ -57,7 +57,7 @@ export default function Dock({tmpLoad,setTmpLoad}) {
                 open_dock(item.id)
             }}
           >
-            <div id={item.id + "icon"}></div>
+            <div id={item.id + "-icon"} className="dock-icon"></div>
           </div>
         ))}
       </div>

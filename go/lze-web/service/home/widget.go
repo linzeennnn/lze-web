@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"lze-web/model/home/widget"
 	"lze-web/pkg/global"
-	"runtime"
+	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shirou/gopsutil/v3/disk"
 )
 
 func Widget(c *gin.Context) {
@@ -24,17 +24,12 @@ func Widget(c *gin.Context) {
 	notList := getFileList(global.NotPath, 3, true)
 	bokList := getFileList(global.BokPath, 1, true)
 	traList := getFileList(global.TraPath, 1, false)
-	files.Doc1 = docList[0]
-	files.Doc2 = docList[1]
-	files.Doc3 = docList[2]
-	files.Not1 = notList[0]
-	files.Not2 = notList[1]
-	files.Not3 = notList[2]
-	files.Bok1 = bokList[0]
-	files.Pic1 = picLIst[0]
-	files.Tra1 = traList[0]
-	files.Mon1, files.Mon2, files.Mon3 = monData(rec.User)
-	files.Total, files.Used = diskData()
+	files.Doc = docList
+	files.Not = notList
+	files.Bok = bokList
+	files.Pic = picLIst
+	files.Tra = traList
+	files.Mon = monData(rec.User)
 	c.JSON(200, files)
 }
 
@@ -60,7 +55,7 @@ func getFileList(path string, count int, ignoreDir bool) []string {
 	return result
 }
 
-func monData(username string) (string, int, int) {
+func monData(username string) [3]string {
 	var tokenTime string
 	username = global.SetUsername(username)
 	userData := global.UserConfig["user"].(map[string]interface{})
@@ -76,18 +71,55 @@ func monData(username string) (string, int, int) {
 		panic(err)
 	}
 	controlData := string(controlJson)
-	return tokenTime, avaTime, strings.Count(controlData, username)
-}
-func diskData() (uint64, uint64) {
-	var diskPath string
-	if runtime.GOOS == "windows" {
-		diskPath = `C:\`
+	var monMes [3]string
+	var avaTimeStr string
+	if tokenTime == "never" {
+		tokenTime = "永不过期"
+		avaTimeStr = "永久"
 	} else {
-		diskPath = "/"
+		tokenTime = convTokenTime(tokenTime)
+		if avaTime < 0 {
+			avaTimeStr = "过期"
+		} else if avaTime < 24 && avaTime > 0 {
+			avaTimeStr = strconv.Itoa(avaTime) + "小时"
+		} else if avaTime < 24*30 {
+			avaTimeStr = strconv.Itoa(avaTime/24) + "天"
+		} else if avaTime < 24*30*12 {
+			avaTimeStr = strconv.Itoa(avaTime/24/30) + "月"
+		} else {
+			avaTimeStr = strconv.Itoa(avaTime/24/365) + "年"
+		}
 	}
-	usage, err := disk.Usage(diskPath)
-	if err != nil {
-		panic(err)
+	monMes[0] = "登录时间:" + tokenTime
+	monMes[1] = "剩余时间:" + avaTimeStr
+	monMes[2] = "权限数量:" + strconv.Itoa(strings.Count(controlData, username))
+	return monMes
+}
+func convTokenTime(input string) string {
+	if input == "" || input == "0" {
+		return "无"
 	}
-	return usage.Total / 1024, usage.Used / 1024
+	var numStr strings.Builder
+	var unitStr strings.Builder
+	for _, r := range input {
+		if unicode.IsDigit(r) {
+			numStr.WriteRune(r)
+		} else {
+			unitStr.WriteRune(unicode.ToLower(r))
+		}
+	}
+	num := numStr.String()
+	unit := unitStr.String()
+	unitMap := map[string]string{
+		"d": "天",
+		"h": "小时",
+		"m": "月",
+		"y": "年",
+	}
+	chineseUnit, ok := unitMap[unit]
+	if !ok {
+		chineseUnit = "未知单位" // fallback
+	}
+
+	return num + chineseUnit
 }

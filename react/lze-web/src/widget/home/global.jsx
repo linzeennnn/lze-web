@@ -12,6 +12,19 @@ export const useGlobal = create((set, get) => {
     token,
     showBg: false,
     locked:true,
+    listWin:{
+      type:"",
+      name:"",
+      status:false
+    },
+    widgetData:{
+      doc:[],
+      pic:[],
+      tra:[],
+      mon:[],
+      not:[],
+      bok:[]
+    },
 
     // 合并式更新
     setGlobal: (partial) => {
