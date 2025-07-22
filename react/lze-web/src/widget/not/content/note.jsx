@@ -10,7 +10,7 @@ export default function Note({name}){
     const [show, setShow] = useState(false)
     const setGlobal=useGlobal.setState
     const[isCopy,setIsCopy]=useState(false)
-    const[title,setTitle]=useState(remove_ext(name))
+    const[title,setTitle]=useState(name)
     const codeRef = useRef(null);
    useEffect(() => {
   if (show && codeRef.current) {
@@ -19,15 +19,6 @@ export default function Note({name}){
     codeRef.current.className = 'hljs';
   }
 }, [text, show,loaded]);
-
-    const get_note=()=>{
-        fetch(`${window.location.origin}/file/Note/${name}`,{ cache: "no-store" })
-        .then((res) => res.text())
-    .then((data) => {
-        setLoaded(true)    
-        setText(data)
-    })
-    }
     return(
         <div className="note">
             <Del name={name}/>
@@ -70,7 +61,7 @@ export default function Note({name}){
             title="打开便签"onClick={()=>{
                 setShow(true)
                 if(!loaded){
-                    get_note()
+                    get_note(name,setLoaded,setText)
                 }
             }}
             ></button>}
@@ -95,8 +86,19 @@ function copy(text) {
 
   document.body.removeChild(textarea);
 }
-function remove_ext(filename){
-      const index = filename.lastIndexOf('.');
-  if (index === -1) return filename; 
-  return filename.substring(0, index);
+function get_note(name,setLoaded,setText){
+const url=useGlobal.getState().notUrl+'get_text'
+fetch(url,{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        name:name
+    })
+}).then(res=>res.text())
+    .then(text=>{
+        setText(text)
+        setLoaded(true)
+    })
 }

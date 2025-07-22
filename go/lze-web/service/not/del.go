@@ -16,7 +16,7 @@ func Del(c *gin.Context) {
 		return
 	}
 	if global.CheckPermit(rec.User, rec.Token, "not", "delete") {
-		err := os.Remove(filepath.Join(global.NotPath, rec.FileName))
+		err := os.Remove(filepath.Join(global.NotPath, rec.FileName+".txt"))
 		if err != nil {
 			c.String(400, "删除失败"+err.Error())
 		} else {

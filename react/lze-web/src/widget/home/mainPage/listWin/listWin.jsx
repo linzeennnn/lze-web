@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { WinBg } from "../../../public"
 import { useGlobal } from "../../global"
 export default function Listwin(){
@@ -19,34 +20,32 @@ export default function Listwin(){
         </WinBg>
     )
 }
-function creatList(type,name){
-    switch(type){
-        case "doc":
-            return listDoc(name)
-            break;
-        case "pic":
-            return listPic(name)
-            break;
-        case "not":
-            return listNot(name)
-            break;
-        case "bok":
-           return listBok(name)
-            break;
-    }
+function creatList(type, name) {
+  switch(type) {
+    case "doc":
+      return <ListDoc name={name} />;
+    case "pic":
+      return <ListPic name={name} />;
+    case "not":
+      return <ListNot name={name} />;
+    case "bok":
+      return <ListBok name={name} />;
+    default:
+      return null;
+  }
+}
+function ListDoc({ name }) {
+  useEffect(() => {
+  }, []);
+  return <div id="doc-list"></div>;
+}
+
+function ListPic(name){
 
 }
-function listDoc(name){
-    return(
-        <div id="doc-list"></div>
-    )
-}
-function listPic(name){
+function ListNot(name){
 
 }
-function listNot(name){
-
-}
-function listBok(name){
+function ListBok(name){
 
 }

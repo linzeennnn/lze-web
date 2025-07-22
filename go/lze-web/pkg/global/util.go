@@ -103,7 +103,7 @@ func ScanDir(path string) []fileSystem.Files {
 	return fileList
 }
 
-// 文件类型重命名
+// 文件类型
 func FileType(path string) string {
 	info, err := os.Lstat(path)
 	if err != nil {
@@ -203,4 +203,15 @@ func SplitExt(fileName string) string {
 		return fileName
 	}
 	return strings.TrimSuffix(fileName, ext)
+}
+
+// 检查是否包含后缀名
+func IncludeExt(name string, extList []string) bool {
+	ext := strings.ToLower(filepath.Ext(name))
+	for _, e := range extList {
+		if ext == e {
+			return true
+		}
+	}
+	return false
 }

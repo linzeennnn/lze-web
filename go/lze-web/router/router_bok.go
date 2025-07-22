@@ -12,7 +12,7 @@ func RouterBok(r *gin.Engine) {
 		loginGroup.GET("/list", bok.List)
 		loginGroup.POST("/del", bok.Del)
 		loginGroup.POST("/add", bok.Add)
-		loginGroup.POST("/recent", bok.Recent)
+		loginGroup.POST("/get_url", bok.GetUrl)
 	}
 
 }

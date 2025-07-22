@@ -19,11 +19,11 @@ func Widget(c *gin.Context) {
 	}
 
 	var files widget.Send
-	docList := getFileList(global.DocPath, 3, false)
-	picLIst := getFileList(global.PicPath, 1, true)
-	notList := getFileList(global.NotPath, 3, true)
-	bokList := getFileList(global.BokPath, 1, true)
-	traList := getFileList(global.TraPath, 1, false)
+	docList := getFileList(global.DocPath, 3, false, true)
+	picLIst := getFileList(global.PicPath, 1, true, false)
+	notList := getFileList(global.NotPath, 3, true, true)
+	bokList := getFileList(global.BokPath, 1, true, true)
+	traList := getFileList(global.TraPath, 1, false, false)
 	files.Doc = docList
 	files.Not = notList
 	files.Bok = bokList
@@ -33,7 +33,7 @@ func Widget(c *gin.Context) {
 	c.JSON(200, files)
 }
 
-func getFileList(path string, count int, ignoreDir bool) []string {
+func getFileList(path string, count int, ignoreDir bool, removeExt bool) []string {
 	fileList := global.ScanDir(path)
 	result := make([]string, 0, count)
 
@@ -41,7 +41,11 @@ func getFileList(path string, count int, ignoreDir bool) []string {
 		if ignoreDir && (f.FileType == "dir" || f.FileType == "dir_link") {
 			continue
 		}
-		result = append(result, f.Name)
+		if removeExt {
+			result = append(result, global.SplitExt(f.Name))
+		} else {
+			result = append(result, f.Name)
+		}
 		if len(result) >= count {
 			break
 		}

@@ -56,29 +56,29 @@ export function list(path,showVideo) {
         let tmpGroupImg=[]
         let tmpGroupVid=[]
         data.filelist.forEach((item) => {
-            if(item.type=="dir"||item.type=="dir_link"){
-                tmpDir.push(item.name)
+            if(item[1]=="dir"||item[1]=="dir_link"){
+                tmpDir.push(item[0])
             }
             else{
-                if(item.type=="file"||item.type=="file_link"){
-                    if(item.media=="img"){
+                if(item[1]=="file"||item[1]=="file_link"){
+                    if(item[2]=="img"){
                         if(tmpGroupImg.length<12){
-                            tmpGroupImg.push(item.name)
+                            tmpGroupImg.push(item[0])
                         }
                         else{
                             tmpImg.push(tmpGroupImg)
                             tmpGroupImg=[]
-                            tmpGroupImg.push(item.name)
+                            tmpGroupImg.push(item[0])
                         }
                     }
-                    if(item.media=="vid"){
+                    if(item[2]=="vid"){
                         if(tmpGroupVid.length<12){
-                            tmpGroupVid.push(item.name)
+                            tmpGroupVid.push(item[0])
                         }
                         else{
                             tmpVid.push(tmpGroupVid)
                             tmpGroupVid=[]
-                            tmpGroupVid.push(item.name)
+                            tmpGroupVid.push(item[0])
                         }
                     }
                 }

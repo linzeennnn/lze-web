@@ -1,14 +1,15 @@
 package list
 
 type Rec struct {
-	Folder string `json:"folder"`
+	File string `json:"file"`
 }
-type FileList struct {
-	Name string `json:"name"`
-	Type string `json:"type"`
+type SendDir struct {
+	Meta          [2]string   `json:"meta"`
+	FileList      [][2]string `json:"filelist"`
+	CurrentFolder string      `json:"currentFolder"`
+	ParentFolder  string      `json:"parentFolder"`
 }
-type Send struct {
-	FileList      []FileList `json:"filelist"`
-	CurrentFolder string     `json:"currentFolder"`
-	ParentFolder  string     `json:"parentFolder"`
+type SendFile struct {
+	FileLink string `json:"filelink"`
+	View     bool   `json:"view"`
 }

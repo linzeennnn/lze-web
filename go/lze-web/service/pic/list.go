@@ -4,7 +4,6 @@ import (
 	"lze-web/model/pic/list"
 	"lze-web/pkg/global"
 	"path/filepath"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,25 +15,23 @@ func List(c *gin.Context) {
 		return
 	}
 	files := global.ScanDir(filepath.Join(global.PicPath, filepath.FromSlash(rec.Folder)))
-	picList := make([]list.FileList, 0, len(files))
+	picList := make([][3]string, 0, len(files))
 	for _, file := range files {
 		switch file.FileType {
 		case "dir", "dir_link":
-			picList = append(picList, list.FileList{
-				Name: file.Name,
-				Type: file.FileType,
-			})
+			picList = append(picList, [3]string{file.Name, file.FileType, ""})
 		default:
 			if mediaType := CheckType(file.Name); mediaType != "" {
-				picList = append(picList, list.FileList{
-					Name:  file.Name,
-					Type:  file.FileType,
-					Media: mediaType,
+				picList = append(picList, [3]string{
+					file.Name,
+					file.FileType,
+					mediaType,
 				})
 			}
 		}
 	}
 	var sendData list.Send
+	sendData.Meta = [3]string{"name", "type", "media"}
 	sendData.FileList = picList
 	sendData.CurrentFolder = rec.Folder
 	parent := filepath.Dir(rec.Folder)
@@ -48,17 +45,12 @@ func List(c *gin.Context) {
 }
 func CheckType(name string) string {
 	var imgFor = []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".ico", ".apng", ".avif"}
-	var vidFor = []string{".mp4", ".webm", ".ogg", ".ogv", ".mov", ".m4v", ".avi", ".3gp", ".mkv"}
-	ext := strings.ToLower(filepath.Ext(name))
-	for _, imgExt := range imgFor {
-		if ext == imgExt {
-			return "img"
-		}
+	if global.IncludeExt(name, imgFor) {
+		return "img"
 	}
-	for _, vidExt := range vidFor {
-		if ext == vidExt {
-			return "vid"
-		}
+	var vidFor = []string{".mp4", ".webm", ".ogg", ".ogv", ".mov", ".m4v", ".avi", ".3gp", ".mkv"}
+	if global.IncludeExt(name, vidFor) {
+		return "vid"
 	}
 	return ""
 }

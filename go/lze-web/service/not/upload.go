@@ -16,7 +16,7 @@ func Upload(c *gin.Context) {
 			c.String(400, err.Error())
 			return
 		}
-		name := global.UniqueName(global.NotPath, file.Filename)
+		name := global.UniqueName(global.NotPath, file.Filename+".txt")
 		if err := c.SaveUploadedFile(file, filepath.Join(global.NotPath, name)); err != nil {
 			c.JSON(400, err)
 			return

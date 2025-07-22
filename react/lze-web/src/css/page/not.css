@@ -131,6 +131,7 @@ background-color: transparent;
     right: 10px;
 }
 #add-title-input{
+    border-radius: 15px;
     margin-left: 5px;
     width: 100%;
     height: 100%;

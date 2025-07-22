@@ -4,7 +4,7 @@ export default function FileText({fileMes,editMode,nameEdit,rename}){
     const nowPath = useGlobal((state) => state.nowPath);
       const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-          rename(fileMes.name, nameInput);
+          rename(fileMes[0], nameInput);
         }
       };
     
@@ -17,23 +17,23 @@ export default function FileText({fileMes,editMode,nameEdit,rename}){
             onKeyDown={handleKeyDown} 
             />):
         (<span
-            className={(fileMes.type === "dir" || fileMes.type === "dir_link" ? "dir-text" : "file-text") + " file-list-text"}
-            title={"查看" + fileMes.name}
+            className={(fileMes[1] === "dir" || fileMes[1] === "dir_link" ? "dir-text" : "file-text") + " file-list-text"}
+            title={"查看" + fileMes[0]}
             onClick={(e) => {
                 e.stopPropagation();
 
-                if (fileMes.type === "dir" || fileMes.type === "dir_link") {
-                const dir_path = nowPath + "/" + fileMes.name;
+                if (fileMes[1] === "dir" || fileMes[1] === "dir_link") {
+                const dir_path = nowPath + "/" + fileMes[0];
                 list(dir_path);
                 }
 
-                if (fileMes.type === "file" || fileMes.type === "file_link") {
-                const file_path =  nowPath + "/" + fileMes.name;
+                if (fileMes[1] === "file" || fileMes[1] === "file_link") {
+                const file_path =  nowPath + "/" + fileMes[0];
                 window.location.href = window.location.origin + "/file/Documents" + file_path;
                 }
             }}
             >
-            {fileMes.name}
+            {fileMes[0]}
             </span>)
         }
         </>

@@ -26,7 +26,7 @@ export default function DocContent(){
         <Content>
             {fileList.map((fileMes) => (
         <FileItem
-          key={"doclist" + fileMes.name}
+          key={"doclist" + fileMes[0]}
           fileMes={fileMes}
           selected={selected}
           docClick={doc_click}

@@ -29,7 +29,7 @@ export const useGlobal = create((set, get) => ({
 
 // 扫描目录
 export function list(path) {
-  const sendData = { folder: path };
+  const sendData = { file: path };
   const url = useGlobal.getState().docUrl;
 
   loadPage(true)

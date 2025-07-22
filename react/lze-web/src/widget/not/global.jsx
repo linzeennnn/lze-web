@@ -52,7 +52,7 @@ fetch(url,{
 }).then(res=>res.json())
 .then(data=>{
     useGlobal.setState({
-      notList:data.list,
+      notList:data,
     })
     init_edit()
   loadPage(false)
@@ -152,15 +152,7 @@ export async function Upload(file, uploadData) {
   const formData = new FormData();
   const user = useGlobal.getState().userName;
   const token = useGlobal.getState().token;
-
-  if (!file.name.endsWith('.txt')) {
-    var newFileName = file.name + '.txt';
-    var newFile = new File([file], newFileName, { type: file.type });
-    formData.append('new_note', newFile);
-  } else {
     formData.append('new_note', file);
-  }
-
   formData.append("token", token);
   formData.append("user", user);
 

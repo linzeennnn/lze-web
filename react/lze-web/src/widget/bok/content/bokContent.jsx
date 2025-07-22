@@ -12,8 +12,8 @@ export default function DocContent(){
     return(
         <Content>
             {
-                bokList.map((bokMes,index)=>{
-                   return <BokItem key={index+bokMes.name} bokMes={bokMes} />
+                bokList.map((name,index)=>{
+                   return <BokItem key={index+name} name={name} />
                 })
             }
         </Content>

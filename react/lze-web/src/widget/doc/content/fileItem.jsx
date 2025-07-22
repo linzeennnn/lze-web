@@ -6,18 +6,18 @@ import { useGlobal,list,loadPage } from "../global";
 import { notify } from "../../public/notify";
 export default function FileItem({ fileMes, selected, docClick}){
     const [editMode, setEditMode] = useState(false);
-    const[nameInput,setNameInput]=useState(fileMes.name)
+    const[nameInput,setNameInput]=useState(fileMes[0])
       const nowPath=useGlobal.getState().nowPath
-      const path=nowPath+"/"+fileMes.name
+      const path=nowPath+"/"+fileMes[0]
     return(
         <div
             className={`doc-list ${selected.includes(path) ? "doc-list-selected" : ""}`}
             onClick={() => docClick(path)}
-            key={"doclist" + fileMes.name}
+            key={"doclist" + fileMes[0]}
             >
             <FileText fileMes={fileMes} editMode={editMode} 
             nameEdit={[nameInput,setNameInput]} rename={rename}/>
-            <EditBtn name={fileMes.name} editing={[editMode, setEditMode]} 
+            <EditBtn name={fileMes[0]} editing={[editMode, setEditMode]} 
             newName={nameInput} rename={rename}/>
             <DownloadBtn fileMes={fileMes}/>
         </div>
