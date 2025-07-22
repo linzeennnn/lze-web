@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Login from "./dockApp/login";
+import Sys from "./dockApp/sys";
 import {useGlobal} from "../global";
 
 export default function Dock({tmpLoad,setTmpLoad}) {
@@ -34,6 +35,7 @@ export default function Dock({tmpLoad,setTmpLoad}) {
             onClick={close_dock}
           ></button>
           {appType === "login" && <Login />}
+          {appType === "sys" && <Sys />}
         </div>
       )}
       <div id="dock" className={(!locked&&tmpLoad)?"dock-load":""}>
