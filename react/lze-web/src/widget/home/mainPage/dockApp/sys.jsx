@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"
 
 export default function Sys(){
+    const [loaded,setLoaded]=useState(false)
     const barList=[
-        {id:"cpu",name:"CPU使用率",data:"",percent:""},
-        {id:"mem",name:"内存使用率",data:"",percent:""},
-        {id:"disk",name:"磁盘使用率",data:"",percent:""},
+        {id:"cpu",name:"CPU使用率"},
+        {id:"mem",name:"内存使用率"},
+        {id:"disk",name:"磁盘使用率"},
     ]
     const [recData,setRecData]=useState(
         {
@@ -27,10 +28,13 @@ export default function Sys(){
             .then(data=>{
                 setRecData({
                     cpu:{data:"",percent:data.cpuPercent},
-                    mem:{data:"",percent:data.memPercent},
-                    disk:{data:"",percent:data.diskPercent},
+                    mem:{data:data.memData,percent:data.memPercent},
+                    disk:{data:data.diskData,percent:data.diskPercent},
                     net:{up:data.netUp,down:data.netDown}
                 })
+                if(!loaded){
+                    setLoaded(true)
+                }
             })
         }, 3000);
         return()=>{
@@ -39,6 +43,9 @@ export default function Sys(){
         },[])
     return(
         <div id="sys-app">
+           {!loaded?( <div id="sys-loadPage">
+                <div className="loading"></div>
+            </div>):null}
         {
             barList.map((item)=>{
                 return  (
