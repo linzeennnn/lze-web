@@ -1,7 +1,7 @@
 package sys
 
 type Send struct {
-	CpuPercent  string `json:"cupPercent"`
+	CpuPercent  string `json:"cpuPercent"`
 	MemPercent  string `json:"memPercent"`
 	MemData     string `json:"memData"`
 	DiskPercent string `json:"diskPercent"`

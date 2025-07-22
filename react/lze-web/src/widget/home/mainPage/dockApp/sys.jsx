@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 export default function Sys(){
     const barList=[
@@ -15,6 +15,28 @@ export default function Sys(){
         }
 
     )
+    useEffect(()=>{
+        const intervalId=setInterval(() => {
+            fetch(window.location.origin+'/server/system/system',{
+                method:"GET",
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(rss=>rss.json())
+            .then(data=>{
+                setRecData({
+                    cpu:{data:"",percent:data.cpuPercent},
+                    mem:{data:"",percent:data.memPercent},
+                    disk:{data:"",percent:data.diskPercent},
+                    net:{up:data.netUp,down:data.netDown}
+                })
+            })
+        }, 3000);
+        return()=>{
+            clearInterval(intervalId)
+        }
+        },[])
     return(
         <div id="sys-app">
         {
