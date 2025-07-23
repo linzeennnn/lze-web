@@ -68,8 +68,12 @@ function ListDoc({ name }) {
   </>)
 }
 
-function ListPic(name){
-
+function ListPic({name}){
+  const url =window.location.origin+"/file/Pictures/"+name.name;
+  if(name.media=="vid")
+    return <video src={url} controls="controls" className="list-media"/>
+  if(name.media="img")
+    return(<img src={url} alt={name.name} className="list-media"/>)
 }
 function ListNot({name}){
   const [loaded,setLoaded]=useState(false)
@@ -88,11 +92,11 @@ return(
   <div className="loading"></div>
 )
 }
-function ListBok(name){
+function ListBok({name}){
   const [loaded,setLoaded]=useState(false)
   const [text,setText]=useState("")
   useEffect(() => {
-    GetData(window.location.origin+"/server/not/get_url",
+    GetData(window.location.origin+"/server/bok/get_url",
       {name},
       setText,
       setLoaded ,
@@ -101,13 +105,11 @@ function ListBok(name){
   }, []);
 return(
   loaded?
-  <code>{text}</code>:
+  ( window.location.href=text ):
   <div className="loading"></div>
 )
 }
 function GetData(url,body,setData,setLoaded,json){
-  console.log(JSON.stringify(body));
-  
   fetch(url,{
     method:"POST",
     headers:{

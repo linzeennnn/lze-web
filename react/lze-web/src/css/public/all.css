@@ -1,3 +1,88 @@
+/* 全局 */
+:root{
+  --global_dark_text:#cecece;
+  --global_light_text:#484848;
+}
+[color="default"] {
+  --dark_back: #4d4d4d92;
+  --light_back: #d2d2d2b1;
+  --base_text: #868686;
+  --base_color: #787878;
+  --dark_text: #cfcfcf;
+  --light_text: #2e2e2e;
+}
+
+[color="green"] {
+  --dark_back: #3b704d92;
+  --light_back: #bce0c2b1;
+  --base_text: #738a7b;
+  --base_color: #488c62;
+  --dark_text: #a9ffc3;
+  --light_text: #2e4b38;
+}
+
+[color="blue"] {
+  --dark_back: #374355b8;
+  --light_back: #bfd4e9b1;
+  --base_text: #3f5a80;
+  --base_color: #4d5e7f;
+  --dark_text: #d2e3f4;
+  --light_text: #2f3e56;
+}
+
+[color="yellow"] {
+  --dark_back: #706f3b92;
+  --light_back: #ece6bfb1;
+  --base_text: #7a753a;
+  --base_color: #8d8753;
+  --dark_text: #f1ecbb;
+  --light_text: #4d481f;
+}
+
+[color="orange"] {
+  --dark_back: #70583b92;
+  --light_back: #e9d0bfb1;
+  --base_text: #7a4e36;
+  --base_color: #876844;
+  --dark_text: #f1dbcb;
+  --light_text: #472f1f;
+}
+
+[color="pink"] {
+  --dark_back: #704d5e92;
+  --light_back: #e8bfd3b1;
+  --base_text: #875c6eb0;
+  --base_color: #8e527c;
+  --dark_text: #f3d3e4;
+  --light_text: #4a2c3e;
+}
+
+[color="red"] {
+  --dark_back: #703b3b92;
+  --light_back: #e9bfbfb1;
+  --base_text: #803f3f;
+  --base_color: #8d5353;
+  --dark_text: #f3c8c8;
+  --light_text: #4a1e1e;
+}
+
+[mode="dark"]{
+  --bg_color:var(--dark_back);
+  --global_text:var(--global_dark_text);
+  --wallpaper:url(../../assets/wallpaper/dark/home.svg);
+  --text:var(--dark_text)
+}
+[mode="light"]{
+  --wallpaper:url(../../assets/wallpaper/light/home.svg);
+  --bg_color:var(--light_back);
+  --global_text:var(--global_light_text);
+  --text:var(--light_text)
+}
+/* css */
+#app{
+  all: unset;
+  display: contents;
+}
 html, body {
   position: relative;
   margin: 0;
@@ -24,6 +109,19 @@ body::-webkit-scrollbar{
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;              
+}
+.wallpaper{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: var(--wallpaper);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -1;
 }
 #root{
     display: flex;

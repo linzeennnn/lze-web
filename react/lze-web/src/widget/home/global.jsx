@@ -3,15 +3,16 @@ import { notify } from '../public/notify.jsx'
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'visitor';
   let token = window.localStorage.getItem('token') || '';
-
-  // 调用 auth 只一次（等价于 useEffect）
-  auth(userName, token);
-
   return {
-    userName,
-    token,
+    userName:"visitor",
+    token:"",
     showBg: false,
     locked:true,
+    theme:{
+      mode:"light",
+      color:"default",
+      userSlect:"system"
+    },
     listWin:{
       type:"",
       name:"",
@@ -40,7 +41,42 @@ export const useGlobal = create((set, get) => {
     },
   };
 });
-export function auth(name,token){
+export function InitData(){
+// 主题设置
+let theme=localStorage.getItem("theme")
+      if(theme){
+        theme =JSON.parse(theme)
+        if(theme.userSelect=="system"){
+          theme.mode=get_system_theme()
+        }
+        useGlobal.setState({
+          theme:theme})
+      }
+      else{
+        theme={
+          mode:get_system_theme(),
+          color:"default",
+          userSlect:"system"
+        }
+        useGlobal.setState({
+          theme:theme})
+      }
+// 用户信息
+    let userName=localStorage.getItem("userName")
+    let token =localStorage.getItem("token")
+    userName=userName?userName:"visitor";
+    token=token?token:""; 
+      useGlobal.setState({
+        userName: userName,
+        token: token
+      })
+      auth(userName,token)
+
+}
+function get_system_theme(){
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+ function auth(name,token){
     name=name?name:"visitor";
     token=token?token:"";
     fetch(window.location.origin+'/server/login/auth_status',
@@ -58,14 +94,14 @@ export function auth(name,token){
         if(!res.ok){
             if(res.status===401){
                 notify("登录过期")
-                window.localStorage.setItem('userName',"visitor");
-                window.localStorage.setItem('token',"");
-                window.location.reload();
             }
             else{
                 notify(res.status+"错误")
             }
-            throw new Error(`请求失败，状态码：${res.status}`);
+            window.localStorage.setItem('userName',"visitor");
+            window.localStorage.setItem('token',"");
+            useGlobal.setState({userName:"visitor",token:""})
+            return
         }
         notify("登录用户:"+(name=="visitor"?"游客":name))
     })

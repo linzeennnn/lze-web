@@ -4,13 +4,14 @@ import Panel from "./panel";
 export default function Widget({tmpLoad}) {
     const locked = useGlobal(state => state.locked);
     const widgetData = useGlobal((state)=>state.widgetData);
+    const theme=useGlobal(state=>state.theme)
     const widget = [
-        { id: 'doc', name: '文件管理' },
-        { id: 'pic', name: '图库' },
-        { id: 'tra', name: '回收站' },
-        { id: 'mon', name: '控制面板' },
-        { id: 'not', name: '便签' },
-        { id: 'bok', name: '书签' }
+        { id: 'doc', name: '文件管理',color: "green" },
+        { id: 'pic', name: '图库',color:"blue" },
+        { id: 'tra', name: '回收站',color:"orange" },
+        { id: 'mon', name: '控制面板',color:"yellow" },
+        { id: 'not', name: '便签',color:"pink" },
+        { id: 'bok', name: '书签',color:"red" }
     ];
 
     const rows = [];
@@ -31,6 +32,8 @@ export default function Widget({tmpLoad}) {
                         <div key={item.id} id={item.id+"widget"} 
                         className="widget-item"
                         title={'进入'+item.name} 
+                        mode={theme.mode}
+                        color={item.color}
                         onClick={
                             ()=>to_next(item.id)
                             }>
@@ -38,7 +41,9 @@ export default function Widget({tmpLoad}) {
                                 <div  id={item.id+"-icon"}></div>
                                 </div>  
                               <Panel showItem={widgetData[item.id]} type={item.id} />
-                            <span className="widget-title">{item.name}</span>
+                            <span className="widget-title"
+                            mode={theme.mode}
+                            color={theme.color}>{item.name}</span>
                         </div>
                     ))}
                 </div>

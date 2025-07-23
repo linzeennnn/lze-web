@@ -1,12 +1,19 @@
-import { useGlobal } from "./global";
+import { InitData, useGlobal } from "./global";
 import MainPage from "./mainPage/mainPage";
 import LockPage from "./lockPage.jsx/lockPage";
+import { useEffect } from "react";
+import '../../css/page/home.css'
+import '../../css/public/all.css'
 export default function App() {
-    const locked = useGlobal(state => state.locked);
+    const theme=useGlobal(state=>state.theme)
+    useEffect(()=>{
+        InitData()
+    },[])
     return (
-        <>
+        <div id="app" color={theme.color} mode={theme.mode}>
         <LockPage />
         <MainPage />
-        </>
+        <div className="wallpaper"></div>
+        </div>
     )
 }
