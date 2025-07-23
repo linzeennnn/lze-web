@@ -19,15 +19,18 @@ func Widget(c *gin.Context) {
 	}
 
 	var files widget.Send
-	docList := getFileList(global.DocPath, 3, false, true)
-	picLIst := getFileList(global.PicPath, 1, true, false)
+	var picList [1]widget.PicMes
+	docList := getFileList(global.DocPath, 3, false, false)
+	picName := getFileList(global.PicPath, 1, true, false)
+	picList[0].Name = picName[0]
+	picList[0].Media = CheckType(picName[0])
 	notList := getFileList(global.NotPath, 3, true, true)
 	bokList := getFileList(global.BokPath, 1, true, true)
 	traList := getFileList(global.TraPath, 1, false, false)
 	files.Doc = docList
 	files.Not = notList
 	files.Bok = bokList
-	files.Pic = picLIst
+	files.Pic = picList
 	files.Tra = traList
 	files.Mon = monData(rec.User)
 	c.JSON(200, files)
@@ -126,4 +129,15 @@ func convTokenTime(input string) string {
 	}
 
 	return num + chineseUnit
+}
+func CheckType(name string) string {
+	var imgFor = []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".ico", ".apng", ".avif"}
+	if global.IncludeExt(name, imgFor) {
+		return "img"
+	}
+	var vidFor = []string{".mp4", ".webm", ".ogg", ".ogv", ".mov", ".m4v", ".avi", ".3gp", ".mkv"}
+	if global.IncludeExt(name, vidFor) {
+		return "vid"
+	}
+	return ""
 }

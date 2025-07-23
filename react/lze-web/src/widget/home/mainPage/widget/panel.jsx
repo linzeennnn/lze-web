@@ -26,15 +26,12 @@ export default function Panel({showItem,type}){
         </div>
     )
 }
-function get_pic(name){
-const imageExts = ["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg", "ico", "apng", "avif"];
-const videoExts = ["mp4", "webm", "ogg", "ogv", "mov", "m4v", "avi", "3gp", "mkv"];
-const ext = name.split(".").pop().toLowerCase();
-const url=window.location.origin+"/file/Pictures/"+name;
-if(imageExts.includes(ext)){
-    return <img src={url} alt={name} />
+function get_pic(picMes){
+const url=window.location.origin+"/file/Pictures/"+picMes.name;
+if(picMes.media=="img"){
+    return <img src={url} alt={picMes.name} />
 }
-if(videoExts.includes(ext)){
+if(picMes.media=="vid"){
     return <video src={url} controls="controls" />
 }
 return (<span className="panel-text panel-text-null">空</span>)
@@ -49,6 +46,8 @@ function openListWin(type,name){
         notify("当前用户:"+user)
         return
     }
+    if((type!="pic"&&name!="")||
+        (type=="pic"&&name.name!="")){
     useGlobal.setState({
         listWin:{
             type:type,
@@ -56,4 +55,5 @@ function openListWin(type,name){
             status:true
         }
     })
+}
 }

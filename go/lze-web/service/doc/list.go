@@ -33,6 +33,7 @@ func getDir(rec list.Rec, c *gin.Context) {
 	}
 	var sendData list.SendDir
 	sendData.Meta = [2]string{"name", "type"}
+	sendData.FileType = "dir"
 	sendData.FileList = docList
 	sendData.CurrentFolder = rec.File
 	par_dir := filepath.Dir(rec.File)
@@ -57,10 +58,12 @@ func getFile(rec list.Rec, c *gin.Context) {
 	url := filepath.FromSlash(filepath.Join("file/Documents", rec.File))
 	var sendData list.SendFile
 	if global.IncludeExt(rec.File, extList) {
-		sendData.FileLink = url
+		sendData.FileType = "file"
+		sendData.Url = url
 		sendData.View = true
 	} else {
-		sendData.FileLink = ""
+		sendData.FileType = "file"
+		sendData.Url = ""
 		sendData.View = false
 	}
 	c.JSON(200, sendData)

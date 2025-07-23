@@ -11,7 +11,7 @@ import (
 func GetText(c *gin.Context) {
 	var rec gettext.Rec
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, err)
+		c.String(400, err.Error())
 		return
 	}
 	path := filepath.Join(global.FilePath, "Note", rec.Name+".txt")
