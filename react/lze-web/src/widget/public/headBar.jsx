@@ -1,4 +1,3 @@
-import '../../css/public/page.css'
 import { ScrollContext } from "./scrollTop"
 import React, { useContext } from 'react';
 function HeadBar(){

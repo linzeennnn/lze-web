@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../public"
 import { useGlobal } from "../../global"
-import { list } from "../../../bok/global"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)
+    const theme=useGlobal(state=>state.theme)
     return(
         <WinBg showBg={listWin.status}>
             <div id="close-back"
@@ -13,11 +13,15 @@ export default function Listwin(){
                         type:"",
                         name:"",
                         status:false,
+                        color:""
                     }
                 })
             }}
             ></div>
-            <div className="list-win" id={listWin.type+"-list"}>
+            <div className="list-win" 
+            color={listWin.color}
+            mode={theme.mode}
+            id={listWin.type+"-list"}>
             {creatList(listWin.type,listWin.name)}
             </div>
         </WinBg>

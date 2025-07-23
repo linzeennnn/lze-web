@@ -11,12 +11,13 @@ export const useGlobal = create((set, get) => {
     theme:{
       mode:"light",
       color:"default",
-      userSlect:"system"
+      userSelect:"system"
     },
     listWin:{
       type:"",
       name:"",
-      status:false
+      status:false,
+      color:""
     },
     widgetData:{
       doc:[],
@@ -56,7 +57,7 @@ let theme=localStorage.getItem("theme")
         theme={
           mode:get_system_theme(),
           color:"default",
-          userSlect:"system"
+          userSelect:"system"
         }
         useGlobal.setState({
           theme:theme})

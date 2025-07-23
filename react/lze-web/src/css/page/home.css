@@ -220,7 +220,7 @@ align-items: center;
     justify-content: center;
     align-items: center;
     position: fixed;
-    background-color: var(--bg_color);
+    background-color: var(--base_color);
     width: 100%;
     top: -120px;
     height: 80px;
@@ -244,7 +244,7 @@ align-items: center;
     bottom: -40px !important;
 }
 #lock-page{
-    background-color: #4f84a8;
+    background-color: var(--bg_color);
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -265,7 +265,7 @@ top: 0 !important;
 width: 46px !important;
 height: 46px !important;
 border-radius: 50%;
-background-color: #588370;
+background-color: var(--base_color);
 background-image: url(../../assets/icon/power.svg);
 }
 /* sys */
@@ -305,7 +305,7 @@ background-image: url(../../assets/icon/power.svg);
     margin: 5px;
     height: 10px;
     flex: 1;
-    background-color: cadetblue;
+    background-color: var(--base_color);
 }
 .sys-percent{
     font-weight: bold;
@@ -314,7 +314,7 @@ background-image: url(../../assets/icon/power.svg);
     text-align: center;
 }
 .sys-progress{
-    background-color: aliceblue;
+    background-color: var(--text);
     height: 100%;
     border-radius: 15px;
     transition: width 0.5s ease-in-out;
@@ -332,20 +332,45 @@ background-image: url(../../assets/icon/power.svg);
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #2b2f2db0;
+    background-color: var(--floatoat_win_bg_color);
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* them */
+#theme-app{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 /* list win */
 .list-win{
+    background-color: var(--bg_color);
+    color: var(--text);
     display: flex;
+    font-weight: bold;
     justify-content: center;
     align-items: center;
     width: 80%;
     height: fit-content;
     max-height: 80vh;
     border-radius: 15px;
+}
+#mode-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#show-mode{
+    color: var(--text);
+    background-color: var(--bg_color);
+    padding: 10px;
+    border-radius: 50px;
+    margin-right: 10px;
 }
 #close-back{
     position: absolute;
@@ -363,7 +388,6 @@ background-image: url(../../assets/icon/power.svg);
     word-break: break-word;
     overflow-wrap: break-word;
     align-items: unset !important;
-    background-color: #bd51936e !important;
     overflow-y: auto;
 }
 #not-list div{
@@ -376,7 +400,6 @@ background-image: url(../../assets/icon/power.svg);
 }
 #doc-list{
     flex-wrap: wrap;
-    background-color: #37c075bc;
 }
 #doc-list span{
     cursor: default;
@@ -410,9 +433,18 @@ background-image: url(../../assets/icon/power.svg);
     background-position: center;
     z-index: 0;
 }
-.list-media{
-    max-width: 100%;
+#pic-list{
+    width: fit-content;
+    height: fit-content;
 }
+.list-media{
+    max-width: 80vw;
+}
+.tooltip{
+    background-color: var(--bg_color);
+    color: var(--text);
+}
+#switch-mode{background-image: url(../../assets/icon/switch_gray.svg);}
 .dir-view-file{background-image: url(../../assets/icon/file.svg);}
 .dir-view-dir{background-image: url(../../assets/icon/folder.svg);}
 #doc-icon{background-image: url(../../assets/icon/folder.svg);}

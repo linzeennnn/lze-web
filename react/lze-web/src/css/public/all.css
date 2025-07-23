@@ -2,6 +2,7 @@
 :root{
   --global_dark_text:#cecece;
   --global_light_text:#484848;
+  --float_win_bg_color:#00000091;
 }
 [color="default"] {
   --dark_back: #4d4d4d92;
@@ -79,6 +80,9 @@
   --text:var(--light_text)
 }
 /* css */
+span{
+  font-weight: bold;
+}
 #app{
   all: unset;
   display: contents;
@@ -171,7 +175,7 @@ opacity: 1;
           100% { transform: rotate(360deg); }
         }
 .bg-enable{
-  background-color: #000000a2;
+  background-color: var(--float_win_bg_color);
   position: fixed;
   top: 0;
   left: 0;
@@ -212,7 +216,6 @@ opacity: 1;
   max-width: 50vw;
   height: fit-content;
     font-weight: bold;
-    background-color: beige;
     border-radius: 15px;
   word-wrap: break-word;      /* 兼容旧浏览器 */
   overflow-wrap: break-word;  /* 推荐写法，现代浏览器标准 */
