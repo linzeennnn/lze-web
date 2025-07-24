@@ -209,7 +209,7 @@ align-items: center;
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: url(../../assets/icon/no_grey.svg);
+    background-image: var(--no_icon);
     z-index: 2;
 }
 #login-win1{
@@ -274,7 +274,7 @@ width: 46px !important;
 height: 46px !important;
 border-radius: 50%;
 background-color: var(--base_color);
-background-image: url(../../assets/icon/power.svg);
+background-image: var(--power_icon);
 }
 /* sys */
 #sys-app{
@@ -382,12 +382,17 @@ background-image: url(../../assets/icon/power.svg);
     margin-right: 5PX;
     width: 32px;
     height: 32px;
-    background-image: url(../../assets/icon/profile_white.svg);
+    background-image: url(../../assets/icon/profile.svg);
     background-position: center;
     background-repeat: no-repeat;
 }
 #logout{
-    background-image: url(../../assets/icon/logout_grey.svg);
+    background-image: url(../../assets/icon/logout.svg);
+}
+#login-send{
+    background-image: var(--toright_icon);
+    background-color: var(--base_color);
+    border-radius: 50%;
 }
 /* them */
 #theme-app{
@@ -531,18 +536,17 @@ background-image: url(../../assets/icon/power.svg);
     background-color: var(--bg_color);
     color: var(--text);
 }
-#login-send{background-image: url(../../assets/icon/right_grey.svg);}
-#switch-mode{background-image: url(../../assets/icon/switch_gray.svg);}
+#switch-mode{background-image: var(--switch_icon);}
 .dir-view-file{background-image: url(../../assets/icon/file.svg);}
 .dir-view-dir{background-image: url(../../assets/icon/folder.svg);}
 #doc-icon{background-image: url(../../assets/icon/folder.svg);}
 #pic-icon{background-image: url(../../assets/icon/picture.svg);}
 #tra-icon{background-image: url(../../assets/icon/trash.svg);}
 #mon-icon{background-image: url(../../assets/icon/monitor.svg);}
-#not-icon{background-image: url(../..//assets/icon/note.svg);}
+#not-icon{background-image: url(../../assets/icon/note.svg);}
 #bok-icon{background-image: url(../../assets/icon/bookmark.svg);}
-#net-up{background-image: url(../../assets/icon/goup_grey.svg);}
-#net-down{background-image: url(../../assets/icon/godown_grey.svg);}
+#net-up{background-image: var(--toup_icon);}
+#net-down{background-image:var(--todown_icon);}
 #net-icon{background-image: url(../../assets/icon/network.svg);}
 #cpu-icon{background-image: url(../../assets/icon/cpu.svg);}
 #mem-icon{background-image: url(../../assets/icon/mem.svg);}
