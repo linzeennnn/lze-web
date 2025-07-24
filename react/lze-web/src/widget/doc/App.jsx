@@ -3,15 +3,17 @@ import DocTopBar from './topBar/docTopBar';
 import DocSideBar from './sideBar/docSideBar';
 import DocWin from './win/docWin'
 import {ScrollTop,GoTopBtn,HeadBar,GoBack} from '../public'
-import{DragOver,DragLeave,Drop} from './global'
+import{DragOver,DragLeave,Drop, InitData,useGlobal} from './global'
 import '../../css/page/doc.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useEffect } from 'react';
-
+import Tooltip from '../public/tooltip'
 
 export default function App() {
+    const theme=useGlobal(state=>state.theme)
   useEffect(() => {
+    InitData()
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
     window.addEventListener('drop', Drop);
@@ -22,7 +24,7 @@ export default function App() {
     };
   }, []);
   return ( 
-     <>
+     <div id='app' color={theme.color} mode={theme.mode}>
       <ScrollTop>
         <HeadBar />
       <DocTopBar />
@@ -32,6 +34,8 @@ export default function App() {
         <DocWin/>
       <DocSideBar />
       <DocContent />
-    </>
+      <Tooltip/>
+      <div className='wallpaper'></div>
+    </div>
   );
 }

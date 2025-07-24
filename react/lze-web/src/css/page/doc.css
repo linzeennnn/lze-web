@@ -14,15 +14,14 @@
     width: 120px;
     height: 80px;
     padding: 10px;
-    background-color: aqua;
     border-radius: 15px;
-    margin: 10px;
+    margin: 20px;
 }
 .doc-list:hover{
-    background-color: #2d8173a2;
+    background-color: var(--base_color);
 }
 .doc-list-selected{
-    background-color: #2d8173a2;
+    background-color: var(--base_color) !important;
 }
 .file-list-text {
     cursor: pointer;
@@ -39,7 +38,6 @@
 .file-edit-btn{
     width: 20px !important;
     height: 20px !important;
-    background-color: antiquewhite;
     position: absolute;
     right: 10px;
     top: 10px;
@@ -82,7 +80,8 @@
     height: 70%;
     position: relative;
     width: 80%;
-    background-color: aquamarine;
+    color: var(--text);
+    box-shadow: var(--in_shadow);
     display: flex;
     align-items: center;
     border-radius: 15px;
@@ -132,7 +131,7 @@
     top: 300px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: bisque;
+    background-color: var(--bg_color);
     border-radius: 15px;
     justify-content: center;
     align-items: center;
@@ -159,7 +158,7 @@
     align-items: center;
     display: flex;
     position: absolute;
-    background-color: rgb(204, 132, 38);
+    background-color: var(--base_color);
     height: 100%;
     border-radius: 15px;
     left: 0;
@@ -190,7 +189,7 @@
     pointer-events: none;
     justify-content: center;
     align-items: center;
-    background-color: #03231ea2;
+    background-color: var(--float_win_bg_color);
 }
 #drag-win div{
     width: 200px;
@@ -212,7 +211,7 @@
 #move{background-image:url(../../assets/icon/move_green.svg);}
 #reload{background-image:url(../../assets/icon/load_green.svg);}
 #upload{background-image:url(../../assets/icon/upload_green.svg);}
-
+#go-top-btn{background-image: url(../../assets/icon/toup_green.svg);}
 
   @keyframes paste {
     0% {
@@ -223,5 +222,10 @@
     }
     100% {
       opacity: 0.5;
+    }
+  }
+  @media (max-width: 600px){
+    .doc-list{
+        margin: 10px;
     }
   }

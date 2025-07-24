@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { notify } from '../public/notify.jsx'
+import { Get_system_theme, GetTheme } from '../public/getTheme.jsx';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'visitor';
   let token = window.localStorage.getItem('token') || '';
@@ -44,24 +45,9 @@ export const useGlobal = create((set, get) => {
 });
 export function InitData(){
 // 主题设置
-let theme=localStorage.getItem("theme")
-      if(theme){
-        theme =JSON.parse(theme)
-        if(theme.userSelect=="system"){
-          theme.mode=get_system_theme()
-        }
-        useGlobal.setState({
-          theme:theme})
-      }
-      else{
-        theme={
-          mode:get_system_theme(),
-          color:"default",
-          userSelect:"system"
-        }
-        useGlobal.setState({
-          theme:theme})
-      }
+const theme=GetTheme("default")
+useGlobal.setState({
+  theme:theme})
 // 用户信息
     let userName=localStorage.getItem("userName")
     let token =localStorage.getItem("token")
@@ -73,9 +59,6 @@ let theme=localStorage.getItem("theme")
       })
       auth(userName,token)
 
-}
-function get_system_theme(){
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
  function auth(name,token){
     name=name?name:"visitor";
