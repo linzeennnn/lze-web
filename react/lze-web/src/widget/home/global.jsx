@@ -10,9 +10,17 @@ export const useGlobal = create((set, get) => {
     showBg: false,
     locked:true,
     theme:{
-      mode:"light",
-      color:"default",
-      userSelect:"system"
+      mode:"",
+      color:{
+        home:"",
+        doc:"",
+        pic:"",
+        tra:"",
+        mon:"",
+        not:"",
+        bok:""
+      },
+      userSelect:""
     },
     listWin:{
       type:"",
@@ -45,7 +53,7 @@ export const useGlobal = create((set, get) => {
 });
 export function InitData(){
 // 主题设置
-const theme=GetTheme("default")
+const theme=GetTheme()
 useGlobal.setState({
   theme:theme})
 // 用户信息

@@ -203,7 +203,6 @@
 #new-dir-btn{background-image: var(--addfolder_icon);}
 #new-dir-cancel{background-image: var(--no_icon);}
 #new-dir-save{background-image: var(--save_icon);}
-#go-back{background-image: var(--toleft_icon);}
 .edit-name{background-image: var(--edit_icon);}
 .save-name{background-image: var(--save_icon);}
 #copy{background-image:var(--copy_icon);}
@@ -211,7 +210,6 @@
 #move{background-image:var(--cut_icon);}
 #reload{background-image:var(--load_icon);}
 #upload{background-image:var(--upload_icon);}
-#go-top-btn{background-image: var(--toup_icon);}
 
   @keyframes paste {
     0% {

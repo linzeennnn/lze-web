@@ -10,8 +10,9 @@ export default function App() {
     useEffect(()=>{
         InitData()
     },[])
+    
     return (
-        <div id="app" color={theme.color} mode={theme.mode}>
+        <div id="app" color={theme.color["home"]} mode={theme.mode}>
         <LockPage />
         <MainPage />
         <div className="wallpaper"></div>

@@ -12,10 +12,13 @@ export const useGlobal = create((set, get) => ({
   showBg: false,
   loading: false,
   dragWin:false,
+    
     theme:{
-      mode:"light",
-      color:"default",
-      userSelect:"system"
+      mode:"",
+      color:{
+        doc:""
+      },
+      userSelect:""
     },
   upload:{
     win:false,
@@ -33,7 +36,7 @@ export const useGlobal = create((set, get) => ({
   getGlobal: () => get(),
 }));
 export function InitData(){
- const theme=GetTheme("green")
+ const theme=GetTheme()
   useGlobal.setState({
     theme:theme
   })

@@ -9,7 +9,6 @@ import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useEffect } from 'react';
 import Tooltip from '../public/tooltip'
-
 export default function App() {
     const theme=useGlobal(state=>state.theme)
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function App() {
     };
   }, []);
   return ( 
-     <div id='app' color={theme.color} mode={theme.mode}>
+     <div id='app' color={theme.color["doc"]} mode={theme.mode}>
       <ScrollTop>
         <HeadBar />
       <DocTopBar />

@@ -15,7 +15,7 @@
 }
 .widget-load{
     pointer-events: unset !important;
-    opacity: 0.7 !important;
+    opacity: 1 !important;
     transform: scale(1) !important;
 }
 .widget-line{
@@ -451,6 +451,25 @@ background-image: var(--power_icon);
     border-radius: 50%;
     background-color: var(--base_color);
 }
+#page-bar{
+    margin-top: 5px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+#show-page{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    background-color: var(--bg_color);
+    padding: 10px;
+    margin-right: 10px;
+    color: var(--text);
+    border-radius: 15px;
+}
 /* list win */
 .list-win{
     background-color: var(--bg_color);
@@ -536,7 +555,7 @@ background-image: var(--power_icon);
     background-color: var(--bg_color);
     color: var(--text);
 }
-#switch-mode{background-image: var(--switch_icon);}
+.switch{background-image: var(--switch_icon);}
 .dir-view-file{background-image: url(../../assets/icon/file.svg);}
 .dir-view-dir{background-image: url(../../assets/icon/folder.svg);}
 #doc-icon{background-image: url(../../assets/icon/folder.svg);}

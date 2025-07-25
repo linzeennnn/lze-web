@@ -68,6 +68,7 @@
     bottom: -40px;
     margin-left: 60px;
     background-color: var(--base_color);
+    background-image: var(--toup_icon);
     border-radius: 50%;
     transition: bottom 0.7s ease-in-out,margin-left 0.7s ease-in-out;
     z-index: 10;
@@ -82,6 +83,7 @@
   border-radius: 7px;
   box-shadow: var(--out_shadow);
   background-color: var(--base_color);
+  background-image: var(--toleft_icon);
   z-index: 12;
 }
 .scroll-head-bar{

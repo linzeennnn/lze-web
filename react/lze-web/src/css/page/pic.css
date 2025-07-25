@@ -122,13 +122,13 @@
     transform: translateX(-50%);
 }
 #home-pic{
-    background-image: url(../../assets/icon/pic_home.svg);
+    background-image: var(--pic_home_icon);
     margin-left: 10px;
 }
 #dir-list{
     position: relative;
     margin-right: 10px;
-    background-image: url(../../assets/icon/list_blue.svg);
+    background-image: var(--option_icon);
     z-index: 100;
 }
 #dir-list-box{
@@ -145,7 +145,7 @@
     overflow-y: auto;
     padding-top: 30px;
     padding-bottom: 30px;
-    background-color: rgba(137, 43, 226, 0.466);
+    background-color: var(--base_color);
     border-radius: 15px;
     bottom: -100%;
     left: -50%;
@@ -161,7 +161,8 @@
 }
 #dir-item{
     cursor: pointer;
-    background-color: antiquewhite;
+    background-color: var(--bg_color);
+    color: var(--text);
     border-radius: 15px;
     height: 30px;
     width: 80%;

@@ -6,9 +6,6 @@ import { list,useGlobal } from "../global";
 import PageBar from "./pageBar";
 export default function PicContent() {
   const imgPage = useGlobal((state) => state.imgPage);
-  useEffect(() => {
-    list("");
-  }, []);
     return (
         <Content>
           <div id="pic-box">

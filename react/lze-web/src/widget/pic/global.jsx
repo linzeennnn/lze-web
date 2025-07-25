@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { notify } from '../public/notify';
+import { GetTheme } from '../public/getTheme';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -12,6 +13,13 @@ export const useGlobal = create((set, get) => ({
   uploading: false,
   showBg: false,
   pageNum:1,
+    theme:{
+      mode:"",
+      color:{
+        pic:""
+      },
+      userSelect:""
+    },
   loading: false,
   dragWin:false,
   imgPage:true,
@@ -34,6 +42,14 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
+// 初始化
+export function Initdata(){
+ const theme=GetTheme()
+  useGlobal.setState({
+    theme:theme
+  })
+  list("")
+}
 // 扫描目录
 export function list(path,showVideo) {
   const sendData = { folder: path };
