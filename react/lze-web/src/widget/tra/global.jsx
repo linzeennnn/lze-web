@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { notify } from '../public/notify';
+import { GetTheme } from '../public/getTheme';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -12,6 +12,13 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   selected: [],
   source_path:true,
+    theme:{
+      mode:"",
+      color:{
+        pic:""
+      },
+      userSelect:""
+    },
   traUrl:`${window.location.origin}/server/tra/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
@@ -21,7 +28,14 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
-
+// 初始化
+export function Initdata(){
+ const theme=GetTheme()
+  useGlobal.setState({
+    theme:theme
+  })
+  list("")
+}
 // 扫描目录
 export function list(path) {
   const sendData = { folder: path };

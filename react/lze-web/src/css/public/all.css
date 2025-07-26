@@ -31,12 +31,12 @@
 }
 
 [color="blue"] {
-  --dark_back: #353e4db8;
-  --light_back: #90abc7b1;
+  --dark_back: #2a303ab8;
+  --light_back: #95b4d4b1;
   --base_text: #3f5a80;
-  --base_color: #525d74;
-  --dark_text: #d2e3f4;
-  --light_text: #2f3e56;
+  --base_color: #5c6579;
+  --dark_text: #92b7db;
+  --light_text: #333e52;
 }
 
 [color="yellow"] {
@@ -49,12 +49,12 @@
 }
 
 [color="orange"] {
-  --dark_back: #70583b92;
-  --light_back: #e9d0bfb1;
+  --dark_back: #4b3f3092;
+  --light_back: #d3a98db1;
   --base_text: #7a4e36;
-  --base_color: #876844;
-  --dark_text: #f1dbcb;
-  --light_text: #472f1f;
+  --base_color: #7c6c59;
+  --dark_text: #ffd0ae;
+  --light_text: #3f2e23;
 }
 
 [color="pink"] {
@@ -99,6 +99,7 @@
 --photo_icon: url(../../assets/icon/photo_dark.svg);
 --pic_home_icon: url(../../assets/icon/pic_home_dark.svg);
 --power_icon: url(../../assets/icon/power_dark.svg);
+--recover_icon:url(../../assets/icon/recover_dark.svg);
 --rightarr_icon: url(../../assets/icon/rightarr_dark.svg);
 --save_icon: url(../../assets/icon/save_dark.svg);
 --setting_icon: url(../../assets/icon/setting_dark.svg);
@@ -139,6 +140,7 @@
 --photo_icon: url(../../assets/icon/photo_light.svg);
 --pic_home_icon: url(../../assets/icon/pic_home_light.svg);
 --power_icon: url(../../assets/icon/power_light.svg);
+--recover_icon:url(../../assets/icon/recover_light.svg);
 --rightarr_icon: url(../../assets/icon/rightarr_light.svg);
 --save_icon: url(../../assets/icon/save_light.svg);
 --setting_icon: url(../../assets/icon/setting_light.svg);

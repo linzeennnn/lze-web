@@ -19,9 +19,6 @@ export default function TraContent(){
   const fileList = useGlobal((state) => state.fileList);
   const selected = useGlobal((state) => state.selected);
     const setGlobal = useGlobal((state) => state.setGlobal);
-  useEffect(() => {
-    list("");
-  }, []);
     return(
         <Content>
             {fileList.map((fileMes) => (

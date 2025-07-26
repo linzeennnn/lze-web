@@ -24,7 +24,7 @@ export default function PicItem({ url,name, type ,index}) {
     setLoaded(true);
   };
   return (
-    <div className="pic-item" key={url} 
+    <div className="pic-item main-item" title={name} key={url} 
     onClick={()=>{openMedia(url,type,index)}}
     >
       {loading && <div className="media-loading loading"></div>}

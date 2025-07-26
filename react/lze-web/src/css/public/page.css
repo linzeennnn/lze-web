@@ -1,4 +1,5 @@
 #top-bar{
+  color: var(--text);
     height: 60px;
     margin-left: 60px;
     position: fixed;

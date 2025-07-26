@@ -5,7 +5,7 @@ export default function FileItem({ fileMes, selected, traClick}){
       const path=nowPath+"/"+fileMes.name
     return(
         <div
-            className={`tra-list ${selected.includes(path) ? "tra-list-selected" : ""}`}
+            className={`tra-list main-item ${selected.includes(path) ? "tra-list-selected" : ""}`}
             onClick={() => traClick(path)}
             key={"tralist" + fileMes.name}
             >
