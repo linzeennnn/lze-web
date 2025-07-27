@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { notify } from '../public/notify';
-import { Get_system_theme, GetTheme } from '../public/getTheme';
+import { GetTheme } from '../public/getTheme';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),

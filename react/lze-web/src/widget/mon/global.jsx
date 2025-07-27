@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { notify } from '../public/notify';
+import { GetTheme } from '../public/getTheme';
 // 全局变量
 export const useGlobal = create((set, get) => {
   const storedUser = window.localStorage.getItem('userName');
@@ -12,6 +12,12 @@ export const useGlobal = create((set, get) => {
     loading: false,
     controlList: null,
     userList: null,
+    theme:{
+      mode:"",
+      color:{
+        mon:""
+      }
+    },
     monUrl: `${window.location.origin}/server/mon/`,
     setGlobal: (partial) => {
       set((state) => ({ ...state, ...partial }));
@@ -23,7 +29,14 @@ export const useGlobal = create((set, get) => {
   };
 });
 
-
+// 初始化
+export function InitData(){
+ const theme=GetTheme()
+  useGlobal.setState({
+    theme:theme
+  })
+  list()
+}
 // 加载页面
 export function loadPage(isLoad){
   useGlobal.setState({

@@ -3,7 +3,7 @@ import ActionBar from "./actionBar"
 export default function ControlBar({keyName,Mes}) {
     const [showAction,setShowAction]=useState(false)
     return (
-Mes?(<div className="control-bar">
+Mes?(<div className="control-bar main-item">
     <span className="control-name">{Mes.name}</span>
     {showAction?(<div className="action-list">
     {Object.entries(Mes.action).map(([actionKey,actionMes])=>{

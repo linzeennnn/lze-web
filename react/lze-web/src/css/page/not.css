@@ -23,7 +23,6 @@ textarea{
 }
 .note{
     position: relative;
-    background-color: rgba(160, 64, 126, 0.692);
     border-radius: 15px;
     width: 100%;
     margin: 10px;
@@ -32,6 +31,9 @@ textarea{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.note span{
+    color: unset !important;
 }
 .note-btn{
     bottom: 10px;
@@ -67,7 +69,7 @@ background-color: transparent;
     position: absolute;
     bottom: 0;
     right: 10px;
-    background-image: url(../../assets/icon/copy_pink.svg);
+    background-image: var(--copy_icon);
     transition: background-image 1s ease-in-out ;
 
 }
@@ -80,7 +82,7 @@ background-color: transparent;
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: url(../../assets/icon/no_pink.svg);
+    background-image: var(--no_icon);
 }
 #edit-back{
     display: flex;
@@ -88,18 +90,22 @@ background-color: transparent;
     position: absolute;
     justify-content: center;
     align-items: center;
+    background-color: var(--bg_color);
     width: 100%;
     height: 100%;
 }
 #edit-title{
     margin-top: 60px;
     text-align: center;
-    border-bottom: 2px solid rgb(0, 0, 0);
-    background-color: rgba(116, 43, 90, 0.575);
+    border-bottom: 2px solid var(--text);
+    color: var(--text);
     width: 100%;
     height: 60px;
+    font-weight: bold;
 }
 #edit-text{
+    font-weight: bold;
+    color: var(--text);
     white-space: pre-wrap;      
   word-break: break-word;     
   overflow-wrap: break-word; 
@@ -116,8 +122,7 @@ background-color: transparent;
 #add-title-box{
     border-radius: 15px;
     margin-right: 10px;
-    margin-left: 10px;
-    background-color: antiquewhite;
+    margin-left: 10px;box-shadow: var(--in_shadow);
     height: 40px;
     width: 120px;
     position: relative;
@@ -149,7 +154,7 @@ background-color: transparent;
     display: flex;
     flex: 1;
     margin-right: 10px;
-    background-color: antiquewhite;
+    box-shadow: var(--in_shadow);
 }
 #add-text-box span{
     position: absolute;
@@ -176,7 +181,9 @@ background-color: transparent;
     top: 0;
     width: 100%;
     height: 300px;
-    background-color: antiquewhite;
+    font-weight: bold;
+    background-color: var(--base_color);
+    box-shadow: var(--in_shadow);
 }
 .default-text{
     color: rgb(90, 86, 86);
@@ -185,7 +192,7 @@ background-color: transparent;
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: url(../../assets/icon/no_pink.svg);
+    background-image: var(--no_icon);
 }
 #not-upload{
     display: flex;
@@ -194,7 +201,7 @@ background-color: transparent;
 }
 #upload-percent{
     position: absolute;
-    color: rgb(250, 192, 250);
+    color: var(--text);
 }
 #drag-win{
     position: fixed;
@@ -207,7 +214,7 @@ background-color: transparent;
     pointer-events: none;
     justify-content: center;
     align-items: center;
-    background-color: #03231ea2;
+    background-color: var(--float_win_bg_color);
 }
 
 #drag-win div{
@@ -215,13 +222,13 @@ background-color: transparent;
     height: 200px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../../assets/icon/upload_pink.svg);
+    background-image: var(--upload_icon);
 }
-.save{background-image: url(../../assets/icon/save_pink.svg);}
-.edit{background-image: url(../../assets/icon/edit_pink.svg);}
-.copy-ok{background-image: url(../../assets/icon/yes_pink.svg) !important;}
-.open-note{background-image: url(../../assets/icon/down_pink.svg);}
-.close-note{background-image: url(../../assets/icon/up_pink.svg);}
-#add-btn{background-image: url(../../assets/icon/add_pink.svg);}
-#load-btn{background-image: url(../../assets/icon/load_pink.svg);}
-#upload-btn{background-image: url(../../assets/icon/upload_pink.svg);}
+.save{background-image: var(--save_icon);}
+.edit{background-image: var(--edit_icon);}
+.copy-ok{background-image: var(--yes_icon) !important;}
+.open-note{background-image: var(--down_icon);}
+.close-note{background-image:var(--up_icon);}
+#add-btn{background-image: var(--add_icon);}
+#load-btn{background-image: var(--load_icon);}
+#upload-btn{background-image: var(--upload_icon);}

@@ -40,10 +40,10 @@
 }
 
 [color="yellow"] {
-  --dark_back: #706f3b92;
+  --dark_back: #525234b5;
   --light_back: #ece6bfb1;
   --base_text: #7a753a;
-  --base_color: #8d8753;
+  --base_color: #6e6b4d;
   --dark_text: #f1ecbb;
   --light_text: #4d481f;
 }
@@ -104,6 +104,7 @@
 --save_icon: url(../../assets/icon/save_dark.svg);
 --setting_icon: url(../../assets/icon/setting_dark.svg);
 --switch_icon: url(../../assets/icon/switch_dark.svg);
+--time_icon:url(../../assets/icon/time_dark.svg);
 --todown_icon: url(../../assets/icon/todown_dark.svg);
 --toleft_icon: url(../../assets/icon/toleft_dark.svg);
 --toright_icon: url(../../assets/icon/toright_dark.svg);
@@ -111,6 +112,7 @@
 --up_icon: url(../../assets/icon/up_dark.svg);
 --upload_icon: url(../../assets/icon/upload_dark.svg);
 --video_icon: url(../../assets/icon/video_dark.svg);
+--user_icon:url(../../assets/icon/user_dark.svg);
 --yes_icon: url(../../assets/icon/yes_dark.svg);
 --zoomin_icon: url(../../assets/icon/zoomin_dark.svg);
 --zoomout_icon: url(../../assets/icon/zoomout_dark.svg);
@@ -145,12 +147,14 @@
 --save_icon: url(../../assets/icon/save_light.svg);
 --setting_icon: url(../../assets/icon/setting_light.svg);
 --switch_icon: url(../../assets/icon/switch_light.svg);
+--time_icon:url(../../assets/icon/time_light.svg);
 --todown_icon: url(../../assets/icon/todown_light.svg);
 --toleft_icon: url(../../assets/icon/toleft_light.svg);
 --toright_icon: url(../../assets/icon/toright_light.svg);
 --toup_icon: url(../../assets/icon/toup_light.svg);
 --up_icon: url(../../assets/icon/up_light.svg);
 --upload_icon: url(../../assets/icon/upload_light.svg);
+--user_icon:url(../../assets/icon/user_light.svg);
 --video_icon: url(../../assets/icon/video_light.svg);
 --yes_icon: url(../../assets/icon/yes_light.svg);
 --zoomin_icon: url(../../assets/icon/zoomin_light.svg);

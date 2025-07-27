@@ -15,7 +15,7 @@ export const useGlobal = create((set, get) => ({
     theme:{
       mode:"",
       color:{
-        pic:""
+        tra:""
       },
       userSelect:""
     },

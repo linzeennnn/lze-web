@@ -1,11 +1,7 @@
-import { useEffect } from 'react'
 import {Content} from '../../public'
-import { useGlobal,list } from '../global'
+import { useGlobal} from '../global'
 import ControlBar from './controlBar'
 export default function MonContent(){
-    useEffect(()=>{
-        list()
-    },[])
     const controlList=useGlobal((state)=>state.controlList)
     return(
         <Content>

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { notify } from '../public/notify';
+import { GetTheme } from '../public/getTheme';
+import {notify} from "../public/notify";
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -15,6 +16,12 @@ export const useGlobal = create((set, get) => ({
     text:"",
     type:""
   },
+    theme:{
+      mode:"",
+      color:{
+        not:""
+      }
+    },
   upload:{
     status:false,
     percent:"0%"
@@ -28,6 +35,14 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
+// 初始化
+export function InitData(){
+ const theme=GetTheme()
+  useGlobal.setState({
+    theme:theme
+  })
+  list()
+}
 //初始化编辑数据
 function init_edit(){
   const edit = useGlobal.getState().edit;

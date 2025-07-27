@@ -90,6 +90,12 @@ align-items: center;
     justify-content: center;
     align-items: center;
 }
+.panel-text {
+    max-width: 80%;
+    white-space: nowrap;       
+    overflow: hidden;
+    text-overflow: ellipsis;  
+}
 .panel-text-null{
     color: var(--global_text);
 }
