@@ -25,8 +25,7 @@ export const useGlobal = create((set, get) => {
     listWin:{
       type:"",
       name:"",
-      status:false,
-      color:""
+      status:false
     },
     widgetData:{
       doc:[],

@@ -19,7 +19,7 @@ export default function Listwin(){
             }}
             ></div>
             <div className="list-win" 
-            color={listWin.color}
+            color={theme.color[listWin.type]}
             mode={theme.mode}
             id={listWin.type+"-list"}>
             {creatList(listWin.type,listWin.name)}

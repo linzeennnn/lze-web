@@ -10,7 +10,7 @@ import '../../css/public/page.css';
 
 export default function App() {
   return ( 
-     <>
+     <div id="app">
       <ScrollTop>
         <HeadBar />
       <MonTopBar />
@@ -20,6 +20,6 @@ export default function App() {
         <MonWin/>
       <MonSideBar />
       <MonContent />
-    </>
+    </div>
   );
 }

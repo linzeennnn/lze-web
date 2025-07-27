@@ -2,7 +2,7 @@ import React from "react";
 import { notify } from "../../../public/notify";
 import { useGlobal } from "../../global";
 
-export default function Panel({showItem,type,color}){
+export default function Panel({showItem,type}){
     return(
         <div className="widget-panel">
             {
@@ -14,7 +14,8 @@ export default function Panel({showItem,type,color}){
                     <div className={"widget-panel-item "+type+"-panel"} title="查看"
                     onClick={(e)=>{
                         e.stopPropagation();
-                        openListWin(type,item,color)}}>
+                        
+                        openListWin(type,item)}}>
                        {type=="pic"? get_pic(item):(<span className={"panel-text "+(item==""?"panel-text-null":"")}>
                             {item==""?"无":item}
                             </span>)}
@@ -36,7 +37,7 @@ if(picMes.media=="vid"){
 }
 return (<span className="panel-text panel-text-null">空</span>)
 }
-function openListWin(type,name,color){
+function openListWin(type,name){
     if(type=="tra"){
         notify("最近删除文件:"+name)
         return
@@ -52,8 +53,7 @@ function openListWin(type,name,color){
         listWin:{
             type:type,
             name:name,
-            status:true,
-            color:color
+            status:true
         }
     })
 }
