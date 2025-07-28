@@ -13,8 +13,8 @@
     -5px 5px 20px rgba(0, 0, 0, 0.068); 
 }
 [color="default"] {
-  --dark_back: #4d4d4d92;
-  --light_back: #d2d2d2b1;
+  --dark_back: #2e2e2eb6;
+  --light_back: #d2d2d2bb;
   --base_text: #868686;
   --base_color: #787878;
   --dark_text: #cfcfcf;
@@ -58,19 +58,19 @@
 }
 
 [color="pink"] {
-  --dark_back: #704d5e92;
-  --light_back: #e8bfd3b1;
+  --dark_back: #442e39af;
+  --light_back: #dfaac4b6;
   --base_text: #875c6eb0;
-  --base_color: #8e527c;
+  --base_color: #6e5567;
   --dark_text: #f3d3e4;
-  --light_text: #4a2c3e;
+  --light_text: #582f48;
 }
 
 [color="red"] {
   --dark_back: #703b3b92;
   --light_back: #e9bfbfb1;
-  --base_text: #803f3f;
-  --base_color: #8d5353;
+  --base_text: #694949;
+  --base_color: #694949;
   --dark_text: #f3c8c8;
   --light_text: #4a1e1e;
 }
@@ -162,6 +162,10 @@
 
 }
 /* css */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text) transparent;
+}
 span{
   font-weight: bold;
 }
@@ -170,6 +174,7 @@ span{
   display: contents;
 }
 html, body {
+  height: 100%;
   position: relative;
   margin: 0;
   padding: 0;
@@ -179,6 +184,9 @@ html, body {
   right: 0;
   scrollbar-width: none;         
   -ms-overflow-style: none; 
+}
+body{
+  background-color: var(--base_color);
 }
 body.no-scroll {
   overflow: hidden;
@@ -197,7 +205,11 @@ body::-webkit-scrollbar{
   display: none;              
 }
 .wallpaper{
+  width: 100%;
+  height: 100%;
+  display: block !important;
   position: fixed;
+  pointer-events: none;
   top: 0;
   bottom: 0;
   left: 0;
@@ -207,11 +219,11 @@ body::-webkit-scrollbar{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
     background-blend-mode: overlay;
   z-index: -1;
 }
 #root{
+  height: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -232,7 +244,6 @@ input{
   opacity: 0.7;
   width: 32px;
   height: 32px;
-  background-color: #ff0000;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -276,8 +287,9 @@ opacity: 1;
 .float-win{
   z-index: 100;
 }
-#notify{
+.notify{
   left: 50%;
+  top: 200px;
   transform: translateX(-50%);
   position: fixed;
   min-width: 30px;
@@ -286,15 +298,21 @@ opacity: 1;
   min-height: 30px;
   height: fit-content;
   border-radius: 15px;
-  background-color: rgba(0, 0, 255, 0.459);
+  color: var(--text);
+  opacity: 0;
+  background-color: var(--bg_color) !important;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  transition: top 0.5s ease, opacity 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
-#notify-text{
-  color: aliceblue;
+.notify-show{
+  transform: translateX(-50%) translateY(-100px);
+  opacity: 1;
+}
+.notify-text{
+  color: var(--text);
 }
 .tooltip{
   background-color: var(--bg_color);
@@ -303,8 +321,8 @@ opacity: 1;
   height: fit-content;
     font-weight: bold;
     border-radius: 15px;
-  word-wrap: break-word;      /* 兼容旧浏览器 */
-  overflow-wrap: break-word;  /* 推荐写法，现代浏览器标准 */
+  word-wrap: break-word;      
+  overflow-wrap: break-word;  
   white-space: normal;        
     padding: 10px;
     position: fixed;

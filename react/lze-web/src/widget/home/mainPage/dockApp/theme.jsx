@@ -89,6 +89,8 @@ function set_theme(type, value) {
       updatedTheme.mode = value; 
     }
   }
+  document.body.setAttribute("mode",updatedTheme.mode)
+  document.body.setAttribute("color",updatedTheme.color["home"])
   useGlobal.setState({ theme: updatedTheme });
   localStorage.setItem("theme", JSON.stringify(updatedTheme));
 }

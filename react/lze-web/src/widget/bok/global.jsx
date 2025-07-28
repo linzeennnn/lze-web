@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { GetTheme } from '../public/getTheme';
 import { notify } from '../public/notify';
 // 全局变量
 export const useGlobal = create((set, get) => ({
@@ -8,6 +9,12 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   bokList:[],
   bokUrl:`${window.location.origin}/server/bok/`,
+    theme:{
+      mode:"",
+      color:{
+        bok:""
+      }
+    },
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -16,6 +23,15 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
+// 初始化其
+export function InitData(){
+        sessionStorage.setItem('app', 'true');
+ const theme=GetTheme("bok")
+  useGlobal.setState({
+    theme:theme
+  })
+  list()
+}
 // 扫描目录
 export function list(){
   loadPage(true)

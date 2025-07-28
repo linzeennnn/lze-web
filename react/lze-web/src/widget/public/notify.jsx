@@ -19,14 +19,8 @@ function Notify({ message, duration = 1000, onClose }) {
   }, [duration, onClose]);
 
   return (
-    <div
-      id="notify"
-            style={{
-        top: visible ? '80px' : '150px', 
-        opacity: visible ? 1 : 0,
-      }}
-    >
-      <span id="notify-text">{message}</span>
+    <div className={`notify ${visible ? 'notify-show' : ''}`}>
+      <span className="notify-text">{message}</span>
     </div>
   );
 }
@@ -34,13 +28,14 @@ function Notify({ message, duration = 1000, onClose }) {
 // 全局调用接口
 export function notify(text, duration = 1000) {
   const container = document.createElement('div');
-  document.body.appendChild(container);
+  const app = document.getElementById('app');
+  app.appendChild(container);
 
   const root = createRoot(container);
 
   const cleanup = () => {
     root.unmount();
-    document.body.removeChild(container);
+    app.removeChild(container);
   };
 
   root.render(<Notify message={text} duration={duration} onClose={cleanup} />);

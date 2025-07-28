@@ -1,7 +1,7 @@
 export function Get_system_theme(){
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
-export function GetTheme(){
+export function GetTheme(type){
     let theme=localStorage.getItem("theme")
           if(theme){
             theme =JSON.parse(theme)
@@ -27,5 +27,7 @@ export function GetTheme(){
               userSelect:"system"
             }
           }
+          document.body.setAttribute("mode",theme.mode)
+          document.body.setAttribute("color",theme.color[type])
           return theme
 }

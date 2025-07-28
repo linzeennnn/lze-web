@@ -20,7 +20,7 @@ export default function Note({name}){
   }
 }, [text, show,loaded]);
     return(
-        <div className="note main-item">
+        <div className="note">
             <Del name={name}/>
             <span className="title title-show">{title}</span>
        {show? 

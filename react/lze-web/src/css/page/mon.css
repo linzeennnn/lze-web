@@ -170,3 +170,8 @@
 #save-time{background-image: var(--save_icon);}
 #user-btn{background-image: var(--user_icon);}
 #switch-unit{background-image: var(--switch_icon);}
+@media (max-width: 600px) {
+    .control-bar{
+        width: 80%;
+    }
+}

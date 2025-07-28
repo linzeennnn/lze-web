@@ -51,8 +51,16 @@ export const useGlobal = create((set, get) => {
   };
 });
 export function InitData(){
+// 锁屏设置
+if (sessionStorage.getItem('app') == 'true') {
+  useGlobal.setState({ locked: false });
+} else {
+  useGlobal.setState({ locked: true });
+}
+
+  sessionStorage.setItem('app', 'false');
 // 主题设置
-const theme=GetTheme()
+const theme=GetTheme("home")
 useGlobal.setState({
   theme:theme})
 // 用户信息

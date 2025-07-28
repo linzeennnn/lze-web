@@ -2,7 +2,7 @@ import { useGlobal,list,loadPage } from "../global"
 import { notify } from "../../public/notify"
 export default function BokItem({name}){
     return(
-        <div className="bookmark"
+        <div className="bookmark main-item"
         title={"访问:"+name}
         onClick={()=>{
             open_link(name)

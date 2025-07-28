@@ -21,16 +21,7 @@ export default function FileText({fileMes,editMode,nameEdit,rename}){
             title={"查看" + fileMes[0]}
             onClick={(e) => {
                 e.stopPropagation();
-
-                if (fileMes[1] === "dir" || fileMes[1] === "dir_link") {
-                const dir_path = nowPath + "/" + fileMes[0];
-                list(dir_path);
-                }
-
-                if (fileMes[1] === "file" || fileMes[1] === "file_link") {
-                const file_path =  nowPath + "/" + fileMes[0];
-                window.location.href = window.location.origin + "/file/Documents" + file_path;
-                }
+                list(nowPath + "/" + fileMes[0]);
             }}
             >
             {fileMes[0]}

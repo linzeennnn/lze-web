@@ -26,7 +26,7 @@ export default function DirList(){
                 }
                 </div>
         </div>
-        {showList?<div id="close-list-win"
+        {showList?<div id="close-list-win" 
         onClick={()=>openList()}
         ></div>:null}
         </>

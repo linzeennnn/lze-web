@@ -12,6 +12,11 @@ export const useGlobal = create((set, get) => ({
   showBg: false,
   loading: false,
   dragWin:false,
+  fileWin:{
+    status:false,
+    url:"",
+    view:false
+  },
     
     theme:{
       mode:"",
@@ -36,7 +41,8 @@ export const useGlobal = create((set, get) => ({
   getGlobal: () => get(),
 }));
 export function InitData(){
- const theme=GetTheme()
+        sessionStorage.setItem('app', 'true');
+ const theme=GetTheme("doc")
   useGlobal.setState({
     theme:theme
   })
@@ -59,12 +65,22 @@ export function list(path) {
     .then((res) => res.json())
     .then((data) => {
       loadPage(false)
+      if(data.type=="dir"){
       useGlobal.setState({
         fileList: data.filelist,
         nowPath: data.currentFolder,
         parentPath: data.parentFolder,
         selected: [],
-      });
+      });}
+      if(data.type=="file"){
+        useGlobal.setState({
+          fileWin:{
+            status:true,
+            url:data.url,
+            view:data.view
+          }
+        })
+      }
     });
 }
 

@@ -6,9 +6,6 @@ import BokItem from './bokItem';
 // import FileItem from './fileItem';
 export default function DocContent(){
     const bokList=useGlobal((state)=>state.bokList)
-  useEffect(() => {
-    list("");
-  }, []);
     return(
         <Content>
             {

@@ -43,7 +43,7 @@ export default function Widget({tmpLoad}) {
                               <Panel showItem={widgetData[item.id]} type={item.id}/>
                             <span className="widget-title"
                             mode={theme.mode}
-                            color={theme.color[item.id]}>{item.name}</span>
+                            color={theme.color["home"]}>{item.name}</span>
                         </div>
                     ))}
                 </div>

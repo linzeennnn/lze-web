@@ -1,8 +1,10 @@
+#root{
+    overflow: hidden;
+}
 /* widget */
 #widget{
-    position: fixed;
     width: 100%;
-    height: 85vh;
+    height: 85%;
     top: 20px;
     display: flex;
     opacity: 0 ;
@@ -11,12 +13,22 @@
     align-items: center;
     pointer-events: none;
     flex-direction: column;
+     will-change: transform, opacity; 
     transition: transform 1s ease, opacity 1s ease;
+}
+#widget .widget-panel{
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
 }
 .widget-load{
     pointer-events: unset !important;
     opacity: 1 !important;
     transform: scale(1) !important;
+}
+.widget-load .widget-panel{
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 .widget-line{
     height: 30%;
@@ -32,21 +44,21 @@ align-items: center;
     cursor: pointer;
     background-color: var(--base_color);
     background-blend-mode: overlay;
-width: 50%;
-margin: 10px;
-height: 100%;
-display: flex;
-background-image: var(--wallpaper);
-box-shadow: var(--out_shadow);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-flex-direction: row;
-position: relative;
-justify-content: center;
-align-items: center;
-border-radius: 15px;
-transition: transform 0.3s ease-in;
+    width: 45%;
+    margin: 10px;
+    height: 100%;
+    display: flex;
+    background-image: var(--wallpaper);
+    box-shadow: var(--out_shadow);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    flex-direction: row;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in;
 }
 .widget-item:hover{
     opacity: 1;
@@ -100,7 +112,7 @@ align-items: center;
     color: var(--global_text);
 }
 .widget-panel-item{
-    background-color: var(--base_color);
+    background-color: var(--bg_color);
     width: 80%;
     display: flex;
     justify-content: center;
@@ -112,12 +124,14 @@ align-items: center;
     transform: scale(1.1);
 }
 .doc-panel{
+    position:  relative !important;
     height: 25%;
     border-radius: 15px;
     margin: 5px;
 }
 .pic-panel{
-    width: 70% !important;
+    min-width: 80% !important;
+    max-width: 150px !important;
     aspect-ratio: 1/1;
     overflow: hidden;
     border-radius: 15px;
@@ -159,19 +173,18 @@ align-items: center;
     box-shadow: var(--out_shadow);
     background-color: var(--bg_color);
       min-width: 80px;
-      position: fixed;
-      bottom: -90px;
       display: flex;
       justify-content: center;
       align-items: center;
-    border-radius: 25px; 
+    border-radius: 36px; 
+    transform: translateY(calc(100% + 60px));
     padding: 10px;
     height: 70px;
-    transition: bottom 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
     z-index: 10;
 }
 .dock-load{
-    bottom: 10px !important;
+    transform: translateY(0) !important;
 }
 .dock-app{
     background-color: var(--base_color);
@@ -202,8 +215,12 @@ align-items: center;
     justify-content: center;
     bottom: 10%;
     height: fit-content;
-    min-width: 50vw;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    min-width: 300px;
     top: 50%;
+    width: 80%;
+    max-width: 500px;
     padding: 60px;
     padding-left: 5px;
     padding-right: 5px;
@@ -261,18 +278,20 @@ align-items: center;
     position: fixed;
     display: flex;
     flex-direction: column;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     width: 100%;
     height: 100%;
-    top: -100%;
     pointer-events: none;
     display: flex;
-    transition:  top 0.5s ease-in-out;
+    opacity: 0;
+    transition:  opacity 0.5s ease-in-out;
     justify-content: center;
     align-items: center;
 }
 .lock-page-load{
     pointer-events: unset !important;
-top: 0 !important;
+    opacity: 1 !important;
 }
 #unlock-btn{
     box-shadow: var(--out_shadow);
@@ -583,5 +602,14 @@ background-image: var(--power_icon);
 @media (max-width: 600px) {
     .widget-panel{
         display: none !important;
+    }
+}
+@media (max-width: 420px) {
+
+    #dock{
+        width: 90%;
+    }
+    .dock-app{
+        margin: 10px;
     }
 }

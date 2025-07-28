@@ -20,6 +20,7 @@ textarea{
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--text);
 }
 .note{
     position: relative;
@@ -27,30 +28,29 @@ textarea{
     width: 100%;
     margin: 10px;
     min-height: 100px;
+    background-color: var(--bg_color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.note span{
-    color: unset !important;
-}
 .note-btn{
     bottom: 10px;
 }
 .text-box{
+    background-color: var(--float_win_bg_color);
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     min-height: 100px;
+    margin-bottom: 10px;
     height: fit-content;
 }
 .hljs {
     white-space: pre-wrap;      
   word-break: break-word;     
   overflow-wrap: break-word; 
-
     font-weight: bold;
     width: 90%;
     font-size: 20px;
@@ -232,3 +232,8 @@ background-color: transparent;
 #add-btn{background-image: var(--add_icon);}
 #load-btn{background-image: var(--load_icon);}
 #upload-btn{background-image: var(--upload_icon);}
+@media (max-width: 600px) {
+    .note{
+        width: 80%;
+    }
+}

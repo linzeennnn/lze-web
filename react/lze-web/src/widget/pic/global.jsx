@@ -44,7 +44,8 @@ export const useGlobal = create((set, get) => ({
 }));
 // 初始化
 export function Initdata(){
- const theme=GetTheme()
+        sessionStorage.setItem('app', 'true');
+ const theme=GetTheme("pic")
   useGlobal.setState({
     theme:theme
   })
