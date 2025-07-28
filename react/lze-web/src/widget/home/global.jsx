@@ -51,18 +51,6 @@ export const useGlobal = create((set, get) => {
   };
 });
 export function InitData(){
-// 锁屏设置
-if (sessionStorage.getItem('app') == 'true') {
-  useGlobal.setState({ locked: false });
-} else {
-  useGlobal.setState({ locked: true });
-}
-
-  sessionStorage.setItem('app', 'false');
-// 主题设置
-const theme=GetTheme("home")
-useGlobal.setState({
-  theme:theme})
 // 用户信息
     let userName=localStorage.getItem("userName")
     let token =localStorage.getItem("token")
@@ -72,7 +60,19 @@ useGlobal.setState({
         userName: userName,
         token: token
       })
+// 锁屏设置
+if (sessionStorage.getItem('app') == 'true') {
+  useGlobal.setState({ locked: false });
+} else {
+  useGlobal.setState({ locked: true });
       auth(userName,token)
+}
+
+  sessionStorage.setItem('app', 'false');
+// 主题设置
+const theme=GetTheme("home")
+useGlobal.setState({
+  theme:theme})
 
 }
  function auth(name,token){
