@@ -26,6 +26,11 @@ export default defineConfig({
       input: {
         home: resolve(__dirname, 'index.html'),
         doc: resolve(__dirname, 'doc.html'),
+        pic: resolve(__dirname, 'pic.html'),
+        tra: resolve(__dirname, 'tra.html'),
+        mon: resolve(__dirname, 'mon.html'),
+        not: resolve(__dirname, 'not.html'),
+        bok: resolve(__dirname, 'bok.html'),
       },
     },
   }

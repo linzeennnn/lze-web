@@ -48,8 +48,8 @@ function update_act(control,action,name,change){
             }else{
                 notify(res.status+"错误")
             }
-            return
             loadPage(false)
+            return
         }
         notify("修改成功")
         list()

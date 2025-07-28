@@ -90,7 +90,7 @@
 }
 #go-back{
   position: fixed;
-  top: 10px;
+  top: 14px;
   left: 10px;
   border-radius: 7px;
   box-shadow: var(--out_shadow);
