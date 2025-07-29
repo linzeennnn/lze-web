@@ -17,13 +17,13 @@ export default defineConfig({
         // 不设置 theme_color，让 HTML 控制
         icons: [
           {
-            src: 'src/assets/icon/linzeen.svg', // WebApp + 安卓
+            src: '/assets/icon/linzeen.svg', // WebApp + 安卓
             sizes: '512x512',
             type: 'image/svg+xml',
             purpose: 'any'
           },
           {
-            src: 'src/assets/icon/linzeen.png', // iPhone
+            src: '/assets/icon/linzeen_apple.png', // iPhone
             sizes: '180x180',
             type: 'image/png',
             purpose: 'any'
