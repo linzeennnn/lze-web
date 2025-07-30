@@ -3,7 +3,7 @@ import EditBtn from "./editBtn"
 import DownloadBtn from "./downloadBtn"
 import { useState } from "react";
 import { useGlobal,list,loadPage } from "../global";
-import { notify } from "../../public/notify";
+import { notify } from "../../../components/notify";
 export default function FileItem({ fileMes, selected, docClick}){
     const [editMode, setEditMode] = useState(false);
     const[nameInput,setNameInput]=useState(fileMes[0])

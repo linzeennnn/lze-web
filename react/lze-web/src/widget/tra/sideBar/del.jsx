@@ -1,5 +1,5 @@
 import { useGlobal,list,loadPage } from "../global"
-import { notify } from "../../public/notify"
+import { notify } from "../../../components/notify"
 export default function Del(){
 
     const user=useGlobal((state)=>state.userName)

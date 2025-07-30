@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { WinBg } from "../../../public"
+import { WinBg } from "../../../../components/winBg"
 import { useGlobal } from "../../global"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)

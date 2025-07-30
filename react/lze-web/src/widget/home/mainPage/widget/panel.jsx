@@ -1,5 +1,5 @@
 import React from "react";
-import { notify } from "../../../public/notify";
+import { notify } from "../../../../components/notify";
 import { useGlobal } from "../../global";
 
 export default function Panel({showItem,type}){

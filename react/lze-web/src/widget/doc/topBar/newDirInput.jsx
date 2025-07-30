@@ -1,6 +1,6 @@
 import { useState } from "react"
 import {useGlobal,list,loadPage} from '../global'; 
-import { notify } from '../../public/notify';
+import { notify } from '../../../components/notify';
 export default function NewDirInput({setCreate}) {
     const[newName,setNewName]=useState("")
      const nameChange = (e) => {

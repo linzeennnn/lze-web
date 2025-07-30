@@ -1,4 +1,4 @@
-import SideBar from '../../public/sideBar'
+import SideBar from '../../../components/sideBar'
 import { list } from '../global'
 export default function BokSidepBar(){
 return (

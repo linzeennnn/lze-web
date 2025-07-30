@@ -1,5 +1,5 @@
 import { useGlobal } from "../../global";
-import { Get_system_theme } from "../../../public/getTheme";
+import { Get_system_theme } from "../../../../components/getTheme";
 import { useState } from "react";
 export default function Theme() {
   const theme = useGlobal((state) => state.theme);

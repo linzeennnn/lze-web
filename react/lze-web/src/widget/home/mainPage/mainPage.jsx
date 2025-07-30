@@ -1,7 +1,7 @@
 import Widget from './widget/widget'
 import Dock from './dock'
 import {useGlobal} from '../global'
-import { WinBg } from '../../public/winBg'
+import { WinBg } from '../../../components/winBg'
 import { useEffect, useState } from 'react'
 import Listwin from './listWin/listWin'
 export default function MainPage() {

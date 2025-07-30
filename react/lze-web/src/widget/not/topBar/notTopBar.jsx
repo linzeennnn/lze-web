@@ -1,5 +1,5 @@
-import { use, useEffect, useRef, useState } from "react";
-import { TopBar } from "../../public";
+import { useEffect, useRef, useState } from "react";
+import  TopBar  from "../../../components/topBar";
 import { Save_note,useGlobal } from "../global";
 export default function NotTopBar(){
     const edit=useGlobal((state)=>state.edit)

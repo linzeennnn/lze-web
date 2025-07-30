@@ -2,9 +2,12 @@ import NotContent from './content/notContent';
 import NotTopBar from './topBar/notTopBar';
 import NotSideBar from './sideBar/notSideBar';
 import NotWin from './win/notWin'
-import {ScrollTop,GoTopBtn,HeadBar,GoBack} from '../public'
+import {ScrollTop} from '../../components/scrollTop'
+import GoTopBtn from '../../components/goTopBtn'
+import HeadBar from '../../components/headBar'
+import GoBack from '../../components/goBack'
+import Tooltip from '../../components/tooltip'
 import{DragOver,DragLeave,Drop, InitData, useGlobal} from './global'
-import Tooltip from '../public/tooltip'
 import '../../css/page/not.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';

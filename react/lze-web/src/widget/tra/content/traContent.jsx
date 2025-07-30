@@ -1,8 +1,6 @@
-import Content from '../../public/content'
-import {notify} from '../../public/notify'
-import {list} from '../global'
+import Content from '../../../components/content'
+import {notify} from '../../../components/notify'
 import {useGlobal} from '../global'
-import { useEffect } from 'react';
 import FileItem from './fileItem';
 export default function TraContent(){
     const tra_click = (name) => {

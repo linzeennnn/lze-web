@@ -1,4 +1,4 @@
-import {Content} from '../../public'
+import Content from '../../../components/content'
 import { useGlobal} from '../global'
 import ControlBar from './controlBar'
 export default function MonContent(){

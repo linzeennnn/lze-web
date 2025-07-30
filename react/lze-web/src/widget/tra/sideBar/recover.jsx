@@ -1,5 +1,5 @@
 import { useGlobal,list,loadPage } from "../global"
-import { notify } from "../../public/notify"
+import { notify } from "../../../components/notify"
 export default function Recover(){
     const user=useGlobal((state)=>state.userName)
     const token=useGlobal((state)=>state.token)

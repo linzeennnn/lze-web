@@ -1,5 +1,5 @@
 import {useGlobal, list } from "../global"
-import { notify } from "../../public/notify"
+import { notify } from "../../../components/notify"
 export default function HomePic(){
     const nowPath=useGlobal((state)=>state.nowPath)
     return(

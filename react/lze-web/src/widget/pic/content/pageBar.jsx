@@ -1,5 +1,5 @@
 import { useGlobal } from "../global";
-import { notify } from "../../public/notify";
+import { notify } from "../../../components/notify";
 import { useState } from "react";
 export default function PageBar(){
     const [inputPage, setInputPage] = useState("")

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { notify } from '../public/notify.jsx'
-import { GetTheme } from '../public/getTheme.jsx';
+import { notify } from '../../components/notify.jsx'
+import { GetTheme } from '../../components/getTheme.jsx';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'visitor';
   let token = window.localStorage.getItem('token') || '';
@@ -10,6 +10,11 @@ export const useGlobal = create((set, get) => {
     token:"",
     showBg: false,
     locked:true,
+    lang:{
+      type:"",
+      list:[],
+      userSelect:""
+    },
     theme:{
       mode:"",
       color:{

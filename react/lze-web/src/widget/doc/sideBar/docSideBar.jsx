@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import SideBar from '../../public/sideBar'
+import SideBar from '../../../components/sideBar'
 import Copy from './copy'
 import Del from './del'
 import Move from './move'

@@ -1,4 +1,4 @@
-import { SideBar } from "../../public";
+import  SideBar  from "../../../components/sideBar";
 import SwitchMediaBtn from "./switchMediaBtn";
 import UploadBtn from "./uploadBtn"
 import Load from "./load";

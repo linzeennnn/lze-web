@@ -1,5 +1,5 @@
-import Content from '../../public/content'
-// import {notify} from '../../public/notify'
+import Content from '../../../components/content'
+// import {notify} from '../../../components/notify'
 import {useGlobal,list} from '../global'
 import { useEffect } from 'react';
 import BokItem from './bokItem';

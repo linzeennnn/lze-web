@@ -31,7 +31,8 @@ export default defineConfig({
         ]
       },
       workbox: {
-        cleanupOutdatedCaches: true
+        cleanupOutdatedCaches: true,
+        navigateFallbackDenylist: [/^\/file\//]
       }
     })
   ],

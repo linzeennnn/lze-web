@@ -1,4 +1,4 @@
-import TopBar from '../../public/topBar'
+import TopBar from '../../../components/topBar'
 import GoUp from './goUp'
 import ShowPath from './showPath'
 import GoHome from './goHome'

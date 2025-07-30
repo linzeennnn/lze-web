@@ -25,5 +25,6 @@ func Router() *gin.Engine {
 	RouterPic(r)
 	RouterDoc(r)
 	RouterTra(r)
+	RouterLang(r)
 	return r
 }

@@ -1,7 +1,5 @@
 import { useGlobal ,Upload,list} from "../global";
-import { WinBg } from "../../public";
-import {notify} from "../../public/notify";
-import { useState } from "react";
+import { WinBg } from "../../../components/winBg";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useGlobal((state) => state.upload); 

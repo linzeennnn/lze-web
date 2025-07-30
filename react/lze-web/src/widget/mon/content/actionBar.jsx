@@ -1,5 +1,5 @@
 import {useGlobal,list,loadPage} from '../global'
-import { notify } from '../../public/notify'
+import { notify } from '../../../components/notify'
 export default function ActionBar({keyName,Mes}){
     const nowuser=useGlobal((state)=>state.nowuser)
     return(

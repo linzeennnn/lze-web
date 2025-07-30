@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { notify } from "../../public/notify"
 import { InitData, useGlobal } from "../global"
 
 export default function LoadBtn(){

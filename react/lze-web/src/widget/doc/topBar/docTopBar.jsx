@@ -1,4 +1,4 @@
-import TopBar from '../../public/topBar'
+import TopBar from '../../../components/topBar'
 import TopBarBox from './topBarBox'
 import GoUp from './goUp'
 import NewDirBtn from './newDirBtn'

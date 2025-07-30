@@ -1,5 +1,5 @@
 import {useGlobal}from '../global'; 
-import{WinBg} from '../../public'
+import{WinBg} from '../../../components/winBg'
 export default function LoadWin(){
   const showBg = useGlobal((state) => state.showBg);
   const loading = useGlobal((state) => state.loading);

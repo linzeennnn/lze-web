@@ -1,4 +1,4 @@
-import {TopBar} from '../../public'
+import TopBar from '../../../components/topBar'
 import UserPro from './userPro'
 import TimeBar from './timeBar'
 import { useGlobal } from '../global'

@@ -1,4 +1,4 @@
-import {SideBar} from '../../public'
+import SideBar from '../../../components/sideBar'
 import Load from './load'
 import Del from './del'
 import Recover from './recover'

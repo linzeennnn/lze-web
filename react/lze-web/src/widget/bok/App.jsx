@@ -2,8 +2,11 @@ import BokContent from './content/bokContent';
 import BokTopBar from './topBar/bokTopBar';
 import BokSideBar from './sideBar/bokSideBar';
 import BokWin from './win/bokWin'
-import {ScrollTop,GoTopBtn,HeadBar,GoBack} from '../public'
-import Tooltip from '../public/tooltip'
+import {ScrollTop} from '../../components/scrollTop'
+import GoTopBtn from '../../components/goTopBtn'
+import HeadBar from '../../components/headBar'
+import GoBack from '../../components/goBack'
+import Tooltip from '../../components/tooltip'
 import '../../css/page/bok.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';

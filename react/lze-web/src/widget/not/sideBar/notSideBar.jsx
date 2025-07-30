@@ -1,4 +1,4 @@
-import { SideBar } from "../../public";
+import  SideBar  from "../../../components/sideBar";
 import Add from "./add";
 import Load from "./load";
 import UploadBtn from "./upload";

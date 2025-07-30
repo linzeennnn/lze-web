@@ -2,13 +2,16 @@ import DocContent from './content/docContent';
 import DocTopBar from './topBar/docTopBar';
 import DocSideBar from './sideBar/docSideBar';
 import DocWin from './win/docWin'
-import {ScrollTop,GoTopBtn,HeadBar,GoBack} from '../public'
+import {ScrollTop} from '../../components/scrollTop'
+import GoTopBtn from '../../components/goTopBtn'
+import HeadBar from '../../components/headBar'
+import GoBack from '../../components/goBack'
+import Tooltip from '../../components/tooltip'
 import{DragOver,DragLeave,Drop, InitData,useGlobal} from './global'
 import '../../css/page/doc.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useEffect } from 'react';
-import Tooltip from '../public/tooltip'
 export default function App() {
     const theme=useGlobal(state=>state.theme)
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GetTheme } from '../public/getTheme';
+import { GetTheme } from '../../components/getTheme';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),

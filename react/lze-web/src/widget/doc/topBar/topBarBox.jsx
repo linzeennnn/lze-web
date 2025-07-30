@@ -1,7 +1,7 @@
 import ShowPath from './showPath';
 import NewDirInput from './newDirInput';
 import {useGlobal,list} from '../global';
-import { notify } from '../../public/notify';
+import { notify } from '../../../components/notify';
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus
     const upload=useGlobal((state) => state.upload); 

@@ -1,4 +1,4 @@
-import { notify } from "../../public/notify"
+import { notify } from "../../../components/notify"
 import { useGlobal,list,loadPage } from "../global"
 export default function Del(){
     return(
