@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useGlobal } from "../global"
-import Textbar from "./textBar";
+import User from "./user";
+import BtnBox from "./btnBox";
 export default function LockPage(){
     const locked =useGlobal(state => state.locked);
       const[tmpLoad,setTmpLoad]=useState(true)
@@ -9,17 +10,8 @@ export default function LockPage(){
             <div id="head-bar" className={(locked&&tmpLoad)?"head-bar-load":""}>
                 <div id="head-name"></div>
             </div>
-            <Textbar/>
-            <button className="btn" id="unlock-btn" title="开始"
-            onClick={()=>{
-                setTmpLoad(false)
-                setTimeout(() => {
-                        useGlobal.setState({locked:false})
-                    setTmpLoad(true)
-                    
-                }, 500);
-                    }}
-            ></button>
+            <User/>
+            <BtnBox unlockProp={setTmpLoad}/>
         </div>
     )
 }

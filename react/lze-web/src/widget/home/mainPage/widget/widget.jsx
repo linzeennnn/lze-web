@@ -15,10 +15,6 @@ export default function Widget({tmpLoad}) {
     ];
 
     const rows = [];
-    useEffect(() => {
-        getWidgetData()
-}, [locked, tmpLoad]);
-
     for (let i = 0; i < widget.length; i += 2) {
         rows.push(widget.slice(i, i + 2));
     }
@@ -53,18 +49,4 @@ export default function Widget({tmpLoad}) {
 }
 function to_next(type){
 window.location.href=type+'.html';
-}
-function getWidgetData(){
-    const user=useGlobal.getState().userName;
-    fetch(window.location.origin+'/server/home/widget',{
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({user})
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        useGlobal.setState({widgetData:data})
-    })
 }

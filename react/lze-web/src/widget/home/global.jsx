@@ -1,10 +1,11 @@
 import { create } from 'zustand';
 import { notify } from '../public/notify.jsx'
-import { Get_system_theme, GetTheme } from '../public/getTheme.jsx';
+import { GetTheme } from '../public/getTheme.jsx';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'visitor';
   let token = window.localStorage.getItem('token') || '';
   return {
+    load:0,
     userName:"visitor",
     token:"",
     showBg: false,
@@ -73,9 +74,11 @@ if (sessionStorage.getItem('app') == 'true') {
 const theme=GetTheme("home")
 useGlobal.setState({
   theme:theme})
-
+// widget
+getWidgetData();
 }
  function auth(name,token){
+    const load=useGlobal.getState().load
     name=name?name:"visitor";
     token=token?token:"";
     fetch(window.location.origin+'/server/login/auth_status',
@@ -99,9 +102,26 @@ useGlobal.setState({
             }
             window.localStorage.setItem('userName',"visitor");
             window.localStorage.setItem('token',"");
-            useGlobal.setState({userName:"visitor",token:""})
+            useGlobal.setState({userName:"visitor",token:"",load:useGlobal.getState().load+1})
             return
         }
+        useGlobal.setState({load:useGlobal.getState().load+1})
         notify("登录用户:"+(name=="visitor"?"游客":name))
+    })
+}
+
+function getWidgetData(){
+    const user=useGlobal.getState().userName;
+    const load=useGlobal.getState().load
+    fetch(window.location.origin+'/server/home/widget',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({user})
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        useGlobal.setState({widgetData:data,load:useGlobal.getState().load+1})
     })
 }

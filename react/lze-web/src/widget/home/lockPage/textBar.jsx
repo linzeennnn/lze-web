@@ -9,12 +9,18 @@ export default function Textbar(){
             <button className="btn" id="text-close" title="关闭"
         onClick={()=>{setShowInput(false)}}
             ></button>
-            <textarea id="text-input" value={text} placeholder="输入内容..."></textarea>
+            <textarea id="text-input" value={text} placeholder="输入内容..."
+            onChange={(e)=>{
+                settext(e.target.value)
+            }}
+            ></textarea>
             <button className="btn" id="text-save" title="保存"></button>
         </div>):
         ( <div id="text-show" title="输入"
         onClick={()=>{setShowInput(true)}}
-        ></div>)
+        >
+            {text}
+        </div>)
         }
         </>
     )
