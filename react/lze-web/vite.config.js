@@ -21,12 +21,6 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/svg+xml',
             purpose: 'any'
-          },
-          {
-            src: '/assets/icon/linzeen_apple.png', // iPhone
-            sizes: '180x180',
-            type: 'image/png',
-            purpose: 'any'
           }
         ]
       },

@@ -4,10 +4,9 @@ export function PageCom(setGlobal,type){
 if(sessionStorage.getItem('home')!="true"){
   window.location.href =  window.location.origin;
 }
-
-setGlobal({langList:
- JSON.parse(sessionStorage.getItem('lang'))
-})
+const lang=JSON.parse(sessionStorage.getItem('lang'))
+setGlobal({langList:lang})
+document.title=lang[type]
         sessionStorage.setItem('app', 'true');
  const theme=GetTheme(type)
  setGlobal({
