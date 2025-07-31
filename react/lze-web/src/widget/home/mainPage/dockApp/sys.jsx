@@ -21,7 +21,7 @@ export default function Sys(){
             fetch(window.location.origin+'/server/system/system',{
                 method:"GET",
                 headers:{
-                    "Content-Type":"application/json"
+                    'Content-Type':'application/json'
                 }
             })
             .then(rss=>rss.json())

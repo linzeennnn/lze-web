@@ -31,18 +31,14 @@ function rename(oldname,newname){
       loadPage(true)
     const oldpath=global.nowPath+"/"+oldname
     const newpath=global.nowPath+"/"+newname
-    const send_data=JSON.stringify({
-            oldpath,newpath,
-            user:global.userName,
-            token:global.token
-        })
-        
     fetch(global.docUrl+"rename",{
         method:"POST",
         headers:{
-            "Content-Type":"application/json"
+            'Content-Type':'application/json',
+            'authorization':"Bearer " +global.token,
+            'x-user':global.userName
         },
-        body:send_data
+        body:JSON.stringify({oldpath,newpath})
     })
     .then(res=>{
         if(res.ok){

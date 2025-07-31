@@ -130,60 +130,50 @@ export function Upload(file, uploadData) {
     notify(file.name + GetText("is_empty"));
     return;
   }
-  let showVideo
+
+  let showVideo;
   const global = useGlobal.getState();
   const user = global.userName;
   const token = global.token;
   const nowPath = global.nowPath;
   const upload = global.upload;
   const setGlobal = useGlobal.setState;
-const imageExts = ["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg", "ico", "apng", "avif"];
-const videoExts = ["mp4", "webm", "ogg", "ogv", "mov", "m4v", "avi", "3gp", "mkv"];
-const ext = file.name.split(".").pop().toLowerCase();
+
+  const imageExts = ["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg", "ico", "apng", "avif"];
+  const videoExts = ["mp4", "webm", "ogg", "ogv", "mov", "m4v", "avi", "3gp", "mkv"];
+  const ext = file.name.split(".").pop().toLowerCase();
+
   if (imageExts.includes(ext)) {
     showVideo = false;
-    setGlobal({
-      imgPage: true
-    });
+    setGlobal({ imgPage: true });
   } else if (videoExts.includes(ext)) {
     showVideo = true;
+    setGlobal({ imgPage: false });
+  } else {
+    notify(file.name + ":" + GetText("not_support_type"));
     setGlobal({
-      imgPage: false
+      upload: { ...upload, status: false },
     });
-  } 
-  else {
-    notify(file.name + ":"+GetText("not_support_type"))
-    setGlobal({
-      upload:{
-          ...upload,
-          status: false,
-      }
-    });
-    return; 
+    return;
   }
-  const url = global.picUrl + "upload";
 
+  const url = global.picUrl + "upload";
   const chunkSize = getChunkSize(file.size);
   const totalChunks = Math.ceil(file.size / chunkSize);
   let start = 0;
 
   function uploadChunk() {
     if (uploadData.sendSize >= uploadData.totalSize) {
-      setGlobal({
-        upload: {
-          ...upload,
-          status: false,
-        },
-      });
-
+      setGlobal({ upload: { ...upload, status: false } });
       notify(GetText("op_com"));
-      list(nowPath,showVideo);
+      list(nowPath, showVideo);
       return;
     }
 
     if (start >= file.size) return;
+
     let percent = "";
-    let tmp_send_size=0
+    let tmp_send_size = 0;
     const chunk = file.slice(start, start + chunkSize);
     const curChunk = Math.floor(start / chunkSize);
     const formData = new FormData();
@@ -192,23 +182,22 @@ const ext = file.name.split(".").pop().toLowerCase();
     formData.append("fileName", file.name);
     formData.append("totalChunks", totalChunks);
     formData.append("currentChunk", curChunk);
-    formData.append("user", user);
-    formData.append("token", token);
-    formData.append("nowpath", nowPath);
+    formData.append("nowpath", nowPath); // 仅保留必要字段
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
 
+    // 将 user 和 token 移到 Header
+    xhr.setRequestHeader("authorization", "Bearer " + token);
+    xhr.setRequestHeader("x-user", user);
+
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        uploadData.sendSize=uploadData.sendSize+event.loaded -tmp_send_size
-        tmp_send_size=event.loaded
-         percent =Math.floor(uploadData.sendSize / uploadData.totalSize * 100) + "%";
+        uploadData.sendSize = uploadData.sendSize + event.loaded - tmp_send_size;
+        tmp_send_size = event.loaded;
+        percent = Math.floor((uploadData.sendSize / uploadData.totalSize) * 100) + "%";
         setGlobal({
-          upload: {
-            ...upload,
-            percent: percent,
-          },
+          upload: { ...upload, percent: percent },
         });
       }
     };
@@ -218,14 +207,9 @@ const ext = file.name.split(".").pop().toLowerCase();
         if (xhr.status === 401) {
           notify(GetText("no_per"));
         } else {
-          notify(GetText("error")+":" + xhr.status+ xhr.responseText);
+          notify(GetText("error") + ":" + xhr.status + xhr.responseText);
         }
-        setGlobal({
-          upload: {
-            ...upload,
-            status: false,
-          },
-        });
+        setGlobal({ upload: { ...upload, status: false } });
         return;
       }
 
@@ -243,6 +227,7 @@ const ext = file.name.split(".").pop().toLowerCase();
 
   uploadChunk();
 }
+
 // 获取块大小
 function getChunkSize(fileSize) {
     const mb=1024*1024

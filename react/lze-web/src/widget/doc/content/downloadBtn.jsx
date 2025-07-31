@@ -1,5 +1,5 @@
-import { GetText, useGlobal } from "../global"
-
+import { GetText, useGlobal ,loadPage} from "../global"
+import { notify } from "../../../components/notify";
 export default function DownloadBtn({fileMes}){
     const global=useGlobal.getState()
    
@@ -29,14 +29,16 @@ function ZipDir(fileName){
         fetch(global.docUrl+"zip_folder",{
         method: "POST",
         headers: {
-        "Content-Type": "application/json" 
+        "Content-Type": "application/json" ,
+        'authorization':'Bearer ' + token,
+        'x-user': user
     },
-    body: JSON.stringify({ folder_path: global.nowPath+fileName ,token,user}) 
+    body: JSON.stringify({ folder_path: global.nowPath+"/"+fileName }) 
       })
       .then(response => {
         if (response.status === 401) {
           notify(GetText("no_per"))
-          pageloading(0)
+          loadPage(false)
           throw new Error('err');
         }
         return response.text();  

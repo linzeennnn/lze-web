@@ -19,7 +19,9 @@ function del(fileName){
     fetch(url,{
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'authorization': "Bearer "+token,
+            'x-user': user
         },
         body: JSON.stringify(send_data)
     })

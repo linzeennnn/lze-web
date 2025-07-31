@@ -10,7 +10,8 @@ import (
 )
 
 func UploadFile(c *gin.Context) {
-	if global.CheckPermit(c.PostForm("user"), c.PostForm("token"), "doc", "upfile") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "doc", "upfile") {
 		filename := c.PostForm("fileName")
 		nowpath := filepath.FromSlash(c.PostForm("nowpath"))
 		tempPath := filepath.Join(global.TempPath, filename)

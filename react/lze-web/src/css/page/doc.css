@@ -34,6 +34,7 @@
 
 .file-list-input{
     cursor: text;
+    color: var(--text);
 }
 .file-edit-btn{
     width: 20px !important;

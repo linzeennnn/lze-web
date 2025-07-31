@@ -65,16 +65,13 @@ function addBok(name,text){
     const user=useGlobal.getState().userName
     const token=useGlobal.getState().token
     const url =useGlobal.getState().bokUrl+"add"
-    const data={
-        name:name,
-        text:text,
-        user:user,
-        token:token
-    }
+    const data={name,text}
     fetch(url,{
         method:'POST',
         headers:{
-            'Content-Type':'application/json'
+            'Content-Type':'application/json',
+            'authorization':"Bearer " +token,
+            'x-user':user
         },
         body:JSON.stringify(data)   })
         .then((res) => {

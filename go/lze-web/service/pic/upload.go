@@ -11,7 +11,8 @@ import (
 )
 
 func Upload(c *gin.Context) {
-	if global.CheckPermit(c.PostForm("user"), c.PostForm("token"), "pic", "upload") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "pic", "upload") {
 		filename := c.PostForm("fileName")
 		checkName := CheckType(filename)
 		if checkName == "" {

@@ -14,14 +14,15 @@ function delete_file(){
         const user=global.userName
         const token=global.token
         const dellist=global.selected
-        const send_data={user,token,dellist}
         const url=global.docUrl+"del"
         fetch(url,{
             method:"POST",
             headers:{
-                "Content-Type":"application/json"
+                'Content-Type':'application/json',
+            'authorization':"Bearer " +token,
+            'x-user':user
             },
-            body:JSON.stringify(send_data)
+            body:JSON.stringify({dellist})
        })
        .then(res=>{
         if(res.ok){

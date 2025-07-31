@@ -42,9 +42,7 @@ export function NewDir(folderName) {
 
   const sendData = {
     folderName,
-    nowpath: global.nowPath,
-    user: global.userName,
-    token: global.token,
+    nowpath: global.nowPath
   };
 
   loadPage(true)
@@ -54,6 +52,8 @@ export function NewDir(folderName) {
     body: JSON.stringify(sendData),
     headers: {
       'Content-Type': 'application/json',
+            'authorization':"Bearer " +global.token,
+            'x-user':global.userName
     },
   })
     .then((res) => {

@@ -8,9 +8,8 @@ import (
 )
 
 func Upload(c *gin.Context) {
-	username := c.PostForm("user")
-	token := c.PostForm("token")
-	if global.CheckPermit(username, token, "not", "upload") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "not", "upload") {
 		file, err := c.FormFile("new_note")
 		if err != nil {
 			c.String(400, err.Error())

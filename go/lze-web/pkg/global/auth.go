@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 // 计算剩余登陆时间
@@ -146,4 +148,16 @@ func SaveUserConfig() {
 	}
 	WriteText(filepath.Join(WorkDir, "config", "user_config.json"), string(userJson))
 
+}
+
+// 获取验证信息
+func GetAuthMes(c *gin.Context) (user string, token string) {
+	user = c.GetHeader("x-user")
+	authHeader := c.GetHeader("authorization")
+	if strings.HasPrefix(authHeader, "Bearer ") {
+		token = strings.TrimPrefix(authHeader, "Bearer ")
+	} else {
+		token = authHeader
+	}
+	return user, token
 }

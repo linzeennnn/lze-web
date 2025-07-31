@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { notify } from "../../../components/notify";
-import { GetText } from "../global";
+import { GetText, useGlobal } from "../global";
 export default function LoginPage({setSwitch}) {
   const [userData, setUserData] = useState({
     userName: '',

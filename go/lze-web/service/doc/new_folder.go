@@ -15,7 +15,8 @@ func NewFolder(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	if global.CheckPermit(rec.User, rec.Token, "doc", "newdir") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "doc", "newdir") {
 		destPath := filepath.Join(global.DocPath, rec.NowPath)
 		dirName := global.UniqueName(destPath, rec.FolderName)
 		os.Mkdir(filepath.Join(destPath, dirName), 0755)

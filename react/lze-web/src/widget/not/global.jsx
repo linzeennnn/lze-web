@@ -62,10 +62,7 @@ export function list(){
 const url =useGlobal.getState().notUrl+'list'
 const edit =useGlobal.getState().edit
 fetch(url,{
-    method:'GET',
-  headers:{
-    'Content-Type':'application/json'
-  }
+    method:'GET'
 }).then(res=>res.json())
 .then(data=>{
     useGlobal.setState({
@@ -88,7 +85,9 @@ export function Save_note(newTitle,newContent){
     fetch(url,{
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'authorization':"Bearer "+ token,
+            'x-user': user
         },
         body: JSON.stringify(send_data)
     }).then((res) => {
@@ -118,51 +117,35 @@ export function loadPage(isLoad){
 export async function Upload(file, uploadData) {
   const setGlobal = useGlobal.setState;
   const upload = useGlobal.getState().upload;
-  
+
   if (file.size === 0) {
-    notify(GetText("error")+GetText("is_empty"));
-    setGlobal({
-      upload: {
-        ...upload,
-        status: false
-      }
-    });
+    notify(GetText("error") + GetText("is_empty"));
+    setGlobal({ upload: { ...upload, status: false } });
     return;
   }
 
   if (file.size > 1024 * 1024) { 
-    notify(GetText("no_more_than")+"1MB");
-    setGlobal({
-      upload: {
-        ...upload,
-        status: false
-      }
-    });
+    notify(GetText("no_more_than") + "1MB");
+    setGlobal({ upload: { ...upload, status: false } });
     return;
   }
 
   const isTextFile = await isText(file);
   if (!isTextFile) {
-    notify(file.name+GetText("not_text"));
-    setGlobal({
-      upload: {
-        ...upload,
-        status: false
-      }
-    });
+    notify(file.name + GetText("not_text"));
+    setGlobal({ upload: { ...upload, status: false } });
     return;
   }
 
   let tmp_send_size = 0;
   let percent = "";
-  const url = useGlobal.getState().notUrl + 'upload';
+  const url = useGlobal.getState().notUrl + "upload";
   const xhr = new XMLHttpRequest();
   const formData = new FormData();
   const user = useGlobal.getState().userName;
   const token = useGlobal.getState().token;
-    formData.append('new_note', file);
-  formData.append("token", token);
-  formData.append("user", user);
+
+  formData.append("new_note", file);
 
   xhr.upload.onprogress = function (event) {
     if (event.lengthComputable) {
@@ -172,7 +155,7 @@ export async function Upload(file, uploadData) {
       setGlobal({
         upload: {
           ...upload,
-          percent: percent + '%',
+          percent: percent + "%",
         },
       });
     }
@@ -183,24 +166,14 @@ export async function Upload(file, uploadData) {
       if (xhr.status === 401) {
         notify(GetText("no_per"));
       } else {
-        notify(GetText("error")+ xhr.status );
+        notify(GetText("error") + xhr.status);
       }
-      setGlobal({
-        upload: {
-          ...upload,
-          status: false,
-        },
-      });
+      setGlobal({ upload: { ...upload, status: false } });
       return;
     }
 
     if (uploadData.sendSize >= uploadData.totalSize) {
-      setGlobal({
-        upload: {
-          ...upload,
-          status: false,
-        },
-      });
+      setGlobal({ upload: { ...upload, status: false } });
       notify(GetText("op_com"));
       list();
     }
@@ -208,15 +181,15 @@ export async function Upload(file, uploadData) {
 
   xhr.onerror = function () {
     notify(GetText("error"));
-    setGlobal({
-      upload: {
-        ...upload,
-        status: false,
-      },
-    });
+    setGlobal({ upload: { ...upload, status: false } });
   };
 
   xhr.open("POST", url);
+
+  // 将 user 和 token 作为 Header 发送
+  xhr.setRequestHeader("authorization", "Bearer " + token);
+  xhr.setRequestHeader("x-user", user);
+
   xhr.send(formData);
 }
 

@@ -47,13 +47,14 @@ function del(name){
 const user=useGlobal.getState().userName
 const token=useGlobal.getState().token
 const url=useGlobal.getState().bokUrl+'del'
-const send_data={user,token,name}
 fetch(url,{
     method: "POST",
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'authorization':'Bearer '+token,
+        'x-user': user
     },
-    body: JSON.stringify(send_data)
+    body: JSON.stringify({name})
 }).then((res) => {
     if(!res.ok){
         if(res.status===401){

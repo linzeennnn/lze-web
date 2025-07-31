@@ -96,13 +96,15 @@ getWidgetData();
 }
  function auth(name,token){
     const load=useGlobal.getState().load
-    name=name?name:"visitor";
+    let user=name?name:"visitor";
     token=token?token:"";
     fetch(window.location.origin+'/server/login/auth_status',
         {
         method:'POST',
         headers:{
-            'Content-Type':'application/json'
+            'Content-Type':'application/json',
+            'authorization':"Bearer " +token,
+            'x-user':user
         },
         body:JSON.stringify({
             name,token

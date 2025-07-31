@@ -23,7 +23,7 @@ function paste_file(type,copylist){
     const user=global.userName
     const nowpath=global.nowPath
     const send_data={
-        copylist,nowpath,user,token
+        copylist,nowpath
     }
     let url
     
@@ -38,7 +38,9 @@ function paste_file(type,copylist){
     fetch(url,{
         method:"POST",
         headers:{  
-            "Content-Type":"application/json"
+            'Content-Type':'application/json',
+            'authorization':"Bearer " +token,
+            'x-user':user
         },
         body:JSON.stringify(send_data)})
         .then(res=>{

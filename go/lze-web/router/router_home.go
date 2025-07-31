@@ -10,6 +10,5 @@ func RouterHome(r *gin.Engine) {
 	loginGroup := r.Group("/server/home")
 	{
 		loginGroup.POST("/widget", home.Widget)
-		loginGroup.POST("/doc_list", home.DocList)
 	}
 }

@@ -166,7 +166,8 @@ align-items: center;
     background-color: transparent !important;
 }
 .bok-panel{
-    padding-left: 10px;
+    padding-left: 20px;
+    font-size: 10px;
     height: 60px;
     border-radius: 15px;
     -webkit-clip-path: polygon(100% 0%,100% 50%,100% 100%,0% 100%,25% 50%,0% 0%);

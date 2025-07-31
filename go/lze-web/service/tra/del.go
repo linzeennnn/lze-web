@@ -1,7 +1,7 @@
 package tra
 
 import (
-	"lze-web/model/tra/del"
+	"lze-web/model/bok/del"
 	"lze-web/pkg/global"
 	"os"
 
@@ -14,7 +14,8 @@ func Del(c *gin.Context) {
 		c.JSON(200, err)
 		return
 	}
-	if global.CheckPermit(rec.User, rec.Token, "tra", "clean") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "tra", "clean") {
 		os.RemoveAll(global.TraPath)
 		os.MkdirAll(global.TraPath, 0755)
 		global.CleanDelData()

@@ -17,7 +17,8 @@ func ZipFolder(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	if global.CheckPermit(rec.User, rec.Token, "doc", "downdir") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "doc", "downdir") {
 		FolderPath := filepath.FromSlash(rec.FolderPath)
 		source := filepath.Join(global.DocPath, FolderPath)
 		zipName := filepath.Base(FolderPath) + ".zip"

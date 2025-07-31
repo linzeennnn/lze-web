@@ -16,7 +16,8 @@ func Recover(c *gin.Context) {
 		c.JSON(200, err)
 		return
 	}
-	if global.CheckPermit(rec.User, rec.Token, "tra", "recover") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "tra", "recover") {
 		if rec.SourcePath {
 			fmt.Println("source")
 			delData := global.GetDeldata()

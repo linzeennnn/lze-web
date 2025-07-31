@@ -17,7 +17,9 @@ export default function Del(){
                 method:"POST",
                 body:JSON.stringify(send_data),
                 headers:{
-                    "Content-Type":"application/json"
+                    'Content-Type':'application/json',
+            'authorization':"Bearer " +token,
+            'x-user':user
                 }
             }).then(res=>{
                 if(!res.ok){

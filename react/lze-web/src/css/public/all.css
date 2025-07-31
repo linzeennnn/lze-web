@@ -168,8 +168,9 @@
   scrollbar-width: thin;
   scrollbar-color: var(--text) transparent;
 }
-span{
+span, input{
   font-weight: bold;
+  color: var(--text);
 }
 #app{
   all: unset;

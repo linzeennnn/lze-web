@@ -28,7 +28,9 @@ function update_act(control,action,name,change){
     fetch(url,{
         method:"POST",
         headers:{
-            "Content-Type":"application/json",
+            'Content-Type':'application/json',
+            'authorization':"Bearer " +token,
+            'x-user':user,
         },
         body:JSON.stringify({
             user,token,control,action,name,change

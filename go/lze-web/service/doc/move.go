@@ -15,7 +15,8 @@ func Move(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	if global.CheckPermit(rec.User, rec.Token, "doc", "move") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "doc", "move") {
 		destPath := filepath.Join(global.DocPath, rec.NowPath)
 		for _, files := range rec.CopyList {
 			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(files))

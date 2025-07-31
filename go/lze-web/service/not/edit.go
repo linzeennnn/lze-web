@@ -15,7 +15,8 @@ func Edit(c *gin.Context) {
 		c.JSON(400, err)
 		return
 	}
-	if global.CheckPermit(rec.User, rec.Token, "not", "edit") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "not", "edit") {
 		var name string
 		if rec.NewTitle == rec.OldTitle {
 			name = rec.OldTitle + ".txt"

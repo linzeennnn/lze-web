@@ -96,7 +96,7 @@ export function loadPage(isLoad){
 // 上传文件
 export function Upload(file, uploadData, type) {
   if (file.size == 0) {
-    notify(GetText("error")+":"+file.name + GetText("is_empty"));
+    notify(GetText("error") + ":" + file.name + GetText("is_empty"));
     return;
   }
 
@@ -139,8 +139,8 @@ export function Upload(file, uploadData, type) {
     if (start >= file.size) {
       return;
     }
-    let tmp_send_size=0
-    let percent=0
+    let tmp_send_size = 0;
+    let percent = 0;
     const chunk = file.slice(start, start + chunkSize);
     const curChunk = Math.floor(start / chunkSize);
     const formData = new FormData();
@@ -149,9 +149,6 @@ export function Upload(file, uploadData, type) {
     formData.append("fileName", file.name);
     formData.append("totalChunks", totalChunks);
     formData.append("currentChunk", curChunk);
-    formData.append("user", user);
-    formData.append("token", token);
-
     if (type === "dir") {
       const relativePath = file.webkitRelativePath;
       formData.append("relativePath", relativePath);
@@ -164,18 +161,21 @@ export function Upload(file, uploadData, type) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
 
+    // 通过 Header 发送 user 和 token
+    xhr.setRequestHeader("x-user", user);
+    xhr.setRequestHeader("authorization", "Bearer " + token);
+
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        uploadData.sendSize=uploadData.sendSize+event.loaded -tmp_send_size
-        tmp_send_size=event.loaded
-         percent =Math.floor(uploadData.sendSize / uploadData.totalSize * 100) + "%";
+        uploadData.sendSize = uploadData.sendSize + event.loaded - tmp_send_size;
+        tmp_send_size = event.loaded;
+        percent = Math.floor((uploadData.sendSize / uploadData.totalSize) * 100) + "%";
         setGlobal({
           upload: {
             ...upload,
             percent: percent,
           },
         });
-        
       }
     };
 
@@ -184,7 +184,7 @@ export function Upload(file, uploadData, type) {
         if (xhr.status == 401) {
           notify(GetText("no_per"));
         } else {
-          notify(GetText("error")+ ":"+xhr.status );
+          notify(GetText("error") + ":" + xhr.status);
         }
         setGlobal({
           upload: {

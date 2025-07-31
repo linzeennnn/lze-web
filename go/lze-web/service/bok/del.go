@@ -15,7 +15,8 @@ func Del(c *gin.Context) {
 		c.JSON(400, err)
 		return
 	}
-	if global.CheckPermit(rec.User, rec.Token, "bok", "delete") {
+	user, token := global.GetAuthMes(c)
+	if global.CheckPermit(user, token, "bok", "delete") {
 		err := os.Remove(filepath.Join(global.BokPath, rec.Name+".html"))
 		if err != nil {
 			c.String(400, "删除失败"+err.Error())
