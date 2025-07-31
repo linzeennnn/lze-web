@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import TopBar from '../../../components/topBar'
-import {useGlobal,list,loadPage} from '../global'
+import {useGlobal,list,loadPage, GetText} from '../global'
 import { notify } from '../../../components/notify'
 export default function BokTopBar(){
     const protocolList=[
-        {type: 'none', showName: '无协议'},
+        {type: 'none', showName: GetText("no_protocol")},
         {type: 'http', showName: 'http://'},
         {type: 'https', showName: 'https://'},
         {type: 'file', showName: 'file://'}
@@ -16,23 +16,23 @@ export default function BokTopBar(){
     return(
         <TopBar>
             <div id='title-box'>
-                <input placeholder='书签名' id='tit-input' type='text'
+                <input placeholder={GetText("bok_name")} id='tit-input' type='text'
                 value={name} onChange={(e) => setName(e.target.value)}/>
-                <button id='save-add' title='保存' className='btn'
+                <button id='save-add' title={GetText("save")} className='btn'
                 onClick={()=>addBok(name,url)}
                 ></button>
             </div>
             <div id='link-box'>
                 <button
                     id='switch-protocol'
-                    title='切换协议'
+                    title={GetText("switch_protocol")}
                     className='btn'
                     onClick={() => {
                         setIndex((prev) => (prev + 1) % protocolList.length)
                     }}
                 ></button>
                 <span id='show-protocol'>{protocolList[index].showName}</span>
-                <input placeholder='网址链接' id='link-input' type='text'
+                <input placeholder={GetText("bok_url")} id='link-input' type='text'
                 value={url} onChange={(e) => setUrl(e.target.value)}
                 />
             </div>
@@ -49,7 +49,7 @@ function addBok(name,text){
 ) {
     text='https://'+text
     if(!isUrl(text)){
-        notify("网址不正确"+text)
+        notify(GetText("bok_url")+" "+GetText("error")+" "+text)
         return
     }
 }
@@ -72,15 +72,15 @@ function addBok(name,text){
         .then((res) => {
     if(!res.ok){
         if(res.status===401){
-            notify("无权限")
+            notify(GetText("no_per"))
         }
         else{
-            notify("添加失败"+res.status+"错误")
+            notify(GetText("error")+":"+res.status)
         }
         loadPage(false)
         return
     }
-    notify("添加成功")
+    notify(GetText("op_com"))
     list()
 })
 }

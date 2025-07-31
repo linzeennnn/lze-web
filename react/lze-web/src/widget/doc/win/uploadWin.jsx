@@ -1,4 +1,4 @@
-import { useGlobal ,Upload,list} from "../global";
+import { useGlobal ,Upload,list, GetText} from "../global";
 import { WinBg } from "../../../components/winBg";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
@@ -24,12 +24,13 @@ export default function UploadWin() {
         fileArr.forEach((file,i)=>{
             Upload(file,uploadData,type) 
         })
+         e.target.value = null;
     }
     return(
         <>
     {upload.win?(<div id="upload-opt">
         <button id="close-upload" className="btn"
-            title="关闭" onClick={()=>{
+            title={GetText("close")} onClick={()=>{
         setGlobal({upload:{
             ...upload,
             win:false
@@ -42,10 +43,10 @@ export default function UploadWin() {
             onChange={(e) => uploadChange(e, "dir")}   id="upDir" 
             />
             <label id="upload-file" className="btn upload-opt-btn"
-            title="上传文件" htmlFor="upFile"
+            title={GetText("upload_file")} htmlFor="upFile"
             ></label>
             <label id="upload-dir" className="btn upload-opt-btn"
-            title="上传文件夹" htmlFor="upDir"
+            title={GetText("upload_folder")}  htmlFor="upDir"
             ></label>
     </div>):null}
     <WinBg showBg={upload.win} />

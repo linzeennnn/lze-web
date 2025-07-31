@@ -1,9 +1,11 @@
+import { GetText } from "../global";
+
 export default function EditBtn({name,editing,newName,rename}){
     const [editMode, setEditMode] = editing;
     return(
         <>
         {editMode?
-        ( <button className="save-name file-edit-btn btn" title="保存"
+        ( <button className="save-name file-edit-btn btn" title={GetText("save")}
              onClick={(e) => {
                 e.stopPropagation();
                 setEditMode(false)
@@ -11,7 +13,7 @@ export default function EditBtn({name,editing,newName,rename}){
                 }} 
                 >
              </button>):
-        (<button className="edit-name file-edit-btn btn" title="重命名" 
+        (<button className="edit-name file-edit-btn btn" title={GetText("rename")}
             onClick={(e) => {e.stopPropagation();setEditMode(true)}}>
             </button>)}
         </>

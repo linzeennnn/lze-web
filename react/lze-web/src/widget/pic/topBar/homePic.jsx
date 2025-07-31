@@ -1,12 +1,12 @@
-import {useGlobal, list } from "../global"
+import {useGlobal, list, GetText } from "../global"
 import { notify } from "../../../components/notify"
 export default function HomePic(){
     const nowPath=useGlobal((state)=>state.nowPath)
     return(
         <button id="home-pic" className="btn" 
         onClick={()=>{
-           nowPath==""? notify("已在主相册"):list("")
-        }} title="返回主相册"
+           nowPath==""? notify(GetText("main_album")):list("")
+        }} title={GetText("back_main_album")}
         ></button>
     )
 }

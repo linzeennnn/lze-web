@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GetTheme } from '../../components/getTheme';
+import { PageCom } from '../../components/pageCom';
 import {notify} from "../../components/notify";
 // 全局变量
 export const useGlobal = create((set, get) => ({
@@ -8,6 +8,7 @@ export const useGlobal = create((set, get) => ({
   uploading: false,
   showBg: false,
   loading: false,
+  langList:[],
   dragWin:false,
   notList:[],
   edit:{
@@ -35,13 +36,13 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
+// 获取文本
+export  function GetText(str){
+  return useGlobal.getState().langList[str]
+}
 // 初始化
 export function InitData(){
-        sessionStorage.setItem('app', 'true');
- const theme=GetTheme("not")
-  useGlobal.setState({
-    theme:theme
-  })
+PageCom(useGlobal.setState,"not")
   list()
 }
 //初始化编辑数据
@@ -102,15 +103,15 @@ export function Save_note(newTitle,newContent){
     }).then((res) => {
         if(!res.ok){
             if(res.status===401){
-                notify("无权限")
+                notify(GetText("no_per"))
             }
             else{
-                notify("保存失败"+res.status+"错误")
+                notify(+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify("保存成功")
+        notify(GetText("op_com"))
         loadPage(false)
         list()
     })
@@ -128,7 +129,7 @@ export async function Upload(file, uploadData) {
   const upload = useGlobal.getState().upload;
   
   if (file.size === 0) {
-    notify("文件为空，无法上传");
+    notify(GetText("error")+GetText("is_empty"));
     setGlobal({
       upload: {
         ...upload,
@@ -139,7 +140,7 @@ export async function Upload(file, uploadData) {
   }
 
   if (file.size > 1024 * 1024) { 
-    notify("文件不允许超过1MB");
+    notify(GetText("no_more_than")+"1MB");
     setGlobal({
       upload: {
         ...upload,
@@ -151,7 +152,7 @@ export async function Upload(file, uploadData) {
 
   const isTextFile = await isText(file);
   if (!isTextFile) {
-    notify("仅支持上传文本文件");
+    notify(file.name+GetText("not_text"));
     setGlobal({
       upload: {
         ...upload,
@@ -189,9 +190,9 @@ export async function Upload(file, uploadData) {
   xhr.onload = function () {
     if (xhr.status !== 200) {
       if (xhr.status === 401) {
-        notify("无上传权限");
+        notify(GetText("no_per"));
       } else {
-        notify("上传失败：" + xhr.status + " 错误:" + xhr.responseText);
+        notify(GetText("error")+ xhr.status );
       }
       setGlobal({
         upload: {
@@ -209,13 +210,13 @@ export async function Upload(file, uploadData) {
           status: false,
         },
       });
-      notify("上传完成");
+      notify(GetText("op_com"));
       list();
     }
   };
 
   xhr.onerror = function () {
-    notify("上传出错");
+    notify(GetText("error"));
     setGlobal({
       upload: {
         ...upload,
@@ -261,7 +262,7 @@ export function Drop(e) {
     if (!entry) return;
 
     if (entry.isDirectory) {
-      notify("不支持上传文件夹");
+      notify(GetText("not_support_type"));
       return;
     }
 
@@ -279,7 +280,7 @@ export function Drop(e) {
   function maybeUpload() {
     if (pending === 0) {
       if (fileList.length === 0) {
-        notify("没有可上传的文件");
+        notify(GetText("no_select_file"));
         return;
       }
 

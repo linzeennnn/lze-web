@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GetTheme } from '../../components/getTheme';
+import { PageCom } from '../../components/pageCom';
 // 全局变量
 export const useGlobal = create((set, get) => {
   const storedUser = window.localStorage.getItem('userName');
@@ -11,6 +11,7 @@ export const useGlobal = create((set, get) => {
     showBg: false,
     loading: false,
     controlList: null,
+    langList:[],
     userList: null,
     theme:{
       mode:"",
@@ -29,13 +30,13 @@ export const useGlobal = create((set, get) => {
   };
 });
 
+// 获取文本
+export  function GetText(str){
+  return useGlobal.getState().langList[str]
+}
 // 初始化
 export function InitData(){
-        sessionStorage.setItem('app', 'true');
- const theme=GetTheme("mon")
-  useGlobal.setState({
-    theme:theme
-  })
+PageCom(useGlobal.setState,"mon")
   list()
 }
 // 加载页面

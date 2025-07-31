@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { notify } from '../../components/notify';
-import { GetTheme } from '../../components/getTheme';
+import { PageCom } from '../../components/pageCom';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -12,6 +12,7 @@ export const useGlobal = create((set, get) => ({
   dirList: [],
   uploading: false,
   showBg: false,
+  langList:[],
   pageNum:1,
     theme:{
       mode:"",
@@ -42,13 +43,13 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
+// 获取文本
+export  function GetText(str){
+  return useGlobal.getState().langList[str]
+}
 // 初始化
-export function Initdata(){
-        sessionStorage.setItem('app', 'true');
- const theme=GetTheme("pic")
-  useGlobal.setState({
-    theme:theme
-  })
+export function InitData(){
+PageCom(useGlobal.setState,"pic")
   list("")
 }
 // 扫描目录
@@ -126,7 +127,7 @@ export function loadPage(isLoad){
 // 上传文件
 export function Upload(file, uploadData) {
   if (file.size == 0) {
-    notify(file.name + " 是空文件，无法上传");
+    notify(file.name + GetText("is_empty"));
     return;
   }
   let showVideo
@@ -151,7 +152,7 @@ const ext = file.name.split(".").pop().toLowerCase();
     });
   } 
   else {
-    notify(file.name + ":不支持类型")
+    notify(file.name + ":"+GetText("not_support_type"))
     setGlobal({
       upload:{
           ...upload,
@@ -175,7 +176,7 @@ const ext = file.name.split(".").pop().toLowerCase();
         },
       });
 
-      notify("上传完成");
+      notify(GetText("op_com"));
       list(nowPath,showVideo);
       return;
     }
@@ -215,9 +216,9 @@ const ext = file.name.split(".").pop().toLowerCase();
     xhr.onload = function () {
       if (xhr.status !== 200) {
         if (xhr.status === 401) {
-          notify("无上传权限");
+          notify(GetText("no_per"));
         } else {
-          notify("上传失败：" + xhr.status + " 错误:"+ xhr.responseText);
+          notify(GetText("error")+":" + xhr.status+ xhr.responseText);
         }
         setGlobal({
           upload: {
@@ -286,7 +287,7 @@ export function Drop(e) {
     if (!entry) return;
 
     if (entry.isDirectory) {
-      notify("不支持上传文件夹");
+      notify(GetText("not_support_type"));
       return;
     }
 
@@ -304,7 +305,7 @@ export function Drop(e) {
   function maybeUpload() {
     if (pending === 0) {
       if (fileList.length === 0) {
-        notify("没有可上传的文件");
+        notify(GetText("empty"));
         return;
       }
 

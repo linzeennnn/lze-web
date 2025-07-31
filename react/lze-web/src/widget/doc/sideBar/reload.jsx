@@ -1,9 +1,9 @@
-import { useGlobal ,list} from "../global"
+import { useGlobal ,list, GetText} from "../global"
 import { notify } from "../../../components/notify"
 export default function Relaod(){
     return(
         <button id="reload" className="btn side-btn" 
-        title="刷新" onClick={()=>{
+        title={GetText("refresh")} onClick={()=>{
             list(useGlobal.getState().nowPath)
         }}
         ></button>

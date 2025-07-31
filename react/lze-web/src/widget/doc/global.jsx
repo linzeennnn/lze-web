@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { notify } from '../../components/notify';
-import { GetTheme } from '../../components/getTheme';
+import { PageCom } from '../../components/pageCom';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -12,6 +12,7 @@ export const useGlobal = create((set, get) => ({
   showBg: false,
   loading: false,
   dragWin:false,
+  langList:[],
   fileWin:{
     status:false,
     url:"",
@@ -40,19 +41,19 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
+// 获取文本
+export  function GetText(str){
+  return useGlobal.getState().langList[str]
+}
+// 初始化
 export function InitData(){
-        sessionStorage.setItem('app', 'true');
- const theme=GetTheme("doc")
-  useGlobal.setState({
-    theme:theme
-  })
+PageCom(useGlobal.setState,"doc")
   list("")
 }
 // 扫描目录
 export function list(path) {
   const sendData = { file: path };
   const url = useGlobal.getState().docUrl;
-
   loadPage(true)
 
   fetch(`${url}list`, {
@@ -95,7 +96,7 @@ export function loadPage(isLoad){
 // 上传文件
 export function Upload(file, uploadData, type) {
   if (file.size == 0) {
-    notify(file.name + "是空文件,无法上传");
+    notify(GetText("error")+":"+file.name + GetText("is_empty"));
     return;
   }
 
@@ -125,7 +126,7 @@ export function Upload(file, uploadData, type) {
       });
 
       if (type === "file") {
-        notify("上传完成");
+        notify(GetText("op_com"));
         list(nowPath);
       } else if (type === "dir") {
         const foldername = file.webkitRelativePath.split("/")[0];
@@ -181,9 +182,9 @@ export function Upload(file, uploadData, type) {
     xhr.onload = function () {
       if (xhr.status != 200) {
         if (xhr.status == 401) {
-          notify("无上传权限");
+          notify(GetText("no_per"));
         } else {
-          notify("上传失败:" + xhr.status + "错误");
+          notify(GetText("error")+ ":"+xhr.status );
         }
         setGlobal({
           upload: {
@@ -224,7 +225,7 @@ function movefolder(foldername) {
     })
     .then(response => response.text())
     .then(data => {
-        notify("上传完成");
+        notify(GetText("op_com"));
         list(global.nowPath)
     })
     .catch(error => {
@@ -299,7 +300,7 @@ export function Drop(e) {
   function maybeUpload() {
     if (pending === 0) {
       if (fileList.length === 0) {
-        notify("没有可上传的文件");
+        notify(GetText("empty"));
         return;
       }
       setGlobal({

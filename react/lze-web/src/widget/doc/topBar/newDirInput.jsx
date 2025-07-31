@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {useGlobal,list,loadPage} from '../global'; 
+import {useGlobal,list,loadPage, GetText} from '../global'; 
 import { notify } from '../../../components/notify';
 export default function NewDirInput({setCreate}) {
     const[newName,setNewName]=useState("")
@@ -15,12 +15,12 @@ export default function NewDirInput({setCreate}) {
     };
     return(
         <>
-        <input placeholder="输入文件夹名称" id="new-dir-input"
+        <input placeholder={GetText("folder_name")} id="new-dir-input"
         onChange={nameChange} value={newName} onKeyDown={newDirKeyDown}
         >
         </input >
             <button id="new-dir-save" className="btn" 
-            title="保存" onClick={()=>{
+            title={GetText("save")} onClick={()=>{
               setCreate(false)
               NewDir(newName)} }  >
             </button> 
@@ -31,10 +31,10 @@ export default function NewDirInput({setCreate}) {
  // 创建新目录
 export function NewDir(folderName) {
   if (folderName.includes('/') || folderName.includes('\\')) {
-    notify('文件夹名不能包含/或\\');
+    notify(GetText("name_not_con")+' / \\');
     return;
   } else if (folderName.length === 0) {
-    notify('文件夹名不能为空');
+    notify(GetText("folder_name")+GetText("is_empty"));
     return;
   }
 
@@ -59,16 +59,16 @@ export function NewDir(folderName) {
     .then((res) => {
       if (!res.ok) {
         if (res.status === 401) {
-          notify('无创建文件夹权限');
+          notify(GetText("no_per"));
         } else {
-          notify(res.status + ' 错误');
+          notify(GetText("error")+":"+res.status);
         }
 
         loadPage(false)
         return;
       }
 
-      notify('已创建 [' + folderName + ']');
+      notify(GetText("op_com"));
       list(global.nowPath); // 重新加载列表
     });
 }

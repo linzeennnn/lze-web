@@ -1,4 +1,4 @@
-import { useGlobal } from "../global";
+import { GetText, useGlobal } from "../global";
 export default function SwitchMediaBtn() {
     const setGlobal = useGlobal.setState
     const pageNum = useGlobal((state) => state.pageNum);
@@ -16,10 +16,10 @@ export default function SwitchMediaBtn() {
     return (
         <>
             <button className="btn side-btn" id="img-btn" 
-            title="图片" onClick={()=>{changePage("img")}}
+            title={GetText("image")} onClick={()=>{changePage("img")}}
             ></button>
             <button className="btn side-btn" id="vid-btn" 
-            title="视频" onClick={()=>{changePage("vid")}}
+            title={GetText("video")} onClick={()=>{changePage("vid")}}
             ></button>
         </>
     )

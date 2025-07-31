@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
-
+import { GetText } from "../../global"
 export default function Sys(){
     const [loaded,setLoaded]=useState(false)
     const barList=[
-        {id:"cpu",name:"CPU使用率"},
-        {id:"mem",name:"内存使用率"},
-        {id:"disk",name:"磁盘使用率"},
+        {id:"cpu",name:GetText("cpu_usage")},
+        {id:"mem",name:GetText("mem_usage")},
+        {id:"disk",name:GetText("disk_usage")},
     ]
     const [recData,setRecData]=useState(
         {
@@ -70,7 +70,7 @@ export default function Sys(){
                 )
             })
         }
-                <div id="net-box" className="sys-box" title="网络使用率">
+                <div id="net-box" className="sys-box" title={GetText("net_usage")}>
                     <span id="net-icon" className="sys-icon"></span>
                     <div id="net-up" className="sys-icon"></div>    
                     <span id="net-up-data" className="sys-data">

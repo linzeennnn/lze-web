@@ -3,7 +3,7 @@ import { notify } from "../../../components/notify";
 import Del from "./del";
 import hljs from 'highlight.js/lib/common';
 import 'highlight.js/styles/atom-one-dark.min.css';
-import { list, loadPage, useGlobal } from "../global";
+import { GetText, list, loadPage, useGlobal } from "../global";
 export default function Note({name}){
     const [text, setText] = useState('');
     const [loaded, setLoaded] = useState(false)
@@ -25,7 +25,7 @@ export default function Note({name}){
             <span className="title title-show">{title}</span>
        {show? 
        <>
-       <button className="btn note-btn edit edit-mode-btn" title="编辑"
+       <button className="btn note-btn edit edit-mode-btn" title={GetText("edit")}
        onClick={()=>{
         setShow(false)
         setLoaded(false)
@@ -36,7 +36,7 @@ export default function Note({name}){
         type:"edit"
        }})}}
        ></button>
-       <button className={"btn note-btn copy "+(isCopy?"copy-ok":"")} title="复制内容"
+       <button className={"btn note-btn copy "+(isCopy?"copy-ok":"")} title={GetText("copy")}
             onClick={()=>{
                 copy(text)
                 setTimeout(() => {
@@ -54,11 +54,11 @@ export default function Note({name}){
         </>
         :null}
            {show? <button className="btn note-btn close-note"
-           title="关闭便签"  onClick={()=>{
+           title={GetText("close")}  onClick={()=>{
             setShow(false)
            }}>
            </button>:<button className="btn note-btn open-note"
-            title="打开便签"onClick={()=>{
+            title={GetText("expand")}onClick={()=>{
                 setShow(true)
                 if(!loaded){
                     get_note(name,setLoaded,setText)
@@ -79,9 +79,9 @@ function copy(text) {
 
   try {
     document.execCommand("copy");
-    notify("复制成功！");
+    notify(GetText("copy")+" "+GetText("success"));
   } catch (err) {
-    notify("复制失败:", err);
+    notify(GetText("error"), err);
   }
 
   document.body.removeChild(textarea);

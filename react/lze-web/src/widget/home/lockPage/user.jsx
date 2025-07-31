@@ -1,12 +1,14 @@
-import { useGlobal } from "../global"
+import { GetText, useGlobal } from "../global"
 
-export default function User(){
+export default function User({setSwitch}){
     const user=useGlobal(state=>state.userName)
     return(
-        <button className="btn" id="lock-user" title="编辑">
+        <button className="btn" id="lock-user" title={GetText("switch")}
+        onClick={()=>{setSwitch(true)}}
+        >
             <div id="lock-profile"></div>
-            <div id="lock-edit"></div>
-            <span>{(user==""||user=="visitor")?"访客":user}</span>
+            <div id="lock-switch"></div>
+            <span>{(user==""||user=="visitor")?GetText("guest"):user}</span>
         </button>
     )
 }

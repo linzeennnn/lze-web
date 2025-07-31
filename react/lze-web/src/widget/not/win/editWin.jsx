@@ -1,4 +1,4 @@
-import { useGlobal,Save_note } from "../global";
+import { useGlobal,Save_note, GetText } from "../global";
 import {WinBg} from'../../../components/winBg'
 import { useEffect, useState } from "react";
 export default function EditWin(){
@@ -25,7 +25,7 @@ const enter_save=(e)=>{
 }
 
 const save_edit=()=>{
-    if(!confirm("确定保存吗"))
+    if(!confirm(GetText("are_you_sure")))
         return
         Save_note(title,text)
 }
@@ -34,20 +34,20 @@ return(
         <div id="edit-back"
                 onKeyDown={key_save}
                 >
-        <button className="btn" id="close-edit" title="关闭"
+        <button className="btn" id="close-edit" title={GetText("close")}
         onClick={()=>setGlobal({edit:{mode:false}})}
         ></button>
-        <button className="btn save" id="save-edit" title="保存"
+        <button className="btn save" id="save-edit" title={GetText("save")}
          onClick={()=>{
         save_edit()
             }}></button>
          <input value={title} 
          onChange={(e)=>setTitle(e.target.value)} 
                 onKeyDown={enter_save}
-            id="edit-title" type="text" placeholder="标题"/>
+            id="edit-title" type="text" placeholder={GetText("title")}/>
              <textarea value={text}
             id="edit-text"
-            placeholder="输入内容...."
+            placeholder={GetText("input_content")}
             onChange={(e)=>setText(e.target.value)}
             />
             </div>

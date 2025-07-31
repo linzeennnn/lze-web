@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { useGlobal,list,loadPage } from "../global";
+import { useGlobal,list,loadPage, GetText } from "../global";
 import { notify } from "../../../components/notify";
 export default function TimeBar() {
     const unitList = {
-        never: "不过期",
-        h: "小时",
-        d: "天",
-        m: "月",
-        y: "年"
+        never: GetText("never"),
+        h:GetText("hour"),
+        d: GetText("day"),
+        m: GetText("month"),
+        y: GetText("year")
     };
     const userconfig=useGlobal((state)=>state.userList)
     const nowuser=useGlobal((state)=>state.nowuser)
@@ -37,7 +37,7 @@ export default function TimeBar() {
             timeStr="never"
         }else{
             if(!(num>=0)){
-                notify("输入时间无效")
+                notify(GetText("not_correct"))
                 return
             }
 
@@ -49,17 +49,17 @@ export default function TimeBar() {
     }
     return (
       userconfig? ( <div id="time-box">
-            <button id="time-btn" className="btn" title="修改登录时限"
+            <button id="time-btn" className="btn" title={GetText("mod_log_time")}
             onClick={()=>setShowEdit(showEdit?false:true)}
             ></button>
 
             {showEdit?(  <>
                 <div id="time-input-box" className="time-text">
-                <input id="time-input" placeholder="数字"
+                <input id="time-input" placeholder={GetText("num")}
                  value={editTime} onChange={timeChange}
                  onKeyDown={keyDown}
                 />
-                <button className="btn mini-btn" id="save-time" title="保存"
+                <button className="btn mini-btn" id="save-time" title={GetText("save")}
                 onClick={()=>{saveTime(editTime,unit)}}
                 ></button>
             </div>
@@ -70,14 +70,14 @@ export default function TimeBar() {
                 <button
                   className="btn mini-btn"
                     id="switch-unit"
-                    title="切换时间单位"
+                    title={GetText("switch")}
                     onClick={switchUnit}
                 >
                 </button>
                 </div>
             </div>
             </>):
-           ( <span className="time-text" id="display-time" title="允许登陆时长">{
+           ( <span className="time-text" id="display-time" title={GetText("allow_login_time")}>{
             getTime(userconfig[nowuser].tokentime)+
             unitList[getUnit(userconfig[nowuser].tokentime)]
            }</span>)}
@@ -105,14 +105,14 @@ function updata_time(name,time){
     ).then(res=>{
         if(!res.ok){
             if(res.status==401){
-                notify("无修改时间权限")
+                notify(GetText("no_per"))
             }else{
-                notify("修改失败"+res.status+"错误")
+                notify(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify("已更新时间")
+        notify(GetText("op_com"))
         list()
     })
     

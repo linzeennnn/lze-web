@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { notify } from '../../components/notify.jsx'
 import { GetTheme } from '../../components/getTheme.jsx';
+import { GetLangList} from '../../components/getLang.jsx';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'visitor';
   let token = window.localStorage.getItem('token') || '';
@@ -56,7 +57,15 @@ export const useGlobal = create((set, get) => {
     },
   };
 });
-export function InitData(){
+// 获取文本
+export  function GetText(str){
+  return useGlobal.getState().lang.list[str]
+}
+export  async function InitData(){
+  // 语言设置
+  useGlobal.setState({
+    lang:await GetLangList()
+  })
 // 用户信息
     let userName=localStorage.getItem("userName")
     let token =localStorage.getItem("token")
@@ -66,6 +75,9 @@ export function InitData(){
         userName: userName,
         token: token
       })
+// 跳转设置
+sessionStorage.setItem('home','true')
+sessionStorage.setItem('lang',JSON.stringify(useGlobal.getState().lang.list))
 // 锁屏设置
 if (sessionStorage.getItem('app') == 'true') {
   useGlobal.setState({ locked: false });
@@ -100,10 +112,10 @@ getWidgetData();
     .then(res=>{
         if(!res.ok){
             if(res.status===401){
-                notify("登录过期")
+                notify(GetText("log_outdate"))
             }
             else{
-                notify(res.status+"错误")
+                notify(res.status)
             }
             window.localStorage.setItem('userName',"visitor");
             window.localStorage.setItem('token',"");
@@ -111,7 +123,6 @@ getWidgetData();
             return
         }
         useGlobal.setState({load:useGlobal.getState().load+1})
-        notify("登录用户:"+(name=="visitor"?"游客":name))
     })
 }
 

@@ -1,14 +1,14 @@
 import { notify } from "../../../components/notify"
-import { useGlobal,list,loadPage } from "../global"
+import { useGlobal,list,loadPage, GetText } from "../global"
 export default function Del(){
     return(
         <button id="del" className="btn side-btn"
-        title="删除文件" onClick={()=>delete_file()}
+        title={GetText("delete")} onClick={()=>delete_file()}
         ></button>
     )
 }
 function delete_file(){
-    if(confirm("确定删除吗?")){
+    if(confirm(GetText("are_you_sure"))){
         loadPage(true)
         const global=useGlobal.getState()
         const user=global.userName
@@ -25,14 +25,14 @@ function delete_file(){
        })
        .then(res=>{
         if(res.ok){
-            notify("已移入回收站")
+            notify(GetText("op_com"))
             list(global.nowPath)
         }else{
             if(res.status==401){
-                notify("无删除权限")
+                notify(GetText("no_per"))
             }
             else{
-                notify(res.status+"错误")
+                notify(GetText("error")+":"+res.status)
             }
             loadPage(false)
         }

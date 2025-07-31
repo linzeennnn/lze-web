@@ -1,12 +1,12 @@
 import UnlockBtn from "./unlockBtn"
 import LoadBtn from "./loadbtn"
-import SwitchBtn from "./switchBtn"
-export default function BtnBox({unlockProp}){
+import LogoutBtn from "./logoutBtn"
+export default function BtnBox({prop}){
     return(
         <div id="btn-box">
             <LoadBtn/>
-            <UnlockBtn setTmpLoad={unlockProp}/>
-            <SwitchBtn/>
+            <UnlockBtn setTmpLoad={prop}/>
+            <LogoutBtn/>
         </div>
     )
 }

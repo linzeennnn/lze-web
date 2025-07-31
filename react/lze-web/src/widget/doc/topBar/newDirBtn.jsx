@@ -1,4 +1,4 @@
-import {useGlobal} from '../global';
+import {GetText, useGlobal} from '../global';
 
 export default function NewDirBtn({createStatus}) {
   const [creating, setCreating] = createStatus
@@ -9,14 +9,14 @@ export default function NewDirBtn({createStatus}) {
         <button
           id="new-dir-btn"
           className="btn new-dir-btn"
-          title="创建新文件夹"
+          title={GetText("create_folder")}
           onClick={() => setCreating(true)}
         ></button>
       ) : (
         <button
           id="new-dir-cancel"
           className="btn new-dir-btn"
-          title="取消"
+          title={GetText("cancel")}
           onClick={() => setCreating(false)}
         ></button>
       )}

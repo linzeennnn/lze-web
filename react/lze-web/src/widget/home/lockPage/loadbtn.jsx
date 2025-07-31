@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { InitData, useGlobal } from "../global"
+import { GetText, InitData, useGlobal } from "../global"
 
 export default function LoadBtn(){
     const [loading, setLoading] = useState(false)
@@ -18,7 +18,7 @@ export default function LoadBtn(){
         }}
         >
             <div></div>
-            <span>刷新</span>
+            <span>{GetText("refresh")}</span>
         </button>
     )
 }

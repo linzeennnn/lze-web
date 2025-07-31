@@ -1,14 +1,14 @@
-import { useGlobal,list,loadPage } from "../global"
+import { useGlobal,list,loadPage, GetText } from "../global"
 import { notify } from "../../../components/notify"
 export default function BokItem({name}){
     return(
         <div className="bookmark main-item"
-        title={"访问:"+name}
+        title={GetText("view")+name}
         onClick={()=>{
             open_link(name)
         }}
         >
-        <button className="btn" id="del-btn" title="删除该书签"
+        <button className="btn" id="del-btn" title={GetText("delete")}
         onClick={(e)=>{
             e.stopPropagation()
             del(name)}}
@@ -29,7 +29,7 @@ fetch(url,{
 })
 .then(res=>{
     if(!res.ok){
-        notify("获取失败"+res.status+"错误")
+        notify(+GetText("error")+":"+res.status)
         loadPage(false)
         return
     }
@@ -40,7 +40,7 @@ fetch(url,{
 })
 }
 function del(name){
-    if(!confirm("确认删除书签:"+name+"?")){
+    if(!confirm(GetText("are_you_sure"))){
         return
     }
     loadPage(true)
@@ -57,15 +57,15 @@ fetch(url,{
 }).then((res) => {
     if(!res.ok){
         if(res.status===401){
-            notify("无权限")
+            notify(GetText("no_per"))
         }
         else{
-            notify("删除失败"+res.status+"错误")
+            notify(GetText("error")+":"+res.status)
         }
         loadPage(false)
         return
     }
-    notify("删除成功")
+    notify(GetText("op_com"))
     list()
 })
 }

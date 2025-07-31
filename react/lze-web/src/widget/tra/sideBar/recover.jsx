@@ -1,4 +1,4 @@
-import { useGlobal,list,loadPage } from "../global"
+import { useGlobal,list,loadPage, GetText } from "../global"
 import { notify } from "../../../components/notify"
 export default function Recover(){
     const user=useGlobal((state)=>state.userName)
@@ -9,10 +9,10 @@ export default function Recover(){
     const url=useGlobal((state)=>state.traUrl)+"recover"
     const recover=()=>{
         if(recover_list.length==0){
-            notify("未选择文件")
+            notify(GetText("no_select_file"))
             return
         }
-        if(!confirm("确认恢复吗？")){
+        if(!confirm(GetText("are_you_sure"))){
             return
         }
         loadPage(true)
@@ -27,20 +27,20 @@ export default function Recover(){
         }).then(res=>{
             if(!res.ok){
                if(res.status==401){
-                notify("无恢复文件权限")
+                notify(GetText("no_per"))
                }
                else{
-                notify("恢复失败"+res.status+"错误")
+                notify(GetText("error")+":"+res.status)
                }
                loadPage(false)
                return
             }
-            notify("恢复完成")
+            notify(GetText("op_com"))
             list(nowPath)
         })
     }
     return(
-        <button className="btn side-btn" id="recover" title="恢复"
+        <button className="btn side-btn" id="recover" title={GetText("restore")}
         onClick={()=>{recover()}}
         ></button>
     )

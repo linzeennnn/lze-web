@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import  TopBar  from "../../../components/topBar";
-import { Save_note,useGlobal } from "../global";
+import { GetText, Save_note,useGlobal } from "../global";
 export default function NotTopBar(){
     const edit=useGlobal((state)=>state.edit)
     const[textInput,setTextInput]=useState(false)
@@ -29,9 +29,9 @@ const key_enter=(e)=>{
     }
 }
 const save_add=()=>{
-    if(!confirm("确定保存吗"))
+    if(!confirm(GetText()))
         return
-    setText("")
+    setText("are_you_sure")
     setTitle("")
     setTextInput(false)
     useGlobal.setState({edit:{
@@ -46,7 +46,7 @@ const save_add=()=>{
                 onKeyDown={key_c_s}
             >
             <div id="add-title-box">
-                <input placeholder="标题" 
+                <input placeholder={GetText("title")}
                 onKeyDown={key_enter}
                 value={title}
                 onChange={(e)=>{
@@ -54,7 +54,7 @@ const save_add=()=>{
                 }}
                 id="add-title-input"/>
                 <button id="add-save" 
-                title="保存"
+                title={GetText("save")}
                 className="btn save"
                 onClick={()=>{
                     save_add()
@@ -78,7 +78,7 @@ const save_add=()=>{
             }}
                 ></div>
                 <textarea id="add-text-input" value={text}
-                placeholder="输入内容"
+                placeholder={GetText("input_content")}
                 ref={textareaRef}
                 onClick={(e)=>{
                     e.stopPropagation();
@@ -88,7 +88,7 @@ const save_add=()=>{
                 />
                     </>
                 ):
-                (text==''?<span>输入内容</span>:
+                (text==''?<span>{GetText("input_content")}</span>:
                 <span>{text}</span>)
                 }
             </div>

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GetTheme } from '../../components/getTheme';
+import { PageCom } from '../../components/pageCom';
 import { notify } from '../../components/notify';
 // 全局变量
 export const useGlobal = create((set, get) => ({
@@ -7,6 +7,7 @@ export const useGlobal = create((set, get) => ({
   token: window.localStorage.getItem('token'),
   showBg: false,
   loading: false,
+  langList:[],
   bokList:[],
   bokUrl:`${window.location.origin}/server/bok/`,
     theme:{
@@ -23,13 +24,13 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
-// 初始化其
+// 获取文本
+export  function GetText(str){
+  return useGlobal.getState().langList[str]
+}
+// 初始化
 export function InitData(){
-        sessionStorage.setItem('app', 'true');
- const theme=GetTheme("bok")
-  useGlobal.setState({
-    theme:theme
-  })
+PageCom(useGlobal.setState,"bok")
   list()
 }
 // 扫描目录
@@ -78,15 +79,15 @@ export function Save_note(newTitle,newContent){
     }).then((res) => {
         if(!res.ok){
             if(res.status===401){
-                notify("无权限")
+                notify(GetText("no_per"))
             }
             else{
-                notify("保存失败"+res.status+"错误")
+                notify(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify("保存成功")
+        notify(GetText("op_com"))
         loadPage(false)
         list()
     })

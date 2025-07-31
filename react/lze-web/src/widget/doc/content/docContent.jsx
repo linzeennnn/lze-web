@@ -1,16 +1,16 @@
 import Content from '../../../components/content'
 import {notify} from '../../../components/notify'
-import {useGlobal} from '../global'
+import {GetText, useGlobal} from '../global'
 import FileItem from './fileItem';
 export default function DocContent(){
     const doc_click = (name) => {
       let tmp = [...selected];
       if (tmp.includes(name)) {
         tmp.splice(tmp.indexOf(name), 1);
-        notify("取消选中");
+        notify(GetText("cancel"));
       } else {
         tmp.push(name);
-        notify("已选择"+tmp.length+"个文件")
+        notify(GetText("selected")+tmp.length+GetText("file"))
       }
       setGlobal({ selected: tmp }); // 更新 selected
     };

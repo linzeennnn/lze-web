@@ -11,11 +11,11 @@ import '../../css/page/tra.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useEffect } from "react";
-import { Initdata, useGlobal } from "./global";
+import { InitData, useGlobal } from "./global";
 export default function App() {
   const theme=useGlobal(state=>state.theme)
   useEffect(()=>{
-    Initdata()
+    InitData()
   },[])
   return ( 
      <div id="app" mode={theme.mode} color={theme.color["tra"]}>

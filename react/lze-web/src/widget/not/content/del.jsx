@@ -1,15 +1,15 @@
-import { useGlobal,list,loadPage } from "../global"
+import { useGlobal,list,loadPage, GetText } from "../global"
 import { notify } from "../../../components/notify"
 export default function Del({name}){
     return(
         <button id="del-btn" className="btn"
-        title="删除"
+        title={GetText("delete")}
         onClick={()=>del(name)}
         ></button>
     )
 }
 function del(fileName){
-    if(!confirm("确认删除吗"))
+    if(!confirm(GetText("are_you_sure")))
         return
     const user =useGlobal.getState().userName
     const token =useGlobal.getState().token
@@ -26,14 +26,14 @@ function del(fileName){
     .then(res=>{
         if(!res.ok){
             if(res.status==401){
-                notify("没有权限")
+                notify(GetText("no_per"))
             }else{
-                notify(res.status+"错误")
+                notify(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify("删除成功")
+        notify(GetText("op_com"))
         list()
     })
 }

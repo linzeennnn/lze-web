@@ -1,4 +1,4 @@
-import { useGlobal,list,loadPage } from "../global"
+import { useGlobal,list,loadPage, GetText } from "../global"
 import { notify } from "../../../components/notify"
 export default function Del(){
 
@@ -7,7 +7,7 @@ export default function Del(){
     const nowPath=useGlobal((state)=>state.nowPath)
     const url=useGlobal((state)=>state.traUrl)+"del"
         const clean=()=>{
-            if(!confirm("确认清空回收站吗？")){
+            if(!confirm(GetText("are_you_sure"))){
                 return
             }
             loadPage(true)
@@ -22,15 +22,15 @@ export default function Del(){
             }).then(res=>{
                 if(!res.ok){
                    if(res.status==401){
-                    notify("无权限")
+                    notify(GetText("no_per"))
                    }
                    else{
-                    notify(res.status+"错误")
+                    notify(GetText("error")+":"+res.status)
                    }
                    loadPage(false)
                    return
                 }
-                notify("清空完成")
+                notify(GetText("op_com"))
                 list(nowPath)
             })
         }
@@ -38,6 +38,6 @@ export default function Del(){
     return(
         <button id="del" className="btn side-btn" 
         onClick={()=>{clean()}}
-        title="清空回收站"></button>
+        title={GetText("clear_tra")}></button>
     )
 }

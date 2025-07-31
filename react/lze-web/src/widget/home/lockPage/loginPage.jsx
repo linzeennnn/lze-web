@@ -1,9 +1,7 @@
 import { useState } from "react";
-import {useGlobal} from "../../global";
-
-export default function Login() {
-  const [win1, setWin1] = useState(true);
-  const userName = useGlobal(state => state.userName);
+import { notify } from "../../../components/notify";
+import { GetText } from "../global";
+export default function LoginPage({setSwitch}) {
   const [userData, setUserData] = useState({
     userName: '',
     password: ''
@@ -25,31 +23,16 @@ export default function Login() {
 
   return (
     <>
-      {win1 ? (
-        <div id="login-win1">
-          <button
-            id="switch-user"
-            className="btn"
-            title="切换用户"
-            onClick={() => setWin1(false)}
-          >
-            <div id="switch-user-icon"></div>
-            <span>{userName}</span>
-          </button>
-          <button
-            id="logout"
-            className="btn"
-            title="退出登录"
-            onClick={() => logout()}
+      
+        <div id="login-win" onKeyDown={handleKeyDown}>
+          <button className="btn" id="login-back" title={GetText("back")}
+          onClick={()=>{setSwitch(false)}}
           ></button>
-        </div>
-      ) : (
-        <div id="login-win2" onKeyDown={handleKeyDown}>
           <input
             className="login-input"
             type="text"
             name="userName"
-            placeholder="用户名"
+            placeholder={GetText("username")}
             value={userData.userName}
             onChange={userDataChange}
           />
@@ -59,16 +42,15 @@ export default function Login() {
             name="password"
             value={userData.password}
             onChange={userDataChange}
-            placeholder="密码"
+            placeholder={GetText("password")}
           />
           <button
             id="login-send"
             className="btn"
-            title="登录"
+            title={GetText("login")}
             onClick={() => login(userData.userName, userData.password)}
           ></button>
         </div>
-      )}
     </>
   );
 }
@@ -87,12 +69,12 @@ function login(name,password){
     .then(res=>{
         if(!res.ok){
             if(res.status===401){
-                notify("账号或密码错误")
+                notify(GetText("acc_or_pas_err"))
             }
             else{
-                notify(res.status+"错误")
+                notify(res.status+GetText("error"))
             }
-            throw new Error(`请求失败，状态码：${res.status}`);
+            throw new Error(res.status);
         }
         
         return res.json()})
@@ -103,10 +85,4 @@ function login(name,password){
 
     })
 
-}
-function logout(){
-    if (confirm("确定退出登录吗？")) {
-    localStorage.clear();
-    window.location.reload();
-    }
 }

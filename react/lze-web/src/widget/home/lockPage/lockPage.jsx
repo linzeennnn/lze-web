@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { useGlobal } from "../global"
-import User from "./user";
-import BtnBox from "./btnBox";
+import LockMainPage from "./lockMainPage";
+import LoginPage from "./loginPage";
 export default function LockPage(){
+    const [switchLogin,setSwitch]=useState(false)
     const locked =useGlobal(state => state.locked);
       const[tmpLoad,setTmpLoad]=useState(true)
     return(
@@ -10,8 +11,13 @@ export default function LockPage(){
             <div id="head-bar" className={(locked&&tmpLoad)?"head-bar-load":""}>
                 <div id="head-name"></div>
             </div>
-            <User/>
-            <BtnBox unlockProp={setTmpLoad}/>
+            {switchLogin?
+                <LoginPage setSwitch={setSwitch}/>:
+            <LockMainPage prop={{
+                unlock:setTmpLoad,
+                switch:setSwitch
+                }}/>
+                }
         </div>
     )
 }

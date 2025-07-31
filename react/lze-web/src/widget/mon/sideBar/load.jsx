@@ -1,8 +1,8 @@
-import { list } from "../global";
+import { GetText, list } from "../global";
 export default function Load(){
     return(
         <button className="btn" id="load"
-        title="刷新"
+        title={GetText("refresh")}
         onClick={()=>{list()}}></button>
     )
 }

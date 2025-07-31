@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {useGlobal,list} from '../global'
+import {useGlobal,list, GetText} from '../global'
 export default function DirList(){
     const[showList,setShowList]=useState(false)
     const dirList=useGlobal((state)=>state.dirList)
@@ -10,7 +10,7 @@ export default function DirList(){
     return(
         <>
         <div id="dir-list" className="btn" 
-        title="查看其他相册" onClick={()=>openList()}
+        title={GetText("view_album")} onClick={()=>openList()}
         >
             <div id="dir-list-box"
             style={{ display: showList ? "flex" : "none" }}
@@ -19,7 +19,7 @@ export default function DirList(){
                     dirList.map((dir,index)=>{
                         return(
                             <div id="dir-item" key={dir+index}
-                            title={"查看"+dir} onClick={()=>{list(nowPath+"/"+dir)}}
+                            title={GetText("view")+dir} onClick={()=>{list(nowPath+"/"+dir)}}
                             >{dir}</div>
                         )
                     })

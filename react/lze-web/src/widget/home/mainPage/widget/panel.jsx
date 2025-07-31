@@ -1,6 +1,6 @@
 import React from "react";
 import { notify } from "../../../../components/notify";
-import { useGlobal } from "../../global";
+import { GetText, useGlobal } from "../../global";
 
 export default function Panel({showItem,type}){
     return(
@@ -9,15 +9,15 @@ export default function Panel({showItem,type}){
                 showItem.map((item,index)=>{
                     return (
                     <React.Fragment key={item+index}>
-                        {type=="tra"&&<li>最近删除</li>}
-                        {type=="bok"&&<li>最近访问</li>}
-                    <div className={"widget-panel-item "+type+"-panel"} title="查看"
+                        {type=="tra"&&<li>{GetText("recent_delete")}</li>}
+                        {type=="bok"&&<li>{GetText("recent_visit")}</li>}
+                    <div className={"widget-panel-item "+type+"-panel"} title={GetText("view")}
                     onClick={(e)=>{
                         e.stopPropagation();
                         
                         openListWin(type,item)}}>
                        {type=="pic"? get_pic(item):(<span className={"panel-text "+(item==""?"panel-text-null":"")}>
-                            {item==""?"无":item}
+                            {item==""?GetText("empty"):item}
                             </span>)}
                     </div>
                     </React.Fragment>
@@ -35,16 +35,16 @@ if(picMes.media=="img"){
 if(picMes.media=="vid"){
     return <video src={url} controls="controls" />
 }
-return (<span className="panel-text panel-text-null">空</span>)
+return (<span className="panel-text panel-text-null">{GetText("empty")}</span>)
 }
 function openListWin(type,name){
     if(type=="tra"){
-        notify("最近删除文件:"+name)
+        notify(GetText("recent_delete")+":"+name)
         return
     }
     if(type=="mon"){
         const user=useGlobal.getState().userName
-        notify("当前用户:"+user)
+        notify(GetText("current_user")+":"+user)
         return
     }
     if((type!="pic"&&name!="")||

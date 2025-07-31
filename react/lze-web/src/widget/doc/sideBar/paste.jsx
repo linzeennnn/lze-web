@@ -1,4 +1,4 @@
-import {useGlobal,list,loadPage} from '../global'
+import {useGlobal,list,loadPage, GetText} from '../global'
 import {notify} from '../../../components/notify'
 export default function Paste({paste,copyList}){
     const[pastestatus,setPastestatus]=paste
@@ -15,7 +15,7 @@ function paste_file(type,copylist){
     const global=useGlobal.getState()
     
     if(copylist.length==0){
-        notify("没有选择文件")
+        notify(GetText("no_select_file"))
         return
     }
     loadPage(true)
@@ -43,15 +43,15 @@ function paste_file(type,copylist){
         body:JSON.stringify(send_data)})
         .then(res=>{
             if(res.ok){
-                notify("已粘贴")
+                notify(GetText("op_com"))
                 list(nowpath)
             }
             else{
                 if(res.status==401){
-                    notify("无权限")
+                    notify(GetText("no_per"))
                 }
                 else{
-                    notify(res.status+"错误")
+                    notify(GetText("error")+":"+res.status)
                 }
                 loadPage(false)
             }

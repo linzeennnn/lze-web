@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Login from "./dockApp/login";
+import Lang from "./dockApp/lang";
 import Sys from "./dockApp/sys";
 import Theme from "./dockApp/theme";
-import {useGlobal} from "../global";
+import {GetText, useGlobal} from "../global";
 
 export default function Dock({tmpLoad,setTmpLoad}) {
   const showBg = useGlobal(state => state.showBg);
@@ -19,10 +19,10 @@ export default function Dock({tmpLoad,setTmpLoad}) {
   };
 
   const dockList = [
-    { id: "login", name: "登陆管理" },
-    { id: "theme", name: "主题" },
-    { id: "sys", name: "系统监视器" },
-    { id: "lock", name: "锁屏" },
+    { id: "lang", name: GetText("lang_setting") },
+    { id: "theme", name: GetText("theme") },
+    { id: "sys", name: GetText("monitor") },
+    { id: "lock", name: GetText("login_manage") },
   ];
 
   return (
@@ -32,10 +32,10 @@ export default function Dock({tmpLoad,setTmpLoad}) {
           <button
             className="btn"
             id="close-win"
-            title="关闭"
+            title={GetText("close")}
             onClick={close_dock}
           ></button>
-          {appType === "login" && <Login />}
+          {appType === "lang" && <Lang/> }
           {appType === "sys" && <Sys />}
           {appType === "theme" && <Theme />}
         </div>

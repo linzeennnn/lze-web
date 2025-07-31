@@ -1,4 +1,4 @@
-import { useGlobal,Upload } from "../global";
+import { useGlobal,Upload, GetText } from "../global";
 export default function UploadBtn() {
     const setGlobal = useGlobal.setState
     const pageNum = useGlobal((state) => state.pageNum);
@@ -24,13 +24,14 @@ export default function UploadBtn() {
         fileArr.forEach((file,i)=>{
             Upload(file,uploadData) 
         })
+         e.target.value = null;
     }
   
     return (
         <>
              <input id="upFile" style={{display:"none"}} 
             type="file" multiple onChange={(e) => uploadChange(e)}/>
-            <label className="btn side-btn" id="upload" title="上传图片视频" 
+            <label className="btn side-btn" id="upload" title={GetText("upload_media")}
             htmlFor="upFile"
             ></label>
             </>

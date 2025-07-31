@@ -1,5 +1,6 @@
 import { useState } from "react"
 import ActionBar from "./actionBar"
+import { GetText } from "../global"
 export default function ControlBar({keyName,Mes}) {
     const [showAction,setShowAction]=useState(false)
     return (
@@ -11,7 +12,7 @@ Mes?(<div className="control-bar main-item">
         keyName={{control:keyName,action:actionKey}} Mes={actionMes} />
     })}
     </div>):null}
-    <button className="btn show-action" title="显示配置项"
+    <button className="btn show-action" title={GetText("show")}
     onClick={()=>{
         showAction?setShowAction(false):setShowAction(true)
     }}

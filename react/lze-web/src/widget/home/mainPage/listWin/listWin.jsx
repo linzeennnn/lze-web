@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../../components/winBg"
-import { useGlobal } from "../../global"
+import { GetText, useGlobal } from "../../global"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)
     const theme=useGlobal(state=>state.theme)
@@ -64,7 +64,7 @@ function ListDoc({ name }) {
         </div>
     })):
     (fileMes.view?<iframe className="file-view" src={window.location.origin+"/"+fileMes.url}></iframe>
-      :<span>不支持类型</span>
+      :<span>{GetText("not_support_type")}</span>
     )
   ):<div className="loading"></div>
   }

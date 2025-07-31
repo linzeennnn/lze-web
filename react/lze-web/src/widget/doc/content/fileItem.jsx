@@ -2,7 +2,7 @@ import FileText from "./fileText"
 import EditBtn from "./editBtn"
 import DownloadBtn from "./downloadBtn"
 import { useState } from "react";
-import { useGlobal,list,loadPage } from "../global";
+import { useGlobal,list,loadPage, GetText } from "../global";
 import { notify } from "../../../components/notify";
 export default function FileItem({ fileMes, selected, docClick}){
     const [editMode, setEditMode] = useState(false);
@@ -46,15 +46,15 @@ function rename(oldname,newname){
     })
     .then(res=>{
         if(res.ok){
-            notify("已重命名["+newname+"]")
+            notify(GetText("op_com"))
             list(global.nowPath)
         }
         else{
             if(res.status===401){
-               notify("无重命名权限")
+               notify(GetText("no_per"))
             }
             else{
-                notify(res.status+"错误")
+                notify(GetText("error")+":"+res.status)
             }
              loadPage(false)
         }

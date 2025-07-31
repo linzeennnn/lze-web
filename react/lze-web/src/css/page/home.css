@@ -30,6 +30,11 @@
   opacity: 1 !important;
   visibility: visible !important;
 }
+.widget-panel li{
+    font-weight: bold;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
 .widget-line{
     height: 30%;
     width: 95%;
@@ -235,14 +240,6 @@ align-items: center;
     background-image: var(--no_icon);
     z-index: 2;
 }
-#login-win1{
-    display: flex;
-    flex-direction: row;
-}
-#switch-user{
-    display: flex;
-    flex-direction: row;
-}
 /* lock Page */
 #head-bar{
     display: flex;
@@ -308,9 +305,13 @@ align-items: center;
     box-shadow: var(--out_shadow);
     background-color: var(--base_color);
     margin-bottom: 60px;
+    transition:transform 0.3s ease ;
+}
+#lock-user:hover{
+    transform: scale(1.2);
 }
 #lock-user div{
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
 }
 #lock-profile{
     width: 40px;
@@ -322,15 +323,15 @@ align-items: center;
 #lock-user:hover #lock-profile{
     opacity: 0.2;
 }
-#lock-user:hover #lock-edit{
+#lock-user:hover #lock-switch{
     opacity: 1;
 }
-#lock-edit{
+#lock-switch{
     opacity: 0;
     position: absolute;
     width: 40px;
     height: 40px;
-    background-image: var(--edit_icon);
+    background-image: var(--switch_icon);
 }
 #lock-user span{
     font-weight: bold;
@@ -444,47 +445,31 @@ background-color: var(--base_color);
     align-items: center;
 }
 /* login */
-#login-win1{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-#login-win2{
+
+#login-win{
+    background-color: var(--bg_color);
+    border-radius: 15px;
+    box-shadow: var(--out_shadow);
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 50px 50px 20px 50px;
+}
+#login-back{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 50%;
+    background-color: var(--base_color);
+    background-image: var(--toleft_icon);
 }
 .login-input{
     box-shadow: var(--in_shadow);
     margin: 10px;
     padding: 10px;
     border-radius: 50px;
-}
-#switch-user{
-    padding: 10px;
-    margin: 5px;
-    border-radius: 50px;
-    width: fit-content !important;
-    height: fit-content !important;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    color: var(--text);
-    background-color: var(--bg_color);
-}
-#switch-user-icon{
-    margin-right: 5PX;
-    width: 32px;
-    height: 32px;
-    background-image: url(../../assets/icon/profile.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-}
-#logout{
-    background-image: url(../../assets/icon/logout.svg);
 }
 #login-send{
     background-image: var(--toright_icon);
@@ -566,6 +551,52 @@ background-color: var(--base_color);
     margin-right: 10px;
     color: var(--text);
     border-radius: 15px;
+}
+/* lang */
+#show-lang{
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content:  flex-start;
+    align-items: center;
+    background-color: var(--base_color);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+#show-lang div{
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    background-image: var(--switch_icon);
+}
+#show-lang:hover{
+    transform: scale(1.2);
+}
+#lang-list{
+    color: var(--text);
+    border-radius: 15px;
+    box-shadow: var(--out_shadow);
+    cursor: pointer;
+    padding: 10px;
+    background-color: var(--bg_color);
+}
+.lang-list-item {
+    text-align: center;
+    padding: 5px;
+    background-color: var(--base_color);
+    border-radius: 15px;
+    margin: 10px;
+    transition: transform 0.3s ease;
+}
+.lang-list-item:hover{
+    transform: scale(1.2);
+}
+.lang-select{
+    cursor: default !important;
+    pointer-events: none !important;
+    background-color: var(--bg_color);
 }
 /* list win */
 .list-win{
@@ -654,7 +685,7 @@ background-color: var(--base_color);
 }
 #load-btn div{background-image: var(--load_icon);}
 #unlock-btn div{background-image: var(--power_icon);}
-#switch-btn div{background-image: var(--switch_icon);}
+#logout-btn div{background-image: var(--logout_icon);}
 .switch{background-image: var(--switch_icon);}
 .dir-view-file{background-image: url(../../assets/icon/file.svg);}
 .dir-view-dir{background-image: url(../../assets/icon/folder.svg);}
@@ -670,7 +701,7 @@ background-color: var(--base_color);
 #cpu-icon{background-image: url(../../assets/icon/cpu.svg);}
 #mem-icon{background-image: url(../../assets/icon/mem.svg);}
 #disk-icon{background-image: url(../../assets/icon/disk.svg);}
-#login-icon{background-image: url(../../assets/icon/user.svg);}
+#lang-icon{background-image: url(../../assets/icon/lang.svg);}
 #sys-icon{background-image: url(../../assets/icon/system.svg);}
 #theme-icon{background-image: url(../../assets/icon/theme.svg);}
 #lock-icon{background-image: url(../../assets/icon/lock.svg);}

@@ -1,6 +1,6 @@
 import ShowPath from './showPath';
 import NewDirInput from './newDirInput';
-import {useGlobal,list} from '../global';
+import {useGlobal,list, GetText} from '../global';
 import { notify } from '../../../components/notify';
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus
@@ -10,9 +10,8 @@ export default function TopBarBox({ createStatus }) {
     <div id="top-bar-box">
      
       {!creating && !upload.status&& (<button id='home-icon' className='btn'
-      title='回到主目录' onClick={()=>{
+      title={GetText("back_main_dir")} onClick={()=>{
         if(nowPath==''){
-          notify('已在主目录')
           return
         }
         list('')}}

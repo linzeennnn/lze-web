@@ -1,10 +1,10 @@
-import { useGlobal } from "../global"
+import { GetText, useGlobal } from "../global"
 
 export default function DownloadBtn({fileMes}){
     const global=useGlobal.getState()
    
     return (
-        <button className="down-btn btn" title={"下载:"+fileMes[0]}
+        <button className="down-btn btn" title={GetText("download")+":"+fileMes[0]}
         onClick={((e)=>{
             e.stopPropagation();
             if(fileMes[1]==="file"||fileMes[1]==="file_link"){
@@ -35,15 +35,15 @@ function ZipDir(fileName){
       })
       .then(response => {
         if (response.status === 401) {
-          notify("无下载文件夹权限")
+          notify(GetText("no_per"))
           pageloading(0)
-          throw new Error('未授权访问');
+          throw new Error('err');
         }
         return response.text();  
       })
       .then(text => {
       window.location.href = global.docUrl+"down_zip?downToken="+text
-      notify("开始下载,请在10秒内下载")
+      notify(GetText("down_one_minute"))
      loadPage(false)
     })
     }

@@ -1,4 +1,4 @@
-import { useGlobal } from "../global";
+import { GetText, useGlobal } from "../global";
 import { notify } from "../../../components/notify";
 import { useState } from "react";
 export default function PageBar(){
@@ -15,7 +15,7 @@ export default function PageBar(){
         else if(num==pageNum)
         {}
         else
-            notify("页码不正确")
+            notify(GetText("page_num")+GetText("not_correct"))
     }
     return(
         <div id="page-bar">
@@ -25,7 +25,7 @@ export default function PageBar(){
             <span id="page-num">{pageNum+"/"+(totalPage==0?1:totalPage)}</span>
             <div id="jump-page">
             <input id="page-input" value={inputPage}  type="text" 
-            placeholder="页码"
+            placeholder={GetText("page_num")}
             onChange={(e) => setInputPage(e.target.value)}
             onKeyDown={(e)=>{
                 if(e.key=="Enter"){
@@ -39,7 +39,7 @@ export default function PageBar(){
             <button className="btn" id="jump-btn"
                 onClick={()=>{jumpPage(inputPage)
                     setInputPage("")
-                }} title="跳转"
+                }} title={GetText("jump")}
                 ></button>
                 </div>
             <button className="btn" id="next-page"

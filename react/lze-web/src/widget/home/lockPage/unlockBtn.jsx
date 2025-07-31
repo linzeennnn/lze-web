@@ -1,4 +1,4 @@
-import { useGlobal } from "../global";
+import { GetText, useGlobal } from "../global";
 
 export default function UnlockBtn({setTmpLoad}){
     return(
@@ -13,7 +13,7 @@ export default function UnlockBtn({setTmpLoad}){
                             }}
         >
             <div></div>
-            <span>开始</span>
+            <span>{GetText("start")}</span>
         </button>
     )
 }

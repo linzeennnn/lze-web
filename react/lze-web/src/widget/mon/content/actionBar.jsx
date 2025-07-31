@@ -1,4 +1,4 @@
-import {useGlobal,list,loadPage} from '../global'
+import {useGlobal,list,loadPage, GetText} from '../global'
 import { notify } from '../../../components/notify'
 export default function ActionBar({keyName,Mes}){
     const nowuser=useGlobal((state)=>state.nowuser)
@@ -8,7 +8,7 @@ export default function ActionBar({keyName,Mes}){
             "action-bar "+(Mes.user.includes(nowuser)?
             "have-action":"no-action")
         }
-        title='修改权限'
+        title={GetText("modify_permission")}
         onClick={()=>{
             update_act(keyName.control,keyName.action,nowuser,(Mes.user.includes(nowuser)?
             "remove":"add"))
@@ -17,16 +17,8 @@ export default function ActionBar({keyName,Mes}){
     )
 }
 function update_act(control,action,name,change){
-    let ch
-    switch(change){
-        case "add":
-            ch="增加"
-            break
-        case "remove":
-            ch="移除"
-            break
-    }
-    if(!confirm("确定"+ch+"该权限吗?")){
+    let ch=GetText(change)
+    if(!confirm(ch+"?")){
         return
     }
     loadPage(true)
@@ -44,14 +36,14 @@ function update_act(control,action,name,change){
     }).then(res=>{
         if(!res.ok){
             if(res.status===401){
-                notify("登录过期")
+                notify(GetText("no_per"))
             }else{
-                notify(res.status+"错误")
+                notify(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify("修改成功")
+        notify(GetText("op_com"))
         list()
     })
 }

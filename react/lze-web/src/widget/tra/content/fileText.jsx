@@ -1,11 +1,11 @@
-import {list,useGlobal} from '../global'
+import {GetText, list,useGlobal} from '../global'
 export default function FileText({fileMes}){
     const nowPath = useGlobal((state) => state.nowPath);
     return(
         <>
         <span
             className={(fileMes.type === "dir" || fileMes.type === "dir_link" ? "dir-text" : "file-text") + " file-list-text"}
-            title={"查看" + fileMes.name}
+            title={GetText("view") + fileMes.name}
             onClick={(e) => {
                 e.stopPropagation();
 
@@ -22,7 +22,7 @@ export default function FileText({fileMes}){
             >
             {fileMes.name}
             </span>
-            <span className='ori-path' title={"原路径:"+fileMes.delData==""?"/":fileMes.delData}
+            <span className='ori-path' title={GetText("ori_path")+":"+fileMes.delData==""?"/":fileMes.delData}
             >{fileMes.delData==""?"/":fileMes.delData}</span>
         </>
     )

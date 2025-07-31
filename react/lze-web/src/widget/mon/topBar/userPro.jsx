@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useGlobal } from "../global";
+import { GetText, useGlobal } from "../global";
 
 export default function UserPro({Mes}){
     const[showuser,setShowUser] = useState(false)
@@ -8,7 +8,7 @@ export default function UserPro({Mes}){
     const setGlobal=useGlobal.setState
     return(
         <div id="user-box">
-        <button id="user-btn" className="btn" title="查看用户"
+        <button id="user-btn" className="btn" title={GetText("view_user")}
         onClick={()=>{
             setShowUser(true)
         }}
