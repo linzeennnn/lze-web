@@ -9,14 +9,20 @@ export default function BokTopBar(){
         {type: 'https', showName: 'https://'},
         {type: 'file', showName: 'file://'}
     ]
-    
+    const KeyDown = (e)=>{
+        if (e.key === 'Enter'){
+            addBok(name,url)
+        }
+    }
     const [index, setIndex] = useState(0)
     const [name, setName] = useState('')
     const [url, setUrl] = useState('')
     return(
         <TopBar>
             <div id='title-box'>
-                <input placeholder={GetText("bok_name")} id='tit-input' type='text'
+                <input placeholder={GetText("bok_name")} 
+                onKeyDown={KeyDown}
+                id='tit-input' type='text'
                 value={name} onChange={(e) => setName(e.target.value)}/>
                 <button id='save-add' title={GetText("save")} className='btn'
                 onClick={()=>addBok(name,url)}
@@ -32,7 +38,9 @@ export default function BokTopBar(){
                     }}
                 ></button>
                 <span id='show-protocol'>{protocolList[index].showName}</span>
-                <input placeholder={GetText("bok_url")} id='link-input' type='text'
+                <input placeholder={GetText("bok_url")} id='link-input'
+                onKeyDown={KeyDown}
+                type='text'
                 value={url} onChange={(e) => setUrl(e.target.value)}
                 />
             </div>

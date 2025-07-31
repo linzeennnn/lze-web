@@ -29,9 +29,9 @@ const key_enter=(e)=>{
     }
 }
 const save_add=()=>{
-    if(!confirm(GetText()))
+    if(!confirm(GetText("are_you_sure")))
         return
-    setText("are_you_sure")
+    setText("")
     setTitle("")
     setTextInput(false)
     useGlobal.setState({edit:{

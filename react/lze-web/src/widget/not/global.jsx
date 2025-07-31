@@ -83,16 +83,7 @@ export function Save_note(newTitle,newContent){
     const edit=useGlobal.getState().edit
     const oldTitle=edit.title
     newTitle=newTitle==""?"new_note":newTitle
-    let api;
-    switch(edit.type){
-      case "edit":
-        api="edit"
-        break;
-      case "add":
-        api="add"
-        break;
-    }
-    const url=useGlobal.getState().notUrl+api
+    const url=useGlobal.getState().notUrl+edit.type
     const send_data={user,token,oldTitle,newTitle,newContent}
     fetch(url,{
         method: "POST",
