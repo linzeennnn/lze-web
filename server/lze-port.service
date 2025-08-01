@@ -1,0 +1,11 @@
+[Unit]
+Description=lze-web server port forward  
+After=network.target        
+
+[Service]
+ExecStart=/usr/bin/lze-port 
+Restart=always            
+WorkingDirectory=/usr/local/bin
+
+[Install]
+WantedBy=multi-user.target  

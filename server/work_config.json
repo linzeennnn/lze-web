@@ -1,0 +1,12 @@
+{
+    "file_path":"default",
+    "doc_path":"default",
+    "pic_path":"default",
+    "tra_path":"default",
+    "not_path":"default",
+    "bok_path":"default",
+    "tmp_path":"default",
+    "log_path":"default",
+    "port":"8888",
+    "max_size":"104857600"
+}
