@@ -494,12 +494,25 @@ background-color: var(--base_color);
     align-items: center;
     border-bottom: #00000020 solid 3px;
 }
-#show-mode{
+.theme-btn{
+    font-size: 15px;
+    min-width: 100px;
+    width: fit-content;
+    text-align: center;
     color: var(--text);
     background-color: var(--bg_color);
     padding: 15px;
     border-radius: 50px;
     margin-right: 10px;
+}
+
+.switch-icon{
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    background-image: var(--switch_icon);
 }
 #color-bar{
     display: flex;
@@ -541,17 +554,6 @@ background-color: var(--base_color);
     flex-direction: row;
     justify-content: left;
     align-items: center;
-}
-#show-page{
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    width: 90px;
-    background-color: var(--bg_color);
-    padding: 10px;
-    margin-right: 10px;
-    color: var(--text);
-    border-radius: 15px;
 }
 /* lang */
 #show-lang{
@@ -687,7 +689,6 @@ background-color: var(--base_color);
 #load-btn div{background-image: var(--load_icon);}
 #unlock-btn div{background-image: var(--power_icon);}
 #logout-btn div{background-image: var(--logout_icon);}
-.switch{background-image: var(--switch_icon);}
 .dir-view-file{background-image: url(../../assets/icon/file.svg);}
 .dir-view-dir{background-image: url(../../assets/icon/folder.svg);}
 #doc-icon{background-image: url(../../assets/icon/folder.svg);}

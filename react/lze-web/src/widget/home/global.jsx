@@ -77,7 +77,6 @@ export  async function InitData(){
       })
 // 跳转设置
 sessionStorage.setItem('home','true')
-sessionStorage.setItem('lang',JSON.stringify(useGlobal.getState().lang.list))
 // 锁屏设置
 if (sessionStorage.getItem('app') == 'true') {
   useGlobal.setState({ locked: false });

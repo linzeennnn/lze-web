@@ -8,6 +8,7 @@ export async function GetLangList(){
         body: JSON.stringify({lang:lang.type})
     })
      lang.list = await response.json();
+     sessionStorage.setItem('lang',JSON.stringify(lang.list))
     return lang;
 }
 export function GetLangType(){

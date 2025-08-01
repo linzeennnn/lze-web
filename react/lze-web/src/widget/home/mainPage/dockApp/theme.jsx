@@ -1,5 +1,5 @@
 import { GetText, useGlobal } from "../../global";
-import { Get_system_theme } from "../../../../components/getTheme";
+import { Get_system_theme, SetThemeColor } from "../../../../components/getTheme";
 import { useState } from "react";
 export default function Theme() {
   const theme = useGlobal((state) => state.theme);
@@ -28,23 +28,27 @@ export default function Theme() {
   return (
     <div id="theme-app">
       <div id="mode-bar">
-        <div id="show-mode">
-          <span>{modeOpt[theme.userSelect]}</span>
-        </div>
-        <button
-          className="btn switch"
-          id="switch-mode"
-          title="切换模式"
+        <button id="show-mode"
+        className="btn theme-btn"
           onClick={handleSwitchMode}
         >
+          <span>{modeOpt[theme.userSelect]}</span>
+        <div
+          className="switch-icon"
+          id="switch-mode"
+          title="切换模式"
+        >
+        </div>
         </button>
       </div>
       <div id="page-bar">
-        <div id="show-page">
+        <button id="show-page"
+        className="btn theme-btn"
+        onClick={handleSwitcPage}
+        >
           <span>{GetText(nowPage)}</span>
-        </div>
-        <button id="switch-page" className="btn switch" title={GetText("switch")} 
-        onClick={handleSwitcPage}></button>
+        <div id="switch-page" className="switch-icon" title={GetText("switch")} ></div>
+        </button>
       </div>
       <div id="color-bar">
         {color.map((colorName, index) => {
@@ -80,6 +84,7 @@ function set_theme(type, value) {
       updatedTheme.mode = value; 
     }
   }
+  SetThemeColor(updatedTheme.mode,updatedTheme.color["home"])
   document.body.setAttribute("mode",updatedTheme.mode)
   document.body.setAttribute("color",updatedTheme.color["home"])
   useGlobal.setState({ theme: updatedTheme });

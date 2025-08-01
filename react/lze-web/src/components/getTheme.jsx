@@ -27,7 +27,19 @@ export function GetTheme(type){
               userSelect:"system"
             }
           }
-          document.body.setAttribute("mode",theme.mode)
-          document.body.setAttribute("color",theme.color[type])
+          SetThemeColor(theme.mode,theme.color[type])
           return theme
+}
+export function SetThemeColor(mode,color){
+  const html=document.documentElement
+  html.setAttribute("mode",mode)
+  html.setAttribute("color",color)
+  const themeColor  = getComputedStyle(html).backgroundColor
+  let meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute('content', themeColor);
 }
