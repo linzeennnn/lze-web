@@ -41,5 +41,5 @@ export default function Widget({tmpLoad}) {
     );
 }
 function to_next(type){
-window.location.href=type+'.html';
+window.location.href=type;
 }

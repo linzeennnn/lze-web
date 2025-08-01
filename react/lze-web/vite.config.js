@@ -14,10 +14,9 @@ export default defineConfig({
         start_url: '.',
         display: 'standalone',
         background_color: '#ffffff',
-        // 不设置 theme_color，让 HTML 控制
         icons: [
           {
-            src: '/assets/icon/linzeen.svg', // WebApp + 安卓
+            src: '/assets/icon/linzeen.svg',
             sizes: '512x512',
             type: 'image/svg+xml',
             purpose: 'any'
@@ -45,6 +44,26 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/file/, '/file'),
       },
+    },
+    middlewareMode: false,
+    fs: {
+      strict: true
+    },
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const rewriteMap = {
+          '/doc': '/doc.html',
+          '/pic': '/pic.html',
+          '/tra': '/tra.html',
+          '/mon': '/mon.html',
+          '/not': '/not.html',
+          '/bok': '/bok.html'
+        };
+        if (rewriteMap[req.url]) {
+          req.url = rewriteMap[req.url];
+        }
+        next();
+      });
     }
   },
   build: {
