@@ -75,8 +75,6 @@ export  async function InitData(){
         userName: userName,
         token: token
       })
-// 跳转设置
-sessionStorage.setItem('home','true')
 // 锁屏设置
 if (sessionStorage.getItem('app') == 'true') {
   useGlobal.setState({ locked: false });
@@ -84,7 +82,6 @@ if (sessionStorage.getItem('app') == 'true') {
   useGlobal.setState({ locked: true });
       auth(userName,token)
 }
-
   sessionStorage.setItem('app', 'false');
 // 主题设置
 const theme=GetTheme("home")
