@@ -1,111 +1,46 @@
 #!/bin/bash
 
-set -e  # 遇到错误直接退出
-set -u  # 使用未定义变量时报错
+# 1. 列出当前目录文件
+echo "当前目录文件列表:"
+ls
 
-CURRENT_USER=$(whoami)
-CURRENT_GROUP=$(id -gn "$CURRENT_USER")
+SERVICE_NAME="lze-web.service"
+INSTALL_DIR="/opt/lze-web"
+SYSTEMD_DIR="/etc/systemd/system"
 
-echo "当前用户：$CURRENT_USER，组：$CURRENT_GROUP"
-
-# 0. 停止正在运行的服务
-echo "检查并停止正在运行的服务..."
-if systemctl --user is-active --quiet lze-web.service; then
-    echo "停止用户服务: lze-web.service"
-    systemctl --user stop lze-web.service
-fi
-
-if systemctl is-active --quiet lze-port.service; then
-    echo "停止系统服务: lze-port.service"
-    sudo systemctl stop lze-port.service
-fi
-
-# 1. 删除 /opt/lze-web 下除 file 和 config 以外的内容
-if [ -d "/opt/lze-web" ]; then
-    echo "清理 /opt/lze-web 除 file 和 config 以外的内容..."
-    shopt -s dotglob  # 允许匹配隐藏文件
-    for item in /opt/lze-web/*; do
-        base_item=$(basename "$item")
-        if [[ "$base_item" != "file" && "$base_item" != "config" ]]; then
-            sudo rm -rf "$item"
-        fi
-    done
-    shopt -u dotglob
+# 2. 停止服务（如果正在运行）
+if systemctl is-active --quiet "$SERVICE_NAME"; then
+    echo "正在停止服务 $SERVICE_NAME ..."
+    sudo systemctl stop "$SERVICE_NAME"
 else
-    echo "创建 /opt/lze-web ..."
-    sudo mkdir -p /opt/lze-web
-    sudo chown "$CURRENT_USER:$CURRENT_GROUP" /opt/lze-web
+    echo "服务 $SERVICE_NAME 没有在运行或不存在"
 fi
 
-# 2. 在 ~/Documents 下创建 lze-web 目录
-mkdir -p ~/Documents/lze-web
+# 3. 删除 /opt/lze-web 目录下的lze-web 和 web（忽略不存在）
+echo "清理 $INSTALL_DIR 下的 lze-web 和 web ..."
+sudo rm -rf "$INSTALL_DIR/lze-web" "$INSTALL_DIR/web"
 
-# 3. 软链接 ~/Documents 和 ~/Pictures 到 ~/Documents/lze-web 下
-for dir in Documents Pictures; do
-    target="$HOME/Documents/lze-web/$dir"
-    if [ ! -L "$target" ]; then
-        ln -s "$HOME/$dir" "$target"
-    fi
-done
-
-# 4. 在 ~/Documents/lze-web 目录下创建 Bookmark、Note、temp、trash 目录
-mkdir -p ~/Documents/lze-web/{Bookmark,Note,temp,trash}
-
-# 检查是否存在 /opt/lze-web/file 和 /opt/lze-web/config
-file_exists=false
-config_exists=false
-[ -d "/opt/lze-web/file" ] && file_exists=true
-[ -d "/opt/lze-web/config" ] && config_exists=true
-
-# 5. 如果 file 不存在，创建软链接
-if [ "$file_exists" = false ]; then
-    mkdir -p /opt/lze-web/file
-    ln -s ~/Documents/lze-web /opt/lze-web/file
+# 4. 创建安装目录（如果不存在）
+if [ ! -d "$INSTALL_DIR" ]; then
+    echo "创建目录 $INSTALL_DIR ..."
+    sudo mkdir -p "$INSTALL_DIR"
 fi
 
-# 6. 复制 ./lze-web 到 /opt/lze-web 并添加执行权限
-cp ./lze-web /opt/lze-web/
-chmod +x /opt/lze-web/lze-web
+# 5. 复制 lze-web 和 web 到安装目录
+echo "复制 lze-web 和 web 到 $INSTALL_DIR ..."
+sudo cp -r ./lze-web "$INSTALL_DIR/"
+sudo cp -r ./web "$INSTALL_DIR/"
 
-# 7. 如果 config 不存在，创建并复制配置
-if [ "$config_exists" = false ]; then
-    mkdir -p /opt/lze-web/config
-    cp ./work_config.json /opt/lze-web/config/
-fi
+# 6. 复制 service 文件到 systemd 目录
+echo "复制 $SERVICE_NAME 到 $SYSTEMD_DIR ..."
+sudo cp ./lze-web.service "$SYSTEMD_DIR/"
 
-# 8. 复制 ./web 到 /opt/lze-web
-cp -r ./web /opt/lze-web/
-
-# 9. 创建全局命令链接
-sudo ln -sf /opt/lze-web/lze-web /usr/local/bin/lze-web
-
-# 10. 复制 lze-web.service 到用户 systemd 目录，替换或追加 User 和 Group 字段
-mkdir -p ~/.config/systemd/user/
-
-if grep -q '^User=' ./lze-web.service; then
-    sed -e "s/^User=.*/User=$CURRENT_USER/" -e "s/^Group=.*/Group=$CURRENT_GROUP/" ./lze-web.service > ~/.config/systemd/user/lze-web.service
-else
-    awk -v user="$CURRENT_USER" -v group="$CURRENT_GROUP" '
-    /^\[Service\]/ { print; print "User=" user; print "Group=" group; next }
-    { print }
-    ' ./lze-web.service > ~/.config/systemd/user/lze-web.service
-fi
-
-# 11. 复制 lze-port 到 /usr/bin 并添加执行权限
-sudo cp ./lze-port /usr/bin/
-sudo chmod +x /usr/bin/lze-port
-
-# 12. 复制 lze-port.service 到系统 systemd 目录
-sudo cp ./lze-port.service /etc/systemd/system/
-
-# 13. 启用并重启两个服务
-systemctl --user daemon-reload
-systemctl --user enable lze-web.service
-systemctl --user restart lze-web.service
-systemctl --user status lze-web.service
-
+# 7. 重新加载 systemd，启用并启动服务
+echo "重新加载 systemd 守护进程 ..."
 sudo systemctl daemon-reload
-sudo systemctl enable lze-port.service
-sudo systemctl restart lze-port.service
-sudo systemctl status lze-port.service
+
+echo "启用并启动服务 $SERVICE_NAME ..."
+sudo systemctl enable --now "$SERVICE_NAME"
+
+echo "完成。"
 

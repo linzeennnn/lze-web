@@ -3,8 +3,8 @@ Description=lze-web server
 After=network.target        
 
 [Service]
-ExecStart=/usr/local/bin/lze-web  
+ExecStart=/usr/local/lze-web  
 Restart=always            
-WorkingDirectory=/usr/local/bin
+WorkingDirectory=/usr/bin
 [Install]
 WantedBy=default.target
