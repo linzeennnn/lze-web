@@ -3,6 +3,18 @@
 set -e  # 遇到错误直接退出
 set -u  # 使用未定义变量时报错
 
+# 0. 停止正在运行的服务
+echo "检查并停止正在运行的服务..."
+if systemctl --user is-active --quiet lze-web.service; then
+    echo "停止用户服务: lze-web.service"
+    systemctl --user stop lze-web.service
+fi
+
+if systemctl is-active --quiet lze-port.service; then
+    echo "停止系统服务: lze-port.service"
+    sudo systemctl stop lze-port.service
+fi
+
 # 1. 删除 /opt/lze-web 下除 file 和 config 以外的内容
 if [ -d "/opt/lze-web" ]; then
     echo "清理 /opt/lze-web 除 file 和 config 以外的内容..."
