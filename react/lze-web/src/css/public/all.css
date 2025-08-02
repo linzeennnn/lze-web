@@ -26,8 +26,8 @@
 [color="green"] {
   --light_theme:#6e927b;
   --dark_theme:#3e5245;
-  --dark_back: #2e473cad;
-  --light_back: #90d1bbb1;
+  --dark_back: #436355ab;
+  --light_back: #9ccebcb1;
   --base_text: #738a7b;
   --base_color: #567260;
   --dark_text: #a9ffc3;
@@ -37,7 +37,7 @@
 [color="blue"] {
   --light_theme:#76819b;
   --dark_theme:#424957;
-  --dark_back: #2a303ab8;
+  --dark_back: #464e5eb8;
   --light_back: #95b4d4b1;
   --base_text: #3f5a80;
   --base_color: #5c6579;
@@ -59,8 +59,8 @@
 [color="orange"] {
   --light_theme:#9f8a72;
   --dark_theme:#594e40;
-  --dark_back: #4b3f3092;
-  --light_back: #d3a98db1;
+  --dark_back: #635545a8;
+  --light_back: #d6b59eb1;
   --base_text: #7a4e36;
   --base_color: #7c6c59;
   --dark_text: #ffd0ae;
@@ -70,7 +70,7 @@
 [color="pink"] {
   --light_theme:#8d6d84;
   --dark_theme:#4f3d4a;
-  --dark_back: #442e39af;
+  --dark_back: #583f4caf;
   --light_back: #dfaac4b6;
   --base_text: #875c6eb0;
   --base_color: #6e5567;
@@ -275,9 +275,9 @@ opacity: 1;
     border-radius: 50%;
     z-index: 100;
     background: conic-gradient(
-        rgba(100, 149, 237, 0.2),
-        rgba(100, 149, 237, 0.8),
-        rgba(100, 149, 237, 0.2)
+        var(--text),
+        var(--base_color),
+        var(--text)
     );
     mask: radial-gradient(transparent 55%, #000 56%);
     -webkit-mask: radial-gradient(transparent 55%, #000 56%);

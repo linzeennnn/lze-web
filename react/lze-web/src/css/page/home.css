@@ -364,6 +364,7 @@ border-radius: 50%;
 background-color: var(--base_color);
 }
 .lock-btn span{
+    white-space: nowrap;
     position: absolute;
     bottom: -30px;
 }

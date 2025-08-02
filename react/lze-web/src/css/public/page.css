@@ -111,11 +111,6 @@
     position: fixed;
     top: 50%;
     bottom: 50%;
-    background: conic-gradient(
-        #bbfff4a2,
-        #41ad9ba2,
-        #bbfff4a2
-    );
 }
 @media (max-width: 600px) {
   #side-bar{
