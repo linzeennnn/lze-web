@@ -14,8 +14,6 @@ echo "正在创建 /opt/lze-web ..."
 sudo mkdir -p /opt/lze-web
 sudo chown "$(whoami):$(whoami)" /opt/lze-web
 
-# 3. 创建 /opt/lze-web/file
-mkdir -p /opt/lze-web/file
 
 # 4. 在 ~/Documents 下创建 lze-web 目录
 mkdir -p ~/Documents/lze-web
@@ -33,7 +31,7 @@ mkdir -p ~/Documents/lze-web/{Bookmark,Note,temp,trash}
 
 # 7. 软链接 ~/Documents/lze-web 到 /opt/lze-web/file
 if [ ! -L "/opt/lze-web/file/lze-web" ]; then
-    ln -s ~/Documents/lze-web /opt/lze-web/file/
+    ln -s ~/Documents/lze-web /opt/lze-web/file
 fi
 
 # 8. 复制 ./lze-web 到 /opt/lze-web 并添加执行权限

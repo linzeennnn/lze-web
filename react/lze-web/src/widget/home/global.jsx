@@ -91,7 +91,7 @@ const theme=GetTheme("home")
 useGlobal.setState({
   theme:theme})
 // widget
-getWidgetData();
+GetWidgetData();
 }
  function auth(name,token){
     const load=useGlobal.getState().load
@@ -127,7 +127,7 @@ getWidgetData();
     })
 }
 
-function getWidgetData(){
+export function GetWidgetData(){
     const user=useGlobal.getState().userName;
     const load=useGlobal.getState().load
     fetch(window.location.origin+'/server/home/widget',{

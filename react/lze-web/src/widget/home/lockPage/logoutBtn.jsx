@@ -1,8 +1,10 @@
-import { GetText } from "../global";
+import { notify } from "../../../components/notify";
+import { GetText, GetWidgetData, useGlobal } from "../global";
 
 export default function LogoutBtn(){
+    const user=useGlobal(state=>state.userName)
     return(
-        <button id="logout-btn" className="btn lock-btn"
+        <button id="logout-btn" className={"btn lock-btn "+(user=='visitor'?"logout-disabled":"")}
         onClick={()=>logout()}
         >
             <div></div>
@@ -12,7 +14,13 @@ export default function LogoutBtn(){
 }
 function logout(){
     if (confirm(GetText("are_you_sure"))) {
-    localStorage.clear();
-    window.location.reload();
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    useGlobal.setState({
+        userName:'visitor',
+        token:""
+    })
+    GetWidgetData()
+    notify(GetText('logout'))
     }
 }

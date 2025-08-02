@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { notify } from "../../../components/notify";
-import { GetText, useGlobal } from "../global";
+import { GetText, GetWidgetData, useGlobal } from "../global";
 export default function LoginPage({setSwitch}) {
+  const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState({
     userName: '',
     password: ''
@@ -17,7 +18,8 @@ export default function LoginPage({setSwitch}) {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      login(userData.userName, userData.password);
+      if(!loading)
+      login(userData.userName, userData.password,setSwitch,setLoading);
     }
   };
 
@@ -44,17 +46,20 @@ export default function LoginPage({setSwitch}) {
             onChange={userDataChange}
             placeholder={GetText("password")}
           />
-          <button
+          {loading?
+          (<div className="loading" id="login-loading"></div>):
+         ( <button
             id="login-send"
             className="btn"
             title={GetText("login")}
-            onClick={() => login(userData.userName, userData.password)}
-          ></button>
+            onClick={() => login(userData.userName, userData.password,setSwitch,setLoading)}
+          ></button>)}
         </div>
     </>
   );
 }
-function login(name,password){
+function login(name,password,setSwitch,setLoading){
+  setLoading(true)
     fetch(window.location.origin+'/server/login/login',
         {
         method:'POST',
@@ -74,6 +79,7 @@ function login(name,password){
             else{
                 notify(res.status+GetText("error"))
             }
+            setLoading(false)
             throw new Error(res.status);
         }
         
@@ -81,7 +87,14 @@ function login(name,password){
     .then(data=>{
         window.localStorage.setItem('userName',name);
         window.localStorage.setItem('token',data.token);
-                window.location.reload();
+        useGlobal.setState({
+          userName:name,
+          token:data.token
+        })
+        GetWidgetData()
+        notify(GetText("login")+":"+name)
+        setLoading(false)
+        setSwitch(false)
 
     })
 

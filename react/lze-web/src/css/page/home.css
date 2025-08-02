@@ -468,6 +468,7 @@ background-color: var(--base_color);
     background-image: var(--toleft_icon);
 }
 .login-input{
+    color: var(--text);
     box-shadow: var(--in_shadow);
     margin: 10px;
     padding: 10px;
@@ -477,6 +478,14 @@ background-color: var(--base_color);
     background-image: var(--toright_icon);
     background-color: var(--base_color);
     border-radius: 50%;
+}
+#login-loading{
+    width: 32px;
+    height: 32px;
+}
+.logout-disabled{
+    opacity: 0.3 !important;
+    pointer-events: none;
 }
 /* them */
 #theme-app{

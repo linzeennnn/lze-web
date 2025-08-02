@@ -167,7 +167,7 @@ export function Upload(file, uploadData, type) {
 
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        uploadData.sendSize = uploadData.sendSize + event.loaded - tmp_send_size;
+        uploadData.sendSize = uploadData.sendSize + Math.min(event.loaded, file.size) - tmp_send_size;
         tmp_send_size = event.loaded;
         percent = Math.floor((uploadData.sendSize / uploadData.totalSize) * 100) + "%";
         setGlobal({
@@ -208,7 +208,6 @@ export function Upload(file, uploadData, type) {
   }
   uploadChunk();
 }
-
 // 从temp移动文件夹
 function movefolder(foldername) {
   const global = useGlobal.getState();

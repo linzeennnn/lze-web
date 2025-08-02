@@ -193,7 +193,7 @@ export function Upload(file, uploadData) {
 
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
-        uploadData.sendSize = uploadData.sendSize + event.loaded - tmp_send_size;
+        uploadData.sendSize = uploadData.sendSize + Math.min(event.loaded, file.size) - tmp_send_size;
         tmp_send_size = event.loaded;
         percent = Math.floor((uploadData.sendSize / uploadData.totalSize) * 100) + "%";
         setGlobal({
