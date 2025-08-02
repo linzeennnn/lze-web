@@ -3,6 +3,11 @@
 set -e  # 遇到错误直接退出
 set -u  # 使用未定义变量时报错
 
+CURRENT_USER=$(whoami)
+CURRENT_GROUP=$(id -gn "$CURRENT_USER")
+
+echo "当前用户：$CURRENT_USER，组：$CURRENT_GROUP"
+
 # 0. 停止正在运行的服务
 echo "检查并停止正在运行的服务..."
 if systemctl --user is-active --quiet lze-web.service; then
@@ -29,7 +34,7 @@ if [ -d "/opt/lze-web" ]; then
 else
     echo "创建 /opt/lze-web ..."
     sudo mkdir -p /opt/lze-web
-    sudo chown "$(whoami):$(whoami)" /opt/lze-web
+    sudo chown "$CURRENT_USER:$CURRENT_GROUP" /opt/lze-web
 fi
 
 # 2. 在 ~/Documents 下创建 lze-web 目录
@@ -74,9 +79,17 @@ cp -r ./web /opt/lze-web/
 # 9. 创建全局命令链接
 sudo ln -sf /opt/lze-web/lze-web /usr/local/bin/lze-web
 
-# 10. 复制 lze-web.service 到用户 systemd 目录
+# 10. 复制 lze-web.service 到用户 systemd 目录，替换或追加 User 和 Group 字段
 mkdir -p ~/.config/systemd/user/
-cp ./lze-web.service ~/.config/systemd/user/
+
+if grep -q '^User=' ./lze-web.service; then
+    sed -e "s/^User=.*/User=$CURRENT_USER/" -e "s/^Group=.*/Group=$CURRENT_GROUP/" ./lze-web.service > ~/.config/systemd/user/lze-web.service
+else
+    awk -v user="$CURRENT_USER" -v group="$CURRENT_GROUP" '
+    /^\[Service\]/ { print; print "User=" user; print "Group=" group; next }
+    { print }
+    ' ./lze-web.service > ~/.config/systemd/user/lze-web.service
+fi
 
 # 11. 复制 lze-port 到 /usr/bin 并添加执行权限
 sudo cp ./lze-port /usr/bin/
@@ -86,10 +99,12 @@ sudo chmod +x /usr/bin/lze-port
 sudo cp ./lze-port.service /etc/systemd/system/
 
 # 13. 启用并重启两个服务
+systemctl --user daemon-reload
 systemctl --user enable lze-web.service
 systemctl --user restart lze-web.service
 systemctl --user status lze-web.service
 
+sudo systemctl daemon-reload
 sudo systemctl enable lze-port.service
 sudo systemctl restart lze-port.service
 sudo systemctl status lze-port.service
