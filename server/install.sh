@@ -1,46 +1,40 @@
 #!/bin/bash
-
-# 1. 列出当前目录文件
-echo "当前目录文件列表:"
-ls
+set -e
 
 SERVICE_NAME="lze-web.service"
 INSTALL_DIR="/opt/lze-web"
+BIN_LINK="/usr/bin/lze-web"
 SYSTEMD_DIR="/etc/systemd/system"
 
-# 2. 停止服务（如果正在运行）
-if systemctl is-active --quiet "$SERVICE_NAME"; then
-    echo "正在停止服务 $SERVICE_NAME ..."
-    sudo systemctl stop "$SERVICE_NAME"
+echo "=== 停止并禁用服务（如果存在） ==="
+if systemctl list-unit-files | grep -q "$SERVICE_NAME"; then
+    systemctl stop "$SERVICE_NAME" || true
+    systemctl disable "$SERVICE_NAME" || true
 else
-    echo "服务 $SERVICE_NAME 没有在运行或不存在"
+    echo "服务 $SERVICE_NAME 不存在，跳过停止步骤。"
 fi
 
-# 3. 删除 /opt/lze-web 目录下的lze-web 和 web（忽略不存在）
-echo "清理 $INSTALL_DIR 下的 lze-web 和 web ..."
-sudo rm -rf "$INSTALL_DIR/lze-web" "$INSTALL_DIR/web"
+echo "=== 删除旧的文件（如果存在） ==="
+rm -rf "$INSTALL_DIR/lze-web" "$INSTALL_DIR/web"
 
-# 4. 创建安装目录（如果不存在）
-if [ ! -d "$INSTALL_DIR" ]; then
-    echo "创建目录 $INSTALL_DIR ..."
-    sudo mkdir -p "$INSTALL_DIR"
+echo "=== 创建安装目录 ==="
+mkdir -p "$INSTALL_DIR"
+
+echo "=== 复制新的文件到 $INSTALL_DIR ==="
+cp -r ./lze-web ./web "$INSTALL_DIR/"
+
+echo "=== 创建可执行文件符号链接 ==="
+if [ -L "$BIN_LINK" ] || [ -f "$BIN_LINK" ]; then
+    rm -f "$BIN_LINK"
 fi
+ln -s "$INSTALL_DIR/lze-web" "$BIN_LINK"
 
-# 5. 复制 lze-web 和 web 到安装目录
-echo "复制 lze-web 和 web 到 $INSTALL_DIR ..."
-sudo cp -r ./lze-web "$INSTALL_DIR/"
-sudo cp -r ./web "$INSTALL_DIR/"
+echo "=== 安装 systemd 服务 ==="
+cp ./lze-web.service "$SYSTEMD_DIR/"
 
-# 6. 复制 service 文件到 systemd 目录
-echo "复制 $SERVICE_NAME 到 $SYSTEMD_DIR ..."
-sudo cp ./lze-web.service "$SYSTEMD_DIR/"
+echo "=== 重新加载 systemd 并启动服务 ==="
+systemctl daemon-reload
+systemctl enable --now "$SERVICE_NAME"
 
-# 7. 重新加载 systemd，启用并启动服务
-echo "重新加载 systemd 守护进程 ..."
-sudo systemctl daemon-reload
-
-echo "启用并启动服务 $SERVICE_NAME ..."
-sudo systemctl enable --now "$SERVICE_NAME"
-
-echo "完成。"
+echo "✅ 部署完成！"
 
