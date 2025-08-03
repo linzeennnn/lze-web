@@ -442,7 +442,7 @@ background-color: var(--base_color);
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: var(--floatoat_win_bg_color);
+    background-color: var(--float_win_bg_color);
     display: flex;
     justify-content: center;
     align-items: center;

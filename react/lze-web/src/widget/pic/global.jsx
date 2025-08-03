@@ -112,6 +112,7 @@ export function list(path,showVideo) {
         parentPath: data.parentFolder,
         selected: [],
         imgPage: showVideo ? false : true,
+        pageNum:1
       });
       loadPage(false)
     });
@@ -121,7 +122,7 @@ export function list(path,showVideo) {
 export function loadPage(isLoad){
   useGlobal.setState({
     loading: isLoad,
-    showBg: isLoad
+    showBg: isLoad,
   });
 }
 // 上传文件

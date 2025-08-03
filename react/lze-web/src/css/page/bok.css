@@ -86,6 +86,7 @@ align-items: center;
 }
 #link-input{
 	padding: 5px;
+	font-size: 10px;
 	border-radius: 15px;
 	margin-left: 15px;
 	width: 100%;

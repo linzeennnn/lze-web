@@ -16,23 +16,23 @@ func List(c *gin.Context) {
 	}
 	files := global.ScanDir(filepath.Join(global.TraPath, filepath.FromSlash(rec.Folder)))
 	length := len(files)
-	docList := make([]list.FileList, length)
+	docList := make([][3]string, length)
 	if rec.Folder == "/" || rec.Folder == "" || rec.Folder == " " || rec.Folder == "." {
 		delData := global.GetDeldata()
 		for i := 0; i < length; i++ {
-			docList[i].Name = files[i].Name
-			docList[i].Type = files[i].FileType
+			docList[i][0] = files[i].Name
+			docList[i][1] = files[i].FileType
 			if delData[files[i].Name] != nil {
-				docList[i].DelData = delData[files[i].Name].(string)
+				docList[i][2] = delData[files[i].Name].(string)
 			} else {
-				docList[i].DelData = filepath.Join("Recover_file,files[i].Name")
+				docList[i][2] = filepath.Join("Recover_file", files[i].Name)
 			}
 		}
 
 	} else {
 		for i := 0; i < length; i++ {
-			docList[i].Name = files[i].Name
-			docList[i].Type = files[i].FileType
+			docList[i][0] = files[i].Name
+			docList[i][1] = files[i].FileType
 		}
 	}
 	var sendData list.Send
@@ -42,6 +42,7 @@ func List(c *gin.Context) {
 	} else {
 		sendData.ParentFolder = par_dir
 	}
+	sendData.Meta = [3]string{"name", "type", "delData"}
 	sendData.FileList = docList
 	sendData.CurrentFolder = rec.Folder
 	c.JSON(200, sendData)

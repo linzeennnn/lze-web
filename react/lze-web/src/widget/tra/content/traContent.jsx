@@ -19,9 +19,9 @@ export default function TraContent(){
     const setGlobal = useGlobal((state) => state.setGlobal);
     return(
         <Content>
-            {fileList.map((fileMes) => (
+            {fileList.map((fileMes,index) => (
         <FileItem
-          key={"tralist" + fileMes.name}
+          key={"tralist" + fileMes[0]+index}
           fileMes={fileMes}
           selected={selected}
           traClick={tra_click}

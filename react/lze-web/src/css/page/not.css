@@ -35,6 +35,9 @@ textarea{
     justify-content: center;
 }
 .note-btn{
+    width: 20px !important;
+    height: 20px !important;
+    margin-bottom: 10px;
     bottom: 10px;
 }
 .text-box{
