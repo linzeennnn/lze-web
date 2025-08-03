@@ -248,7 +248,7 @@ align-items: center;
     justify-content: center;
     align-items: center;
     position: fixed;
-    background-color: var(--bg_color);
+    background-color: var(--theme_color);
     width: 100%;
     top: -120px;
     height: 80px;

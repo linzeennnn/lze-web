@@ -99,7 +99,6 @@ export function Upload(file, uploadData, type) {
     notify(GetText("error") + ":" + file.name + GetText("is_empty"));
     return;
   }
-
   const global = useGlobal.getState();
   const user = global.userName;
   const token = global.token;
@@ -117,7 +116,8 @@ export function Upload(file, uploadData, type) {
   let start = 0;
 
   function uploadChunk() {
-    if (uploadData.sendSize >= uploadData.totalSize) {
+
+    if (uploadData.sendSize >= uploadData.totalSize&&(!uploadData.completed)) {
       setGlobal({
         upload: {
           ...upload,
@@ -126,6 +126,7 @@ export function Upload(file, uploadData, type) {
       });
 
       if (type === "file") {
+        uploadData.completed=true
         notify(GetText("op_com"));
         list(nowPath);
       } else if (type === "dir") {
@@ -183,6 +184,7 @@ export function Upload(file, uploadData, type) {
       if (xhr.status != 200) {
         if (xhr.status == 401) {
           notify(GetText("no_per"));
+          
         } else {
           notify(GetText("error") + ":" + xhr.status);
         }
@@ -192,6 +194,7 @@ export function Upload(file, uploadData, type) {
             status: false,
           },
         });
+        uploadData.completed=true
         return;
       } else {
         start += chunkSize;
@@ -296,7 +299,7 @@ export function Drop(e) {
       });
     }
   }
-  function maybeUpload() {
+async  function maybeUpload() {
     if (pending === 0) {
       if (fileList.length === 0) {
         notify(GetText("empty"));
@@ -312,9 +315,14 @@ export function Drop(e) {
       const uploadData = {
         totalSize: totalSize,
         sendSize: 0,
+        completed:false
       };
+      const type=fileList[0].webkitRelativePath ? "dir" : "file";
+    const permitted = await UploadPermit(type);
+    if (!permitted) {
+      return;
+    }
       fileList.forEach((file) => {
-        const type = file.webkitRelativePath ? "dir" : "file";
         Upload(file, uploadData, type);
       });
     }
@@ -325,4 +333,41 @@ export function Drop(e) {
       traverseFileTree(entry);
     }
   }
+}
+// 检查是否能有上传权限
+export async function UploadPermit(type){
+  const user=useGlobal.getState().userName
+  const token=useGlobal.getState().token
+  const upload = useGlobal.getState().upload;
+  const url=window.location.origin+"/server/login/upload"
+
+    const res =  await  fetch(url,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`,
+            'x-user': user
+        },
+        body: JSON.stringify({
+            appType:"doc",fileType:type
+        })
+    })
+    
+        if(res.ok){
+            return true
+        }else{
+            if(res.status==401){
+                notify(GetText("no_per"))
+            }
+            else{
+                notify(GetText("error")+":"+res.status)
+            }
+           useGlobal.setState({
+              upload: {
+                ...upload,
+                status: false
+              }
+            })
+            return false
+        }
 }

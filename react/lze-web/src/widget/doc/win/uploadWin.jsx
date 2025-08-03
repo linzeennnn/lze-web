@@ -1,11 +1,11 @@
-import { useGlobal ,Upload,list, GetText} from "../global";
+import { useGlobal ,Upload,UploadPermit, GetText} from "../global";
 import { WinBg } from "../../../components/winBg";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useGlobal((state) => state.upload); 
     const dragWin=useGlobal((state) => state.dragWin); 
     const nowPath=useGlobal((state) => state.nowPath); 
-    const uploadChange=(e,type)=>{
+    const  uploadChange=async(e,type)=>{
         setGlobal({upload:{
             ...upload,
             status:true,
@@ -14,7 +14,12 @@ export default function UploadWin() {
         const fileArr=Array.from(e.target.files);
         let uploadData={
             totalSize:0,
-            sendSize:0
+            sendSize:0,
+            completed:false
+        }
+        const permitted = await UploadPermit(type);
+        if (!permitted) {
+        return;
         }
         fileArr.forEach((file,i)=>{
            uploadData.totalSize+=file.size

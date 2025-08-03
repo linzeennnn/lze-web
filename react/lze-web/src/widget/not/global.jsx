@@ -241,7 +241,7 @@ export function Drop(e) {
     }
   }
 
-  function maybeUpload() {
+async  function maybeUpload() {
     if (pending === 0) {
       if (fileList.length === 0) {
         notify(GetText("no_select_file"));
@@ -260,7 +260,12 @@ export function Drop(e) {
         totalSize: totalSize,
         sendSize: 0,
       };
-
+ const permitted = await UploadPermit();
+            if (!permitted) {
+              return;
+            }
+            console.log(22222);
+            
       fileList.forEach((file) => {
         Upload(file, uploadData); // type 参数已从 Upload 中移除
       });
@@ -297,4 +302,41 @@ function isText(file) {
 
     reader.readAsText(blob); // 使用 UTF-8 解码尝试读取为文本
   });
+}
+// 检查是否能有上传权限
+export async function UploadPermit(){
+  const user=useGlobal.getState().userName
+  const token=useGlobal.getState().token
+  const upload = useGlobal.getState().upload;
+  const url=window.location.origin+"/server/login/upload"
+
+    const res =  await  fetch(url,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`,
+            'x-user': user
+        },
+        body: JSON.stringify({
+            appType:"not",fileType:""
+        })
+    })
+    
+        if(res.ok){
+            return true
+        }else{
+            if(res.status==401){
+                notify(GetText("no_per"))
+            }
+            else{
+                notify(GetText("error")+":"+res.status)
+            }
+           useGlobal.setState({
+              upload: {
+                ...upload,
+                status: false
+              }
+            })
+            return false
+        }
 }

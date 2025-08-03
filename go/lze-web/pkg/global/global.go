@@ -5,6 +5,7 @@ var (
 	UserList      []string
 	Port          string
 	MaxUploadSize int64
+	Gzip          string
 	// 路径相关
 	WorkDir  string
 	DocPath  string

@@ -1,4 +1,4 @@
-import { useGlobal,Upload, GetText } from "../global";
+import { useGlobal,Upload, GetText,UploadPermit } from "../global";
 export default function UploadBtn() {
     const setGlobal = useGlobal.setState
     const pageNum = useGlobal((state) => state.pageNum);
@@ -6,7 +6,7 @@ export default function UploadBtn() {
     const upload=useGlobal((state) => state.upload); 
     const dragWin=useGlobal((state) => state.dragWin); 
     const nowPath=useGlobal((state) => state.nowPath); 
-    const uploadChange=(e)=>{
+    const uploadChange= async(e)=>{
         setGlobal({upload:{
             ...upload,
             status:true
@@ -20,7 +20,10 @@ export default function UploadBtn() {
            uploadData.totalSize+=file.size
            
         })
-        
+            const permitted = await UploadPermit();
+            if (!permitted) {
+              return;
+            }
         fileArr.forEach((file,i)=>{
             Upload(file,uploadData) 
         })

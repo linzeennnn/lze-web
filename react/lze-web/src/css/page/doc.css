@@ -89,6 +89,7 @@
     overflow: hidden;
 }
 #new-dir-input{
+    color: var(--text);
     padding-left: 10px;
     background-color: transparent;
     height: 100%;
