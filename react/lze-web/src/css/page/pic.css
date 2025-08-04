@@ -257,6 +257,11 @@ z-index: 1;
 .media-btn{
     position: fixed;
 }
+.media-selected{
+    cursor: default;
+    opacity: 1 !important;
+    pointer-events: none;
+}
 .media-widget{
     z-index: 2;
 }

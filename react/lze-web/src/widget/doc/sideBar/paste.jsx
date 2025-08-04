@@ -4,7 +4,9 @@ export default function Paste({paste,copyList}){
     const[pastestatus,setPastestatus]=paste
     
     return(
-        pastestatus.status?(<button id="paste" className="btn side-btn"
+        pastestatus.status?(<button id="paste" 
+            title={GetText("paste")}
+            className="btn side-btn"
         onClick={()=>{
             setPastestatus({status:false})
             paste_file(pastestatus.type,copyList)

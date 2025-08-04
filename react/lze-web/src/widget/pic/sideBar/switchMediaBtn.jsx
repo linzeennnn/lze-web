@@ -15,10 +15,10 @@ export default function SwitchMediaBtn() {
     }
     return (
         <>
-            <button className="btn side-btn" id="img-btn" 
+            <button className={"btn side-btn "+(imgPage?"media-selected":"")} id="img-btn" 
             title={GetText("image")} onClick={()=>{changePage("img")}}
             ></button>
-            <button className="btn side-btn" id="vid-btn" 
+            <button className={"btn side-btn "+(!imgPage?"media-selected":"")} id="vid-btn" 
             title={GetText("video")} onClick={()=>{changePage("vid")}}
             ></button>
         </>
