@@ -1,5 +1,6 @@
 /* 全局 */
 :root{
+  --home_head_bar:var(--theme_color);
   --normal_win_bg_color :#0000001e;/* 搭配毛玻璃使用 */
   --global_dark_text:#cecece;
   --global_light_text:#484848;

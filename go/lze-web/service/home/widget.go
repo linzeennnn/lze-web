@@ -1,7 +1,6 @@
 package home
 
 import (
-	"encoding/json"
 	"lze-web/model/home/widget"
 	"lze-web/pkg/global"
 	"strconv"
@@ -73,38 +72,62 @@ func monData(username string) [3]string {
 	}
 	avaTime := global.CheckTokenTime(username)
 	controlDataMap := global.UserConfig["control"].(map[string]interface{})
-	controlJson, err := json.Marshal(controlDataMap)
-	if err != nil {
-		panic(err)
-	}
-	controlData := string(controlJson)
 	var monMes [3]string
 	var avaTimeStr string
 	if tokenTime == "never" {
-		tokenTime = "永不过期"
-		avaTimeStr = "永久"
+		avaTimeStr = "never"
 	} else {
 		tokenTime = convTokenTime(tokenTime)
 		if avaTime < 0 {
-			avaTimeStr = "过期"
+			avaTimeStr = "outdate"
 		} else if avaTime < 24 && avaTime > 0 {
-			avaTimeStr = strconv.Itoa(avaTime) + "小时"
+			avaTimeStr = strconv.Itoa(avaTime) + "/hour"
 		} else if avaTime < 24*30 {
-			avaTimeStr = strconv.Itoa(avaTime/24) + "天"
+			avaTimeStr = strconv.Itoa(avaTime/24) + "/day"
 		} else if avaTime < 24*30*12 {
-			avaTimeStr = strconv.Itoa(avaTime/24/30) + "月"
+			avaTimeStr = strconv.Itoa(avaTime/24/30) + "/month"
 		} else {
-			avaTimeStr = strconv.Itoa(avaTime/24/365) + "年"
+			avaTimeStr = strconv.Itoa(avaTime/24/365) + "/year"
 		}
 	}
-	monMes[0] = "登录时间:" + tokenTime
-	monMes[1] = "剩余时间:" + avaTimeStr
-	monMes[2] = "权限数量:" + strconv.Itoa(strings.Count(controlData, username))
+	monMes[0] = "login_time" + "/" + tokenTime
+	monMes[1] = "remain_time" + "/" + avaTimeStr
+	monMes[2] = "per_num" + "/" + countActNum(username, controlDataMap)
 	return monMes
 }
+func countActNum(username string, data map[string]interface{}) string {
+	count := 0
+	count += countInMap(username, data)
+	return strconv.Itoa(count)
+}
+func countInMap(username string, m map[string]interface{}) int {
+	count := 0
+	for key, value := range m {
+		switch v := value.(type) {
+		case map[string]interface{}:
+			count += countInMap(username, v)
+		case []interface{}:
+			if key == "user" {
+				for _, item := range v {
+					if str, ok := item.(string); ok && str == username {
+						count++
+					}
+				}
+			} else {
+				for _, item := range v {
+					if subMap, ok := item.(map[string]interface{}); ok {
+						count += countInMap(username, subMap)
+					}
+				}
+			}
+		}
+	}
+	return count
+}
+
 func convTokenTime(input string) string {
 	if input == "" || input == "0" {
-		return "无"
+		return "none"
 	}
 	var numStr strings.Builder
 	var unitStr strings.Builder
@@ -118,18 +141,19 @@ func convTokenTime(input string) string {
 	num := numStr.String()
 	unit := unitStr.String()
 	unitMap := map[string]string{
-		"d": "天",
-		"h": "小时",
-		"m": "月",
-		"y": "年",
+		"d": "/day",
+		"h": "/hour",
+		"m": "/month",
+		"y": "/year",
 	}
 	chineseUnit, ok := unitMap[unit]
 	if !ok {
-		chineseUnit = "未知单位" // fallback
+		chineseUnit = "unknow" // fallback
 	}
 
 	return num + chineseUnit
 }
+
 func CheckType(name string) string {
 	var imgFor = []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".ico", ".apng", ".avif"}
 	if global.IncludeExt(name, imgFor) {

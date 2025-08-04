@@ -14,11 +14,9 @@ export default function Panel({showItem,type}){
                     <div className={"widget-panel-item "+type+"-panel"} title={GetText("view")}
                     onClick={(e)=>{
                         e.stopPropagation();
-                        
-                        openListWin(type,item)}}>
-                       {type=="pic"? get_pic(item):(<span className={"panel-text "+(item==""?"panel-text-null":"")}>
-                            {item==""?GetText("empty"):item}
-                            </span>)}
+                        openListWin(type,item)}}>{
+                            getPanelText(item,type)
+                        }
                     </div>
                     </React.Fragment>
                     )
@@ -26,6 +24,34 @@ export default function Panel({showItem,type}){
             }
         </div>
     )
+}
+// mon分字符串
+function getPanelText(item,type) {
+    switch (type) {
+        case "pic":
+            return get_pic(item)
+        case "mon":
+            return get_mon(item)
+        default:
+            return(<span className={"panel-text "+(item==""?"panel-text-null":"")}>
+                            {item==""?GetText("empty"):item}
+                            </span>)
+    }
+}
+function splitStr(){
+    const index = str.indexOf('/');
+    return [str.slice(0, index), str.slice(index + 1)];
+}
+function get_mon(str){
+    const arr=str.split("/");
+    switch (arr[0]) {
+        case "per_num":
+            return GetText(arr[0])+":"+arr[1]
+        default:
+            return GetText(arr[0])+":"+((arr[1]=="never"||arr[1]=="none")?
+                GetText(arr[1]):arr[1]+GetText(arr[2])
+            )
+    }
 }
 function get_pic(picMes){
 const url=window.location.origin+"/file/Pictures/"+picMes.name;

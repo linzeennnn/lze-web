@@ -13,7 +13,7 @@ export default function ActionBar({keyName,Mes}){
             update_act(keyName.control,keyName.action,nowuser,(Mes.user.includes(nowuser)?
             "remove":"add"))
         }}
-        >{Mes.name}</div>
+        >{GetText(Mes.name)}</div>
     )
 }
 function update_act(control,action,name,change){

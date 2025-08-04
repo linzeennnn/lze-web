@@ -6,6 +6,7 @@ var (
 	Port          string
 	MaxUploadSize int64
 	Gzip          string
+	Lang          map[string]interface{}
 	// 路径相关
 	WorkDir  string
 	DocPath  string

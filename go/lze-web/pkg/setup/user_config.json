@@ -1,202 +1,195 @@
 {
     "control": {
-        "bok": {
-            "action": {
-                "delete": {
-                    "name": "删除书签",
-                    "user": [
-                        "admin"
-                    ]
-                },
-                "newbok": {
-                    "name": "添加书签",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                }
+    "bok": {
+        "action": {
+            "delete": {
+                "name": "delete",
+                "user": [
+                    "admin"
+                ]
             },
-            "name": "书签"
-        },
-        "doc": {
-            "action": {
-                "copy": {
-                    "name": "复制文件",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "delete": {
-                    "name": "删除文件",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "downdir": {
-                    "name": "下载文件夹",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "downfile": {
-                    "name": "下载文件",
-                    "user": [
-                        "admin",
-                        "user",
-                        "visitor"
-                    ]
-                },
-                "move": {
-                    "name": "移动文件",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "newdir": {
-                    "name": "新建文件夹",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "rename": {
-                    "name": "重命名",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "updir": {
-                    "name": "上传文件夹",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "upfile": {
-                    "name": "上传文件",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                }
-            },
-            "name": "文件"
-        },
-        "home": {
-            "action": {
-                "viewdoc": {
-                    "name": "预览文件",
-                    "user": [
-                        "admin",
-                        "visitor",
-                        "user"
-                    ]
-                },
-                "viewnote": {
-                    "name": "预览便签",
-                    "user": [
-                        "admin",
-                        "user",
-                        "visitor"
-                    ]
-                },
-                "viewpic": {
-                    "name": "预览图片",
-                    "user": [
-                        "admin",
-                        "user",
-                        "visitor"
-                    ]
-                }
-            },
-            "name": "主页"
-        },
-        "mon": {
-            "action": {
-                "change": {
-                    "name": "修改权限",
-                    "user": [
-                        "admin"
-                    ]
-                },
-                "edittime": {
-                    "name": "修改时间",
-                    "user": [
-                        "admin"
-                    ]
-                }
-            },
-            "name": "控制面板"
-        },
-        "not": {
-            "action": {
-                "delete": {
-                    "name": "删除便签",
-                    "user": [
-                        "admin"
-                    ]
-                },
-                "edit": {
-                    "name": "编辑便签",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                },
-                "newnote": {
-                    "name": "添加便签",
-                    "user": [
-                        "admin",
-                        "user",
-                        "visitor"
-                    ]
-                },
-                "upload": {
-                    "name": "上传便签",
-                    "user": [
-                        "admin",
-                        "user"
-                    ]
-                }
-            },
-            "name": "便签"
-        },
-        "pic": {
-            "action": {
-                "upload": {
-                    "name": "上传图片和视频",
-                    "user": [
-                        "admin",
-                        "user",
-                        "visitor"
-                    ]
-                }
-            },
-            "name": "相册"
-        },
-        "tra": {
-            "action": {
-                "clean": {
-                    "name": "清空回收站",
-                    "user": [
-                        "admin"
-                    ]
-                },
-                "recover": {
-                    "name": "恢复文件",
-                    "user": [
-                        "admin"
-                    ]
-                }
-            },
-            "name": "回收站"
+            "newbok": {
+                "name": "add",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            }
         }
     },
+    "doc": {
+        "action": {
+            "copy": {
+                "name": "copy",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "delete": {
+                "name": "delete",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "downdir": {
+                "name": "downdir",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "downfile": {
+                "name": "downfile",
+                "user": [
+                    "admin",
+                    "user",
+                    "visitor"
+                ]
+            },
+            "move": {
+                "name": "cut",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "newdir": {
+                "name": "create_folder",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "rename": {
+                "name": "rename",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "updir": {
+                "name": "upload_folder",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "upfile": {
+                "name": "upload_file",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            }
+        }
+    },
+    "home": {
+        "action": {
+            "viewdoc": {
+                "name": "view",
+                "user": [
+                    "admin",
+                    "visitor",
+                    "user"
+                ]
+            },
+            "viewnote": {
+                "name": "view",
+                "user": [
+                    "admin",
+                    "user",
+                    "visitor"
+                ]
+            },
+            "viewpic": {
+                "name": "view",
+                "user": [
+                    "admin",
+                    "user",
+                    "visitor"
+                ]
+            }
+        }
+    },
+    "mon": {
+        "action": {
+            "change": {
+                "name": "modify_permission",
+                "user": [
+                    "admin"
+                ]
+            },
+            "edittime": {
+                "name": "mod_log_time",
+                "user": [
+                    "admin"
+                ]
+            }
+        }
+    },
+    "not": {
+        "action": {
+            "delete": {
+                "name": "delete",
+                "user": [
+                    "admin"
+                ]
+            },
+            "edit": {
+                "name": "edit",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            },
+            "newnote": {
+                "name": "add",
+                "user": [
+                    "admin",
+                    "user",
+                    "visitor"
+                ]
+            },
+            "upload": {
+                "name": "upload",
+                "user": [
+                    "admin",
+                    "user"
+                ]
+            }
+        }
+    },
+    "pic": {
+        "action": {
+            "upload": {
+                "name": "upload_media",
+                "user": [
+                    "admin",
+                    "user",
+                    "visitor"
+                ]
+            }
+        }
+    },
+    "tra": {
+        "action": {
+            "clean": {
+                "name": "clear_tra",
+                "user": [
+                    "admin"
+                ]
+            },
+            "recover": {
+                "name": "restore",
+                "user": [
+                    "admin"
+                ]
+            }
+        }
+    }
+},
     "user": {
         "admin": {
             "password": "lze-web-admin",
