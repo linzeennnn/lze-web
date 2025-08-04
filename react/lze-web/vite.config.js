@@ -13,7 +13,6 @@ export default defineConfig({
         short_name: 'lze-web',
         start_url: '.',
         display: 'standalone',
-        background_color: '#ffffff',
         icons: [
           {
             src: '/assets/icon/linzeen.svg',
