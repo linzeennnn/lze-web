@@ -606,6 +606,7 @@ background-color: var(--base_color);
     align-items: center;
     width: 80%;
     height: fit-content;
+    overflow-y: auto;
     max-height: 80vh;
     border-radius: 15px;
 }
