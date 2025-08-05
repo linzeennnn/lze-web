@@ -57,7 +57,6 @@ export function SetThemeColor(mode, color) {
   }
 
   document.documentElement.style.setProperty('--home_head_bar', finalColor);
-  meta.setAttribute("content", finalColor);
   // 再延时执行一次是因为chrome webapp 如何上一页与跳转页颜色相同的话颜色不会生效(原因未知)
  setTimeout(() => {
   meta.setAttribute("content", finalColor);
