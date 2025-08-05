@@ -32,9 +32,6 @@
     align-items: center;
     transition: transform 0.3s ease-in-out;
 }
-.pic-item:hover{
-    transform: scale(1.15);
-}
 .pic-item img,.pic-item video{
     border-radius: 15px;
     width: 90%;
@@ -115,10 +112,6 @@
     transition:  transform 0.3s ease-in-out;
     margin-left: 10px;
 }
-#par-text:hover{
-    opacity: 1;
-    transform: scale(1.2);
-}
 #cur-text{
     display: flex;
     text-align: center;
@@ -129,7 +122,6 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    transform: translateX(-50%);
 }
 #home-pic{
     background-image: var(--pic_home_icon);
@@ -185,9 +177,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     transition: transform 0.3s ease-in-out;
-}
-#dir-item:hover{
-    transform: scale(1.1);
 }
 #upload-box{
     width: 95%;
@@ -301,3 +290,16 @@ z-index: 1;
         margin-bottom: 80px;
     }
 }
+  @media (hover: hover) and (pointer: fine) {
+
+.pic-item:hover{
+    transform: scale(1.15);
+}
+#par-text:hover{
+    opacity: 1;
+    transform: scale(1.2);
+}
+#dir-item:hover{
+    transform: scale(1.1);
+}
+  }

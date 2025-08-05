@@ -52,9 +52,6 @@
     min-width: 100px;
     padding: 5px;
 }
-.action-bar:hover{
-    background-color: var(--base_color);
-}
 .no-action{
     background-color: var(--bg_color);
 }
@@ -166,9 +163,6 @@
     justify-content: center;
     align-items: center;
 }
-.name-item:hover{
-    background-color: var(--base_color);
-}
 #load{background-image: var(--load_icon);}
 #save-time{background-image: var(--save_icon);}
 #user-btn{background-image: var(--user_icon);}
@@ -178,3 +172,12 @@
         width: 80%;
     }
 }
+  @media (hover: hover) and (pointer: fine) {
+.action-bar:hover{
+    background-color: var(--base_color);
+}
+
+.name-item:hover{
+    background-color: var(--base_color);
+}
+  }

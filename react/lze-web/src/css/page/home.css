@@ -66,11 +66,6 @@ align-items: center;
     border-radius: 15px;
     transition: transform 0.3s ease-in;
 }
-.widget-item:hover{
-    opacity: 1;
-    transform: scale(1.1); 
-    z-index: 9;
-}
 .widget-title{
     font-size: 15px;
     position: absolute;
@@ -136,9 +131,6 @@ align-items: center;
     align-items: center;
     text-align: center;
     transition: transform 0.2s ease-in-out;
-}
-.widget-panel-item:hover{
-    transform: scale(1.1);
 }
 .doc-panel{
     position:  relative !important;
@@ -223,9 +215,6 @@ align-items: center;
     height: 40px;
     background-position: center;
     background-repeat: no-repeat;
-}
-.dock-app:hover{
-    transform: scale(1.2);  
 }
 .app-win{
     position: fixed;
@@ -322,9 +311,6 @@ align-items: center;
     margin-bottom: 60px;
     transition:transform 0.3s ease ;
 }
-#lock-user:hover{
-    transform: scale(1.2);
-}
 #lock-user div{
     transition: opacity 0.3s ease-in-out;
 }
@@ -334,12 +320,6 @@ align-items: center;
     border-radius: 50%;
     overflow: hidden;
     background-image: var(--user_icon);
-}
-#lock-user:hover #lock-profile{
-    opacity: 0.2;
-}
-#lock-user:hover #lock-switch{
-    opacity: 1;
 }
 #lock-switch{
     opacity: 0;
@@ -559,9 +539,6 @@ background-color: var(--base_color);
     border: 3px solid;
     border-color: transparent;
 }
-.color-btn:hover{
-    border-color: var(--base_color);
-}
 .color-btn-enable{
     border-color: var(--base_color);
 }
@@ -598,9 +575,6 @@ background-color: var(--base_color);
     height: 20px;
     background-image: var(--switch_icon);
 }
-#show-lang:hover{
-    transform: scale(1.2);
-}
 #lang-list{
     color: var(--text);
     border-radius: 15px;
@@ -616,9 +590,6 @@ background-color: var(--base_color);
     border-radius: 15px;
     margin: 10px;
     transition: transform 0.3s ease;
-}
-.lang-list-item:hover{
-    transform: scale(1.2);
 }
 .lang-select{
     cursor: default !important;
@@ -750,4 +721,36 @@ background-color: var(--base_color);
     .dock-app{
         margin: 10px;
     }
+}
+@media (hover: hover) and (pointer: fine) {
+
+.widget-item:hover{
+    opacity: 1;
+    transform: scale(1.1); 
+    z-index: 9;
+}
+.widget-panel-item:hover{
+    transform: scale(1.1);
+}
+.dock-app:hover{
+    transform: scale(1.2);  
+}
+#lock-user:hover{
+    transform: scale(1.2);
+}
+#lock-user:hover #lock-profile{
+    opacity: 0.2;
+}
+#lock-user:hover #lock-switch{
+    opacity: 1;
+}
+.color-btn:hover{
+    border-color: var(--base_color);
+}
+#show-lang:hover{
+    transform: scale(1.2);
+}
+.lang-list-item:hover{
+    transform: scale(1.2);
+}
 }

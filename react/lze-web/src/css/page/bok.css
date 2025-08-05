@@ -67,9 +67,6 @@ align-items: center;
 	clip-path: polygon(100% 0%, 100% 100%, 50% 82%, 0% 100%, 0% 0%, 0% 0%);
 	transition: transform 0.3s ease;
 }
-.bookmark:hover {
-	transform: scale(1.2);
-}
 #del-btn{
     position: absolute;
     top: 10px;
@@ -93,3 +90,8 @@ align-items: center;
 	height: 100%;
 }
 #load{background-image:var(--load_icon);}
+@media (hover: hover) and (pointer: fine) {
+.bookmark:hover {
+	transform: scale(1.2);
+}
+}

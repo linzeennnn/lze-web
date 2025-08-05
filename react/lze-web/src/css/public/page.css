@@ -85,9 +85,6 @@
     transition: transform 0.7s ease-in-out,margin-left 0.7s ease-in-out;
     z-index: 10;
 }
-#go-top-btn:hover{
-  opacity: 1;
-}
 #go-back{
   position: fixed;
   top: 14px;
@@ -130,5 +127,10 @@
   }
 .notify{
   left: 50% !important;
+}
+}
+@media (hover: hover) and (pointer: fine) {
+#go-top-btn:hover{
+  opacity: 1;
 }
 }

@@ -17,10 +17,6 @@
     margin: 10px;
     flex-direction: column;
 }
-.tra-list:hover{
-    background-color: var(--base_color);
-
-}
 .dir-text{
     text-decoration: underline;
 }
@@ -45,11 +41,6 @@
 .tra-list-selected{
     background-color: var(--base_color) !important;
 }
-.go-up-disable:hover{
-    cursor:default;
-    opacity: 0.7 !important;
-
-}
 #top-bar{
     display: flex;
     align-items: center;
@@ -72,3 +63,15 @@
 #load{background-image: var(--load_icon);}
 #del{background-image: var(--bin_icon);}
 #recover{background-image: var(--recover_icon);}
+  @media (hover: hover) and (pointer: fine) {
+
+.tra-list:hover{
+    background-color: var(--base_color);
+
+}
+.go-up-disable:hover{
+    cursor:default;
+    opacity: 0.7 !important;
+
+}
+  }

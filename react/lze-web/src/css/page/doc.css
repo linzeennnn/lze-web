@@ -17,9 +17,6 @@
     margin: 20px;
     margin-bottom: 30px;
 }
-.doc-list:hover{
-    background-color: var(--base_color);
-}
 .doc-list-selected{
     background-color: var(--base_color) !important;
 }
@@ -80,11 +77,6 @@
 #go-up{
     background-image: var(--goup_icon);
     margin-left: 10px;
-}
-.go-up-disable:hover{
-    cursor:default;
-    opacity: 0.7 !important;
-
 }
 #show-path{
     cursor: default;
@@ -175,9 +167,6 @@
     width: 100px !important;
     height: 100px !important;
     transition: transform 0.3s ease-in-out;
-}
-.upload-opt-btn:hover{
-    transform: scale(1.2);
 }
 #progress{
     text-align: center;
@@ -284,4 +273,18 @@
         margin: 10px;
     margin-bottom: 30px;
     }
+  }
+  @media (hover: hover) and (pointer: fine) {
+.doc-list:hover{
+    background-color: var(--base_color);
+}
+
+.go-up-disable:hover{
+    cursor:default;
+    opacity: 0.7 !important;
+
+}
+.upload-opt-btn:hover{
+    transform: scale(1.2);
+}
   }

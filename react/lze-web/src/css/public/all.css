@@ -270,9 +270,6 @@ input{
   background-position: center;
   background-repeat: no-repeat;
 }
-.btn:hover{
-opacity: 1;
-}
 .loading {
     width: 60px;
     height: 60px;
@@ -358,4 +355,9 @@ opacity: 1;
   .tooltip{
     display: none;
   }
+}
+@media (hover: hover) and (pointer: fine) {
+.btn:hover{
+opacity: 1;
+}
 }
