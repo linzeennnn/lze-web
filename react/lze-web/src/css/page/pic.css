@@ -242,6 +242,8 @@ z-index: 1;
     object-fit: contain;
 }
 .media-btn{
+    background-color: var(--bg_color);
+    border-radius: 50%;
     position: fixed;
 }
 .media-selected{

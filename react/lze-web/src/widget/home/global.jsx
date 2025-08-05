@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { notify } from '../../components/notify.jsx'
 import { GetTheme } from '../../components/getTheme.jsx';
 import { GetLangList} from '../../components/getLang.jsx';
+import { DisableZoom } from '../../components/pub.jsx';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'visitor';
   let token = window.localStorage.getItem('token') || '';
@@ -62,6 +63,7 @@ export  function GetText(str){
   return useGlobal.getState().lang.list[str]
 }
 export  async function InitData(){
+  DisableZoom()
   // 语言设置
   useGlobal.setState({
     lang:await GetLangList()
