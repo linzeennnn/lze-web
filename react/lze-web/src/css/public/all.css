@@ -5,14 +5,16 @@
   --global_dark_text:#cecece;
   --global_light_text:#484848;
   --float_win_bg_color:#00000091;
-    --in_shadow:inset 4px 4px 7px rgba(0, 0, 0, 0.068),   
-    inset -4px -4px 7px rgba(0, 0, 0, 0.068), 
-    inset 4px -4px 7px rgba(0, 0, 0, 0.068),  
-    inset -4px 4px 7px rgba(0, 0, 0, 0.068); 
-    --out_shadow:5px 5px 20px rgba(0, 0, 0, 0.068),   
-    -5px -5px 20px rgba(0, 0, 0, 0.068), 
-    5px -5px 20px rgba(0, 0, 0, 0.068),  
-    -5px 5px 20px rgba(0, 0, 0, 0.068); 
+  --in_shadow: inset 4px 4px 7px rgba(0, 0, 0, 0.068),
+             inset -4px -4px 7px rgba(0, 0, 0, 0.068),
+             inset 4px -4px 7px rgba(0, 0, 0, 0.068),
+             inset -4px 4px 7px rgba(0, 0, 0, 0.068);
+
+--out_shadow: 5px 5px 20px rgba(0, 0, 0, 0.068),
+              -5px -5px 20px rgba(0, 0, 0, 0.068),
+              5px -5px 20px rgba(0, 0, 0, 0.068),
+              -5px 5px 20px rgba(0, 0, 0, 0.068);
+
 }
 [color="default"] {
   --light_theme:#99999980;

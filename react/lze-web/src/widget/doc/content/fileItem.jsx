@@ -11,7 +11,10 @@ export default function FileItem({ fileMes, selected, docClick}){
       const path=nowPath+"/"+fileMes[0]
     return(
         <div
-            className={`doc-list main-item ${selected.includes(path) ? "doc-list-selected" : ""}`}
+            className={"doc-list main-item "+
+                (selected.includes(path) ? "doc-list-selected " :"")+
+                ((fileMes[1] === "dir" || fileMes[1] === "dir_link") ?"dir-item ":"file-item ")
+            }
             onClick={() => docClick(path)}
             key={"doclist" + fileMes[0]}
             >

@@ -2,9 +2,9 @@ import React from "react";
 import { notify } from "../../../../components/notify";
 import { GetText, useGlobal } from "../../global";
 
-export default function Panel({showItem,type}){
+export default function Panel({showItem,type,show}){
     return(
-        <div className="widget-panel">
+        <div className={"widget-panel "+(show?"widget-hide":"")} key={type+"panel"}>
             {
                 showItem.map((item,index)=>{
                     return (

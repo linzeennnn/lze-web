@@ -8,7 +8,6 @@
     cursor: pointer;
     display: flex;
     position: relative;
-    margin-bottom: 10px;
     justify-content: center;
     align-items: center;
     width: 120px;
@@ -16,12 +15,38 @@
     padding: 10px;
     border-radius: 15px;
     margin: 20px;
+    margin-bottom: 30px;
 }
 .doc-list:hover{
     background-color: var(--base_color);
 }
 .doc-list-selected{
     background-color: var(--base_color) !important;
+}
+.dir-item::before{
+    content: "";
+    top: -20px;
+    left: 10px;
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: var(--base_color);
+}
+.file-item{
+  clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%, 0 28%);   
+    overflow: hidden;
+}
+.file-item::before{
+    content: "";
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 25%;
+    height: 28%;
+    border-bottom-right-radius:15px;
+    background-color: var(--base_color);
 }
 .file-list-text {
     cursor: pointer;
@@ -257,5 +282,6 @@
   @media (max-width: 600px){
     .doc-list{
         margin: 10px;
+    margin-bottom: 30px;
     }
   }
