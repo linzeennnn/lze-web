@@ -18,7 +18,7 @@
     margin-bottom: 30px;
 }
 .doc-list-selected{
-    background-color: var(--base_color) !important;
+    background-color: var(--theme_color) !important;
 }
 .dir-item::before{
     content: "";
@@ -276,7 +276,7 @@
   }
   @media (hover: hover) and (pointer: fine) {
 .doc-list:hover{
-    background-color: var(--base_color);
+    background-color: var(--theme_color);
 }
 
 .go-up-disable:hover{
