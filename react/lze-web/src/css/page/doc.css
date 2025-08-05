@@ -18,7 +18,10 @@
     margin-bottom: 30px;
 }
 .doc-list-selected{
-    background-color: var(--theme_color) !important;
+    background-color: var(--base_color) !important;
+}
+.doc-list-selected::before{
+    background-color: var(--bg_color) !important;
 }
 .dir-item::before{
     content: "";
@@ -276,15 +279,15 @@
   }
   @media (hover: hover) and (pointer: fine) {
 .doc-list:hover{
-    background-color: var(--theme_color);
+    background-color: var(--base_color);
+}
+.doc-list:hover::before{
+    background-color: var(--bg_color);
 }
 
 .go-up-disable:hover{
     cursor:default;
     opacity: 0.7 !important;
 
-}
-.upload-opt-btn:hover{
-    transform: scale(1.2);
 }
   }
