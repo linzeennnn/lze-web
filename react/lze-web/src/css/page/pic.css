@@ -255,12 +255,26 @@ z-index: 1;
 .media-widget{
     z-index: 2;
 }
+.zoom-btn{
+    border-radius: 10px;
+    background-color: var(--bg_color);
+    width: 46px;
+    height: 46px;
+}
+.zoom-btn div{
+    width: 20px;
+    height: 20px;
+}
 #zoom-bar{
+    box-shadow: var(--out_shadow);
+    border-radius: 15px;
+    padding: 10px;
+    background-color: var(--base_color);
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
-    bottom: 30px;
+    bottom: 80px;
     margin-top: 20px;
 }
 #scale-text{

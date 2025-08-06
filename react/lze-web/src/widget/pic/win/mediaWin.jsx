@@ -121,12 +121,16 @@ const switchPic=(action)=>{
         )}
       </div>
     <div id="zoom-bar" className="media-widget">
-      <button className="btn" id="zoom-out" style={{marginRight:"20px"}}
+      <button className="btn zoom-btn" style={{marginRight:"20px"}}
       title={GetText("zoom_out")} onClick={(e)=>{e.stopPropagation();zoom("out")}}
-      ></button>
-      <button className="btn" id="zoom-in" style={{marginLeft:"20px"}}
+      >
+        <div id="zoom-out"></div>
+      </button>
+      <button className="btn zoom-btn" style={{marginLeft:"20px"}}
       title={GetText("zoom_in")} onClick={(e)=>{e.stopPropagation();zoom("in")}}
-      ></button>
+      >
+        <div id="zoom-in"></div>
+      </button>
     </div>
     </div>
   );
