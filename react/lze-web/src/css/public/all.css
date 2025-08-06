@@ -177,9 +177,10 @@
 
 }
 /* css */
+/* 滚动条 */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--text) transparent;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--text) var(--base_color) !important;
 }
 span, input{
   font-weight: bold;
