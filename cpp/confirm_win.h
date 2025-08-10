@@ -1,3 +1,4 @@
+#pragma once
 #include "menu.h"
 #include<string>
 #include"split_line.h"

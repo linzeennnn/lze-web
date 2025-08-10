@@ -1,15 +1,16 @@
 CXX = g++
-CXXFLAGS = -Wall -std=c++17
-
-SRC = main.cpp key.cpp
+CXXFLAGS = -Wall -O2
+SRC = $(shell find . -name "*.cpp")
 OBJ = $(SRC:.cpp=.o)
-TARGET = app
+TARGET = lze-web-config-cli
 
-all: $(TARGET)
+all: $(TARGET) clean
 
 $(TARGET): $(OBJ)
 	$(CXX) $(OBJ) -o $(TARGET)
 
-clean:
-	rm -f $(OBJ) $(TARGET)
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+clean:
+	rm -f $(OBJ)

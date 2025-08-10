@@ -1,3 +1,4 @@
+#pragma once
 #ifndef SPLIT_LINE_H
 #define SPLIT_LINE_H
 
