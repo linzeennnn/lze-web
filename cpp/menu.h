@@ -3,28 +3,45 @@
 #include <vector>
 #include <string>
 #include"clean.h"
+#include <algorithm>
 #include"split_line.h"
 #include"key.h"
 #include "option.h"
 using namespace std;
 class menu{
     private:
-    string title;
     string content;
     vector<option*> list;
+    size_t max_list_show=9;
     int index;
     menu *last_win;
     void creat_content(){
-        content=">"+title+"\n"+
+        content=">"+(last_win?last_win->title+">":"")+title+"\n"+
         split_line('-')+"\n"+
         (index==list.size()?" >[返回]":"  [返回]")+"\n";
-        for(size_t i=0;i<list.size();i++){
-            if(i==index)
-                content+=" >"+list[i]->name+"\n";
-            else
-                content+="  "+list[i]->name+"\n";
+        if(index<=max_list_show||index==list.size()){
+                for(size_t i=0;
+                    i<min(max_list_show+1,list.size());
+                    i++){
+                    if(i==index)
+                        content+=" >"+list[i]->name+"\n";
+                    else
+                        content+="  "+list[i]->name+"\n";
+                }
+            }
+        else{
+                for(size_t i=index-max_list_show;
+                    i<min(static_cast<size_t>(index+1),list.size());
+                    i++)
+                    {
+                    if(i==index)
+                        content+=" >"+list[i]->name+"\n";
+                    else
+                        content+="  "+list[i]->name+"\n";
+                }
         }
-
+        if(list.size()>max_list_show&&index+1<list.size())
+            content+="  .....\n";
     }
     void print(){
             clean();
@@ -40,6 +57,7 @@ class menu{
         }
     }
     public:
+    string title;
         menu(string title,vector<option*> list,menu*last_win){
             index=0;
             this->last_win=last_win;

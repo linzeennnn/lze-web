@@ -4,7 +4,6 @@
 #include "public.h"
 using namespace std;
 void tmp(){
-   cout<<get_work_path()<<endl;
 }
 void main_win(){
     menu *mainWin;

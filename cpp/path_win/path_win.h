@@ -4,6 +4,7 @@
 #include <vector>
 #include"../option.h"
 #include "../all_win.hpp"
+#include "../public.h"
 using namespace std;
 void open_path_win(string title,menu* last_win);
-void edit_path(string type);
+void edit_path(string type,menu* last_win);
