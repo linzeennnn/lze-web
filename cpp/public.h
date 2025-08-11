@@ -3,6 +3,7 @@
 #include <string>
 #include <filesystem>
 #include<iostream>
+#include <sstream>
 #include <fstream> 
 using json = nlohmann::json;
 using namespace std;
@@ -17,8 +18,7 @@ extern string file_path;
 void write_text(std::string path, string content) ;
 std::string get_work_path();
 string read_text(std::string path);
-void save_user_config();
-void save_work_config();
+void save_config();
 void init();
 string file_type(filesystem::path filePath);
 

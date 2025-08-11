@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include"clean.h"
+#include"public.h"
 #include <algorithm>
 #include"split_line.h"
 #include"key.h"
@@ -15,6 +16,18 @@ class menu{
     size_t max_list_show=9;
     int index;
     menu *last_win;
+    void open_confirm(menu* last_win){
+    menu *confirm_win;
+    vector<option*> list={
+        new option("[保存]",[](){
+            save_config();
+            exit(0);
+        }),
+        new option("[不保存]",[](){exit(0);})
+    };
+    confirm_win=new menu("内容未保存!!",list,last_win);
+    confirm_win->open();
+}
     void creat_content(){
         content=">"+(last_win?last_win->title+">":"")+title+"\n"+
         split_line('-')+"\n"+
@@ -53,7 +66,11 @@ class menu{
             last_win->open();
             delete this;
         }else{
-            exit(0);
+            if(edit){
+                open_confirm(this);
+            }
+            else
+                exit(0);
         }
     }
     public:

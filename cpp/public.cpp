@@ -24,10 +24,8 @@ if (config_file_path == "default") {
     file_path = config_file_path;
 }
 }
-void save_user_config(){
+void save_config(){
     write_text(user_config_path,userData.dump(4));
-}
-void save_work_config(){    
     write_text(work_config_path,workData.dump(4));
 }
 string read_text(string path){

@@ -23,7 +23,7 @@ void edit_path(string type,menu*last_win){
     if(cur_path=="default"){
         cur_path=default_path;
     }
-        open_path_edit_win(last_win,nullptr,cur_path,cur_path,key);
+        open_path_edit_win(last_win,nullptr,cur_path,default_path,key);
 }
 void open_path_edit_win(menu * last_win,
                         menu * last_path_win,
