@@ -2,7 +2,9 @@
 #include <iostream>
 #include <functional>
 #include <unordered_map>
-
+#include <thread>
+#include <chrono>
+using namespace std;
 #if defined(_WIN32) || defined(_WIN64)
     #include <conio.h>
 #else
@@ -21,17 +23,39 @@ public:
     void enter(Callback fn) { handlers["enter"] = fn; }
     void esc(Callback fn) { handlers["esc"] = fn; }
 
+    void stop() { stoprun = true; }
+    void restart() { stoprun = false; this->run(); }
+
+    void pause() { paused = true; }
+    void resume() { 
+        paused = false;
+    }
+    bool isStop(){ return stoprun;}
+    bool isPause(){ return paused;}
     void run() {
-        while (true) {
+        while (!stoprun) {
+            if (paused) {
+                // 暂停时，等待少许时间，避免CPU占用过高
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                continue;
+            }
+
             std::string key = getKey();
             if (!key.empty() && handlers.count(key)) {
                 handlers[key]();
-                if (key == "esc") break;
+                if (key == "esc") {
+                    std::cout << "stop" << std::endl;
+                    stoprun = true;
+                }
             }
         }
     }
 
+    Key() : stoprun(false), paused(false) {}
+
 private:
+    bool stoprun;
+    bool paused;
     std::unordered_map<std::string, Callback> handlers;
 
 #if defined(_WIN32) || defined(_WIN64)

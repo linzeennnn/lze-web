@@ -25,11 +25,12 @@ class menu{
         }),
         new option("[不保存]",[](){exit(0);})
     };
-    confirm_win=new menu("内容未保存!!",list,last_win);
+    confirm_win=new menu("  内容未保存!!",list,last_win,true);
     confirm_win->open();
 }
     void creat_content(){
-        content=">"+(last_win?last_win->title+">":"")+title+"\n"+
+        content=split_line('=');
+        content+=title+"\n"+
         split_line('-')+"\n"+
         (index==list.size()?" >[返回]":"  [返回]")+"\n";
         if(index<=max_list_show||index==list.size()){
@@ -37,9 +38,9 @@ class menu{
                     i<min(max_list_show+1,list.size());
                     i++){
                     if(i==index)
-                        content+=" >"+list[i]->name+"\n";
+                        content+=" >"+list[i]->name+get_info(i)+"\n";
                     else
-                        content+="  "+list[i]->name+"\n";
+                        content+="  "+list[i]->name+get_info(i)+"\n";
                 }
             }
         else{
@@ -48,13 +49,18 @@ class menu{
                     i++)
                     {
                     if(i==index)
-                        content+=" >"+list[i]->name+"\n";
+                        content+=" >"+list[i]->name+get_info(i)+"\n";
                     else
-                        content+="  "+list[i]->name+"\n";
+                        content+="  "+list[i]->name+get_info(i)+"\n";
                 }
         }
         if(list.size()>max_list_show&&index+1<list.size())
             content+="  .....\n";
+        content+=split_line('=')+"\n";
+    }
+    string get_info(int index){
+        return list[index]->info?std::string(" [") + (*(list[index]->info)).get<std::string>() + "]"
+    : std::string("");
     }
     void print(){
             clean();
@@ -63,8 +69,7 @@ class menu{
     }
     void back(){
         if(last_win!=NULL){
-            last_win->open();
-            delete this;
+            last_win->restore(this);
         }else{
             if(edit){
                 open_confirm(this);
@@ -75,18 +80,20 @@ class menu{
     }
     public:
     string title;
-        menu(string title,vector<option*> list,menu*last_win){
+    Key key;
+        menu(string title,vector<option*> list,menu*last_win,bool uni_title=false){
             index=0;
             this->last_win=last_win;
             this->list=list;
-            this->title=title;
-            creat_content();
+            this->title=uni_title?
+            title:(last_win?last_win->title+">":"")+title;
         };
         ~menu(){
             for(option* opt : list){
         delete opt;  // 释放每个 option 对象
     }
     list.clear();
+    key.stop();
         }
         void up(){
            index= index==0?list.size():index-1;
@@ -98,16 +105,34 @@ class menu{
             creat_content();
             this->print();
         }
-        void open(){
+        void restore(menu *del_win=nullptr){
+            creat_content();
             this->print();
-            Key key;
+            if(del_win){
+                delete del_win;}
+            if(key.isStop()){
+                key.restart();}
+            if(key.isPause()){
+                key.resume();
+            }
+        }
+        void open(){
+            creat_content();
+            this->print();
             key.up([this](){up();});
             key.down([this](){down();});
             key.enter([this](){
-                if(index==list.size())
+                if(index==list.size()){
                     this->back();
-                else
+                    key.stop();
+                }
+                else{
+                    if(list[index]->pause)
+                        key.pause();
+                    else
+                        key.stop();
                     list[index]->func();
+                }
             });
             key.run();
         }

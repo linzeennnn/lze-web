@@ -51,6 +51,6 @@ void open_path_edit_win(menu * last_win,
                 list.push_back(new option(entry.path().filename(),[&path_edit_win,last_win,scan_path,default_path,entry,key]()
         {open_path_edit_win(last_win,path_edit_win,entry.path(),default_path,key);}));
         }
-        path_edit_win=new menu(scan_path,list,last_win);
+        path_edit_win=new menu(scan_path,list,last_win,true);
         path_edit_win->open();
 }

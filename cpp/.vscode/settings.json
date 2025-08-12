@@ -59,6 +59,15 @@
         "locale": "cpp",
         "csignal": "cpp",
         "sstream": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "ranges": "cpp",
+        "variant": "cpp",
+        "ratio": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "forward_list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp"
     }
 }
