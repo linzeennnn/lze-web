@@ -40,9 +40,9 @@ void open_path_edit_win(menu * last_win,
     delete last_path_win;
     menu *path_edit_win;
     vector<option*> list={
-        new option("[返回上一级]",[&path_edit_win,last_win,scan_path,default_path,key]()
+        new option(text_box("backPar"),[&path_edit_win,last_win,scan_path,default_path,key]()
         {open_path_edit_win(last_win,path_edit_win,scan_path.parent_path(),default_path,key);}),
-        new option("[使用默认路径]",[&path_edit_win,last_win,scan_path,default_path,key]()
+        new option(text_box("useDefault"),[&path_edit_win,last_win,scan_path,default_path,key]()
         {open_path_edit_win(last_win,path_edit_win,default_path,default_path,key);})
     };
  for (const auto& entry : fs::directory_iterator(scan_path)) {

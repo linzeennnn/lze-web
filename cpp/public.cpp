@@ -8,7 +8,8 @@ string user_config_path;
 string work_config_path;
 string file_path;
 bool edit=false;
-string lang="";
+json langData;
+json langDict;
 
 void init(){
 work_dir="/opt/lze-web";
@@ -16,6 +17,8 @@ user_config_path=work_dir+"/config/user_config.json";
 work_config_path=work_dir+"/config/work_config.json";
 string user_config_text=read_text(user_config_path);
 string work_config_text=read_text(work_config_path);
+string lang_config_text=read_text("lang.json");
+langData=json::parse(lang_config_text);
 userData=json::parse(user_config_text);
 workData=json::parse(work_config_text);
 string config_file_path=workData["file_path"];
@@ -95,5 +98,16 @@ string get_work_path(){
 return fs::read_symlink("/proc/self/exe").parent_path().string();
 }
 string get_text(string key){
-
+    return langDict[key];
+}
+string text_box(string text){
+    return "["+get_text(text)+"]";
+}
+void mod_permit(string user,string control,string action,bool add){
+    json control_config=userData["control"];
+    json user_arr=control_config[control]["action"][action]["user"];
+    if(add)
+        user_arr.push_back(user);
+    else
+         user_arr.erase(std::remove(user_arr.begin(), user_arr.end(), user), user_arr.end());
 }

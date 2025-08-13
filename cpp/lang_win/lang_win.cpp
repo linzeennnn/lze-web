@@ -1,14 +1,13 @@
 #include "lang_win.h"
-class lang_win{
-    private:
-    int index;
-    vector<option*>list;
-    public:
-};
-void open_lang(menu * last_win){
-    string content=split_line('=')+'\n'
-    +
-}
-void creat_content(string * content){
-
+void open_lang(lang_win** win){
+    vector<option*> list={
+        new option("简体中文",[&win](){
+            langDict=langData["zh"];
+        }),
+        new option("English",[&win](){
+            langDict=langData["en"];
+        })
+    };
+    *win =new lang_win(list);
+    (*win)->open();
 }

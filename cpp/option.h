@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include <functional>
+#include "json.hpp"
 using namespace std;
-
+using json = nlohmann::json;
 class option {
 public:
     string name;

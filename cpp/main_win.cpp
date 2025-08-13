@@ -1,18 +1,22 @@
 #include"menu.h"
 #include"option.h"
 #include"all_win.hpp"
+#include "lang_win/lang_win.h"
 #include "public.h"
 using namespace std;
 void tmp(){
 }
 void main_win(){
+    lang_win* langWin;
+    open_lang(&langWin);
+    delete langWin;
     menu *mainWin;
     vector<option*> list={
-        new option("用户配置",tmp),
-        new option("权限配置",tmp),
-        new option("运行配置", [&mainWin](){open_run_win("运行配置",mainWin);}),
-        new option("路径配置",[&mainWin](){open_path_win("路径配置",mainWin);})
+        new option(get_text("userCon"),tmp),
+        new option(get_text("perCon"),[&mainWin](){open_per_win(get_text("perCon"),mainWin);}),
+        new option(get_text("runCon"), [&mainWin](){open_run_win(get_text("runCon"),mainWin);}),
+        new option(get_text("pathCon"),[&mainWin](){open_path_win(get_text("pathCon"),mainWin);})
     };
-    mainWin=new menu("lze-web配置",list,NULL);
+    mainWin=new menu("lze-config",list,NULL);
     mainWin->open();
 }

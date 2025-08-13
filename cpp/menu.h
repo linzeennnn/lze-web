@@ -19,20 +19,21 @@ class menu{
     void open_confirm(menu* last_win){
         menu *confirm_win;
         vector<option*> list={
-            new option("[保存]",[](){
+            new option(text_box("save"),[](){
                 save_config();
                 exit(0);
             }),
-            new option("[不保存]",[](){exit(0);})
+            new option(text_box("dontSave"),[](){exit(0);})
         };
-        confirm_win=new menu("  内容未保存!!",list,last_win,true);
+        confirm_win=new menu("  "+get_text("notSave"),list,last_win,true);
         confirm_win->open();
 }
     void creat_content(){
         content=split_line('=');
         content+=title+"\n"+
         split_line('-')+"\n"+
-        (index==list.size()?" >[返回]":"  [返回]")+"\n";
+        (index==list.size()?(" >"+text_box("back"))
+        :("  "+text_box("back")))+"\n";
         if(index<=max_list_show||index==list.size()){
                 for(size_t i=0;
                     i<min(max_list_show+1,list.size());
