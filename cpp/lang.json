@@ -1,0 +1,33 @@
+{
+    "zh":{
+        "back":"返回",
+        "userCon":"用户配置",
+        "perCon":"权限配置",
+        "runCon":"运行配置",
+        "pathCon":"路径配置",
+        "runPort":"运行端口",
+        "maxReSize":"最大请求大小",
+        "gzip":"gzip压缩",
+        "inputPort":"输入端口号",
+        "inputSize":"输入大小(MB)",
+        "doc": "文件管理",
+        "pic": "图库",
+        "tra":"回收站",
+        "mon":"控制面板",
+        "not":"便签",
+        "bok":"书签",
+        "doc_path": "文件管理路径",
+        "pic_path": "图库路径",
+        "tra_path":"回收站路径",
+        "tmp_path":"临时面板",
+        "not_path":"便签路径",
+        "bok_path":"书签路径",
+        "file_path":"文件目录路径",
+        "useDefault":"使用默认路径",
+        "backPar":"返回上一级",
+        "notSave":"内容未保存!!!",
+        "save":"保存",
+        "dontSave":"不保存"
+    },
+    "en":{}
+}

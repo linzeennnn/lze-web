@@ -8,6 +8,7 @@ string user_config_path;
 string work_config_path;
 string file_path;
 bool edit=false;
+string lang="";
 
 void init(){
 work_dir="/opt/lze-web";
@@ -92,4 +93,7 @@ string file_type(filesystem::path filePath){
 }
 string get_work_path(){
 return fs::read_symlink("/proc/self/exe").parent_path().string();
+}
+string get_text(string key){
+
 }

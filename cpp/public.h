@@ -11,6 +11,7 @@ namespace fs = filesystem;
 extern bool edit;
 extern json userData;
 extern json workData;
+extern string lang;
 extern string work_dir;
 extern string user_config_path;
 extern string work_config_path;
@@ -21,4 +22,4 @@ string read_text(std::string path);
 void save_config();
 void init();
 string file_type(filesystem::path filePath);
-
+string get_text(string key);

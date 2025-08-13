@@ -17,16 +17,16 @@ class menu{
     int index;
     menu *last_win;
     void open_confirm(menu* last_win){
-    menu *confirm_win;
-    vector<option*> list={
-        new option("[保存]",[](){
-            save_config();
-            exit(0);
-        }),
-        new option("[不保存]",[](){exit(0);})
-    };
-    confirm_win=new menu("  内容未保存!!",list,last_win,true);
-    confirm_win->open();
+        menu *confirm_win;
+        vector<option*> list={
+            new option("[保存]",[](){
+                save_config();
+                exit(0);
+            }),
+            new option("[不保存]",[](){exit(0);})
+        };
+        confirm_win=new menu("  内容未保存!!",list,last_win,true);
+        confirm_win->open();
 }
     void creat_content(){
         content=split_line('=');
