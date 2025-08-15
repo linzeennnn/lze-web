@@ -10,6 +10,6 @@ void open_path_win(string title,menu* last_win){
         new option(get_text("tmp_path"),[&path_menu](){edit_path("tmp",path_menu);},&(workData["tmp_path"])),
         new option(get_text("file_path"),[&path_menu](){edit_path("file",path_menu);},&(workData["file_path"]))
     };
-    path_menu=new menu(title,list,last_win);
-    path_menu->open();
+    path_menu=new menu(title,list);
+    new_win(path_menu);
 }

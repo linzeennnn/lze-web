@@ -11,11 +11,11 @@
 using namespace std;
 class menu{
     private:
+    bool close=false;
     string content;
     vector<option*> list;
     size_t max_list_show=9;
     int index;
-    menu *last_win;
     void open_confirm(menu* last_win){
         menu *confirm_win;
         vector<option*> list={
@@ -25,7 +25,8 @@ class menu{
             }),
             new option(text_box("dontSave"),[](){exit(0);})
         };
-        confirm_win=new menu("  "+get_text("notSave"),list,last_win,true);
+        confirm_win=new menu("  "+get_text("notSave"),list,true);
+        menu_list.push(confirm_win);
         confirm_win->open();
 }
     void creat_content(){
@@ -69,8 +70,10 @@ class menu{
 
     }
     void back(){
-        if(last_win!=NULL){
-            last_win->restore(this);
+            tmp_menu=this;
+            menu_list.pop();
+        if(!menu_list.empty()){
+            menu_list.top()->open();
         }else{
             if(edit){
                 open_confirm(this);
@@ -79,22 +82,34 @@ class menu{
                 exit(0);
         }
     }
+    void key_bind(){
+            key.up([this](){up();});
+            key.down([this](){down();});
+            key.enter([this](){enter();});
+    }
     public:
-    string title;
     Key key;
-        menu(string title,vector<option*> list,menu*last_win,bool uni_title=false){
+    void pause(){
+        close=true;
+    }
+    string title;
+        menu(string title,vector<option*> list,bool uni_title=false){
             index=0;
-            this->last_win=last_win;
             this->list=list;
-            this->title=uni_title?
-            title:(last_win?last_win->title+">":"")+title;
+            if(uni_title){
+                this->title=title;
+            }else{
+                this->title=tmp_title+">"+title;
+                tmp_title=this->title;
+            }
         };
         ~menu(){
             for(option* opt : list){
         delete opt;  // 释放每个 option 对象
     }
+        close=true;
+        std::this_thread::sleep_for(std::chrono::milliseconds(101));
     list.clear();
-    key.stop();
         }
         void up(){
            index= index==0?list.size():index-1;
@@ -106,35 +121,30 @@ class menu{
             creat_content();
             this->print();
         }
-        void restore(menu *del_win=nullptr){
-            creat_content();
-            this->print();
-            if(del_win){
-                delete del_win;}
-            if(key.isStop()){
-                key.restart();}
-            if(key.isPause()){
-                key.resume();
-            }
-        }
-        void open(){
-            creat_content();
-            this->print();
-            key.up([this](){up();});
-            key.down([this](){down();});
-            key.enter([this](){
+        void enter(){
                 if(index==list.size()){
                     this->back();
-                    key.stop();
                 }
                 else{
-                    if(list[index]->pause)
-                        key.pause();
-                    else
-                        key.stop();
                     list[index]->func();
                 }
-            });
+
+        }
+        void restore(){
+           
+
+            creat_content();
+            this->print();
+            key.resume();
+        }
+        void open(){
+                 if(tmp_menu){
+                delete tmp_menu;
+                tmp_menu=nullptr;
+            }
+            key_bind();
+            creat_content();
+            this->print();
             key.run();
         }
 };

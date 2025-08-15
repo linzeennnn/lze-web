@@ -18,5 +18,8 @@ void main_win(){
         new option(get_text("pathCon"),[&mainWin](){open_path_win(get_text("pathCon"),mainWin);})
     };
     mainWin=new menu("lze-config",list,NULL);
-    mainWin->open();
+    new_win(mainWin);
+    while(true){
+             std::this_thread::sleep_for(std::chrono::milliseconds(100000));
+        }
 }

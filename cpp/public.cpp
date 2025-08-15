@@ -1,5 +1,5 @@
 #include "public.h"
-
+#include "menu.h"
 
 json userData;
 json workData;
@@ -9,9 +9,13 @@ string work_config_path;
 string file_path;
 bool edit=false;
 json langData;
+string tmp_title;
 json langDict;
+menu*tmp_menu;
+stack<menu*> menu_list;
 
 void init(){
+    tmp_title="";
 work_dir="/opt/lze-web";
 user_config_path=work_dir+"/config/user_config.json";
 work_config_path=work_dir+"/config/work_config.json";
@@ -104,10 +108,27 @@ string text_box(string text){
     return "["+get_text(text)+"]";
 }
 void mod_permit(string user,string control,string action,bool add){
-    json control_config=userData["control"];
-    json user_arr=control_config[control]["action"][action]["user"];
+    json& user_arr=userData["control"][control]["action"][action]["user"];
     if(add)
         user_arr.push_back(user);
     else
          user_arr.erase(std::remove(user_arr.begin(), user_arr.end(), user), user_arr.end());
+}
+// 输出log
+void output_log(string content) {
+    // 打开文件，ios::app 表示追加内容，如果文件不存在会自动创建
+    ofstream ofs("output.log", ios::app);
+    if (!ofs) {
+        cerr << "无法打开或创建文件 output.log" << endl;
+        return;
+    }
+    ofs << content << endl;  // 写入内容并换行
+    ofs.close();
+}
+void new_win(menu*win){
+    if(!menu_list.empty())
+        menu_list.top()->key.stop();
+    menu_list.push(win);
+    menu_list.top()->open();
+
 }

@@ -14,44 +14,93 @@ void open_run_win(string title,menu* last_win){
         size_opt,
         new option(get_text("gzip"),[&run_win](){edit_gzip(run_win);},&(workData["gzip"])),
     };
-    run_win=new menu(title,list,last_win);
-    run_win->open();
+    run_win=new menu(title,list);
+    new_win(run_win);
 }
 void edit_port(menu* run_win){
-    edit_mode();
-    unsigned int port;
-    cout << get_text("inputPort")+":" << std::flush;
-    while (true)
-    {
-    if (cin >> port && port > 0 && port <= 65535)  break; 
-    cout<<"\n"+get_text("inputErr")+":";
-    cin.clear(); 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    menu_list.top()->key.stop();
+    edit_mode();  // 开启 ICANON + ECHO
+
+    // 丢弃内核输入队列中残留的字符（非阻塞）
+    tcflush(STDIN_FILENO, TCIFLUSH);
+    std::cin.clear();
+
+    unsigned int port = 0;
+    std::string line;
+
+    while (true) {
+        std::cout << get_text("inputPort") << ": " << std::flush;
+        if (!std::getline(std::cin, line)) {
+            // 遇到 EOF 或错误，做适当处理（这里退出）
+            std::cin.clear();
+            continue;
+        }
+        // 去掉首尾空白（可选）
+        size_t start = line.find_first_not_of(" \t\r\n");
+        if (start == std::string::npos) { 
+            std::cout << get_text("inputErr") << std::endl;
+            continue;
+        }
+        size_t end = line.find_last_not_of(" \t\r\n");
+        std::string trimmed = line.substr(start, end - start + 1);
+
+        try {
+            unsigned long v = std::stoul(trimmed);
+            if (v > 0 && v <= 65535) {
+                port = static_cast<unsigned int>(v);
+                break;
+            }
+        } catch (...) { /* 转换失败 */ }
+
+        std::cout << get_text("inputErr") << std::endl;
     }
-    cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
-    edit=true;
+
+    edit = true;
     disable_edit_mode();
-    workData["port"]=to_string(port);
-    run_win->restore();
+    workData["port"] = std::to_string(port);
+    menu_list.top()->open();
 }
+
 void edit_max_size(menu* run_win){
+    menu_list.top()->key.stop();
     edit_mode();
-    unsigned long size;
-    cout<<get_text("inputSize")+":";
-    while (true)
-    {
-        if(cin >> size)break;
-    cout<<"\n"+get_text("inputErr")+":";
-    cin.clear(); 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    tcflush(STDIN_FILENO, TCIFLUSH);
+    std::cin.clear();
+
+    unsigned long size = 0;
+    std::string line;
+    while (true) {
+        std::cout << get_text("inputSize") << ": " << std::flush;
+        if (!std::getline(std::cin, line)) {
+            std::cin.clear();
+            continue;
+        }
+        // trim
+        size_t start = line.find_first_not_of(" \t\r\n");
+        if (start == std::string::npos) {
+            std::cout << get_text("inputErr") << std::endl;
+            continue;
+        }
+        size_t end = line.find_last_not_of(" \t\r\n");
+        std::string trimmed = line.substr(start, end - start + 1);
+
+        try {
+            unsigned long v = std::stoul(trimmed);
+            size = v;
+            break;
+        } catch (...) {
+            std::cout << get_text("inputErr") << std::endl;
+        }
     }
-    cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
-    edit=true;
+
+    edit = true;
     disable_edit_mode();
-    size=size*1024*1024;
-    workData["max_size"]=to_string(size);
-    run_win->restore();
+    size = size * 1024 * 1024;
+    workData["max_size"] = std::to_string(size);
+    menu_list.top()->open();
 }
+
 void edit_gzip(menu* run_win){
     workData["gzip"]=workData["gzip"]=="yes"?"no":"yes";
     edit=true;

@@ -1,8 +1,11 @@
 #include "path_win.h"
 namespace fs = std::filesystem;
 using namespace std;
+void switch_menu(menu *win);
 void open_path_edit_win(menu * last_win,menu * last_path_win,fs::path path,fs::path default_path,string key);
 void edit_path(string type,menu*last_win){
+    menu_list.top()->key.pause();
+    menu_list.push(nullptr);
     string key=type+"_path";
     string cur_path=workData[key];
     string default_path;
@@ -51,6 +54,16 @@ void open_path_edit_win(menu * last_win,
                 list.push_back(new option(entry.path().filename(),[&path_edit_win,last_win,scan_path,default_path,entry,key]()
         {open_path_edit_win(last_win,path_edit_win,entry.path(),default_path,key);}));
         }
-        path_edit_win=new menu(scan_path,list,last_win,true);
-        path_edit_win->open();
+        path_edit_win=new menu(scan_path,list,true);
+        switch_menu(path_edit_win);
+}
+void switch_menu(menu *win){
+    tmp_menu=menu_list.top();
+    menu_list.pop();
+    if(!tmp_menu){
+        delete tmp_menu;
+        tmp_menu=nullptr;
+    }
+    menu_list.push(win);
+    menu_list.top()->open();
 }

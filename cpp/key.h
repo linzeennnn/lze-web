@@ -1,115 +1,75 @@
 #pragma once
 #include <iostream>
-#include <functional>
-#include <unordered_map>
 #include <thread>
-#include <chrono>
-using namespace std;
-#if defined(_WIN32) || defined(_WIN64)
-    #include <conio.h>
-#else
-    #include <termios.h>
-    #include <unistd.h>
-#endif
+#include <atomic>
+#include <functional>
+#include <termios.h>
+#include <unistd.h>
 
 class Key {
 public:
-    using Callback = std::function<void()>;
+    Key() : running(false), paused(false) {}
+    ~Key() { stop(); }
 
-    void left(Callback fn) { handlers["left"] = fn; }
-    void right(Callback fn) { handlers["right"] = fn; }
-    void up(Callback fn) { handlers["up"] = fn; }
-    void down(Callback fn) { handlers["down"] = fn; }
-    void enter(Callback fn) { handlers["enter"] = fn; }
-    void esc(Callback fn) { handlers["esc"] = fn; }
-
-    void stop() { stoprun = true; }
-    void restart() { stoprun = false; this->run(); }
-
-    void pause() { paused = true; }
-    void resume() { 
-        paused = false;
-    }
-    bool isStop(){ return stoprun;}
-    bool isPause(){ return paused;}
     void run() {
-        while (!stoprun) {
-            if (paused) {
-                // 暂停时，等待少许时间，避免CPU占用过高
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                continue;
-            }
+        if (running) return;
+        running = true;
+        listenerThread = std::thread(&Key::listen, this);
+    }
 
-            std::string key = getKey();
-            if (!key.empty() && handlers.count(key)) {
-                handlers[key]();
-                if (key == "esc") {
-                    std::cout << "stop" << std::endl;
-                    stoprun = true;
-                }
-            }
+    void stop() {
+    running = false;
+    if (listenerThread.joinable()) {
+        if (std::this_thread::get_id() == listenerThread.get_id()) {
+            listenerThread.detach(); // 线程自己调用就 detach
+        } else {
+            listenerThread.join();
         }
     }
+}
+    void pause() { paused = true; }
+    void resume() { paused = false; }
 
-    Key() : stoprun(false), paused(false) {}
+    void up(std::function<void()> func) { upFunc = func; }
+    void down(std::function<void()> func) { downFunc = func; }
+    void enter(std::function<void()> func) { enterFunc = func; }
 
 private:
-    bool stoprun;
-    bool paused;
-    std::unordered_map<std::string, Callback> handlers;
+    std::atomic<bool> running;
+    std::atomic<bool> paused;
+    std::thread listenerThread;
 
-#if defined(_WIN32) || defined(_WIN64)
-    std::string getKey() {
-        int ch = _getch();
-        if (ch == 0 || ch == 224) {
-            int ch2 = _getch();
-            switch (ch2) {
-                case 72: return "up";
-                case 80: return "down";
-                case 75: return "left";
-                case 77: return "right";
-                default: return "";
-            }
-        } else if (ch == 13) {
-            return "enter";
-        } else if (ch == 27) {
-            return "esc";
-        }
-        return "";
-    }
-#else
-    char getch() {
-        struct termios oldt, newt;
-        char ch;
-        tcgetattr(STDIN_FILENO, &oldt);
-        newt = oldt;
-        newt.c_lflag &= ~(ICANON | ECHO);
-        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-        ch = getchar();
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-        return ch;
-    }
+    std::function<void()> upFunc;
+    std::function<void()> downFunc;
+    std::function<void()> enterFunc;
 
-    std::string getKey() {
-        char ch = getch();
-        if (ch == 27) {  // ESC 或方向键
-            char ch1 = getch();
-            if (ch1 == '[') {
-                char ch2 = getch();
-                switch (ch2) {
-                    case 'A': return "up";
-                    case 'B': return "down";
-                    case 'C': return "right";
-                    case 'D': return "left";
-                    default: return "";
+    void listen() {
+        termios orig_termios;
+        tcgetattr(STDIN_FILENO, &orig_termios);
+        termios new_termios = orig_termios;
+        new_termios.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+
+        while (running) {
+            if (!paused) {
+                char ch;
+                if (read(STDIN_FILENO, &ch, 1) == 1) {
+                    if (ch == '\033') { // ESC 开头的方向键
+                        char seq[2];
+                        if (read(STDIN_FILENO, &seq[0], 1) == 0) continue;
+                        if (read(STDIN_FILENO, &seq[1], 1) == 0) continue;
+                        if (seq[0] == '[') {
+                            if (seq[1] == 'A' && upFunc) upFunc();    // 上
+                            if (seq[1] == 'B' && downFunc) downFunc(); // 下
+                        }
+                    } else if (ch == '\n' && enterFunc) {
+                        enterFunc();
+                    }
                 }
-            } else {
-                return "esc";
             }
-        } else if (ch == '\n') {
-            return "enter";
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
-        return "";
+
+        tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
     }
-#endif
 };

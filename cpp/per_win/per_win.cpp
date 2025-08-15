@@ -6,6 +6,6 @@ void open_per_win(string title,menu*last_win){
     for (auto& [key, value] : user_config.items()) {
         list.push_back(new option(key,[key,&per_win](){open_control_win(key,per_win);}));
 }
-    per_win=new menu(title,list,last_win);
-    per_win->open();
+    per_win=new menu(title,list);
+    new_win(per_win);
 }

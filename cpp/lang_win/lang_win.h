@@ -5,6 +5,7 @@
 #include "../clean.h"
 class lang_win{
     private:
+    bool close=false;
     int index;
     string content;
     vector<option*>list;
@@ -32,6 +33,11 @@ class lang_win{
         key.up([this](){this->up();});
         key.enter([this](){this->enter();});
         key.run();
+        while (!close)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+        
     }
     void up(){
         index=index==0?(list.size()-1):index-1;
@@ -44,8 +50,9 @@ class lang_win{
         print();
     }
     void enter(){
+        close=true;
         list[index]->func();
-        key.stop();
+        std::this_thread::sleep_for(std::chrono::milliseconds(101));
     }
     lang_win(vector<option*> list){
         index=0;
@@ -56,6 +63,7 @@ class lang_win{
         delete opt;  // 释放每个 option 对象
     }
     list.clear();
+    key.stop();
 }
 };
 

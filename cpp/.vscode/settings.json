@@ -68,6 +68,10 @@
         "forward_list": "cpp",
         "map": "cpp",
         "set": "cpp",
-        "unordered_set": "cpp"
+        "unordered_set": "cpp",
+        "filesystem": "cpp",
+        "any": "cpp",
+        "__node_handle": "cpp",
+        "stack": "cpp"
     }
 }

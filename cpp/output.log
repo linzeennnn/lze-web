@@ -1,0 +1,1204 @@
+===== 文件: ./option.h =====
+#pragma once
+#include <string>
+#include <functional>
+#include "json.hpp"
+using namespace std;
+using json = nlohmann::json;
+class option {
+public:
+    string name;
+    std::function<void()> func;  
+    json* info;
+    bool pause;
+
+    option(string name, std::function<void()> f,json* info=nullptr)
+        : name(name), func(f), info(info){}
+};
+
+
+===== 文件: ./clean.h =====
+#pragma once
+#include <iostream>
+#include <termios.h>
+#include <unistd.h>
+using namespace std;
+
+static struct termios orig_termios;
+static struct termios raw_termios;
+static bool raw_mode_enabled = false;
+
+inline void create_win() {
+    // 进入备用屏幕缓冲区
+    std::cout << "\033[?1049h";
+    // 清屏并光标移到左上
+    std::cout << "\033[2J\033[H";
+    // 隐藏光标
+    std::cout << "\033[?25l" << std::flush;
+
+    if (!raw_mode_enabled) {
+        tcgetattr(STDIN_FILENO, &orig_termios);
+        raw_termios = orig_termios;
+        raw_termios.c_lflag &= ~(ECHO | ICANON);  // 保留 ISIG，允许 ctrl+c 产生信号
+        raw_termios.c_cc[VMIN] = 1;
+        raw_termios.c_cc[VTIME] = 0;
+        tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw_termios);
+        raw_mode_enabled = true;
+    }
+}
+
+inline void clean() {
+    // 清除备用屏幕缓冲区内容，光标移回左上
+    std::cout << "\033[2J\033[H" << std::flush;
+}
+
+inline void restore() {
+    if (raw_mode_enabled) {
+        // 恢复终端属性
+        tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+        raw_mode_enabled = false;
+    }
+
+    // 显示光标
+    std::cout << "\033[?25h";
+    // 退出备用屏幕缓冲区，恢复主屏幕内容
+    std::cout << "\033[?1049l" << std::flush;
+}
+
+// 开启编辑模式（恢复 ECHO 和 ICANON）
+inline void edit_mode() {
+    struct termios t;
+    tcgetattr(STDIN_FILENO, &t);
+    t.c_lflag |= (ICANON | ECHO);  // 打开标准输入和回显
+    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+}
+
+
+// 禁用编辑模式（回到 raw 模式）
+inline void disable_edit_mode() {
+    if (raw_mode_enabled) {
+        tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw_termios);
+        // 隐藏光标
+        std::cout << "\033[?25l" << std::flush;
+    }
+}
+
+===== 文件: ./run_win/run_win.h =====
+#include "../menu.h"
+#include "../option.h"
+#include "../public.h"
+#include "../all_win.hpp"
+void open_run_win(string title,menu* last_win);
+
+===== 文件: ./run_win/run_win.cpp =====
+#include"run_win.h"
+#include "../clean.h"
+void edit_port(menu* run_win);
+void edit_max_size(menu* run_win);
+void edit_gzip(menu* run_win);
+void open_run_win(string title,menu* last_win){
+    menu* run_win;
+    option *port_opt=new option(get_text("runPort"),[&run_win](){edit_port(run_win);},&(workData["port"]));
+    option *size_opt=new option(get_text("maxReSize"),[&run_win](){edit_max_size(run_win);},&(workData["max_size"]));
+    port_opt->pause=true;
+    size_opt->pause=true;
+    vector<option*> list={
+        port_opt,
+        size_opt,
+        new option(get_text("gzip"),[&run_win](){edit_gzip(run_win);},&(workData["gzip"])),
+    };
+    run_win=new menu(title,list);
+    new_win(run_win);
+}
+void edit_port(menu* run_win){
+    menu_list.top()->key.pause();
+    edit_mode();
+    unsigned int port;
+    cout << get_text("inputPort")+":" << std::flush;
+    bool error=true;
+    getchar();
+    cin >> port;
+    cout<<"输入了"<<port<<endl;
+    // do
+    // {
+    //     cin.clear(); 
+    //     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    //     if (cin >> port && port > 0 && port <= 65535)
+    //         error=false;
+    //     if(error)
+    //          cout<<"\n"+get_text("inputErr")+":";
+    // } while (error);
+    
+    // while (true)
+    // {
+    // if (cin >> port && port > 0 && port <= 65535)  break; 
+    // cout<<"\n"+get_text("inputErr")+":";
+    // cin.clear(); 
+    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // }
+
+
+
+    // cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+    // edit=true;
+    // disable_edit_mode();
+    // workData["port"]=to_string(port);
+    // menu_list.top()->restore();
+}
+void edit_max_size(menu* run_win){
+    menu_list.top()->key.pause();
+    edit_mode();
+    unsigned long size;
+    cout<<get_text("inputSize")+":";
+    cin.clear(); 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    while (true)
+    {
+        if(cin >> size)break;
+    cout<<"\n"+get_text("inputErr")+":";
+    cin.clear(); 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+    edit=true;
+    disable_edit_mode();
+    size=size*1024*1024;
+    workData["max_size"]=to_string(size);
+    menu_list.top()->restore();
+}
+void edit_gzip(menu* run_win){
+    workData["gzip"]=workData["gzip"]=="yes"?"no":"yes";
+    edit=true;
+    run_win->restore();
+}
+
+===== 文件: ./Makefile =====
+# 自动检测平台
+UNAME_S := $(shell uname -s)
+
+# 根据平台选择编译器
+ifeq ($(UNAME_S), Darwin)  # macOS
+    CXX = clang++
+    FS_LIB =               # 新版 clang/libc++ 不需要额外链接
+else                        # Linux
+    CXX = g++
+    FS_LIB =               # 如果是 GCC < 9，可改成 -lstdc++fs
+endif
+
+CXXFLAGS = -Wall -O2 -g -std=c++17
+SRC = $(shell find . -name "*.cpp")
+OBJ = $(SRC:.cpp=.o)
+TARGET = lze-web-config-cli
+
+all: $(TARGET) clean
+
+$(TARGET): $(OBJ)
+	$(CXX) $(OBJ) -o $(TARGET) $(FS_LIB)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJ)
+
+
+===== 文件: ./lang_win/lang_win.h =====
+#include "../option.h"
+#include "../menu.h"
+#include "../public.h"
+#include "../key.h"
+#include "../clean.h"
+class lang_win{
+    private:
+    bool close=false;
+    int index;
+    string content;
+    vector<option*>list;
+    menu * last_win;
+    void creat_content(){
+        content=split_line('=')+'\n';
+        for(size_t i=0;i<list.size();i++){
+            if(i==index)
+                content+=" >"+list[i]->name+'\n';
+            else
+                content+="  "+list[i]->name+'\n';
+        }
+        content+=split_line('=');
+    }
+    void print(){
+        clean();
+        cout<<content;
+    }
+    public:
+    Key key;
+    void open(){
+        creat_content();
+        print();
+        key.down([this](){this->down();});
+        key.up([this](){this->up();});
+        key.enter([this](){this->enter();});
+        key.run();
+        while (!close)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+        
+    }
+    void up(){
+        index=index==0?(list.size()-1):index-1;
+        creat_content();
+        print();
+    }
+    void down(){
+        index=index==list.size()-1?0:index+1;
+        creat_content();
+        print();
+    }
+    void enter(){
+        close=true;
+        list[index]->func();
+        std::this_thread::sleep_for(std::chrono::milliseconds(101));
+    }
+    lang_win(vector<option*> list){
+        index=0;
+        this->list=list;
+    }
+    ~lang_win(){
+            for(option* opt : list){
+        delete opt;  // 释放每个 option 对象
+    }
+    list.clear();
+}
+};
+
+
+void open_lang(lang_win** win);
+
+===== 文件: ./lang_win/lang_win.cpp =====
+#include "lang_win.h"
+void open_lang(lang_win** win){
+    vector<option*> list={
+        new option("简体中文",[&win](){
+            cout<<1111<<endl;
+            langDict=langData["zh"];
+        }),
+        new option("English",[&win](){
+            langDict=langData["en"];
+        })
+    };
+    *win =new lang_win(list);
+    (*win)->open();
+}
+
+===== 文件: ./key.h =====
+#pragma once
+#include <iostream>
+#include <thread>
+#include <atomic>
+#include <functional>
+#include <termios.h>
+#include <unistd.h>
+#include <map>
+#include <vector>
+#include <fcntl.h>
+class Key {
+public:
+    Key() : running(false), paused(false) {}
+
+    // 启动监听
+    void run() {
+        running = true;
+        listenerThread = std::thread(&Key::listen, this);
+    }
+
+    // 暂停监听
+    void pause() {
+        paused = true;
+    }
+
+    // 恢复监听
+    void resume() {
+        paused = false;
+    }
+
+    // 绑定按键函数
+    void up(std::function<void()> func) {
+        keyBindings["UP"] = func;
+    }
+
+    void down(std::function<void()> func) {
+        keyBindings["DOWN"] = func;
+    }
+
+    void left(std::function<void()> func) {
+        keyBindings["LEFT"] = func;
+    }
+
+    void right(std::function<void()> func) {
+        keyBindings["RIGHT"] = func;
+    }
+
+    void enter(std::function<void()> func) {
+        keyBindings["ENTER"] = func;
+    }
+
+    // 停止监听并回收线程
+    ~Key() {
+        running = false;
+        if (listenerThread.joinable()) {
+            listenerThread.join();
+        }
+    }
+
+private:
+    std::atomic<bool> running;
+    std::atomic<bool> paused;
+    std::thread listenerThread;
+    std::map<std::string, std::function<void()>> keyBindings;
+
+    void listen() {
+        struct termios oldt, newt;
+        tcgetattr(STDIN_FILENO, &oldt);
+        newt = oldt;
+        newt.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+        // 设置非阻塞
+        int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
+        fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
+
+        std::vector<char> buffer;
+
+        while (running) {
+            if (!paused) {
+                char ch;
+                ssize_t n = read(STDIN_FILENO, &ch, 1);
+                if (n > 0) {
+                    buffer.push_back(ch);
+
+                    // 检查多字节序列
+                    std::string key = parseKey(buffer);
+                    if (!key.empty()) {
+                        auto it = keyBindings.find(key);
+                        if (it != keyBindings.end() && it->second) {
+                            it->second();
+                        }
+                        buffer.clear(); // 清空缓冲
+                    }
+                } else {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(5));
+                }
+            } else {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
+        }
+
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // 恢复终端
+    }
+
+    std::string parseKey(const std::vector<char>& buffer) {
+        if (buffer.empty()) return "";
+
+        if (buffer.size() == 1) {
+            if (buffer[0] == '\n') return "ENTER";
+        } else if (buffer.size() == 3) {
+            // 检测箭头键序列：\033 [ A/B/C/D
+            if (buffer[0] == 27 && buffer[1] == '[') {
+                switch (buffer[2]) {
+                    case 'A': return "UP";
+                    case 'B': return "DOWN";
+                    case 'C': return "RIGHT";
+                    case 'D': return "LEFT";
+                }
+            }
+        }
+
+        return "";
+    }
+};
+
+===== 文件: ./split_line.h =====
+#pragma once
+#ifndef SPLIT_LINE_H
+#define SPLIT_LINE_H
+
+#include <string>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <sys/ioctl.h>
+#include <unistd.h>
+#endif
+
+inline int get_terminal_width() {
+#ifdef _WIN32
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+        return csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    }
+    return 80; // 默认宽度
+#else
+    struct winsize w;
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0) {
+        return w.ws_col;
+    }
+    return 80; // 默认宽度
+#endif
+}
+
+inline std::string split_line(char ch) {
+    int width = get_terminal_width();
+    return std::string(width, ch);
+}
+
+#endif // SPLIT_LINE_H
+
+
+===== 文件: ./all_win.hpp =====
+#pragma once
+#include <string>
+#include "menu.h"
+using namespace std;
+void main_win();
+void open_path_win(string title,menu* last_win);
+void open_run_win(string title,menu* last_win);
+void open_per_win(string title,menu*last_win);
+
+===== 文件: ./output.log =====
+
+
+===== 文件: ./public.h =====
+#pragma once
+#include "json.hpp" 
+#include <stack>
+#include <string>
+#include <filesystem>
+#include<iostream>
+#include <sstream>
+#include "key.h"
+#include <fstream> 
+class menu;
+using json = nlohmann::json;
+using namespace std;
+namespace fs = filesystem;
+extern bool edit;
+extern json langData;
+extern json langDict;
+extern json userData;
+extern json workData;
+extern menu*tmp_menu;
+extern string tmp_title;
+extern stack<menu*> menu_list;
+extern string work_dir;
+extern string user_config_path;
+extern string work_config_path;
+extern string file_path;
+string text_box(string text);
+void write_text(std::string path, string content) ;
+std::string get_work_path();
+string read_text(std::string path);
+void save_config();
+void init();
+string file_type(filesystem::path filePath);
+string get_text(string key);
+void mod_permit(string user,string control,string action,bool add);
+void output_log(string content);
+void new_win(menu*win);
+
+===== 文件: ./lang.json =====
+{
+    "zh": {
+        "back": "返回",
+        "userCon": "用户配置",
+        "perCon": "权限配置",
+        "runCon": "运行配置",
+        "pathCon": "路径配置",
+        "runPort": "运行端口",
+        "maxReSize": "最大请求大小",
+        "gzip": "gzip压缩",
+        "inputPort": "输入端口号",
+        "inputSize": "输入大小(MB)",
+        "inputErr":"输入有误",
+        "doc": "文件管理",
+        "pic": "图库",
+        "tra": "回收站",
+        "mon": "控制面板",
+        "not": "便签",
+        "bok": "书签",
+        "doc_path": "文件管理路径",
+        "pic_path": "图库路径",
+        "tra_path": "回收站路径",
+        "tmp_path": "临时面板",
+        "not_path": "便签路径",
+        "bok_path": "书签路径",
+        "file_path": "文件目录路径",
+        "useDefault": "使用默认路径",
+        "backPar": "返回上一级",
+        "notSave": "内容未保存!!!",
+        "save": "保存",
+        "dontSave": "不保存",
+        "delete": "删除",
+        "add": "新增",
+        "copy": "复制",
+        "downdir": "下载文件夹",
+        "downfile": "下载文件",
+        "cut": "剪切",
+        "create_folder": "新建文件夹",
+        "rename": "重命名",
+        "upload_folder": "上传文件夹",
+        "upload_file": "上传文件",
+        "modify_permission": "修改权限",
+        "mod_log_time": "修改登陆时长",
+        "edit": "编辑",
+        "upload": "上传",
+        "upload_media": "上传图片/视频",
+        "clear_tra": "清空回收站",
+        "restore": "恢复文件"
+    },
+    "en": {
+        "back": "Back",
+        "userCon": "User Configuration",
+        "perCon": "Permission Configuration",
+        "runCon": "Run Configuration",
+        "pathCon": "Path Configuration",
+        "runPort": "Run Port",
+        "maxReSize": "Max Request Size",
+        "gzip": "Gzip Compression",
+        "inputPort": "Enter Port Number",
+        "inputSize": "Enter Size (MB)",
+        "inputErr":"Input Invalid",
+        "doc": "File Manager",
+        "pic": "Gallery",
+        "tra": "Recycle Bin",
+        "mon": "Control Panel",
+        "not": "Notes",
+        "bok": "Bookmarks",
+        "doc_path": "File Manager Path",
+        "pic_path": "Gallery Path",
+        "tra_path": "Recycle Bin Path",
+        "tmp_path": "Temporary Panel",
+        "not_path": "Notes Path",
+        "bok_path": "Bookmarks Path",
+        "file_path": "File Directory Path",
+        "useDefault": "Use Default Path",
+        "backPar": "Back to Parent",
+        "notSave": "Content Not Saved!!!",
+        "save": "Save",
+        "dontSave": "Don't Save",
+        "delete": "Delete",
+        "add": "Add",
+        "copy": "Copy",
+        "downdir": "Download Folder",
+        "downfile": "Download File",
+        "cut": "Cut",
+        "create_folder": "Create Folder",
+        "rename": "Rename",
+        "upload_folder": "Upload Folder",
+        "upload_file": "Upload File",
+        "modify_permission": "Modify Permission",
+        "mod_log_time": "Modify Log Time",
+        "edit": "Edit",
+        "upload": "Upload",
+        "upload_media": "Upload Media",
+        "clear_tra": "Clear Recycle Bin",
+        "restore": "Restore File"
+    }
+}
+
+
+===== 文件: ./menu.h =====
+#pragma once
+#include <iostream>
+#include <vector>
+#include <string>
+#include"clean.h"
+#include"public.h"
+#include <algorithm>
+#include"split_line.h"
+#include"key.h"
+#include "option.h"
+using namespace std;
+class menu{
+    private:
+    bool close=false;
+    string content;
+    vector<option*> list;
+    size_t max_list_show=9;
+    int index;
+    void open_confirm(menu* last_win){
+        menu *confirm_win;
+        vector<option*> list={
+            new option(text_box("save"),[](){
+                save_config();
+                exit(0);
+            }),
+            new option(text_box("dontSave"),[](){exit(0);})
+        };
+        confirm_win=new menu("  "+get_text("notSave"),list,true);
+        menu_list.push(confirm_win);
+        confirm_win->open();
+}
+    void creat_content(){
+        content=split_line('=');
+        content+=title+"\n"+
+        split_line('-')+"\n"+
+        (index==list.size()?(" >"+text_box("back"))
+        :("  "+text_box("back")))+"\n";
+        if(index<=max_list_show||index==list.size()){
+                for(size_t i=0;
+                    i<min(max_list_show+1,list.size());
+                    i++){
+                    if(i==index)
+                        content+=" >"+list[i]->name+get_info(i)+"\n";
+                    else
+                        content+="  "+list[i]->name+get_info(i)+"\n";
+                }
+            }
+        else{
+                for(size_t i=index-max_list_show;
+                    i<min(static_cast<size_t>(index+1),list.size());
+                    i++)
+                    {
+                    if(i==index)
+                        content+=" >"+list[i]->name+get_info(i)+"\n";
+                    else
+                        content+="  "+list[i]->name+get_info(i)+"\n";
+                }
+        }
+        if(list.size()>max_list_show&&index+1<list.size())
+            content+="  .....\n";
+        content+=split_line('=')+"\n";
+    }
+    string get_info(int index){
+        return list[index]->info?std::string(" [") + (*(list[index]->info)).get<std::string>() + "]"
+    : std::string("");
+    }
+    void print(){
+            clean();
+            cout<<content;
+
+    }
+    void back(){
+            tmp_menu=this;
+            menu_list.pop();
+        if(!menu_list.empty()){
+            menu_list.top()->restore();
+        }else{
+            if(edit){
+                open_confirm(this);
+            }
+            else
+                exit(0);
+        }
+    }
+    void key_bind(){
+            key.up([this](){up();});
+            key.down([this](){down();});
+            key.enter([this](){enter();});
+    }
+    public:
+    Key key;
+    void pause(){
+        close=true;
+    }
+    string title;
+        menu(string title,vector<option*> list,bool uni_title=false){
+            index=0;
+            this->list=list;
+            if(uni_title){
+                this->title=title;
+            }else{
+                this->title=tmp_title+">"+title;
+                tmp_title=this->title;
+            }
+        };
+        ~menu(){
+            for(option* opt : list){
+        delete opt;  // 释放每个 option 对象
+    }
+        close=true;
+        std::this_thread::sleep_for(std::chrono::milliseconds(101));
+    list.clear();
+        }
+        void up(){
+           index= index==0?list.size():index-1;
+            creat_content();
+            this->print();
+        }
+        void down(){
+           index= index==list.size()?0:index+1;
+            creat_content();
+            this->print();
+        }
+        void enter(){
+                if(index==list.size()){
+                    this->back();
+                }
+                else{
+                    list[index]->func();
+                }
+
+        }
+        void restore(){
+            if(tmp_menu){
+                delete tmp_menu;
+                tmp_menu=nullptr;
+            }
+
+            creat_content();
+            this->print();
+            key.resume();
+        }
+        void open(){
+                
+            key_bind();
+            creat_content();
+            this->print();
+            key.run();
+        }
+};
+
+===== 文件: ./.vscode/settings.json =====
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "vector": "cpp",
+        "chrono": "cpp",
+        "text_encoding": "cpp",
+        "typeindex": "cpp",
+        "typeinfo": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "__split_buffer": "cpp",
+        "list": "cpp",
+        "new": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "span": "cpp",
+        "queue": "cpp",
+        "atomic": "cpp",
+        "bit": "cpp",
+        "bitset": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "exception": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "memory_resource": "cpp",
+        "random": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "format": "cpp",
+        "initializer_list": "cpp",
+        "iosfwd": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "mutex": "cpp",
+        "print": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "__bit_reference": "cpp",
+        "__locale": "cpp",
+        "__verbose_abort": "cpp",
+        "execution": "cpp",
+        "ios": "cpp",
+        "locale": "cpp",
+        "csignal": "cpp",
+        "sstream": "cpp",
+        "unordered_map": "cpp",
+        "ranges": "cpp",
+        "variant": "cpp",
+        "ratio": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "forward_list": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp",
+        "filesystem": "cpp",
+        "any": "cpp",
+        "__node_handle": "cpp",
+        "stack": "cpp"
+    }
+}
+
+===== 文件: ./path_win/path_win.cpp =====
+#include "path_win.h"
+void open_path_win(string title,menu* last_win){
+    menu *path_menu;
+    vector<option*> list={
+        new option(get_text("doc_path"),[&path_menu](){edit_path("doc",path_menu);},&(workData["doc_path"])),
+        new option(get_text("pic_path"),[&path_menu](){edit_path("pic",path_menu);},&(workData["pic_path"])),
+        new option(get_text("tra_path"),[&path_menu](){edit_path("tra",path_menu);},&(workData["tra_path"])),
+        new option(get_text("not_path"),[&path_menu](){edit_path("not",path_menu);},&(workData["not_path"])),
+        new option(get_text("bok_path"),[&path_menu](){edit_path("bok",path_menu);},&(workData["bok_path"])),
+        new option(get_text("tmp_path"),[&path_menu](){edit_path("tmp",path_menu);},&(workData["tmp_path"])),
+        new option(get_text("file_path"),[&path_menu](){edit_path("file",path_menu);},&(workData["file_path"]))
+    };
+    path_menu=new menu(title,list);
+    new_win(path_menu);
+}
+
+===== 文件: ./path_win/edit_path.cpp =====
+#include "path_win.h"
+namespace fs = std::filesystem;
+using namespace std;
+void switch_menu(menu *win);
+void open_path_edit_win(menu * last_win,menu * last_path_win,fs::path path,fs::path default_path,string key);
+void edit_path(string type,menu*last_win){
+    menu_list.top()->key.pause();
+    menu_list.push(nullptr);
+    string key=type+"_path";
+    string cur_path=workData[key];
+    string default_path;
+        if(type=="file")
+            default_path=file_path;
+        else if(type=="doc")
+            default_path=file_path+"/Documents";
+        else if(type=="pic")
+            default_path=file_path+"/Pictures";
+        else if(type=="not")
+            default_path=file_path+"/Note";
+        else if(type=="bok")
+            default_path=file_path+"/Bookmark";
+        else if(type=="tmp")
+            default_path=file_path+"/temp";
+        else if(type=="tra")
+            default_path=file_path+"/trash";
+    if(cur_path=="default"){
+        cur_path=default_path;
+    }
+        open_path_edit_win(last_win,nullptr,cur_path,default_path,key);
+}
+void open_path_edit_win(menu * last_win,
+                        menu * last_path_win,
+                        fs::path scan_path,
+                        fs::path default_path,
+                        string key
+                    ){
+        if(!edit)
+            edit=true;
+        if(scan_path==default_path)
+            workData[key]="default";
+        else
+            workData[key]=scan_path.string();
+    delete last_path_win;
+    menu *path_edit_win;
+    vector<option*> list={
+        new option(text_box("backPar"),[&path_edit_win,last_win,scan_path,default_path,key]()
+        {open_path_edit_win(last_win,path_edit_win,scan_path.parent_path(),default_path,key);}),
+        new option(text_box("useDefault"),[&path_edit_win,last_win,scan_path,default_path,key]()
+        {open_path_edit_win(last_win,path_edit_win,default_path,default_path,key);})
+    };
+ for (const auto& entry : fs::directory_iterator(scan_path)) {
+            std::string fileType=file_type(entry.path());
+            if(fileType=="dir"||fileType=="dir_link")
+                list.push_back(new option(entry.path().filename(),[&path_edit_win,last_win,scan_path,default_path,entry,key]()
+        {open_path_edit_win(last_win,path_edit_win,entry.path(),default_path,key);}));
+        }
+        path_edit_win=new menu(scan_path,list,true);
+        switch_menu(path_edit_win);
+}
+void switch_menu(menu *win){
+    tmp_menu=menu_list.top();
+    menu_list.pop();
+    if(!tmp_menu){
+        delete tmp_menu;
+        tmp_menu=nullptr;
+    }
+    menu_list.push(win);
+    menu_list.top()->open();
+}
+
+===== 文件: ./path_win/path_win.h =====
+#pragma once
+#include"../menu.h"
+#include<string>
+#include <vector>
+#include"../option.h"
+#include "../all_win.hpp"
+#include "../public.h"
+using namespace std;
+void open_path_win(string title,menu* last_win);
+void edit_path(string type,menu* last_win);
+
+===== 文件: ./per_win/action_win.cpp =====
+#include"per_win.h"
+bool include(json arr,string userName);
+void open_action_win(string control,string user,menu*last_win){
+    json action_config=userData["control"][control]["action"];
+    menu*action_win;
+    vector<option*>list;
+    json action_mes;
+    for(auto&[key,value]:action_config.items()){
+        if(include(value["user"],user)){
+            action_mes[key]="yes";
+            list.push_back(new option(get_text(value["name"]),[user,control,key,&action_mes,&action_win](){
+                edit=true;
+                mod_permit(user,control,key,false);
+                action_mes[key]="no";
+                action_win->restore();
+            },&action_mes[key]));
+        }
+        else{
+            action_mes[key]="no";
+            list.push_back(new option(get_text(value["name"]),[user,control,key,&action_mes,&action_win](){
+                edit=true;
+                mod_permit(user,control,key,true);
+                action_mes[key]="yes";
+                action_win->restore();
+            },&action_mes[key]));
+        }
+
+    }
+    action_win=new menu(get_text(control),list);
+    new_win(action_win);
+}
+bool include(json arr,string userName){
+  auto it = std::find(arr.begin(), arr.end(), userName);
+    if (it != arr.end()) 
+        return true;
+    else
+        return false;
+    
+}
+
+===== 文件: ./per_win/per_win.cpp =====
+#include"per_win.h"
+void open_per_win(string title,menu*last_win){
+    menu * per_win;
+    vector<option*> list;
+    json user_config=userData["user"];
+    for (auto& [key, value] : user_config.items()) {
+        list.push_back(new option(key,[key,&per_win](){open_control_win(key,per_win);}));
+}
+    per_win=new menu(title,list);
+    new_win(per_win);
+}
+
+===== 文件: ./per_win/per_win.h =====
+#include "../menu.h"
+#include "../public.h"
+#include "../option.h"
+#include"../all_win.hpp"
+void open_per_win(string title,menu*last_win);
+void open_control_win(string user,menu *last_win);
+void open_action_win(string control,string user,menu*last_win);
+
+===== 文件: ./per_win/control_win.cpp =====
+#include "per_win.h"
+void open_control_win(string user,menu *last_win){
+    json control_config=userData["control"];
+    menu*control_win;
+    vector<option*>list;
+    for(auto&[key,value]:control_config.items()){
+        list.push_back(new option(get_text(key),[key,user,&control_win](){
+            open_action_win(key,user,control_win);
+        }));
+    }
+    control_win=new menu(user,list);
+    new_win(control_win);
+}
+
+===== 文件: ./main.cpp =====
+#include <iostream>
+#include"clean.h"
+#include"all_win.hpp"
+#include <csignal>
+#include"public.h"
+using namespace std;
+void signal_handler(int signum) {
+    restore();
+    std::_Exit(signum);
+}
+void on_exit_cleanup() {
+    restore();
+}
+int main() {
+    init();
+    std::signal(SIGINT, signal_handler);
+    std::atexit(on_exit_cleanup);
+     create_win();
+     main_win();
+    return 0;
+}
+
+===== 文件: ./main_win.cpp =====
+#include"menu.h"
+#include"option.h"
+#include"all_win.hpp"
+#include "lang_win/lang_win.h"
+#include "public.h"
+using namespace std;
+void tmp(){
+}
+void main_win(){
+    lang_win* langWin;
+    open_lang(&langWin);
+    delete langWin;
+    menu *mainWin;
+    vector<option*> list={
+        new option(get_text("userCon"),tmp),
+        new option(get_text("perCon"),[&mainWin](){open_per_win(get_text("perCon"),mainWin);}),
+        new option(get_text("runCon"), [&mainWin](){open_run_win(get_text("runCon"),mainWin);}),
+        new option(get_text("pathCon"),[&mainWin](){open_path_win(get_text("pathCon"),mainWin);})
+    };
+    mainWin=new menu("lze-config",list,NULL);
+    new_win(mainWin);
+    while(true){
+             std::this_thread::sleep_for(std::chrono::milliseconds(100000));
+        }
+}
+
+===== 文件: ./public.cpp =====
+#include "public.h"
+#include "menu.h"
+
+json userData;
+json workData;
+string work_dir;
+string user_config_path;
+string work_config_path;
+string file_path;
+bool edit=false;
+json langData;
+string tmp_title;
+json langDict;
+menu*tmp_menu;
+stack<menu*> menu_list;
+
+void init(){
+    tmp_title="";
+work_dir="/opt/lze-web";
+user_config_path=work_dir+"/config/user_config.json";
+work_config_path=work_dir+"/config/work_config.json";
+string user_config_text=read_text(user_config_path);
+string work_config_text=read_text(work_config_path);
+string lang_config_text=read_text("lang.json");
+langData=json::parse(lang_config_text);
+userData=json::parse(user_config_text);
+workData=json::parse(work_config_text);
+string config_file_path=workData["file_path"];
+if (config_file_path == "default") {
+    file_path = work_dir + "/file";
+} else {
+    file_path = config_file_path;
+}
+}
+void save_config(){
+    write_text(user_config_path,userData.dump(4));
+    write_text(work_config_path,workData.dump(4));
+}
+string read_text(string path){
+std::ifstream file(path);
+    if (!file) {
+        std::cout << "无法打开文件\n";
+        return "";
+    }
+
+    std::ostringstream buffer;
+    buffer << file.rdbuf();
+    std::string content = buffer.str();
+
+    return content; 
+}
+void write_text(string path, string content) {
+    try {
+        // 自动创建目录
+        filesystem::path p(path);
+        if (p.has_parent_path()) {
+            filesystem::create_directories(p.parent_path());
+        }
+
+        // 以覆盖模式写入
+        ofstream file(path, ios::out | ios::trunc);
+        if (!file) {
+            throw runtime_error("无法打开文件: " + path);
+        }
+
+        file << content;  // 写入内容
+        file.close();     // 关闭文件
+
+    } catch (const exception& e) {
+        cerr << "写入文件失败: " << e.what() << endl;
+    }
+}
+string file_type(filesystem::path filePath){
+    try {
+        if (!fs::exists(filePath))
+            return "other";
+
+        if (fs::is_symlink(filePath)) {
+            // 是符号链接，进一步判断它指向的类型
+            fs::path target = fs::read_symlink(filePath);
+            fs::file_status target_status = fs::status(filePath);
+
+            if (fs::is_directory(target_status))
+                return "dir_link";
+            else if (fs::is_regular_file(target_status))
+                return "file_link";
+            else
+                return "other";
+        } else {
+            if (fs::is_directory(filePath))
+                return "dir";
+            else if (fs::is_regular_file(filePath))
+                return "file";
+            else
+                return "other";
+        }
+    } catch (...) {
+        return "other"; // 发生异常时也返回 other
+    }
+}
+string get_work_path(){
+return fs::read_symlink("/proc/self/exe").parent_path().string();
+}
+string get_text(string key){
+    return langDict[key];
+}
+string text_box(string text){
+    return "["+get_text(text)+"]";
+}
+void mod_permit(string user,string control,string action,bool add){
+    json& user_arr=userData["control"][control]["action"][action]["user"];
+    if(add)
+        user_arr.push_back(user);
+    else
+         user_arr.erase(std::remove(user_arr.begin(), user_arr.end(), user), user_arr.end());
+}
+// 输出log
+void output_log(string content) {
+    // 打开文件，ios::app 表示追加内容，如果文件不存在会自动创建
+    ofstream ofs("output.log", ios::app);
+    if (!ofs) {
+        cerr << "无法打开或创建文件 output.log" << endl;
+        return;
+    }
+    ofs << content << endl;  // 写入内容并换行
+    ofs.close();
+}
+void new_win(menu*win){
+    if(!menu_list.empty())
+        menu_list.top()->key.pause();
+    menu_list.push(win);
+    menu_list.top()->open();
+
+}
+

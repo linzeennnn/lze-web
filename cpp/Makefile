@@ -10,7 +10,7 @@ else                        # Linux
     FS_LIB =               # 如果是 GCC < 9，可改成 -lstdc++fs
 endif
 
-CXXFLAGS = -Wall -O2 -std=c++17
+CXXFLAGS = -Wall -O0 -g -std=c++17
 SRC = $(shell find . -name "*.cpp")
 OBJ = $(SRC:.cpp=.o)
 TARGET = lze-web-config-cli
