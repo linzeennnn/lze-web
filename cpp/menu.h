@@ -131,11 +131,8 @@ class menu{
 
         }
         void restore(){
-           
-
             creat_content();
             this->print();
-            key.resume();
         }
         void open(){
                  if(tmp_menu){
