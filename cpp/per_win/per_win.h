@@ -3,5 +3,5 @@
 #include "../option.h"
 #include"../all_win.hpp"
 void open_per_win(string title,menu*last_win);
-void open_control_win(string user,menu *last_win);
-void open_action_win(string control,string user,menu*last_win);
+void open_control_win(string user);
+void open_action_win(string control,string user);

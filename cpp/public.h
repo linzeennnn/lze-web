@@ -13,6 +13,7 @@ using namespace std;
 namespace fs = filesystem;
 extern bool edit;
 extern json langData;
+extern json action_mes;
 extern json langDict;
 extern json userData;
 extern json workData;

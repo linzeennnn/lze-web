@@ -4,6 +4,7 @@
 json userData;
 json workData;
 string work_dir;
+json action_mes;
 string user_config_path;
 string work_config_path;
 string file_path;

@@ -1,27 +1,42 @@
-# 自动检测平台
+# 检测系统
 UNAME_S := $(shell uname -s)
 
-# 根据平台选择编译器
-ifeq ($(UNAME_S), Darwin)  # macOS
+ifeq ($(UNAME_S), Darwin) # macOS
     CXX = clang++
-    FS_LIB =               # 新版 clang/libc++ 不需要额外链接
-else                        # Linux
+    DEBUG_FLAGS = -fstandalone-debug
+    DEBUGGER = lldb
+else # Linux
     CXX = g++
-    FS_LIB =               # 如果是 GCC < 9，可改成 -lstdc++fs
+    DEBUG_FLAGS =
+    DEBUGGER = gdb
 endif
 
-CXXFLAGS = -Wall -O0 -g -std=c++17
+CXXFLAGS = -Wall -O0 -std=c++17
 SRC = $(shell find . -name "*.cpp")
 OBJ = $(SRC:.cpp=.o)
 TARGET = lze-web-config-cli
 
-all: $(TARGET) clean
+# 正常编译
+all: CXXFLAGS += -g
+all: $(TARGET) clean_obj
+
+# 调试编译
+debug: CXXFLAGS += -g $(DEBUG_FLAGS)
+debug: $(TARGET)
+	$(DEBUGGER) ./$(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CXX) $(OBJ) -o $(TARGET) $(FS_LIB)
+	$(CXX) $(OBJ) -o $(TARGET)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-clean:
+# 编译后删除 .o（正常模式）
+clean_obj:
 	rm -f $(OBJ)
+
+# 彻底清理
+clean:
+	rm -f $(OBJ) $(TARGET)
+
+.PHONY: all debug clean clean_obj
