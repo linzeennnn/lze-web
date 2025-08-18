@@ -12,9 +12,9 @@ void main_win(){
     delete langWin;
     menu *mainWin;
     vector<option*> list={
-        new option(get_text("userCon"),tmp),
+        new option(get_text("userCon"),[&mainWin](){open_user_win(get_text("userCon"));}),
         new option(get_text("perCon"),[&mainWin](){open_per_win(get_text("perCon"),mainWin);}),
-        new option(get_text("runCon"), [&mainWin](){open_run_win(get_text("runCon"));}),
+        new option(get_text("runCon"), [](){open_run_win(get_text("runCon"));}),
         new option(get_text("pathCon"),[&mainWin](){open_path_win(get_text("pathCon"),mainWin);})
     };
     mainWin=new menu("lze-config",list,NULL);

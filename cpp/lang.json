@@ -45,7 +45,10 @@
         "upload": "上传",
         "upload_media": "上传图片/视频",
         "clear_tra": "清空回收站",
-        "restore": "恢复文件"
+        "restore": "恢复文件",
+        "new_user":"创建用户",
+        "del_user":"删除用户",
+        "mod_pas":"修改密码"
     },
     "en": {
         "back": "Back",
