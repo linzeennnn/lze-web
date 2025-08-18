@@ -72,6 +72,7 @@
         "filesystem": "cpp",
         "any": "cpp",
         "__node_handle": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "source_location": "cpp"
     }
 }

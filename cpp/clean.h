@@ -8,6 +8,7 @@ static struct termios orig_termios;
 static struct termios raw_termios;
 static bool raw_mode_enabled = false;
 
+// 进入备用屏幕 + raw 模式
 inline void create_win() {
     // 进入备用屏幕缓冲区
     std::cout << "\033[?1049h";
@@ -27,38 +28,47 @@ inline void create_win() {
     }
 }
 
+// 清屏
 inline void clean() {
-    // 清除备用屏幕缓冲区内容，光标移回左上
     std::cout << "\033[2J\033[H" << std::flush;
 }
 
+// 恢复主屏幕并退出 raw 模式
 inline void restore() {
     if (raw_mode_enabled) {
-        // 恢复终端属性
         tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
         raw_mode_enabled = false;
     }
-
-    // 显示光标
-    std::cout << "\033[?25h";
-    // 退出备用屏幕缓冲区，恢复主屏幕内容
-    std::cout << "\033[?1049l" << std::flush;
+    std::cout << "\033[?25h";       // 显示光标
+    std::cout << "\033[?1049l" << std::flush; // 退出备用屏幕
 }
 
-// 开启编辑模式（恢复 ECHO 和 ICANON）
-inline void edit_mode() {
+// 进入可编辑模式（清屏 + 恢复终端输入输出）
+inline void create_edit_win() {
     struct termios t;
     tcgetattr(STDIN_FILENO, &t);
-    t.c_lflag |= (ICANON | ECHO);  // 打开标准输入和回显
-    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+    t.c_lflag |= (ECHO | ICANON);   // 强制打开行缓冲和回显
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, &t);
+
+    raw_mode_enabled = false;
+    std::cout << "\033[?25h" << std::flush; // 显示光标
+    
 }
 
 
-// 禁用编辑模式（回到 raw 模式）
-inline void disable_edit_mode() {
-    if (raw_mode_enabled) {
+// 退出可编辑模式，回到 create_win() 状态
+inline void close_edit_win() {
+    if (!raw_mode_enabled) {
+        // 从编辑模式切回 raw 模式
+        tcgetattr(STDIN_FILENO, &orig_termios);  // 先拿到当前模式
+        raw_termios = orig_termios;
+        raw_termios.c_lflag &= ~(ECHO | ICANON);
+        raw_termios.c_cc[VMIN] = 1;
+        raw_termios.c_cc[VTIME] = 0;
         tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw_termios);
-        // 隐藏光标
+
+        raw_mode_enabled = true;
+        // 隐藏光标，保持 UI 模式
         std::cout << "\033[?25l" << std::flush;
     }
 }

@@ -5,7 +5,6 @@
 #include <functional>
 #include <termios.h>
 #include <unistd.h>
-
 class Key {
 public:
     Key() : running(false), paused(false) {}
