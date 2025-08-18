@@ -9,10 +9,17 @@ void open_run_win(string title){
         edit_port();
         tmp_menu=menu_list.top();
         menu_list.pop();
+        tmp_title=menu_list.top()->title;
         open_run_win(title);
     
     },&(workData["port"]));
-    option *size_opt=new option(get_text("maxReSize"),[](){edit_max_size();},&(workData["max_size"]));
+    option *size_opt=new option(get_text("maxReSize"),[title](){
+        edit_max_size();
+        tmp_menu=menu_list.top();
+        menu_list.pop();
+        tmp_title=menu_list.top()->title;
+        open_run_win(title);
+    },&(workData["max_size"]));
     port_opt->pause=true;
     size_opt->pause=true;
     vector<option*> list={
@@ -23,58 +30,92 @@ void open_run_win(string title){
     run_win=new menu(title,list);
     new_win(run_win);
 }
+#include <iostream>
+#include <string>
+#include <termios.h>
+#include <unistd.h>
+
+using namespace std;
+
 void edit_port() {
     menu_list.top()->key.stop();
     edit = true;
     unsigned int port = 0;
     string line;
+
     create_edit_win();
-    std::cout << get_text("inputPort") << ": " << std::flush;
-    getline(cin, line);
-    if (!line.empty()) {
-        port = std::stoi(line);
+
+    while (true) {
+        std::cout << get_text("inputPort") << ": " << std::flush;
+        getline(cin, line);
+
+        // 清空输入缓冲
+        tcflush(STDIN_FILENO, TCIFLUSH);
+
+        if (!line.empty()) {
+            try {
+                port = std::stoi(line);
+            } catch (const std::invalid_argument& e) {
+                std::cout << get_text("inputErr") << std::endl;
+                continue;
+            } catch (const std::out_of_range& e) {
+                std::cout << get_text("inputErr") << std::endl;
+                continue;
+            }
+
+            if (port >= 1 && port <= 65535) {
+                break; // 合法端口，跳出循环
+            } else {
+                std::cout << get_text("inputErr") << std::endl;
+            }
+        } else {
+            std::cout << get_text("inputErr") << std::endl;
+        }
     }
-    tcflush(STDIN_FILENO, TCIFLUSH);
+
     close_edit_win();
     workData["port"] = std::to_string(port);
 }
 
+
 void edit_max_size(){
-    // menu_list.top()->key.stop();
-    // create_edit_win();
-    // std::cin.clear();
+    menu_list.top()->key.stop();
+    edit = true;
+    unsigned long size = 0;
+    string line;
 
-    // unsigned long size = 0;
-    // std::string line;
-    // while (true) {
-    //     std::cout << get_text("inputSize") << ": " << std::flush;
-    //     if (!std::getline(std::cin, line)) {
-    //         std::cin.clear();
-    //         continue;
-    //     }
-    //     // trim
-    //     size_t start = line.find_first_not_of(" \t\r\n");
-    //     if (start == std::string::npos) {
-    //         std::cout << get_text("inputErr") << std::endl;
-    //         continue;
-    //     }
-    //     size_t end = line.find_last_not_of(" \t\r\n");
-    //     std::string trimmed = line.substr(start, end - start + 1);
+    create_edit_win();
 
-    //     try {
-    //         unsigned long v = std::stoul(trimmed);
-    //         size = v;
-    //         break;
-    //     } catch (...) {
-    //         std::cout << get_text("inputErr") << std::endl;
-    //     }
-    // }
+    while (true) {
+        std::cout << get_text("inputSize") << ": " << std::flush;
+        getline(cin, line);
 
-    // edit = true;
-    // disable_edit_mode();
-    // size = size * 1024 * 1024;
-    // workData["max_size"] = std::to_string(size);
-    // menu_list.top()->open();
+        // 清空输入缓冲
+        tcflush(STDIN_FILENO, TCIFLUSH);
+
+        if (!line.empty()) {
+            try {
+                size = std::stoi(line);
+            } catch (const std::invalid_argument& e) {
+                std::cout << get_text("inputErr") << std::endl;
+                continue;
+            } catch (const std::out_of_range& e) {
+                std::cout << get_text("inputErr") << std::endl;
+                continue;
+            }
+
+            if (size >0) {
+                break; // 合法端口，跳出循环
+            } else {
+                std::cout << get_text("inputErr") << std::endl;
+            }
+        } else {
+            std::cout << get_text("inputErr") << std::endl;
+        }
+    }
+    size *=1024*1024;
+    close_edit_win();
+    workData["max_size"] = std::to_string(size);
 }
 
 void edit_gzip(){
