@@ -52,8 +52,10 @@
         "input_pas":"输入密码",
         "input_name":"输入用户名",
         "cant_change_pas":"该用户不允许修改密码",
+        "cant_del":"该用户不允许删除",
         "user_exit":"用户名已存在",
-        "success":"操作成功"
+        "success":"操作成功",
+        "no_change":"配置无更改"
     },
     "en": {
         "back": "Back",
@@ -101,6 +103,16 @@
         "upload": "Upload",
         "upload_media": "Upload Media",
         "clear_tra": "Clear Recycle Bin",
-        "restore": "Restore File"
+        "restore": "Restore File",
+        "new_user": "Create User",
+        "del_user": "Delete User",
+        "mod_pas": "Change Password",
+        "input_pas": "Enter Password",
+        "input_name": "Enter Username",
+        "cant_change_pas": "This user is not allowed to change the password",
+        "cant_del": "This user is not allowed to be deleted",
+        "user_exit": "Username already exists",
+        "success": "Operation successful",
+        "no_change": "No configuration changes"
     }
 }

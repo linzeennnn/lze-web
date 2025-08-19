@@ -6,5 +6,5 @@
 #include "../all_win.hpp"
 #include "../public.h"
 using namespace std;
-void open_path_win(string title,menu* last_win);
+void open_path_win(string title);
 void edit_path(string type);

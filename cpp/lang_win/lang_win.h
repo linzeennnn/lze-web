@@ -18,7 +18,7 @@ class lang_win{
             else
                 content+="  "+list[i]->name+'\n';
         }
-        content+=split_line('=');
+        content+=split_line('=')+'\n';
     }
     void print(){
         clean();

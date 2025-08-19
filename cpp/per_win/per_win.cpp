@@ -1,5 +1,5 @@
 #include"per_win.h"
-void open_per_win(string title,menu*last_win){
+void open_per_win(string title){
     menu * per_win;
     vector<option*> list;
     json user_config=userData["user"];

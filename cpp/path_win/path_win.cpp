@@ -1,5 +1,5 @@
 #include "path_win.h"
-void open_path_win(string title,menu* last_win){
+void open_path_win(string title){
     menu *path_menu;
     vector<option*> list={
         new option(get_text("doc_path"),[](){edit_path("doc");},&(workData["doc_path"])),

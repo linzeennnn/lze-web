@@ -11,7 +11,7 @@ else # Linux
     DEBUGGER = gdb
 endif
 
-CXXFLAGS = -Wall -O0 -std=c++17
+CXXFLAGS = -Wall -O2 -std=c++17
 SRC = $(shell find . -name "*.cpp")
 OBJ = $(SRC:.cpp=.o)
 TARGET = lze-web-config-cli

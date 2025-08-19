@@ -5,3 +5,4 @@
 void new_user();
 void open_user_win(string title,string notify);
 void open_mod_pass_win(string title,string notify="");
+void open_del_usr_win(string title,string notify="");

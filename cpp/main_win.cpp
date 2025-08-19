@@ -13,9 +13,18 @@ void main_win(){
     menu *mainWin;
     vector<option*> list={
         new option(get_text("userCon"),[&mainWin](){open_user_win(get_text("userCon"));}),
-        new option(get_text("perCon"),[&mainWin](){open_per_win(get_text("perCon"),mainWin);}),
+        new option(get_text("perCon"),[&mainWin](){open_per_win(get_text("perCon"));}),
         new option(get_text("runCon"), [](){open_run_win(get_text("runCon"));}),
-        new option(get_text("pathCon"),[&mainWin](){open_path_win(get_text("pathCon"),mainWin);})
+        new option(get_text("pathCon"),[&mainWin](){open_path_win(get_text("pathCon"));}),
+        new option(get_text("save"),[&mainWin](){
+            if(edit){
+                save_config();
+                edit=false;
+                cout<<get_text("success")<<endl;
+            }else
+                cout<<get_text("no_change")<<endl;
+        
+        })
     };
     mainWin=new menu("lze-config",list,NULL);
     new_win(mainWin);

@@ -10,7 +10,9 @@ void open_user_win(string title,string notify){
            open_user_win(title,get_text("success"));
 
         }),
-        new option(get_text("del_user"),[](){}),
+        new option(get_text("del_user"),[](){
+            open_del_usr_win(get_text("del_user"));
+        }),
         new option(get_text("mod_pas"),[](){
             open_mod_pass_win(get_text("mod_pas"));
         })

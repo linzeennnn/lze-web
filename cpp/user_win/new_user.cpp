@@ -26,10 +26,24 @@ void new_user(){
      new_user_data["tokentime"]="1m";
     new_user_data["token"]="";
     userData["user"][username]=new_user_data;
+   std::map<std::string, std::vector<std::string>> permit_map = {
+    {"bok", {"newbok"}},
+    {"doc", {"downdir","copy","delete","downfile","move","newdir","rename","updir","upfile"}},
+    {"not", {"edit","newnote","upload"}},
+    {"pic", {"upload"}},
+    {"tra", {"recover"}}
+};
+
+for (auto& [module, actions] : permit_map) {
+    for (auto& action : actions) {
+        mod_permit(username, module.c_str(), action.c_str(), true);
+    }
+}
+
 }
 bool user_exit(string name){
     json user_config=userData["user"];
-for(auto&[key,value]:user_config["user"].items()){
+for(auto&[key,value]:user_config.items()){
        if(key==name){
         return true;
        }
