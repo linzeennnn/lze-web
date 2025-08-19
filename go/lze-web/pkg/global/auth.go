@@ -78,7 +78,7 @@ func CheckPassword(username, password string) (string, bool) {
 	if password != savePassword {
 		return "", false
 	}
-	if CheckTokenTime(username) < 0 {
+	if CheckTokenTime(username) < 0 || userMes["token"].(string) == "" {
 		token := GenToken()
 		userMes["token"] = token
 		SaveUserConfig()

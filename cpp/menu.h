@@ -15,7 +15,7 @@ class menu{
     string content;
     vector<option*> list;
     size_t max_list_show=9;
-    int index;
+    int index=0;
     void open_confirm(menu* last_win){
         menu *confirm_win;
         vector<option*> list={
@@ -89,12 +89,13 @@ class menu{
     }
     public:
     Key key;
+    string notify;
     void pause(){
         close=true;
     }
     string title;
         menu(string title,vector<option*> list,bool uni_title=false){
-            index=0;
+            notify="";
             this->list=list;
             if(uni_title){
                 this->title=title;
@@ -142,6 +143,8 @@ class menu{
             key_bind();
             creat_content();
             this->print();
+            if(!notify.empty())
+                cout<<notify<<endl;
             key.run();
         }
 };

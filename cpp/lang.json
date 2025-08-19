@@ -48,7 +48,12 @@
         "restore": "恢复文件",
         "new_user":"创建用户",
         "del_user":"删除用户",
-        "mod_pas":"修改密码"
+        "mod_pas":"修改密码",
+        "input_pas":"输入密码",
+        "input_name":"输入用户名",
+        "cant_change_pas":"该用户不允许修改密码",
+        "user_exit":"用户名已存在",
+        "success":"操作成功"
     },
     "en": {
         "back": "Back",
