@@ -186,6 +186,12 @@ span, input{
   font-weight: bold;
   color: var(--text);
 }
+img{
+   user-select: none;
+  -webkit-user-select: none; 
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
 #app{
   all: unset;
   display: contents;
