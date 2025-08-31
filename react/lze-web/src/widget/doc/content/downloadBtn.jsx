@@ -8,9 +8,9 @@ export default function DownloadBtn({fileMes}){
         onClick={((e)=>{
             e.stopPropagation();
             if(fileMes[1]==="file"||fileMes[1]==="file_link"){
-                window.location.href = 
+              DownFile(
                 global.docUrl+"download_file?file_path="+global.nowPath+"/"+fileMes[0]+
-                "&token="+global.token+"&user="+global.userName
+                "&token="+global.token+"&user="+global.userName)
             }
             else{
                 ZipDir(fileMes[0])
@@ -19,9 +19,18 @@ export default function DownloadBtn({fileMes}){
         ></button>
     )
 }
-
+// 下载操作
+function DownFile(url){
+const a = document.createElement("a");
+  a.href = url;
+  a.download = "";  // 让浏览器根据 url 自动决定文件名
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 // 压缩目录
 function ZipDir(fileName){
+  if(confirm(GetText("are_you_sure"))){
   loadPage(true)
   const global = useGlobal.getState();
   const token =global.token
@@ -44,8 +53,8 @@ function ZipDir(fileName){
         return response.text();  
       })
       .then(text => {
-      window.location.href = global.docUrl+"down_zip?downToken="+text
       notify(GetText("down_one_minute"))
+      DownFile(global.docUrl+"down_zip?downToken="+text)
      loadPage(false)
-    })
+    })}
     }
