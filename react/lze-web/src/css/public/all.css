@@ -95,6 +95,7 @@
   --add_icon: url(../../assets/icon/add_dark.svg);
 --addfolder_icon: url(../../assets/icon/addfolder_dark.svg);
 --bin_icon: url(../../assets/icon/bin_dark.svg);
+--cmd_icon: url(../../assets/icon/shell_dark.svg);
 --copy_icon: url(../../assets/icon/copy_dark.svg);
 --cut_icon: url(../../assets/icon/cut_dark.svg);
 --down_icon: url(../../assets/icon/down_dark.svg);
@@ -140,6 +141,7 @@
   --add_icon: url(../../assets/icon/add_light.svg);
 --addfolder_icon: url(../../assets/icon/addfolder_light.svg);
 --bin_icon: url(../../assets/icon/bin_light.svg);
+--cmd_icon: url(../../assets/icon/shell_light.svg);
 --copy_icon: url(../../assets/icon/copy_light.svg);
 --cut_icon: url(../../assets/icon/cut_light.svg);
 --down_icon: url(../../assets/icon/down_light.svg);

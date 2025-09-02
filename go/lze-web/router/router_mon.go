@@ -11,6 +11,7 @@ func RouterMon(r *gin.Engine) {
 	{
 		loginGroup.GET("/list", mon.List)
 		loginGroup.POST("/date", mon.Date)
+		loginGroup.POST("/cmd", mon.Cmd)
 		loginGroup.POST("/update_act", mon.UpdateAct)
 	}
 }
