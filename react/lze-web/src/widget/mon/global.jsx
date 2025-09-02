@@ -13,6 +13,7 @@ export const useGlobal = create((set, get) => {
     controlList: null,
     langList:[],
     userList: null,
+    showCmd:false,
     theme:{
       mode:"",
       color:{

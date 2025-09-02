@@ -99,7 +99,6 @@ function updata_time(name,time){
         },
     
         body:JSON.stringify({
-            token,user,
             name:name,
             time:time
         })

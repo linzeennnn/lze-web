@@ -1,3 +1,6 @@
+input{
+    all: unset;
+}
 #content{
     display: flex;
     flex-direction: column;
@@ -162,6 +165,50 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#cmd-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: var(--bg_color);
+    border-radius: 15px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    width: 90%;
+    height: 90%;
+}
+#close-cmd{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-image: var(--no_icon);
+}
+#input-cmd{
+    box-shadow: var(--in_shadow);
+    padding: 10px;
+    width: 90%;
+    border-radius: 15px;
+    height: 20px;
+    font-weight: bold;
+    color: var(--text);
+}
+#output-text{
+    max-height: 300px;
+    width: 90%;
+    overflow-y: auto;
+    font-weight: bold;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+#send-cmd{
+    margin:10px ;
+    background-image: var(--toright_icon);
+    background-color: var(--base_color);
+    border-radius: 50%;
 }
 #load{background-image: var(--load_icon);}
 #save-time{background-image: var(--save_icon);}
