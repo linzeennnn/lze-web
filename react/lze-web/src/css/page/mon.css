@@ -169,6 +169,7 @@ input{
 #cmd-box{
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -186,15 +187,39 @@ input{
     background-image: var(--no_icon);
 }
 #input-cmd{
+    width: 90%;
+}
+.cmd-input{
     box-shadow: var(--in_shadow);
     padding: 10px;
-    width: 90%;
     border-radius: 15px;
+    width: 90%;
     height: 20px;
     font-weight: bold;
+    margin: 5px;
     color: var(--text);
 }
+.cmd-widget{
+    width: 90%;
+    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--out_shadow);
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+}
+#cus-cmd-input-bar{
+    flex-direction: column;
+}
+#send-box{
+    display: flex;
+    flex-direction: column;
+}
 #output-text{
+    border-radius: 15px;
+    box-shadow: var(--out_shadow);
+    padding: 10px;
     max-height: 300px;
     width: 90%;
     overflow-y: auto;
@@ -205,10 +230,24 @@ input{
     overflow-wrap: break-word;
 }
 #send-cmd{
+    width: 46px !important;
+    height: 32px !important;
     margin:10px ;
     background-image: var(--toright_icon);
     background-color: var(--base_color);
-    border-radius: 50%;
+    border-radius: 10px;
+}
+#add-cmd{
+    background-image: var(--add_icon);
+    background-color: var(--base_color);
+    border-radius: 10px;
+}
+#cus-cmd-box{
+    width: 90%;
+    border-bottom: 3px solid var(--base_color);
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
 }
 #load{background-image: var(--load_icon);}
 #save-time{background-image: var(--save_icon);}
