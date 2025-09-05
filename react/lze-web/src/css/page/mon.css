@@ -188,6 +188,9 @@ input{
 }
 #input-cmd{
     width: 90%;
+    border-bottom: 2px solid var(--base_color);
+    font-weight: bold;
+    color: var(--text);
 }
 .cmd-input{
     box-shadow: var(--in_shadow);
@@ -202,7 +205,7 @@ input{
 .cmd-widget{
     width: 90%;
     display: flex;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 20px;
     box-shadow: var(--out_shadow);
     border-radius: 15px;
@@ -220,7 +223,7 @@ input{
     border-radius: 15px;
     box-shadow: var(--out_shadow);
     padding: 10px;
-    max-height: 300px;
+    max-height: 250px;
     width: 90%;
     overflow-y: auto;
     font-weight: bold;
@@ -243,11 +246,48 @@ input{
     border-radius: 10px;
 }
 #cus-cmd-box{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
     width: 90%;
     border-bottom: 3px solid var(--base_color);
     margin-bottom: 20px;
     overflow-x: auto;
     padding-bottom: 10px;
+}
+.cmd-item{
+    flex-shrink: 0;
+    margin: 5px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 80px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    background-color: var(--bg_color);
+}
+.cmd-title{
+    margin-top: 10px;
+}
+.cmd-item:hover{
+    background-color: var(--base_color);
+}
+.del-cmd{
+    width: 15px !important;
+    height: 15px !important;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-image: var(--no_icon);
+}
+.cmd-cmd{
+    font-size: 12px;
 }
 #load{background-image: var(--load_icon);}
 #save-time{background-image: var(--save_icon);}

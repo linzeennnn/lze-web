@@ -19,9 +19,11 @@ export default function CmdWin(){
     localStorage.setItem("cmdList", JSON.stringify(newList))
 }
    const delCmd = (index) => {
-    const newList = [...cmdList, { title, cmd }]
-    setCmdList(newList)
-    localStorage.setItem("cmdList", JSON.stringify(newList))
+    if(!confirm(GetText("are_you_sure")))
+        return
+  const newList = [...cmdList.slice(0, index), ...cmdList.slice(index + 1)]
+  setCmdList(newList)
+  localStorage.setItem("cmdList", JSON.stringify(newList))
 }
     const cusKeyDown=(e)=>{
             if(e.key==="Enter"){
@@ -39,14 +41,25 @@ export default function CmdWin(){
                 ></button>
             <div id="cus-cmd-box">
                 {cmdList.map((cmd_item,index)=>(
-                        <div className="cmd-item" key={index+cmd_item.cmd}>
-                            <button className="del-cmd btn"></button>
+                        <div className="cmd-item" key={index+cmd_item.cmd} title={GetText("run")}
+                        onClick={()=>{
+                            setInputCmd(cmd_item.cmd)
+                            sendCmd(cmd_item.cmd,setOutput)
+                        }}
+                        >
+                            <button className="del-cmd btn" title={GetText("delete")}
+                            onClick={(e)=>{
+                                e.stopPropagation()
+                                delCmd(index)
+                            }}
+                            ></button>
                             <span className="cmd-title">{cmd_item.title}</span>
+                            <span className="cmd-cmd">{cmd_item.cmd}</span>
                         </div>
                 ))}
             </div>
             <div id="send-box" className="cmd-widget">
-            <input id="input-cmd" className="cmd-input" value={inputCmd}
+            <input id="input-cmd" value={inputCmd} placeholder={GetText("cmd")} 
             onKeyDown={(e)=>{
                 if(e.key==="Enter"){
                     sendCmd(inputCmd,setOutput)
@@ -55,18 +68,18 @@ export default function CmdWin(){
             onChange={(e)=>setInputCmd(e.target.value)}
             />
             <pre id="output-text">{output}</pre>
-            <button className="btn" id="send-cmd"
+            <button className="btn" id="send-cmd" title={GetText("run")}
             onClick={()=>{
                 sendCmd(inputCmd,setOutput)
             }}
             ></button>
             </div>
             <div id="cus-cmd-input-bar"  className="cmd-widget">
-                <input placeholder="自定义名称"  className="cmd-input" onKeyDown={cusKeyDown}
+                <input placeholder={GetText("cus_name")}  className="cmd-input" onKeyDown={cusKeyDown}
                 value={cusTitle} onChange={(e)=>setCusTitle(e.target.value)}/>
-                <input placeholder="命令"  className="cmd-input"  onKeyDown={cusKeyDown}
+                <input placeholder={GetText("cmd")}  className="cmd-input"  onKeyDown={cusKeyDown}
                 value={cusCmd} onChange={(e)=>setCusCmd(e.target.value)}/>
-                <button className="btn" id="add-cmd"
+                <button className="btn" id="add-cmd" title={GetText("add")}
                 onClick={()=>{
                     saveCmd(cusTitle,cusCmd)
                 }}

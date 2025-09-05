@@ -33,7 +33,7 @@ export const useGlobal = create((set, get) => {
 
 // 获取文本
 export  function GetText(str){
-  return useGlobal.getState().langList[str]
+  return useGlobal.getState().langList[str] ||str
 }
 // 初始化
 export function InitData(){
