@@ -20,18 +20,17 @@ export default function PicItem({ url,name, type ,index}) {
     return () => clearTimeout(timer);
   }, [loaded]);
 
-  const handleLoad = () => {
-    setLoaded(true);
-  };
   return (
     <div className="pic-item main-item" title={name} key={url} 
     onClick={()=>{openMedia(url,type,index)}}
     >
       {loading && <div className="media-loading loading"></div>}
       {type === "img" ? (
-        <img src={url+name} loading="lazy" onLoad={handleLoad} />
-      ) : (
-        <video src={url+name} onLoadedData={handleLoad} />
+        <img src={url+name} loading="lazy" onLoad={()=>{setLoaded(true)}} />
+      ) : (<>
+      <div className="play-icon btn"></div>
+        <video src={url+name} onLoadedData={()=>{setLoaded(true)}} />
+          </>
       )}
     </div>
   );

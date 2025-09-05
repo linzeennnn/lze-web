@@ -20,9 +20,9 @@ func Widget(c *gin.Context) {
 	var files widget.Send
 	var picList [1]widget.PicMes
 	docList := getFileList(global.DocPath, 3, false, false)
-	picName := getFileList(global.PicPath, 1, true, false)
-	picList[0].Name = picName[0]
-	picList[0].Media = CheckType(picName[0])
+	picTmpData := picData()
+	picList[0].Name = picTmpData[0]
+	picList[0].Media = picTmpData[1]
 	notList := getFileList(global.NotPath, 3, true, true)
 	bokList := getFileList(global.BokPath, 1, true, true)
 	traList := getFileList(global.TraPath, 1, false, false)
@@ -60,7 +60,32 @@ func getFileList(path string, count int, ignoreDir bool, removeExt bool) []strin
 
 	return result
 }
+func picData() [2]string {
+	fileList := global.ScanDir(global.PicPath)
+	result := [2]string{"", ""}
 
+	for _, f := range fileList {
+		media := CheckType(f.Name)
+		if f.FileType == "dir" || f.FileType == "dir_link" || media == "" {
+			continue
+		}
+		result[0] = f.Name
+		result[1] = media
+		return result
+	}
+	return result
+}
+func CheckType(name string) string {
+	var imgFor = []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".ico", ".apng", ".avif"}
+	if global.IncludeExt(name, imgFor) {
+		return "img"
+	}
+	var vidFor = []string{".mp4", ".webm", ".ogg", ".ogv", ".mov", ".m4v", ".avi", ".3gp", ".mkv"}
+	if global.IncludeExt(name, vidFor) {
+		return "vid"
+	}
+	return ""
+}
 func monData(username string) [3]string {
 	var tokenTime string
 	username = global.SetUsername(username)
@@ -152,16 +177,4 @@ func convTokenTime(input string) string {
 	}
 
 	return num + chineseUnit
-}
-
-func CheckType(name string) string {
-	var imgFor = []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".ico", ".apng", ".avif"}
-	if global.IncludeExt(name, imgFor) {
-		return "img"
-	}
-	var vidFor = []string{".mp4", ".webm", ".ogg", ".ogv", ".mov", ".m4v", ".avi", ".3gp", ".mkv"}
-	if global.IncludeExt(name, vidFor) {
-		return "vid"
-	}
-	return ""
 }

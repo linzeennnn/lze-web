@@ -293,6 +293,11 @@ z-index: 1;
     top: 10px;
     left: 10px;
 }
+.play-icon{
+    position: absolute;
+    background-image: var(--play_icon);
+    z-index: 1
+}
 #uploading{background-color: transparent !important;}
 #zoom-in{background-image: var(--zoomin_icon);}
 #zoom-out{background-image: var(--zoomout_icon);}

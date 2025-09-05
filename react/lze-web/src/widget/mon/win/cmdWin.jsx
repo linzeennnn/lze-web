@@ -14,9 +14,16 @@ export default function CmdWin(){
         
     },[])
    const saveCmd = (title, cmd) => {
+    if(cusTitle==""||cusCmd==""){
+        notify(GetText("none"))
+        return
+    }
+    setCusTitle("")
+    setCusCmd("")
     const newList = [...cmdList, { title, cmd }]
     setCmdList(newList)
     localStorage.setItem("cmdList", JSON.stringify(newList))
+    notify(GetText("op_com") )
 }
    const delCmd = (index) => {
     if(!confirm(GetText("are_you_sure")))
@@ -90,6 +97,8 @@ export default function CmdWin(){
     )
 }
 function sendCmd(cmd,setOutput){
+    if(!confirm(GetText("are_you_sure")))
+        return
         loadPage(true)
         const globale=useGlobal.getState()
         const token=globale.token
