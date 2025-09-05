@@ -97,7 +97,7 @@ export default function CmdWin(){
     )
 }
 function sendCmd(cmd,setOutput){
-    if(!confirm(GetText("are_you_sure")))
+    if(!confirm(GetText("run")+"?"))
         return
         loadPage(true)
         const globale=useGlobal.getState()
