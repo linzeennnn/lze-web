@@ -16,6 +16,14 @@
      will-change: transform, opacity; 
     transition: transform 1s ease, opacity 1s ease;
 }
+.widget-item:hover{
+    opacity: 1;
+    transform: scale(1.1); 
+    z-index: 9;
+}
+.widget-panel-item:hover{
+    transform: scale(1.1);
+}
 #widget .widget-panel{
   opacity: 0;
   visibility: hidden;
@@ -725,14 +733,6 @@ background-color: var(--base_color);
 }
 @media (hover: hover) and (pointer: fine) {
 
-.widget-item:hover{
-    opacity: 1;
-    transform: scale(1.1); 
-    z-index: 9;
-}
-.widget-panel-item:hover{
-    transform: scale(1.1);
-}
 .dock-app:hover{
     transform: scale(1.2);  
 }

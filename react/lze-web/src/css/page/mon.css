@@ -275,9 +275,6 @@ input{
 .cmd-title{
     margin-top: 10px;
 }
-.cmd-item:hover{
-    background-color: var(--base_color);
-}
 .del-cmd{
     width: 15px !important;
     height: 15px !important;
@@ -301,6 +298,9 @@ input{
 }
   @media (hover: hover) and (pointer: fine) {
 .action-bar:hover{
+    background-color: var(--base_color);
+}
+.cmd-item:hover{
     background-color: var(--base_color);
 }
 
