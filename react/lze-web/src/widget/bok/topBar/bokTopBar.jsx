@@ -11,7 +11,15 @@ export default function BokTopBar(){
     ]
     const KeyDown = (e)=>{
         if (e.key === 'Enter'){
-            addBok(name,url)
+            addBok(name,checkProtocol(url))
+        }
+    }
+    const checkProtocol=(text)=>{
+        if (haveProtocol(text)){
+            return text
+        }
+        else{
+            return index==0?"https://"+text:protocolList[index].showName+text
         }
     }
     const [index, setIndex] = useState(0)
@@ -25,7 +33,7 @@ export default function BokTopBar(){
                 id='tit-input' type='text'
                 value={name} onChange={(e) => setName(e.target.value)}/>
                 <button id='save-add' title={GetText("save")} className='btn'
-                onClick={()=>addBok(name,url)}
+                onClick={()=>addBok(name,checkProtocol(url))}
                 ></button>
             </div>
             <div id='link-box'>
@@ -47,20 +55,25 @@ export default function BokTopBar(){
         </TopBar>
     )
 }
+function haveProtocol(url){
+if (
+  url.startsWith('http://') ||
+  url.startsWith('https://') ||
+  url.startsWith('file://')
+) {
+    return true
+}
+return false
+}
 function addBok(name,text){
     if(name=="")
         name="new_bookmark"
-    if (
-  !text.startsWith('http://') &&
-  !text.startsWith('https://') &
-  !text.startsWith('file://')
-) {
-    text='https://'+text
     if(!isUrl(text)){
         notify(GetText("bok_url")+" "+GetText("error")+" "+text)
+        console.log(text);
+        
         return
     }
-}
     loadPage(true)
     const user=useGlobal.getState().userName
     const token=useGlobal.getState().token
