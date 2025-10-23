@@ -7,7 +7,7 @@ import GoTopBtn from '../../components/goTopBtn'
 import HeadBar from '../../components/headBar'
 import GoBack from '../../components/goBack'
 import Tooltip from '../../components/tooltip'
-import { DragLeave,DragOver,Drop,useGlobal,InitData } from './global';
+import { DragLeave,DragOver,Drop,useGlobal,InitData, GetText,Upload } from './global';
 import '../../css/page/pic.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
@@ -19,10 +19,12 @@ export default function App() {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
     window.addEventListener('drop', Drop);
+    window.addEventListener("paste", pastePic);
     return () => {
       window.removeEventListener('dragover', DragOver);
       window.removeEventListener('dragleave', DragLeave);
       window.removeEventListener('drop', Drop);
+      window.removeEventListener("paste", pastePic);
     };
   }, []);
   return ( 
@@ -40,4 +42,16 @@ export default function App() {
       <Tooltip/>
     </div>
   );
+}
+function pastePic(e){
+  if (!e) return;
+    const item = e.clipboardData.items[0];
+      if (item.type.startsWith("image/")&&confirm(GetText("are_you_sure"))) {
+        const file = item.getAsFile(); //  这是一个 File 对象
+        const uploadData = {
+        totalSize: file.size,
+        sendSize: 0,
+      };
+      Upload(file, uploadData);
+      }
 }
