@@ -1,7 +1,6 @@
 module lze-web
 
 go 1.24.4
-
 require (
 	github.com/bytedance/sonic v1.13.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
