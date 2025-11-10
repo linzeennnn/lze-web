@@ -37,5 +37,6 @@ func Router() *gin.Engine {
 	RouterDoc(r)
 	RouterTra(r)
 	RouterLang(r)
+	RouterPlugin(r)
 	return r
 }

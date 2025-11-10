@@ -13,10 +13,14 @@ var defaultWorkConfig string
 //go:embed user_config.json
 var defaultUserConfig string
 
+//go:embed cmd_config.json
+var defaultCmdConfig string
+
 func CheckConfig() {
 	ConfigPath := filepath.Join(global.GetWorkDir(), "config")
 	userConfigPath := filepath.Join(ConfigPath, "user_config.json")
 	workConfigPath := filepath.Join(ConfigPath, "work_config.json")
+	cmdConfigPath := filepath.Join(ConfigPath, "cmd_config.json")
 	delDataPath := filepath.Join(ConfigPath, "del_data.json")
 	if !checkExit(ConfigPath) {
 		os.MkdirAll(ConfigPath, 0755)
@@ -26,6 +30,9 @@ func CheckConfig() {
 	}
 	if !checkExit(workConfigPath) {
 		global.WriteText(workConfigPath, defaultWorkConfig)
+	}
+	if !checkExit(cmdConfigPath) {
+		global.WriteText(cmdConfigPath, defaultCmdConfig)
 	}
 	if !checkExit(delDataPath) {
 		global.WriteText(delDataPath, "{}")

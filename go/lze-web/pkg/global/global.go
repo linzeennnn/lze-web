@@ -17,4 +17,5 @@ var (
 	TempPath string
 	FilePath string
 	LogPath  string
+	CmdPath  string
 )

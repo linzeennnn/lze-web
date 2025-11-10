@@ -10,6 +10,7 @@ func Setup() {
 	global.WorkDir = global.GetWorkDir()
 	userConfigStr := global.ReadText(filepath.Join(global.WorkDir, "config", "user_config.json"))
 	workConfigStr := global.ReadText(filepath.Join(global.WorkDir, "config", "work_config.json"))
+	global.CmdPath = filepath.Join(global.WorkDir, "config", "cmd_config.json")
 	global.UserConfig = global.JsonToMap(userConfigStr)
 	UserJson := global.UserConfig["user"].(map[string]interface{})
 	for user := range UserJson {
