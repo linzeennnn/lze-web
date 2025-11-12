@@ -10,8 +10,9 @@ export default function PageBar(){
     let totalPage=imgPage?imgList.length:vidList.length
     const setGlobal = useGlobal.setState
     const jumpPage=(num)=>{
-        if(num>=1&&num<=totalPage&&totalPage!=1)
-            setGlobal({pageNum:num})
+        num = Number(num)
+        if(num>=1&&num<=totalPage&&totalPage!=1){
+            setGlobal({pageNum:num})}
         else if(num==pageNum)
         {}
         else
