@@ -19,6 +19,7 @@ func Setup() {
 	WorkConfig := global.JsonToMap(workConfigStr)
 	global.Port = WorkConfig["port"].(string)
 	global.Gzip = WorkConfig["gzip"].(string)
+	// global.JwtKey = []byte(WorkConfig["secretKey"].(string))
 	maxSiztStr := WorkConfig["max_size"].(string)
 	global.MaxUploadSize, _ = strconv.ParseInt(maxSiztStr, 10, 64)
 	global.FilePath = WorkConfig["file_path"].(string)

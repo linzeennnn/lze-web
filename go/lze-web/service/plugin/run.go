@@ -2,7 +2,6 @@ package plugin
 
 import (
 	"bytes"
-	"fmt"
 	"lze-web/pkg/global"
 	"os/exec"
 	"runtime"
@@ -11,12 +10,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Run(c *gin.Context) {
+func GetRun(c *gin.Context) {
+	Run(c, false)
+}
+func PostRun(c *gin.Context) {
+	Run(c, true)
+}
+func Run(c *gin.Context, havePara bool) {
+	var paraList []string
+	if havePara {
+		if err := c.ShouldBindJSON(&paraList); err != nil {
+			c.JSON(400, err)
+			return
+		}
+	}
 	pluginName := c.Param("path")
 	pluginName = strings.ReplaceAll(pluginName, "/", "")
 	cmdConfig := global.ReadText(global.CmdPath)
 	cmdData := global.JsonToMap(cmdConfig)
-	fmt.Println(pluginName)
 	if pluginJson, ok := cmdData[pluginName]; ok {
 		pluginMap := pluginJson.(map[string]interface{})
 		isAuth := pluginMap["auth"].(bool)
@@ -24,6 +35,9 @@ func Run(c *gin.Context) {
 			c.Status(401)
 		} else {
 			cmdStr := pluginMap["cmd"].(string)
+			for _, para := range paraList {
+				cmdStr += " " + para
+			}
 			c.String(200, cmdRun(cmdStr))
 		}
 

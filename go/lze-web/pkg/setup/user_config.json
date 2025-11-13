@@ -206,5 +206,27 @@
             "token": null,
             "tokentime": null
         }
+    },
+"userMes":[
+    {
+        "name":"admin",
+        "password": "lze-web-admin",
+        "jti":"T5h2YpBijYoLVLGVHSn2Ca7Nou0gVLyp_483565",
+        "outdate": "never",
+        "exp":-1
+    },
+    {
+        "name":"user",
+        "password": "lze-web",
+        "jti": "uErBsFCjxtuyoufciBttfdCniwgnxxpC_486260",
+        "outdate": "1y",
+        "exp":0
+    },
+    {
+        "name":"guest",
+        "password": null,
+        "jti": null,
+        "outdate": null
     }
+]
 }

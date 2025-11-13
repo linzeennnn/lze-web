@@ -161,3 +161,11 @@ func GetAuthMes(c *gin.Context) (user string, token string) {
 	}
 	return user, token
 }
+
+// 生成jwt
+// func GenJwt(name string) (token string) {
+// 	// userMes := UserConfig["userMes"].(map[string]interface{})
+// 	// // userMes := userModule[username].(map[string]interface{})
+// 	// // token := userMes["token"].(string)
+// 	// // tokentime := userMes["tokentime"].(string)
+// }

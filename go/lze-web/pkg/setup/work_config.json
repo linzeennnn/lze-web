@@ -8,6 +8,7 @@
     "tmp_path":"default",
     "log_path":"default",
     "port":"80",
+    "secretKey":"lze-web-key",
     "max_size":"104857600",
     "gzip":"no"
 }
