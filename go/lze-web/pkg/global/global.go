@@ -1,6 +1,10 @@
 package global
 
-import "github.com/golang-jwt/jwt/v5"
+import (
+	"lze-web/model/config"
+
+	"github.com/golang-jwt/jwt/v5"
+)
 
 var (
 	UserConfig    map[string]interface{} //用户配置
@@ -10,6 +14,7 @@ var (
 	Gzip          string                 //是否启用gzip压缩
 	Lang          map[string]interface{} //语言
 	JwtKey        []byte                 //jwt密钥
+	UserArr       []config.UserMes
 	// 路径相关
 	WorkDir  string
 	DocPath  string
