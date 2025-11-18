@@ -8,10 +8,9 @@ import (
 )
 
 func DownloadFile(c *gin.Context) {
-	user := c.Query("file")
-	token := c.Query("token")
 	flie := c.Query("file_path")
-	if global.CheckPermit(user, token, "doc", "downfile") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "doc", "downfile") {
 		filePath := filepath.Join(global.DocPath, flie)
 		c.FileAttachment(filePath, filepath.Base(filePath))
 	} else {

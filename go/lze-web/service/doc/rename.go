@@ -15,8 +15,8 @@ func Rename(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "doc", "rename") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "doc", "rename") {
 		oldpath := filepath.FromSlash(rec.OldPath)
 		newpath := filepath.FromSlash(rec.NewPath)
 		filePath := filepath.Join(global.DocPath, filepath.Dir(newpath))

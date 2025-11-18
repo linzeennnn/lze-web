@@ -16,8 +16,8 @@ func Del(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "doc", "delete") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "doc", "delete") {
 		delData := global.GetDeldata()
 		for _, files := range rec.DelList {
 			cleanPath := strings.TrimPrefix(files, "./")

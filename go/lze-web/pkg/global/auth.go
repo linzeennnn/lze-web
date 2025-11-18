@@ -32,7 +32,7 @@ func InitUserMes(c *gin.Context) {
 // 检查token
 func CheckToken(c *gin.Context) bool {
 	curUserMes, _ := c.MustGet("curUserMes").(*Claims)
-	if curUserMes.Name == "guest" && curUserMes.Jti == "" && curUserMes.Exp == 0 {
+	if curUserMes.Name == "guest" {
 		return true
 	}
 	userMes := GetUserMes(curUserMes.Name)
@@ -52,13 +52,6 @@ func CheckPassword(username, password string) (string, bool) {
 	if password != userMes.Password {
 		return "", false
 	}
-	now := GetTimeStamp()
-	if now < userMes.Exp || userMes.Jti == "" {
-		userMes.Jti = GenJti()
-		userMes.Exp = now
-		UserConfig["userMes"] = UserArr
-		SaveUserConfig()
-	}
 	return GenJwt(username), true
 }
 
@@ -72,7 +65,7 @@ func SetUsername(username string) string {
 		}
 	}
 	if !isUser {
-		return "visitor"
+		return "guest"
 	}
 	return username
 
@@ -85,6 +78,9 @@ func GetTimeStamp() int64 {
 
 // 检查操作权限
 func CheckPermit(c *gin.Context, control, action string) bool {
+	if !CheckToken(c) {
+		return false
+	}
 	curUserMes := c.MustGet("curUserMes").(*Claims)
 	controlModule := UserConfig["control"].(map[string]interface{})
 	controlMes := controlModule[control].(map[string]interface{})
@@ -101,13 +97,23 @@ func CheckPermit(c *gin.Context, control, action string) bool {
 
 // 生成jwt
 func GenJwt(name string) (token string) {
-	userMes := GetUserMes(name)    //获取对应用户信息
-	avaTime := userMes.Outdate     //获取token有效时间
-	expTime := GetExpTime(avaTime) //获取过期时间
-	claims := &Claims{
-		Name: name,
-		Jti:  GenJti(),
-		Exp:  expTime,
+	userMes := GetUserMes(name) //获取对应用户信息
+	avaTime := userMes.Outdate  //获取token有效时间
+	now := GetTimeStamp()
+	var claims *Claims
+	if now > userMes.Exp || userMes.Jti == "" {
+		expTime := GetExpTime(avaTime) //获取过期时间
+		claims = &Claims{
+			Name: userMes.Name,
+			Jti:  GenJti(),
+			Exp:  expTime,
+		}
+	} else {
+		claims = &Claims{
+			Name: userMes.Name,
+			Jti:  userMes.Jti,
+			Exp:  userMes.Exp,
+		}
 	}
 	token, _ = jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(JwtKey)
 	return
@@ -188,6 +194,13 @@ func GetExpTime(avaTimeCon string) int64 {
 		avaTime = avaTime * 24
 	}
 	return GetTimeStamp() + int64(avaTime)
+}
+
+// 计算剩余时间
+func GetRemainTime(username string) int64 {
+	now := GetTimeStamp()
+	exp := GetUserMes(username).Exp
+	return exp - now
 }
 
 // ///////////写操作///////////////////

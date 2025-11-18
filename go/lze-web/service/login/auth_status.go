@@ -7,8 +7,8 @@ import (
 )
 
 func AuthStatus(c *gin.Context) {
-	user, token := global.GetAuthMes(c)
-	if !global.CheckToken(user, token) {
+	global.InitUserMes(c)
+	if !global.CheckToken(c) {
 		c.Status(401)
 		return
 	}

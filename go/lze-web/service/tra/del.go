@@ -14,8 +14,8 @@ func Del(c *gin.Context) {
 		c.JSON(200, err)
 		return
 	}
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "tra", "clean") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "tra", "clean") {
 		os.RemoveAll(global.TraPath)
 		os.MkdirAll(global.TraPath, 0755)
 		global.CleanDelData()

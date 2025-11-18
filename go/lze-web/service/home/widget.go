@@ -90,12 +90,12 @@ func monData(username string) [3]string {
 	var tokenTime string
 	username = global.SetUsername(username)
 	userData := global.UserConfig["user"].(map[string]interface{})
-	if username == "visitor" {
+	if username == "guest" {
 		tokenTime = "0"
 	} else {
 		tokenTime = userData[username].(map[string]interface{})["tokentime"].(string)
 	}
-	avaTime := global.CheckTokenTime(username)
+	avaTime := global.GetRemainTime(username)
 	controlDataMap := global.UserConfig["control"].(map[string]interface{})
 	var monMes [3]string
 	var avaTimeStr string
@@ -106,13 +106,13 @@ func monData(username string) [3]string {
 		if avaTime < 0 {
 			avaTimeStr = "outdate"
 		} else if avaTime < 24 && avaTime > 0 {
-			avaTimeStr = strconv.Itoa(avaTime) + "/hour"
+			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/hour"
 		} else if avaTime < 24*30 {
-			avaTimeStr = strconv.Itoa(avaTime/24) + "/day"
+			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/day"
 		} else if avaTime < 24*30*12 {
-			avaTimeStr = strconv.Itoa(avaTime/24/30) + "/month"
+			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/month"
 		} else {
-			avaTimeStr = strconv.Itoa(avaTime/24/365) + "/year"
+			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/year"
 		}
 	}
 	monMes[0] = "login_time" + "/" + tokenTime

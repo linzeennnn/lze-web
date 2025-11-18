@@ -17,12 +17,12 @@ func ZipFolder(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "doc", "downdir") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "doc", "downdir") {
 		FolderPath := filepath.FromSlash(rec.FolderPath)
 		source := filepath.Join(global.DocPath, FolderPath)
 		zipName := filepath.Base(FolderPath) + ".zip"
-		downLoadToken := global.GenToken()
+		downLoadToken := global.GenJti()
 		tempPath := filepath.Join(global.TempPath, downLoadToken)
 		os.Mkdir(tempPath, 0755)
 		compress(source, filepath.Join(tempPath, zipName))

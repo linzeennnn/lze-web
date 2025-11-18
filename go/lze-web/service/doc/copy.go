@@ -15,8 +15,8 @@ func Copy(c *gin.Context) {
 		c.String(400, err.Error())
 		return
 	}
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "doc", "copy") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "doc", "copy") {
 		destPath := filepath.Join(global.DocPath, rec.NowPath)
 		for _, files := range rec.CopyList {
 			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(files))

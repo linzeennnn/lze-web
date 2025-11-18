@@ -13,8 +13,8 @@ func UpdateAct(c *gin.Context) {
 		c.JSON(200, err)
 		return
 	}
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "mon", "change") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "mon", "change") {
 		switch rec.Change {
 		case "add":
 			add(rec.Name, rec.Control, rec.Action)

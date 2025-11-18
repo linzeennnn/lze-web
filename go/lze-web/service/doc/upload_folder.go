@@ -10,8 +10,8 @@ import (
 )
 
 func UploadFolder(c *gin.Context) {
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "doc", "updir") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "doc", "updir") {
 		relativePath := filepath.FromSlash(c.PostForm("relativePath"))
 		curChunkStr := c.PostForm("currentChunk")
 		total, err := strconv.ParseInt(c.PostForm("totalChunks"), 10, 0)

@@ -12,8 +12,8 @@ func Date(c *gin.Context) {
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		c.JSON(400, err)
 	}
-	user, token := global.GetAuthMes(c)
-	if global.CheckPermit(user, token, "mon", "edittime") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "mon", "edittime") {
 		userMes := global.UserConfig["user"].(map[string]interface{})
 		userInfo := userMes[rec.Name].(map[string]interface{})
 		userInfo["tokentime"] = rec.Time

@@ -69,15 +69,14 @@ func cmdRun(command string) string {
 
 func auth(c *gin.Context) bool {
 
-	authHeader := c.GetHeader("authorization")
-	var token string
-	if strings.HasPrefix(authHeader, "Bearer ") {
-		token = strings.TrimPrefix(authHeader, "Bearer ")
-	} else {
-		token = authHeader
-	}
-	if global.CheckToken("admin", token) {
-		return true
+	global.InitUserMes(c)
+	curUserMes, _ := c.MustGet("curUserMes").(*global.Claims)
+	if curUserMes.Name == "admin" {
+		if global.CheckToken(c) {
+			return true
+		} else {
+			return false
+		}
 	} else {
 		return false
 	}

@@ -13,9 +13,9 @@ func Upload(c *gin.Context) {
 		c.JSON(200, err)
 		return
 	}
-	user, token := global.GetAuthMes(c)
 	control, action := getPermitName(rec)
-	if global.CheckPermit(user, token, control, action) {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, control, action) {
 		c.Status(200)
 		return
 	}

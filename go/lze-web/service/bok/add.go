@@ -14,9 +14,9 @@ func Add(c *gin.Context) {
 		c.JSON(400, err)
 		return
 	}
-	user, token := global.GetAuthMes(c)
-	name := global.UniqueName(global.BokPath, rec.Name+".html")
-	if global.CheckPermit(user, token, "bok", "newbok") {
+	global.InitUserMes(c)
+	if global.CheckPermit(c, "bok", "newbok") {
+		name := global.UniqueName(global.BokPath, rec.Name+".html")
 		global.WriteText(filepath.Join(global.BokPath, name), genBokText(rec.Text))
 		c.Status(200)
 	} else {

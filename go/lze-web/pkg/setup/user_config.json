@@ -45,7 +45,7 @@
                 "user": [
                     "admin",
                     "user",
-                    "visitor"
+                    "guest"
                 ]
             },
             "move": {
@@ -91,7 +91,7 @@
                 "name": "view",
                 "user": [
                     "admin",
-                    "visitor",
+                    "guest",
                     "user"
                 ]
             },
@@ -100,7 +100,7 @@
                 "user": [
                     "admin",
                     "user",
-                    "visitor"
+                    "guest"
                 ]
             },
             "viewpic": {
@@ -108,7 +108,7 @@
                 "user": [
                     "admin",
                     "user",
-                    "visitor"
+                    "guest"
                 ]
             }
         }
@@ -149,7 +149,7 @@
                 "user": [
                     "admin",
                     "user",
-                    "visitor"
+                    "guest"
                 ]
             },
             "upload": {
@@ -168,7 +168,7 @@
                 "user": [
                     "admin",
                     "user",
-                    "visitor"
+                    "guest"
                 ]
             }
         }
@@ -201,7 +201,7 @@
             "token": "uErBsFCjxtuyoufciBttfdCniwgnxxpC_486260",
             "tokentime": "1y"
         },
-        "visitor": {
+        "guest": {
             "password": null,
             "token": null,
             "tokentime": null

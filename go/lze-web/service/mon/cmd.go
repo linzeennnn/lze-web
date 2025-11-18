@@ -17,16 +17,14 @@ func Cmd(c *gin.Context) {
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		c.JSON(400, err)
 	}
-
-	authHeader := c.GetHeader("authorization")
-	var token string
-	if strings.HasPrefix(authHeader, "Bearer ") {
-		token = strings.TrimPrefix(authHeader, "Bearer ")
-	} else {
-		token = authHeader
-	}
-	if global.CheckToken("admin", token) {
-		c.String(200, cmdRun(rec.CmdStr))
+	global.InitUserMes(c)
+	curUserMes, _ := c.MustGet("curUserMes").(*global.Claims)
+	if curUserMes.Name == "admin" {
+		if global.CheckToken(c) {
+			c.String(200, cmdRun(rec.CmdStr))
+		} else {
+			c.Status(401)
+		}
 	} else {
 		c.Status(401)
 	}
