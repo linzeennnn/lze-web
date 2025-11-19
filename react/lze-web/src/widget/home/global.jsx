@@ -4,11 +4,11 @@ import { GetTheme } from '../../components/getTheme.jsx';
 import { GetLangList} from '../../components/getLang.jsx';
 import { DisableZoom } from '../../components/pub.jsx';
 export const useGlobal = create((set, get) => {
-  let userName = window.localStorage.getItem('userName') || 'visitor';
+  let userName = window.localStorage.getItem('userName') || 'guest';
   let token = window.localStorage.getItem('token') || '';
   return {
     load:0,
-    userName:"visitor",
+    userName:"guest",
     token:"",
     showBg: false,
     locked:true,
@@ -71,7 +71,7 @@ export  async function InitData(){
 // 用户信息
     let userName=localStorage.getItem("userName")
     let token =localStorage.getItem("token")
-    userName=userName?userName:"visitor";
+    userName=userName?userName:"guest";
     token=token?token:""; 
       useGlobal.setState({
         userName: userName,
@@ -94,15 +94,14 @@ GetWidgetData();
 }
  function auth(name,token){
     const load=useGlobal.getState().load
-    let user=name?name:"visitor";
+    let user=name?name:"guest";
     token=token?token:"";
     fetch(window.location.origin+'/server/login/auth_status',
         {
         method:'POST',
         headers:{
             'Content-Type':'application/json',
-            'authorization':"Bearer " +token,
-            'x-user':user
+            'authorization':"Bearer " +token
         },
         body:JSON.stringify({
             name,token
@@ -117,9 +116,9 @@ GetWidgetData();
             else{
                 notify(res.status)
             }
-            window.localStorage.setItem('userName',"visitor");
+            window.localStorage.setItem('userName',"guest");
             window.localStorage.setItem('token',"");
-            useGlobal.setState({userName:"visitor",token:"",load:useGlobal.getState().load+1})
+            useGlobal.setState({userName:"guest",token:"",load:useGlobal.getState().load+1})
             return
         }
         useGlobal.setState({load:useGlobal.getState().load+1})

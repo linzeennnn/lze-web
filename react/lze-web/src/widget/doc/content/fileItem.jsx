@@ -39,7 +39,6 @@ function rename(oldname,newname){
         headers:{
             'Content-Type':'application/json',
             'authorization':"Bearer " +global.token,
-            'x-user':global.userName
         },
         body:JSON.stringify({oldpath,newpath})
     })

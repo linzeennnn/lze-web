@@ -14,9 +14,8 @@ func Date(c *gin.Context) {
 	}
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "mon", "edittime") {
-		userMes := global.UserConfig["user"].(map[string]interface{})
-		userInfo := userMes[rec.Name].(map[string]interface{})
-		userInfo["tokentime"] = rec.Time
+		userMes := global.GetUserMes(rec.Name)
+		userMes.Outdate = rec.Time
 		global.SaveUserConfig()
 		c.Status(200)
 	} else {

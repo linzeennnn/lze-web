@@ -4,7 +4,7 @@ import { GetText, GetWidgetData, useGlobal } from "../global";
 export default function LogoutBtn(){
     const user=useGlobal(state=>state.userName)
     return(
-        <button id="logout-btn" className={"btn lock-btn "+(user=='visitor'?"logout-disabled":"")}
+        <button id="logout-btn" className={"btn lock-btn "+(user=='guest'?"logout-disabled":"")}
         onClick={()=>logout()}
         >
             <div></div>
@@ -17,7 +17,7 @@ function logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
     useGlobal.setState({
-        userName:'visitor',
+        userName:'guest',
         token:""
     })
     GetWidgetData()

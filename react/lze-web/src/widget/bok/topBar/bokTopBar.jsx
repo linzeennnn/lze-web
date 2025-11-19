@@ -83,8 +83,7 @@ function addBok(name,text){
         method:'POST',
         headers:{
             'Content-Type':'application/json',
-            'authorization':"Bearer " +token,
-            'x-user':user
+            'authorization':"Bearer " +token
         },
         body:JSON.stringify(data)   })
         .then((res) => {

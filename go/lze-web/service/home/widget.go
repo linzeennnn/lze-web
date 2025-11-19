@@ -89,11 +89,11 @@ func CheckType(name string) string {
 func monData(username string) [3]string {
 	var tokenTime string
 	username = global.SetUsername(username)
-	userData := global.UserConfig["user"].(map[string]interface{})
-	if username == "guest" {
+	userData := global.GetUserMes(username)
+	if userData.Name == "guest" {
 		tokenTime = "0"
 	} else {
-		tokenTime = userData[username].(map[string]interface{})["tokentime"].(string)
+		tokenTime = userData.Outdate
 	}
 	avaTime := global.GetRemainTime(username)
 	controlDataMap := global.UserConfig["control"].(map[string]interface{})
@@ -103,9 +103,7 @@ func monData(username string) [3]string {
 		avaTimeStr = "never"
 	} else {
 		tokenTime = convTokenTime(tokenTime)
-		if avaTime < 0 {
-			avaTimeStr = "outdate"
-		} else if avaTime < 24 && avaTime > 0 {
+		if avaTime < 24 {
 			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/hour"
 		} else if avaTime < 24*30 {
 			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/day"
@@ -117,7 +115,7 @@ func monData(username string) [3]string {
 	}
 	monMes[0] = "login_time" + "/" + tokenTime
 	monMes[1] = "remain_time" + "/" + avaTimeStr
-	monMes[2] = "per_num" + "/" + countActNum(username, controlDataMap)
+	monMes[2] = "per_num" + "/" + countActNum(userData.Name, controlDataMap)
 	return monMes
 }
 func countActNum(username string, data map[string]interface{}) string {

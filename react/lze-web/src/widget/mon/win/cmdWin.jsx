@@ -107,7 +107,7 @@ function sendCmd(cmd,setOutput){
             method:"POST",
             headers:{
                 'Content-Type':'application/json',
-                'authorization':"Bearer " +token,
+                'authorization':"Bearer " +token
             },
             body:JSON.stringify({
                 cmd

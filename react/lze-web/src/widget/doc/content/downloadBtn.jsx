@@ -40,7 +40,6 @@ function ZipDir(fileName){
         headers: {
         "Content-Type": "application/json" ,
         'authorization':'Bearer ' + token,
-        'x-user': user
     },
     body: JSON.stringify({ folder_path: global.nowPath+"/"+fileName }) 
       })

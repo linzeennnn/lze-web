@@ -86,8 +86,7 @@ export function Save_note(newTitle,newContent){
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'authorization':"Bearer "+ token,
-            'x-user': user
+            'authorization':"Bearer "+ token
         },
         body: JSON.stringify(send_data)
     }).then((res) => {
@@ -188,7 +187,6 @@ export async function Upload(file, uploadData) {
 
   // 将 user 和 token 作为 Header 发送
   xhr.setRequestHeader("authorization", "Bearer " + token);
-  xhr.setRequestHeader("x-user", user);
 
   xhr.send(formData);
 }
@@ -314,8 +312,7 @@ export async function UploadPermit(){
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}`,
-            'x-user': user
+            'authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
             appType:"not",fileType:""

@@ -226,7 +226,8 @@
         "name":"guest",
         "password": null,
         "jti": null,
-        "outdate": null
+        "outdate": null,
+        "exp":-1
     }
 ]
 }

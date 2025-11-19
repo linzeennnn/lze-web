@@ -29,8 +29,7 @@ function update_act(control,action,name,change){
         method:"POST",
         headers:{
             'Content-Type':'application/json',
-            'authorization':"Bearer " +token,
-            'x-user':user,
+            'authorization':"Bearer " +token
         },
         body:JSON.stringify({
             user,token,control,action,name,change

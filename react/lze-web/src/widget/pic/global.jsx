@@ -190,7 +190,6 @@ export function Upload(file, uploadData) {
 
     // 将 user 和 token 移到 Header
     xhr.setRequestHeader("authorization", "Bearer " + token);
-    xhr.setRequestHeader("x-user", user);
 
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
@@ -332,8 +331,7 @@ export async function UploadPermit(){
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}`,
-            'x-user': user
+            'authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
             appType:"pic",fileType:""

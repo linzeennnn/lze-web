@@ -52,8 +52,7 @@ export function NewDir(folderName) {
     body: JSON.stringify(sendData),
     headers: {
       'Content-Type': 'application/json',
-            'authorization':"Bearer " +global.token,
-            'x-user':global.userName
+            'authorization':"Bearer " +global.token
     },
   })
     .then((res) => {

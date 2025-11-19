@@ -2,6 +2,7 @@ package global
 
 import (
 	"encoding/json"
+	"fmt"
 	"lze-web/model/config"
 	"math/rand"
 	"path/filepath"
@@ -32,6 +33,7 @@ func InitUserMes(c *gin.Context) {
 // 检查token
 func CheckToken(c *gin.Context) bool {
 	curUserMes, _ := c.MustGet("curUserMes").(*Claims)
+	fmt.Println(curUserMes.Name)
 	if curUserMes.Name == "guest" {
 		return true
 	}
@@ -103,11 +105,15 @@ func GenJwt(name string) (token string) {
 	var claims *Claims
 	if now > userMes.Exp || userMes.Jti == "" {
 		expTime := GetExpTime(avaTime) //获取过期时间
+		jti := GenJti()
 		claims = &Claims{
 			Name: userMes.Name,
-			Jti:  GenJti(),
+			Jti:  jti,
 			Exp:  expTime,
 		}
+		userMes.Jti = jti
+		userMes.Exp = expTime
+		SaveUserConfig()
 	} else {
 		claims = &Claims{
 			Name: userMes.Name,
@@ -166,12 +172,12 @@ func GenJti() string {
 // 获取某个用户的配置信息
 func GetUserMes(username string) *config.UserMes {
 	var guestMes *config.UserMes
-	for _, user := range UserArr {
-		if user.Name == username {
-			return &user
+	for i := range UserArr { // 用 index 遍历
+		if UserArr[i].Name == username {
+			return &UserArr[i] // 返回真实元素地址！
 		}
-		if user.Name == "guest" {
-			guestMes = &user
+		if UserArr[i].Name == "guest" {
+			guestMes = &UserArr[i]
 		}
 	}
 	return guestMes
@@ -200,12 +206,17 @@ func GetExpTime(avaTimeCon string) int64 {
 func GetRemainTime(username string) int64 {
 	now := GetTimeStamp()
 	exp := GetUserMes(username).Exp
-	return exp - now
+	remainTime := exp - now
+	if remainTime < 0 {
+		remainTime = 0
+	}
+	return remainTime
 }
 
 // ///////////写操作///////////////////
 // 保存用户配置
 func SaveUserConfig() {
+	UserConfig["userMes"] = UserArr
 	userJson, err := json.MarshalIndent(UserConfig, "", "  ")
 	if err != nil {
 		panic(err)

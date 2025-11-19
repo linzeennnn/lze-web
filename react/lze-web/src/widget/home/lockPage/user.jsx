@@ -8,7 +8,7 @@ export default function User({setSwitch}){
         >
             <div id="lock-profile"></div>
             <div id="lock-switch"></div>
-            <span>{(user==""||user=="visitor")?GetText("guest"):user}</span>
+            <span>{(user==""||user=="guest")?GetText("guest"):user}</span>
         </button>
     )
 }

@@ -7,7 +7,7 @@ export const useGlobal = create((set, get) => {
   return {
     userName: storedUser,
     token: storedToken,
-    nowuser: storedUser?.trim() || 'visitor',
+    nowuser: storedUser?.trim() || 'guest',
     showBg: false,
     loading: false,
     controlList: null,

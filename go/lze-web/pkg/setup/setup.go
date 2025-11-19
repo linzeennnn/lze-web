@@ -16,7 +16,9 @@ func Setup() {
 
 	// 解析用户配置
 	global.UserConfig = global.JsonToMap(userConfigStr)
-	UserMap := global.UserConfig["userMes"].(map[string]interface{})
+	userMesValue := global.UserConfig["userMes"]
+
+	UserMap, _ := userMesValue.([]interface{})
 	UserJson, _ := json.Marshal(UserMap)
 	json.Unmarshal(UserJson, &global.UserArr)
 	for _, user := range global.UserArr {
