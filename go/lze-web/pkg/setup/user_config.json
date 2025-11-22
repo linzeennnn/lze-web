@@ -82,6 +82,12 @@
                     "admin",
                     "user"
                 ]
+            },
+            "link":{
+                "name":"get_link",
+                "user":[
+                    "admin"
+                ]
             }
         }
     },

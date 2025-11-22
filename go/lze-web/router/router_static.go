@@ -20,7 +20,10 @@ func RouterStatic(r *gin.Engine) {
 	// 根路径的文件访问用 NoRoute 来做智能路由处理
 	r.NoRoute(func(c *gin.Context) {
 		reqPath := c.Request.URL.Path
-
+		if strings.HasPrefix(c.Request.URL.Path, "/file/") {
+			c.String(http.StatusNotFound, "Not Found")
+			return
+		}
 		// 防止目录穿越攻击
 		if !strings.HasPrefix(reqPath, "/") {
 			c.String(http.StatusForbidden, "Forbidden")
