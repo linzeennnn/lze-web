@@ -105,6 +105,7 @@
 --home_icon: url(../../assets/icon/home_dark.svg);
 --left_icon: url(../../assets/icon/left_dark.svg);
 --leftarr_icon: url(../../assets/icon/leftarr_dark.svg);
+--link_icon: url(../../assets/icon/link_dark.svg);
 --load_icon: url(../../assets/icon/load_dark.svg);
 --logout_icon: url(../../assets/icon/logout_dark.svg);
 --maximize_icon: url(../../assets/icon/maximize_dark.svg);
@@ -154,6 +155,7 @@
 --home_icon: url(../../assets/icon/home_light.svg);
 --left_icon: url(../../assets/icon/left_light.svg);
 --leftarr_icon: url(../../assets/icon/leftarr_light.svg);
+--link_icon: url(../../assets/icon/link_light.svg);
 --load_icon: url(../../assets/icon/load_light.svg);
 --logout_icon: url(../../assets/icon/logout_light.svg);
 --maximize_icon: url(../../assets/icon/maximize_light.svg);
