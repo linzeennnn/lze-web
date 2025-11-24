@@ -26,6 +26,8 @@ var (
 	FilePath string
 	LogPath  string
 	CmdPath  string
+	// 其他
+	FileLinkArr [10]FileLink
 )
 
 type Claims struct {
@@ -33,4 +35,9 @@ type Claims struct {
 	Jti  string `json:"jti"`
 	Exp  int64  `json:"exp"`
 	jwt.RegisteredClaims
+}
+type FileLink struct {
+	Path  string
+	Token string
+	Time  int64
 }

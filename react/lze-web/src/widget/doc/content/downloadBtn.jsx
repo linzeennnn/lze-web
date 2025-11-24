@@ -8,9 +8,7 @@ export default function DownloadBtn({fileMes}){
         onClick={((e)=>{
             e.stopPropagation();
             if(fileMes[1]==="file"||fileMes[1]==="file_link"){
-              DownLoad(
-                global.docUrl+"download_file?file_path="+global.nowPath+"/"+fileMes[0]+
-                "&token="+global.token+"&user="+global.userName)
+              DownLoadFile(global.nowPath+"/"+fileMes[0])
             }
             else{
                 ZipDir(fileMes[0])
@@ -22,29 +20,38 @@ export default function DownloadBtn({fileMes}){
 // 下载文件
 function DownLoadFile(path){
   const global = useGlobal.getState();
-  global.loadPage(true)
-  const body={ path }
-  fetch(global.docUrl+"download_file",{
+  loadPage(true);
+  const body = { path };
+
+  fetch(global.docUrl + "download_file", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json" ,
-      'authorization':'Bearer ' + global.token,
-  },
-  body: JSON.stringify(body)
+      "Content-Type": "application/json",
+      "authorization": "Bearer " + global.token,
+    },
+    body: JSON.stringify(body)
   })
-    .then(res=>{
-         global.loadPage(false)
-        if(res.ok){
-            DownLoad(res.text())
-        }else{
-            if(res.status==401){
-                notify(GetText("no_per"))
-            }
-            else{
-                notify(GetText("error")+":"+res.status)
-            }
-        }
-       })
+  .then(res => {
+    if(res.ok){
+      return res.text(); // 返回 Promise
+    } else {
+      if(res.status == 401){
+        notify(GetText("no_per"));
+      } else {
+        notify(GetText("error") + ":" + res.status);
+      }
+      throw new Error("HTTP error " + res.status); // 抛出错误阻止继续执行
+    }
+  })
+  .then(text => {
+    DownLoad(global.docUrl + "download_file/"+text); // 这里才是实际文本
+  })
+  .catch(err => {
+    console.error("Fetch failed:", err);
+  })
+  .finally(() => {
+    loadPage(false);
+  });
 }
 // 下载操作
 function DownLoad(url){
