@@ -1,6 +1,7 @@
 import FileText from "./fileText"
 import EditBtn from "./editBtn"
 import DownloadBtn from "./downloadBtn"
+import Link from "./link"
 import { useState } from "react";
 import { useGlobal,list,loadPage, GetText } from "../global";
 import { notify } from "../../../components/notify";
@@ -23,6 +24,7 @@ export default function FileItem({ fileMes, selected, docClick}){
             <EditBtn name={fileMes[0]} editing={[editMode, setEditMode]} 
             newName={nameInput} rename={rename}/>
             <DownloadBtn fileMes={fileMes}/>
+            {(fileMes[1] === "dir" || fileMes[1] === "dir_link") ?null:<Link name={fileMes[0]}></Link>}
         </div>
     )
 }

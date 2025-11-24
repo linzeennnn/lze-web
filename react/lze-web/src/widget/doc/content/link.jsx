@@ -1,7 +1,12 @@
-import { useGlobal } from "../global"
+import { notify } from "../../../components/notify"
+import { GetText, useGlobal,loadPage } from "../global"
 
 export default function Link({name}){
-    return <button className="btn link-btn" onClick={()=>{getLink(name)}}></button>
+    return <button className="btn link-btn" 
+    title={GetText("get_link")}
+    onClick={(e)=>{
+      e.stopPropagation();
+      getLink(name)}}></button>
 }
 // 获取直链
 function getLink(name){
@@ -30,7 +35,7 @@ function getLink(name){
         }
       })
       .then(text => {
-        DownLoad(global.docUrl + api+"/"+text); 
+        copy(encodeURI(window.location.origin+"/"+text))
       })
       .catch(err => {
         console.error("Fetch failed:", err);
@@ -39,3 +44,20 @@ function getLink(name){
         loadPage(false);
       });
     }
+  function copy(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";  
+    textarea.style.opacity = "0";      
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand("copy");
+      notify(GetText("copy")+" "+GetText("success"));
+    } catch (err) {
+      notify(GetText("error"), err);
+    }
+  
+    document.body.removeChild(textarea);
+  }

@@ -283,6 +283,14 @@
     background-image: var(--minimize_icon);
     background-color: var(--base_color);
 }
+.link-btn{
+    width: 20px !important;
+    height: 20px !important;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-image: var(--link_icon);
+}
 .full-screen-btn{background-image: var(--maximize_icon);}
 .refresh-btn{background-image: var(--load_icon);}
 #upload-dir{background-image: url(../../assets//icon/folder.svg);}

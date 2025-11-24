@@ -17,10 +17,11 @@ func RouterDoc(r *gin.Engine) {
 		loginGroup.POST("/copy", doc.Copy)
 		loginGroup.POST("/move", doc.Move)
 		loginGroup.POST("/rename", doc.Rename)
+		loginGroup.POST("/del", doc.Del)
+		loginGroup.POST("/link", doc.Link)
 		loginGroup.POST("/download_folder", doc.PostDownloadDir)
 		loginGroup.GET("/download_folder/*filepath", doc.GetDownLoadDir)
 		loginGroup.POST("/download_file", doc.PostDownloadFile)
 		loginGroup.GET("/download_file/*filepath", doc.GetDownLoadFile)
-		loginGroup.POST("/del", doc.Del)
 	}
 }
