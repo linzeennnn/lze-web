@@ -28,6 +28,7 @@ var (
 	CmdPath  string
 	// 其他
 	FileLinkArr [10]FileLink
+	DirLinkArr  [10]DirLink
 )
 
 type Claims struct {
@@ -37,6 +38,11 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 type FileLink struct {
+	Path  string
+	Token string
+	Time  int64
+}
+type DirLink struct {
 	Path  string
 	Token string
 	Time  int64

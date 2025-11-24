@@ -15,7 +15,7 @@ func PostDownloadFile(c *gin.Context) {
 	}
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "doc", "downfile") {
-		token := getUrlToken(filepath.Clean(rec.Path))
+		token := getFileUrlToken(filepath.Clean(rec.Path))
 		c.String(200, token)
 	} else {
 		c.Status(401)
@@ -23,11 +23,11 @@ func PostDownloadFile(c *gin.Context) {
 }
 func GetDownLoadFile(c *gin.Context) {
 	token := filepath.Base(c.Request.URL.String())
-	path := getPath(token)
+	path := getFilePath(token)
 	filePath := filepath.Join(global.DocPath, path)
 	c.FileAttachment(filePath, filepath.Base(filePath))
 }
-func getPath(token string) string {
+func getFilePath(token string) string {
 	for _, link := range global.FileLinkArr {
 		if link.Token == token {
 			return link.Path
@@ -35,18 +35,19 @@ func getPath(token string) string {
 	}
 	return ""
 }
-func getUrlToken(path string) string {
+func getFileUrlToken(path string) string {
 	var outdatedTime int64
 	outdatedTime = -1
 	outdatedIndex := -1
 	for i, link := range global.FileLinkArr {
 		if link.Path == path {
+			global.FileLinkArr[i].Time = global.GetTimeStampS()
 			return link.Token
 		} else {
 			if link.Time == 0 {
 				global.FileLinkArr[i].Path = path
 				global.FileLinkArr[i].Token = global.GenJti()
-				global.FileLinkArr[i].Time = global.GetTimeStamp()
+				global.FileLinkArr[i].Time = global.GetTimeStampS()
 				return global.FileLinkArr[i].Token
 			} else {
 				if outdatedTime == -1 || (link.Time < outdatedTime && outdatedTime != -1) {
@@ -58,6 +59,6 @@ func getUrlToken(path string) string {
 	}
 	global.FileLinkArr[outdatedIndex].Path = path
 	global.FileLinkArr[outdatedIndex].Token = global.GenJti()
-	global.FileLinkArr[outdatedIndex].Time = global.GetTimeStamp()
+	global.FileLinkArr[outdatedIndex].Time = global.GetTimeStampS()
 	return global.FileLinkArr[outdatedIndex].Token
 }

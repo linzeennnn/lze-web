@@ -73,9 +73,14 @@ func SetUsername(username string) string {
 
 }
 
-// 获取时间戳
+// 获取时间戳(小时)
 func GetTimeStamp() int64 {
 	return time.Now().Unix() / 3600
+}
+
+// 获取时间戳(秒)
+func GetTimeStampS() int64 {
+	return time.Now().Unix()
 }
 
 // 检查操作权限

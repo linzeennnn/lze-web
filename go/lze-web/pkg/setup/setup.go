@@ -3,6 +3,7 @@ package setup
 import (
 	"encoding/json"
 	"lze-web/pkg/global"
+	"os"
 	"path/filepath"
 	"strconv"
 )
@@ -48,6 +49,9 @@ func Setup() {
 	global.BokPath = setPath("bok_path", "Bookmark", WorkConfig)
 	global.TraPath = setPath("tra_path", "trash", WorkConfig)
 	global.TempPath = setPath("tmp_path", "temp", WorkConfig)
+	// 清空临时目录
+	os.RemoveAll(global.TempPath)
+	os.Mkdir(global.TempPath, 0755)
 
 }
 func setPath(pathType, defaultPath string, WorkConfig map[string]interface{}) string {

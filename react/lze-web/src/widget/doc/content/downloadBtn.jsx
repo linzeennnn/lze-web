@@ -8,22 +8,25 @@ export default function DownloadBtn({fileMes}){
         onClick={((e)=>{
             e.stopPropagation();
             if(fileMes[1]==="file"||fileMes[1]==="file_link"){
-              DownLoadFile(global.nowPath+"/"+fileMes[0])
+              DownLoadFile(global.nowPath+"/"+fileMes[0],true)
             }
             else{
-                ZipDir(fileMes[0])
+              DownLoadFile(global.nowPath+"/"+fileMes[0],false)
             }
         })}
         ></button>
     )
 }
 // 下载文件
-function DownLoadFile(path){
+function DownLoadFile(path,isFile){
+  if (!confirm(GetText("are_you_sure"))){
+    return
+  }
   const global = useGlobal.getState();
   loadPage(true);
   const body = { path };
-
-  fetch(global.docUrl + "download_file", {
+  let api =(isFile?"download_file":"download_folder")
+  fetch(global.docUrl + api, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +47,7 @@ function DownLoadFile(path){
     }
   })
   .then(text => {
-    DownLoad(global.docUrl + "download_file/"+text); // 这里才是实际文本
+    DownLoad(global.docUrl + api+"/"+text); 
   })
   .catch(err => {
     console.error("Fetch failed:", err);
@@ -62,32 +65,3 @@ const a = document.createElement("a");
   a.click();
   document.body.removeChild(a);
 }
-// 压缩目录
-function ZipDir(fileName){
-  if(confirm(GetText("are_you_sure"))){
-  loadPage(true)
-  const global = useGlobal.getState();
-  const token =global.token
-  const user = global.userName
-        fetch(global.docUrl+"zip_folder",{
-        method: "POST",
-        headers: {
-        "Content-Type": "application/json" ,
-        'authorization':'Bearer ' + token,
-    },
-    body: JSON.stringify({ folder_path: global.nowPath+"/"+fileName }) 
-      })
-      .then(response => {
-        if (response.status === 401) {
-          notify(GetText("no_per"))
-          loadPage(false)
-          throw new Error('err');
-        }
-        return response.text();  
-      })
-      .then(text => {
-      notify(GetText("down_one_minute"))
-      DownLoad(global.docUrl+"down_zip?downToken="+text)
-     loadPage(false)
-    })}
-    }

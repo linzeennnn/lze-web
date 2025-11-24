@@ -1,15 +1,12 @@
 package global
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	fileSystem "lze-web/model/other/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
-	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -219,25 +216,8 @@ func IncludeExt(name string, extList []string) bool {
 	return false
 }
 
-// 执行命令
-func cmd(command string) (string, error) {
-	var execCmd *exec.Cmd
-
-	if runtime.GOOS == "windows" {
-		// Windows 用 cmd /C
-		execCmd = exec.Command("cmd", "/C", command)
-	} else {
-		// Linux/macOS 用 sh -c
-		execCmd = exec.Command("sh", "-c", command)
-	}
-
-	var out, stderr bytes.Buffer
-	execCmd.Stdout = &out
-	execCmd.Stderr = &stderr
-
-	err := execCmd.Run()
-	if err != nil {
-		return stderr.String(), err
-	}
-	return out.String(), nil
+// 判断文件是否存在
+func FileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil || !os.IsNotExist(err)
 }
