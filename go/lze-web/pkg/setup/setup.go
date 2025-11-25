@@ -2,6 +2,7 @@ package setup
 
 import (
 	"encoding/json"
+	"fmt"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -18,14 +19,22 @@ func Setup() {
 	// 解析用户配置
 	global.UserConfig = global.JsonToMap(userConfigStr)
 	userMesValue := global.UserConfig["userMes"]
-
 	UserMap, _ := userMesValue.([]interface{})
 	UserJson, _ := json.Marshal(UserMap)
 	json.Unmarshal(UserJson, &global.UserArr)
 	for _, user := range global.UserArr {
 		global.UserList = append(global.UserList, user.Name)
 	}
-
+	// 初始化命令缓存表
+	global.CmdCacheMap.CmdMap = make(map[string]any, 10)
+	for i := 1; i <= 10; i++ {
+		key := fmt.Sprintf("dummy%d", i) // 生成字符串 key
+		global.CmdCacheMap.CmdMap[key] = map[string]any{
+			"cmd":  nil,
+			"auth": nil,
+		}
+	}
+	global.CmdCacheMap.OldestCmd = "dummy1"
 	//解析work配置
 	WorkConfig := global.JsonToMap(workConfigStr)
 	global.Port = WorkConfig["port"].(string)

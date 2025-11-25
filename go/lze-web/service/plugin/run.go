@@ -45,6 +45,16 @@ func Run(c *gin.Context, havePara bool) {
 		c.Status(404)
 	}
 }
+
+// 从缓存获取命令字符串或者从配置文件获取命令字符串
+func getCmdStr(cmdName string) string {
+
+}
+
+// 更新缓存
+func updateCache(cmdName, cmdStr string) {
+
+}
 func cmdRun(command string) string {
 	var execCmd *exec.Cmd
 	if runtime.GOOS == "windows" {

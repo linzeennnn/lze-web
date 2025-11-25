@@ -29,6 +29,7 @@ var (
 	// 其他
 	FileLinkArr [10]FileLink
 	DirLinkArr  [10]DirLink
+	CmdCacheMap CmdCache
 )
 
 type Claims struct {
@@ -46,4 +47,8 @@ type DirLink struct {
 	Path  string
 	Token string
 	Time  int64
+}
+type CmdCache struct {
+	CmdMap    map[string]any
+	OldestCmd string
 }
