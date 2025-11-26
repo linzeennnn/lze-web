@@ -1,6 +1,8 @@
 package login
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	loginModel "lze-web/model/login/login"
 	"lze-web/pkg/global"
 
@@ -13,9 +15,10 @@ func Login(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	username := rec.Name
-	password := rec.Password
-	token, isRight := global.CheckPassword(username, password)
+	userMesJson, _ := global.DecodeUserMes(rec.UserMes, string(global.JwtKey))
+	var userMes loginModel.UserMes
+	json.Unmarshal([]byte(userMesJson), &userMes)
+	token, isRight := global.CheckPassword(userMes.Name, userMes.Password)
 	if isRight {
 		var sendData loginModel.Send
 		sendData.Token = token
@@ -23,4 +26,7 @@ func Login(c *gin.Context) {
 	} else {
 		c.Status(401)
 	}
+}
+func GetLogin(c *gin.Context) {
+	c.String(200, base64.StdEncoding.EncodeToString([]byte(global.JwtKey)))
 }

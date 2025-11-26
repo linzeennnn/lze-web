@@ -11,6 +11,7 @@ func RouterLogin(r *gin.Engine) {
 	{
 		loginGroup.POST("/auth_status", login.AuthStatus)
 		loginGroup.POST("/login", login.Login)
+		loginGroup.GET("/login", login.GetLogin)
 		loginGroup.POST("/upload", login.Upload)
 	}
 }
