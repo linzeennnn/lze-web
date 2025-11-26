@@ -107,9 +107,11 @@
 --leftarr_icon: url(../../assets/icon/leftarr_dark.svg);
 --link_icon: url(../../assets/icon/link_dark.svg);
 --load_icon: url(../../assets/icon/load_dark.svg);
+--lock_icon: url(../../assets/icon/lock_dark.svg);
 --logout_icon: url(../../assets/icon/logout_dark.svg);
 --maximize_icon: url(../../assets/icon/maximize_dark.svg);
 --minimize_icon: url(../../assets/icon/minimize_dark.svg);
+--newUser_icon: url(../../assets/icon/newUser_dark.svg);
 --no_icon: url(../../assets/icon/no_dark.svg);
 --option_icon: url(../../assets/icon/option_dark.svg);
 --paste_icon: url(../../assets/icon/paste_dark.svg);
@@ -157,9 +159,11 @@
 --leftarr_icon: url(../../assets/icon/leftarr_light.svg);
 --link_icon: url(../../assets/icon/link_light.svg);
 --load_icon: url(../../assets/icon/load_light.svg);
+--lock_icon: url(../../assets/icon/lock_light.svg);
 --logout_icon: url(../../assets/icon/logout_light.svg);
 --maximize_icon: url(../../assets/icon/maximize_light.svg);
 --minimize_icon: url(../../assets/icon/minimize_light.svg);
+--newUser_icon: url(../../assets/icon/newUser_light.svg);
 --no_icon: url(../../assets/icon/no_light.svg);
 --option_icon: url(../../assets/icon/option_light.svg);
 --paste_icon: url(../../assets/icon/paste_light.svg);
@@ -201,6 +205,10 @@ img{
   -webkit-user-select: none; 
   -moz-user-select: none;
   -ms-user-select: none;
+}
+button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 #app{
   all: unset;

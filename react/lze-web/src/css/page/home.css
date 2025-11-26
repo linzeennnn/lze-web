@@ -450,7 +450,7 @@ background-color: var(--base_color);
 }
 /* login */
 
-#login-win{
+.user-page-win{
     background-color: var(--bg_color);
     border-radius: 15px;
     box-shadow: var(--out_shadow);
@@ -461,7 +461,25 @@ background-color: var(--base_color);
     align-items: center;
     padding: 50px 50px 20px 50px;
 }
-#login-back{
+.user-opt-page-win{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+#user-page-btn-bar{
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+.user-page-btn{
+    width: 24px !important;
+    height: 24px !important;
+    margin: 10px;
+}
+.user-page-back{
     position: absolute;
     top: 10px;
     left: 10px;
@@ -469,19 +487,19 @@ background-color: var(--base_color);
     background-color: var(--base_color);
     background-image: var(--toleft_icon);
 }
-.login-input{
+.user-page-input{
     color: var(--text);
     box-shadow: var(--in_shadow);
     margin: 10px;
     padding: 10px;
     border-radius: 50px;
 }
-#login-send{
+.user-page-send{
     background-image: var(--toright_icon);
     background-color: var(--base_color);
     border-radius: 50%;
 }
-#login-loading{
+.user-page-loading{
     width: 32px;
     height: 32px;
 }
@@ -693,6 +711,9 @@ background-color: var(--base_color);
 #load-btn div{background-image: var(--load_icon);}
 #unlock-btn div{background-image: var(--power_icon);}
 #logout-btn div{background-image: var(--logout_icon);}
+#login-btn{background-image: var(--user_icon);}
+#reg-btn{background-image: var(--newUser_icon);}
+#modPas-btn{background-image: var(--lock_icon);}
 .dir-view-file{background-image: url(../../assets/icon/file.svg);}
 .dir-view-dir{background-image: url(../../assets/icon/folder.svg);}
 #doc-icon{background-image: url(../../assets/icon/folder.svg);}

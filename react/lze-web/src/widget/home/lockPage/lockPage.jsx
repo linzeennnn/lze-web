@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { useGlobal } from "../global"
 import LockMainPage from "./lockMainPage";
-import LoginPage from "./loginPage";
+import UserPage from "./userPage";
 export default function LockPage(){
-    const [switchLogin,setSwitch]=useState(false)
+    const [switchUser,setSwitch]=useState(false)
     const locked =useGlobal(state => state.locked);
       const[tmpLoad,setTmpLoad]=useState(true)
     return(
@@ -11,8 +11,8 @@ export default function LockPage(){
             <div id="head-bar" className={(locked&&tmpLoad)?"head-bar-load":""}>
                 <div id="head-name"></div>
             </div>
-            {switchLogin?
-                <LoginPage setSwitch={setSwitch}/>:
+            {switchUser?
+                <UserPage setSwitch={setSwitch}/>:
             <LockMainPage prop={{
                 unlock:setTmpLoad,
                 switch:setSwitch

@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { notify } from "../../../components/notify";
-import { GetText, GetWidgetData, useGlobal } from "../global";
-export default function LoginPage({setSwitch}) {
+import { notify } from "../../../../components/notify";
+import { GetText, GetWidgetData, useGlobal } from "../../global";
+export default function LoginPage(){
   const [loading, setLoading] = useState(false)
   const [userData, setUserData] = useState({
     userName: '',
     password: ''
   });
-
   const userDataChange = (e) => {
     const { name, value } = e.target;
     setUserData((prev) => ({
@@ -23,15 +22,10 @@ export default function LoginPage({setSwitch}) {
     }
   };
 
-  return (
-    <>
-      
-        <div id="login-win" onKeyDown={handleKeyDown}>
-          <button className="btn" id="login-back" title={GetText("back")}
-          onClick={()=>{setSwitch(false)}}
-          ></button>
-          <input
-            className="login-input"
+    return(
+        <div className="user-opt-page-win"  onKeyDown={handleKeyDown}>
+            <input
+            className="user-page-input"
             type="text"
             name="userName"
             placeholder={GetText("username")}
@@ -39,7 +33,7 @@ export default function LoginPage({setSwitch}) {
             onChange={userDataChange}
           />
           <input
-            className="login-input"
+            className="user-page-input"
             type="password"
             name="password"
             value={userData.password}
@@ -47,16 +41,14 @@ export default function LoginPage({setSwitch}) {
             placeholder={GetText("password")}
           />
           {loading?
-          (<div className="loading" id="login-loading"></div>):
+          (<div className="loading user-page-loading"></div>):
          ( <button
-            id="login-send"
-            className="btn"
+            className="btn user-page-send"
             title={GetText("login")}
             onClick={() => login(userData.userName, userData.password,setSwitch,setLoading)}
           ></button>)}
         </div>
-    </>
-  );
+    )
 }
 async function login(name,password,setSwitch,setLoading){
   setLoading(true)
