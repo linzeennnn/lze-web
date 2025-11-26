@@ -48,7 +48,14 @@ type DirLink struct {
 	Token string
 	Time  int64
 }
+type CmdObj struct {
+	CmdStr string
+	IsAuth bool
+	Time   int64
+}
 type CmdCache struct {
-	CmdMap    map[string]any
-	OldestCmd string
+	CmdMap     map[string]*CmdObj
+	DummyIndex int // 1~10
+	MaxDummy   int // 10
+	OldestCmd  string
 }

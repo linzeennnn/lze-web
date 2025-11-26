@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"bytes"
+	"fmt"
 	"lze-web/pkg/global"
 	"os/exec"
 	"runtime"
@@ -26,15 +27,12 @@ func Run(c *gin.Context, havePara bool) {
 	}
 	pluginName := c.Param("path")
 	pluginName = strings.ReplaceAll(pluginName, "/", "")
-	cmdConfig := global.ReadText(global.CmdPath)
-	cmdData := global.JsonToMap(cmdConfig)
-	if pluginJson, ok := cmdData[pluginName]; ok {
-		pluginMap := pluginJson.(map[string]interface{})
-		isAuth := pluginMap["auth"].(bool)
-		if isAuth && !auth(c) {
+	cmdObj := getCmdStr(pluginName)
+	if cmdObj.CmdStr != "" {
+		if cmdObj.IsAuth && !auth(c) {
 			c.Status(401)
 		} else {
-			cmdStr := pluginMap["cmd"].(string)
+			cmdStr := cmdObj.CmdStr
 			for _, para := range paraList {
 				cmdStr += " " + para
 			}
@@ -47,14 +45,66 @@ func Run(c *gin.Context, havePara bool) {
 }
 
 // 从缓存获取命令字符串或者从配置文件获取命令字符串
-func getCmdStr(cmdName string) string {
+func getCmdStr(cmdName string) *global.CmdObj {
+	// 1. 先从缓存读取
+	if cmdObj, ok := global.CmdCacheMap.CmdMap[cmdName]; ok {
+		cmdObj.Time = global.GetTimeStampS()
+		return cmdObj
+	}
 
+	// 2. 缓存没有命中，读取 JSON
+	cmdConfig := global.ReadText(global.CmdPath)
+	cmdData := global.JsonToMap(cmdConfig)
+
+	if pluginJson, ok := cmdData[cmdName]; ok {
+		pluginMap := pluginJson.(map[string]interface{})
+		cmdStr := pluginMap["cmd"].(string)
+		isAuth := pluginMap["auth"].(bool)
+
+		// 正确分配内存
+		cmdObj := &global.CmdObj{
+			CmdStr: cmdStr,
+			IsAuth: isAuth,
+		}
+		cmdObj.Time = global.GetTimeStampS()
+		updateCache(cmdName, cmdObj)
+		return cmdObj
+	}
+
+	// 3. 没找到，返回空对象
+	return &global.CmdObj{}
 }
 
 // 更新缓存
-func updateCache(cmdName, cmdStr string) {
-
+func updateCache(cmdName string, cmdObj *global.CmdObj) {
+	cc := global.CmdCacheMap
+	// 1. 前 10 条，依次使用 dummy1~dummy10
+	if cc.DummyIndex <= cc.MaxDummy {
+		key := fmt.Sprintf("dummy%d", cc.DummyIndex)
+		cc.CmdMap[key] = cmdObj
+		cc.OldestCmd = key
+		cc.DummyIndex++
+		return
+	}
+	// 2. 超过 MaxDummy，替换 Time 最老的条目
+	oldTime := int64(^uint64(0) >> 1) // 最大 int64
+	oldKey := ""
+	for k, v := range cc.CmdMap {
+		if v.Time < oldTime {
+			oldTime = v.Time
+			oldKey = k
+		}
+	}
+	if oldKey != "" {
+		// 删除最老的 key
+		delete(cc.CmdMap, oldKey)
+		// 添加新的 cmdName
+		cc.CmdMap[cmdName] = cmdObj
+		// 更新 OldestCmd 为新插入的 cmdName
+		cc.OldestCmd = cmdName
+	}
 }
+
 func cmdRun(command string) string {
 	var execCmd *exec.Cmd
 	if runtime.GOOS == "windows" {

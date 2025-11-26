@@ -26,12 +26,15 @@ func Setup() {
 		global.UserList = append(global.UserList, user.Name)
 	}
 	// 初始化命令缓存表
-	global.CmdCacheMap.CmdMap = make(map[string]any, 10)
-	for i := 1; i <= 10; i++ {
+	global.CmdCacheMap.MaxDummy = 10
+	global.CmdCacheMap.DummyIndex = 1
+	global.CmdCacheMap.CmdMap = make(map[string]*global.CmdObj, global.CmdCacheMap.MaxDummy)
+	for i := 1; i <= global.CmdCacheMap.MaxDummy; i++ {
 		key := fmt.Sprintf("dummy%d", i) // 生成字符串 key
-		global.CmdCacheMap.CmdMap[key] = map[string]any{
-			"cmd":  nil,
-			"auth": nil,
+		global.CmdCacheMap.CmdMap[key] = &global.CmdObj{
+			CmdStr: "",
+			IsAuth: false,
+			Time:   0,
 		}
 	}
 	global.CmdCacheMap.OldestCmd = "dummy1"
