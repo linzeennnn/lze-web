@@ -196,23 +196,6 @@
         }
     }
 },
-    "user": {
-        "admin": {
-            "password": "lze-web-admin",
-            "token": "T5h2YpBijYoLVLGVHSn2Ca7Nou0gVLyp_483565",
-            "tokentime": "never"
-        },
-        "user": {
-            "password": "lze-web",
-            "token": "uErBsFCjxtuyoufciBttfdCniwgnxxpC_486260",
-            "tokentime": "1y"
-        },
-        "guest": {
-            "password": null,
-            "token": null,
-            "tokentime": null
-        }
-    },
 "userMes":[
     {
         "name":"admin",
