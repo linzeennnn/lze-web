@@ -1,12 +1,8 @@
 package global
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"lze-web/model/config"
 	"math/rand"
 	"path/filepath"
@@ -16,7 +12,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/pbkdf2"
 )
 
 // 初始化当前用户信息
@@ -235,36 +230,21 @@ func SaveUserConfig() {
 }
 
 // 解析用户名密码加密字符串
-
-func DecodeUserMes(encodedB64, password string) (string, error) {
-	data, err := base64.StdEncoding.DecodeString(encodedB64)
+func DecodeUserMes(encoded string, key string) (string, error) {
+	// Base64 解码
+	data, err := base64.StdEncoding.DecodeString(encoded)
 	if err != nil {
 		return "", err
 	}
 
-	if len(data) < 16+12 {
-		return "", fmt.Errorf("数据长度不足")
+	keyBytes := []byte(key)
+	keyLen := len(keyBytes)
+	decoded := make([]byte, len(data))
+
+	// XOR 解密（与加密完全一样）
+	for i := 0; i < len(data); i++ {
+		decoded[i] = data[i] ^ keyBytes[i%keyLen]
 	}
 
-	salt := data[:16]
-	iv := data[16:28]
-	ciphertext := data[28:]
-
-	key := pbkdf2.Key([]byte(password), salt, 100000, 32, sha256.New)
-	block, err := aes.NewCipher(key)
-	if err != nil {
-		return "", err
-	}
-
-	aesgcm, err := cipher.NewGCM(block)
-	if err != nil {
-		return "", err
-	}
-
-	plaintext, err := aesgcm.Open(nil, iv, ciphertext, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return string(plaintext), nil
+	return string(decoded), nil
 }

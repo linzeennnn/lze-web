@@ -169,37 +169,10 @@ async function GetKey() {
 
 ////////////////////////////////////////加密用户名密码/////////////////////////////////////////
 export async function encodeUserMes(str) {
-  let password = await GetKey();
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(password),
-    "PBKDF2",
-    false,
-    ["deriveKey"]
-  );
-
-  const aesKey = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
-    keyMaterial,
-    { name: "AES-GCM", length: 256 },
-    false,
-    ["encrypt"]
-  );
-
-  const encrypted = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
-    aesKey,
-    new TextEncoder().encode(str)
-  );
-
-  // 拼接成一个 Base64 字符串: salt + iv + ciphertext
-  const combined = new Uint8Array(salt.length + iv.length + encrypted.byteLength);
-  combined.set(salt, 0);
-  combined.set(iv, salt.length);
-  combined.set(new Uint8Array(encrypted), salt.length + iv.length);
-
-  return btoa(String.fromCharCode(...combined));
+  let key= await GetKey();
+    let res = [];
+    for (let i = 0; i < str.length; i++) {
+        res.push(str.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+    }
+    return btoa(String.fromCharCode(...res));
 }

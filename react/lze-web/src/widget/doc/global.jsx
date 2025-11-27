@@ -235,15 +235,19 @@ function movefolder(foldername) {
 }
 // 获取块大小
 function getChunkSize(fileSize) {
-    const mb=1024*1024
-    if (fileSize <= 1024 * mb) {
+    const mb = 1024 * 1024;
+
+    if (fileSize <= 100 * mb) {
+        return 2 * mb;
+    } else if (fileSize <= 1024 * mb) {
+        return 5 * mb;
+    } else if (fileSize <= 10240 * mb) {
         return 10 * mb;
-    } else if (fileSize <= 5120 * mb&&fileSize>1024 * mb) {
-        return 50 * mb;
     } else {
-        return 100 * mb;
+        return 20 * mb;
     }
 }
+
 //拖拽上传
 export function DragOver(e) {
   
