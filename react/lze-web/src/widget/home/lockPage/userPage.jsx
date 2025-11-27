@@ -4,12 +4,27 @@ import  Reg  from "./userPage/reg";
 import { GetText} from "../global";
 import { useState } from "react";
 export default function UserPage({setSwitch}) {
+  const [loading, setLoading] = useState(false)
   const [showPage, setShowPage] = useState("login");
-  const pages = {
-    login: <LoginPage />,
-    modPas: <ModPasPage />,
-    reg: <Reg />,
+    const handleKeyDown = (e,fun) => {
+    if (e.key === 'Enter') {
+      if(!loading)
+      fun()
+    }
   };
+    const para={
+    keyDown:handleKeyDown,
+    setLoading:setLoading,
+    loading:loading,
+    afterSend:() => afterSend(setLoading,setSwitch)
+  }
+  const pages = {
+    login: <LoginPage para={para} />,
+    modPas: <ModPasPage para={para} />,
+    reg: <Reg  para={para} />,
+  };
+
+
 
   return (
     <>
@@ -29,4 +44,8 @@ export default function UserPage({setSwitch}) {
         </div>
     </>
   );
+}
+function afterSend(setLoading,setSwitch){
+        setLoading(false)
+        setSwitch(false)  
 }

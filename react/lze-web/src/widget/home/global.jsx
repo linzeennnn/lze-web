@@ -59,8 +59,9 @@ export const useGlobal = create((set, get) => {
   };
 });
 // 获取文本
-export  function GetText(str){
-  return useGlobal.getState().lang.list[str]
+export function GetText(str) {
+  const list = useGlobal.getState().lang.list;
+  return list[str] ?? str;   
 }
 export  async function InitData(){
   DisableZoom()
@@ -139,4 +140,66 @@ export function GetWidgetData(){
     .then(data=>{
         useGlobal.setState({widgetData:data,load:useGlobal.getState().load+1})
     })
+}
+// ///////////////////////////获取密钥////////////////////////////////
+async function GetKey() {
+    try {
+        // 构建 URL
+        const url = window.location.origin + '/server/login/login';
+        // 发送请求
+        const response = await fetch(url, {
+            method: 'GET', // 或 'POST' 根据实际接口
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        });
+
+        // 获取响应文本
+        const text = await response.text();
+
+        // Base64 解码
+        const decoded = atob(text);
+
+        return decoded;
+    } catch (error) {
+        console.error('Error fetching key:', error);
+        return null;
+    }
+}
+
+////////////////////////////////////////加密用户名密码/////////////////////////////////////////
+export async function encodeUserMes(str) {
+  let password = await GetKey();
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(password),
+    "PBKDF2",
+    false,
+    ["deriveKey"]
+  );
+
+  const aesKey = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt"]
+  );
+
+  const encrypted = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    aesKey,
+    new TextEncoder().encode(str)
+  );
+
+  // 拼接成一个 Base64 字符串: salt + iv + ciphertext
+  const combined = new Uint8Array(salt.length + iv.length + encrypted.byteLength);
+  combined.set(salt, 0);
+  combined.set(iv, salt.length);
+  combined.set(new Uint8Array(encrypted), salt.length + iv.length);
+
+  return btoa(String.fromCharCode(...combined));
 }

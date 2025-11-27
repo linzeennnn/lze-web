@@ -38,7 +38,6 @@ func InitUserMes(c *gin.Context) {
 // 检查token
 func CheckToken(c *gin.Context) bool {
 	curUserMes, _ := c.MustGet("curUserMes").(*Claims)
-	fmt.Println(curUserMes.Name)
 	if curUserMes.Name == "guest" {
 		return true
 	}

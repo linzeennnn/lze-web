@@ -106,11 +106,11 @@ func monData(username string) [3]string {
 		if avaTime < 24 {
 			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/hour"
 		} else if avaTime < 24*30 {
-			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/day"
+			avaTimeStr = strconv.FormatInt(avaTime/24, 10) + "/day"
 		} else if avaTime < 24*30*12 {
-			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/month"
+			avaTimeStr = strconv.FormatInt(avaTime/(24*30), 10) + "/month"
 		} else {
-			avaTimeStr = strconv.FormatInt(avaTime, 10) + "/year"
+			avaTimeStr = strconv.FormatInt(avaTime/(24*30*12), 10) + "/year"
 		}
 	}
 	monMes[0] = "login_time" + "/" + tokenTime

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { notify } from "../../../../components/notify";
-import { GetText, GetWidgetData, useGlobal } from "../../global";
-export default function LoginPage(){
-  const [loading, setLoading] = useState(false)
+import { GetText, GetWidgetData, useGlobal,encodeUserMes } from "../../global";
+import SendBtn from "./sendBtn";
+export default function LoginPage({para}){
   const [userData, setUserData] = useState({
     userName: '',
     password: ''
@@ -15,15 +15,8 @@ export default function LoginPage(){
     }));
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      if(!loading)
-      login(userData.userName, userData.password,setSwitch,setLoading);
-    }
-  };
-
     return(
-        <div className="user-opt-page-win"  onKeyDown={handleKeyDown}>
+        <div className="user-opt-page-win"  onKeyDown={(e) => para.keyDown(e, () => login(userData.userName, userData.password, para))}>
             <input
             className="user-page-input"
             type="text"
@@ -40,18 +33,14 @@ export default function LoginPage(){
             onChange={userDataChange}
             placeholder={GetText("password")}
           />
-          {loading?
+          {para.loading?
           (<div className="loading user-page-loading"></div>):
-         ( <button
-            className="btn user-page-send"
-            title={GetText("login")}
-            onClick={() => login(userData.userName, userData.password,setSwitch,setLoading)}
-          ></button>)}
+         ( <SendBtn loading={para.loading} send={() => login(userData.userName, userData.password,para)}/>)}
         </div>
     )
 }
-async function login(name,password,setSwitch,setLoading){
-  setLoading(true)
+async function login(name,password,para){
+  para.setLoading(true)
  let userMesStr=JSON.stringify({
     name,password
   })
@@ -62,7 +51,7 @@ async function login(name,password,setSwitch,setLoading){
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
-           userMes:await encodeUserMes(userMesStr, await GetKey())
+           userMes:await encodeUserMes(userMesStr)
         })
     }
     )
@@ -74,7 +63,7 @@ async function login(name,password,setSwitch,setLoading){
             else{
                 notify(res.status+GetText("error"))
             }
-            setLoading(false)
+            para.setLoading(false)
             throw new Error(res.status);
         }
         
@@ -88,70 +77,7 @@ async function login(name,password,setSwitch,setLoading){
         })
         GetWidgetData()
         notify(GetText("login")+":"+name)
-        setLoading(false)
-        setSwitch(false)
-
+        para.afterSend()
     })
 
-}
-// ///////////////////////////获取密钥////////////////////////////////
-async function GetKey() {
-    try {
-        // 构建 URL
-        const url = window.location.origin + '/server/login/login';
-        // 发送请求
-        const response = await fetch(url, {
-            method: 'GET', // 或 'POST' 根据实际接口
-            headers: {
-                'Content-Type': 'text/plain'
-            }
-        });
-
-        // 获取响应文本
-        const text = await response.text();
-
-        // Base64 解码
-        const decoded = atob(text);
-
-        return decoded;
-    } catch (error) {
-        console.error('Error fetching key:', error);
-        return null;
-    }
-}
-
-////////////////////////////////////////加密用户名密码/////////////////////////////////////////
-async function encodeUserMes(str, password) {
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(password),
-    "PBKDF2",
-    false,
-    ["deriveKey"]
-  );
-
-  const aesKey = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" },
-    keyMaterial,
-    { name: "AES-GCM", length: 256 },
-    false,
-    ["encrypt"]
-  );
-
-  const encrypted = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
-    aesKey,
-    new TextEncoder().encode(str)
-  );
-
-  // 拼接成一个 Base64 字符串: salt + iv + ciphertext
-  const combined = new Uint8Array(salt.length + iv.length + encrypted.byteLength);
-  combined.set(salt, 0);
-  combined.set(iv, salt.length);
-  combined.set(new Uint8Array(encrypted), salt.length + iv.length);
-
-  return btoa(String.fromCharCode(...combined));
 }
