@@ -107,7 +107,7 @@ func GenJwt(name string) (token string) {
 	avaTime := userMes.Outdate  //获取token有效时间
 	now := GetTimeStamp()
 	var claims *Claims
-	if now > userMes.Exp || userMes.Jti == "" {
+	if (now > userMes.Exp && userMes.Exp != -1) || userMes.Jti == "" {
 		expTime := GetExpTime(avaTime) //获取过期时间
 		jti := GenJti()
 		claims = &Claims{

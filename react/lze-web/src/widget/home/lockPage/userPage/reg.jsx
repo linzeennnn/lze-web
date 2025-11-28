@@ -42,7 +42,36 @@ export default function RegPage({para}) {
   );
 }
 async function register(name,password,para){
-  para.setLoading(true);
-console.log(name,password);
+        const global=useGlobal.getState()
+  let token=global.token
+const userMes=await encodeUserMes(JSON.stringify({name,password}))
+  para.setLoading(true)
+    fetch(window.location.origin+'/server/login/register',
+        {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'authorization':"Bearer " +token
+        },
+        body:JSON.stringify({
+           userMes:userMes
+        })
+    }
+    )
+    .then(res=>{
+        if(!res.ok){
+            if(res.status===401){
+                notify(GetText("acc_or_pas_err"))
+            }
+            else{
+                notify(res.status+GetText("error"))
+            }
+            para.setLoading(false)
+            throw new Error(res.status);
+        }})
+    .then(data=>{
+        notify(GetText("op_com"))
+        para.afterSend()
+    })
 
 }
