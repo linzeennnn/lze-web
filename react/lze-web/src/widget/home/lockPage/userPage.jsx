@@ -33,11 +33,11 @@ export default function UserPage({setSwitch}) {
           onClick={()=>{setSwitch(false)}}
           ></button>
           <div id="user-page-btn-bar">
-          <button disabled={showPage==="login"} className="btn user-page-btn"
+          <button disabled={showPage==="login"} className="btn user-page-btn" title={GetText("login")}
            id="login-btn" onClick={()=>{setShowPage("login")}}></button>
-          <button disabled={showPage==="modPas"} className="btn user-page-btn"
+          <button disabled={showPage==="modPas"} className="btn user-page-btn" title={GetText("modPas")}
            id="modPas-btn" onClick={()=>{setShowPage("modPas")}}></button>
-          <button disabled={showPage==="reg"} className="btn user-page-btn"
+          <button disabled={showPage==="reg"} className="btn user-page-btn" title={GetText("reg")}
            id="reg-btn" onClick={()=>{setShowPage("reg")}}></button>
           </div>
           {pages[showPage]}

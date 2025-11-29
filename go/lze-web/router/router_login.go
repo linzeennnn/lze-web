@@ -13,6 +13,7 @@ func RouterLogin(r *gin.Engine) {
 		loginGroup.POST("/login", login.Login)
 		loginGroup.GET("/login", login.GetLogin)
 		loginGroup.POST("/modPas", login.ModPas)
+		loginGroup.POST("/register", login.Reg)
 		loginGroup.POST("/upload", login.Upload)
 	}
 }

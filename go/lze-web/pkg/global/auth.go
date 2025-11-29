@@ -30,6 +30,16 @@ func InitUserMes(c *gin.Context) {
 	c.Set("curUserMes", curUserMes)
 }
 
+// 检查用户是否存在
+func CheckUserExist(username string) bool {
+	for _, user := range UserList {
+		if user == username {
+			return true
+		}
+	}
+	return false
+}
+
 // 检查token
 func CheckToken(c *gin.Context) bool {
 	curUserMes, _ := c.MustGet("curUserMes").(*Claims)
@@ -46,7 +56,7 @@ func CheckToken(c *gin.Context) bool {
 // 检查密码
 func CheckPassword(username, password string) (string, bool) {
 	username = SetUsername(username)
-	if username == "guest" {
+	if username == "guest" || !CheckUserExist(username) {
 		return "", false
 	}
 	userMes := GetUserMes(username)
@@ -215,6 +225,37 @@ func GetRemainTime(username string) int64 {
 		remainTime = 0
 	}
 	return remainTime
+}
+
+// //////设置权限用户/////////
+func PermitRemove(username, control, action string) {
+	userList, actionMes := getModule(control, action)
+	newList := make([]interface{}, 0)
+	for _, v := range userList {
+		if v.(string) != username {
+			newList = append(newList, v)
+		}
+	}
+	actionMes["user"] = newList
+}
+func PermitAdd(username, control, action string) {
+	userList, actionMes := getModule(control, action)
+	for _, v := range userList {
+		if v.(string) == username {
+			return
+		}
+	}
+	userList = append(userList, username)
+	actionMes["user"] = userList
+}
+
+func getModule(control, action string) ([]interface{}, map[string]interface{}) {
+	controlModule := UserConfig["control"].(map[string]interface{})
+	controlConfig := controlModule[control].(map[string]interface{})
+	actionModule := controlConfig["action"].(map[string]interface{})
+	actionMes := actionModule[action].(map[string]interface{})
+	actionUser := actionMes["user"].([]interface{})
+	return actionUser, actionMes
 }
 
 // ///////////写操作///////////////////

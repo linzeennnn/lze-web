@@ -41,37 +41,41 @@ export default function RegPage({para}) {
             </div>
   );
 }
-async function register(name,password,para){
-        const global=useGlobal.getState()
-  let token=global.token
-const userMes=await encodeUserMes(JSON.stringify({name,password}))
-  para.setLoading(true)
-    fetch(window.location.origin+'/server/login/register',
-        {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'authorization':"Bearer " +token
-        },
-        body:JSON.stringify({
-           userMes:userMes
-        })
-    }
-    )
-    .then(res=>{
-        if(!res.ok){
-            if(res.status===401){
-                notify(GetText("acc_or_pas_err"))
-            }
-            else{
-                notify(res.status+GetText("error"))
-            }
-            para.setLoading(false)
-            throw new Error(res.status);
-        }})
-    .then(data=>{
-        notify(GetText("op_com"))
-        para.afterSend()
-    })
+async function register(name, password, para) {
+  try {
+    const global = useGlobal.getState();
+    const token = global.token;
+    const userMes = await encodeUserMes(JSON.stringify({ name, password }));
 
+    para.setLoading(true);
+
+    const res = await fetch(window.location.origin + '/server/login/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': "Bearer " + token
+      },
+      body: JSON.stringify({ userMes })
+    });
+
+    const text = await res.text();
+
+    if (!res.ok) {
+      if (res.status === 401) {
+        notify(GetText(text));
+      } else {
+        notify(res.status + GetText("error"));
+      }
+      para.setLoading(false);
+      return;
+    }
+
+    notify(GetText("op_com"));
+    para.afterSend();
+
+  } catch (err) {
+    console.error(err);
+    notify("Network error");
+    para.setLoading(false);
+  }
 }
