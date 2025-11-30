@@ -14,6 +14,7 @@ export const useGlobal = create((set, get) => {
     langList:[],
     userList: null,
     showCmd:false,
+    showLogout:false,
     theme:{
       mode:"",
       color:{

@@ -289,3 +289,36 @@ func DecodeUserMes(encoded string, key string) (string, error) {
 
 	return string(decoded), nil
 }
+func RemoveUser(username string) {
+	// 移除userlist里的用户
+	for i, v := range UserList {
+		if v == username {
+			UserList = append(UserList[:i], UserList[i+1:]...)
+			break
+		}
+	}
+	// 移除userconfig里的用户
+	for i, v := range UserArr {
+		if v.Name == username {
+			UserArr = append(UserArr[:i], UserArr[i+1:]...)
+			break
+		}
+	}
+	// 移除所有权限里的用户
+	controlModule := UserConfig["control"].(map[string]interface{})
+	for _, controlMes := range controlModule {
+		actionModule := controlMes.(map[string]interface{})["action"].(map[string]interface{})
+		for _, actionMes := range actionModule {
+			userList := actionMes.(map[string]interface{})["user"].([]interface{})
+			newList := make([]interface{}, 0)
+			for _, v := range userList {
+				if v.(string) != username {
+					newList = append(newList, v)
+				}
+			}
+			actionMes.(map[string]interface{})["user"] = newList
+		}
+	}
+	// 保存配置
+	SaveUserConfig()
+}

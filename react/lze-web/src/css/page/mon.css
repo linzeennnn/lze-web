@@ -286,11 +286,54 @@ input{
 .cmd-cmd{
     font-size: 12px;
 }
+#user-list-box{
+    position: relative;
+    background-color: var(--bg_color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    box-shadow: var(--out_shadow);
+    padding: 20px;
+    width: fit-content;
+
+}
+.user-item-box{
+    position: relative;
+    display: flex;
+    width: 60px;
+    height: 60px;
+    background-color: var(--base_color);
+    padding: 5px;
+    text-align: center;
+    border-radius: 15px;
+    margin: 5px;
+    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+}
+.del-uaer-btn{
+    width: 15px !important;
+    height: 15px !important;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    background-image: var(--no_icon);
+}
+#close-logout{
+    background-image: var(--no_icon);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
 #load{background-image: var(--load_icon);}
 #save-time{background-image: var(--save_icon);}
 #user-btn{background-image: var(--user_icon);}
 #switch-unit{background-image: var(--switch_icon);}
 #cmd-btn{background-image: var(--cmd_icon);}
+#logout-btn{background-image: var(--delUser_icon);}
 @media (max-width: 600px) {
     .control-bar{
         width: 80%;

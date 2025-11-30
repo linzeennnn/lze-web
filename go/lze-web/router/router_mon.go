@@ -10,6 +10,8 @@ func RouterMon(r *gin.Engine) {
 	loginGroup := r.Group("/server/mon")
 	{
 		loginGroup.GET("/list", mon.List)
+		loginGroup.GET("/userList", mon.UserList)
+		loginGroup.DELETE("/userList", mon.DelUserList)
 		loginGroup.POST("/date", mon.Date)
 		loginGroup.POST("/cmd", mon.Cmd)
 		loginGroup.POST("/update_act", mon.UpdateAct)

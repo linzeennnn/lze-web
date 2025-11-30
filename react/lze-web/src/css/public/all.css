@@ -98,6 +98,7 @@
 --cmd_icon: url(../../assets/icon/shell_dark.svg);
 --copy_icon: url(../../assets/icon/copy_dark.svg);
 --cut_icon: url(../../assets/icon/cut_dark.svg);
+--delUser_icon: url(../../assets/icon/delUser_dark.svg);
 --down_icon: url(../../assets/icon/down_dark.svg);
 --download_icon: url(../../assets/icon/download_dark.svg);
 --edit_icon: url(../../assets/icon/edit_dark.svg);
@@ -150,6 +151,7 @@
 --cmd_icon: url(../../assets/icon/shell_light.svg);
 --copy_icon: url(../../assets/icon/copy_light.svg);
 --cut_icon: url(../../assets/icon/cut_light.svg);
+--delUser_icon: url(../../assets/icon/delUser_light.svg);
 --down_icon: url(../../assets/icon/down_light.svg);
 --download_icon: url(../../assets/icon/download_light.svg);
 --edit_icon: url(../../assets/icon/edit_light.svg);

@@ -8,7 +8,7 @@ export default function LogoutBtn(){
         onClick={()=>logout()}
         >
             <div></div>
-            <span>{GetText("logout")}</span>
+            <span>{GetText("exit")}</span>
         </button>
     )
 }
