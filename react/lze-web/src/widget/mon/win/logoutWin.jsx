@@ -90,12 +90,6 @@ async function getUserList(){
          "Authorization": "Bearer " + token
       }
     });
-
-    // 401 单独处理
-    if (res.status === 401) {
-      return []; 
-    }
-
     // 200 正常返回 JSON
     if (res.ok) {
       loadPage(false)
@@ -103,8 +97,6 @@ async function getUserList(){
     }
 
     // 统一处理其他错误
-    notify(GetText("error")+":"+res.status)
-      loadPage(false)
     return [];
 
   } catch (err) {
