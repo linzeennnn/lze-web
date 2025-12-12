@@ -6,13 +6,12 @@ import {ScrollTop} from '../../components/scrollTop'
 import GoTopBtn from '../../components/goTopBtn'
 import HeadBar from '../../components/headBar'
 import GoBack from '../../components/goBack'
-import Tooltip from '../../components/tooltip'
+import Tooltip from '../../components/public/tooltip'
 import '../../css/page/bok.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { InitData, useGlobal } from './global';
 import { useEffect } from 'react';
-
 
 export default function App() {
   const theme=useGlobal(state=>state.theme)

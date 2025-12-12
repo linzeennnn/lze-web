@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
-import {notify} from "../../components/notify";
+import { useNotifyStore } from '../../store/notify';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -74,6 +74,7 @@ fetch(url,{
 }
 // 保存文件
 export function Save_note(newTitle,newContent){
+    const notify=useNotifyStore()
     loadPage(true)
     const user=useGlobal.getState().userName
     const token=useGlobal.getState().token
@@ -92,15 +93,15 @@ export function Save_note(newTitle,newContent){
     }).then((res) => {
         if(!res.ok){
             if(res.status===401){
-                notify(GetText("no_per"))
+                notify.normal(GetText("no_per"))
             }
             else{
-                notify(+":"+res.status)
+                notify.normal(+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify(GetText("op_com"))
+        notify.normal(GetText("op_com"))
         loadPage(false)
         list()
     })
@@ -116,22 +117,23 @@ export function loadPage(isLoad){
 export async function Upload(file, uploadData) {
   const setGlobal = useGlobal.setState;
   const upload = useGlobal.getState().upload;
+    const notify=useNotifyStore()
 
   if (file.size === 0) {
-    notify(GetText("error") + GetText("is_empty"));
+    notify.normal(GetText("error") + GetText("is_empty"));
     setGlobal({ upload: { ...upload, status: false } });
     return;
   }
 
   if (file.size > 1024 * 1024) { 
-    notify(GetText("no_more_than") + "1MB");
+    notify.normal(GetText("no_more_than") + "1MB");
     setGlobal({ upload: { ...upload, status: false } });
     return;
   }
 
   const isTextFile = await isText(file);
   if (!isTextFile) {
-    notify(file.name + GetText("not_text"));
+    notify.normal(file.name + GetText("not_text"));
     setGlobal({ upload: { ...upload, status: false } });
     return;
   }
@@ -161,11 +163,12 @@ export async function Upload(file, uploadData) {
   };
 
   xhr.onload = function () {
+    const notify=useNotifyStore()
     if (xhr.status !== 200) {
       if (xhr.status === 401) {
-        notify(GetText("no_per"));
+        notify.normal(GetText("no_per"));
       } else {
-        notify(GetText("error") + xhr.status);
+        notify.normal(GetText("error") + xhr.status);
       }
       setGlobal({ upload: { ...upload, status: false } });
       return;
@@ -173,13 +176,14 @@ export async function Upload(file, uploadData) {
 
     if (uploadData.sendSize >= uploadData.totalSize) {
       setGlobal({ upload: { ...upload, status: false } });
-      notify(GetText("op_com"));
+      notify.normal(GetText("op_com"));
       list();
     }
   };
 
   xhr.onerror = function () {
-    notify(GetText("error"));
+    const notify=useNotifyStore()
+    notify.normal(GetText("error"));
     setGlobal({ upload: { ...upload, status: false } });
   };
 
@@ -204,6 +208,7 @@ export function DragLeave(e) {
     e.preventDefault();
 }
 export function Drop(e) {
+    const notify=useNotifyStore()
   const global = useGlobal.getState();
   const upload = global.upload;
   const setGlobal = useGlobal.setState;
@@ -224,7 +229,7 @@ export function Drop(e) {
     if (!entry) return;
 
     if (entry.isDirectory) {
-      notify(GetText("not_support_type"));
+      notify.normal(GetText("not_support_type"));
       return;
     }
 
@@ -240,9 +245,10 @@ export function Drop(e) {
   }
 
 async  function maybeUpload() {
+    const notify=useNotifyStore()
     if (pending === 0) {
       if (fileList.length === 0) {
-        notify(GetText("no_select_file"));
+        notify.normal(GetText("no_select_file"));
         return;
       }
 
@@ -303,6 +309,7 @@ function isText(file) {
 }
 // 检查是否能有上传权限
 export async function UploadPermit(){
+    const notify=useNotifyStore()
   const user=useGlobal.getState().userName
   const token=useGlobal.getState().token
   const upload = useGlobal.getState().upload;
@@ -323,10 +330,10 @@ export async function UploadPermit(){
             return true
         }else{
             if(res.status==401){
-                notify(GetText("no_per"))
+                notify.normal(GetText("no_per"))
             }
             else{
-                notify(GetText("error")+":"+res.status)
+                notify.normal(GetText("error")+":"+res.status)
             }
            useGlobal.setState({
               upload: {

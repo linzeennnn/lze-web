@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { notify } from '../../components/notify.jsx'
+import { notify } from '../../components/public/notify.jsx'
 import { GetTheme } from '../../components/getTheme.jsx';
 import { GetLangList} from '../../components/getLang.jsx';
 import { DisableZoom } from '../../components/pub.jsx';
@@ -63,6 +63,7 @@ export function GetText(str) {
   const list = useGlobal.getState().lang.list;
   return list[str] ?? str;   
 }
+// 初始化
 export  async function InitData(){
   DisableZoom()
   // 语言设置

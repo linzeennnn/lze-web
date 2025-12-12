@@ -1,5 +1,5 @@
 import { useGlobal,list,loadPage, GetText } from "../global"
-import { notify } from "../../../components/notify"
+import { notify } from "../../../components/public/notify"
 export default function BokItem({name}){
     return(
         <div className="bookmark main-item"

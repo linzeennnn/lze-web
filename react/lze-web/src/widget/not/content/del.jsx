@@ -1,5 +1,4 @@
 import { useGlobal,list,loadPage, GetText } from "../global"
-import { notify } from "../../../components/notify"
 export default function Del({name}){
     return(
         <button id="del-btn" className="btn"

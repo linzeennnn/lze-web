@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { notify } from '../../components/notify';
+import { notify } from '../../components/public/notify';
 import { PageCom } from '../../components/pageCom';
 // 全局变量
 export const useGlobal = create((set, get) => ({

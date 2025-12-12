@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TopBar from '../../../components/topBar'
 import {useGlobal,list,loadPage, GetText} from '../global'
-import { notify } from '../../../components/notify'
+import { notify } from '../../../components/public/notify'
 export default function BokTopBar(){
     const protocolList=[
         {type: 'none', showName: GetText("no_protocol")},

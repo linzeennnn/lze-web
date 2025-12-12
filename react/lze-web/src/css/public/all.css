@@ -355,6 +355,12 @@ input{
 .notify-text{
   color: var(--text);
 }
+.notify-err{
+  background-color: gray !important;
+}
+.notify-err span{
+  color: red !important;
+}
 .tooltip{
   background-color: var(--bg_color);
   color: var(--text);

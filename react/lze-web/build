@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 npm run build
 rm -rf /opt/lze-web/web/*
 rm -rf ../../server/web/*

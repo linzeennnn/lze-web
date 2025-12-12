@@ -1,5 +1,5 @@
 import { useState,useEffect, useRef } from "react";
-import { notify } from "../../../components/notify";
+import { copy } from "../../../utils/common";
 import Del from "./del";
 import hljs from 'highlight.js/lib/common';
 import 'highlight.js/styles/atom-one-dark.min.css';
@@ -68,24 +68,7 @@ export default function Note({name}){
         </div>
     )
 }
-function copy(text) {
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.style.position = "fixed";  
-  textarea.style.opacity = "0";      
-  document.body.appendChild(textarea);
-  textarea.focus();
-  textarea.select();
 
-  try {
-    document.execCommand("copy");
-    notify(GetText("copy")+" "+GetText("success"));
-  } catch (err) {
-    notify(GetText("error"), err);
-  }
-
-  document.body.removeChild(textarea);
-}
 function get_note(name,setLoaded,setText){
 const url=useGlobal.getState().notUrl+'get_text'
 fetch(url,{
