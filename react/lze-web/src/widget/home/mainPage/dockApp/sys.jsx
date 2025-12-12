@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { GetText } from "../../global"
+import {GetText} from "../../../../utils/common"
 export default function Sys(){
     const [loaded,setLoaded]=useState(false)
     const barList=[

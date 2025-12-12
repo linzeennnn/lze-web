@@ -1,5 +1,5 @@
-import {useGlobal,list,loadPage, GetText} from '../global'
-import { notify } from '../../../components/notify'
+import {useGlobal,list,loadPage} from '../global'
+import { GetText,notify } from '../../../utils/common'
 export default function ActionBar({keyName,Mes}){
     const nowuser=useGlobal((state)=>state.nowuser)
     return(
@@ -37,14 +37,14 @@ function update_act(control,action,name,change){
     }).then(res=>{
         if(!res.ok){
             if(res.status===401){
-                notify(GetText("no_per"))
+                notify.err(GetText("no_per"))
             }else{
-                notify(GetText("error")+":"+res.status)
+                notify.err(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify(GetText("op_com"))
+        notify.normal(GetText("op_com"))
         list()
     })
 }

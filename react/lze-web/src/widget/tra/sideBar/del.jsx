@@ -1,5 +1,6 @@
-import { useGlobal,list,loadPage, GetText } from "../global"
-import { notify } from "../../../components/notify"
+import { useGlobal,list,loadPage } from "../global"
+import { GetText } from '../../../utils/common';
+import { notify } from '../../../utils/common';
 export default function Del(){
 
     const user=useGlobal((state)=>state.userName)
@@ -23,15 +24,15 @@ export default function Del(){
             }).then(res=>{
                 if(!res.ok){
                    if(res.status==401){
-                    notify(GetText("no_per"))
+                    notify.err(GetText("no_per"))
                    }
                    else{
-                    notify(GetText("error")+":"+res.status)
+                    notify.err(GetText("error")+":"+res.status)
                    }
                    loadPage(false)
                    return
                 }
-                notify(GetText("op_com"))
+                notify.normal(GetText("op_com"))
                 list(nowPath)
             })
         }

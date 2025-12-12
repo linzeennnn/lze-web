@@ -1,5 +1,5 @@
-import { useGlobal ,list, GetText} from "../global"
-import { notify } from "../../../components/notify"
+import { useGlobal ,list} from "../global"
+import { GetText } from '../../../utils/common';
 export default function Relaod(){
     return(
         <button id="reload" className="btn side-btn" 

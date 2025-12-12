@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { GetText, InitData, useGlobal } from "../global"
-
+import {InitData, useGlobal } from "../global"
+import {GetText} from "../../../utils/common"
 export default function LoadBtn(){
     const [loading, setLoading] = useState(false)
     const load=useGlobal(state=>state.load)

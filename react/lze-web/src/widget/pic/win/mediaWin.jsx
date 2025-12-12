@@ -1,4 +1,5 @@
-import { GetText, useGlobal } from "../global";
+import {  useGlobal } from "../global";
+import { GetText } from "../../../utils/common";
 import { useRef, useEffect, useState } from "react";
 export default function MediaWin() {
   const setGlobal = useGlobal.setState;

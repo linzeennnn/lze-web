@@ -1,16 +1,17 @@
 import Content from '../../../components/content'
-import {notify} from '../../../components/notify'
-import {GetText, useGlobal} from '../global'
+import { notify } from '../../../utils/common';
+import {useGlobal} from '../global'
+import { GetText } from '../../../utils/common';
 import FileItem from './fileItem';
 export default function TraContent(){
     const tra_click = (name) => {
       let tmp = [...selected];
       if (tmp.includes(name)) {
         tmp.splice(tmp.indexOf(name), 1);
-        notify(GetText("cancel"));
+        notify.normal(GetText("cancel"));
       } else {
         tmp.push(name);
-        notify(GetText("selected")+tmp.length+GetText("file"))
+        notify.normal(GetText("selected")+tmp.length+GetText("file"))
       }
       setGlobal({ selected: tmp }); // 更新 selected
     };

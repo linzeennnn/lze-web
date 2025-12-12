@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { GetText, useGlobal } from "../global";
+import {useGlobal } from "../global";
+import { GetText } from '../../../utils/common';
 
 export default function UserPro({Mes}){
     const[showuser,setShowUser] = useState(false)

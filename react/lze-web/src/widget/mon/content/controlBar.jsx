@@ -1,6 +1,6 @@
 import { useState } from "react"
 import ActionBar from "./actionBar"
-import { GetText } from "../global"
+import { GetText } from '../../../utils/common';
 export default function ControlBar({keyName,Mes}) {
     const [showAction,setShowAction]=useState(false)
     return (

@@ -1,4 +1,5 @@
-import { GetText, useGlobal } from "../../global";
+import { useGlobal } from "../../global";
+import {GetText} from "../../../../utils/common"
 import { Get_system_theme, SetThemeColor } from "../../../../components/getTheme";
 import { useState } from "react";
 export default function Theme() {

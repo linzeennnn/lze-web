@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import Content from  "../../../components/content";
 import ImgPage from "./imgPage";
 import VidPage from "./vidPage";

@@ -1,5 +1,5 @@
-import { GetText, useGlobal } from "../global"
-
+import { useGlobal } from "../global"
+import {GetText} from "../../../utils/common"
 export default function User({setSwitch}){
     const user=useGlobal(state=>state.userName)
     return(

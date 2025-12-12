@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import { notify } from '../../components/notify';
+import { notify } from "../../utils/common";
 import { PageCom } from '../../components/pageCom';
+import { GetText } from "../../utils/common";
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -12,7 +13,6 @@ export const useGlobal = create((set, get) => ({
   dirList: [],
   uploading: false,
   showBg: false,
-  langList:[],
   pageNum:1,
     theme:{
       mode:"",
@@ -43,10 +43,6 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
-// 获取文本
-export  function GetText(str){
-  return useGlobal.getState().langList[str]
-}
 // 初始化
 export function InitData(){
 PageCom(useGlobal.setState,"pic")
@@ -128,7 +124,7 @@ export function loadPage(isLoad){
 // 上传文件
 export function Upload(file, uploadData) {
   if (file.size == 0) {
-    notify(file.name + GetText("is_empty"));
+    notify.err(file.name + GetText("is_empty"));
     return;
   }
 
@@ -151,7 +147,7 @@ export function Upload(file, uploadData) {
     showVideo = true;
     setGlobal({ imgPage: false });
   } else {
-    notify(file.name + ":" + GetText("not_support_type"));
+    notify.err(file.name + ":" + GetText("not_support_type"));
     setGlobal({
       upload: { ...upload, status: false },
     });
@@ -166,7 +162,7 @@ export function Upload(file, uploadData) {
   function uploadChunk() {
     if (uploadData.sendSize >= uploadData.totalSize) {
       setGlobal({ upload: { ...upload, status: false } });
-      notify(GetText("op_com"));
+      notify.normal(GetText("op_com"));
       list(nowPath, showVideo);
       return;
     }
@@ -205,9 +201,9 @@ export function Upload(file, uploadData) {
     xhr.onload = function () {
       if (xhr.status !== 200) {
         if (xhr.status === 401) {
-          notify(GetText("no_per"));
+          notify.err(GetText("no_per"));
         } else {
-          notify(GetText("error") + ":" + xhr.status + xhr.responseText);
+          notify.err(GetText("error") + ":" + xhr.status + xhr.responseText);
         }
         setGlobal({ upload: { ...upload, status: false } });
         return;
@@ -272,7 +268,7 @@ export function Drop(e) {
     if (!entry) return;
 
     if (entry.isDirectory) {
-      notify(GetText("not_support_type"));
+      notify.err(GetText("not_support_type"));
       return;
     }
 
@@ -290,7 +286,7 @@ export function Drop(e) {
 async  function maybeUpload() {
     if (pending === 0) {
       if (fileList.length === 0) {
-        notify(GetText("empty"));
+        notify.err(GetText("empty"));
         return;
       }
 
@@ -342,10 +338,10 @@ export async function UploadPermit(){
             return true
         }else{
             if(res.status==401){
-                notify(GetText("no_per"))
+                notify.err(GetText("no_per"))
             }
             else{
-                notify(GetText("error")+":"+res.status)
+                notify.err(GetText("error")+":"+res.status)
             }
            useGlobal.setState({
               upload: {

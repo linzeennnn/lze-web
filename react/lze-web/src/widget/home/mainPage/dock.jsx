@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Lang from "./dockApp/lang";
 import Sys from "./dockApp/sys";
 import Theme from "./dockApp/theme";
-import {GetText, useGlobal} from "../global";
-
+import {useGlobal} from "../global";
+import {GetText} from "../../../utils/common"
 export default function Dock({tmpLoad,setTmpLoad}) {
   const showBg = useGlobal(state => state.showBg);
   const setGlobal = useGlobal(state => state.setGlobal);

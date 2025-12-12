@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { notify } from "../../../../components/notify";
-import { GetText, GetWidgetData, useGlobal,encodeUserMes } from "../../global";
+import { notify } from "../../../../utils/common";
+import { GetWidgetData, useGlobal,encodeUserMes } from "../../global";
+import {GetText} from "../../../../utils/common"
 import SendBtn from "./sendBtn";
 export default function RegPage({para}) {
   const [userData, setUserData] = useState({
@@ -62,20 +63,20 @@ async function register(name, password, para) {
 
     if (!res.ok) {
       if (res.status === 401) {
-        notify(GetText(text));
+        notify.err(GetText(text));
       } else {
-        notify(res.status + GetText("error"));
+        notify.err(res.status + GetText("error"));
       }
       para.setLoading(false);
       return;
     }
 
-    notify(GetText("op_com"));
+    notify.normal(GetText("op_com"));
     para.afterSend();
 
   } catch (err) {
     console.error(err);
-    notify("Network error");
+    notify.err("Network error");
     para.setLoading(false);
   }
 }

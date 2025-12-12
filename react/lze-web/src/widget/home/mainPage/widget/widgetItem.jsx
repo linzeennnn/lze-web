@@ -1,4 +1,4 @@
-import { GetText } from "../../global";
+import {GetText} from "../../../../utils/common"
 import {useState } from "react";
 import Panel from './panel'
 export default function WidgetItem({ theme, item, to_next, widgetData }){

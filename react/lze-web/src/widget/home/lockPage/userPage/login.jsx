@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { notify } from "../../../../components/notify";
-import { GetText, GetWidgetData, useGlobal,encodeUserMes } from "../../global";
+import { notify } from "../../../../utils/common";
+import { GetWidgetData, useGlobal,encodeUserMes } from "../../global";
+import {GetText} from "../../../../utils/common"
 import SendBtn from "./sendBtn";
 export default function LoginPage({para}){
   const [userData, setUserData] = useState({
@@ -58,10 +59,10 @@ async function login(name,password,para){
     .then(res=>{
         if(!res.ok){
             if(res.status===401){
-                notify(GetText("acc_or_pas_err"))
+                notify.err(GetText("acc_or_pas_err"))
             }
             else{
-                notify(res.status+GetText("error"))
+                notify.err(res.status+GetText("error"))
             }
             para.setLoading(false)
             throw new Error(res.status);
@@ -76,7 +77,7 @@ async function login(name,password,para){
           token:data.token
         })
         GetWidgetData()
-        notify(GetText("login")+":"+name)
+        notify.normal(GetText("login")+":"+name)
         para.afterSend()
     })
 

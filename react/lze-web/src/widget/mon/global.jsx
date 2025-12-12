@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
+import { GetText } from '../../utils/common';
 // 全局变量
 export const useGlobal = create((set, get) => {
   const storedUser = window.localStorage.getItem('userName');
@@ -31,11 +32,6 @@ export const useGlobal = create((set, get) => {
     getGlobal: () => get(),
   };
 });
-
-// 获取文本
-export  function GetText(str){
-  return useGlobal.getState().langList[str] ||str
-}
 // 初始化
 export function InitData(){
 PageCom(useGlobal.setState,"mon")

@@ -1,4 +1,5 @@
-import { useGlobal ,Upload,UploadPermit, GetText} from "../global";
+import { useGlobal ,Upload,UploadPermit} from "../global";
+import { GetText } from '../../../utils/common';
 import { WinBg } from "../../../components/winBg";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState

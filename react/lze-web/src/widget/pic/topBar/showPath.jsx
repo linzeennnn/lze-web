@@ -1,4 +1,5 @@
-import { useGlobal,list, GetText } from "../global";
+import { useGlobal,list } from "../global";
+import { GetText } from "../../../utils/common";
 export default function ShowPath(){
     const nowPath=useGlobal((state)=>state.nowPath)
     const parentPath=useGlobal((state)=>state.parentPath)

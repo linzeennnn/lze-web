@@ -1,4 +1,4 @@
-import { GetText} from "../../global";
+import {GetText} from "../../../../utils/common"
 export default function SendBtn({loading,send}){
     return(
         <>

@@ -1,7 +1,11 @@
-import { notify } from "../store/notify";
+import { showNotify } from "../store/notify";
 import { getLang, setLang } from "../store/lang";
-
-////////////////通知//////////////////
+// /////////////////通知////////////////
+export const notify = {
+  normal: (text) => showNotify.normal(text),
+  err: (text) => showNotify.err(text)
+};
+////////////////复制//////////////////
 export function copy(text) {
   navigator.clipboard.writeText(text)
     .then(() => {
@@ -18,39 +22,26 @@ export function copy(text) {
 }
 
 //////////////获取文本//////////////////
-export async function GetText(str) {
+export function GetText(key) {
+  const currentLang = getLang();
+  return currentLang.list?.[key] ?? key;
+}
+
+///////////////////判空逻辑独立成函数 ///////////////////
+export async function CheckLang(remote=false) {
   let currentLang = getLang();
 
-  // 判断对象是否为空
-  if (!currentLang.list || Object.keys(currentLang.list).length === 0) {
+  // 缺语言包 → 拉取
+  if (!currentLang.list || Object.keys(currentLang.list).length === 0||remote) {
     const tmpLang = await GetLangList();
     setLang(tmpLang);
-    currentLang = tmpLang; // 使用最新获取的值
   }
-
-  return currentLang.list[str] ?? str;
 }
 
-function GetLangType() {
-  const langList = ['en', 'zh'];
-  let sysLang = (navigator.language || navigator.userLanguage).split('-')[0];
-  if (!langList.includes(sysLang)) sysLang = 'en';
-
-  // 获取用户选择
-  let lang = localStorage.getItem('lang');
-  let type = (!lang || lang === 'system') ? sysLang : lang;
-
-  // 尝试从本地存储获取 langList，保证是对象
-  let list = JSON.parse(localStorage.getItem('langList') || '{}');
-
-  return { userSelect: lang || 'system', type, list };
-}
-
+///////////////////  拉取语言包 ///////////////////
 export async function GetLangList() {
   const lang = GetLangType();
 
-  // 判断对象是否为空
-  if (!lang.list || Object.keys(lang.list).length === 0) {
     try {
       const response = await fetch(window.location.origin + "/server/lang", {
         method: "POST",
@@ -59,14 +50,28 @@ export async function GetLangList() {
       });
 
       const data = await response.json();
-      // 确保 list 是对象
-      lang.list = (data && typeof data === 'object') ? data : {};
-      localStorage.setItem('langList', JSON.stringify(lang.list));
+      lang.list = (data && typeof data === "object") ? data : {};
+
+      localStorage.setItem("langList", JSON.stringify(lang.list));
     } catch (err) {
-      console.error("获取语言列表失败：", err);
+      console.error(err);
       lang.list = {};
     }
-  }
 
   return lang;
+}
+
+/////////////////// 保留语言类型逻辑 ///////////////////
+function GetLangType() {
+  const langList = ['en', 'zh'];
+  let sysLang = (navigator.language || navigator.userLanguage).split('-')[0];
+  if (!langList.includes(sysLang)) sysLang = 'en';
+
+  // 用户选择
+  let lang = localStorage.getItem('lang');
+  let type = (!lang || lang === 'system') ? sysLang : lang;
+
+  let list = JSON.parse(localStorage.getItem('langList') || '{}');
+
+  return { userSelect: lang || 'system', type, list };
 }

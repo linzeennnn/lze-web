@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
-import { GetText, useGlobal,loadPage } from "../global"
-import { notify } from "../../../components/notify";
+import { GetText ,notify} from '../../../utils/common';
+import { useGlobal,loadPage } from "../global"
 export default function CmdWin(){
     const showCmd=useGlobal(state=>state.showCmd)
     const [output,setOutput]=useState("输出")
@@ -15,7 +15,7 @@ export default function CmdWin(){
     },[])
    const saveCmd = (title, cmd) => {
     if(cusTitle==""||cusCmd==""){
-        notify(GetText("none"))
+        notify.normal(GetText("none"))
         return
     }
     setCusTitle("")
@@ -23,7 +23,7 @@ export default function CmdWin(){
     const newList = [...cmdList, { title, cmd }]
     setCmdList(newList)
     localStorage.setItem("cmdList", JSON.stringify(newList))
-    notify(GetText("op_com") )
+    notify.normal(GetText("op_com") )
 }
    const delCmd = (index) => {
     if(!confirm(GetText("are_you_sure")))
@@ -116,9 +116,9 @@ function sendCmd(cmd,setOutput){
         ).then(res=>{
             if(!res.ok){
                 if(res.status==401){
-                    notify(GetText("no_per"))
+                    notify.err(GetText("no_per"))
                 }else{
-                    notify(GetText("error")+":"+res.status)
+                    notify.err(GetText("error")+":"+res.status)
                 }
                 loadPage(false)
                 return

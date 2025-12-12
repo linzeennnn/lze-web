@@ -1,8 +1,9 @@
 import { create } from 'zustand';
-import { notify } from '../../components/public/notify.jsx'
+import { notify } from '../../utils/common.js'
 import { GetTheme } from '../../components/getTheme.jsx';
-import { GetLangList} from '../../components/getLang.jsx';
+// import { GetText } from '../../utils/common.js';
 import { DisableZoom } from '../../components/pub.jsx';
+import { CheckLang } from '../../utils/common.js';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'guest';
   let token = window.localStorage.getItem('token') || '';
@@ -12,11 +13,6 @@ export const useGlobal = create((set, get) => {
     token:"",
     showBg: false,
     locked:true,
-    lang:{
-      type:"",
-      list:[],
-      userSelect:""
-    },
     theme:{
       mode:"",
       color:{
@@ -58,18 +54,11 @@ export const useGlobal = create((set, get) => {
     },
   };
 });
-// 获取文本
-export function GetText(str) {
-  const list = useGlobal.getState().lang.list;
-  return list[str] ?? str;   
-}
 // 初始化
 export  async function InitData(){
   DisableZoom()
-  // 语言设置
-  useGlobal.setState({
-    lang:await GetLangList()
-  })
+// 拉取语言包
+await CheckLang(true)
 // 用户信息
     let userName=localStorage.getItem("userName")
     let token =localStorage.getItem("token")
@@ -113,10 +102,10 @@ GetWidgetData();
     .then(res=>{
         if(!res.ok){
             if(res.status===401){
-                notify(GetText("log_outdate"))
+                notify.err(GetText("log_outdate"))
             }
             else{
-                notify(res.status)
+                notify.err(res.status)
             }
             window.localStorage.setItem('userName',"guest");
             window.localStorage.setItem('token',"");

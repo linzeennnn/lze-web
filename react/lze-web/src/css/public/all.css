@@ -329,6 +329,7 @@ input{
   z-index: 100;
 }
 .notify{
+  pointer-events: none;
   left: 50%;
   top: 200px;
   transform: translateX(-50%);

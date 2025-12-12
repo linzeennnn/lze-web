@@ -2,7 +2,7 @@ import { InitData, useGlobal } from "./global";
 import MainPage from "./mainPage/mainPage";
 import LockPage from "./lockPage/lockPage";
 import { useEffect } from "react";
-import Tooltip from "../../components/tooltip";
+import PublicWidget from "../../components/public/publicWidget";
 import '../../css/page/home.css'
 import '../../css/public/all.css'
 export default function App() {
@@ -16,7 +16,7 @@ export default function App() {
         <LockPage />
         <MainPage />
         <div className="wallpaper"></div>
-        <Tooltip/>
+        <PublicWidget/>
         </div>
     )
 }

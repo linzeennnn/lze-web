@@ -1,5 +1,7 @@
-import { notify } from "../../../components/notify"
-import { useGlobal,list,loadPage, GetText } from "../global"
+
+import { notify } from "../../../utils/common";
+import { useGlobal,list,loadPage} from "../global"
+import { GetText } from '../../../utils/common';
 export default function Del(){
     return(
         <button id="del" className="btn side-btn"
@@ -25,14 +27,14 @@ function delete_file(){
        })
        .then(res=>{
         if(res.ok){
-            notify(GetText("op_com"))
+            notify.normal(GetText("op_com"))
             list(global.nowPath)
         }else{
             if(res.status==401){
-                notify(GetText("no_per"))
+                notify.err(GetText("no_per"))
             }
             else{
-                notify(GetText("error")+":"+res.status)
+                notify.err(GetText("error")+":"+res.status)
             }
             loadPage(false)
         }

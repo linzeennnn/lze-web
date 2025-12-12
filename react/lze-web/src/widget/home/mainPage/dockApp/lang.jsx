@@ -1,8 +1,10 @@
-import { GetText, useGlobal } from "../../global"
-import { GetLangList } from "../../../../components/getLang"
+import { useGlobal } from "../../global"
+import {GetText} from "../../../../utils/common"
+import { GetLangList } from "../../../../utils/common"
 import { useState } from "react"
+import { useLangStore,setLang } from "../../../../store/lang"
 export default function Lang(){
-    const lang=useGlobal(state=>state.lang)
+    const lang=useLangStore((state)=>state.lang)
     const [showList,setShowList]=useState(false)
     const list={
         system:GetText("system"),
@@ -18,9 +20,7 @@ export default function Lang(){
                     onClick={async ()=>{
                         localStorage.setItem("lang",key)
                         setShowList(false)
-                          useGlobal.setState({
-                            lang:await GetLangList()
-                          })
+                          setLang(await GetLangList())
                     }}
                     >
                         <span>{value}</span>

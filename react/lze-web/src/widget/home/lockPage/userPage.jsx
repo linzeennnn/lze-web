@@ -1,7 +1,7 @@
 import  LoginPage  from "./userPage/login";
 import  ModPasPage  from "./userPage/modPas";
 import  Reg  from "./userPage/reg";
-import { GetText} from "../global";
+import {GetText} from "../../../utils/common"
 import { useState } from "react";
 export default function UserPage({setSwitch}) {
   const [loading, setLoading] = useState(false)

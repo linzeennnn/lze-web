@@ -6,7 +6,7 @@ import {ScrollTop} from '../../components/scrollTop'
 import GoTopBtn from '../../components/goTopBtn'
 import HeadBar from '../../components/headBar'
 import GoBack from '../../components/goBack'
-import Tooltip from '../../components/tooltip'
+import PublicWidget from "../../components/public/publicWidget";
 import '../../css/page/tra.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
@@ -29,7 +29,7 @@ export default function App() {
       <TraContent></TraContent>
       <TraWin/>
       </ScrollTop>
-    <Tooltip/>
+      <PublicWidget/>
     </div>
   );
 }

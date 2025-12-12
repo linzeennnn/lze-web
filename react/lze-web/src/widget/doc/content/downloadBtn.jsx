@@ -1,5 +1,6 @@
-import { GetText, useGlobal ,loadPage} from "../global"
-import { notify } from "../../../components/notify";
+import { useGlobal ,loadPage} from "../global"
+import { GetText } from '../../../utils/common';
+import { notify } from "../../../utils/common";
 export default function DownloadBtn({fileMes}){
     const global=useGlobal.getState()
    
@@ -39,9 +40,9 @@ function DownLoadFile(path,isFile){
       return res.text(); // 返回 Promise
     } else {
       if(res.status == 401){
-        notify(GetText("no_per"));
+        notify.err(GetText("no_per"));
       } else {
-        notify(GetText("error") + ":" + res.status);
+        notify.normal(GetText("error") + ":" + res.status);
       }
       throw new Error("HTTP error " + res.status); // 抛出错误阻止继续执行
     }

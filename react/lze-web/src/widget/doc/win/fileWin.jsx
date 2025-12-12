@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react"
-import { GetText, useGlobal } from "../global"
+import { useGlobal } from "../global"
 
+import { GetText } from '../../../utils/common';
 export default function FileWin(){
     const [fullScreen,setFullScreen]=useState(false)
     const fileWin=useGlobal(state=>state.fileWin)

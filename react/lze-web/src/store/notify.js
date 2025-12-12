@@ -15,7 +15,7 @@ export const useNotifyStore = create((set) => ({
     setTimeout(() => set({ show: false }), 1000);
   }
 }));
-export const notify = {
+export const showNotify = {
   normal: (text) => useNotifyStore.getState().normal(text),
   err: (text) => useNotifyStore.getState().err(text)
 };

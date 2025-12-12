@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
-import { GetText, useGlobal,loadPage } from "../global"
-import { notify } from "../../../components/notify";
+import {useGlobal,loadPage } from "../global"
+import { GetText,notify } from '../../../utils/common';
 export default function LogoutWin(){
     const [userList,setUserList]=useState([])
     const showLogout=useGlobal(state=>state.showLogout)
@@ -52,12 +52,12 @@ function removeUser(name, setUserList) {
   })
   .then(res => {
     if (res.status === 401||res.status === 405) {
-       notify(GetText("no_per"))
+       notify.err(GetText("no_per"))
       loadPage(false);
       return null; // 不继续处理
     }
     if (!res.ok) {
-    notify(GetText("error")+":"+res.status)
+    notify.err(GetText("error")+":"+res.status)
       loadPage(false);
       return null;
     }
@@ -65,7 +65,7 @@ function removeUser(name, setUserList) {
   })
   .then(data => {
     if (data) {
-        notify(GetText("op_com"))
+        notify.normal(GetText("op_com"))
       setUserList(data); // 更新用户列表
     }
   })

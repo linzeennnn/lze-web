@@ -1,5 +1,7 @@
-import {useGlobal,list,loadPage, GetText} from '../global'
-import {notify} from '../../../components/notify'
+import {useGlobal,list,loadPage} from '../global'
+
+import { notify } from "../../../utils/common";
+import { GetText } from '../../../utils/common';
 export default function Paste({paste,copyList}){
     const[pastestatus,setPastestatus]=paste
     
@@ -17,7 +19,7 @@ function paste_file(type,copylist){
     const global=useGlobal.getState()
     
     if(copylist.length==0){
-        notify(GetText("no_select_file"))
+        notify.err(GetText("no_select_file"))
         return
     }
     loadPage(true)
@@ -46,15 +48,15 @@ function paste_file(type,copylist){
         body:JSON.stringify(send_data)})
         .then(res=>{
             if(res.ok){
-                notify(GetText("op_com"))
+                notify.normal(GetText("op_com"))
                 list(nowpath)
             }
             else{
                 if(res.status==401){
-                    notify(GetText("no_per"))
+                    notify.err(GetText("no_per"))
                 }
                 else{
-                    notify(GetText("error")+":"+res.status)
+                    notify.err(GetText("error")+":"+res.status)
                 }
                 loadPage(false)
             }

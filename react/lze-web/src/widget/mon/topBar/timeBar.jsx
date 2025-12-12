@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useGlobal,list,loadPage, GetText } from "../global";
-import { notify } from "../../../components/notify";
+import { GetText, notify  } from '../../../utils/common';
+import { useGlobal,list,loadPage } from "../global";
 export default function TimeBar() {
     const unitList = {
         never: GetText("never"),
@@ -37,7 +37,7 @@ export default function TimeBar() {
             timeStr="never"
         }else{
             if(!(num>=0)){
-                notify(GetText("not_correct"))
+                notify.err(GetText("not_correct"))
                 return
             }
 
@@ -105,14 +105,14 @@ function updata_time(name,time){
     ).then(res=>{
         if(!res.ok){
             if(res.status==401){
-                notify(GetText("no_per"))
+                notify.err(GetText("no_per"))
             }else{
-                notify(GetText("error")+":"+res.status)
+                notify.err(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify(GetText("op_com"))
+        notify.normal(GetText("op_com"))
         list()
     })
     

@@ -1,4 +1,4 @@
-import { GetText, useGlobal } from "../../global";
+import { useGlobal } from "../../global";
 import WidgetItem from "./widgetItem";
 export default function Widget({tmpLoad}) {
     const locked = useGlobal(state => state.locked);

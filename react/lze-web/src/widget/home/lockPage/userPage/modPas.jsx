@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { notify } from "../../../../components/notify";
-import { GetText,encodeUserMes,useGlobal } from "../../global";
+import { notify } from "../../../../utils/common";
+import { encodeUserMes,useGlobal } from "../../global";
+import {GetText} from "../../../../utils/common"
 import SendBtn from "./sendBtn";
 export default function ModPasPage({para}){
   const [userData, setUserData] = useState({
@@ -56,16 +57,16 @@ const userMes=await encodeUserMes(JSON.stringify({oldPas,newPas}))
     .then(res=>{
         if(!res.ok){
             if(res.status===401){
-                notify(GetText("acc_or_pas_err"))
+                notify.err(GetText("acc_or_pas_err"))
             }
             else{
-                notify(res.status+GetText("error"))
+                notify.err(res.status+GetText("error"))
             }
             para.setLoading(false)
             throw new Error(res.status);
         }})
     .then(data=>{
-        notify(GetText("op_com"))
+        notify.normal(GetText("op_com"))
         para.afterSend()
     })
 

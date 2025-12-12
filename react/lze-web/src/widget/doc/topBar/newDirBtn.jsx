@@ -1,4 +1,5 @@
-import {GetText, useGlobal} from '../global';
+
+import { GetText } from '../../../utils/common';
 
 export default function NewDirBtn({createStatus}) {
   const [creating, setCreating] = createStatus

@@ -1,6 +1,6 @@
-import { notify } from "../../../components/notify";
-import { GetText, GetWidgetData, useGlobal } from "../global";
-
+import { notify } from "../../../utils/common";
+import {GetWidgetData, useGlobal } from "../global";
+import {GetText} from "../../../utils/common"
 export default function LogoutBtn(){
     const user=useGlobal(state=>state.userName)
     return(
@@ -21,6 +21,6 @@ function logout(){
         token:""
     })
     GetWidgetData()
-    notify(GetText('logout'))
+    notify.normal(GetText('logout'))
     }
 }

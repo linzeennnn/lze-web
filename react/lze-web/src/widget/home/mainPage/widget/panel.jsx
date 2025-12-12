@@ -1,7 +1,7 @@
 import React from "react";
-import { notify } from "../../../../components/notify";
-import { GetText, useGlobal } from "../../global";
-
+import { notify } from "../../../../utils/common";
+import { useGlobal } from "../../global";
+import {GetText} from "../../../../utils/common"
 export default function Panel({showItem,type,show}){
     return(
         <div className={"widget-panel "+(show?"widget-hide":"")} key={type+"panel"}>
@@ -65,12 +65,12 @@ return (<span className="panel-text panel-text-null">{GetText("empty")}</span>)
 }
 function openListWin(type,name){
     if(type=="tra"){
-        notify(GetText("recent_delete")+":"+name)
+        notify.normal(GetText("recent_delete")+":"+name)
         return
     }
     if(type=="mon"){
         const user=useGlobal.getState().userName
-        notify(GetText("current_user")+":"+user)
+        notify.normal(GetText("current_user")+":"+user)
         return
     }
     if((type!="pic"&&name!="")||

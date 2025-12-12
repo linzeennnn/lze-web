@@ -1,5 +1,6 @@
 import { useState } from "react"
-import {useGlobal,list, GetText} from '../global'
+import { GetText } from "../../../utils/common";
+import {useGlobal,list} from '../global'
 export default function DirList(){
     const[showList,setShowList]=useState(false)
     const dirList=useGlobal((state)=>state.dirList)

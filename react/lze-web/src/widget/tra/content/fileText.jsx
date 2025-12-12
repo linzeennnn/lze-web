@@ -1,4 +1,5 @@
-import {GetText, list,useGlobal} from '../global'
+import {list,useGlobal} from '../global'
+import { GetText } from '../../../utils/common';
 export default function FileText({fileMes}){
     const nowPath = useGlobal((state) => state.nowPath);
     return(

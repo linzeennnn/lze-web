@@ -1,4 +1,5 @@
-import { GetText } from "../global";
+
+import { GetText } from '../../../utils/common';
 
 export default function EditBtn({name,editing,newName,rename}){
     const [editMode, setEditMode] = editing;

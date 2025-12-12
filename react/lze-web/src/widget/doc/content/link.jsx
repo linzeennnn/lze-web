@@ -1,6 +1,8 @@
-import { notify } from "../../../components/public/notify"
-import { GetText, useGlobal, loadPage } from "../global"
 
+import { notify } from "../../../utils/common";
+import { useGlobal, loadPage } from "../global"
+
+import { GetText } from '../../../utils/common';
 export default function Link({ name }) {
   return (
     <button
@@ -33,9 +35,9 @@ async function getLink(name) {
 
     if (!res.ok) {
       if (res.status === 401) {
-        notify(GetText("no_per"));
+        notify.err(GetText("no_per"));
       } else {
-        notify(GetText("error") + ":" + res.status);
+        notify.err(GetText("error") + ":" + res.status);
       }
       throw new Error("HTTP error " + res.status);
     }
@@ -63,9 +65,9 @@ async function copy(text) {
     // 使用 Clipboard API
     try {
       await navigator.clipboard.writeText(text);
-      notify(GetText("copy") + " " + GetText("success"));
+      notify.normal(GetText("copy") + " " + GetText("success"));
     } catch (err) {
-      notify(GetText("error"), err);
+      notify.err(GetText("error"), err);
       console.error("Clipboard API failed:", err);
     }
   } else {
@@ -79,9 +81,9 @@ async function copy(text) {
     textarea.select();
     try {
       document.execCommand("copy");
-      notify(GetText("copy") + " " + GetText("success"));
+      notify.normal(GetText("copy") + " " + GetText("success"));
     } catch (err) {
-      notify(GetText("error"), err);
+      notify.err(GetText("error"), err);
       console.error("execCommand fallback failed:", err);
     }
     document.body.removeChild(textarea);

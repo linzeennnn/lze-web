@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../../components/winBg"
-import { GetText, useGlobal } from "../../global"
+import {  useGlobal } from "../../global"
+import {GetText} from "../../../../utils/common"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)
     const theme=useGlobal(state=>state.theme)

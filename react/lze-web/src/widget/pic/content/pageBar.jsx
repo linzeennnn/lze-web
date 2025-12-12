@@ -1,5 +1,6 @@
-import { GetText, useGlobal } from "../global";
-import { notify } from "../../../components/notify";
+import { useGlobal } from "../global";
+import { notify } from "../../../utils/common";
+import { GetText } from "../../../utils/common";
 import { useState } from "react";
 export default function PageBar(){
     const [inputPage, setInputPage] = useState("")
@@ -16,7 +17,7 @@ export default function PageBar(){
         else if(num==pageNum)
         {}
         else
-            notify(GetText("page_num")+GetText("not_correct"))
+            notify.err(GetText("page_num")+GetText("not_correct"))
     }
     return(
         <div id="page-bar">

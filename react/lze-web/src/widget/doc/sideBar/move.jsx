@@ -1,4 +1,5 @@
-import { GetText, useGlobal } from "../global"
+import {  useGlobal } from "../global"
+import { GetText } from '../../../utils/common';
 export default function Move({setPaste,setCopyList}){
     return(
         <button id="move" className="btn side-btn"
