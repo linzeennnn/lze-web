@@ -1,5 +1,6 @@
 import {useGlobal,list,loadPage} from '../global'
 import { GetText,notify } from '../../../utils/common'
+import { confirmWin } from '../../../utils/confirmWin'
 export default function ActionBar({keyName,Mes}){
     const nowuser=useGlobal((state)=>state.nowuser)
     return(
@@ -16,9 +17,9 @@ export default function ActionBar({keyName,Mes}){
         >{GetText(Mes.name)}</div>
     )
 }
-function update_act(control,action,name,change){
+async function update_act(control,action,name,change){
     let ch=GetText(change)
-    if(!confirm(ch+"?")){
+    if(!await confirmWin.normal(ch+"?")){
         return
     }
     loadPage(true)

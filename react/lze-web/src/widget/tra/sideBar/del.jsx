@@ -1,5 +1,5 @@
 import { useGlobal,list,loadPage } from "../global"
-import { GetText } from '../../../utils/common';
+import { GetText,confirmWin } from '../../../utils/common';
 import { notify } from '../../../utils/common';
 export default function Del(){
 
@@ -7,8 +7,8 @@ export default function Del(){
     const token=useGlobal((state)=>state.token)
     const nowPath=useGlobal((state)=>state.nowPath)
     const url=useGlobal((state)=>state.traUrl)+"del"
-        const clean=()=>{
-            if(!confirm(GetText("are_you_sure"))){
+        const clean=async ()=>{
+            if(!await confirmWin.normal(GetText("are_you_sure"))){
                 return
             }
             loadPage(true)

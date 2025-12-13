@@ -1,6 +1,7 @@
 import { useGlobal ,loadPage} from "../global"
 import { GetText } from '../../../utils/common';
 import { notify } from "../../../utils/common";
+import { confirmWin } from "../../../utils/common";
 export default function DownloadBtn({fileMes}){
     const global=useGlobal.getState()
    
@@ -19,8 +20,8 @@ export default function DownloadBtn({fileMes}){
     )
 }
 // 下载文件
-function DownLoadFile(path,isFile){
-  if (!confirm(GetText("are_you_sure"))){
+async function DownLoadFile(path,isFile){
+  if (!await confirmWin.normal(GetText("are_you_sure"))){
     return
   }
   const global = useGlobal.getState();

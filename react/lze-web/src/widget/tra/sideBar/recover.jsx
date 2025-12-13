@@ -1,6 +1,6 @@
 import { useGlobal,list,loadPage } from "../global"
 import { GetText } from '../../../utils/common';
-import { notify } from '../../../utils/common';
+import { notify,confirmWin } from '../../../utils/common';
 export default function Recover(){
     const user=useGlobal((state)=>state.userName)
     const token=useGlobal((state)=>state.token)
@@ -8,12 +8,12 @@ export default function Recover(){
     const source_path=useGlobal((state)=>state.source_path)
     const nowPath=useGlobal((state)=>state.nowPath)
     const url=useGlobal((state)=>state.traUrl)+"recover"
-    const recover=()=>{
+    const recover=async ()=>{
         if(recover_list.length==0){
             notify.err(GetText("no_select_file"))
             return
         }
-        if(!confirm(GetText("are_you_sure"))){
+        if(!await confirmWin.normal(GetText("are_you_sure"))){
             return
         }
         loadPage(true)

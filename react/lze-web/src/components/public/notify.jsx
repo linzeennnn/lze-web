@@ -7,4 +7,3 @@ export default function Notify(){
     </div>
   )
 }
-export const notify=()=>{}

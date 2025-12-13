@@ -316,7 +316,7 @@
      text-decoration: underline;
     text-decoration-line: underline;
   white-space: normal;
-  word-wrap: break-word;   /* 旧名，兼容性好 */
+  word-wrap: break-word;   
   overflow-wrap: break-word;
 }
 #link-win span:hover{

@@ -1,9 +1,24 @@
 import { showNotify } from "../store/notify";
 import { getLang, setLang } from "../store/lang";
+import { useConfirmStore } from "../store/confirm";
 // /////////////////通知////////////////
 export const notify = {
   normal: (text) => showNotify.normal(text),
   err: (text) => showNotify.err(text)
+};
+////////////////////确认框///////////
+export const confirmWin = {
+  normal: (text) => {
+    return new Promise((resolve) => {
+      useConfirmStore.getState().normal(text, resolve);
+    });
+  },
+
+  err: (text) => {
+    return new Promise((resolve) => {
+      useConfirmStore.getState().err(text, resolve);
+    });
+  }
 };
 ////////////////复制//////////////////
 export function copy(text) {

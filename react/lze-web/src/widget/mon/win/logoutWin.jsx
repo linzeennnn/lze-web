@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
 import {useGlobal,loadPage } from "../global"
-import { GetText,notify } from '../../../utils/common';
+import { GetText,notify,confirmWin } from '../../../utils/common';
 export default function LogoutWin(){
     const [userList,setUserList]=useState([])
     const showLogout=useGlobal(state=>state.showLogout)
@@ -34,8 +34,8 @@ export default function LogoutWin(){
         </WinBg>
     )
 }
-function removeUser(name, setUserList) {
-    if(!confirm(GetText("are_you_sure")))
+async function removeUser(name, setUserList) {
+    if(!await confirmWin.normal(GetText("are_you_sure")))
         return
   loadPage(true); // 显示 loading
   const global = useGlobal.getState();

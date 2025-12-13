@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
 import { GetText ,notify} from '../../../utils/common';
 import { useGlobal,loadPage } from "../global"
+import { confirmWin } from "../../../components/confirmWin"
 export default function CmdWin(){
     const showCmd=useGlobal(state=>state.showCmd)
     const [output,setOutput]=useState("输出")
@@ -25,8 +26,8 @@ export default function CmdWin(){
     localStorage.setItem("cmdList", JSON.stringify(newList))
     notify.normal(GetText("op_com") )
 }
-   const delCmd = (index) => {
-    if(!confirm(GetText("are_you_sure")))
+   const delCmd =async  (index) => {
+    if(!await confirmWin.normal(GetText("are_you_sure")))
         return
   const newList = [...cmdList.slice(0, index), ...cmdList.slice(index + 1)]
   setCmdList(newList)
@@ -96,8 +97,8 @@ export default function CmdWin(){
         </WinBg>
     )
 }
-function sendCmd(cmd,setOutput){
-    if(!confirm(GetText("run")+"?"))
+async function sendCmd(cmd,setOutput){
+    if(!await confirmWin.normal(GetText("run")+"?"))
         return
         loadPage(true)
         const globale=useGlobal.getState()

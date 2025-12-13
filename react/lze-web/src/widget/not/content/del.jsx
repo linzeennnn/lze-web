@@ -1,5 +1,5 @@
 import { useGlobal,list,loadPage } from "../global"
-import { GetText,notify } from "../../../utils/common"
+import { GetText,notify,confirmWin } from "../../../utils/common"
 export default function Del({name}){
     return(
         <button id="del-btn" className="btn"
@@ -8,8 +8,8 @@ export default function Del({name}){
         ></button>
     )
 }
-function del(fileName){
-    if(!confirm(GetText("are_you_sure")))
+async function del(fileName){
+    if(!await confirmWin.normal(GetText("are_you_sure")))
         return
     const user =useGlobal.getState().userName
     const token =useGlobal.getState().token

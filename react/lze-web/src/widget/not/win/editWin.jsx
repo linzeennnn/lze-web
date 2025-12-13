@@ -1,7 +1,7 @@
 import { useGlobal,Save_note } from "../global";
 import {WinBg} from'../../../components/winBg'
 import { useEffect, useState } from "react";
-import { GetText } from "../../../utils/common";
+import { GetText,confirmWin } from "../../../utils/common";
 export default function EditWin(){
     const edit=useGlobal((state)=>state.edit)
     const [title,setTitle]=useState(edit.title)
@@ -25,8 +25,8 @@ const enter_save=(e)=>{
     }
 }
 
-const save_edit=()=>{
-    if(!confirm(GetText("are_you_sure")))
+const save_edit=async ()=>{
+    if(!await confirmWin.normal(GetText("are_you_sure")))
         return
         Save_note(title,text)
 }

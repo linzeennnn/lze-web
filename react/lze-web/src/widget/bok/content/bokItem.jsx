@@ -1,5 +1,6 @@
 import { useGlobal,list,loadPage } from "../global"
 import { notify,GetText } from "../../../utils/common"
+import confirmWin from "../../../components/public/confirmWin"
 export default function BokItem({name}){
     return(
         <div className="bookmark main-item"
@@ -39,8 +40,8 @@ fetch(url,{
     window.location.href=data
 })
 }
-function del(name){
-    if(!confirm(GetText("are_you_sure"))){
+async function del(name){
+    if(!(await confirmWin.normal(GetText("are_you_sure")))){
         return
     }
     loadPage(true)

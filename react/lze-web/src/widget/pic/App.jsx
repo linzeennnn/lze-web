@@ -6,7 +6,7 @@ import {ScrollTop} from '../../components/scrollTop'
 import GoTopBtn from '../../components/goTopBtn'
 import HeadBar from '../../components/headBar'
 import GoBack from '../../components/goBack'
-import { GetText } from "../../utils/common";
+import { GetText,confirmWin } from "../../utils/common";
 import PublicWidget from '../../components/public/publicWidget'
 import { DragLeave,DragOver,Drop,useGlobal,InitData,Upload } from './global';
 import '../../css/page/pic.css';
@@ -44,10 +44,10 @@ export default function App() {
     </div>
   );
 }
-function pastePic(e){
+async function pastePic(e){
   if (!e) return;
     const item = e.clipboardData.items[0];
-      if (item.type.startsWith("image/")&&confirm(GetText("are_you_sure"))) {
+      if (item.type.startsWith("image/")&&await confirmWin.normal(GetText("are_you_sure"))) {
         const file = item.getAsFile(); //  这是一个 File 对象
         const uploadData = {
         totalSize: file.size,

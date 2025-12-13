@@ -357,7 +357,7 @@ input{
   color: var(--text);
 }
 .notify-err{
-  background-color: gray !important;
+  background-color: var(--bg_color);
 }
 .notify-err span{
   color: red !important;
@@ -378,6 +378,49 @@ input{
     pointer-events: none; 
     opacity: 0;
     transition:opacity 0.7s ease;
+}
+#confirm-win{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 15px;
+  min-width: 60%;
+  max-width: 90%;
+  min-height: 150px;
+  background-color: var(--bg_color);
+}
+#confirm-title{
+  color: var(--global_text);
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+#confirm-content{
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;   
+  overflow-wrap: break-word;
+}
+#confirm-btn-bar{
+  margin-top: 30px;
+  height: 50px;
+  width: 100%;
+  bottom: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.confirm-btn{
+  box-shadow: var(--out_shadow);
+  margin: 10px;
+  background-color: var(--bg_color);
+  border-radius: 30px;
+  min-width:100px !important;
+  height: 90% !important;
+  font-weight: bold;
+  color: var(--text)
+}
+.confirm-err span{
+  color: red !important;
 }
 @media (hover: none) {
   .tooltip{

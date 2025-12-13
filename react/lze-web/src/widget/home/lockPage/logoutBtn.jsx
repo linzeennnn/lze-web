@@ -1,6 +1,7 @@
 import { notify } from "../../../utils/common";
 import {GetWidgetData, useGlobal } from "../global";
 import {GetText} from "../../../utils/common"
+import {confirmWin} from "../../../utils/common"
 export default function LogoutBtn(){
     const user=useGlobal(state=>state.userName)
     return(
@@ -12,8 +13,8 @@ export default function LogoutBtn(){
         </button>
     )
 }
-function logout(){
-    if (confirm(GetText("are_you_sure"))) {
+async function logout(){
+    if (await confirmWin.normal(GetText("are_you_sure"))) {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
     useGlobal.setState({

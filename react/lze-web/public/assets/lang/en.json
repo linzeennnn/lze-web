@@ -16,6 +16,7 @@
   "clear_tra": "Empty Trash",
   "close": "Close",
   "copy": "Copy",
+  "confirm":"confirm",
   "cpu_usage": "CPU Usage",
   "create_folder": "Create New Folder",
   "current_user": "Current User",
@@ -123,6 +124,7 @@
   "view": "View",
   "view_album": "View Other Albums",
   "view_user": "View Users",
+  "warning": "Warning",
   "year": "Year",
   "zoom_in": "Zoom In",
   "zoom_out": "Zoom Out"

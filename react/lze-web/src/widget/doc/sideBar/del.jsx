@@ -2,6 +2,7 @@
 import { notify } from "../../../utils/common";
 import { useGlobal,list,loadPage} from "../global"
 import { GetText } from '../../../utils/common';
+import { confirmWin } from "../../../utils/common";
 export default function Del(){
     return(
         <button id="del" className="btn side-btn"
@@ -9,8 +10,8 @@ export default function Del(){
         ></button>
     )
 }
-function delete_file(){
-    if(confirm(GetText("are_you_sure"))){
+async function delete_file(){
+    if(await confirmWin.normal(GetText("are_you_sure"))){
         loadPage(true)
         const global=useGlobal.getState()
         const user=global.userName

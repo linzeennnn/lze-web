@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import  TopBar  from "../../../components/topBar";
 import { Save_note,useGlobal } from "../global";
-import { GetText } from "../../../utils/common";
+import { GetText ,confirmWin} from "../../../utils/common";
 export default function NotTopBar(){
     const edit=useGlobal((state)=>state.edit)
     const[textInput,setTextInput]=useState(false)
@@ -29,8 +29,8 @@ const key_enter=(e)=>{
         save_add()
     }
 }
-const save_add=()=>{
-    if(!confirm(GetText("are_you_sure")))
+const save_add=async ()=>{
+    if(!await confirmWin.normal(GetText("are_you_sure")))
         return
     setText("")
     setTitle("")
