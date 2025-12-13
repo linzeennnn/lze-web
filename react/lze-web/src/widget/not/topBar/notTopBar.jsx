@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import  TopBar  from "../../../components/topBar";
-import { GetText, Save_note,useGlobal } from "../global";
+import { Save_note,useGlobal } from "../global";
+import { GetText } from "../../../utils/common";
 export default function NotTopBar(){
     const edit=useGlobal((state)=>state.edit)
     const[textInput,setTextInput]=useState(false)

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TopBar from '../../../components/topBar'
-import {useGlobal,list,loadPage, GetText} from '../global'
-import { notify } from '../../../components/public/notify'
+import {useGlobal,list,loadPage} from '../global'
+import { notify,GetText } from '../../../utils/common'
 export default function BokTopBar(){
     const protocolList=[
         {type: 'none', showName: GetText("no_protocol")},
@@ -69,7 +69,7 @@ function addBok(name,text){
     if(name=="")
         name="new_bookmark"
     if(!isUrl(text)){
-        notify(GetText("bok_url")+" "+GetText("error")+" "+text)
+        notify.err(GetText("bok_url")+" "+GetText("error")+" "+text)
         console.log(text);
         
         return
@@ -89,15 +89,15 @@ function addBok(name,text){
         .then((res) => {
     if(!res.ok){
         if(res.status===401){
-            notify(GetText("no_per"))
+            notify.err(GetText("no_per"))
         }
         else{
-            notify(GetText("error")+":"+res.status)
+            notify.err(GetText("error")+":"+res.status)
         }
         loadPage(false)
         return
     }
-    notify(GetText("op_com"))
+    notify.normal(GetText("op_com"))
     list()
 })
 }

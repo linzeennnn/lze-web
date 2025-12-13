@@ -1,4 +1,5 @@
-import { useGlobal,Upload, GetText,UploadPermit } from "../global";
+import { GetText } from "../../../utils/common";
+import { useGlobal,Upload,UploadPermit } from "../global";
 export default function UploadBtn(){
     const setGlobal = useGlobal.setState;
     const upload = useGlobal((state)=> state.upload);

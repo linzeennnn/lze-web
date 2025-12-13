@@ -1,6 +1,7 @@
-import { useGlobal,Save_note, GetText } from "../global";
+import { useGlobal,Save_note } from "../global";
 import {WinBg} from'../../../components/winBg'
 import { useEffect, useState } from "react";
+import { GetText } from "../../../utils/common";
 export default function EditWin(){
     const edit=useGlobal((state)=>state.edit)
     const [title,setTitle]=useState(edit.title)

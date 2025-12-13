@@ -1,4 +1,5 @@
-import { useGlobal,list,loadPage, GetText } from "../global"
+import { useGlobal,list,loadPage } from "../global"
+import { GetText,notify } from "../../../utils/common"
 export default function Del({name}){
     return(
         <button id="del-btn" className="btn"
@@ -26,14 +27,14 @@ function del(fileName){
     .then(res=>{
         if(!res.ok){
             if(res.status==401){
-                notify(GetText("no_per"))
+                notify.err(GetText("no_per"))
             }else{
-                notify(GetText("error")+":"+res.status)
+                notify.err(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify(GetText("op_com"))
+        notify.normal(GetText("op_com"))
         list()
     })
 }

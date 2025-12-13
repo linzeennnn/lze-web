@@ -1,5 +1,6 @@
 import SideBar from '../../../components/sideBar'
-import { GetText, list } from '../global'
+import {list } from '../global'
+import { GetText } from '../../../utils/common'
 export default function BokSidepBar(){
 return (
     <SideBar>

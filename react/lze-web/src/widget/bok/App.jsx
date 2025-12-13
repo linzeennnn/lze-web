@@ -6,7 +6,7 @@ import {ScrollTop} from '../../components/scrollTop'
 import GoTopBtn from '../../components/goTopBtn'
 import HeadBar from '../../components/headBar'
 import GoBack from '../../components/goBack'
-import Tooltip from '../../components/public/tooltip'
+import PublicWidget from '../../components/public/publicWidget';
 import '../../css/page/bok.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
@@ -30,7 +30,7 @@ export default function App() {
         <BokWin/>
       <BokSideBar />
       <BokContent />
-      <Tooltip/>
+      <PublicWidget/>
     </div>
   );
 }

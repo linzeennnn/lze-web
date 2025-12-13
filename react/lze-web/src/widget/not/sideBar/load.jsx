@@ -1,4 +1,5 @@
-import {GetText, list} from '../global'
+import {list} from '../global'
+import { GetText } from '../../../utils/common'
 export default function Load(){
     return(
         <button  className="btn side-btn" 

@@ -9,12 +9,7 @@ export const notify = {
 export function copy(text) {
   navigator.clipboard.writeText(text)
     .then(() => {
-      // GetText 是异步的，需要 await 或 then
-      GetText("copy").then(copyText => {
-        GetText("success").then(successText => {
-          notify.normal(`${copyText} ${successText}`);
-        });
-      });
+          notify.normal(GetText("copy")+" "+GetText("success"));
     })
     .catch(err => {
       console.error(err);

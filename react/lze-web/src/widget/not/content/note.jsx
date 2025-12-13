@@ -1,9 +1,9 @@
 import { useState,useEffect, useRef } from "react";
-import { copy } from "../../../utils/common";
+import { copy,GetText } from "../../../utils/common";
 import Del from "./del";
 import hljs from 'highlight.js/lib/common';
 import 'highlight.js/styles/atom-one-dark.min.css';
-import { GetText, list, loadPage, useGlobal } from "../global";
+import {  list, loadPage, useGlobal } from "../global";
 export default function Note({name}){
     const [text, setText] = useState('');
     const [loaded, setLoaded] = useState(false)

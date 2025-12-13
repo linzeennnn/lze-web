@@ -1,5 +1,5 @@
-import { useGlobal,list,loadPage, GetText } from "../global"
-import { notify } from "../../../components/public/notify"
+import { useGlobal,list,loadPage } from "../global"
+import { notify,GetText } from "../../../utils/common"
 export default function BokItem({name}){
     return(
         <div className="bookmark main-item"
@@ -29,7 +29,7 @@ fetch(url,{
 })
 .then(res=>{
     if(!res.ok){
-        notify(+GetText("error")+":"+res.status)
+        notify.err(+GetText("error")+":"+res.status)
         loadPage(false)
         return
     }
@@ -57,15 +57,15 @@ fetch(url,{
 }).then((res) => {
     if(!res.ok){
         if(res.status===401){
-            notify(GetText("no_per"))
+            notify.err(GetText("no_per"))
         }
         else{
-            notify(GetText("error")+":"+res.status)
+            notify.err(GetText("error")+":"+res.status)
         }
         loadPage(false)
         return
     }
-    notify(GetText("op_com"))
+    notify.normal(GetText("op_com"))
     list()
 })
 }

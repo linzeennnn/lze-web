@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
-import { notify } from '../../components/public/notify';
+import { notify,GetText } from '../../utils/common';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -24,10 +24,6 @@ export const useGlobal = create((set, get) => ({
   },
   getGlobal: () => get(),
 }));
-// 获取文本
-export  function GetText(str){
-  return useGlobal.getState().langList[str]
-}
 // 初始化
 export function InitData(){
 PageCom(useGlobal.setState,"bok")
@@ -79,15 +75,15 @@ export function Save_note(newTitle,newContent){
     }).then((res) => {
         if(!res.ok){
             if(res.status===401){
-                notify(GetText("no_per"))
+                notify.err(GetText("no_per"))
             }
             else{
-                notify(GetText("error")+":"+res.status)
+                notify.err(GetText("error")+":"+res.status)
             }
             loadPage(false)
             return
         }
-        notify(GetText("op_com"))
+        notify.normal(GetText("op_com"))
         loadPage(false)
         list()
     })
