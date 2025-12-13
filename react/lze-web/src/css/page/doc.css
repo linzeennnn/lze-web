@@ -291,6 +291,53 @@
     left: 10px;
     background-image: var(--link_icon);
 }
+#link-win{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    min-width: 100px;
+    max-width: 95%;
+    min-height: 60px;
+    padding: 10px;
+    background-color: var(--bg_color);
+}
+#link-win span{
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+     text-decoration: underline;
+    text-decoration-line: underline;
+  white-space: normal;
+  word-wrap: break-word;   /* 旧名，兼容性好 */
+  overflow-wrap: break-word;
+}
+#link-win span:hover{
+    color: var(--global_text);
+}
+.link-win-btn{
+    width: 20px !important;
+    height: 20px !important;
+}
+#copy-link-btn{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-image: var(--copy_icon);
+}
+#close-link-btn{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-image: var(--no_icon);
+}
 .full-screen-btn{background-image: var(--maximize_icon);}
 .refresh-btn{background-image: var(--load_icon);}
 #upload-dir{background-image: url(../../assets//icon/folder.svg);}

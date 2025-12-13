@@ -10,6 +10,10 @@ export const useGlobal = create((set, get) => ({
   parentPath: "",
   fileList: [],
   uploading: false,
+  linkWin:{
+    show:false,
+    link:""
+  },
   showBg: false,
   loading: false,
   dragWin:false,

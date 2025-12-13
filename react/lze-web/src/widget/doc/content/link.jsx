@@ -1,92 +1,62 @@
 
 import { notify } from "../../../utils/common";
 import { useGlobal, loadPage } from "../global"
-
 import { GetText } from '../../../utils/common';
+import LinkWin from "../win/linkWin";
 export default function Link({ name }) {
   return (
     <button
       className="btn link-btn"
       title={GetText("get_link")}
       onClick={(e) => {
-        e.stopPropagation();
-        copyLink(name);
+        e.stopPropagation()
+        getLink(name)
       }}
     ></button>
   );
 }
 
 // 获取直链并返回 URL
-async function getLink(name) {
+function getLink(name) {
   const global = useGlobal.getState();
   const path = global.nowPath + "/" + name;
   const url = global.docUrl + "link";
   const body = { path };
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": "Bearer " + global.token,
-      },
-      body: JSON.stringify(body),
-    });
+  loadPage(true);
 
-    if (!res.ok) {
-      if (res.status === 401) {
-        notify.err(GetText("no_per"));
-      } else {
-        notify.err(GetText("error") + ":" + res.status);
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: "Bearer " + global.token,
+    },
+    body: JSON.stringify(body),
+  })
+    .then(res => {
+      if (!res.ok) {
+        if (res.status === 401) {
+          notify.err(GetText("no_per"));
+        } else {
+          notify.err(GetText("error") + ":" + res.status);
+        }
+        throw new Error("HTTP error " + res.status);
       }
-      throw new Error("HTTP error " + res.status);
-    }
-
-    const text = await res.text();
-    return encodeURI(window.location.origin + "/" + text);
-  } catch (err) {
-    console.error("Fetch failed:", err);
-    return null;
-  } finally {
-    loadPage(false);
-  }
+      return res.text();
+    })
+    .then(text => {
+      useGlobal.setState({
+        linkWin: {
+          link: encodeURI(window.location.origin + "/" + text),
+          show: true,
+        },
+      });
+      
+    })
+    .catch(err => {
+      console.error("Fetch failed:", err);
+    })
+    .finally(() => {
+      loadPage(false);
+    });
 }
-
-// 接收 URL 并复制
-async function copyLink(name) {
-  const url = await getLink(name);
-  if (url) {
-    copy(url);
-  }
-}
-
-async function copy(text) {
-  if (navigator.clipboard && window.isSecureContext) {
-    // 使用 Clipboard API
-    try {
-      await navigator.clipboard.writeText(text);
-      notify.normal(GetText("copy") + " " + GetText("success"));
-    } catch (err) {
-      notify.err(GetText("error"), err);
-      console.error("Clipboard API failed:", err);
-    }
-  } else {
-    // 回退到 execCommand（不一定在 Safari 生效）
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.style.position = "fixed";
-    textarea.style.opacity = "0";
-    document.body.appendChild(textarea);
-    textarea.focus();
-    textarea.select();
-    try {
-      document.execCommand("copy");
-      notify.normal(GetText("copy") + " " + GetText("success"));
-    } catch (err) {
-      notify.err(GetText("error"), err);
-      console.error("execCommand fallback failed:", err);
-    }
-    document.body.removeChild(textarea);
-  }
-}
-

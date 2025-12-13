@@ -30,6 +30,9 @@ export default function FileWin(){
         const style = doc.createElement("style")
         style.textContent = `
             body {
+                display:flex;
+                justify-content: center;
+                align-items: center;
                 width: 100%;
                 height: 100%;
             }
