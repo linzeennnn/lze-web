@@ -9,12 +9,12 @@ export default function ConfirmWin() {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-     useConfirmStore.getState().close(true);
+     close(true)
      
     }
     if (e.key === "Escape" ) {
       e.preventDefault();
-      useConfirmStore.getState().close(false);
+      close(false)
     }
   };
 

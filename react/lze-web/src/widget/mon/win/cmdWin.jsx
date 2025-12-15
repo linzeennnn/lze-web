@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
-import { GetText ,notify} from '../../../utils/common';
+import { GetText ,notify,confirmWin} from '../../../utils/common';
 import { useGlobal,loadPage } from "../global"
-import { confirmWin } from "../../../components/confirmWin"
 export default function CmdWin(){
     const showCmd=useGlobal(state=>state.showCmd)
     const [output,setOutput]=useState("输出")

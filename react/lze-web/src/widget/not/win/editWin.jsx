@@ -36,7 +36,7 @@ return(
                 onKeyDown={key_save}
                 >
         <button className="btn" id="close-edit" title={GetText("close")}
-        onClick={()=>setGlobal({edit:{mode:false}})}
+        onClick={()=>setGlobal({edit:{mode:false,type:"",title:"",text:""}})}
         ></button>
         <button className="btn save" id="save-edit" title={GetText("save")}
          onClick={()=>{

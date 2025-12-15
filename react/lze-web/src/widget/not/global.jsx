@@ -45,12 +45,13 @@ PageCom(useGlobal.setState,"not")
 function init_edit(){
   const edit = useGlobal.getState().edit;
   const setGlobal = useGlobal.setState;
+  if(edit.type!="edit"){
   setGlobal({edit:{
     mode:false,
     title:"",
     text:"",
     type:""
-  }})
+  }})}
 }
 // 扫描目录
 export function list(){

@@ -1,6 +1,5 @@
 import {useGlobal,list,loadPage} from '../global'
-import { GetText,notify } from '../../../utils/common'
-import { confirmWin } from '../../../utils/confirmWin'
+import { GetText,notify,confirmWin } from '../../../utils/common'
 export default function ActionBar({keyName,Mes}){
     const nowuser=useGlobal((state)=>state.nowuser)
     return(

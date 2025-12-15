@@ -1,7 +1,6 @@
 import { create } from 'zustand';
-import { notify } from '../../components/public/notify';
 import { PageCom } from '../../components/pageCom';
-import { GetText } from '../../utils/common';
+import { GetText,notify } from '../../utils/common';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
