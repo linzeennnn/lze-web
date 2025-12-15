@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { notify } from '../../utils/common.js'
+import { notify,GetText } from '../../utils/common.js'
 import { GetTheme } from '../../components/getTheme.jsx';
-// import { GetText } from '../../utils/common.js';
+import { InitApi } from '../../store/request.js';
 import { DisableZoom } from '../../components/pub.jsx';
 import { CheckLang } from '../../utils/common.js';
 export const useGlobal = create((set, get) => {
@@ -54,8 +54,9 @@ export const useGlobal = create((set, get) => {
     },
   };
 });
-// 初始化
+/////////////初始化/////////////
 export  async function InitData(){
+  InitApi()
   DisableZoom()
 // 拉取语言包
 await CheckLang(true)
