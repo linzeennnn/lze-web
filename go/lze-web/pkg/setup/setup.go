@@ -1,6 +1,7 @@
 package setup
 
 import (
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"lze-web/pkg/global"
@@ -9,6 +10,16 @@ import (
 	"strconv"
 )
 
+//go:embed lang.json
+var LangJson string
+
+func setLang() {
+	err := json.Unmarshal([]byte(LangJson), &global.Lang)
+	if err != nil {
+		panic(err)
+	}
+
+}
 func Setup() {
 	// 获取配置文件的路径
 	global.WorkDir = global.GetWorkDir()
@@ -64,6 +75,8 @@ func Setup() {
 	// 清空临时目录
 	os.RemoveAll(global.TempPath)
 	os.Mkdir(global.TempPath, 0755)
+	// 设置语言
+	setLang()
 
 }
 func setPath(pathType, defaultPath string, WorkConfig map[string]interface{}) string {

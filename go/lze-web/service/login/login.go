@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	loginModel "lze-web/model/login/login"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 
 	"github.com/gin-gonic/gin"
@@ -28,5 +29,8 @@ func Login(c *gin.Context) {
 	}
 }
 func GetLogin(c *gin.Context) {
-	c.String(200, base64.StdEncoding.EncodeToString([]byte(global.JwtKey)))
+	var sendData response.Response[string]
+	sendData.Code = 200
+	sendData.Data = base64.StdEncoding.EncodeToString([]byte(global.JwtKey))
+	c.JSON(200, sendData)
 }

@@ -12,3 +12,4 @@ export const useLangStore = create((set) => ({
 }));
 export const setLang = (langMsg) => useLangStore.getState().setLang(langMsg)
 export const getLang = () => useLangStore.getState().lang;
+export const getLangType= () => useLangStore.getState().lang.type;

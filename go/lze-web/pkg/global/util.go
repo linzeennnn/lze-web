@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 // 获取运行时候的目录
@@ -220,4 +222,25 @@ func IncludeExt(name string, extList []string) bool {
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil || !os.IsNotExist(err)
+}
+func GetLangType(c *gin.Context) string {
+	langType := c.GetHeader("lang")
+	if langType == "" {
+		langType = "en"
+	}
+	return langType
+}
+
+// 获取对应语言的文本
+func GetText(text string, c *gin.Context) string {
+	langMap, ok := Lang[GetLangType(c)]
+	if !ok {
+		langMap = Lang["en"]
+	}
+	value, ok := langMap[text]
+	if !ok {
+		return text
+	}
+
+	return value
 }

@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { notify,GetText } from '../../utils/common.js'
 import { GetTheme } from '../../components/getTheme.jsx';
-import { InitApi } from '../../store/request.js';
+import { InitRequest } from '../../store/request.js';
 import { DisableZoom } from '../../components/pub.jsx';
 import { CheckLang } from '../../utils/common.js';
+import { Api } from '../../utils/request.js';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'guest';
   let token = window.localStorage.getItem('token') || '';
@@ -56,7 +57,7 @@ export const useGlobal = create((set, get) => {
 });
 /////////////初始化/////////////
 export  async function InitData(){
-  InitApi()
+  InitRequest()
   DisableZoom()
 // 拉取语言包
 await CheckLang(true)
@@ -74,7 +75,7 @@ if (sessionStorage.getItem('app') == 'true') {
   useGlobal.setState({ locked: false });
 } else {
   useGlobal.setState({ locked: true });
-      auth(userName,token)
+      auth()
 }
   sessionStorage.setItem('app', 'false');
 // 主题设置
@@ -84,52 +85,28 @@ useGlobal.setState({
 // widget
 GetWidgetData();
 }
- function auth(name,token){
-    const load=useGlobal.getState().load
-    let user=name?name:"guest";
-    token=token?token:"";
-    fetch(window.location.origin+'/server/login/auth_status',
-        {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'authorization':"Bearer " +token
-        },
-        body:JSON.stringify({
-            name,token
-        })
-    }
-    )
-    .then(res=>{
-        if(!res.ok){
-            if(res.status===401){
-                notify.err(GetText("log_outdate"))
-            }
-            else{
-                notify.err(res.status)
-            }
+ function auth(){
+    Api.get({
+      api:"login/auth_status",
+      endFun:()=>{
+        useGlobal.setState({load:useGlobal.getState().load+1})
+      },
+      failFun:()=>{
             window.localStorage.setItem('userName',"guest");
             window.localStorage.setItem('token',"");
             useGlobal.setState({userName:"guest",token:"",load:useGlobal.getState().load+1})
-            return
-        }
-        useGlobal.setState({load:useGlobal.getState().load+1})
+      }
     })
 }
 
 export function GetWidgetData(){
     const user=useGlobal.getState().userName;
-    const load=useGlobal.getState().load
-    fetch(window.location.origin+'/server/home/widget',{
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({user})
-    })
-    .then(res=>res.json())
-    .then(data=>{
+    Api.post({
+      body:{user},
+      api:"home/widget",
+      successFun:(data)=>{
         useGlobal.setState({widgetData:data,load:useGlobal.getState().load+1})
+      }
     })
 }
 // ///////////////////////////获取密钥////////////////////////////////

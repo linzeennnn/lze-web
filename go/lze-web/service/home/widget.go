@@ -2,6 +2,7 @@ package home
 
 import (
 	"lze-web/model/home/widget"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"strconv"
 	"strings"
@@ -12,8 +13,11 @@ import (
 
 func Widget(c *gin.Context) {
 	var rec widget.Rec
+	var sendData response.Response[widget.Send]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		sendData.Code = 400
+		sendData.Msg = global.GetText("get_widget_data_fail", c)
+		c.JSON(400, sendData)
 		return
 	}
 
@@ -32,7 +36,10 @@ func Widget(c *gin.Context) {
 	files.Pic = picList
 	files.Tra = traList
 	files.Mon = monData(rec.User)
-	c.JSON(200, files)
+	sendData.Code = 200
+	sendData.Msg = global.GetText("get_widget_data_success", c)
+	sendData.Data = files
+	c.JSON(200, sendData)
 }
 
 func getFileList(path string, count int, ignoreDir bool, removeExt bool) []string {
