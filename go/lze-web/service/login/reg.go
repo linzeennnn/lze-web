@@ -2,8 +2,10 @@ package login
 
 import (
 	"encoding/json"
+	"fmt"
 	userMes "lze-web/model/config"
 	regModel "lze-web/model/login/reg"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +13,7 @@ import (
 
 func Reg(c *gin.Context) {
 	var rec regModel.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -21,21 +24,28 @@ func Reg(c *gin.Context) {
 	global.InitUserMes(c)
 
 	if checkPermit(c) {
-		ok, mes := addUser(userMes.Name, userMes.Password)
+		ok, msg := addUser(userMes.Name, userMes.Password)
 		if ok {
 			initPermit(userMes.Name)
 			global.SaveUserConfig()
-			c.Status(200)
+			sendData.Code = 200
+			sendData.Msg = global.GetText(msg, c)
+			c.JSON(200, sendData)
 		} else {
-			c.String(401, mes)
+			sendData.Code = 401
+			sendData.Msg = global.GetText("reg_fail", c) + ":" + global.GetText(msg, c)
+			c.JSON(401, sendData)
 		}
 	} else {
-		c.String(401, "no_per")
+		sendData.Code = 403
+		sendData.Msg = global.GetText("reg_fail", c) + ":" + global.GetText("no_per", c)
+		c.JSON(403, sendData)
 	}
 }
 func checkPermit(c *gin.Context) bool {
 
 	curUserMes, _ := c.MustGet("curUserMes").(*global.Claims)
+	fmt.Println(curUserMes.Name)
 	if curUserMes.Name != "admin" {
 		return false
 	}
@@ -57,7 +67,7 @@ func addUser(userName, password string) (bool, string) {
 		newUser.Outdate = "1y"
 		newUser.Jti = global.GenJti()
 		global.UserArr = append(global.UserArr, newUser)
-		return true, "success"
+		return true, "reg_success"
 	}
 }
 func initPermit(userName string) {

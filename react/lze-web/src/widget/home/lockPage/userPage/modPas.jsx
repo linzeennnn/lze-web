@@ -3,6 +3,8 @@ import { notify } from "../../../../utils/common";
 import { encodeUserMes,useGlobal } from "../../global";
 import {GetText} from "../../../../utils/common"
 import SendBtn from "./sendBtn";
+import { Api } from "../../../../utils/request";
+import { setToken } from "../../../../store/request";
 export default function ModPasPage({para}){
   const [userData, setUserData] = useState({
     oldPassword: '',
@@ -38,36 +40,16 @@ export default function ModPasPage({para}){
     )
 }
 async function modePas(oldPas,newPas, para){
-        const global=useGlobal.getState()
-  let token=global.token
 const userMes=await encodeUserMes(JSON.stringify({oldPas,newPas}))
   para.setLoading(true)
-    fetch(window.location.origin+'/server/login/modPas',
-        {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'authorization':"Bearer " +token
-        },
-        body:JSON.stringify({
-           userMes:userMes
-        })
-    }
-    )
-    .then(res=>{
-        if(!res.ok){
-            if(res.status===401){
-                notify.err(GetText("acc_or_pas_err"))
-            }
-            else{
-                notify.err(res.status+GetText("error"))
-            }
-            para.setLoading(false)
-            throw new Error(res.status);
-        }})
-    .then(data=>{
-        notify.normal(GetText("op_com"))
-        para.afterSend()
-    })
-
+  Api.post({
+    api:"login/modPas",
+    body:{userMes},
+    notice:true,
+    success:(data)=>{
+      setToken(data.token)
+      localStorage.setItem("token",data.token)
+      para.afterSend()},
+    fail:()=>{ para.setLoading(false)}
+  })
 }

@@ -1,7 +1,7 @@
-import { useGlobal } from "../global"
 import {GetText} from "../../../utils/common"
+import { useRequestStore } from "../../../store/request"
 export default function User({setSwitch}){
-    const user=useGlobal(state=>state.userName)
+    const user=useRequestStore(state=>state.request.username)
     return(
         <button className="btn" id="lock-user" title={GetText("switch")}
         onClick={()=>{setSwitch(true)}}

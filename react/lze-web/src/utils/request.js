@@ -10,7 +10,7 @@ export  const Api={
     patch:(request)=>{req(request,"PATCH")}
 }
 
-export const asyncApi = {
+export const AsyncApi = {
   post: (request) => reqAsync(request, "POST"),
   get: (request) => reqAsync(request, "GET"),
   put: (request) => reqAsync(request, "PUT"),
@@ -22,9 +22,9 @@ function req(request, method) {
  const {
     api,
     body,
-    successFun,
-    failFun,
-    endFun,
+    success,
+    fail,
+    end,
     notice
   } = request;
   const m = method.toUpperCase();
@@ -48,12 +48,12 @@ function req(request, method) {
       if (code === 200) {
         if(notice)
             notify.normal(msg)
-       successFun && successFun(data);
+       success && success(data);
       } else {
         notify.err(msg)
-      failFun && failFun();
+      fail && fail();
       }
-      endFun&&endFun()
+      end&&end()
     })
     .catch(err => {
         notify.err(err)
@@ -86,10 +86,9 @@ async function reqAsync(request, method) {
       return data
     } else {
       notify.err(msg);
+      return null
     }
   } catch (err) {
     notify.err(err)
-  } finally {
-    endFun && endFun();
   }
 }

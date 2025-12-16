@@ -3,6 +3,7 @@ package login
 import (
 	"encoding/json"
 	modPasModel "lze-web/model/login/modPas"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 
 	"github.com/gin-gonic/gin"
@@ -16,26 +17,31 @@ func ModPas(c *gin.Context) {
 	}
 	global.InitUserMes(c)
 	userMesJson, _ := global.DecodeUserMes(rec.UserMes, string(global.JwtKey))
+	var sendData response.Response[modPasModel.Send]
 	var userMes modPasModel.UserMes
 	json.Unmarshal([]byte(userMesJson), &userMes)
-	if ModPassword(c, userMes.OldPas, userMes.NewPas) {
-
-		c.Status(200)
+	ok, token := ModPassword(c, userMes.OldPas, userMes.NewPas)
+	if ok {
+		sendData.Code = 200
+		sendData.Data.Token = token
+		sendData.Msg = global.GetText("mod_pas_success", c)
+		c.JSON(200, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 401
+		sendData.Msg = global.GetText("mod_pas_fail", c)
+		c.JSON(401, sendData)
 	}
 }
-func ModPassword(c *gin.Context, oldPas string, newPas string) bool {
+func ModPassword(c *gin.Context, oldPas string, newPas string) (bool, string) {
 	if !global.CheckToken(c) {
-		return false
+		return false, ""
 	}
 	curUserMes, _ := c.MustGet("curUserMes").(*global.Claims)
 	userMes := global.GetUserMes(curUserMes.Name)
 	if userMes.Password == oldPas {
 		userMes.Password = newPas
-		global.SaveUserConfig()
+		return true, global.UpdateJwt(userMes.Name)
 	} else {
-		return false
+		return false, ""
 	}
-	return true
 }

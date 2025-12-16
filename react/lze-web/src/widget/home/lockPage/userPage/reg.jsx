@@ -3,6 +3,7 @@ import { notify } from "../../../../utils/common";
 import { GetWidgetData, useGlobal,encodeUserMes } from "../../global";
 import {GetText} from "../../../../utils/common"
 import SendBtn from "./sendBtn";
+import { Api } from "../../../../utils/request";
 export default function RegPage({para}) {
   const [userData, setUserData] = useState({
     userName: '',
@@ -43,40 +44,18 @@ export default function RegPage({para}) {
   );
 }
 async function register(name, password, para) {
-  try {
+
     const global = useGlobal.getState();
     const token = global.token;
     const userMes = await encodeUserMes(JSON.stringify({ name, password }));
 
     para.setLoading(true);
+    Api.post({
+      api:"login/register",
+      body:{userMes},
+      notice:true,
+      success:()=>{para.afterSend();},
+      fail:()=>{para.setLoading(false);}
+    })
 
-    const res = await fetch(window.location.origin + '/server/login/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': "Bearer " + token
-      },
-      body: JSON.stringify({ userMes })
-    });
-
-    const text = await res.text();
-
-    if (!res.ok) {
-      if (res.status === 401) {
-        notify.err(GetText(text));
-      } else {
-        notify.err(res.status + GetText("error"));
-      }
-      para.setLoading(false);
-      return;
-    }
-
-    notify.normal(GetText("op_com"));
-    para.afterSend();
-
-  } catch (err) {
-    console.error(err);
-    notify.err("Network error");
-    para.setLoading(false);
-  }
 }

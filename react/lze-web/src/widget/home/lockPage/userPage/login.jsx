@@ -3,6 +3,8 @@ import { notify } from "../../../../utils/common";
 import { GetWidgetData, useGlobal,encodeUserMes } from "../../global";
 import {GetText} from "../../../../utils/common"
 import SendBtn from "./sendBtn";
+import { Api } from "../../../../utils/request";
+import { setToken, setUsername } from "../../../../store/request";
 export default function LoginPage({para}){
   const [userData, setUserData] = useState({
     userName: '',
@@ -45,40 +47,18 @@ async function login(name,password,para){
  let userMesStr=JSON.stringify({
     name,password
   })
-    fetch(window.location.origin+'/server/login/login',
-        {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-           userMes:await encodeUserMes(userMesStr)
-        })
-    }
-    )
-    .then(res=>{
-        if(!res.ok){
-            if(res.status===401){
-                notify.err(GetText("acc_or_pas_err"))
-            }
-            else{
-                notify.err(res.status+GetText("error"))
-            }
-            para.setLoading(false)
-            throw new Error(res.status);
-        }
-        
-        return res.json()})
-    .then(data=>{
+  Api.post({
+    api:"/login/login",
+    body:{userMes:await encodeUserMes(userMesStr)},
+    success:(data)=>{
         window.localStorage.setItem('userName',name);
         window.localStorage.setItem('token',data.token);
-        useGlobal.setState({
-          userName:name,
-          token:data.token
-        })
+        setUsername(name)
+        setToken(data.token)
         GetWidgetData()
         notify.normal(GetText("login")+":"+name)
         para.afterSend()
-    })
-
+    },
+    fail:()=>{para.setLoading(false)}
+  })
 }

@@ -7,3 +7,6 @@ type UserMes struct {
 type Rec struct {
 	UserMes string `json:"userMes"`
 }
+type Send struct {
+	Token string `json:"token"`
+}

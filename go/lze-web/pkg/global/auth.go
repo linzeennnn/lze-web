@@ -139,6 +139,25 @@ func GenJwt(name string) (token string) {
 	return
 }
 
+// 更新jwt
+func UpdateJwt(name string) (token string) {
+	userMes := GetUserMes(name) //获取对应用户信息
+	avaTime := userMes.Outdate  //获取token有效时间
+	var claims *Claims
+	expTime := GetExpTime(avaTime) //获取过期时间
+	jti := GenJti()
+	claims = &Claims{
+		Name: userMes.Name,
+		Jti:  jti,
+		Exp:  expTime,
+	}
+	userMes.Jti = jti
+	userMes.Exp = expTime
+	SaveUserConfig()
+	token, _ = jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(JwtKey)
+	return
+}
+
 // 解析jwt
 func DecodeJwt(jwtStr string) (*Claims, error) {
 	claims := &Claims{}

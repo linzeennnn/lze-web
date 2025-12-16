@@ -1,17 +1,15 @@
 import { create } from 'zustand';
 import { notify,GetText } from '../../utils/common.js'
 import { GetTheme } from '../../components/getTheme.jsx';
-import { InitRequest } from '../../store/request.js';
+import { getUsername, InitRequest, setToken, setUsername } from '../../store/request.js';
 import { DisableZoom } from '../../components/pub.jsx';
 import { CheckLang } from '../../utils/common.js';
-import { Api } from '../../utils/request.js';
+import { Api, AsyncApi } from '../../utils/request.js';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'guest';
   let token = window.localStorage.getItem('token') || '';
   return {
     load:0,
-    userName:"guest",
-    token:"",
     showBg: false,
     locked:true,
     theme:{
@@ -88,51 +86,34 @@ GetWidgetData();
  function auth(){
     Api.get({
       api:"login/auth_status",
-      endFun:()=>{
+      end:()=>{
         useGlobal.setState({load:useGlobal.getState().load+1})
       },
-      failFun:()=>{
+      fail:()=>{
             window.localStorage.setItem('userName',"guest");
             window.localStorage.setItem('token',"");
-            useGlobal.setState({userName:"guest",token:"",load:useGlobal.getState().load+1})
+            useGlobal.setState({load:useGlobal.getState().load+1})
+            setUsername("guest")
+            setToken("")
       }
     })
 }
 
 export function GetWidgetData(){
-    const user=useGlobal.getState().userName;
+    const user=getUsername();
     Api.post({
       body:{user},
       api:"home/widget",
-      successFun:(data)=>{
+      success:(data)=>{
         useGlobal.setState({widgetData:data,load:useGlobal.getState().load+1})
       }
     })
 }
 // ///////////////////////////获取密钥////////////////////////////////
 async function GetKey() {
-    try {
-        // 构建 URL
-        const url = window.location.origin + '/server/login/login';
-        // 发送请求
-        const response = await fetch(url, {
-            method: 'GET', // 或 'POST' 根据实际接口
-            headers: {
-                'Content-Type': 'text/plain'
-            }
-        });
-
-        // 获取响应文本
-        const text = await response.text();
-
-        // Base64 解码
-        const decoded = atob(text);
-
-        return decoded;
-    } catch (error) {
-        console.error('Error fetching key:', error);
-        return null;
-    }
+  return  atob(await AsyncApi.get({
+    api:"login/login"
+  }));
 }
 
 ////////////////////////////////////////加密用户名密码/////////////////////////////////////////
