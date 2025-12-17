@@ -35,7 +35,7 @@ function rename(oldname,newname){
     const global=useGlobal.getState()
     const oldpath=global.nowPath+"/"+oldname
     const newpath=global.nowPath+"/"+newname
-Api.post({
+Api.patch({
     api:"doc/rename",
     body:{oldpath,newpath},
     notice:true,

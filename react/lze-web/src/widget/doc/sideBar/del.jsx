@@ -14,7 +14,7 @@ async function delete_file(){
         return
         const global=useGlobal.getState()
         const dellist=global.selected
-        Api.post({
+        Api.delete({
             api:"doc/del",
             notice:true,
             body:{dellist},
