@@ -2,6 +2,7 @@ package doc
 
 import (
 	newfolder "lze-web/model/doc/new_folder"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -11,8 +12,11 @@ import (
 
 func NewFolder(c *gin.Context) {
 	var rec newfolder.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.String(400, err.Error())
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(400, sendData)
 		return
 	}
 	global.InitUserMes(c)
@@ -20,8 +24,12 @@ func NewFolder(c *gin.Context) {
 		destPath := filepath.Join(global.DocPath, rec.NowPath)
 		dirName := global.UniqueName(destPath, rec.FolderName)
 		os.Mkdir(filepath.Join(destPath, dirName), 0755)
-
+		sendData.Code = 200
+		sendData.Msg = global.GetText("new_dir_success", c)
+		c.JSON(200, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_new_dir_per", c)
+		c.JSON(403, sendData)
 	}
 }

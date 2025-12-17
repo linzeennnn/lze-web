@@ -2,6 +2,7 @@ package doc
 
 import (
 	copyDoc "lze-web/model/doc/copy"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -11,8 +12,11 @@ import (
 
 func Move(c *gin.Context) {
 	var rec copyDoc.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.String(400, err.Error())
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(400, sendData)
 		return
 	}
 	global.InitUserMes(c)
@@ -23,7 +27,12 @@ func Move(c *gin.Context) {
 			filename := global.UniqueName(destPath, filepath.Base(files))
 			os.Rename(sourcePath, filepath.Join(destPath, filename))
 		}
+		sendData.Code = 200
+		sendData.Msg = global.GetText("move_success", c)
+		c.JSON(200, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_move_per", c)
+		c.JSON(403, sendData)
 	}
 }

@@ -419,7 +419,7 @@ input{
   font-weight: bold;
   color: var(--text)
 }
-.confirm-err span{
+.confirm-err-text{
   color: red !important;
 }
 @media (hover: none) {

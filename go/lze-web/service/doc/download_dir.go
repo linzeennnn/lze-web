@@ -4,6 +4,7 @@ import (
 	"archive/zip"
 	"io"
 	downdir "lze-web/model/doc/down_dir"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -13,17 +14,26 @@ import (
 
 func PostDownloadDir(c *gin.Context) {
 	var rec downdir.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, err)
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(400, sendData)
+		return
 	}
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "doc", "downdir") {
 		path := filepath.Clean(rec.Path)
 		token := getDirUrlToken(path)
 		zipDir(path, token)
-		c.String(200, token)
+		sendData.Code = 200
+		sendData.Msg = global.GetText("downDir_success", c)
+		sendData.Data = token
+		c.JSON(200, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_downDir_per", c)
+		c.JSON(403, sendData)
 	}
 }
 

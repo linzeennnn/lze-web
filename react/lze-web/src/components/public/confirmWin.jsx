@@ -32,8 +32,8 @@ export default function ConfirmWin() {
   return (
     <WinBg showBg={show} className={"confirm-" + type}>
       <div id="confirm-win">
-        <span id="confirm-title">{GetText("warning") + ":"}</span>
-        <span id="confirm-content">{msg}</span>
+        <span id="confirm-title">{type === "err"?GetText("error"):GetText("warning") + ":"}</span>
+        <span id="confirm-content" className={type === "err" ? "confirm-err-text" : ""}>{msg}</span>
         <div id="confirm-btn-bar">
           <button className="confirm-btn btn" onClick={() => run(true)}>
             {GetText("confirm")}

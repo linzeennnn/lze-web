@@ -1,6 +1,6 @@
 import { getLangType } from "../store/lang"
 import { getUrl,getToken } from "../store/request"
-import { loadingPage, notify } from "./common"
+import { confirmWin, loadingPage, notify } from "./common"
 
 export  const Api={
     post:(request)=>{req(request,"POST")},
@@ -40,12 +40,10 @@ function req(request, method) {
   if (body && m !== "GET") {
     options.body = JSON.stringify(body);
   }
-
   fetch(getUrl()+api, options)
     .then(res => res.json())
     .then(res => {
       const { code, msg, data } = res;
-
       if (code === 200) {
         if(notice)
             notify.normal(msg)
@@ -60,7 +58,7 @@ function req(request, method) {
       loadingPage(false)
     })
     .catch(err => {
-        notify.err(err)
+    confirmWin.err(err.message)
         loadingPage(false)
     });
 }
@@ -94,6 +92,6 @@ async function reqAsync(request, method) {
       return null
     }
   } catch (err) {
-    notify.err(err)
+    confirmWin.err(err.msg)
   }
 }

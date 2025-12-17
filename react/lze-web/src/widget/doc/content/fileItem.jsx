@@ -3,9 +3,8 @@ import EditBtn from "./editBtn"
 import DownloadBtn from "./downloadBtn"
 import Link from "./link"
 import { useState } from "react";
-import { useGlobal,list,loadPage } from "../global";
-import { GetText } from '../../../utils/common';
-import { notify } from "../../../utils/common";
+import { useGlobal,list } from "../global";
+import { Api } from "../../../utils/request";
 export default function FileItem({ fileMes, selected, docClick}){
     const [editMode, setEditMode] = useState(false);
     const[nameInput,setNameInput]=useState(fileMes[0])
@@ -20,7 +19,7 @@ export default function FileItem({ fileMes, selected, docClick}){
             onClick={() => docClick(path)}
             key={"doclist" + fileMes[0]}
             >
-            <FileText fileMes={fileMes} editMode={editMode} 
+            <FileText fileMes={fileMes} editing={[editMode, setEditMode]} 
             nameEdit={[nameInput,setNameInput]} rename={rename}/>
             <EditBtn name={fileMes[0]} editing={[editMode, setEditMode]} 
             newName={nameInput} rename={rename}/>
@@ -34,30 +33,12 @@ function rename(oldname,newname){
         return
     }
     const global=useGlobal.getState()
-      loadPage(true)
     const oldpath=global.nowPath+"/"+oldname
     const newpath=global.nowPath+"/"+newname
-    fetch(global.docUrl+"rename",{
-        method:"POST",
-        headers:{
-            'Content-Type':'application/json',
-            'authorization':"Bearer " +global.token,
-        },
-        body:JSON.stringify({oldpath,newpath})
-    })
-    .then(res=>{
-        if(res.ok){
-            notify.normal(GetText("op_com"))
-            list(global.nowPath)
-        }
-        else{
-            if(res.status===401){
-               notify.err(GetText("no_per"))
-            }
-            else{
-                notify.err(GetText("error")+":"+res.status)
-            }
-             loadPage(false)
-        }
-    })
+Api.post({
+    api:"doc/rename",
+    body:{oldpath,newpath},
+    notice:true,
+    success:()=>{list(global.nowPath)}
+})
 }

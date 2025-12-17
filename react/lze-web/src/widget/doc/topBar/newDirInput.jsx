@@ -3,6 +3,7 @@ import {useGlobal,list,loadPage} from '../global';
 import { GetText } from '../../../utils/common';
 
 import { notify } from "../../../utils/common";
+import { Api } from "../../../utils/request";
 export default function NewDirInput({setCreate}) {
     const[newName,setNewName]=useState("")
      const nameChange = (e) => {
@@ -39,37 +40,16 @@ export function NewDir(folderName) {
     notify.err(GetText("folder_name")+GetText("is_empty"));
     return;
   }
-
   const global = useGlobal.getState();
-
-  const sendData = {
-    folderName,
-    nowpath: global.nowPath
-  };
-
-  loadPage(true)
-
-  fetch(`${global.docUrl}new_folder`, {
-    method: 'POST',
-    body: JSON.stringify(sendData),
-    headers: {
-      'Content-Type': 'application/json',
-            'authorization':"Bearer " +global.token
+  Api.post({
+    api:"doc/new_folder",
+    notice:true,
+    body:{
+     folderName,
+    nowpath: global.nowPath     
     },
+    success:()=>{
+      list(global.nowPath);
+    }
   })
-    .then((res) => {
-      if (!res.ok) {
-        if (res.status === 401) {
-          notify.err(GetText("no_per"));
-        } else {
-          notify.err(GetText("error")+":"+res.status);
-        }
-
-        loadPage(false)
-        return;
-      }
-
-      notify.normal(GetText("op_com"));
-      list(global.nowPath); // 重新加载列表
-    });
 }

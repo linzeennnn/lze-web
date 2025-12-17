@@ -2,6 +2,8 @@ import { useGlobal ,loadPage} from "../global"
 import { GetText } from '../../../utils/common';
 import { notify } from "../../../utils/common";
 import { confirmWin } from "../../../utils/common";
+import { Api } from "../../../utils/request";
+import { getUrl } from "../../../store/request";
 export default function DownloadBtn({fileMes}){
     const global=useGlobal.getState()
    
@@ -25,41 +27,21 @@ async function DownLoadFile(path,isFile){
     return
   }
   const global = useGlobal.getState();
-  loadPage(true);
-  const body = { path };
-  let api =(isFile?"download_file":"download_folder")
-  fetch(global.docUrl + api, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "authorization": "Bearer " + global.token,
-    },
-    body: JSON.stringify(body)
-  })
-  .then(res => {
-    if(res.ok){
-      return res.text(); // 返回 Promise
-    } else {
-      if(res.status == 401){
-        notify.err(GetText("no_per"));
-      } else {
-        notify.normal(GetText("error") + ":" + res.status);
+  let apiType =(isFile?"download_file":"download_folder")
+  const apiUrl="doc/"+apiType
+    Api.post({
+      api: apiUrl,
+      notice:true,
+      body: {path},
+      success:(data)=>{
+        DownLoad(getUrl() + apiUrl+"/"+data);
       }
-      throw new Error("HTTP error " + res.status); // 抛出错误阻止继续执行
-    }
-  })
-  .then(text => {
-    DownLoad(global.docUrl + api+"/"+text); 
-  })
-  .catch(err => {
-    console.error("Fetch failed:", err);
-  })
-  .finally(() => {
-    loadPage(false);
-  });
+    })
 }
 // 下载操作
 function DownLoad(url){
+  console.log(url);
+  
 const a = document.createElement("a");
   a.href = url;
   a.download = "";  // 让浏览器根据 url 自动决定文件名

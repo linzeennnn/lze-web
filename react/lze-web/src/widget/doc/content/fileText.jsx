@@ -1,11 +1,13 @@
 import { list,useGlobal} from '../global'
 import { GetText } from '../../../utils/common';
-export default function FileText({fileMes,editMode,nameEdit,rename}){
+export default function FileText({fileMes,editing,nameEdit,rename}){
     const[nameInput,setNameInput]=nameEdit
+    const [editMode, setEditMode] = editing;
     const nowPath = useGlobal((state) => state.nowPath);
       const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
           rename(fileMes[0], nameInput);
+          setEditMode(false)
         }
       };
     

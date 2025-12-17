@@ -14,7 +14,23 @@
         "no_per":"没有权限",
         "allow_upload":"允许上传",
         "not_allow_upload":"没有上传权限",
-        "move_dir_success":"移动目录成功"
+        "move_dir_success":"移动目录成功",
+        "no_new_dir_per":"没有新建文件夹权限",
+        "new_dir_success":"新建文件夹成功",
+        "copy_success":"复制成功",
+        "no_copy_per":"没有复制权限",
+        "move_success":"移动成功",
+        "no_move_per":"没有移动权限",
+        "rename_success":"重命名成功",
+        "no_rename_per":"没有重命名权限",
+        "del_success":"删除成功",
+        "no_del_per":"没有删除权限",
+        "getLink_success":"获取链接成功",
+        "no_getLink_per":"没有获取链接的权限",
+        "downDir_success":"开始下载文件夹",
+        "no_downDir_per":"没有下载文件夹权限",
+        "downFile_success":"开始下载文件",
+        "no_downFile_per":"没有下载文件权限"
 },
 "en":{
     "get_widget_data_success":"Successfully retrieved widget data.",
@@ -31,7 +47,23 @@
         "no_per":"No permission.",
         "allow_upload":"Allow upload.",
         "not_allow_upload":"No upload permission.",
-        "move_dir_success":"Move directory succeeded."
+        "move_dir_success":"Move directory succeeded.",
+        "no_new_dir_per":"No new directory permission.",
+        "new_dir_success":"New directory created successfully.",
+        "copy_success":"Copy succeeded.",
+        "no_copy_per":"No copy permission.",
+        "move_success":"Move succeeded.",
+        "no_move_per":"No move permission.",
+        "rename_success":"Rename succeeded.",
+        "no_rename_per":"No rename permission.",
+        "del_success":"Delete succeeded.",
+        "no_del_per":"No delete permission.",
+        "getLink_success":"Get link succeeded.",
+        "no_getLink_per":"No get link permission.",
+        "downDir_success":"Start downloading directory.",
+        "no_downDir_per":"No download directory permission.",
+        "downFile_success":"Start downloading file.",
+        "no_downFile_per":"No download file permission."
 }
 
 }
