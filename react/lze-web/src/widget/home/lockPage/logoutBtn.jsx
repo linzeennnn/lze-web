@@ -17,7 +17,7 @@ export default function LogoutBtn(){
 async function logout(){
     if (await confirmWin.normal(GetText("are_you_sure"))) {
     localStorage.removeItem('token');
-    localStorage.removeItem('userName');
+    localStorage.removeItem('username');
     setUsername('guest')
     setToken('')
     GetWidgetData()

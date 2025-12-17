@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { notify } from "../../utils/common";
 import { PageCom } from '../../components/pageCom';
 import { GetText } from "../../utils/common";
+import { Api, AsyncApi } from '../../utils/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -318,37 +319,18 @@ async  function maybeUpload() {
 }
 // 检查是否能有上传权限
 export async function UploadPermit(){
-  const user=useGlobal.getState().userName
-  const token=useGlobal.getState().token
   const upload = useGlobal.getState().upload;
-  const url=window.location.origin+"/server/login/upload"
-
-    const res =  await  fetch(url,{
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-            appType:"pic",fileType:""
-        })
-    })
-    
-        if(res.ok){
-            return true
-        }else{
-            if(res.status==401){
-                notify.err(GetText("no_per"))
-            }
-            else{
-                notify.err(GetText("error")+":"+res.status)
-            }
-           useGlobal.setState({
+if (await AsyncApi.post({
+  api:"login/upload",
+  body:{appType:"pic",fileType:""}
+})==null){
+  useGlobal.setState({
               upload: {
                 ...upload,
                 status: false
               }
             })
-            return false
+        return false
         }
+        return true
 }

@@ -1,6 +1,7 @@
 import { showNotify } from "../store/notify";
 import { getLang, setLang } from "../store/lang";
 import { useConfirmStore } from "../store/confirm";
+import { setLoading } from "../store/loading";
 // /////////////////通知////////////////
 export const notify = {
   normal: (text) => showNotify.normal(text),
@@ -30,7 +31,10 @@ export function copy(text) {
       console.error(err);
     });
 }
-
+///////////////加载页面/////////////
+export function loadingPage(show){
+  setLoading(show)
+}
 //////////////获取文本//////////////////
 export function GetText(key) {
   const currentLang = getLang();
@@ -38,20 +42,22 @@ export function GetText(key) {
 }
 
 ///////////////////判空逻辑独立成函数 ///////////////////
-export async function CheckLang(remote=false) {
-  let currentLang = getLang();
-
+export async function CheckLang() {
+  let remote=false;
+  if(sessionStorage.getItem('lze-web')!='true')
+      remote=true
+  let currentLang = GetLangType();
   // 缺语言包 → 拉取
   if (!currentLang.list || Object.keys(currentLang.list).length === 0||remote) {
-    const tmpLang = await GetLangList();
+    const tmpLang = await GetLangList(currentLang);
     setLang(tmpLang);
+  }else{
+    setLang(currentLang);
   }
 }
 
 ///////////////////  拉取语言包 ///////////////////
-export async function GetLangList() {
-  const lang = GetLangType();
-
+export async function GetLangList(lang) {
     try {
       const response = await fetch(window.location.origin + "/server/lang", {
         method: "POST",

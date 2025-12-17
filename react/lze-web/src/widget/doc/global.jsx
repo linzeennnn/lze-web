@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
-import { GetText,notify } from '../../utils/common';
+import { GetText,loadingPage,notify } from '../../utils/common';
+import { Api, AsyncApi } from '../../utils/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -51,19 +52,10 @@ PageCom(useGlobal.setState,"doc")
 }
 // 扫描目录
 export function list(path) {
-  const sendData = { file: path };
-  const url = useGlobal.getState().docUrl;
-  loadPage(true)
-
-  fetch(`${url}list`, {
-    method: 'POST',
-    body: JSON.stringify(sendData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
+Api.post({
+  api:"doc/list",
+  body:{file: path},
+  success:(data)=>{
       loadPage(false)
       if(data.type=="dir"){
       useGlobal.setState({
@@ -81,7 +73,9 @@ export function list(path) {
           }
         })
       }
-    });
+  }
+})
+
 }
 
 // 加载页面
@@ -95,7 +89,7 @@ export function loadPage(isLoad){
 // 上传文件
 export function Upload(file, uploadData, type) {
   if (file.size == 0) {
-    notify(GetText("error") + ":" + file.name + GetText("is_empty"));
+    notify.err(GetText("error") + ":" + file.name + GetText("is_empty"));
     return;
   }
   const global = useGlobal.getState();
@@ -126,7 +120,7 @@ export function Upload(file, uploadData, type) {
 
       if (type === "file") {
         uploadData.completed=true
-        notify(GetText("op_com"));
+        notify.normal(GetText("op_com"));
         list(nowPath);
       } else if (type === "dir") {
         const foldername = file.webkitRelativePath.split("/")[0];
@@ -181,10 +175,10 @@ export function Upload(file, uploadData, type) {
     xhr.onload = function () {
       if (xhr.status != 200) {
         if (xhr.status == 401) {
-          notify(GetText("no_per"));
+          notify.err(GetText("no_per"));
           
         } else {
-          notify(GetText("error") + ":" + xhr.status);
+          notify.err(GetText("error") + ":" + xhr.status);
         }
         setGlobal({
           upload: {
@@ -212,25 +206,15 @@ export function Upload(file, uploadData, type) {
 // 从temp移动文件夹
 function movefolder(foldername) {
   const global = useGlobal.getState();
-  const url=global.docUrl+"move_folder"
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+Api.post({
+  api:"doc/move_folder",
+  body:{name: foldername,
+        path: global.nowPath
         },
-        body: JSON.stringify({
-            name: foldername,
-            path: global.nowPath
-        })
-    })
-    .then(response => response.text())
-    .then(data => {
-        notify(GetText("op_com"));
+  success:()=>{
         list(global.nowPath)
-    })
-    .catch(error => {
-        notify(error);
-    });
+  }
+})
 }
 // 获取块大小
 function getChunkSize(fileSize) {
@@ -304,7 +288,7 @@ export function Drop(e) {
 async  function maybeUpload() {
     if (pending === 0) {
       if (fileList.length === 0) {
-        notify(GetText("empty"));
+        notify.err(GetText("empty"));
         return;
       }
       setGlobal({
@@ -338,37 +322,18 @@ async  function maybeUpload() {
 }
 // 检查是否能有上传权限
 export async function UploadPermit(type){
-  const user=useGlobal.getState().userName
-  const token=useGlobal.getState().token
   const upload = useGlobal.getState().upload;
-  const url=window.location.origin+"/server/login/upload"
-
-    const res =  await  fetch(url,{
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-            appType:"doc",fileType:type
-        })
-    })
-    
-        if(res.ok){
-            return true
-        }else{
-            if(res.status==401){
-                notify(GetText("no_per"))
-            }
-            else{
-                notify(GetText("error")+":"+res.status)
-            }
-           useGlobal.setState({
+if (await AsyncApi.post({
+  api:"login/upload",
+  body:{appType:"doc",fileType:type}
+})==null){
+  useGlobal.setState({
               upload: {
                 ...upload,
                 status: false
               }
             })
-            return false
+        return false
         }
+        return true
 }

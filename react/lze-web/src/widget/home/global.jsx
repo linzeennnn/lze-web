@@ -58,16 +58,8 @@ export  async function InitData(){
   InitRequest()
   DisableZoom()
 // 拉取语言包
-await CheckLang(true)
-// 用户信息
-    let userName=localStorage.getItem("userName")
-    let token =localStorage.getItem("token")
-    userName=userName?userName:"guest";
-    token=token?token:""; 
-      useGlobal.setState({
-        userName: userName,
-        token: token
-      })
+await CheckLang()
+sessionStorage.setItem('lze-web', 'true');
 // 锁屏设置
 if (sessionStorage.getItem('app') == 'true') {
   useGlobal.setState({ locked: false });
@@ -90,7 +82,7 @@ GetWidgetData();
         useGlobal.setState({load:useGlobal.getState().load+1})
       },
       fail:()=>{
-            window.localStorage.setItem('userName',"guest");
+            window.localStorage.setItem('username',"guest");
             window.localStorage.setItem('token',"");
             useGlobal.setState({load:useGlobal.getState().load+1})
             setUsername("guest")

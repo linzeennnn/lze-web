@@ -1,4 +1,5 @@
 import ConfirmWin from "./confirmWin"
+import LoadingPage from "./loadingPage"
 import Notify from "./notify"
 import Tooltip from "./tooltip"
 
@@ -8,6 +9,7 @@ return (
     <Notify/>
     <Tooltip/>
     <ConfirmWin/>
+    <LoadingPage/>
     </>
 )
 }

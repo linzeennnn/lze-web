@@ -4,10 +4,11 @@ import { CheckLang } from "../utils/common";
 import { GetTheme } from "./getTheme";
 import { DisableZoom } from "./pub";
 export function PageCom(setGlobal,type){
-  InitRequest
+  InitRequest()
   DisableZoom()
   CheckLang()
         sessionStorage.setItem('app', 'true');
+        sessionStorage.setItem('lze-web', 'true');
  const theme=GetTheme(type)
  setGlobal({
     theme:theme

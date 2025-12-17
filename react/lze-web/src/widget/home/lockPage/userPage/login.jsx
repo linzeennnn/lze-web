@@ -51,7 +51,7 @@ async function login(name,password,para){
     api:"/login/login",
     body:{userMes:await encodeUserMes(userMesStr)},
     success:(data)=>{
-        window.localStorage.setItem('userName',name);
+        window.localStorage.setItem('username',name);
         window.localStorage.setItem('token',data.token);
         setUsername(name)
         setToken(data.token)

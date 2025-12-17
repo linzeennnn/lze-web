@@ -1,6 +1,6 @@
 import { getLangType } from "../store/lang"
 import { getUrl,getToken } from "../store/request"
-import { notify } from "./common"
+import { loadingPage, notify } from "./common"
 
 export  const Api={
     post:(request)=>{req(request,"POST")},
@@ -19,6 +19,7 @@ export const AsyncApi = {
 };
 
 function req(request, method) {
+  loadingPage(true)
  const {
     api,
     body,
@@ -49,14 +50,18 @@ function req(request, method) {
         if(notice)
             notify.normal(msg)
        success && success(data);
+        loadingPage(false)
       } else {
         notify.err(msg)
       fail && fail();
+        loadingPage(false)
       }
       end&&end()
+      loadingPage(false)
     })
     .catch(err => {
         notify.err(err)
+        loadingPage(false)
     });
 }
 

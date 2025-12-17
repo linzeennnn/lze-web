@@ -2,6 +2,7 @@ package doc
 
 import (
 	"lze-web/model/doc/list"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"path/filepath"
 
@@ -11,7 +12,10 @@ import (
 func List(c *gin.Context) {
 	var rec list.Rec
 	if err := c.ShouldBind(&rec); err != nil {
-		c.JSON(200, err)
+		var sendData response.Response[string]
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(400, sendData)
 		return
 	}
 	filePath := filepath.Join(global.DocPath, filepath.FromSlash(rec.File))
@@ -24,6 +28,7 @@ func List(c *gin.Context) {
 	}
 }
 func getDir(rec list.Rec, c *gin.Context) {
+	var resData response.Response[list.SendDir]
 	files := global.ScanDir(filepath.Join(global.DocPath, filepath.FromSlash(rec.File)))
 	length := len(files)
 	docList := make([][2]string, length)
@@ -42,10 +47,13 @@ func getDir(rec list.Rec, c *gin.Context) {
 	} else {
 		sendData.ParentFolder = par_dir
 	}
-	c.JSON(200, sendData)
+	resData.Data = sendData
+	resData.Code = 200
+	c.JSON(200, resData)
 
 }
 func getFile(rec list.Rec, c *gin.Context) {
+	var resData response.Response[list.SendFile]
 	extList := []string{
 		".html", ".htm", ".css", ".js", ".mjs", ".json", ".xml", ".rss", ".svg", ".webmanifest",
 		".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".ico", ".avif",
@@ -66,5 +74,7 @@ func getFile(rec list.Rec, c *gin.Context) {
 		sendData.Url = ""
 		sendData.View = false
 	}
-	c.JSON(200, sendData)
+	resData.Data = sendData
+	resData.Code = 200
+	c.JSON(200, resData)
 }

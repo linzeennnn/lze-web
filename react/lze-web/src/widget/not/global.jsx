@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
 import { GetText,notify } from '../../utils/common';
+import { AsyncApi } from '../../utils/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -259,7 +260,6 @@ async  function maybeUpload() {
             if (!permitted) {
               return;
             }
-            console.log(22222);
             
       fileList.forEach((file) => {
         Upload(file, uploadData); // type 参数已从 Upload 中移除
@@ -300,37 +300,18 @@ function isText(file) {
 }
 // 检查是否能有上传权限
 export async function UploadPermit(){
-  const user=useGlobal.getState().userName
-  const token=useGlobal.getState().token
   const upload = useGlobal.getState().upload;
-  const url=window.location.origin+"/server/login/upload"
-
-    const res =  await  fetch(url,{
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-            appType:"not",fileType:""
-        })
-    })
-    
-        if(res.ok){
-            return true
-        }else{
-            if(res.status==401){
-                notify.err(GetText("no_per"))
-            }
-            else{
-                notify.err(GetText("error")+":"+res.status)
-            }
-           useGlobal.setState({
+if (await AsyncApi.post({
+  api:"login/upload",
+  body:{appType:"not",fileType:""}
+})==null){
+  useGlobal.setState({
               upload: {
                 ...upload,
                 status: false
               }
             })
-            return false
+        return false
         }
+        return true
 }

@@ -11,7 +11,10 @@
         "reg_success":"注册成功",
         "reg_fail":"注册失败",
         "user_ext":"用户已存在",
-        "no_per":"没有权限"
+        "no_per":"没有权限",
+        "allow_upload":"允许上传",
+        "not_allow_upload":"没有上传权限",
+        "move_dir_success":"移动目录成功"
 },
 "en":{
     "get_widget_data_success":"Successfully retrieved widget data.",
@@ -25,7 +28,10 @@
         "reg_success":"Registration succeeded.",
         "reg_fail":"Registration failed.",
         "user_ext":"User already exists.",
-        "no_per":"No permission."
+        "no_per":"No permission.",
+        "allow_upload":"Allow upload.",
+        "not_allow_upload":"No upload permission.",
+        "move_dir_success":"Move directory succeeded."
 }
 
 }
