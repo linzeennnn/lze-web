@@ -3,10 +3,9 @@ import { notify } from "../../utils/common";
 import { PageCom } from '../../components/pageCom';
 import { GetText } from "../../utils/common";
 import { Api, AsyncApi } from '../../utils/request';
+import { getToken, getUrl } from '../../store/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
-  userName: window.localStorage.getItem('userName'),
-  token: window.localStorage.getItem('token'),
   nowPath: "",
   parentPath: "",
   imgList: [],
@@ -35,7 +34,6 @@ export const useGlobal = create((set, get) => ({
     status:false,
     percent:"0%"
   },
-  picUrl:`${window.location.origin}/server/pic/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -51,20 +49,10 @@ PageCom(useGlobal.setState,"pic")
 }
 // 扫描目录
 export function list(path,showVideo) {
-  const sendData = { folder: path };
-  const url = useGlobal.getState().picUrl+"list";
-
-  loadPage(true)
-
-  fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(sendData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
+ Api.post({
+  api:"pic/list",
+  body:{folder: path},
+  success:(data)=>{
         let tmpDir=[]
         let tmpImg=[]
         let tmpVid=[]
@@ -111,8 +99,8 @@ export function list(path,showVideo) {
         imgPage: showVideo ? false : true,
         pageNum:1
       });
-      loadPage(false)
-    });
+  }
+ })
 }
 
 // 加载页面
@@ -131,8 +119,7 @@ export function Upload(file, uploadData) {
 
   let showVideo;
   const global = useGlobal.getState();
-  const user = global.userName;
-  const token = global.token;
+  const token = getToken();
   const nowPath = global.nowPath;
   const upload = global.upload;
   const setGlobal = useGlobal.setState;
@@ -155,7 +142,7 @@ export function Upload(file, uploadData) {
     return;
   }
 
-  const url = global.picUrl + "upload";
+  const url = getUrl() + "pic/upload";
   const chunkSize = getChunkSize(file.size);
   const totalChunks = Math.ceil(file.size / chunkSize);
   let start = 0;

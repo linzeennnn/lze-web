@@ -2,10 +2,9 @@ import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
 import { GetText,loadingPage,notify } from '../../utils/common';
 import { Api, AsyncApi } from '../../utils/request';
+import { getToken, getUrl } from '../../store/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
-  userName: window.localStorage.getItem('userName'),
-  token: window.localStorage.getItem('token'),
   nowPath: "",
   parentPath: "",
   fileList: [],
@@ -36,7 +35,6 @@ export const useGlobal = create((set, get) => ({
     percent:"0%"
   },
   selected: [],
-  docUrl:`${window.location.origin}/server/doc/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -93,16 +91,15 @@ export function Upload(file, uploadData, type) {
     return;
   }
   const global = useGlobal.getState();
-  const user = global.userName;
-  const token = global.token;
+  const token = getToken()
   const nowPath = global.nowPath;
   const upload = global.upload;
   const setGlobal = useGlobal.setState;
-
+  const api=getUrl()+"doc/"
   const url =
     type === "file"
-      ? global.docUrl + "upload_file"
-      : global.docUrl + "upload_folder";
+      ? api + "upload_file"
+      : api + "upload_folder";
 
   const chunkSize = getChunkSize(file.size);
   const totalChunks = Math.ceil(file.size / chunkSize);

@@ -2,6 +2,7 @@ package pic
 
 import (
 	"lze-web/model/pic/list"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"path/filepath"
 
@@ -10,8 +11,11 @@ import (
 
 func List(c *gin.Context) {
 	var rec list.Rec
-	if err := c.ShouldBind(&rec); err != nil {
-		c.JSON(400, err.Error())
+	var resData response.Response[list.Send]
+	if err := c.ShouldBindJSON(&rec); err != nil {
+		resData.Code = 400
+		resData.Msg = err.Error()
+		c.JSON(400, resData)
 		return
 	}
 	files := global.ScanDir(filepath.Join(global.PicPath, filepath.FromSlash(rec.Folder)))
@@ -41,7 +45,9 @@ func List(c *gin.Context) {
 		sendData.ParentFolder = parent
 	}
 	sendData.ParentFolder = parent
-	c.JSON(200, sendData)
+	resData.Code=200
+	resData.Data=sendData
+	c.JSON(200, resData)
 }
 func CheckType(name string) string {
 	var imgFor = []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".ico", ".apng", ".avif"}
