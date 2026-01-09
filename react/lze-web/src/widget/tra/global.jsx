@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
-import { GetText } from '../../utils/common';
+import {Api}from '../../utils/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -36,20 +36,10 @@ PageCom(useGlobal.setState,"tra")
 }
 // 扫描目录
 export function list(path) {
-  const sendData = { folder: path };
-  const url = useGlobal.getState().traUrl;
-
-  loadPage(true)
-
-  fetch(`${url}list`, {
-    method: 'POST',
-    body: JSON.stringify(sendData),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
+    Api.post({
+      api:"tra/list",
+      body:{folder: path},
+      success:(data)=>{
       loadPage(false)
       let sourcePath
       if(data.currentFolder==""){
@@ -64,7 +54,9 @@ export function list(path) {
         source_path:sourcePath,
         selected: [],
       });
-    });
+
+      }
+    })
 }
 
 // 加载页面

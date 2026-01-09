@@ -49,7 +49,11 @@ function req(request, method) {
             notify.normal(msg)
        success && success(data);
         loadingPage(false)
-      } else {
+      } 
+    else if (code === 400||code===500) {
+      confirmWin.err(msg)
+    }
+      else {
         notify.err(msg)
       fail && fail();
         loadingPage(false)
@@ -58,8 +62,9 @@ function req(request, method) {
       loadingPage(false)
     })
     .catch(err => {
-    confirmWin.err(err.message)
-        loadingPage(false)
+    if (code !== 400 && code !== 500)
+      confirmWin.err(err.msg)
+    loadingPage(false)
     });
 }
 
@@ -87,11 +92,17 @@ async function reqAsync(request, method) {
     if (code === 200) {
       if (notice) notify.normal(msg);
       return data
-    } else {
+    }
+    else if (code === 400||code===500) {
+      confirmWin.err(msg)
+    }
+    else {
       notify.err(msg);
       return null
     }
   } catch (err) {
-    confirmWin.err(err.msg)
+    if (code !== 400 && code !== 500)
+      confirmWin.err(err.msg)
+    loadingPage(false)
   }
 }

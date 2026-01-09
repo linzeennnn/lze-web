@@ -1,6 +1,7 @@
 package tra
 
 import (
+	"lze-web/model/public/response"
 	"lze-web/model/tra/list"
 	"lze-web/pkg/global"
 	"path/filepath"
@@ -10,8 +11,11 @@ import (
 
 func List(c *gin.Context) {
 	var rec list.Rec
-	if err := c.ShouldBind(&rec); err != nil {
-		c.JSON(200, err)
+	var resData response.Response[list.Send]
+	if err := c.ShouldBindJSON(&rec); err != nil {
+		resData.Code = 400
+		resData.Msg = err.Error()
+		c.JSON(400, resData)
 		return
 	}
 	files := global.ScanDir(filepath.Join(global.TraPath, filepath.FromSlash(rec.Folder)))
@@ -45,5 +49,7 @@ func List(c *gin.Context) {
 	sendData.Meta = [3]string{"name", "type", "delData"}
 	sendData.FileList = docList
 	sendData.CurrentFolder = rec.Folder
-	c.JSON(200, sendData)
+	resData.Code = 200
+	resData.Data = sendData
+	c.JSON(200, resData)
 }

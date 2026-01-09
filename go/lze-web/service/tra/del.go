@@ -1,7 +1,7 @@
 package tra
 
 import (
-	"lze-web/model/bok/del"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os"
 
@@ -9,18 +9,19 @@ import (
 )
 
 func Del(c *gin.Context) {
-	var rec del.Rec
-	if err := c.ShouldBind(&rec); err != nil {
-		c.JSON(200, err)
-		return
-	}
+	var sendData response.Response[string]
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "tra", "clean") {
 		os.RemoveAll(global.TraPath)
 		os.MkdirAll(global.TraPath, 0755)
 		global.CleanDelData()
+		sendData.Code = 200
+		sendData.Msg = global.GetText("clean_success", c)
+		c.JSON(200, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_clean_per", c)
+		c.JSON(403, sendData)
 	}
 
 }

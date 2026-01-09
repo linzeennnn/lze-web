@@ -11,7 +11,7 @@ func RouterTra(r *gin.Engine) {
 	{
 		loginGroup.POST("/list", tra.List)
 		loginGroup.POST("/recover", tra.Recover)
-		loginGroup.POST("/del", tra.Del)
+		loginGroup.DELETE("/del", tra.Del)
 	}
 
 }

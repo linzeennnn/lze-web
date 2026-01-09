@@ -1,7 +1,7 @@
 package tra
 
 import (
-	"fmt"
+	"lze-web/model/public/response"
 	"lze-web/model/tra/recover"
 	"lze-web/pkg/global"
 	"os"
@@ -12,14 +12,17 @@ import (
 
 func Recover(c *gin.Context) {
 	var rec recover.Rec
-	if err := c.ShouldBind(&rec); err != nil {
-		c.JSON(200, err)
+	var sendData response.Response[string]
+	if err := c.ShouldBindJSON(&rec); err != nil {
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(400, sendData)
 		return
 	}
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "tra", "recover") {
 		if rec.SourcePath {
-			fmt.Println("source")
+			// 原目录存在
 			delData := global.GetDeldata()
 			for _, files := range rec.RecoverList {
 				oriPathStr := delData[filepath.Base(files)].(string)
@@ -35,7 +38,7 @@ func Recover(c *gin.Context) {
 			}
 			global.SaveDelData(delData)
 		} else {
-			fmt.Println("no source")
+			// 原目录已经不存在
 			for _, files := range rec.RecoverList {
 				dest := filepath.Join(global.DocPath, "Recover_file")
 				os.Mkdir(dest, 0755)
@@ -46,7 +49,12 @@ func Recover(c *gin.Context) {
 			}
 
 		}
+		sendData.Code = 200
+		sendData.Msg = global.GetText("recover_success", c)
+		c.JSON(200, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_recover_per", c)
+		c.JSON(403, sendData)
 	}
 }

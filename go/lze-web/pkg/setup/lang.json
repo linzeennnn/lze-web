@@ -30,7 +30,11 @@
         "downDir_success":"开始下载文件夹",
         "no_downDir_per":"没有下载文件夹权限",
         "downFile_success":"开始下载文件",
-        "no_downFile_per":"没有下载文件权限"
+        "no_downFile_per":"没有下载文件权限",
+        "recover_success":"已成功恢复文件",
+        "no_recover_per":"没有恢复文件的权限",
+        "clean_success":"已成功清空回收站",
+        "no_clean_per":"没有清空回收站的权限"
 },
 "en":{
     "get_widget_data_success":"Successfully retrieved widget data.",
@@ -63,7 +67,11 @@
         "downDir_success":"Start downloading directory.",
         "no_downDir_per":"No download directory permission.",
         "downFile_success":"Start downloading file.",
-        "no_downFile_per":"No download file permission."
+        "no_downFile_per":"No download file permission.",
+        "recover_success":"File recovered successfully.",
+        "no_recover_per":"No permission to recover file.",
+        "clean_success":"Recycle bin cleaned successfully.",
+        "no_clean_per":"No permission to clean recycle bin."
 }
 
 }
