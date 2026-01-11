@@ -2,6 +2,7 @@ import React from "react";
 import { notify } from "../../../../utils/common";
 import { useGlobal } from "../../global";
 import {GetText} from "../../../../utils/common"
+import { getUsername } from "../../../../store/request";
 export default function Panel({showItem,type,show}){
     return(
         <div className={"widget-panel "+(show?"widget-hide":"")} key={type+"panel"}>
@@ -38,10 +39,6 @@ function getPanelText(item,type) {
                             </span>)
     }
 }
-function splitStr(){
-    const index = str.indexOf('/');
-    return [str.slice(0, index), str.slice(index + 1)];
-}
 function get_mon(str){
     const arr=str.split("/");
     switch (arr[0]) {
@@ -69,7 +66,7 @@ function openListWin(type,name){
         return
     }
     if(type=="mon"){
-        const user=useGlobal.getState().userName
+        const user=getUsername()
         notify.normal(GetText("current_user")+":"+user)
         return
     }

@@ -1,12 +1,14 @@
 package mon
 
 import (
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 
 	"github.com/gin-gonic/gin"
 )
 
 func List(c *gin.Context) {
+	var sendData = response.Response[map[string]interface{}]{}
 	sendConfig := global.UserConfig
 	userJson := make(map[string]interface{})
 	for _, userMes := range global.UserArr {
@@ -17,5 +19,7 @@ func List(c *gin.Context) {
 	}
 	sendConfig["user"] = userJson
 	delete(sendConfig, "userMes")
-	c.JSON(200, sendConfig)
+	sendData.Code = 200
+	sendData.Data = sendConfig
+	c.JSON(200, sendData)
 }

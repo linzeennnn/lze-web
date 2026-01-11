@@ -7,7 +7,7 @@ import (
 )
 
 func RouterHome(r *gin.Engine) {
-	loginGroup := r.Group("/server/home")
+	loginGroup := r.Group("/api/home")
 	{
 		loginGroup.POST("/widget", home.Widget)
 	}

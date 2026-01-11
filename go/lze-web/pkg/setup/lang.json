@@ -1,5 +1,6 @@
 {
     "zh":{
+        "login_outdate":"登录已过期，请重新登录",
         "get_widget_data_success":"获取组件数据成功",
         "get_widget_data_fail":"获取组件数据失败",
         "user_auth_fail":"用户验证失败",
@@ -34,10 +35,25 @@
         "recover_success":"已成功恢复文件",
         "no_recover_per":"没有恢复文件的权限",
         "clean_success":"已成功清空回收站",
-        "no_clean_per":"没有清空回收站的权限"
+        "no_clean_per":"没有清空回收站的权限",
+        "no_delUser_per":"没有删除用户的权限",
+        "delUser_not_allowed":"不允许删除此用户",
+        "delUser_success":"删除用户成功",
+        "update_date_success":"更新过期时间成功",
+        "no_update_date_per":"没有更新过期时间的权限",
+        "no_cmd_per":"没有执行命令的权限",
+        "add_per_success":"添加权限成功",
+        "remove_per_success":"移除权限成功",
+        "no_change_per":"没有更改权限的权限",
+        "del_fail":"删除失败",
+        "add_note_success":"添加便签成功",
+        "no_add_note_per":"没有添加便签的权限",
+        "modify_note_success":"修改便签成功",
+        "no_modify_note_per":"没有修改便签的权限"
 },
 "en":{
-    "get_widget_data_success":"Successfully retrieved widget data.",
+        "login_outdate":"Login expired, please login again.",
+        "get_widget_data_success":"Successfully retrieved widget data.",
         "get_widget_data_fail":"Failed to retrieve widget data.",
         "user_auth_fail":"User authentication failed.",
         "user_auth_success":"User authentication succeeded.",
@@ -71,7 +87,21 @@
         "recover_success":"File recovered successfully.",
         "no_recover_per":"No permission to recover file.",
         "clean_success":"Recycle bin cleaned successfully.",
-        "no_clean_per":"No permission to clean recycle bin."
+        "no_clean_per":"No permission to clean recycle bin.",
+        "no_delUser_per":"No permission to delete user.",
+        "delUser_not_allowed":"Not allowed to delete this user.",
+        "delUser_success":"User deleted successfully.",
+        "update_date_success":"Successfully updated expiration date.",
+        "no_update_date_per":"No permission to update expiration date.",
+        "no_cmd_per":"No permission to execute command.",
+        "add_per_success":"Permission added successfully.",
+        "remove_per_success":"Permission removed successfully.",
+        "no_change_per":"No permission to change permissions.",
+        "del_fail":"Delete failed.",
+        "add_note_success":"Note added successfully.",
+        "no_add_note_per":"No permission to add note.",
+        "modify_note_success":"Note modified successfully.",
+        "no_modify_note_per":"No permission to modify note."
 }
 
 }

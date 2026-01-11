@@ -1,5 +1,6 @@
 import { useGlobal,list,loadPage } from "../global"
 import { GetText,notify,confirmWin } from "../../../utils/common"
+import { Api } from "../../../utils/request"
 export default function Del({name}){
     return(
         <button id="del-btn" className="btn"
@@ -36,5 +37,14 @@ async function del(fileName){
         }
         notify.normal(GetText("op_com"))
         list()
+    })
+
+    Api.delete({
+        api:'not/del',
+        body:{fileName},
+        notice:true,
+        success:()=>{
+            list()
+        }
     })
 }

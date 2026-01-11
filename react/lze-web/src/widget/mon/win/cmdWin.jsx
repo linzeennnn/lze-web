@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
 import { GetText ,notify,confirmWin} from '../../../utils/common';
 import { useGlobal,loadPage } from "../global"
+import { Api } from "../../../utils/request";
 export default function CmdWin(){
     const showCmd=useGlobal(state=>state.showCmd)
     const [output,setOutput]=useState("输出")
@@ -99,31 +100,11 @@ export default function CmdWin(){
 async function sendCmd(cmd,setOutput){
     if(!await confirmWin.normal(GetText("run")+"?"))
         return
-        loadPage(true)
-        const globale=useGlobal.getState()
-        const token=globale.token
-        const url=globale.monUrl+"cmd"
-        fetch(url,{
-            method:"POST",
-            headers:{
-                'Content-Type':'application/json',
-                'authorization':"Bearer " +token
-            },
-            body:JSON.stringify({
-                cmd
-            })
-        }
-        ).then(res=>{
-            if(!res.ok){
-                if(res.status==401){
-                    notify.err(GetText("no_per"))
-                }else{
-                    notify.err(GetText("error")+":"+res.status)
-                }
-                loadPage(false)
-                return
+        Api.post({
+            api:'mon/cmd',
+            body:{cmd},
+            success:(data)=>{
+                setOutput(data)
             }
-            setOutput(res.text())
-                loadPage(false)
         })
 }

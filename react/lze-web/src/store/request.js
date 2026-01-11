@@ -27,7 +27,7 @@ export const useRequestStore = create((set) => ({
 
 export function InitRequest() {
   // 初始化 URL
-  const url = window.location.origin + "/server/";
+  const url = window.location.origin + "/api/";
   useRequestStore.getState().setInnerUrl(url);
 
   // 初始化 token

@@ -7,7 +7,7 @@ import (
 )
 
 func RouterLogin(r *gin.Engine) {
-	loginGroup := r.Group("/server/login")
+	loginGroup := r.Group("/api/login")
 	{
 		loginGroup.GET("/auth_status", login.AuthStatus)
 		loginGroup.POST("/login", login.Login)

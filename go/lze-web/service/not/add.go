@@ -2,6 +2,7 @@ package not
 
 import (
 	"lze-web/model/not/add"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"path/filepath"
 
@@ -10,16 +11,23 @@ import (
 
 func Add(c *gin.Context) {
 	var rec add.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, err)
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(sendData.Code, sendData)
 		return
 	}
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "not", "newnote") {
 		name := global.UniqueName(global.NotPath, rec.NewTitle+".txt")
 		global.WriteText(filepath.Join(global.NotPath, name), rec.NewContent)
-		c.Status(200)
+		sendData.Code = 200
+		sendData.Msg = global.GetText("add_note_success", c)
+		c.JSON(sendData.Code, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_add_note_per", c)
+		c.JSON(sendData.Code, sendData)
 	}
 }

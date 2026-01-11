@@ -7,7 +7,7 @@ import (
 )
 
 func RouterTra(r *gin.Engine) {
-	loginGroup := r.Group("/server/tra")
+	loginGroup := r.Group("/api/tra")
 	{
 		loginGroup.POST("/list", tra.List)
 		loginGroup.POST("/recover", tra.Recover)

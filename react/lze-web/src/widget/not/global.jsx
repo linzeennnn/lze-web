@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
 import { GetText,notify } from '../../utils/common';
-import { AsyncApi } from '../../utils/request';
+import { Api, AsyncApi } from '../../utils/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -56,51 +56,28 @@ function init_edit(){
 }
 // 扫描目录
 export function list(){
-  loadPage(true)
-const url =useGlobal.getState().notUrl+'list'
-const edit =useGlobal.getState().edit
-fetch(url,{
-    method:'GET'
-}).then(res=>res.json())
-.then(data=>{
+Api.get({
+  api:'not/list',
+  success:(data)=>{
     useGlobal.setState({
       notList:data,
     })
     init_edit()
-  loadPage(false)
+  }
 })
 }
 // 保存文件
 export function Save_note(newTitle,newContent){
-    loadPage(true)
-    const user=useGlobal.getState().userName
-    const token=useGlobal.getState().token
     const edit=useGlobal.getState().edit
     const oldTitle=edit.title
     newTitle=newTitle==""?"new_note":newTitle
-    const url=useGlobal.getState().notUrl+edit.type
-    const send_data={user,token,oldTitle,newTitle,newContent}
-    fetch(url,{
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization':"Bearer "+ token
-        },
-        body: JSON.stringify(send_data)
-    }).then((res) => {
-        if(!res.ok){
-            if(res.status===401){
-                notify.err(GetText("no_per"))
-            }
-            else{
-                notify.err(+":"+res.status)
-            }
-            loadPage(false)
-            return
-        }
-        notify.normal(GetText("op_com"))
-        loadPage(false)
+    Api.post({
+      api:'not/'+edit.type,
+      body:{oldTitle,newTitle,newContent},
+      notice: true,
+      success:()=>{
         list()
+      }
     })
 }
 // 加载页面

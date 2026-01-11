@@ -7,7 +7,7 @@ import GoTopBtn from '../../components/goTopBtn'
 import HeadBar from '../../components/headBar'
 import GoBack from '../../components/goBack'
 import PublicWidget from '../../components/public/publicWidget'
-import{DragOver,DragLeave,Drop, InitData, useGlobal} from './global'
+import{DragOver,DragLeave,Drop, useGlobal} from './global'
 import '../../css/page/not.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
@@ -16,9 +16,6 @@ import { useEffect } from 'react';
 
 export default function App() {
   const theme=useGlobal(state=>state.theme)
-    useEffect(() => {
-        InitData()
-    }, []);
   useEffect(() => {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);

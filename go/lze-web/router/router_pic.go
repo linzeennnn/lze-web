@@ -7,7 +7,7 @@ import (
 )
 
 func RouterPic(r *gin.Engine) {
-	loginGroup := r.Group("/server/pic")
+	loginGroup := r.Group("/api/pic")
 	{
 		loginGroup.POST("/list", pic.List)
 		loginGroup.POST("/upload", pic.Upload)

@@ -10,14 +10,10 @@ import PublicWidget from '../../components/public/publicWidget';
 import '../../css/page/bok.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
-import { InitData, useGlobal } from './global';
-import { useEffect } from 'react';
+import {  useGlobal } from './global';
 
 export default function App() {
   const theme=useGlobal(state=>state.theme)
-    useEffect(() => {
-        InitData()
-    }, []);
   return ( 
      <div id='app' mode={theme.mode} color={theme.color["bok"]}>
       <div className='wallpaper'></div>

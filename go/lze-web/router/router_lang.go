@@ -11,7 +11,7 @@ import (
 
 func RouterLang(r *gin.Engine) {
 
-	r.POST("/server/lang", func(c *gin.Context) {
+	r.POST("/api/lang", func(c *gin.Context) {
 		var rec lang.Rec
 		if err := c.ShouldBindJSON(&rec); err != nil {
 			c.JSON(400, err)

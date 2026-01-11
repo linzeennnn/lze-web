@@ -20,57 +20,10 @@ export const AsyncApi = {
 
 function req(request, method) {
   loadingPage(true)
- const {
-    api,
-    body,
-    success,
-    fail,
-    end,
-    notice
-  } = request;
-  const m = method.toUpperCase();
-  const options = {
-    method: m,
-    headers: {
-      "Content-Type": "application/json",
-      'authorization':"Bearer " +getToken(),
-      'lang':getLangType()
-    }
-  };
-  if (body && m !== "GET") {
-    options.body = JSON.stringify(body);
-  }
-  fetch(getUrl()+api, options)
-    .then(res => res.json())
-    .then(res => {
-      const { code, msg, data } = res;
-      if (code === 200) {
-        if(notice)
-            notify.normal(msg)
-       success && success(data);
-        loadingPage(false)
-      } 
-    else if (code === 400||code===500) {
-      confirmWin.err(msg)
-    }
-      else {
-        notify.err(msg)
-      fail && fail();
-        loadingPage(false)
-      }
-      end&&end()
-      loadingPage(false)
-    })
-    .catch(err => {
-    if (code !== 400 && code !== 500)
-      confirmWin.err(err.msg)
-    loadingPage(false)
-    });
-}
 
-async function reqAsync(request, method) {
-  const { api, body,  notice } = request;
-  const m = method.toUpperCase();
+  const { api, body, success, fail, end, notice } = request
+  const m = method.toUpperCase()
+
   const options = {
     method: m,
     headers: {
@@ -78,31 +31,92 @@ async function reqAsync(request, method) {
       "authorization": "Bearer " + getToken(),
       "lang": getLangType()
     }
-  };
+  }
 
   if (body && m !== "GET") {
-    options.body = JSON.stringify(body);
+    options.body = JSON.stringify(body)
+  }
+
+  fetch(getUrl() + api, options)
+    .then(async res => {
+      // 不再抛出 HTTP 错误，让下面统一处理 code
+      const data = await res.json()
+      return { ok: res.ok, status: res.status, ...data }
+    })
+    .then(({ ok, status, code, msg, data }) => {
+      if (ok && code === 200) {
+        notice && notify.normal(msg)
+        success && success(data)
+      } else if (code === 400 || code === 500) {
+        confirmWin.err(msg)
+        fail && fail(code)
+      }else {
+        notify.err(msg)
+        fail && fail(code)
+      }
+    })
+    .catch(err => {
+      // 只处理 fetch 抛出的异常（比如网络断开）
+      confirmWin.err(err.message)
+      fail && fail(-1)
+    })
+    .finally(() => {
+      loadingPage(false)
+      end && end()
+    })
+}
+
+
+async function reqAsync(request, method) {
+  loadingPage(true)
+
+  const { api, body, notice } = request
+  const m = method.toUpperCase()
+
+  const options = {
+    method: m,
+    headers: {
+      "Content-Type": "application/json",
+      "authorization": "Bearer " + getToken(),
+      "lang": getLangType()
+    }
+  }
+
+  if (body && m !== "GET") {
+    options.body = JSON.stringify(body)
   }
 
   try {
-    const res = await fetch(getUrl() + api, options);
-    const result = await res.json();
-    const { code, msg, data } = result;
+    const res = await fetch(getUrl() + api, options)
 
-    if (code === 200) {
-      if (notice) notify.normal(msg);
+    let json
+    try {
+      json = await res.json()
+    } catch {
+      // 如果不是 JSON，返回空对象，交给 catch 处理
+      json = {}
+    }
+
+    const { code, msg, data } = json
+
+    if (res.ok && code === 200) {
+      notice && notify.normal(msg)
       return data
     }
-    else if (code === 400||code===500) {
+
+    // HTTP 状态码非 2xx 或 code 非 200
+    if (code === 400 || code === 500) {
       confirmWin.err(msg)
+    } else {
+      notify.err(msg)
     }
-    else {
-      notify.err(msg);
-      return null
-    }
+
+    return null
   } catch (err) {
-    if (code !== 400 && code !== 500)
-      confirmWin.err(err.msg)
+    // 只捕获 fetch 抛出的异常（网络问题）
+    confirmWin.err(err.message || "网络异常")
+    return null
+  } finally {
     loadingPage(false)
   }
 }

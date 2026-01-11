@@ -7,8 +7,8 @@ import (
 )
 
 func RouterSystem(r *gin.Engine) {
-	loginGroup := r.Group("/server/system")
+	loginGroup := r.Group("/api/system")
 	{
-		loginGroup.GET("/system", system.System)
+		loginGroup.GET("/api", system.System)
 	}
 }

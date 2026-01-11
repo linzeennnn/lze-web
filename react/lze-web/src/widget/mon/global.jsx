@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
-import { GetText } from '../../utils/common';
+import {Api, AsyncApi}from '../../utils/request'
 // 全局变量
 export const useGlobal = create((set, get) => {
   const storedUser = window.localStorage.getItem('userName');
@@ -46,16 +46,10 @@ export function loadPage(isLoad){
 }
 //获取配置
 export function list(){
-  loadPage(true)
-const url =useGlobal.getState().monUrl+'list'
-fetch(url,{
-    method:'GET',
-  headers:{
-    'Content-Type':'application/json'
-  }
-}).then(res=>res.json())
-.then(data=>{
+Api.get({
+  api:'mon/list',
+  success:(data)=>{
     useGlobal.setState({controlList:data.control,userList:data.user})
-  loadPage(false)
+  }
 })
 }

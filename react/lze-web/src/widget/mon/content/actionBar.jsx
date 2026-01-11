@@ -1,5 +1,6 @@
 import {useGlobal,list,loadPage} from '../global'
 import { GetText,notify,confirmWin } from '../../../utils/common'
+import { Api } from '../../../utils/request'
 export default function ActionBar({keyName,Mes}){
     const nowuser=useGlobal((state)=>state.nowuser)
     return(
@@ -21,30 +22,12 @@ async function update_act(control,action,name,change){
     if(!await confirmWin.normal(ch+"?")){
         return
     }
-    loadPage(true)
-    const user=useGlobal.getState().userName
-    const token=useGlobal.getState().token
-    const url=useGlobal.getState().monUrl+"update_act"
-    fetch(url,{
-        method:"POST",
-        headers:{
-            'Content-Type':'application/json',
-            'authorization':"Bearer " +token
-        },
-        body:JSON.stringify({
-            user,token,control,action,name,change
-        })
-    }).then(res=>{
-        if(!res.ok){
-            if(res.status===401){
-                notify.err(GetText("no_per"))
-            }else{
-                notify.err(GetText("error")+":"+res.status)
-            }
-            loadPage(false)
-            return
+    Api.patch({
+        api:'mon/update_act',
+        body:{control,action,name,change},
+        notice:true,
+        success:()=>{
+            list()
         }
-        notify.normal(GetText("op_com"))
-        list()
     })
 }

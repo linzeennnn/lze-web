@@ -7,13 +7,13 @@ import (
 )
 
 func RouterNot(r *gin.Engine) {
-	loginGroup := r.Group("/server/not")
+	loginGroup := r.Group("/api/not")
 	{
 		loginGroup.GET("/list", not.List)
-		loginGroup.POST("/del", not.Del)
+		loginGroup.DELETE("/del", not.Del)
 		loginGroup.POST("/add", not.Add)
 		loginGroup.POST("/edit", not.Edit)
-		loginGroup.POST("/get_text", not.GetText)
+		loginGroup.POST("/getText", not.GetText)
 		loginGroup.POST("/upload", not.Upload)
 	}
 

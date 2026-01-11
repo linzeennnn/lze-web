@@ -4,6 +4,7 @@ import Del from "./del";
 import hljs from 'highlight.js/lib/common';
 import 'highlight.js/styles/atom-one-dark.min.css';
 import {  list, loadPage, useGlobal } from "../global";
+import { Api } from "../../../utils/request";
 export default function Note({name}){
     const [text, setText] = useState('');
     const [loaded, setLoaded] = useState(false)
@@ -70,18 +71,12 @@ export default function Note({name}){
 }
 
 function get_note(name,setLoaded,setText){
-const url=useGlobal.getState().notUrl+'get_text'
-fetch(url,{
-    method:"POST",
-    headers:{
-        'Content-Type':'application/json',
-    },
-    body:JSON.stringify({
-        name:name
-    })
-}).then(res=>res.text())
-    .then(text=>{
-        setText(text)
-        setLoaded(true)
+    Api.post({
+        api:'not/getText',
+        body:{name},
+        success:(data)=>{
+          setText(data)
+          setLoaded(true)
+        }
     })
 }

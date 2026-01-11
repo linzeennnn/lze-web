@@ -7,6 +7,6 @@ import (
 )
 
 func RouterPlugin(r *gin.Engine) {
-	r.GET("/server/plugin/*path", plugin.GetRun)
-	r.POST("/server/plugin/*path", plugin.PostRun)
+	r.GET("/api/plugin/*path", plugin.GetRun)
+	r.POST("/api/plugin/*path", plugin.PostRun)
 }

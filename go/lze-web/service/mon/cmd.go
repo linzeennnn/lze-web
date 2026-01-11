@@ -3,6 +3,7 @@ package mon
 import (
 	"bytes"
 	"lze-web/model/mon/cmd"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os/exec"
 	"regexp"
@@ -14,19 +15,29 @@ import (
 
 func Cmd(c *gin.Context) {
 	var rec cmd.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, err)
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(400, sendData)
+		return
 	}
 	global.InitUserMes(c)
 	curUserMes, _ := c.MustGet("curUserMes").(*global.Claims)
 	if curUserMes.Name == "admin" {
 		if global.CheckToken(c) {
-			c.String(200, cmdRun(rec.CmdStr))
+			sendData.Code = 200
+			sendData.Data = cmdRun(rec.CmdStr)
+			c.JSON(sendData.Code, sendData)
 		} else {
-			c.Status(401)
+			sendData.Code = 401
+			sendData.Msg = global.GetText("login_outdate", c)
+			c.JSON(sendData.Code, sendData)
 		}
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_cmd_per", c)
+		c.JSON(sendData.Code, sendData)
 	}
 
 }

@@ -7,7 +7,7 @@ import (
 )
 
 func RouterDoc(r *gin.Engine) {
-	loginGroup := r.Group("/server/doc")
+	loginGroup := r.Group("/api/doc")
 	{
 		loginGroup.POST("/list", doc.List)
 		loginGroup.POST("/upload_file", doc.UploadFile)

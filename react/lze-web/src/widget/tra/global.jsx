@@ -20,7 +20,6 @@ export const useGlobal = create((set, get) => ({
       },
       userSelect:""
     },
-  traUrl:`${window.location.origin}/server/tra/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },

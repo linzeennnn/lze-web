@@ -32,10 +32,10 @@ func Del(c *gin.Context) {
 			os.Rename(sourcePath, destPath)
 			delData[filename] = files
 			global.SaveDelData(delData)
-			sendData.Code = 200
-			sendData.Msg = global.GetText("del_success", c)
-			c.JSON(200, sendData)
 		}
+		sendData.Code = 200
+		sendData.Msg = global.GetText("del_success", c)
+		c.JSON(200, sendData)
 	} else {
 		sendData.Code = 403
 		sendData.Msg = global.GetText("no_del_per", c)

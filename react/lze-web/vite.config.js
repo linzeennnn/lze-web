@@ -24,7 +24,7 @@ export default defineConfig({
       },
       workbox: {
         cleanupOutdatedCaches: true,
-        navigateFallbackDenylist: [/^\/file\//]
+        navigateFallbackDenylist: [/^\/file\//],
       }
     })
   ],
@@ -33,16 +33,16 @@ export default defineConfig({
     port: 1234,
     strictPort: true,
     proxy: {
-      '/server': {
-        target: 'http://127.0.0.1',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/server/, '/server'),
-      },
-      '/file': {
-        target: 'http://127.0.0.1',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/file/, '/file'),
-      },
+     '/api': {
+    target: 'http://127.0.0.1',
+    changeOrigin: true,
+    rewrite: (path) => path, // 不改 path
+  },
+  '/file': {
+    target: 'http://127.0.0.1',
+    changeOrigin: true,
+    rewrite: (path) => path,
+  },
     },
     middlewareMode: false,
     fs: {

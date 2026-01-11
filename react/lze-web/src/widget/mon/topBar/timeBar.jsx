@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GetText, notify  } from '../../../utils/common';
 import { useGlobal,list,loadPage } from "../global";
+import { Api } from "../../../utils/request";
 export default function TimeBar() {
     const unitList = {
         never: GetText("never"),
@@ -85,37 +86,14 @@ export default function TimeBar() {
     );
 }
 function updata_time(name,time){
-    loadPage(true)
-    const globale=useGlobal.getState()
-    const token=globale.token
-    const user=globale.userName
-    const url=globale.monUrl+"date"
-    fetch(url,{
-        method:"POST",
-        headers:{
-            'Content-Type':'application/json',
-            'authorization':"Bearer " +token
-        },
-    
-        body:JSON.stringify({
-            name:name,
-            time:time
-        })
-    }
-    ).then(res=>{
-        if(!res.ok){
-            if(res.status==401){
-                notify.err(GetText("no_per"))
-            }else{
-                notify.err(GetText("error")+":"+res.status)
-            }
-            loadPage(false)
-            return
-        }
-        notify.normal(GetText("op_com"))
-        list()
+    Api.patch({
+        api:'mon/date',
+        body:{name,time},
+        notice:true,
+        success:()=>[
+            list()
+        ]
     })
-    
 }
 function getTime(str) {
   if(str=="never"||str==""||!str){
