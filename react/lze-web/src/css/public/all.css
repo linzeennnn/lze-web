@@ -123,6 +123,7 @@
 --recover_icon:url(../../assets/icon/recover_dark.svg);
 --rightarr_icon: url(../../assets/icon/rightarr_dark.svg);
 --save_icon: url(../../assets/icon/save_dark.svg);
+--select_icon: url(../../assets/icon/select_dark.svg);
 --setting_icon: url(../../assets/icon/setting_dark.svg);
 --switch_icon: url(../../assets/icon/switch_dark.svg);
 --time_icon:url(../../assets/icon/time_dark.svg);
@@ -176,6 +177,7 @@
 --recover_icon:url(../../assets/icon/recover_light.svg);
 --rightarr_icon: url(../../assets/icon/rightarr_light.svg);
 --save_icon: url(../../assets/icon/save_light.svg);
+--select_icon: url(../../assets/icon/select_light.svg);
 --setting_icon: url(../../assets/icon/setting_light.svg);
 --switch_icon: url(../../assets/icon/switch_light.svg);
 --time_icon:url(../../assets/icon/time_light.svg);
@@ -239,6 +241,9 @@ body.no-scroll {
 
 body::-webkit-scrollbar{
   display: none;
+}
+svg{
+  fill:var(--text) !important;
 }
 .hide-scrollbar {
   overflow: auto;             

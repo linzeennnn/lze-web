@@ -176,6 +176,12 @@
                     "user",
                     "guest"
                 ]
+            },
+            "delete": {
+                "name": "delete",
+                "user": [
+                    "admin"
+                ]
             }
         }
     },

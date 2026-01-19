@@ -11,8 +11,6 @@ export default function HomePic() {
   };
 
   useEffect(() => {
-    console.log(nowPath);
-    
     AddMouseMenu({
       home: {
         name: GetText("back_main_album"),

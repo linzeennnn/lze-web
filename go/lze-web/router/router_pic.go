@@ -11,6 +11,7 @@ func RouterPic(r *gin.Engine) {
 	{
 		loginGroup.POST("/list", pic.List)
 		loginGroup.POST("/upload", pic.Upload)
+		loginGroup.DELETE("/del", pic.Delete)
 	}
 
 }

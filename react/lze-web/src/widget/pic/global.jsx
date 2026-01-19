@@ -30,6 +30,10 @@ export const useGlobal = create((set, get) => ({
     path:window.location.origin+"/file/Pictures/",
     index:0
   },
+  select:{
+    status:false,
+    list:[]
+  },
   upload:{
     status:false,
     percent:"0%"
@@ -49,6 +53,8 @@ PageCom(useGlobal.setState,"pic")
 }
 // 扫描目录
 export function list(path,showVideo) {
+  const setGlobal=useGlobal.setState
+  const select=useGlobal.getState().select
  Api.post({
   api:"pic/list",
   body:{folder: path},
@@ -58,6 +64,13 @@ export function list(path,showVideo) {
         let tmpVid=[]
         let tmpGroupImg=[]
         let tmpGroupVid=[]
+        setGlobal({
+      select: {
+        status:false,
+        list: []
+    }
+});
+
         data.filelist.forEach((item) => {
             if(item[1]=="dir"||item[1]=="dir_link"){
                 tmpDir.push(item[0])
