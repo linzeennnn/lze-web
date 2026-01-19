@@ -1,57 +1,92 @@
-import { useGlobal,Save_note } from "../global";
-import {WinBg} from'../../../components/winBg'
+import { useGlobal, Save_note } from "../global";
+import { WinBg } from '../../../components/winBg';
 import { useEffect, useState } from "react";
-import { GetText,confirmWin } from "../../../utils/common";
-export default function EditWin(){
-    const edit=useGlobal((state)=>state.edit)
-    const [title,setTitle]=useState(edit.title)
-    const [text,setText]=useState(edit.text)
-    const setGlobal=useGlobal.setState
-    useEffect(() => {
+import { GetText, confirmWin, AddMouseMenu } from "../../../utils/common";
+
+export default function EditWin() {
+  const edit = useGlobal((state) => state.edit);
+  const [title, setTitle] = useState(edit.title);
+  const [text, setText] = useState(edit.text);
+  const setGlobal = useGlobal.setState;
+
+  useEffect(() => {
     setTitle(edit.title || "");
     setText(edit.text || "");
-}, [edit.title, edit.text]);
-const key_save=(e)=>{
+  }, [edit.title, edit.text]);
+
+  // 保存操作
+  const save_edit = async () => {
+    if (!await confirmWin.normal(GetText("are_you_sure"))) return;
+    Save_note(title, text);
+  };
+
+  // Ctrl+S / Cmd+S 快捷键保存
+  const key_save = (e) => {
     const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
     const isCtrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
     if (isCtrlOrCmd && e.key.toLowerCase() === "s") {
-        e.preventDefault(); 
-        save_edit()
+      e.preventDefault();  // 阻止浏览器默认保存
+      save_edit();
     }
-    }
-const enter_save=(e)=>{
-    if(e.key==="Enter"){
-        save_edit()
-    }
-}
+  };
 
-const save_edit=async ()=>{
-    if(!await confirmWin.normal(GetText("are_you_sure")))
-        return
-        Save_note(title,text)
-}
-return(
-    <WinBg showBg={edit.mode?true:false}>
-        <div id="edit-back"
-                onKeyDown={key_save}
-                >
-        <button className="btn" id="close-edit" title={GetText("close")}
-        onClick={()=>setGlobal({edit:{mode:false,type:"",title:"",text:""}})}
+  // Enter 键保存
+  const enter_save = (e) => {
+    if (e.key === "Enter") {
+      save_edit();
+    }
+  };
+
+  // 添加右键菜单
+  useEffect(() => {
+    AddMouseMenu({
+      save: {
+        name: GetText("save")+"(S)",
+        fun: save_edit,
+        disable: !edit.mode
+      }
+    },[edit.mode]);
+
+    // 全局监听 Ctrl+S / Cmd+S
+    const handleKeyDown = (e) => key_save(e);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [title, text]); // 确保拿到最新 title/text
+
+  return (
+    <WinBg showBg={edit.mode ? true : false}>
+      <div id="edit-back">
+        <button
+          className="btn"
+          id="close-edit"
+          title={GetText("close")}
+          onClick={() => setGlobal({ edit: { mode: false, type: "", title: "", text: "" } })}
         ></button>
-        <button className="btn save" id="save-edit" title={GetText("save")}
-         onClick={()=>{
-        save_edit()
-            }}></button>
-         <input value={title} 
-         onChange={(e)=>setTitle(e.target.value)} 
-                onKeyDown={enter_save}
-            id="edit-title" type="text" placeholder={GetText("title")}/>
-             <textarea value={text}
-            id="edit-text"
-            placeholder={GetText("input_content")}
-            onChange={(e)=>setText(e.target.value)}
-            />
-            </div>
+
+        <button
+          className="btn save"
+          id="save-edit"
+          title={GetText("save")}
+          onClick={save_edit}
+        ></button>
+
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={enter_save} // 回车保存
+          id="edit-title"
+          type="text"
+          placeholder={GetText("title")}
+        />
+
+        <textarea
+          value={text}
+          id="edit-text"
+          placeholder={GetText("input_content")}
+          onChange={(e) => setText(e.target.value)}
+        />
+      </div>
     </WinBg>
-)
+  );
 }

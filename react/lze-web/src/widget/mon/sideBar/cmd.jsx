@@ -1,13 +1,28 @@
-import { useGlobal } from "../global"
-import { GetText } from '../../../utils/common';
+import { useGlobal } from "../global";
+import { AddMouseMenu, GetText } from '../../../utils/common';
+import { useEffect } from "react";
 
-export default function Cmd(){
-    const showCmd=useGlobal(state=>state.showCmd)
-    return(
-        <button className="btn side-btn" id="cmd-btn" title={GetText("terminal")}
-        onClick={()=>{
-            useGlobal.setState({showCmd:true})
-        }}
-        ></button>
-    )
+export default function Cmd() {
+
+  const openCmd = () => {
+    useGlobal.setState({ showCmd: true });
+  };
+
+  useEffect(() => {
+    AddMouseMenu({
+      terminal: {
+        name: GetText("terminal"),
+        fun: openCmd,
+      }
+    });
+  }, []);
+
+  return (
+    <button
+      className="btn side-btn"
+      id="cmd-btn"
+      title={GetText("terminal")}
+      onClick={openCmd}
+    ></button>
+  );
 }

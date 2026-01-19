@@ -16,6 +16,7 @@
   "clear_tra": "清空回收站",
   "close": "关闭",
   "copy": "复制",
+  "confirm":"确定",
   "cpu_usage": "CPU使用率",
   "create_folder": "创建新文件夹",
   "current_user": "当前用户",
@@ -123,6 +124,7 @@
   "view": "查看",
   "view_album": "查看其他相册",
   "view_user": "查看用户",
+  "warning": "警告",
   "year":"年",
   "zoom_in": "放大",
   "zoom_out": "缩小"

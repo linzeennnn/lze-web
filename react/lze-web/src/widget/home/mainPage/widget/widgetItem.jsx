@@ -1,5 +1,6 @@
 import {GetText} from "../../../../utils/common"
 import {useState } from "react";
+import {GetIcon} from "../../../home/global.jsx"
 import Panel from './panel'
 export default function WidgetItem({ theme, item, to_next, widgetData }){
     const [showPanel, setShowPanel] = useState(false)
@@ -14,7 +15,9 @@ export default function WidgetItem({ theme, item, to_next, widgetData }){
                             ()=>to_next(item)
                             }>
                               <div className={"widget-icon "+(showPanel?"widget-hide":"")} >
-                                <div  id={item+"-icon"}></div>
+                                <div  id={item+"-icon"}>{
+                                  GetIcon(item)
+                                  }</div>
                                 </div>  
                               <Panel showItem={widgetData[item]} type={item} show={!showPanel}/>
                               <div className={"show-panel btn "+(showPanel?"show-panel-enable":"") }

@@ -2,6 +2,7 @@ package bok
 
 import (
 	geturl "lze-web/model/bok/get_url"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -13,8 +14,11 @@ import (
 
 func GetUrl(c *gin.Context) {
 	var rec geturl.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, err)
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(sendData.Code, sendData)
 		return
 	}
 	name := rec.Name + ".html"
@@ -28,9 +32,12 @@ func GetUrl(c *gin.Context) {
 	re := regexp.MustCompile(`url=([^">]+)`)
 	match := re.FindStringSubmatch(url)
 
+	sendData.Code = 200
 	if len(match) > 1 {
-		c.String(200, match[1])
+		sendData.Data = match[1]
 	} else {
-		c.String(200, "")
+		sendData.Code = 404
+		sendData.Msg = global.GetText("url_not_found", c)
 	}
+	c.JSON(sendData.Code, sendData)
 }

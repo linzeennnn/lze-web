@@ -1,6 +1,7 @@
 import { useGlobal,list,loadPage } from "../global"
 import { notify,GetText } from "../../../utils/common"
-import confirmWin from "../../../components/public/confirmWin"
+import { confirmWin } from "../../../utils/common"
+import { Api } from "../../../utils/request"
 export default function BokItem({name}){
     return(
         <div className="bookmark main-item"
@@ -19,54 +20,24 @@ export default function BokItem({name}){
     )
 }
 function open_link(name){
-    loadPage(true)
-const url =useGlobal.getState().bokUrl+'get_url'
-fetch(url,{
-    method:'POST',
-    headers:{
-        'Content-Type':'application/json'
-    },
-    body:JSON.stringify({name})
-})
-.then(res=>{
-    if(!res.ok){
-        notify.err(+GetText("error")+":"+res.status)
-        loadPage(false)
-        return
-    }
-   return res.text()})
-.then(data=>{
-    loadPage(false)
+Api.post({
+    api:'bok/get_url',
+    body:{name},
+    success:(data)=>{
     window.location.href=data
+    }
 })
 }
 async function del(name){
     if(!(await confirmWin.normal(GetText("are_you_sure")))){
         return
     }
-    loadPage(true)
-const user=useGlobal.getState().userName
-const token=useGlobal.getState().token
-const url=useGlobal.getState().bokUrl+'del'
-fetch(url,{
-    method: "POST",
-    headers: {
-        'Content-Type': 'application/json',
-        'authorization':'Bearer '+token
-    },
-    body: JSON.stringify({name})
-}).then((res) => {
-    if(!res.ok){
-        if(res.status===401){
-            notify.err(GetText("no_per"))
-        }
-        else{
-            notify.err(GetText("error")+":"+res.status)
-        }
-        loadPage(false)
-        return
+Api.delete({
+    api:'bok/del',
+    body:{name},
+    notice:true,
+    success:()=>{
+        list()
     }
-    notify.normal(GetText("op_com"))
-    list()
 })
 }

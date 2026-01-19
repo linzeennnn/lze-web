@@ -49,7 +49,10 @@
         "add_note_success":"添加便签成功",
         "no_add_note_per":"没有添加便签的权限",
         "modify_note_success":"修改便签成功",
-        "no_modify_note_per":"没有修改便签的权限"
+        "no_modify_note_per":"没有修改便签的权限",
+        "add_bok_success":"添加书签成功",
+        "no_add_bok_per":"没有添加书签的权限",
+        "url_not_found":"未找到链接地址"
 },
 "en":{
         "login_outdate":"Login expired, please login again.",
@@ -101,7 +104,10 @@
         "add_note_success":"Note added successfully.",
         "no_add_note_per":"No permission to add note.",
         "modify_note_success":"Note modified successfully.",
-        "no_modify_note_per":"No permission to modify note."
+        "no_modify_note_per":"No permission to modify note.",
+        "add_bok_success":"Bookmark added successfully.",
+        "no_add_bok_per":"No permission to add bookmark.",
+        "url_not_found":"URL not found."
 }
 
 }

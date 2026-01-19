@@ -57,6 +57,7 @@ align-items: center;
 	display: flex;
 	padding: 10px;
 	align-items: center;
+	text-align: center;
 	justify-content: center;
 	cursor: pointer;
 	margin: 20px;
@@ -66,6 +67,11 @@ align-items: center;
 	-webkit-clip-path: polygon(100% 0%, 100% 100%, 50% 82%, 0% 100%, 0% 0%, 0% 0%);
 	clip-path: polygon(100% 0%, 100% 100%, 50% 82%, 0% 100%, 0% 0%, 0% 0%);
 	transition: transform 0.3s ease;
+}
+.bookmark span{
+	max-width: 80%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 #del-btn{
     position: absolute;

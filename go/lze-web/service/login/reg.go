@@ -15,7 +15,9 @@ func Reg(c *gin.Context) {
 	var rec regModel.Rec
 	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(sendData.Code, sendData)
 		return
 	}
 	userMesJson, _ := global.DecodeUserMes(rec.UserMes, string(global.JwtKey))

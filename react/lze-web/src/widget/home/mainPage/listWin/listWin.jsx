@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../../components/winBg"
-import {  useGlobal } from "../../global"
+import {  GetIcon, useGlobal } from "../../global"
 import {GetText} from "../../../../utils/common"
+import { Api } from "../../../../utils/request"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)
     const theme=useGlobal(state=>state.theme)
@@ -46,7 +47,7 @@ function ListDoc({ name }) {
   const [loaded,setLoaded]=useState(false)
   const [fileMes,setFileMes]=useState(null)
   useEffect(() => {
-    GetData(window.location.origin+"/server/doc/list",
+    GetData("doc/list",
       {file:name},
       setFileMes,
       setLoaded,
@@ -60,7 +61,10 @@ function ListDoc({ name }) {
     (fileMes.filelist.map((file,index)=>{
       return <div key={index+file[0]} className="dir-view" title={file[0]}>
           <div className={((file[1]=="dir"||file[1]=="dir_link")?
-            "dir-view-dir":"dir-view-file")}></div>
+            "dir-view-dir":"dir-view-file")}>{
+              (file[1]=="dir"||file[1]=="dir_link")?GetIcon("doc"):
+              GetIcon("file")
+            }</div>
           <span>{file[0]}</span>
         </div>
     })):
@@ -84,7 +88,7 @@ function ListNot({name}){
   const [loaded,setLoaded]=useState(false)
   const [text,setText]=useState("")
   useEffect(() => {
-    GetData(window.location.origin+"/server/not/get_text",
+    GetData("not/getText",
       {name},
       setText,
       setLoaded ,
@@ -101,7 +105,7 @@ function ListBok({name}){
   const [loaded,setLoaded]=useState(false)
   const [text,setText]=useState("")
   useEffect(() => {
-    GetData(window.location.origin+"/server/bok/get_url",
+    GetData("bok/get_url",
       {name},
       setText,
       setLoaded ,
@@ -114,18 +118,13 @@ return(
   <div className="loading"></div>
 )
 }
-function GetData(url,body,setData,setLoaded,json){
-  fetch(url,{
-    method:"POST",
-    headers:{
-      'Content-Type':'application/json'
-    },
-    body:JSON.stringify(body)
+function GetData(url,data,setData,setLoaded,json){
+  Api.post({
+    api:url,
+    body:data,
+    success:(data)=>{
+      setData(data)
+      setLoaded(true)
+    }
   })
-  .then(res=>json? res.json(): res.text())
-  .then(data=>{
-    setData(data)
-    setLoaded(true)
-  })
-  
 }

@@ -1,11 +1,28 @@
-import {useGlobal,list} from '../global';
-import { GetText } from '../../../utils/common';
+import { useGlobal, list } from '../global';
+import { AddMouseMenu, GetText } from '../../../utils/common';
+import { useEffect } from 'react';
 
 export default function GoUp() {
   const nowPath = useGlobal((state) => state.nowPath);
   const parentPath = useGlobal((state) => state.parentPath);
 
-  const isRoot = (nowPath === '/')||(nowPath === '');
+  const isRoot = (nowPath === '/') || (nowPath === '');
+
+  const goUp = () => {
+    if (isRoot) return;
+    list(parentPath);
+  };
+
+  // 只在挂载时注册右键菜单
+  useEffect(() => {
+    AddMouseMenu({
+      goUp: {
+        disable:isRoot,
+        name: GetText("back"),
+        fun: goUp,
+      }
+    });
+  }, [isRoot,parentPath]);
 
   return (
     <button
@@ -13,11 +30,7 @@ export default function GoUp() {
       className={(isRoot ? 'go-up-disable' : '') + ' btn'}
       disabled={isRoot}
       title={isRoot ? '' : GetText("back")}
-      onClick={() => {
-        if (!isRoot) {
-          list(parentPath);
-        }
-      }}
+      onClick={goUp}
     ></button>
   );
 }

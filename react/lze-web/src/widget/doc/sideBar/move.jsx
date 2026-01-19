@@ -1,13 +1,23 @@
 import {  useGlobal } from "../global"
-import { GetText } from '../../../utils/common';
+import { AddMouseMenu, GetText } from '../../../utils/common';
+import { useEffect } from "react";
 export default function Move({setPaste,setCopyList}){
-    return(
-        <button id="move" className="btn side-btn"
-        title={GetText("cut")} onClick={()=>{
+    const cut=()=>{
             const selected=useGlobal.getState().selected
             setCopyList([...selected])
             setPaste({status:true,type:"move"})
-        }}>
+    }
+     useEffect(() => {
+        AddMouseMenu({
+          cut: {
+            name: GetText("cut")+"(X)",
+            fun: cut,  
+          }
+        });
+      }, []);
+    return(
+        <button id="move" className="btn side-btn"
+        title={GetText("cut")} onClick={cut}>
         </button>
     )
 }

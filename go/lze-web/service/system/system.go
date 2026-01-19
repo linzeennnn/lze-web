@@ -2,6 +2,7 @@ package system
 
 import (
 	"fmt"
+	"lze-web/model/public/response"
 	sys "lze-web/model/system/system"
 	"math"
 	"runtime"
@@ -16,12 +17,15 @@ import (
 )
 
 func System(c *gin.Context) {
+	var resData response.Response[sys.Send]
 	var sendData sys.Send
 	sendData.CpuPercent = cpuData()
 	sendData.MemData, sendData.MemPercent = memData()
 	sendData.DiskData, sendData.DiskPercent = diskData()
 	sendData.NetUp, sendData.NetDown = netData()
-	c.JSON(200, sendData)
+	resData.Code = 200
+	resData.Data = sendData
+	c.JSON(resData.Code, resData)
 }
 func cpuData() string {
 	cpuUsage, err := cpu.Percent(time.Millisecond*100, false)

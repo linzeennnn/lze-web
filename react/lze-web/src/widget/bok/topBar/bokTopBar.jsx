@@ -2,6 +2,7 @@ import { useState } from 'react'
 import TopBar from '../../../components/topBar'
 import {useGlobal,list,loadPage} from '../global'
 import { notify,GetText } from '../../../utils/common'
+import { Api } from '../../../utils/request'
 export default function BokTopBar(){
     const protocolList=[
         {type: 'none', showName: GetText("no_protocol")},
@@ -70,35 +71,15 @@ function addBok(name,text){
         name="new_bookmark"
     if(!isUrl(text)){
         notify.err(GetText("bok_url")+" "+GetText("error")+" "+text)
-        console.log(text);
-        
         return
     }
-    loadPage(true)
-    const user=useGlobal.getState().userName
-    const token=useGlobal.getState().token
-    const url =useGlobal.getState().bokUrl+"add"
-    const data={name,text}
-    fetch(url,{
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'authorization':"Bearer " +token
-        },
-        body:JSON.stringify(data)   })
-        .then((res) => {
-    if(!res.ok){
-        if(res.status===401){
-            notify.err(GetText("no_per"))
-        }
-        else{
-            notify.err(GetText("error")+":"+res.status)
-        }
-        loadPage(false)
-        return
+Api.post({
+    api:'bok/add',
+    body:{name,text},
+    notice:true,
+    success:()=>{
+        list()
     }
-    notify.normal(GetText("op_com"))
-    list()
 })
 }
 function isUrl(str){

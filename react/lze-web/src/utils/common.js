@@ -2,6 +2,8 @@ import { showNotify } from "../store/notify";
 import { getLang, setLang } from "../store/lang";
 import { useConfirmStore } from "../store/confirm";
 import { setLoading } from "../store/loading";
+import { AsyncApi } from "./request";
+import { setMenuOption, useMouseMenuStore } from "../store/mouseMenu";
 // /////////////////通知////////////////
 export const notify = {
   normal: (text) => showNotify.normal(text),
@@ -43,42 +45,37 @@ export function GetText(key) {
 
 ///////////////////判空逻辑独立成函数 ///////////////////
 export async function CheckLang() {
-  let remote=false;
-  if(sessionStorage.getItem('lze-web')!='true')
-      remote=true
-  let currentLang = GetLangType();
+  let remote=(sessionStorage.getItem('lze-web')!='true');
+  let currentLang = GetLocalLangType();
   // 缺语言包 → 拉取
   if (!currentLang.list || Object.keys(currentLang.list).length === 0||remote) {
     const tmpLang = await GetLangList(currentLang);
     setLang(tmpLang);
   }else{
-    setLang(currentLang);
+  setLang(currentLang);
   }
+  
 }
-
 ///////////////////  拉取语言包 ///////////////////
 export async function GetLangList(lang) {
-    try {
-      const response = await fetch(window.location.origin + "/server/lang", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lang: lang.type })
-      });
-
-      const data = await response.json();
+if(!lang){
+  lang = GetLocalLangType();
+}
+const data= await AsyncApi.post({
+    api: "lang",
+    body: { lang: lang.type }
+})
+  if(data){
       lang.list = (data && typeof data === "object") ? data : {};
-
       localStorage.setItem("langList", JSON.stringify(lang.list));
-    } catch (err) {
-      console.error(err);
+  }else{
       lang.list = {};
-    }
-
-  return lang;
+  }
+  return lang
 }
 
 /////////////////// 保留语言类型逻辑 ///////////////////
-function GetLangType() {
+export function GetLocalLangType() {
   const langList = ['en', 'zh'];
   let sysLang = (navigator.language || navigator.userLanguage).split('-')[0];
   if (!langList.includes(sysLang)) sysLang = 'en';
@@ -90,4 +87,12 @@ function GetLangType() {
   let list = JSON.parse(localStorage.getItem('langList') || '{}');
 
   return { userSelect: lang || 'system', type, list };
+}
+/////////////////////设置右键菜单的选项/////////////////////
+export function AddMouseMenu(options) {
+  const setMenuOpt = useMouseMenuStore.getState().setMenuOpt;
+  Object.entries(options).forEach(([key, value]) => {
+    // 调用 store 的 setMenuOpt 方法，支持增量合并
+    setMenuOpt(key, value);
+  });
 }

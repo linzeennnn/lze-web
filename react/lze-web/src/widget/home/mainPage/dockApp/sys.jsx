@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {GetText} from "../../../../utils/common"
+import { Api } from "../../../../utils/request"
 export default function Sys(){
     const [loaded,setLoaded]=useState(false)
     const barList=[
@@ -18,24 +19,22 @@ export default function Sys(){
     )
     useEffect(()=>{
         const intervalId=setInterval(() => {
-            fetch(window.location.origin+'/server/system/system',{
-                method:"GET",
-                headers:{
-                    'Content-Type':'application/json'
+            Api.get({
+                api:'system/system',
+                loading:false,
+                success:(data)=>{
+                    setRecData({
+                        cpu:{data:"",percent:data.cpuPercent},
+                        mem:{data:data.memData,percent:data.memPercent},
+                        disk:{data:data.diskData,percent:data.diskPercent},
+                        net:{up:data.netUp,down:data.netDown}
+                    })
+                    if(!loaded){
+                        setLoaded(true)
+                    }
                 }
             })
-            .then(rss=>rss.json())
-            .then(data=>{
-                setRecData({
-                    cpu:{data:"",percent:data.cpuPercent},
-                    mem:{data:data.memData,percent:data.memPercent},
-                    disk:{data:data.diskData,percent:data.diskPercent},
-                    net:{up:data.netUp,down:data.netDown}
-                })
-                if(!loaded){
-                    setLoaded(true)
-                }
-            })
+
         }, 3000);
         return()=>{
             clearInterval(intervalId)

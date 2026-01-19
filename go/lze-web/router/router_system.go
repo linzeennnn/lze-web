@@ -9,6 +9,6 @@ import (
 func RouterSystem(r *gin.Engine) {
 	loginGroup := r.Group("/api/system")
 	{
-		loginGroup.GET("/api", system.System)
+		loginGroup.GET("/system", system.System)
 	}
 }

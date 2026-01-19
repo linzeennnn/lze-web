@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
 import { GetText,notify } from '../../utils/common';
 import { Api, AsyncApi } from '../../utils/request';
+import { getUrl } from '../../store/request';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -113,7 +114,7 @@ export async function Upload(file, uploadData) {
 
   let tmp_send_size = 0;
   let percent = "";
-  const url = useGlobal.getState().notUrl + "upload";
+  const url = getUrl() + "not/upload";
   const xhr = new XMLHttpRequest();
   const formData = new FormData();
   const user = useGlobal.getState().userName;

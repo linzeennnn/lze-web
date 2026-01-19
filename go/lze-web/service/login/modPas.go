@@ -11,13 +11,15 @@ import (
 
 func ModPas(c *gin.Context) {
 	var rec modPasModel.Rec
+	var sendData response.Response[modPasModel.Send]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(sendData.Code, sendData)
 		return
 	}
 	global.InitUserMes(c)
 	userMesJson, _ := global.DecodeUserMes(rec.UserMes, string(global.JwtKey))
-	var sendData response.Response[modPasModel.Send]
 	var userMes modPasModel.UserMes
 	json.Unmarshal([]byte(userMesJson), &userMes)
 	ok, token := ModPassword(c, userMes.OldPas, userMes.NewPas)

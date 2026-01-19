@@ -2,6 +2,7 @@ package bok
 
 import (
 	"lze-web/model/bok/del"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -11,21 +12,30 @@ import (
 
 func Del(c *gin.Context) {
 	var rec del.Rec
+	var sendData response.Response[string]
 	if err := c.ShouldBindJSON(&rec); err != nil {
-		c.JSON(400, err)
+		sendData.Code = 400
+		sendData.Msg = err.Error()
+		c.JSON(400, sendData)
 		return
 	}
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "bok", "delete") {
 		err := os.Remove(filepath.Join(global.BokPath, rec.Name+".html"))
 		if err != nil {
-			c.String(400, "delete fail."+err.Error())
+			sendData.Code = 400
+			sendData.Msg = global.GetText("del_fail", c) + err.Error()
+			c.JSON(sendData.Code, sendData)
 		} else {
-			c.Status(200)
+			sendData.Code = 200
+			sendData.Msg = global.GetText("del_success", c)
+			c.JSON(sendData.Code, sendData)
 		}
 
 	} else {
-		c.Status(401)
+		sendData.Code = 403
+		sendData.Msg = global.GetText("no_del_per", c)
+		c.JSON(sendData.Code, sendData)
 	}
 
 }

@@ -104,7 +104,6 @@ input{
     font-size: 10px;
     white-space: nowrap;
     width: 50px;
-    margin-left: 5px;
     border-radius: 15px;
     position: relative;
 }
@@ -117,8 +116,8 @@ input{
     justify-content: left;
 }
 #time-input-box{
+    overflow: hidden;
     height: fit-content;
-    padding-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center;

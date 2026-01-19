@@ -19,9 +19,18 @@ export const AsyncApi = {
 };
 
 function req(request, method) {
-  loadingPage(true)
+  const {
+    api,
+    body,
+    success,
+    fail,
+    end,
+    notice,
+    loading = true   
+  } = request
 
-  const { api, body, success, fail, end, notice } = request
+  loading && loadingPage(true)
+
   const m = method.toUpperCase()
 
   const options = {
@@ -39,38 +48,43 @@ function req(request, method) {
 
   fetch(getUrl() + api, options)
     .then(async res => {
-      // 不再抛出 HTTP 错误，让下面统一处理 code
       const data = await res.json()
       return { ok: res.ok, status: res.status, ...data }
     })
-    .then(({ ok, status, code, msg, data }) => {
+    .then(({ ok, code, msg, data }) => {
       if (ok && code === 200) {
         notice && notify.normal(msg)
         success && success(data)
       } else if (code === 400 || code === 500) {
         confirmWin.err(msg)
         fail && fail(code)
-      }else {
+      } else {
         notify.err(msg)
         fail && fail(code)
       }
     })
     .catch(err => {
-      // 只处理 fetch 抛出的异常（比如网络断开）
       confirmWin.err(err.message)
       fail && fail(-1)
     })
     .finally(() => {
-      loadingPage(false)
+      loading && loadingPage(false)
       end && end()
     })
 }
 
 
-async function reqAsync(request, method) {
-  loadingPage(true)
 
-  const { api, body, notice } = request
+async function reqAsync(request, method) {
+  const {
+    api,
+    body,
+    notice,
+    loading = true   
+  } = request
+
+  loading && loadingPage(true)
+
   const m = method.toUpperCase()
 
   const options = {
@@ -89,13 +103,10 @@ async function reqAsync(request, method) {
   try {
     const res = await fetch(getUrl() + api, options)
 
-    let json
+    let json = {}
     try {
       json = await res.json()
-    } catch {
-      // 如果不是 JSON，返回空对象，交给 catch 处理
-      json = {}
-    }
+    } catch {}
 
     const { code, msg, data } = json
 
@@ -104,7 +115,6 @@ async function reqAsync(request, method) {
       return data
     }
 
-    // HTTP 状态码非 2xx 或 code 非 200
     if (code === 400 || code === 500) {
       confirmWin.err(msg)
     } else {
@@ -113,10 +123,9 @@ async function reqAsync(request, method) {
 
     return null
   } catch (err) {
-    // 只捕获 fetch 抛出的异常（网络问题）
     confirmWin.err(err.message || "网络异常")
     return null
   } finally {
-    loadingPage(false)
+    loading && loadingPage(false)
   }
 }

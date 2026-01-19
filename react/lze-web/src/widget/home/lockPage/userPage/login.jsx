@@ -48,7 +48,7 @@ async function login(name,password,para){
     name,password
   })
   Api.post({
-    api:"/login/login",
+    api:"login/login",
     body:{userMes:await encodeUserMes(userMesStr)},
     success:(data)=>{
         window.localStorage.setItem('username',name);
