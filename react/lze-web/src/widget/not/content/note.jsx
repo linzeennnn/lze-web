@@ -6,6 +6,7 @@ import 'highlight.js/styles/atom-one-dark.min.css';
 import {  list, loadPage, useGlobal } from "../global";
 import { Api } from "../../../utils/request";
 export default function Note({name}){
+    const outer=useGlobal((state)=>state.outer)
     const [text, setText] = useState('');
     const [loaded, setLoaded] = useState(false)
     const [show, setShow] = useState(false)
@@ -20,6 +21,17 @@ export default function Note({name}){
     codeRef.current.className = 'hljs';
   }
 }, [text, show,loaded]);
+    useEffect(() => {
+        if(outer){
+            openText()
+        }
+    })
+const openText=()=>{
+                setShow(true)
+                if(!loaded){
+                    get_note(name,setLoaded,setText)
+                }
+}
     return(
         <div className="note">
             <Del name={name}/>
@@ -59,12 +71,7 @@ export default function Note({name}){
             setShow(false)
            }}>
            </button>:<button className="btn note-btn open-note"
-            title={GetText("expand")}onClick={()=>{
-                setShow(true)
-                if(!loaded){
-                    get_note(name,setLoaded,setText)
-                }
-            }}
+            title={GetText("expand")}onClick={openText}
             ></button>}
         </div>
     )

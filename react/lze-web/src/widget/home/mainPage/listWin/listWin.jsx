@@ -3,6 +3,8 @@ import { WinBg } from "../../../../components/winBg"
 import {  GetIcon, useGlobal } from "../../global"
 import {GetText} from "../../../../utils/common"
 import { Api } from "../../../../utils/request"
+import { GetPageSession, SetPageSession } from "../../../../utils/pageSession"
+import { Page } from "../../../../utils/page"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)
     const theme=useGlobal(state=>state.theme)
@@ -32,49 +34,24 @@ export default function Listwin(){
 function creatList(type, name) {
   switch(type) {
     case "doc":
-      return <ListDoc name={name} />;
+      ListDoc(name)
+      return null;
     case "pic":
       return <ListPic name={name} />;
     case "not":
-      return <ListNot name={name} />;
+    ListNot(name)
+      return null;
     case "bok":
       return <ListBok name={name} />;
     default:
       return null;
   }
 }
-function ListDoc({ name }) {
-  const [loaded,setLoaded]=useState(false)
-  const [fileMes,setFileMes]=useState(null)
-  useEffect(() => {
-    GetData("doc/list",
-      {file:name},
-      setFileMes,
-      setLoaded,
-      true
-    )
-  }, []);
-  return (<>
-  {
-    loaded?(
-    fileMes.type=="dir"?
-    (fileMes.filelist.map((file,index)=>{
-      return <div key={index+file[0]} className="dir-view" title={file[0]}>
-          <div className={((file[1]=="dir"||file[1]=="dir_link")?
-            "dir-view-dir":"dir-view-file")}>{
-              (file[1]=="dir"||file[1]=="dir_link")?GetIcon("doc"):
-              GetIcon("file")
-            }</div>
-          <span>{file[0]}</span>
-        </div>
-    })):
-    (fileMes.view?<iframe className="file-view" src={window.location.origin+"/"+fileMes.url}></iframe>
-      :<span>{GetText("not_support_type")}</span>
-    )
-  ):<div className="loading"></div>
-  }
-  
-  </>)
+function ListDoc(name) {
+const pageSession=GetPageSession()
+pageSession.doc.list.path=name
+SetPageSession(pageSession)
+Page("doc")
 }
 
 function ListPic({name}){
@@ -84,22 +61,11 @@ function ListPic({name}){
   if(name.media="img")
     return(<img src={url} alt={name.name} className="list-media"/>)
 }
-function ListNot({name}){
-  const [loaded,setLoaded]=useState(false)
-  const [text,setText]=useState("")
-  useEffect(() => {
-    GetData("not/getText",
-      {name},
-      setText,
-      setLoaded ,
-      false
-    )
-  }, []);
-return(
-  loaded?
-  <code>{text}</code>:
-  <div className="loading"></div>
-)
+function ListNot(name){
+const pageSession=GetPageSession()
+pageSession.not.list.name=name
+SetPageSession(pageSession)
+Page("not")
 }
 function ListBok({name}){
   const [loaded,setLoaded]=useState(false)

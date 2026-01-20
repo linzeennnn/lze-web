@@ -3,6 +3,7 @@ import { PageCom } from '../../components/pageCom';
 import { GetText,loadingPage,notify } from '../../utils/common';
 import { Api, AsyncApi } from '../../utils/request';
 import { getToken, getUrl } from '../../store/request';
+import { GetPageSession, SetPageSession } from '../../utils/pageSession';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   nowPath: "",
@@ -46,7 +47,15 @@ export const useGlobal = create((set, get) => ({
 // 初始化
 export function InitData(){
 PageCom(useGlobal.setState,"doc")
-  list("")
+// 获取别的页面传递需要加载的目录
+  const pageSession=GetPageSession()
+  console.log(pageSession);
+  
+  const path=pageSession.doc.list.path
+  pageSession.doc.list.path=""
+  if(path!="")
+    SetPageSession(pageSession)
+  list(path)
 }
 // 扫描目录
 export function list(path) {

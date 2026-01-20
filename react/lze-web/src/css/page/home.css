@@ -691,11 +691,16 @@ background-color: var(--base_color);
     margin: 10px;
 }
 .dir-view div{
+    cursor: pointer;
     width: 46px;
     height: 46px;
     position: absolute;
     background-position: center;
+    transition: transform 0.3s ease;
     z-index: 0;
+}
+.dir-view div:hover{
+    transform: scale(1.5)
 }
 .dir-view span{
     max-width: 90%;
@@ -722,8 +727,6 @@ background-color: var(--base_color);
 #login-btn{background-image: var(--user_icon);}
 #reg-btn{background-image: var(--newUser_icon);}
 #modPas-btn{background-image: var(--lock_icon);}
-/* .dir-view-file{background-image: url(../../assets/icon/file.svg);}
-.dir-view-dir{background-image: url(../../assets/icon/folder.svg);} */
 #net-up{background-image: var(--toup_icon);}
 #net-down{background-image:var(--todown_icon);}
 #net-icon{background-image: url(../../assets/icon/network.svg);}

@@ -16,7 +16,7 @@ export default function Widget({tmpLoad}) {
             {rows.map((row, index) => (
                 <div key={`line${index}`} className="widget-line">
                     {row.map((item) => (
-                        <WidgetItem item={item} key={item} theme={theme} to_next={to_next}
+                        <WidgetItem item={item} key={item} theme={theme}
                         widgetData={widgetData}
                         />
                     ))}
@@ -24,7 +24,4 @@ export default function Widget({tmpLoad}) {
             ))}
         </div>
     );
-}
-function to_next(type){
-window.location.href=type;
 }

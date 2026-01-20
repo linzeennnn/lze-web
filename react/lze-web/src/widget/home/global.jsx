@@ -6,6 +6,7 @@ import { DisableZoom } from '../../components/pub.jsx';
 import { CheckLang } from '../../utils/common.js';
 import { Api, AsyncApi } from '../../utils/request.js';
 import { setLang } from '../../store/lang.js';
+import { InitPageSession } from '../../utils/pageSession.js';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'guest';
   let token = window.localStorage.getItem('token') || '';
@@ -63,6 +64,8 @@ export  async function InitData(){
   DisableZoom()
 // 拉取语言包
 await CheckLang()
+// 初始化session
+InitPageSession()
 sessionStorage.setItem('lze-web', 'true');
 // 锁屏设置
 if (sessionStorage.getItem('app') == 'true') {

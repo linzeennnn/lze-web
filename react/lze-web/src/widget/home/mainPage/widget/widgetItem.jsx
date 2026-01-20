@@ -1,8 +1,9 @@
 import {GetText} from "../../../../utils/common"
+import {Page} from "../../../../utils/page.js"
 import {useState } from "react";
 import {GetIcon} from "../../../home/global.jsx"
 import Panel from './panel'
-export default function WidgetItem({ theme, item, to_next, widgetData }){
+export default function WidgetItem({ theme, item,  widgetData }){
     const [showPanel, setShowPanel] = useState(false)
     return(
         <>
@@ -12,7 +13,7 @@ export default function WidgetItem({ theme, item, to_next, widgetData }){
                         mode={theme.mode}
                         color={theme.color[item]}
                         onClick={
-                            ()=>to_next(item)
+                            ()=>Page(item)
                             }>
                               <div className={"widget-icon "+(showPanel?"widget-hide":"")} >
                                 <div  id={item+"-icon"}>{

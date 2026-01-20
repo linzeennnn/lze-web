@@ -3,6 +3,7 @@ import { PageCom } from '../../components/pageCom';
 import { GetText,notify } from '../../utils/common';
 import { Api, AsyncApi } from '../../utils/request';
 import { getUrl } from '../../store/request';
+import { GetPageSession, SetPageSession } from '../../utils/pageSession';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -13,6 +14,7 @@ export const useGlobal = create((set, get) => ({
   langList:[],
   dragWin:false,
   notList:[],
+  outer:false,
   edit:{
     mode:false,
     title:"",
@@ -41,7 +43,11 @@ export const useGlobal = create((set, get) => ({
 // 初始化
 export function InitData(){
 PageCom(useGlobal.setState,"not")
-  list()
+const pageSession=GetPageSession()
+const name=pageSession.not.list.name
+pageSession.not.list.name=""
+SetPageSession(pageSession)
+  list(name)
 }
 //初始化编辑数据
 function init_edit(){
@@ -56,16 +62,23 @@ function init_edit(){
   }})}
 }
 // 扫描目录
-export function list(){
+export function list(name){
+if(name){
+    useGlobal.setState({
+      notList:[name],
+      outer:true
+    })
+}else{
 Api.get({
   api:'not/list',
   success:(data)=>{
     useGlobal.setState({
       notList:data,
+      outer:false
     })
     init_edit()
   }
-})
+})}
 }
 // 保存文件
 export function Save_note(newTitle,newContent){
