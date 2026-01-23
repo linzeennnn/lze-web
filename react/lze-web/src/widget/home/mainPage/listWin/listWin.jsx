@@ -37,7 +37,8 @@ function creatList(type, name) {
       ListDoc(name)
       return null;
     case "pic":
-      return <ListPic name={name} />;
+      ListPic(name)
+      return null
     case "not":
     ListNot(name)
       return null;
@@ -54,16 +55,15 @@ SetPageSession(pageSession)
 Page("doc")
 }
 
-function ListPic({name}){
-  const url =window.location.origin+"/file/Pictures/"+name.name;
-  if(name.media=="vid")
-    return <video src={url} controls="controls" className="list-media"/>
-  if(name.media="img")
-    return(<img src={url} alt={name.name} className="list-media"/>)
+function ListPic(name){
+  const pageSession=GetPageSession()
+  pageSession.pic.list.path=name.name
+  SetPageSession(pageSession)
+  Page("pic")
 }
-function ListNot(name){
+function ListNot(path){
 const pageSession=GetPageSession()
-pageSession.not.list.name=name
+pageSession.not.list.path=path
 SetPageSession(pageSession)
 Page("not")
 }

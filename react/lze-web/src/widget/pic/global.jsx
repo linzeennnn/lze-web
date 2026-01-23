@@ -4,6 +4,7 @@ import { PageCom } from '../../components/pageCom';
 import { GetText } from "../../utils/common";
 import { Api, AsyncApi } from '../../utils/request';
 import { getToken, getUrl } from '../../store/request';
+import { GetPageSession, SetPageSession } from '../../utils/pageSession';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   nowPath: "",
@@ -14,6 +15,9 @@ export const useGlobal = create((set, get) => ({
   uploading: false,
   showBg: false,
   pageNum:1,
+  listSession:{
+    path:""
+  },
     theme:{
       mode:"",
       color:{
@@ -49,6 +53,11 @@ export const useGlobal = create((set, get) => ({
 // 初始化
 export function InitData(){
 PageCom(useGlobal.setState,"pic")
+  const pageSession=GetPageSession()
+  const path=pageSession.pic.list.path
+  useGlobal.setState({listSession:{path:path}})
+  pageSession.pic.list.path=""
+  SetPageSession(pageSession)
   list("")
 }
 // 扫描目录

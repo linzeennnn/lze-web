@@ -49,16 +49,13 @@ export function InitData(){
 PageCom(useGlobal.setState,"doc")
 // 获取别的页面传递需要加载的目录
   const pageSession=GetPageSession()
-  console.log(pageSession);
-  
   const path=pageSession.doc.list.path
-  pageSession.doc.list.path=""
-  if(path!="")
-    SetPageSession(pageSession)
   list(path)
 }
 // 扫描目录
 export function list(path) {
+const pageSession=GetPageSession()
+const sessionPath=pageSession.doc.list.path
 Api.post({
   api:"doc/list",
   body:{file: path},
@@ -70,7 +67,12 @@ Api.post({
         nowPath: data.currentFolder,
         parentPath: data.parentFolder,
         selected: [],
-      });}
+      });
+      if(sessionPath!=""){
+        pageSession.doc.list.path=""
+        SetPageSession(pageSession)
+      }
+    }
       if(data.type=="file"){
         useGlobal.setState({
           fileWin:{
@@ -79,6 +81,11 @@ Api.post({
             view:data.view
           }
         })
+      if(sessionPath!=""){
+        pageSession.doc.list.path=""
+        SetPageSession(pageSession)
+        list("")
+      }
       }
   }
 })

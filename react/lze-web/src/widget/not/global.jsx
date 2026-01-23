@@ -14,7 +14,9 @@ export const useGlobal = create((set, get) => ({
   langList:[],
   dragWin:false,
   notList:[],
-  outer:false,
+  listSession:{
+    path:""
+  },
   edit:{
     mode:false,
     title:"",
@@ -31,7 +33,6 @@ export const useGlobal = create((set, get) => ({
     status:false,
     percent:"0%"
   },
-  notUrl:`${window.location.origin}/server/not/`,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -44,10 +45,11 @@ export const useGlobal = create((set, get) => ({
 export function InitData(){
 PageCom(useGlobal.setState,"not")
 const pageSession=GetPageSession()
-const name=pageSession.not.list.name
-pageSession.not.list.name=""
+const path=pageSession.not.list.path
+useGlobal.setState({listSession:{path:path}})
+pageSession.not.list.path=""
 SetPageSession(pageSession)
-  list(name)
+  list()
 }
 //初始化编辑数据
 function init_edit(){
@@ -62,24 +64,17 @@ function init_edit(){
   }})}
 }
 // 扫描目录
-export function list(name){
-if(name){
-    useGlobal.setState({
-      notList:[name],
-      outer:true
-    })
-}else{
+export function list(){
 Api.get({
   api:'not/list',
   success:(data)=>{
     useGlobal.setState({
-      notList:data,
-      outer:false
+      notList:data
     })
     init_edit()
   }
 })}
-}
+
 // 保存文件
 export function Save_note(newTitle,newContent){
     const edit=useGlobal.getState().edit

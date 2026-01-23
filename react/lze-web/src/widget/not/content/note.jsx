@@ -6,7 +6,7 @@ import 'highlight.js/styles/atom-one-dark.min.css';
 import {  list, loadPage, useGlobal } from "../global";
 import { Api } from "../../../utils/request";
 export default function Note({name}){
-    const outer=useGlobal((state)=>state.outer)
+    const listSession=useGlobal((state)=>state.listSession)
     const [text, setText] = useState('');
     const [loaded, setLoaded] = useState(false)
     const [show, setShow] = useState(false)
@@ -22,10 +22,11 @@ export default function Note({name}){
   }
 }, [text, show,loaded]);
     useEffect(() => {
-        if(outer){
+        if(name==listSession.path){
+        useGlobal.setState({listSession:{path:""}})
             openText()
         }
-    })
+    },[listSession.path])
 const openText=()=>{
                 setShow(true)
                 if(!loaded){

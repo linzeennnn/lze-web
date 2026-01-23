@@ -6,12 +6,17 @@ export default function PicItem({ url,name, type ,index}) {
   const [loaded, setLoaded] = useState(false);
   const select = useGlobal((state) => state.select);
   const setGlobal = useGlobal((state) => state.setGlobal);
-
+  const listSession = useGlobal((state) => state.listSession);
   useEffect(() => {
     setLoading(true);
     setLoaded(false);
   }, [url]);
-
+  useEffect(()=>{
+    if(listSession.path==name){
+      openMedia(url,type,index)
+      setGlobal({listSession:{path:""}})
+    }
+  },[])
   useEffect(() => {
     let timer;
     if (loaded) {

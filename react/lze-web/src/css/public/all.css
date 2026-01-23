@@ -289,6 +289,10 @@ button {
 input{
   all:unset;
 }
+iframe{
+  border-radius: 15px;
+  border: 5px solid var(--base_color);
+}
 .btn{
   cursor: pointer;
   opacity: 0.7;

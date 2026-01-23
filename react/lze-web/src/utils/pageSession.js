@@ -7,12 +7,16 @@ export function InitPageSession() {
                 path: ""
             },
         },
-        pic: {},
+        pic: {
+            list:{
+                path: ""
+            }
+        },
         tra: {},
         mon: {},
         not: {
             list: {
-                name: ""
+                path: ""
             }
         },
         bok: {},
