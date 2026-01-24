@@ -1,10 +1,12 @@
 import PicItem from "./picItem";
 import { useGlobal } from "../global";
-export default function ImgPage(){
+export default function ImgPage({inner}){
     const imgList = useGlobal((state) => state.imgList);
     const pageNum = useGlobal((state) => state.pageNum);
     const nowPath = useGlobal((state) => state.nowPath);
-    const url=`${window.location.origin}/file/Pictures/`+nowPath+"/"
+    const url=inner.enable?
+    inner.url
+   : `${window.location.origin}/file/Pictures/`+nowPath+"/"
     return(
         <>{imgList[pageNum-1]?
             (imgList[pageNum-1].map((name,index)=>{

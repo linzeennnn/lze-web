@@ -14,6 +14,7 @@ export default function Note({name}){
     const[isCopy,setIsCopy]=useState(false)
     const[title,setTitle]=useState(name)
     const codeRef = useRef(null);
+    const inner=useGlobal((state)=>state.inner)
    useEffect(() => {
   if (show && codeRef.current) {
     const result = hljs.highlightAuto(text);
@@ -21,6 +22,11 @@ export default function Note({name}){
     codeRef.current.className = 'hljs';
   }
 }, [text, show,loaded]);
+    useEffect(()=>{
+        if(inner.enable){
+            openText()
+        }
+    },[inner.enable])
     useEffect(() => {
         if(name==listSession.path){
         useGlobal.setState({listSession:{path:""}})
@@ -32,10 +38,12 @@ const openText=()=>{
                 if(!loaded){
                     get_note(name,setLoaded,setText)
                 }
-}
+            }
     return(
-        <div className="note">
-            <Del name={name}/>
+        <div className="note">{
+            inner.enable?
+            null:
+            <Del name={name}/>}
             <span className="title title-show">{title}</span>
        {show? 
        <>
@@ -79,9 +87,10 @@ const openText=()=>{
 }
 
 function get_note(name,setLoaded,setText){
+    const inner=useGlobal.getState().inner
     Api.post({
         api:'not/getText',
-        body:{name},
+        body:{name,source:inner.source,path:inner.path},
         success:(data)=>{
           setText(data)
           setLoaded(true)

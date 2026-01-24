@@ -28,7 +28,12 @@ func Edit(c *gin.Context) {
 			os.Remove(filepath.Join(global.NotPath, rec.OldTitle+".txt"))
 			name = global.UniqueName(global.NotPath, rec.NewTitle+".txt")
 		}
-		global.WriteText(filepath.Join(global.NotPath, name), rec.NewContent)
+		switch rec.Source {
+		case "doc":
+			global.WriteText(filepath.Join(global.DocPath, rec.Path), rec.NewContent)
+		default:
+			global.WriteText(filepath.Join(global.NotPath, name), rec.NewContent)
+		}
 		sendData.Code = 200
 		sendData.Msg = global.GetText("modify_note_success", c)
 		c.JSON(sendData.Code, sendData)

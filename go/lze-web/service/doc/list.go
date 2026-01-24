@@ -4,7 +4,10 @@ import (
 	"lze-web/model/doc/list"
 	"lze-web/model/public/response"
 	"lze-web/pkg/global"
+	"os"
 	"path/filepath"
+	"strings"
+	"unicode/utf8"
 
 	"github.com/gin-gonic/gin"
 )
@@ -54,27 +57,89 @@ func getDir(rec list.Rec, c *gin.Context) {
 }
 func getFile(rec list.Rec, c *gin.Context) {
 	var resData response.Response[list.SendFile]
-	extList := []string{
-		".html", ".htm", ".css", ".js", ".mjs", ".json", ".xml", ".rss", ".svg", ".webmanifest",
-		".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".ico", ".avif",
-		".mp3", ".wav", ".ogg", ".oga", ".m4a", ".aac", ".flac",
-		".mp4", ".webm", ".ogv", ".ogg", ".mov",
-		".pdf", ".txt", ".csv", ".md",
-		".woff", ".woff2", ".ttf", ".otf", ".eot",
-		".wasm",
-	}
 	url := filepath.FromSlash(filepath.Join("file/Documents", rec.File))
 	var sendData list.SendFile
-	if global.IncludeExt(rec.File, extList) {
-		sendData.FileType = "file"
-		sendData.Url = url
-		sendData.View = true
-	} else {
-		sendData.FileType = "file"
-		sendData.Url = ""
-		sendData.View = false
-	}
+	sendData.FileType = "file"
+	sendData.Url = url
+	sendData.InnerApp = CheckFileType(filepath.Join(global.DocPath, rec.File))
 	resData.Data = sendData
 	resData.Code = 200
 	c.JSON(200, resData)
+}
+func CheckFileType(path string) []string {
+	ext := strings.ToLower(filepath.Ext(path))
+	r := []string{}
+
+	img := map[string]bool{
+		".jpg": true, ".jpeg": true, ".png": true, ".gif": true,
+		".webp": true, ".bmp": true, ".ico": true, ".avif": true,
+	}
+	vid := map[string]bool{
+		".mp4": true, ".webm": true, ".ogv": true, ".mov": true,
+	}
+	html := map[string]bool{".html": true, ".htm": true}
+	svg := map[string]bool{".svg": true}
+	browser := map[string]bool{
+		".html": true, ".htm": true, ".css": true, ".js": true, ".mjs": true,
+		".json": true, ".xml": true, ".rss": true, ".svg": true, ".webmanifest": true,
+		".jpg": true, ".jpeg": true, ".png": true, ".gif": true, ".webp": true,
+		".bmp": true, ".ico": true, ".avif": true,
+		".mp3": true, ".wav": true, ".ogg": true, ".oga": true,
+		".m4a": true, ".aac": true, ".flac": true,
+		".mp4": true, ".webm": true, ".ogv": true, ".mov": true,
+		".pdf": true, ".csv": true, ".md": true,
+		".woff": true, ".woff2": true, ".ttf": true, ".otf": true,
+		".eot": true, ".wasm": true,
+	}
+
+	if html[ext] {
+		return []string{"doc", "not"}
+	}
+	if svg[ext] {
+		return []string{"img", "not"}
+	}
+
+	if isText(path) {
+		r = append(r, "not")
+	}
+	if img[ext] {
+		r = append(r, "img")
+	}
+	if vid[ext] {
+		r = append(r, "vid")
+	}
+	if browser[ext] && !img[ext] && !vid[ext] && !contains(r, "not") {
+		r = append(r, "doc")
+	}
+
+	return r
+}
+
+// 判断是否为文本
+func isText(p string) bool {
+	f, e := os.Open(p)
+	if e != nil {
+		return false
+	}
+	defer f.Close()
+	b := make([]byte, 4096)
+	n, e := f.Read(b)
+	if e != nil || n == 0 {
+		return false
+	}
+	b = b[:n]
+	for _, c := range b {
+		if c == 0 {
+			return false
+		}
+	}
+	return utf8.Valid(b)
+}
+func contains(a []string, s string) bool {
+	for _, v := range a {
+		if v == s {
+			return true
+		}
+	}
+	return false
 }

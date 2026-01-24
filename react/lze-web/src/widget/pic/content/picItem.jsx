@@ -7,6 +7,7 @@ export default function PicItem({ url,name, type ,index}) {
   const select = useGlobal((state) => state.select);
   const setGlobal = useGlobal((state) => state.setGlobal);
   const listSession = useGlobal((state) => state.listSession);
+  const inner=useGlobal((state) => state.inner);
   useEffect(() => {
     setLoading(true);
     setLoaded(false);
@@ -38,7 +39,9 @@ export default function PicItem({ url,name, type ,index}) {
       setGlobal({ select: { ...select, list: tmp } }); // 更新 selected
   }
   return (
-    <div className="pic-item main-item" title={name} key={url} 
+    <div className={"pic-item main-item "+
+      (inner.enable?"inner-pic-item":"")}
+     title={name} key={url} 
     onClick={()=>{openMedia(url,type,index)}}
     >
     <div className={"mask "+(select.status?"mask-enable ":"")+

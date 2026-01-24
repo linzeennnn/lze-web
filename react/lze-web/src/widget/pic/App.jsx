@@ -15,6 +15,7 @@ import '../../css/public/page.css';
 import { useEffect } from 'react';
 export default function App() {
   const theme=useGlobal(state=>state.theme);
+  const inner=useGlobal(state=>state.inner);
   useEffect(() => {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
@@ -30,6 +31,13 @@ export default function App() {
   return ( 
      <div id='app' mode={theme.mode} color={theme.color["pic"]}>
       <div className='wallpaper'></div>
+      {inner.enable?<InnerApp/>:<NormalApp/>}
+    </div>
+  );
+}
+function NormalApp(){
+  return(
+    <>
       <ScrollTop>
         <HeadBar />
       <PicTopBar />
@@ -40,8 +48,20 @@ export default function App() {
       <PicSideBar />
       <PicContent />
       <PublicWidget/>
-    </div>
-  );
+    </>
+  )
+}
+function InnerApp(){
+  return(
+    <>
+      <ScrollTop>
+        <GoTopBtn innerMode={true} />
+      </ScrollTop>
+        <PicWin/>
+      <PicContent />
+      <PublicWidget/>
+    </>
+  )
 }
 async function pastePic(e){
   if (!e) return;

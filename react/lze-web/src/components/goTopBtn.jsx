@@ -1,6 +1,6 @@
 import { ScrollContext } from "./scrollTop"
 import React, { useContext } from 'react';
-function GoTopBtn(){
+function GoTopBtn({innerMode}){
     let isScroll=useContext(ScrollContext); 
     return(
         <div id="go-top-btn" 
@@ -8,7 +8,9 @@ function GoTopBtn(){
   top: 0,
   behavior: 'smooth' 
 })}}
-        className={isScroll?"scroll-go-top-btn":""}>
+        className={(isScroll?"scroll-go-top-btn ":"")+
+            (innerMode?"inner-top-btn":"")
+        }>
         </div>
     )
 }

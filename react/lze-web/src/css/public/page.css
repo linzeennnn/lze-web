@@ -109,6 +109,13 @@
     top: 50%;
     bottom: 50%;
 }
+.inner-content{
+  top: 70px !important;
+  margin-left: 0 !important;
+}
+.inner-top-btn{
+  margin-left: 0 !important;
+}
 @media (max-width: 600px) {
   #side-bar{
     flex-direction: row;

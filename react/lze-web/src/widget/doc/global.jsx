@@ -1,9 +1,11 @@
 import { create } from 'zustand';
 import { PageCom } from '../../components/pageCom';
 import { GetText,loadingPage,notify } from '../../utils/common';
+import {baseName, dirName} from '../../utils/path'
 import { Api, AsyncApi } from '../../utils/request';
 import { getToken, getUrl } from '../../store/request';
 import { GetPageSession, SetPageSession } from '../../utils/pageSession';
+import { PageUrl } from '../../utils/page';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   nowPath: "",
@@ -20,7 +22,8 @@ export const useGlobal = create((set, get) => ({
   fileWin:{
     status:false,
     url:"",
-    view:false
+    view:false,
+    innerApp:[]
   },
     
     theme:{
@@ -74,24 +77,70 @@ Api.post({
       }
     }
       if(data.type=="file"){
+        SetInnerSession(path,data.innerApp[0],data.url)
         useGlobal.setState({
           fileWin:{
             status:true,
-            url:data.url,
-            view:data.view
+            url:GetListFileUrl(data.innerApp[0]),
+            view:(data.innerApp.length!=0)
           }
         })
-      if(sessionPath!=""){
-        pageSession.doc.list.path=""
-        SetPageSession(pageSession)
-        list("")
-      }
       }
   }
 })
-
 }
-
+// 获取list file的url
+export function GetListFileUrl(type){
+  let url
+  switch (type) {
+          case "doc":
+            url=PageUrl(data.url)
+            break;
+          case "img":
+            url=PageUrl("pic")
+            break;
+          case "vid":
+            url=PageUrl("pic")
+            break;
+          case "not":
+            url=PageUrl("not")
+            break;
+          default:
+            url=""
+            break;
+        }
+      return url
+}
+// 设置inner的session
+ export function SetInnerSession(path,type,url){
+    const pageSession=GetPageSession()
+const sessionPath=pageSession.doc.list.path
+      if(sessionPath!=""){
+        pageSession.doc.list.path=""
+        list("")
+      }
+    let inner={
+      source:"doc",
+      enable:true,
+      name:baseName(path)
+    }
+    if(type=="img"||type=="vid"){
+      if(type=="img")
+        inner.media="img"
+      if(type=="vid")
+        inner.media="vid"
+      inner.url=PageUrl(dirName(url)+"/")
+      pageSession.pic.inner=inner
+    }else if(type=="not"){
+      inner.path=path
+      pageSession.not.inner=inner
+    }else{
+      inner.source=""
+      inner.enable=false
+      inner.name=""
+    }
+    SetPageSession(pageSession)
+ }
 // 加载页面
 export function loadPage(isLoad){
   useGlobal.setState({

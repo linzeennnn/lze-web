@@ -1,6 +1,6 @@
-function Content({ children }){
+function Content({ children,innerMode }){
 return(
-    <div id="content">
+    <div id="content" className={innerMode?"inner-content":""}>
         {children}
     </div>)
 }

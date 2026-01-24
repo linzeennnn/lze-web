@@ -8,7 +8,7 @@ export default function EditWin() {
   const [title, setTitle] = useState(edit.title);
   const [text, setText] = useState(edit.text);
   const setGlobal = useGlobal.setState;
-
+  const inner=useGlobal((state) => state.inner);
   useEffect(() => {
     setTitle(edit.title || "");
     setText(edit.text || "");
@@ -78,6 +78,7 @@ export default function EditWin() {
           id="edit-title"
           type="text"
           placeholder={GetText("title")}
+          readOnly={inner.enable}
         />
 
         <textarea

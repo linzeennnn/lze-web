@@ -10,6 +10,13 @@ export function InitPageSession() {
         pic: {
             list:{
                 path: ""
+            },
+            inner:{
+                enable:false,
+                source:"",  
+                media:"",
+                url:"",
+                name:""
             }
         },
         tra: {},
@@ -17,6 +24,12 @@ export function InitPageSession() {
         not: {
             list: {
                 path: ""
+            },
+            inner:{
+                enable:false,
+                source:"",
+                path:"",
+                name:""
             }
         },
         bok: {},

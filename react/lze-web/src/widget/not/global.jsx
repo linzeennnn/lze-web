@@ -14,6 +14,12 @@ export const useGlobal = create((set, get) => ({
   langList:[],
   dragWin:false,
   notList:[],
+  inner:{
+    enable:false,
+    source:"",
+    path:"",
+    name:""
+  },
   listSession:{
     path:""
   },
@@ -43,13 +49,33 @@ export const useGlobal = create((set, get) => ({
 }));
 // 初始化
 export function InitData(){
-PageCom(useGlobal.setState,"not")
-const pageSession=GetPageSession()
-const path=pageSession.not.list.path
-useGlobal.setState({listSession:{path:path}})
-pageSession.not.list.path=""
-SetPageSession(pageSession)
-  list()
+ PageCom(useGlobal.setState, "not");
+
+const pageSession = GetPageSession();
+const {
+  not: {
+    list: { path },
+    inner
+  }
+} = pageSession;
+
+// 同步到 zustand（复制一份，断引用）
+useGlobal.setState({
+  listSession: { path },
+  inner: { ...inner }
+});
+
+// reset session
+pageSession.not.inner = {
+  enable: false,
+  source: "",
+  path: "",
+  name: ""
+};
+pageSession.not.list.path = "";
+
+SetPageSession(pageSession);
+list();
 }
 //初始化编辑数据
 function init_edit(){
@@ -65,24 +91,36 @@ function init_edit(){
 }
 // 扫描目录
 export function list(){
-Api.get({
-  api:'not/list',
-  success:(data)=>{
-    useGlobal.setState({
-      notList:data
+const inner=useGlobal.getState().inner
+if(!inner.enable)
+    {Api.get({
+      api:'not/list',
+      success:(data)=>{
+        useGlobal.setState({
+          notList:data
+        })
+        init_edit()
+      }
     })
-    init_edit()
+  }else{
+        useGlobal.setState({
+          notList:[inner.name]
+        })
   }
-})}
+}
 
 // 保存文件
 export function Save_note(newTitle,newContent){
     const edit=useGlobal.getState().edit
+    const inner=useGlobal.getState().inner
     const oldTitle=edit.title
     newTitle=newTitle==""?"new_note":newTitle
     Api.post({
       api:'not/'+edit.type,
-      body:{oldTitle,newTitle,newContent},
+      body:{oldTitle,newTitle,newContent,
+        source:inner.source,
+        path:inner.path
+      },
       notice: true,
       success:()=>{
         list()

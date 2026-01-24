@@ -14,6 +14,13 @@ export const useGlobal = create((set, get) => ({
   dirList: [],
   uploading: false,
   showBg: false,
+  inner:{
+    enable:false,
+    source:"",  
+    media:"",
+    url:"",
+    name:""
+  },
   pageNum:1,
   listSession:{
     path:""
@@ -53,17 +60,48 @@ export const useGlobal = create((set, get) => ({
 // 初始化
 export function InitData(){
 PageCom(useGlobal.setState,"pic")
-  const pageSession=GetPageSession()
-  const path=pageSession.pic.list.path
-  useGlobal.setState({listSession:{path:path}})
-  pageSession.pic.list.path=""
-  SetPageSession(pageSession)
+  const pageSession = GetPageSession();
+  
+  const {
+    pic: {
+      list: { path },
+      inner
+    }
+  } = pageSession;
+  
+  // 同步到 zustand（复制一份，断引用）
+  useGlobal.setState({
+    listSession: { path },
+    inner: { ...inner },
+    imgPage:(inner.media=="img")
+  });
+  
+  // reset session
+  pageSession.pic.inner = {
+    enable: false,
+    source: "",
+    name: "",
+    media:"",
+    url: ""
+  };
+  pageSession.pic.list.path = "";
+  
+  SetPageSession(pageSession);
   list("")
 }
 // 扫描目录
 export function list(path,showVideo) {
+  const inner=useGlobal.getState().inner
+  console.log(inner);
+  
   const setGlobal=useGlobal.setState
   const select=useGlobal.getState().select
+  if(inner.enable){
+    setGlobal({
+      imgList:(inner.media=="img"?[[inner.name]]:[]),
+      vidList:(inner.media!="img"?[[inner.name]]:[])
+    })
+  }else{
  Api.post({
   api:"pic/list",
   body:{folder: path},
@@ -123,6 +161,7 @@ export function list(path,showVideo) {
       });
   }
  })
+}
 }
 
 // 加载页面

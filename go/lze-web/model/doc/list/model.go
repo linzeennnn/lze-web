@@ -11,7 +11,7 @@ type SendDir struct {
 	ParentFolder  string      `json:"parentFolder"`
 }
 type SendFile struct {
-	FileType string `json:"type"`
-	Url      string `json:"url"`
-	View     bool   `json:"view"`
+	FileType string   `json:"type"`
+	Url      string   `json:"url"`
+	InnerApp []string `json:"innerApp"`
 }

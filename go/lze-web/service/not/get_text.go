@@ -18,7 +18,13 @@ func GetText(c *gin.Context) {
 		c.JSON(sendData.Code, sendData)
 		return
 	}
-	path := filepath.Join(global.FilePath, "Note", rec.Name+".txt")
+	var path string
+	switch rec.Source {
+	case "doc":
+		path = filepath.Join(global.DocPath, rec.Path)
+	default:
+		path = filepath.Join(global.FilePath, "Note", rec.Name+".txt")
+	}
 	sendData.Code = 200
 	sendData.Data = global.ReadText(path)
 	c.JSON(sendData.Code, sendData)

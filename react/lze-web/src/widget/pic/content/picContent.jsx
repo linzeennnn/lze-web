@@ -4,14 +4,15 @@ import ImgPage from "./imgPage";
 import VidPage from "./vidPage";
 import { list,useGlobal } from "../global";
 import PageBar from "./pageBar";
-export default function PicContent() {
+export default function PicContent({innerMode}) {
   const imgPage = useGlobal((state) => state.imgPage);
+  const inner=useGlobal((state) => state.inner);
     return (
-        <Content>
+        <Content  innerMode={inner.enable}>
           <div id="pic-box">
-         {imgPage? <ImgPage/>:
-          <VidPage/>}
+         {imgPage? <ImgPage inner={inner}/>:
+          <VidPage inner={inner}/>}
           </div>
-            <PageBar/>
+          {inner.enable?null:<PageBar/>}
         </Content>
     )}

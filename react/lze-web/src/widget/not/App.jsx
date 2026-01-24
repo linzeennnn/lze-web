@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 
 export default function App() {
   const theme=useGlobal(state=>state.theme)
+  const inner=useGlobal(state=>state.inner)
   useEffect(() => {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
@@ -29,16 +30,37 @@ export default function App() {
   return ( 
      <div id='app' mode={theme.mode} color={theme.color["not"]}>
      <div className='wallpaper'></div>
-      <ScrollTop>
-        <HeadBar />
-      <NotTopBar />
-        <GoBack />
-        <GoTopBtn />
-      </ScrollTop>
-        <NotWin/>
-      <NotSideBar />
-      <NotContent />
-      <PublicWidget/>
+     {
+      inner.enable?<InnerApp/>:<NormalApp/>
+     }
     </div>
   );
+}
+function NormalApp(){
+  return(
+    <>
+     <ScrollTop>
+       <HeadBar />
+     <NotTopBar />
+       <GoBack />
+       <GoTopBtn />
+     </ScrollTop>
+       <NotWin/>
+     <NotSideBar />
+     <NotContent />
+     <PublicWidget/>
+     </>
+  )
+}
+function InnerApp(){
+  return(
+    <>
+    <ScrollTop>
+      <GoTopBtn innerMode={true}/>
+    </ScrollTop>
+      <NotWin/>
+    <NotContent />
+    <PublicWidget/>
+    </>
+  )
 }

@@ -33,6 +33,10 @@
     align-items: center;
     transition: transform 0.3s ease-in-out;
 }
+.inner-pic-item{
+    min-width: 80% !important;
+    aspect-ratio:inherit !important;
+}
 .pic-item img,.pic-item video{
     border-radius: 15px;
     width: 90%;
