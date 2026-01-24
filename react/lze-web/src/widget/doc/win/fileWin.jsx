@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import { useGlobal } from "../global"
+import { SetFileWin, useGlobal } from "../global"
 
 import { GetText } from '../../../utils/common';
 export default function FileWin(){
@@ -50,7 +50,11 @@ export default function FileWin(){
     const iframe = iframeRef.current
     if (iframe) iframe.onload = applyStyle
 }, [fileWin.url])
-
+const switchInnerApp=()=>{
+    [fileWin.data.innerApp[0],fileWin.data.innerApp[1]]=[fileWin.data.innerApp[1],fileWin.data.innerApp[0]]
+    useGlobal.setState({fileWin:{...fileWin}})
+    SetFileWin(fileWin.data,fileWin.path)
+}
     return(
         fileWin.status?(<div id="file-win">
             {fullScreen?null:<button  className="btn close-file-win" title={GetText("close")}
@@ -61,6 +65,7 @@ export default function FileWin(){
                 fileWin.view?
             (<div className="file-view-box">
             <iframe
+                 key={fileWin.url}
                 ref={iframeRef}
                 src={fileWin.url}
                 className={"file-view "+(fullScreen?"full-screen":"")}
@@ -73,9 +78,17 @@ export default function FileWin(){
                 ></button>
                 :
                 (<div className="file-win-btn-bar">
+                    {(fileWin.data.innerApp.length>1)?
+                    <>{
+                        fileWin.currentType=="not"?
+                        <button className="btn file-win-btn view-btn" title={GetText("view")} onClick={switchInnerApp}></button>:
+                        <button className="btn file-win-btn edit-btn" title={GetText("edit")} onClick={switchInnerApp}></button>
+                    }</>
+                    :null}
                     <button
                         className="btn file-win-btn refresh-btn"
                         title={GetText("refresh")}
+                        disabled={fileWin.currentType!="doc"}
                         onClick={()=>{
                             if (iframeRef.current) {
                                 iframeRef.current.src = iframeRef.current.src

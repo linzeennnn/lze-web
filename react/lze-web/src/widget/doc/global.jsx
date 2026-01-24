@@ -23,7 +23,9 @@ export const useGlobal = create((set, get) => ({
     status:false,
     url:"",
     view:false,
-    innerApp:[]
+    data:null,
+    currentType:"",
+    path:""
   },
     
     theme:{
@@ -77,24 +79,33 @@ Api.post({
       }
     }
       if(data.type=="file"){
-        SetInnerSession(path,data.innerApp[0],data.url)
-        useGlobal.setState({
-          fileWin:{
-            status:true,
-            url:GetListFileUrl(data.innerApp[0]),
-            view:(data.innerApp.length!=0)
-          }
-        })
+       SetFileWin(data,path)
       }
   }
 })
 }
+// 设置文件窗口
+export function SetFileWin(data,path){
+   SetInnerSession(path,data.innerApp[0],data.url)
+        const view=(data.innerApp.length!=0)
+        useGlobal.setState({
+          fileWin:{
+            status:true,
+            url:GetListFileUrl(data.innerApp[0],data.url),
+            view:view,
+            innerApp:data.innerApp,
+            currentType:view?data.innerApp[0]:"",
+            data:data,
+            path:path
+          }
+        })
+}
 // 获取list file的url
-export function GetListFileUrl(type){
+export function GetListFileUrl(type,defaultUrl){
   let url
   switch (type) {
           case "doc":
-            url=PageUrl(data.url)
+            url=PageUrl(defaultUrl)
             break;
           case "img":
             url=PageUrl("pic")
@@ -115,10 +126,6 @@ export function GetListFileUrl(type){
  export function SetInnerSession(path,type,url){
     const pageSession=GetPageSession()
 const sessionPath=pageSession.doc.list.path
-      if(sessionPath!=""){
-        pageSession.doc.list.path=""
-        list("")
-      }
     let inner={
       source:"doc",
       enable:true,
@@ -140,6 +147,9 @@ const sessionPath=pageSession.doc.list.path
       inner.name=""
     }
     SetPageSession(pageSession)
+    if(sessionPath!=""){
+        list("")
+      }
  }
 // 加载页面
 export function loadPage(isLoad){

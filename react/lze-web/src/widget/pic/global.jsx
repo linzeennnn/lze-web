@@ -92,8 +92,6 @@ PageCom(useGlobal.setState,"pic")
 // 扫描目录
 export function list(path,showVideo) {
   const inner=useGlobal.getState().inner
-  console.log(inner);
-  
   const setGlobal=useGlobal.setState
   const select=useGlobal.getState().select
   if(inner.enable){

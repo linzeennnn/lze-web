@@ -352,7 +352,8 @@
 #move{background-image:var(--cut_icon);}
 #reload{background-image:var(--load_icon);}
 #upload{background-image:var(--upload_icon);}
-
+.edit-btn{background-image: var(--edit_icon);}
+.view-btn{background-image: var(--eye_icon);}
   @keyframes paste {
     0% {
       opacity: 0.5;
