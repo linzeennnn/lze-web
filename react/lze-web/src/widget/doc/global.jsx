@@ -1,11 +1,11 @@
 import { create } from 'zustand';
-import { PageCom } from '../../components/pageCom';
-import { GetText,loadingPage,notify } from '../../utils/common';
+import { GetText,notify } from '../../utils/common';
 import {baseName, dirName} from '../../utils/path'
 import { Api, AsyncApi } from '../../utils/request';
 import { getToken, getUrl } from '../../store/request';
 import { GetPageSession, SetPageSession } from '../../utils/pageSession';
 import { PageUrl } from '../../utils/page';
+import { PageInit } from '../../utils/pageInit';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   nowPath: "",
@@ -27,14 +27,6 @@ export const useGlobal = create((set, get) => ({
     currentType:"",
     path:""
   },
-    
-    theme:{
-      mode:"",
-      color:{
-        doc:""
-      },
-      userSelect:""
-    },
   upload:{
     win:false,
     status:false,
@@ -51,7 +43,7 @@ export const useGlobal = create((set, get) => ({
 }));
 // 初始化
 export function InitData(){
-PageCom(useGlobal.setState,"doc")
+PageInit("doc")
 // 获取别的页面传递需要加载的目录
   const pageSession=GetPageSession()
   const path=pageSession.doc.list.path

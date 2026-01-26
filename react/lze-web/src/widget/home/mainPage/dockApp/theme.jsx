@@ -2,8 +2,9 @@ import { useGlobal } from "../../global";
 import {GetText} from "../../../../utils/common"
 import { Get_system_theme, SetThemeColor } from "../../../../components/getTheme";
 import { useState } from "react";
+import { useThemeStore } from "../../../../store/theme";
 export default function Theme() {
-  const theme = useGlobal((state) => state.theme);
+  const theme = useThemeStore((state) => state.theme);
   const [nowPage,setNowPage]=useState("home")
   const modeOpt = {
     system: GetText("system"),
@@ -76,7 +77,8 @@ export default function Theme() {
   );
 }
 function set_theme(type, value) {
-  const theme = useGlobal.getState().theme;
+  const setTheme=useThemeStore.getState().setTheme
+  const theme = useThemeStore.getState().theme;
   const updatedTheme = { ...theme, [type]: value };
   if (type === "userSelect") {
     if (value === "system") {
@@ -88,7 +90,8 @@ function set_theme(type, value) {
   SetThemeColor(updatedTheme.mode,updatedTheme.color["home"])
   document.body.setAttribute("mode",updatedTheme.mode)
   document.body.setAttribute("color",updatedTheme.color["home"])
-  useGlobal.setState({ theme: updatedTheme });
+  
+  setTheme(updatedTheme );
   localStorage.setItem("theme", JSON.stringify(updatedTheme));
 }
 

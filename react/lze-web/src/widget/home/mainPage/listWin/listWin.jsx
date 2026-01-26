@@ -5,9 +5,10 @@ import {GetText} from "../../../../utils/common"
 import { Api } from "../../../../utils/request"
 import { GetPageSession, SetPageSession } from "../../../../utils/pageSession"
 import { Page } from "../../../../utils/page"
+import { useThemeStore } from "../../../../store/theme"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)
-    const theme=useGlobal(state=>state.theme)
+    const theme=useThemeStore(state=>state.theme)
     return(
         <WinBg showBg={listWin.status}>
             <div id="close-back"

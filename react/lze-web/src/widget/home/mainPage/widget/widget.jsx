@@ -1,9 +1,10 @@
+import { useThemeStore } from "../../../../store/theme";
 import { useGlobal } from "../../global";
 import WidgetItem from "./widgetItem";
 export default function Widget({tmpLoad}) {
     const locked = useGlobal(state => state.locked);
     const widgetData = useGlobal((state)=>state.widgetData);
-    const theme=useGlobal(state=>state.theme)
+    const theme=useThemeStore(state=>state.theme)
     const widget = ['doc', 'pic',  'tra', 'mon', 'not','bok'];
     const rows = [];
     for (let i = 0; i < widget.length; i += 2) {

@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 export default function App() {
   const theme=useGlobal(state=>state.theme)
   const inner=useGlobal(state=>state.inner)
+  const env=useGlobal(state=>state.env)
   useEffect(() => {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
@@ -28,7 +29,7 @@ export default function App() {
     };
   }, []);
   return ( 
-     <div id='app' mode={theme.mode} color={theme.color["not"]}>
+     <div id='app' mode={theme.mode} color={theme.color[env.source]}>
      <div className='wallpaper'></div>
      {
       inner.enable?<InnerApp/>:<NormalApp/>

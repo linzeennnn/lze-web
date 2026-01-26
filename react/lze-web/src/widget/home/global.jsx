@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import { notify,GetText, GetLocalLangType } from '../../utils/common.js'
-import { GetTheme } from '../../components/getTheme.jsx';
 import { getUsername, InitRequest, setToken, setUsername } from '../../store/request.js';
-import { DisableZoom } from '../../components/pub.jsx';
 import { CheckLang } from '../../utils/common.js';
 import { Api, AsyncApi } from '../../utils/request.js';
 import { setLang } from '../../store/lang.js';
 import { InitPageSession } from '../../utils/pageSession.js';
+import { InitTheme } from '../../utils/theme.js';
+import DisableZoom from '../../utils/private/disableZoom.js';
 export const useGlobal = create((set, get) => {
   let userName = window.localStorage.getItem('userName') || 'guest';
   let token = window.localStorage.getItem('token') || '';
@@ -14,19 +14,6 @@ export const useGlobal = create((set, get) => {
     load:0,
     showBg: false,
     locked:true,
-    theme:{
-      mode:"",
-      color:{
-        home:"",
-        doc:"",
-        pic:"",
-        tra:"",
-        mon:"",
-        not:"",
-        bok:""
-      },
-      userSelect:""
-    },
     listWin:{
       type:"",
       name:"",
@@ -77,9 +64,7 @@ auth()
 }
   sessionStorage.setItem('app', 'false');
 // 主题设置
-const theme=GetTheme("home")
-useGlobal.setState({
-  theme:theme})
+InitTheme("home")
 // widget
 GetWidgetData();
 }

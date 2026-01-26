@@ -14,6 +14,9 @@ export const useGlobal = create((set, get) => ({
   langList:[],
   dragWin:false,
   notList:[],
+  env:{
+    source:"not"
+  },
   inner:{
     enable:false,
     source:"",
@@ -49,7 +52,6 @@ export const useGlobal = create((set, get) => ({
 }));
 // 初始化
 export function InitData(){
- PageCom(useGlobal.setState, "not");
 
 const pageSession = GetPageSession();
 const {
@@ -59,10 +61,13 @@ const {
   }
 } = pageSession;
 
+  const appType=(inner.source!=""?inner.source:"not") 
+ PageCom(useGlobal.setState, appType);
 // 同步到 zustand（复制一份，断引用）
 useGlobal.setState({
   listSession: { path },
-  inner: { ...inner }
+  inner: { ...inner },
+  env:{ source:appType}
 });
 
 // reset session

@@ -12,8 +12,9 @@ import '../../css/page/doc.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useEffect } from 'react';
+import { useThemeStore } from '../../store/theme';
 export default function App() {
-    const theme=useGlobal(state=>state.theme)
+    const theme=useThemeStore(state=>state.theme)
   useEffect(() => {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
