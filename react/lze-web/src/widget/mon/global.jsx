@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { PageCom } from '../../components/pageCom';
 import {Api, AsyncApi}from '../../utils/request'
+import { PageInit } from '../../utils/pageInit';
 // 全局变量
 export const useGlobal = create((set, get) => {
   const storedUser = window.localStorage.getItem('userName');
@@ -16,12 +16,6 @@ export const useGlobal = create((set, get) => {
     userList: null,
     showCmd:false,
     showLogout:false,
-    theme:{
-      mode:"",
-      color:{
-        mon:""
-      }
-    },
     monUrl: `${window.location.origin}/server/mon/`,
     setGlobal: (partial) => {
       set((state) => ({ ...state, ...partial }));
@@ -34,7 +28,7 @@ export const useGlobal = create((set, get) => {
 });
 // 初始化
 export function InitData(){
-PageCom(useGlobal.setState,"mon")
+PageInit("mon")
   list()
 }
 // 加载页面

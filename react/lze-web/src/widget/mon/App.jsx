@@ -10,11 +10,11 @@ import PublicWidget from '../../components/public/publicWidget'
 import '../../css/page/mon.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
-import { useGlobal } from './global';
+import { useThemeStore } from '../../store/theme';
 
 
 export default function App() {
-  const theme=useGlobal(state=>state.theme)
+  const theme=useThemeStore(state=>state.theme)
   return ( 
      <div id="app" mode={theme.mode} color={theme.color["mon"]}>
       <ScrollTop>

@@ -1,7 +1,6 @@
 import { create } from 'zustand';
-import { PageCom } from '../../components/pageCom';
-import { notify,GetText } from '../../utils/common';
 import {Api} from '../../utils/request'
+import { PageInit } from '../../utils/pageInit';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -10,13 +9,6 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   langList:[],
   bokList:[],
-  bokUrl:`${window.location.origin}/server/bok/`,
-    theme:{
-      mode:"",
-      color:{
-        bok:""
-      }
-    },
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -27,7 +19,7 @@ export const useGlobal = create((set, get) => ({
 }));
 // 初始化
 export function InitData(){
-PageCom(useGlobal.setState,"bok")
+PageInit("bok")
   list()
 }
 // 扫描目录

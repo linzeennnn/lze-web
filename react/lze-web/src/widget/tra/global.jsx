@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { PageCom } from '../../components/pageCom';
 import {Api}from '../../utils/request';
+import { PageInit } from '../../utils/pageInit';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -13,13 +13,6 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   selected: [],
   source_path:true,
-    theme:{
-      mode:"",
-      color:{
-        tra:""
-      },
-      userSelect:""
-    },
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -30,7 +23,7 @@ export const useGlobal = create((set, get) => ({
 }));
 // 初始化
 export function InitData(){
-PageCom(useGlobal.setState,"tra")
+PageInit("tra")
   list("")
 }
 // 扫描目录

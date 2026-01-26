@@ -3,8 +3,7 @@ import { InitRequest } from "../store/request";
 import { CheckLang } from "./common";
 import { InitPageSession } from "../utils/pageSession";
 import {InitTheme } from "./theme";
-import DisableZoom  from "./pub/DisableZoom";
-import { useThemeStore } from "../store/theme";
+import DisableZoom  from "./private/disableZoom";
 export function PageInit(type){
   InitRequest()
   InitPageSession()

@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import { PageCom } from '../../components/pageCom';
 import { GetText,notify } from '../../utils/common';
 import { Api, AsyncApi } from '../../utils/request';
 import { getUrl } from '../../store/request';
 import { GetPageSession, SetPageSession } from '../../utils/pageSession';
+import { PageInit } from '../../utils/pageInit';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -32,12 +32,6 @@ export const useGlobal = create((set, get) => ({
     text:"",
     type:""
   },
-    theme:{
-      mode:"",
-      color:{
-        not:""
-      }
-    },
   upload:{
     status:false,
     percent:"0%"
@@ -62,7 +56,7 @@ const {
 } = pageSession;
 
   const appType=(inner.source!=""?inner.source:"not") 
- PageCom(useGlobal.setState, appType);
+ PageInit(appType)
 // 同步到 zustand（复制一份，断引用）
 useGlobal.setState({
   listSession: { path },

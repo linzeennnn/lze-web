@@ -4,6 +4,7 @@ import { useConfirmStore } from "../store/confirm";
 import { setLoading } from "../store/loading";
 import { AsyncApi } from "./request";
 import { setMenuOption, useMouseMenuStore } from "../store/mouseMenu";
+import { GetPageSession } from "./pageSession";
 // /////////////////通知////////////////
 export const notify = {
   normal: (text) => showNotify.normal(text),
@@ -95,4 +96,9 @@ export function AddMouseMenu(options) {
     // 调用 store 的 setMenuOpt 方法，支持增量合并
     setMenuOpt(key, value);
   });
+}
+/////////////////获取环境变量的类型////////
+export function GetEnvSource(type){
+  let source=GetPageSession()[type].inner.source
+    return source==""?type:source
 }

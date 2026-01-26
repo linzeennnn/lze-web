@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { notify } from "../../utils/common";
-import { PageCom } from '../../components/pageCom';
 import { GetText } from "../../utils/common";
 import { Api, AsyncApi } from '../../utils/request';
 import { getToken, getUrl } from '../../store/request';
 import { GetPageSession, SetPageSession } from '../../utils/pageSession';
+import { PageInit } from '../../utils/pageInit';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   nowPath: "",
@@ -25,13 +25,6 @@ export const useGlobal = create((set, get) => ({
   listSession:{
     path:""
   },
-    theme:{
-      mode:"",
-      color:{
-        pic:""
-      },
-      userSelect:""
-    },
   loading: false,
   dragWin:false,
   imgPage:true,
@@ -59,7 +52,7 @@ export const useGlobal = create((set, get) => ({
 }));
 // 初始化
 export function InitData(){
-PageCom(useGlobal.setState,"pic")
+PageInit("pic")
   const pageSession = GetPageSession();
   
   const {
