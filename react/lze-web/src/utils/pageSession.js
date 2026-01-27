@@ -6,6 +6,9 @@ export function InitPageSession() {
             list: {
                 path: ""
             },
+            inner: {
+                source:""
+            }
         },
         pic: {
             list:{
@@ -19,8 +22,16 @@ export function InitPageSession() {
                 name:""
             }
         },
-        tra: {},
-        mon: {},
+        tra: {
+            inner: {
+                source:""
+            }
+        },
+        mon: {
+            inner: {
+                source:""
+            }
+        },
         not: {
             list: {
                 path: ""
@@ -32,7 +43,11 @@ export function InitPageSession() {
                 name:""
             }
         },
-        bok: {},
+        bok: {
+            inner: {
+                source:""
+            }
+        },
         home: {}
     };
         sessionStorage.setItem("pageSession", JSON.stringify(pageSession));

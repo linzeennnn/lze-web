@@ -293,18 +293,6 @@ z-index: 1;
     width: 20px;
     height: 20px;
 }
-#zoom-bar{
-    box-shadow: var(--out_shadow);
-    border-radius: 15px;
-    padding: 10px;
-    background-color: var(--base_color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 80px;
-    margin-top: 20px;
-}
 #scale-text{
     margin: 10px;
 }
@@ -326,6 +314,35 @@ z-index: 1;
     background-image: var(--play_icon);
     z-index: 1
 }
+
+
+
+#edit-win{
+    background-color: var(--bg_color);
+}
+
+.tool-bar{
+    box-shadow: var(--out_shadow);
+    border-radius: 15px;
+    padding: 10px;
+    background-color: var(--base_color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 80px;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+#yes-btn{background-image: var(--yes_icon);}
+#no-btn{background-image: var(--no_icon);}
+#save-btn{background-image: var(--save_icon);}
+#crop-btn{background-image: var(--maximize_icon);}
 #uploading{background-color: transparent !important;}
 #zoom-in{background-image: var(--zoomin_icon);}
 #zoom-out{background-image: var(--zoomout_icon);}

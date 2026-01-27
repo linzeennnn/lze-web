@@ -14,9 +14,6 @@ export const useGlobal = create((set, get) => ({
   langList:[],
   dragWin:false,
   notList:[],
-  env:{
-    source:"not"
-  },
   inner:{
     enable:false,
     source:"",
@@ -54,14 +51,11 @@ const {
     inner
   }
 } = pageSession;
-
-  const appType=(inner.source!=""?inner.source:"not") 
- PageInit(appType)
+ PageInit("not")
 // 同步到 zustand（复制一份，断引用）
 useGlobal.setState({
   listSession: { path },
-  inner: { ...inner },
-  env:{ source:appType}
+  inner: { ...inner }
 });
 
 // reset session

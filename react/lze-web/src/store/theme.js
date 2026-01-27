@@ -17,26 +17,5 @@ export const useThemeStore = create((set) => ({
 
   setTheme: (themeMsg) => {
     set({ theme: themeMsg });
-  },
-
-  setThemeMode: (mode) => {
-    set((state) => ({
-      theme: {
-        ...state.theme,
-        mode
-      }
-    }));
-  },
-
-  setThemeColor: (key, value) => {
-    set((state) => ({
-      theme: {
-        ...state.theme,
-        color: {
-          ...state.theme.color,
-          [key]: value
-        }
-      }
-    }));
   }
 }));

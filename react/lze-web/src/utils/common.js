@@ -5,6 +5,7 @@ import { setLoading } from "../store/loading";
 import { AsyncApi } from "./request";
 import { setMenuOption, useMouseMenuStore } from "../store/mouseMenu";
 import { GetPageSession } from "./pageSession";
+import { setEnv } from "../store/common";
 // /////////////////通知////////////////
 export const notify = {
   normal: (text) => showNotify.normal(text),
@@ -98,7 +99,21 @@ export function AddMouseMenu(options) {
   });
 }
 /////////////////获取环境变量的类型////////
-export function GetEnvSource(type){
+export function InitEnv(type){
   let source=GetPageSession()[type].inner.source
-    return source==""?type:source
+    setEnv({
+      type:(source==""?type:source),
+      root:""
+    })
+}
+///////////////获取css变量/////////
+export function GetCssVar(name) {
+  if (!name) return "";
+
+  // 允许传 name 或 --name
+  const varName = name.startsWith("--") ? name : `--${name}`;
+
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(varName)
+    .trim();
 }

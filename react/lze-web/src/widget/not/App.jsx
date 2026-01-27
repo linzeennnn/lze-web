@@ -13,12 +13,13 @@ import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useEffect } from 'react';
 import { useThemeStore } from '../../store/theme';
+import { useEnvStore } from '../../store/common';
 
 
 export default function App() {
   const theme=useThemeStore(state=>state.theme)
   const inner=useGlobal(state=>state.inner)
-  const env=useGlobal(state=>state.env)
+  const env=useEnvStore(state=>state.env)
   useEffect(() => {
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
@@ -30,7 +31,7 @@ export default function App() {
     };
   }, []);
   return ( 
-     <div id='app' mode={theme.mode} color={theme.color[env.source]}>
+     <div id='app' mode={theme.mode} color={theme.color[env.type]}>
      <div className='wallpaper'></div>
      {
       inner.enable?<InnerApp/>:<NormalApp/>

@@ -121,7 +121,7 @@ const switchPic=(action)=>{
           <video src={mediaWin.url+picList[mediaWin.index]} controls autoPlay loop />
         )}
       </div>
-    <div id="zoom-bar" className="media-widget">
+    <div  className="media-widget tool-bar">
       <button className="btn zoom-btn" style={{marginRight:"20px"}}
       title={GetText("zoom_out")} onClick={(e)=>{e.stopPropagation();zoom("out")}}
       >

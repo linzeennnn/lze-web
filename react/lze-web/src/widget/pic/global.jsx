@@ -14,6 +14,10 @@ export const useGlobal = create((set, get) => ({
   dirList: [],
   uploading: false,
   showBg: false,
+  editWin:{
+    status:true,
+    url:"http://127.0.0.1:1234/file/Pictures/image(9).png"
+  },
   inner:{
     enable:false,
     source:"",  
