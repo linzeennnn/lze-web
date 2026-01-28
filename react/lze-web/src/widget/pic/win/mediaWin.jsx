@@ -1,4 +1,4 @@
-import {  useGlobal } from "../global";
+import {  closeMediaWin, openEditWin, useGlobal } from "../global";
 import { GetText } from "../../../utils/common";
 import { useRef, useEffect, useState } from "react";
 export default function MediaWin() {
@@ -95,9 +95,11 @@ const switchPic=(action)=>{
   return (
     <div
       className="bg-enable"
-      onClick={() => setGlobal({ mediaWin: { status: false } })}
+      onClick={() => {
+        closeMediaWin()
+      }}
     >
-      <button className="btn media-btn media-widget" id="close-media"></button>
+      <button className="btn media-btn media-widget close-media" ></button>
       <button className="btn media-btn media-widget" 
       id="last-pic"  onClick={(e)=>{e.stopPropagation();switchPic("min")}}
       ></button>
@@ -122,16 +124,17 @@ const switchPic=(action)=>{
         )}
       </div>
     <div  className="media-widget tool-bar">
-      <button className="btn zoom-btn" style={{marginRight:"20px"}}
+      <button className="btn" id="zoom-out"
       title={GetText("zoom_out")} onClick={(e)=>{e.stopPropagation();zoom("out")}}
       >
-        <div id="zoom-out"></div>
       </button>
-      <button className="btn zoom-btn" style={{marginLeft:"20px"}}
+      <button className="btn" id="zoom-in"
       title={GetText("zoom_in")} onClick={(e)=>{e.stopPropagation();zoom("in")}}
       >
-        <div id="zoom-in"></div>
       </button>
+      <button className="btn" id="edit-pic-btn"
+      onClick={()=>[openEditWin(mediaWin.url,mediaWin.index)]}
+      ></button>
     </div>
     </div>
   );

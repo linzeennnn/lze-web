@@ -1,7 +1,7 @@
 import LoadWin from "./loadWin";
 import UploadWin from "./uploadWin";
 import MediaWin from "./mediaWin";
-import EditWin from "./editWin";
+import EditWin from "./editWin/editWin";
 export default function PicWin() {
     return(
         <>

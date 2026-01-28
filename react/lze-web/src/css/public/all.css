@@ -103,10 +103,12 @@
 --download_icon: url(../../assets/icon/download_dark.svg);
 --edit_icon: url(../../assets/icon/edit_dark.svg);
 --eye_icon: url(../../assets/icon/eye_dark.svg);
+--frame_icon: url(../../assets/icon/frame_dark.svg);
 --goup_icon: url(../../assets/icon/goup_dark.svg);
 --home_icon: url(../../assets/icon/home_dark.svg);
 --left_icon: url(../../assets/icon/left_dark.svg);
 --leftarr_icon: url(../../assets/icon/leftarr_dark.svg);
+--leftRight_icon: url(../../assets/icon/leftRight_dark.svg);
 --link_icon: url(../../assets/icon/link_dark.svg);
 --load_icon: url(../../assets/icon/load_dark.svg);
 --lock_icon: url(../../assets/icon/lock_dark.svg);
@@ -117,6 +119,7 @@
 --no_icon: url(../../assets/icon/no_dark.svg);
 --option_icon: url(../../assets/icon/option_dark.svg);
 --paste_icon: url(../../assets/icon/paste_dark.svg);
+--pen_icon: url(../../assets/icon/pen_dark.svg);
 --photo_icon: url(../../assets/icon/photo_dark.svg);
 --pic_home_icon: url(../../assets/icon/pic_home_dark.svg);
 --play_icon: url(../../assets/icon/play_dark.svg);
@@ -133,6 +136,7 @@
 --toright_icon: url(../../assets/icon/toright_dark.svg);
 --toup_icon: url(../../assets/icon/toup_dark.svg);
 --up_icon: url(../../assets/icon/up_dark.svg);
+--upDown_icon: url(../../assets/icon/upDown_dark.svg);
 --upload_icon: url(../../assets/icon/upload_dark.svg);
 --video_icon: url(../../assets/icon/video_dark.svg);
 --user_icon:url(../../assets/icon/user_dark.svg);
@@ -158,10 +162,12 @@
 --download_icon: url(../../assets/icon/download_light.svg);
 --edit_icon: url(../../assets/icon/edit_light.svg);
 --eye_icon: url(../../assets/icon/eye_light.svg);
+--frame_icon: url(../../assets/icon/frame_light.svg);
 --goup_icon: url(../../assets/icon/goup_light.svg);
 --home_icon: url(../../assets/icon/home_light.svg);
 --left_icon: url(../../assets/icon/left_light.svg);
 --leftarr_icon: url(../../assets/icon/leftarr_light.svg);
+--leftRight_icon: url(../../assets/icon/leftRight_light.svg);
 --link_icon: url(../../assets/icon/link_light.svg);
 --load_icon: url(../../assets/icon/load_light.svg);
 --lock_icon: url(../../assets/icon/lock_light.svg);
@@ -172,6 +178,7 @@
 --no_icon: url(../../assets/icon/no_light.svg);
 --option_icon: url(../../assets/icon/option_light.svg);
 --paste_icon: url(../../assets/icon/paste_light.svg);
+--pen_icon: url(../../assets/icon/pen_light.svg);
 --photo_icon: url(../../assets/icon/photo_light.svg);
 --pic_home_icon: url(../../assets/icon/pic_home_light.svg);
 --play_icon: url(../../assets/icon/play_light.svg);
@@ -189,6 +196,7 @@
 --toup_icon: url(../../assets/icon/toup_light.svg);
 --up_icon: url(../../assets/icon/up_light.svg);
 --upload_icon: url(../../assets/icon/upload_light.svg);
+--upDown_icon: url(../../assets/icon/upDown_light.svg);
 --user_icon:url(../../assets/icon/user_light.svg);
 --video_icon: url(../../assets/icon/video_light.svg);
 --yes_icon: url(../../assets/icon/yes_light.svg);
@@ -247,10 +255,58 @@ body::-webkit-scrollbar{
 svg{
   fill:var(--text) !important;
 }
+/* 滑动条样式 */
+.range{
+  -webkit-appearance: none;
+  appearance: none;
+    background-color: var(--base_color);
+    box-shadow: var(--in_shadow);
+    border-radius: 15px;
+    color: var(--text);
+    justify-content: center;
+    align-items: center;
+    
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  cursor: pointer;
+  border: none;
+}
+.range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  border: none;
+  cursor: pointer;
+}
+/*  */
+.color-input {
+  border-radius: 7px ; 
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
 .hide-scrollbar {
   overflow: auto;             
   scrollbar-width: none;  
   -ms-overflow-style: none; 
+}
+.color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 4px;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

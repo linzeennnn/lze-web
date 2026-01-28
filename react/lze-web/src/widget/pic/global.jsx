@@ -15,8 +15,9 @@ export const useGlobal = create((set, get) => ({
   uploading: false,
   showBg: false,
   editWin:{
-    status:true,
-    url:"http://127.0.0.1:1234/file/Pictures/image(9).png"
+    status:false,
+    url:"",
+    index:0
   },
   inner:{
     enable:false,
@@ -166,6 +167,35 @@ export function loadPage(isLoad){
     showBg: isLoad,
   });
 }
+// 关闭mediawin
+export function closeMediaWin(){
+ useGlobal.setState({ mediaWin: { status: false } })
+}
+// 打开mediaWin
+export function openMediaWin(url,type,index){
+const setGlobal=useGlobal.setState
+setGlobal({mediaWin:{
+    url:url,
+    img:type=="img"?true:false,
+    status:true,
+    index:index
+}})
+
+}
+// 打开编辑窗口
+export function openEditWin(url,index){
+const setGlobal=useGlobal.setState
+setGlobal({editWin:{
+    url:url,
+    status:true,
+    index:index
+}})
+}
+// 关闭编辑窗口
+export function closeEditWin(){
+  useGlobal.setState({ editWin: { status: false } })
+}
+
 // 上传文件
 export function Upload(file, uploadData) {
   if (file.size == 0) {

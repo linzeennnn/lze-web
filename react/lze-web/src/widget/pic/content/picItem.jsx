@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGlobal } from "../global";
+import { openMediaWin, useGlobal } from "../global";
 
 export default function PicItem({ url,name, type ,index}) {
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ export default function PicItem({ url,name, type ,index}) {
     <div className={"pic-item main-item "+
       (inner.enable?"inner-pic-item":"")}
      title={name} key={url} 
-    onClick={()=>{openMedia(url,type,index)}}
+    onClick={()=>{openMediaWin(url,type,index)}}
     >
     <div className={"mask "+(select.status?"mask-enable ":"")+
       ((select.list.includes(name)&&select.status)?"mask-selected":"")}
@@ -58,13 +58,4 @@ export default function PicItem({ url,name, type ,index}) {
       )}
     </div>
   );
-}
-function openMedia(url,type,index){
-const setGlobal=useGlobal.setState
-setGlobal({mediaWin:{
-    url:url,
-    img:type=="img"?true:false,
-    status:true,
-    index:index
-}})
 }
