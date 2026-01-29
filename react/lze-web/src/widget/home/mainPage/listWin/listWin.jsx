@@ -8,29 +8,7 @@ import { Page } from "../../../../utils/page"
 import { useThemeStore } from "../../../../store/theme"
 export default function Listwin(){
     const listWin=useGlobal(state=>state.listWin)
-    const theme=useThemeStore(state=>state.theme)
-    return(
-        <WinBg showBg={listWin.status}>
-            <div id="close-back"
-            onClick={()=>{
-                useGlobal.setState({
-                    listWin:{
-                        type:"",
-                        name:"",
-                        status:false,
-                        color:""
-                    }
-                })
-            }}
-            ></div>
-            <div className="list-win" 
-            color={theme.color[listWin.type]}
-            mode={theme.mode}
-            id={listWin.type+"-list"}>
-            {creatList(listWin.type,listWin.name)}
-            </div>
-        </WinBg>
-    )
+    creatList(listWin.type,listWin.name)
 }
 function creatList(type, name) {
   switch(type) {
