@@ -1,6 +1,6 @@
 import { FabricImage, Rect } from "fabric";
 import { useRef, useState } from "react";
-import { GetCssVar } from "../../../../utils/common";
+import { GetCssVar, GetText } from "../../../../utils/common";
 export default function Crop({editData}){
     
       const [cropMode, setCropMode] = useState(false);
@@ -124,6 +124,8 @@ const applyCrop = () => {
       };
     
       return (
-            <button className="btn" id="crop-btn" onClick={startCrop} />
+            <button className="btn"
+            title={GetText("crop")}
+            id="crop-btn" onClick={startCrop} />
       );
 }

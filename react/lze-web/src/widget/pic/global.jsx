@@ -17,7 +17,8 @@ export const useGlobal = create((set, get) => ({
   editWin:{
     status:false,
     url:"",
-    index:0
+    index:0,
+    newSaveImg:""
   },
   inner:{
     enable:false,
@@ -193,11 +194,12 @@ setGlobal({editWin:{
 }
 // 关闭编辑窗口
 export function closeEditWin(){
-  useGlobal.setState({ editWin: { status: false } })
+  const editWin=useGlobal.getState().editWin
+  useGlobal.setState({ editWin: {...editWin, status: false } })
 }
 
 // 上传文件
-export function Upload(file, uploadData) {
+export function Upload(file, uploadData,replace=false) {
   if (file.size == 0) {
     notify.err(file.name + GetText("is_empty"));
     return;
@@ -248,7 +250,7 @@ export function Upload(file, uploadData) {
     const chunk = file.slice(start, start + chunkSize);
     const curChunk = Math.floor(start / chunkSize);
     const formData = new FormData();
-
+    formData.append("replace", replace);
     formData.append("file", chunk);
     formData.append("fileName", file.name);
     formData.append("totalChunks", totalChunks);

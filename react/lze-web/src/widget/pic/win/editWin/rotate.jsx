@@ -1,4 +1,5 @@
 import { FabricImage } from "fabric";
+import { GetText } from "../../../../utils/common";
 
 export default function Rotate({ editData }) {
   const startRotate = () => {
@@ -63,5 +64,7 @@ export default function Rotate({ editData }) {
     });
   };
 
-  return <button className="btn" id="rotate-btn" onClick={startRotate} />;
+  return <button className="btn" id="rotate-btn"
+  title={GetText("rotate")}
+  onClick={startRotate} />;
 }

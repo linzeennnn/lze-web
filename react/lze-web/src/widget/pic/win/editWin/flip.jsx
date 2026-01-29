@@ -1,4 +1,5 @@
 import { FabricImage } from "fabric";
+import { GetText } from "../../../../utils/common";
 
 export default function Flip({ editData }) {
   const flipX = () => {
@@ -67,8 +68,12 @@ export default function Flip({ editData }) {
   }
   return (
     <>
-      <button className="btn" id="flipX-btn" onClick={flipX}></button>
-      <button className="btn" id="flipY-btn" onClick={flipY}></button>
+      <button className="btn" 
+      title={GetText("flip")}
+      id="flipX-btn" onClick={flipX}></button>
+      <button className="btn" id="flipY-btn" 
+      title={GetText("flip")}
+      onClick={flipY}></button>
     </>
   );
 }

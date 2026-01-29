@@ -8,6 +8,7 @@ export default function PicItem({ url,name, type ,index}) {
   const setGlobal = useGlobal((state) => state.setGlobal);
   const listSession = useGlobal((state) => state.listSession);
   const inner=useGlobal((state) => state.inner);
+  const editWin = useGlobal((state) => state.editWin);
   useEffect(() => {
     setLoading(true);
     setLoaded(false);
@@ -27,6 +28,11 @@ export default function PicItem({ url,name, type ,index}) {
     }
     return () => clearTimeout(timer);
   }, [loaded]);
+  useEffect(() => {
+  if(editWin.newSaveImg === name){  // name 对应当前 PicItem
+    useGlobal.setState({editWin:{...editWin,newSaveImg:""}})
+  }
+}, [name]);
   const picClick=(e,name)=>{
     e.stopPropagation();
     const setGlobal=useGlobal.setState;
@@ -50,7 +56,7 @@ export default function PicItem({ url,name, type ,index}) {
     ></div>
       {loading && <div className="media-loading loading"></div>}
       {type === "img" ? (
-        <img src={url+name} loading="lazy" onLoad={()=>{setLoaded(true)}} />
+        <img src={url+imgUrl(name)} loading="lazy" onLoad={()=>{setLoaded(true)}} />
       ) : (<>
       <div className="play-icon btn"></div>
         <video src={url+name} onLoadedData={()=>{setLoaded(true)}} />
@@ -58,4 +64,14 @@ export default function PicItem({ url,name, type ,index}) {
       )}
     </div>
   );
+}
+// 判断是不是新编辑保存的图片
+function imgUrl(fileName){
+  const editWin = useGlobal.getState().editWin;
+  if(editWin.newSaveImg == fileName){
+    // 仅返回带时间戳的 URL，不修改全局状态
+    return fileName+"?t="+new Date().getTime()
+  } else {
+    return fileName
+  }
 }

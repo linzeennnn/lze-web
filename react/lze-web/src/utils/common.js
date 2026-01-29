@@ -117,3 +117,8 @@ export function GetCssVar(name) {
     .getPropertyValue(varName)
     .trim();
 }
+// /////////获取后缀名///////
+export function GetExt(filename) { 
+  const parts = filename.split('.');
+  return parts.length > 1 ? parts.pop().toLowerCase() : '';
+}

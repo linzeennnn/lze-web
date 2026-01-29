@@ -1,10 +1,11 @@
 import {  closeMediaWin, openEditWin, useGlobal } from "../global";
-import { GetText } from "../../../utils/common";
+import { GetExt, GetText } from "../../../utils/common";
 import { useRef, useEffect, useState } from "react";
 export default function MediaWin() {
   const setGlobal = useGlobal.setState;
   const mediaWin = useGlobal((state) => state.mediaWin);
   const pageNum= useGlobal((state) => state.pageNum);
+  const avaExt=["png","jpg","jpeg","webp"]
   let picList 
   if(mediaWin.img){
     picList= useGlobal((state) => state.imgList)[pageNum-1];
@@ -132,7 +133,9 @@ const switchPic=(action)=>{
       title={GetText("zoom_in")} onClick={(e)=>{e.stopPropagation();zoom("in")}}
       >
       </button>
-      <button className="btn" id="edit-pic-btn"
+      <button className="btn" id="edit-pic-btn" 
+      title={GetText("edit")}
+      disabled={!avaExt.includes(GetExt(picList[mediaWin.index]))}
       onClick={()=>[openEditWin(mediaWin.url,mediaWin.index)]}
       ></button>
     </div>

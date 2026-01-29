@@ -5,6 +5,8 @@ import Crop from "./crop";
 import Paint from "./paint";
 import Rotate from "./rotate";
 import Flip from "./flip";
+import { GetText } from "../../../../utils/common";
+import Save from "./save";
 export default function EditWin() {
   const editWin = useGlobal((state) => state.editWin);
   const pageNum= useGlobal((state) => state.pageNum);
@@ -22,7 +24,8 @@ export default function EditWin() {
     setRunNo: fn => (runNo.current = fn),
     setRunYes: fn => (runYes.current = fn),
     canvasRef,
-    imageRef
+    imageRef,
+    fileName: picList?picList[editWin.index]:"",
   }
   /* 初始化 canvas + 图片 */
   useEffect(() => {
@@ -81,7 +84,7 @@ export default function EditWin() {
   if (!editWin.status) return null;
 
   return (
-    <div className="bg-enable">
+    <div className="bg-enable" id="edit-back">
       <button className="btn media-btn media-widget close-media" 
       onClick={()=>{closeEditWin()}}
       ></button>
@@ -92,15 +95,15 @@ export default function EditWin() {
 
         {editMode ? (
           <>
-            <button className="btn" id="yes-btn" onClick={() => runYes.current?.()} />
-            <button className="btn" id="no-btn" onClick={() => runNo.current?.()} />
+            <button className="btn" id="yes-btn" title={GetText("confirm")} onClick={() => runYes.current?.()} />
+            <button className="btn" id="no-btn" title={GetText("cancel")} onClick={() => runNo.current?.()} />
           </>
         ):
         (<>
         <Crop editData={editData}/>
         <Rotate editData={editData}/>
         <Flip editData={editData}/>
-        <button className="btn" id="save-btn" />
+        <Save editData={editData}/>
         </>
         )
         }

@@ -330,7 +330,9 @@ z-index: 1;
     align-items: center;
     gap: 5px;
 }
-
+#edit-back{
+    background-color: var(--base_color) !important;
+}
 #edit-pic-btn{background-image: var(--edit_icon);}
 #flipX-btn{background-image: var(--leftRight_icon);}
 #flipY-btn{background-image: var(--upDown_icon);}

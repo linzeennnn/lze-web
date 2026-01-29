@@ -41,7 +41,12 @@ func Upload(c *gin.Context) {
 		if curCount == total-1 {
 			targetFile := global.MergeFile(tempPath, total)
 			targetDir := path.Join(global.PicPath, nowpath)
-			saveName := global.UniqueName(targetDir, filename)
+			var saveName string
+			if c.PostForm("replace") == "true" {
+				saveName = filename
+			} else {
+				saveName = global.UniqueName(targetDir, filename)
+			}
 			os.Rename(targetFile, filepath.Join(targetDir, saveName))
 			os.RemoveAll(tempPath)
 		}
