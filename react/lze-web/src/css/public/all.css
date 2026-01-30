@@ -468,7 +468,7 @@ iframe{
   flex-direction: column;
   padding: 20px;
   border-radius: 15px;
-  min-width: 400px;
+  min-width: 30%;
   max-width: 90%;
   min-height: 150px;
   background-color: var(--bg_color);
