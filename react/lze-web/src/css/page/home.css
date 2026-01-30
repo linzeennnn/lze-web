@@ -15,6 +15,7 @@
     flex-direction: column;
      will-change: transform, opacity; 
     transition: transform 1s ease, opacity 1s ease;
+    z-index: 1;
 }
 .widget-item:hover{
     opacity: 1;
@@ -308,6 +309,7 @@ align-items: center;
     transition:  opacity 0.5s ease-in-out;
     justify-content: center;
     align-items: center;
+    z-index:1;
 }
 #lock-user{
     position: relative;

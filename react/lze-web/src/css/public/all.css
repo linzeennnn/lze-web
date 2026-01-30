@@ -24,6 +24,8 @@
   --base_color: #787878;
   --dark_text: #cfcfcf;
   --light_text: #2e2e2e;
+  --light_bodye:#999999;
+  --dark_body:#575757;
 }
 
 [color="green"] {
@@ -34,6 +36,8 @@
   --base_color: #567260;
   --dark_text: #a9ffc3;
   --light_text: #2e4b38;
+  --light_body:#6e927b;
+  --dark_body:#3e5245;
 }
 
 [color="blue"] {
@@ -44,6 +48,8 @@
   --base_color: #5c6579;
   --dark_text: #92b7db;
   --light_text: #333e52;
+  --light_body:#76819b;
+  --dark_body:#424957;
 }
 
 [color="orange"] {
@@ -54,6 +60,8 @@
   --base_color: #7c6c59;
   --dark_text: #ffd0ae;
   --light_text: #3f2e23;
+  --light_body:#9f8a72;
+  --dark_body:#594e40;
 }
 
 [color="yellow"] {
@@ -64,6 +72,8 @@
   --base_color: #6e6b4d;
   --dark_text: #f1ecbb;
   --light_text: #4d481f;
+  --light_body:#8d8962;
+  --dark_body:#4f4d38;
 }
 
 [color="pink"] {
@@ -74,6 +84,8 @@
   --base_color: #6e5567;
   --dark_text: #f3d3e4;
   --light_text: #582f48;
+  --light_body:#8d6d84;
+  --dark_body:#4f3d4a;
 }
 
 [color="red"] {
@@ -84,11 +96,14 @@
   --base_color: #694949;
   --dark_text: #f3c8c8;
   --light_text: #4a1e1e;
+  --light_body:#855d5d;
+  --dark_body:#4c3535;
 }
 
 [mode="dark"]{
   --theme_color:var(--dark_theme);
   --bg_color:var(--dark_back);
+  --body_color:var(--dark_body);
   --global_text:var(--global_dark_text);
   --wallpaper:url(../../assets/wallpaper/dark.svg);
   --text:var(--dark_text);
@@ -147,6 +162,7 @@
 }
 [mode="light"]{
   --theme_color:var(--light_theme);
+  --body_color:var(--light_body);
   --wallpaper:url(../../assets/wallpaper/light.svg);
   --bg_color:var(--light_back);
   --global_text:var(--global_light_text);
@@ -230,10 +246,10 @@ button:disabled {
 }
 html{
   user-select: none;
-  background-color: var(--theme_color);
 }
 html, body {
    touch-action: manipulation;
+  background-color: var(--body_color);
   height: 100%;
   position: relative;
   margin: 0;
@@ -328,7 +344,6 @@ svg{
   background-position: center;
   background-repeat: no-repeat;
     background-blend-mode: overlay;
-  z-index: -1;
 }
 #root{
   height: 100%;

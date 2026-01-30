@@ -231,7 +231,7 @@
     z-index: 13;
 }
 #file-win{
-    background-color: var(--bg_color);
+    background-color: var(--body_color);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
     position: fixed;

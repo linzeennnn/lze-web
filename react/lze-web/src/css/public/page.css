@@ -30,7 +30,7 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
     height: 100vh;
-    background-color: var(--bg_color);
+    background-color: var(--theme_color);
     width: 60px;
     left: 0;
     bottom: 0;
