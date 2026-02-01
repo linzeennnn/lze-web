@@ -7,31 +7,36 @@ import { GetPageSession, SetPageSession } from "../../../../utils/pageSession"
 import { Page } from "../../../../utils/page"
 import { useThemeStore } from "../../../../store/theme"
 export default function Listwin(){
-    const listWin=useGlobal(state=>state.listWin)
-    creatList(listWin.type,listWin.name)
-}
-function creatList(type, name) {
-  switch(type) {
-    case "doc":
-      ListDoc(name)
-      return null;
-    case "pic":
-      ListPic(name)
-      return null
-    case "not":
-    ListNot(name)
-      return null;
-    case "bok":
-      return <ListBok name={name} />;
-    default:
-      return null;
-  }
+   const listWin = useGlobal(state => state.listWin)
+
+  useEffect(() => {
+    if (!listWin) return
+
+    switch (listWin.type) {
+      case "doc":
+        ListDoc(listWin.name)
+        break
+      case "pic":
+        ListPic(listWin.name)
+        break
+      case "not":
+        ListNot(listWin.name)
+        break
+      case "bok":
+      return <ListBok name={listWin.name} />;
+        break
+    }
+  }, [listWin])
+
+  return null
 }
 function ListDoc(name) {
 const pageSession=GetPageSession()
 pageSession.doc.list.path=name
 SetPageSession(pageSession)
-Page("doc")
+console.log(111);
+
+// Page("doc")
 }
 
 function ListPic(name){

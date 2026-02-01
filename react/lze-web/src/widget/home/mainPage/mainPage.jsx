@@ -12,7 +12,6 @@ export default function MainPage() {
       <WinBg showBg={showBg} />
       <Widget tmpLoad={tmpLoad}/>
       <Dock  tmpLoad={tmpLoad} setTmpLoad={setTmpLoad}/>
-      <Listwin/>
     </>
   )
 }

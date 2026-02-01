@@ -3,6 +3,7 @@ import { notify } from "../../../../utils/common";
 import { useGlobal } from "../../global";
 import {GetText} from "../../../../utils/common"
 import { getUsername } from "../../../../store/request";
+import { GetPageSession,SetPageSession } from "../../../../utils/pageSession";
 export default function Panel({showItem,type,show}){
     return(
         <div className={"widget-panel "+(show?"widget-hide":"")} key={type+"panel"}>
@@ -70,14 +71,39 @@ function openListWin(type,name){
         notify.normal(GetText("current_user")+":"+user)
         return
     }
-    if((type!="pic"&&name!="")||
-        (type=="pic"&&name.name!="")){
-    useGlobal.setState({
-        listWin:{
-            type:type,
-            name:name,
-            status:true
-        }
-    })
+    entryApp(type,name)
 }
+function entryApp(type,name){
+const pageSession=GetPageSession()
+pageSession[name].list.path=name
+SetPageSession(pageSession)
+Page(type)
+
+}
+function ListBok({name}){
+  const [loaded,setLoaded]=useState(false)
+  const [text,setText]=useState("")
+  useEffect(() => {
+    GetData("bok/get_url",
+      {name},
+      setText,
+      setLoaded ,
+      false
+    )
+  }, []);
+return(
+  loaded?
+  ( window.location.href=text ):
+  <div className="loading"></div>
+)
+}
+function GetData(url,data,setData,setLoaded,json){
+  Api.post({
+    api:url,
+    body:data,
+    success:(data)=>{
+      setData(data)
+      setLoaded(true)
+    }
+  })
 }
