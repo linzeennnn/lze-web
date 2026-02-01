@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	env "lze-web/model/other/env"
 	fileSystem "lze-web/model/other/fs"
 	"os"
 	"path/filepath"
@@ -243,4 +244,12 @@ func GetText(text string, c *gin.Context) string {
 	}
 
 	return value
+}
+
+// 获取前端环境变量
+func GetEnv(c *gin.Context) env.Env {
+	var e env.Env
+	e.Source = c.GetHeader("source")
+	e.Root = ""
+	return e
 }

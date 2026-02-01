@@ -1,3 +1,4 @@
+import { getEnv } from "../store/common"
 import { getLangType } from "../store/lang"
 import { getUrl,getToken } from "../store/request"
 import { confirmWin, loadingPage, notify } from "./common"
@@ -30,7 +31,7 @@ function req(request, method) {
   } = request
 
   loading && loadingPage(true)
-
+  const env=getEnv()
   const m = method.toUpperCase()
 
   const options = {
@@ -38,7 +39,8 @@ function req(request, method) {
     headers: {
       "Content-Type": "application/json",
       "authorization": "Bearer " + getToken(),
-      "lang": getLangType()
+      "lang": getLangType(),
+      "source":env.type
     }
   }
 
@@ -85,6 +87,7 @@ async function reqAsync(request, method) {
 
   loading && loadingPage(true)
 
+  const env=getEnv()
   const m = method.toUpperCase()
 
   const options = {
@@ -92,7 +95,8 @@ async function reqAsync(request, method) {
     headers: {
       "Content-Type": "application/json",
       "authorization": "Bearer " + getToken(),
-      "lang": getLangType()
+      "lang": getLangType(),
+      "source":env.type
     }
   }
 

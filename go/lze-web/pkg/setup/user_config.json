@@ -182,6 +182,13 @@
                 "user": [
                     "admin"
                 ]
+            },
+            "edit":{
+                "name": "edit",
+                "user": [
+                    "admin",
+                    "user"
+                ]
             }
         }
     },

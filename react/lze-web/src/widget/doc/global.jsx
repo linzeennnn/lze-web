@@ -121,7 +121,8 @@ const sessionPath=pageSession.doc.list.path
     let inner={
       source:"doc",
       enable:true,
-      name:baseName(path)
+      name:baseName(path),
+      path
     }
     if(type=="img"||type=="vid"){
       if(type=="img")

@@ -22,13 +22,14 @@ func Edit(c *gin.Context) {
 	global.InitUserMes(c)
 	if global.CheckPermit(c, "not", "edit") {
 		var name string
+		env := global.GetEnv(c)
 		if rec.NewTitle == rec.OldTitle {
 			name = rec.OldTitle + ".txt"
 		} else {
 			os.Remove(filepath.Join(global.NotPath, rec.OldTitle+".txt"))
 			name = global.UniqueName(global.NotPath, rec.NewTitle+".txt")
 		}
-		switch rec.Source {
+		switch env.Source {
 		case "doc":
 			global.WriteText(filepath.Join(global.DocPath, rec.Path), rec.NewContent)
 		default:

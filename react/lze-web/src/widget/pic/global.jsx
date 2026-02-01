@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 import { notify } from "../../utils/common";
+import { dirName } from '../../utils/path';
 import { GetText } from "../../utils/common";
 import { Api, AsyncApi } from '../../utils/request';
 import { getToken, getUrl } from '../../store/request';
 import { GetPageSession, SetPageSession } from '../../utils/pageSession';
 import { PageInit } from '../../utils/pageInit';
+import { getEnv } from '../../store/common';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   nowPath: "",
@@ -25,7 +27,8 @@ export const useGlobal = create((set, get) => ({
     source:"",  
     media:"",
     url:"",
-    name:""
+    name:"",
+    path:""
   },
   pageNum:1,
   listSession:{
@@ -81,7 +84,8 @@ PageInit("pic")
     source: "",
     name: "",
     media:"",
-    url: ""
+    url: "",
+    path:""
   };
   pageSession.pic.list.path = "";
   
@@ -199,17 +203,19 @@ export function closeEditWin(){
 }
 
 // 上传文件
-export function Upload(file, uploadData,replace=false) {
+export function Upload(file, uploadData,edit=false) {
   if (file.size == 0) {
     notify.err(file.name + GetText("is_empty"));
     return;
   }
 
   let showVideo;
+  const env=getEnv()
   const global = useGlobal.getState();
   const token = getToken();
   const nowPath = global.nowPath;
   const upload = global.upload;
+  const inner=global.inner
   const setGlobal = useGlobal.setState;
 
   const imageExts = ["jpg", "jpeg", "png", "gif", "webp", "bmp", "svg", "ico", "apng", "avif"];
@@ -250,19 +256,19 @@ export function Upload(file, uploadData,replace=false) {
     const chunk = file.slice(start, start + chunkSize);
     const curChunk = Math.floor(start / chunkSize);
     const formData = new FormData();
-    formData.append("replace", replace);
+    formData.append("edit", edit);
     formData.append("file", chunk);
     formData.append("fileName", file.name);
     formData.append("totalChunks", totalChunks);
     formData.append("currentChunk", curChunk);
-    formData.append("nowpath", nowPath); // 仅保留必要字段
+    formData.append("nowpath", (env.type!=""?dirName(inner.path):nowPath)); // 仅保留必要字段
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
 
     // 将 user 和 token 移到 Header
     xhr.setRequestHeader("authorization", "Bearer " + token);
-
+    xhr.setRequestHeader("source",env.type)
     xhr.upload.onprogress = function (event) {
       if (event.lengthComputable) {
         uploadData.sendSize = uploadData.sendSize + Math.min(event.loaded, file.size) - tmp_send_size;

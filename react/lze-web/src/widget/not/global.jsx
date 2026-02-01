@@ -111,7 +111,6 @@ export function Save_note(newTitle,newContent){
     Api.post({
       api:'not/'+edit.type,
       body:{oldTitle,newTitle,newContent,
-        source:inner.source,
         path:inner.path
       },
       notice: true,
