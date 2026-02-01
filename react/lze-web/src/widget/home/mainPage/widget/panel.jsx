@@ -4,6 +4,7 @@ import { useGlobal } from "../../global";
 import {GetText} from "../../../../utils/common"
 import { getUsername } from "../../../../store/request";
 import { GetPageSession,SetPageSession } from "../../../../utils/pageSession";
+import { Page } from "../../../../utils/page";
 export default function Panel({showItem,type,show}){
     return(
         <div className={"widget-panel "+(show?"widget-hide":"")} key={type+"panel"}>
@@ -75,7 +76,8 @@ function openListWin(type,name){
 }
 function entryApp(type,name){
 const pageSession=GetPageSession()
-pageSession[name].list.path=name
+
+pageSession[type].list.path=name
 SetPageSession(pageSession)
 Page(type)
 

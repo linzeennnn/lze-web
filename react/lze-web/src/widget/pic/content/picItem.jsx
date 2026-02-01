@@ -14,8 +14,8 @@ export default function PicItem({ url,name, type ,index}) {
     setLoaded(false);
   }, [url]);
   useEffect(()=>{
-    if(listSession.path==name){
-      openMediaWin(url,type,index)
+    if(listSession.name==name){
+      openMediaWin(url,listSession.media,index)
       setGlobal({listSession:{path:""}})
     }
   },[])

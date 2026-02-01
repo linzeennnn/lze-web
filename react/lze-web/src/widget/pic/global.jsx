@@ -32,7 +32,8 @@ export const useGlobal = create((set, get) => ({
   },
   pageNum:1,
   listSession:{
-    path:""
+    name:"",
+    media:""
   },
   loading: false,
   dragWin:false,
@@ -63,17 +64,16 @@ export const useGlobal = create((set, get) => ({
 export function InitData(){
 PageInit("pic")
   const pageSession = GetPageSession();
-  
-  const {
-    pic: {
-      list: { path },
-      inner
-    }
-  } = pageSession;
+ const { 
+  pic: { 
+    inner, 
+    list: { path } 
+  } 
+} = pageSession;
   
   // 同步到 zustand（复制一份，断引用）
   useGlobal.setState({
-    listSession: { path },
+    listSession: { ...path },
     inner: { ...inner },
     imgPage:(inner.media=="img")
   });
@@ -87,16 +87,14 @@ PageInit("pic")
     url: "",
     path:""
   };
-  pageSession.pic.list.path = "";
-  
+  pageSession.pic.list.path = {name:"",media:""};
   SetPageSession(pageSession);
-  list("")
+  list("",(useGlobal.getState().listSession.media=="vid"))
 }
 // 扫描目录
 export function list(path,showVideo) {
   const inner=useGlobal.getState().inner
   const setGlobal=useGlobal.setState
-  const select=useGlobal.getState().select
   if(inner.enable){
     setGlobal({
       imgList:(inner.media=="img"?[[inner.name]]:[]),

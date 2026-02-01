@@ -44,6 +44,9 @@ export function InitPageSession() {
             }
         },
         bok: {
+            list: {
+                path: ""
+            },
             inner: {
                 source:""
             }
