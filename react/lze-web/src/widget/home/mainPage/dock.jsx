@@ -5,6 +5,7 @@ import Theme from "./dockApp/theme";
 import { useGlobal } from "../global";
 import { GetText, AddMouseMenu } from "../../../utils/common";
 import { useLangStore } from "../../../store/lang";
+import {FillIcon} from "../../../utils/icon";
 
 export default function Dock({ tmpLoad, setTmpLoad }) {
   const lang=useLangStore((state)=>state.lang)
@@ -92,7 +93,9 @@ export default function Dock({ tmpLoad, setTmpLoad }) {
             className="dock-app"
             onClick={item.action}
           >
-            <div id={item.id + "-icon"} className="dock-icon"></div>
+            <div id={item.id + "-icon"} className="dock-icon">
+              {FillIcon(item.id)}
+            </div>
           </div>
         ))}
       </div>

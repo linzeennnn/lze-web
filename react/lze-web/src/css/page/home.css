@@ -735,10 +735,6 @@ background-color: var(--base_color);
 #cpu-icon{background-image: url(../../assets/icon/cpu.svg);}
 #mem-icon{background-image: url(../../assets/icon/mem.svg);}
 #disk-icon{background-image: url(../../assets/icon/disk.svg);}
-#lang-icon{background-image: url(../../assets/icon/lang.svg);}
-#sys-icon{background-image: url(../../assets/icon/system.svg);}
-#theme-icon{background-image: url(../../assets/icon/theme.svg);}
-#lock-icon{background-image: url(../../assets/icon/lock.svg);}
 @media (max-width: 600px) {
     .widget-hide{
         display: none !important;

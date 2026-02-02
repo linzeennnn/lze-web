@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import {InitData, useGlobal } from "../global"
 import {GetText} from "../../../utils/common"
+import { Icon } from "../../../utils/icon"
 export default function LoadBtn(){
     const [loading, setLoading] = useState(false)
     const load=useGlobal(state=>state.load)
@@ -17,7 +18,9 @@ export default function LoadBtn(){
             InitData()
         }}
         >
-            <div></div>
+            <div>
+            {Icon("load")}
+            </div>
             <span>{GetText("refresh")}</span>
         </button>
     )

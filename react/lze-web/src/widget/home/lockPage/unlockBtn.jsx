@@ -1,5 +1,6 @@
 import { useGlobal } from "../global";
 import {GetText} from "../../../utils/common"
+import {Icon} from "../../../utils/icon";
 export default function UnlockBtn({setTmpLoad}){
     return(
         <button id="unlock-btn" className="btn lock-btn"
@@ -12,7 +13,9 @@ export default function UnlockBtn({setTmpLoad}){
                         }, 500);
                             }}
         >
-            <div></div>
+            <div>
+                {Icon("power")}
+            </div>
             <span>{GetText("start")}</span>
         </button>
     )
