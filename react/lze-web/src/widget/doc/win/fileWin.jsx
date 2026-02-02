@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import { SetFileWin, useGlobal } from "../global"
 
 import { GetText } from '../../../utils/common';
+import { Icon } from "../../../utils/icon";
 export default function FileWin(){
     const [fullScreen,setFullScreen]=useState(false)
     const fileWin=useGlobal(state=>state.fileWin)
@@ -61,7 +62,7 @@ const switchInnerApp=()=>{
             onClick={()=>{
                 useGlobal.setState({fileWin:{status: false,url:"",view:false}})
             }}
-            ></button>}{
+            >{Icon("no")}</button>}{
                 fileWin.view?
             (<div className="file-view-box">
             <iframe
@@ -75,18 +76,22 @@ const switchInnerApp=()=>{
                 <button className="btn ext-full-screen-btn"
                     title={GetText("zoom_out")}
                     onClick={()=>{setFullScreen(false)}}
-                ></button>
+                >{Icon("minimize")}</button>
                 :
                 (<div className="file-win-btn-bar">
                     {(fileWin.data.innerApp.length>1)?
                     <>{
                         fileWin.currentType=="not"?
-                        <button className="btn file-win-btn view-btn" title={GetText("view")} onClick={switchInnerApp}></button>:
-                        <button className="btn file-win-btn edit-btn" title={GetText("edit")} onClick={switchInnerApp}></button>
+                        <button className="btn file-win-btn" title={GetText("view")} onClick={switchInnerApp}>
+                            {Icon("eye")}
+                        </button>:
+                        <button className="btn file-win-btn" title={GetText("edit")} onClick={switchInnerApp}>
+                            {Icon("edit")}
+                        </button>
                     }</>
                     :null}
                     <button
-                        className="btn file-win-btn refresh-btn"
+                        className="btn file-win-btn"
                         title={GetText("refresh")}
                         disabled={fileWin.currentType!="doc"}
                         onClick={()=>{
@@ -94,13 +99,13 @@ const switchInnerApp=()=>{
                                 iframeRef.current.src = iframeRef.current.src
                             }
                         }}
-                    ></button>
+                    >{Icon("load")}</button>
 
                     <button
-                        className="btn file-win-btn full-screen-btn"
+                        className="btn file-win-btn"
                         title={GetText("zoom_in")}
                         onClick={()=>{setFullScreen(true)}}
-                    ></button>
+                    >{Icon("maximize")}</button>
                 </div>)
                 }
 

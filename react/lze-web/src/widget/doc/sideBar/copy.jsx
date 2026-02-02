@@ -1,6 +1,7 @@
 import { useGlobal } from "../global";
 import { AddMouseMenu, GetText, notify } from "../../../utils/common";
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Copy({ setPaste, setCopyList }) {
   const copy = () => {
@@ -36,10 +37,9 @@ export default function Copy({ setPaste, setCopyList }) {
 
   return (
     <button
-      id="copy"
       className="btn side-btn"
       title={`${GetText("copy")} (Ctrl/Cmd + C)`}
       onClick={copy}
-    />
+    >{Icon("copy")}</button>
   );
 }

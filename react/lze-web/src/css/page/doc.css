@@ -78,7 +78,6 @@
     justify-content: left;
 }
 #go-up{
-    background-image: var(--goup_icon);
     margin-left: 10px;
 }
 #show-path{
@@ -124,7 +123,6 @@
     margin-right: 10px;
 }
 .down-btn{
-    background-image: var(--download_icon);
     width: 20px!important;
     height: 20px!important;
     position: absolute;
@@ -132,13 +130,11 @@
     right: 10px;
 }
 #paste{
-    background-image:var(--paste_icon);
     animation: paste 1s ease-in-out infinite;
 }
 #home-icon{
     position: relative;
     left: 10px;
-    background-image: var(--home_icon);
     margin-right: 5px;
     width: 32px;
     height: 32px;
@@ -163,7 +159,6 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: var(--no_icon);
 }
 .upload-opt-btn{
     margin: 10px !important;
@@ -215,7 +210,6 @@
     height: 200px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: var(--upload_icon);
 }
 
 .close-file-win{
@@ -227,7 +221,6 @@
     width: 46px;
     height: 46px;
     box-shadow: var(--out_shadow);
-    background-image: var(--no_icon);
     z-index: 13;
 }
 #file-win{
@@ -280,7 +273,6 @@
     border-radius: 10px;
     right: 20px;
     bottom: 20px;
-    background-image: var(--minimize_icon);
     background-color: var(--base_color);
 }
 .link-btn{
@@ -289,7 +281,6 @@
     position: absolute;
     bottom: 10px;
     left: 10px;
-    background-image: var(--link_icon);
 }
 #link-win{
     justify-content: center;
@@ -330,30 +321,12 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background-image: var(--copy_icon);
 }
 #close-link-btn{
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: var(--no_icon);
 }
-.full-screen-btn{background-image: var(--maximize_icon);}
-.refresh-btn{background-image: var(--load_icon);}
-#upload-dir{background-image: url(../../assets//icon/folder.svg);}
-#upload-file{background-image: url(../../assets/icon/file.svg);}
-#new-dir-btn{background-image: var(--addfolder_icon);}
-#new-dir-cancel{background-image: var(--no_icon);}
-#new-dir-save{background-image: var(--save_icon);}
-.edit-name{background-image: var(--edit_icon);}
-.save-name{background-image: var(--save_icon);}
-#copy{background-image:var(--copy_icon);}
-#del{background-image:var(--bin_icon);}
-#move{background-image:var(--cut_icon);}
-#reload{background-image:var(--load_icon);}
-#upload{background-image:var(--upload_icon);}
-.edit-btn{background-image: var(--edit_icon);}
-.view-btn{background-image: var(--eye_icon);}
   @keyframes paste {
     0% {
       opacity: 0.5;

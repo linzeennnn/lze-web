@@ -1,5 +1,6 @@
 import { WinBg } from "../../../components/winBg";
 import { copy, GetText } from "../../../utils/common";
+import { Icon } from "../../../utils/icon";
 import { useGlobal } from "../global";
 export default function LinkWin(){
     const setGlobal=useGlobal.setState
@@ -14,7 +15,7 @@ export default function LinkWin(){
                 show:false
             }})}}
             title={GetText("close")}
-            className="btn link-win-btn"></button>
+            className="btn link-win-btn">{Icon("no")}</button>
             <span
             onClick={()=>{openUrl()}}
             >{linkWin.link}</span>
@@ -22,7 +23,7 @@ export default function LinkWin(){
             title={GetText("copy")}
             className="btn link-win-btn"
             onClick={()=>{coptLink()}}
-            ></button>
+            >{Icon("copy")}</button>
         </div>
         </WinBg>
         </>

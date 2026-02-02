@@ -714,10 +714,6 @@ background-color: var(--base_color);
 }
 
 
-#net-icon{background-image: url(../../assets/icon/network.svg);}
-#cpu-icon{background-image: url(../../assets/icon/cpu.svg);}
-#mem-icon{background-image: url(../../assets/icon/mem.svg);}
-#disk-icon{background-image: url(../../assets/icon/disk.svg);}
 @media (max-width: 600px) {
     .widget-hide{
         display: none !important;

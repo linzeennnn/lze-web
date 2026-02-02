@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {GetText} from "../../../../utils/common"
 import { Api } from "../../../../utils/request"
-import { Icon } from "../../../../utils/icon"
+import {FillIcon, Icon } from "../../../../utils/icon"
 export default function Sys(){
     const [loaded,setLoaded]=useState(false)
     const barList=[
@@ -52,7 +52,7 @@ export default function Sys(){
                     <React.Fragment key={item.id}>
                 <div  className="sys-box" title={item.name}>
                 <div id={item.id+"-bar"} className="sys-bar">
-                    <div id={item.id+"-icon"} className="sys-icon"></div>
+                    <div  className="sys-icon">{FillIcon(item.id)}</div>
                     <div id={item.id+"-progress-bar"} className="sys-progress-bar">
                     <div className="sys-progress"
                     style={{width:recData[item.id].percent}}
@@ -71,7 +71,7 @@ export default function Sys(){
             })
         }
                 <div id="net-box" className="sys-box" title={GetText("net_usage")}>
-                    <span id="net-icon" className="sys-icon"></span>
+                    <span className="sys-icon">{FillIcon("network")}</span>
                     <div className="sys-icon">{Icon("toUp")}</div>    
                     <span id="net-up-data" className="sys-data">
                         {recData.net.up}

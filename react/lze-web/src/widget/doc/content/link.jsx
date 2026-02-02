@@ -4,6 +4,7 @@ import { useGlobal, loadPage } from "../global"
 import { GetText } from '../../../utils/common';
 import LinkWin from "../win/linkWin";
 import { Api } from "../../../utils/request";
+import { Icon } from "../../../utils/icon";
 export default function Link({ name }) {
   return (
     <button
@@ -13,7 +14,7 @@ export default function Link({ name }) {
         e.stopPropagation()
         getLink(name)
       }}
-    ></button>
+    >{Icon("link")}</button>
   );
 }
 

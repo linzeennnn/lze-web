@@ -4,6 +4,7 @@ import { notify } from "../../../utils/common";
 import { confirmWin } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { getUrl } from "../../../store/request";
+import { Icon } from "../../../utils/icon";
 export default function DownloadBtn({fileMes}){
     const global=useGlobal.getState()
    
@@ -18,7 +19,7 @@ export default function DownloadBtn({fileMes}){
               DownLoadFile(global.nowPath+"/"+fileMes[0],false)
             }
         })}
-        ></button>
+        >{Icon("download")}</button>
     )
 }
 // 下载文件

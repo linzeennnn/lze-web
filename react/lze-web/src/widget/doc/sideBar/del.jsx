@@ -2,6 +2,7 @@ import { useGlobal, list } from "../global";
 import { AddMouseMenu, confirmWin, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Del() {
 
@@ -57,10 +58,9 @@ export default function Del() {
 
   return (
     <button
-      id="del"
       className="btn side-btn"
       title={`${GetText("delete")} (Delete / Cmd + Delete)`}
       onClick={del}
-    />
+    >{Icon("bin")}</button>
   );
 }

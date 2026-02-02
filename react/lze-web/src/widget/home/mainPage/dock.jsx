@@ -93,7 +93,7 @@ export default function Dock({ tmpLoad, setTmpLoad }) {
             className="dock-app"
             onClick={item.action}
           >
-            <div id={item.id + "-icon"} className="dock-icon">
+            <div className="dock-icon">
               {FillIcon(item.id)}
             </div>
           </div>

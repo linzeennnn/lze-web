@@ -2,6 +2,7 @@ import { useGlobal, list } from "../global";
 import { AddMouseMenu, notify, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Paste({ paste, copyList }) {
   const [pastestatus, setPastestatus] = paste;
@@ -45,7 +46,7 @@ export default function Paste({ paste, copyList }) {
       title={`${GetText("paste")} (Ctrl/Cmd + V)`}
       className="btn side-btn"
       onClick={onPaste}
-    />
+    >{Icon("paste")}</button>
   ) : null;
 }
 

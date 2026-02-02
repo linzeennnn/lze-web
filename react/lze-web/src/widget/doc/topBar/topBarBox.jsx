@@ -3,6 +3,7 @@ import NewDirInput from './newDirInput';
 import { useGlobal, list } from '../global';
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from 'react';
+import { Icon } from '../../../utils/icon';
 
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus;
@@ -33,7 +34,7 @@ export default function TopBarBox({ createStatus }) {
           className="btn"
           title={GetText("back_main_dir")}
           onClick={goHome}
-        ></button>
+        >{Icon("home")}</button>
       )}
 
       {!creating && !upload.status && <ShowPath />}

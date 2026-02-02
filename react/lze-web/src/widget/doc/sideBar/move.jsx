@@ -1,6 +1,7 @@
 import {  useGlobal } from "../global"
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 export default function Move({setPaste,setCopyList}){
     const cut=()=>{
             const selected=useGlobal.getState().selected
@@ -16,8 +17,8 @@ export default function Move({setPaste,setCopyList}){
         });
       }, []);
     return(
-        <button id="move" className="btn side-btn"
-        title={GetText("cut")} onClick={cut}>
+        <button className="btn side-btn"
+        title={GetText("cut")} onClick={cut}>{Icon("cut")}
         </button>
     )
 }

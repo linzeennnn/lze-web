@@ -4,6 +4,7 @@ import { GetText } from '../../../utils/common';
 
 import { notify } from "../../../utils/common";
 import { Api } from "../../../utils/request";
+import { Icon } from "../../../utils/icon";
 export default function NewDirInput({setCreate}) {
     const[newName,setNewName]=useState("")
      const nameChange = (e) => {
@@ -25,7 +26,7 @@ export default function NewDirInput({setCreate}) {
             <button id="new-dir-save" className="btn" 
             title={GetText("save")} onClick={()=>{
               setCreate(false)
-              NewDir(newName)} }  >
+              NewDir(newName)} }  >{Icon("save")}
             </button> 
             </>
     )

@@ -1,6 +1,7 @@
 import { useGlobal, list } from '../global';
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from 'react';
+import { Icon } from '../../../utils/icon';
 
 export default function GoUp() {
   const nowPath = useGlobal((state) => state.nowPath);
@@ -31,6 +32,6 @@ export default function GoUp() {
       disabled={isRoot}
       title={isRoot ? '' : GetText("back")}
       onClick={goUp}
-    ></button>
+    >{Icon("goUp")}</button>
   );
 }

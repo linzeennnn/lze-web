@@ -1,5 +1,6 @@
 
 import { GetText } from '../../../utils/common';
+import { Icon } from '../../../utils/icon';
 
 export default function NewDirBtn({createStatus}) {
   const [creating, setCreating] = createStatus
@@ -12,14 +13,13 @@ export default function NewDirBtn({createStatus}) {
           className="btn new-dir-btn"
           title={GetText("create_folder")}
           onClick={() => setCreating(true)}
-        ></button>
+        >{Icon("addFolder")}</button>
       ) : (
         <button
-          id="new-dir-cancel"
           className="btn new-dir-btn"
           title={GetText("cancel")}
           onClick={() => setCreating(false)}
-        ></button>
+        >{Icon("no")}</button>
       )}
     </>
   );

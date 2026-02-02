@@ -1,3 +1,4 @@
+import { Icon } from "../utils/icon";
 import { ScrollContext } from "./scrollTop"
 import React, { useContext } from 'react';
 function GoTopBtn({innerMode}){
@@ -10,7 +11,7 @@ function GoTopBtn({innerMode}){
 })}}
         className={(isScroll?"scroll-go-top-btn ":"")+
             (innerMode?"inner-top-btn":"")
-        }>
+        }>{Icon("toUp")}
         </div>
     )
 }

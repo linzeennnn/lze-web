@@ -1,6 +1,7 @@
 import { useGlobal ,list} from "../global"
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 export default function Relaod(){
     const refresh=()=>{
             list(useGlobal.getState().nowPath)
@@ -14,8 +15,8 @@ export default function Relaod(){
         });
       }, []);
     return(
-        <button id="reload" className="btn side-btn" 
+        <button className="btn side-btn" 
         title={GetText("refresh")} onClick={refresh}
-        ></button>
+        >{Icon("load")}</button>
     )
 }

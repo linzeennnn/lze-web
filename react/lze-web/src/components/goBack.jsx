@@ -1,3 +1,5 @@
+import { Icon } from "../utils/icon";
+
 export default function GoBack() {
   return (
     <button
@@ -12,7 +14,7 @@ export default function GoBack() {
           window.location.href =  window.location.origin;
         }
       }}
-    >
+    >{Icon("toLeft")}
     </button>
   );
 }
