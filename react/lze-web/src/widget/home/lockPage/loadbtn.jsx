@@ -11,7 +11,7 @@ export default function LoadBtn(){
     return(
         loading?
         <div className="loading" id="lock-loading"> </div>:
-        <button id="load-btn" className="btn lock-btn"
+        <button  className="btn lock-btn"
         onClick={()=>{
             setLoading(true)
             useGlobal.setState({load:0})

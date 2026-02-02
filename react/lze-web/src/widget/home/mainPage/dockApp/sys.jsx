@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {GetText} from "../../../../utils/common"
 import { Api } from "../../../../utils/request"
+import { Icon } from "../../../../utils/icon"
 export default function Sys(){
     const [loaded,setLoaded]=useState(false)
     const barList=[
@@ -71,11 +72,11 @@ export default function Sys(){
         }
                 <div id="net-box" className="sys-box" title={GetText("net_usage")}>
                     <span id="net-icon" className="sys-icon"></span>
-                    <div id="net-up" className="sys-icon"></div>    
+                    <div className="sys-icon">{Icon("toUp")}</div>    
                     <span id="net-up-data" className="sys-data">
                         {recData.net.up}
                     </span>
-                    <div id="net-down" className="sys-icon"></div>
+                    <div  className="sys-icon">{Icon("toDown")}</div>
                     <span id="net-down-data" className="sys-data">
                         {recData.net.down}
                     </span>

@@ -3,6 +3,7 @@ import  ModPasPage  from "./userPage/modPas";
 import  Reg  from "./userPage/reg";
 import {GetText} from "../../../utils/common"
 import { useState } from "react";
+import { Icon } from "../../../utils/icon";
 export default function UserPage({setSwitch}) {
   const [loading, setLoading] = useState(false)
   const [showPage, setShowPage] = useState("login");
@@ -31,14 +32,14 @@ export default function UserPage({setSwitch}) {
         <div className="user-page-win">
           <button className="btn user-page-back" title={GetText("back")}
           onClick={()=>{setSwitch(false)}}
-          ></button>
+          >{Icon("toLeft")}</button>
           <div id="user-page-btn-bar">
           <button disabled={showPage==="login"} className="btn user-page-btn" title={GetText("login")}
-           id="login-btn" onClick={()=>{setShowPage("login")}}></button>
+           id="login-btn" onClick={()=>{setShowPage("login")}}>{Icon("user")}</button>
           <button disabled={showPage==="modPas"} className="btn user-page-btn" title={GetText("modPas")}
-           id="modPas-btn" onClick={()=>{setShowPage("modPas")}}></button>
+           id="modPas-btn" onClick={()=>{setShowPage("modPas")}}>{Icon("lock")}</button>
           <button disabled={showPage==="reg"} className="btn user-page-btn" title={GetText("reg")}
-           id="reg-btn" onClick={()=>{setShowPage("reg")}}></button>
+           id="reg-btn" onClick={()=>{setShowPage("reg")}}>{Icon("newUser")}</button>
           </div>
           {pages[showPage]}
         </div>

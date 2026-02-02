@@ -3,6 +3,7 @@ import {GetText} from "../../../../utils/common"
 import { GetLangList } from "../../../../utils/common"
 import { useState } from "react"
 import { useLangStore,setLang } from "../../../../store/lang"
+import { Icon } from "../../../../utils/icon"
 export default function Lang(){
     const lang=useLangStore((state)=>state.lang)
     const [showList,setShowList]=useState(false)
@@ -30,7 +31,7 @@ export default function Lang(){
             title={GetText("switch")}
             onClick={()=>{setShowList(true)}}>
             <span>{list[lang.userSelect]}</span>
-            <div></div>
+            <div>{Icon("switch")}</div>
         </div>)
         }
         </>

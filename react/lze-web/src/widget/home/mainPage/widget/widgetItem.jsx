@@ -2,7 +2,7 @@ import {GetText} from "../../../../utils/common"
 import {Page} from "../../../../utils/page.js"
 import {useState } from "react";
 import Panel from './panel'
-import {FillIcon} from "../../../../utils/icon";
+import {FillIcon, Icon} from "../../../../utils/icon";
 export default function WidgetItem({ theme, item,  widgetData }){
     const [showPanel, setShowPanel] = useState(false)
     return(
@@ -26,7 +26,7 @@ export default function WidgetItem({ theme, item,  widgetData }){
                               onClick={(e)=>{
                                 e.stopPropagation();
                                 setShowPanel(!showPanel)}}
-                              ></div>
+                              >{Icon("option")}</div>
                               
                             <span className="widget-title"
                             mode={theme.mode}

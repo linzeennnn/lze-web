@@ -5,6 +5,9 @@ export function  Icon(name,color="text"){
       <svg aria-hidden="true"
       stroke={`var(--${color}`}  
       fill="none"
+       strokeWidth="2" 
+       strokeLinecap="round" 
+       strokeLinejoin="round"
       viewBox="0 0 24 24">
         {getIconPath(name)}
       </svg>

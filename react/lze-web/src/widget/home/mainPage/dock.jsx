@@ -5,7 +5,7 @@ import Theme from "./dockApp/theme";
 import { useGlobal } from "../global";
 import { GetText, AddMouseMenu } from "../../../utils/common";
 import { useLangStore } from "../../../store/lang";
-import {FillIcon} from "../../../utils/icon";
+import {FillIcon, Icon} from "../../../utils/icon";
 
 export default function Dock({ tmpLoad, setTmpLoad }) {
   const lang=useLangStore((state)=>state.lang)
@@ -65,7 +65,7 @@ export default function Dock({ tmpLoad, setTmpLoad }) {
     { id: "lang", name: GetText("lang_setting"), action: openLang },
     { id: "theme", name: GetText("theme"), action: openTheme },
     { id: "sys", name: GetText("monitor"), action: openSys },
-    { id: "lock", name: GetText("login_manage"), action: lockAction },
+    { id: "lockScreen", name: GetText("login_manage"), action: lockAction },
   ];
 
   return (
@@ -77,7 +77,7 @@ export default function Dock({ tmpLoad, setTmpLoad }) {
             id="close-win"
             title={GetText("close")}
             onClick={close_dock}
-          ></button>
+          >{Icon("no")}</button>
           {appType === "lang" && <Lang />}
           {appType === "sys" && <Sys />}
           {appType === "theme" && <Theme />}

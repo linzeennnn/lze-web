@@ -3,6 +3,7 @@ import {GetText} from "../../../../utils/common"
 import { Get_system_theme, SetThemeColor } from "../../../../components/getTheme";
 import { useState } from "react";
 import { useThemeStore } from "../../../../store/theme";
+import { Icon } from "../../../../utils/icon";
 export default function Theme() {
   const theme = useThemeStore((state) => state.theme);
   const [nowPage,setNowPage]=useState("home")
@@ -40,6 +41,7 @@ export default function Theme() {
           id="switch-mode"
           title="切换模式"
         >
+        {Icon("switch")}
         </div>
         </button>
       </div>
@@ -49,7 +51,8 @@ export default function Theme() {
         onClick={handleSwitcPage}
         >
           <span>{GetText(nowPage)}</span>
-        <div id="switch-page" className="switch-icon" title={GetText("switch")} ></div>
+        <div id="switch-page" className="switch-icon" title={GetText("switch")} >
+        {Icon("switch")}</div>
         </button>
       </div>
       <div id="color-bar">

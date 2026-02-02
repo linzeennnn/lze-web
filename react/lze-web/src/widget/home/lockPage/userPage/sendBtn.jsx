@@ -1,4 +1,5 @@
 import {GetText} from "../../../../utils/common"
+import { Icon } from "../../../../utils/icon"
 export default function SendBtn({loading,send}){
     return(
         <>
@@ -8,7 +9,7 @@ export default function SendBtn({loading,send}){
             className="btn user-page-send"
             title={GetText("start")}
             onClick={() => send()}
-            ></button>)}
+            >{Icon("toRight")}</button>)}
             </>
     )
 }
