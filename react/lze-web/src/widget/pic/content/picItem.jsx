@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { openMediaWin, useGlobal } from "../global";
+import { FillIcon } from "../../../utils/icon";
 
 export default function PicItem({ url,name, type ,index}) {
   const [loading, setLoading] = useState(true);
@@ -58,7 +59,7 @@ export default function PicItem({ url,name, type ,index}) {
       {type === "img" ? (
         <img src={url+imgUrl(name)} loading="lazy" onLoad={()=>{setLoaded(true)}} />
       ) : (<>
-      <div className="play-icon btn"></div>
+      <div className="play-icon btn">{FillIcon("play")}</div>
         <video src={url+name} onLoadedData={()=>{setLoaded(true)}} />
           </>
       )}

@@ -5,6 +5,7 @@ import hljs from 'highlight.js/lib/common';
 import 'highlight.js/styles/atom-one-dark.min.css';
 import {  list, loadPage, useGlobal } from "../global";
 import { Api } from "../../../utils/request";
+import { Icon } from "../../../utils/icon";
 export default function Note({name}){
     const listSession=useGlobal((state)=>state.listSession)
     const [text, setText] = useState('');
@@ -47,7 +48,7 @@ const openText=()=>{
             <span className="title title-show">{title}</span>
        {show? 
        <>
-       <button className="btn note-btn edit edit-mode-btn" title={GetText("edit")}
+       <button className="btn note-btn edit-mode-btn" title={GetText("edit")}
        onClick={()=>{
         setShow(false)
         setLoaded(false)
@@ -57,8 +58,8 @@ const openText=()=>{
         text:text,
         type:"edit"
        }})}}
-       ></button>
-       <button className={"btn note-btn copy "+(isCopy?"copy-ok":"")} title={GetText("copy")}
+       >{Icon("edit")}</button>
+       <button className="btn note-btn copy" title={GetText("copy")}
             onClick={()=>{
                 copy(text)
                 setTimeout(() => {
@@ -66,7 +67,7 @@ const openText=()=>{
                 }, 2000);
                 setIsCopy(true)
             }}
-            ></button> 
+            >{Icon(isCopy?"yes":"copy")}</button> 
        <div className="text-box">
             {loaded?
             <pre><code ref={codeRef}></code></pre>:
@@ -75,13 +76,13 @@ const openText=()=>{
         </div>
         </>
         :null}
-           {show? <button className="btn note-btn close-note"
+           {show? <button className="btn note-btn"
            title={GetText("close")}  onClick={()=>{
             setShow(false)
-           }}>
-           </button>:<button className="btn note-btn open-note"
+           }}>{Icon("up")}
+           </button>:<button className="btn note-btn"
             title={GetText("expand")}onClick={openText}
-            ></button>}
+            >{Icon("down")}</button>}
         </div>
     )
 }

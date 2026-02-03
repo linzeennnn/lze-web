@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { PencilBrush,FabricImage } from "fabric";
 import { GetText } from "../../../../utils/common";
+import { Icon } from "../../../../utils/icon";
 
 export default function Paint({ editData }) {
   const pathsRef = useRef([]);
@@ -142,7 +143,7 @@ const startPaint = () => {
       </div>
     )}
     {!editData.editMode && !paintEdit && (
-      <button className="btn" title={GetText("paint")} id="paint-btn" onClick={startPaint} />
+      <button className="btn" title={GetText("paint")} onClick={startPaint} >{Icon("pen")}</button>
     )}
   </>
   );

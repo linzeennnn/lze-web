@@ -30,7 +30,6 @@ input{
     cursor: default;
 }
 .show-action{
-    background-image: var(--setting_icon);
     margin-bottom: 10px;
     margin-top: 10px;
 }
@@ -129,9 +128,6 @@ input{
     height: 20px !important;
     position: absolute !important;
 }
-#time-btn{
-    background-image: var(--time_icon);
-}
 #unit-text{
     position: relative;
     display: flex;
@@ -183,7 +179,6 @@ input{
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: var(--no_icon);
 }
 #input-cmd{
     width: 90%;
@@ -235,12 +230,10 @@ input{
     width: 46px !important;
     height: 32px !important;
     margin:10px ;
-    background-image: var(--toright_icon);
     background-color: var(--base_color);
     border-radius: 10px;
 }
 #add-cmd{
-    background-image: var(--add_icon);
     background-color: var(--base_color);
     border-radius: 10px;
 }
@@ -264,6 +257,7 @@ input{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-width: 60px !important;
     width: fit-content;
     height: 80px;
     padding-left: 5px;
@@ -280,7 +274,6 @@ input{
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: var(--no_icon);
 }
 .cmd-cmd{
     font-size: 12px;
@@ -320,21 +313,13 @@ input{
     position: absolute;
     top: 10px;
     left: 5px;
-    background-image: var(--no_icon);
 }
 #close-logout{
-    background-image: var(--no_icon);
     position: absolute;
     top: 10px;
     left: 10px;
 }
 
-#load{background-image: var(--load_icon);}
-#save-time{background-image: var(--save_icon);}
-#user-btn{background-image: var(--user_icon);}
-#switch-unit{background-image: var(--switch_icon);}
-#cmd-btn{background-image: var(--cmd_icon);}
-#logout-btn{background-image: var(--delUser_icon);}
 @media (max-width: 600px) {
     .control-bar{
         width: 80%;

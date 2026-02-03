@@ -1,6 +1,7 @@
 import { useGlobal } from "../global";
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Cmd() {
 
@@ -20,9 +21,8 @@ export default function Cmd() {
   return (
     <button
       className="btn side-btn"
-      id="cmd-btn"
       title={GetText("terminal")}
       onClick={openCmd}
-    ></button>
+    >{Icon("shell")}</button>
   );
 }

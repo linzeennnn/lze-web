@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { GetText } from "../../../utils/common";
 import {useGlobal,list} from '../global'
+import { Icon } from "../../../utils/icon";
 export default function DirList(){
     const[showList,setShowList]=useState(false)
     const dirList=useGlobal((state)=>state.dirList)
@@ -12,7 +13,7 @@ export default function DirList(){
         <>
         <div id="dir-list" className="btn" 
         title={GetText("view_album")} onClick={()=>openList()}
-        >
+        >{Icon("option")}
             <div id="dir-list-box"
             style={{ display: showList ? "flex" : "none" }}
             >

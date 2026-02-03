@@ -1,4 +1,5 @@
 import { confirmWin, GetExt, GetText } from "../../../../utils/common"
+import { Icon } from "../../../../utils/icon";
 import { closeEditWin, Upload, useGlobal } from "../../global";
 import EditWin from "./editWin";
 
@@ -40,13 +41,13 @@ closeEditWin();
 
 };
 
-return(<button className="btn" id="save-btn"
+return(<button className="btn"
   onClick={async ()=>{
     if (!(await confirmWin.normal(GetText("are_you_sure"))))
       return
     saveImage()
   }}
-  title={GetText("save")}/>)
+  title={GetText("save")}>{Icon("save")}</button>)
 }
 function getCanvasExportOptions(ext) {
   ext = ext.toLowerCase();

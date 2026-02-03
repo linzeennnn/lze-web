@@ -58,11 +58,6 @@
     box-shadow: var(--in_shadow);
     border-radius: 15px;
 }
-#go-home{background-image: var(--home_icon);}
-#go-up{background-image: var(--left_icon);}
-#load{background-image: var(--load_icon);}
-#del{background-image: var(--bin_icon);}
-#recover{background-image: var(--recover_icon);}
   @media (hover: hover) and (pointer: fine) {
 
 .tra-list:hover{

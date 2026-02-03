@@ -1,4 +1,5 @@
 import { confirmWin, GetText, AddMouseMenu, notify } from "../../../utils/common";
+import { Icon } from "../../../utils/icon";
 import { Api } from "../../../utils/request";
 import { list, useGlobal } from "../global";
 import { useEffect } from "react";
@@ -57,9 +58,8 @@ export default function Del() {
   return (
     <button
       className="btn side-btn"
-      id="del-btn"
       title={GetText("delete")}
       onClick={delPic}
-    ></button>
+    >{Icon("bin")}</button>
   );
 }

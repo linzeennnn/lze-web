@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import  TopBar  from "../../../components/topBar";
 import { Save_note,useGlobal } from "../global";
 import { GetText ,confirmWin} from "../../../utils/common";
+import { Icon } from "../../../utils/icon";
 export default function NotTopBar(){
     const edit=useGlobal((state)=>state.edit)
     const[textInput,setTextInput]=useState(false)
@@ -56,11 +57,11 @@ const save_add=async ()=>{
                 id="add-title-input"/>
                 <button id="add-save" 
                 title={GetText("save")}
-                className="btn save"
+                className="btn"
                 onClick={()=>{
                     save_add()
                 }}
-                ></button>
+                >{Icon("save")}</button>
             </div>
             <div id="text-box"></div>
             <div id="add-text-box" 

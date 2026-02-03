@@ -7,6 +7,7 @@ import Rotate from "./rotate";
 import Flip from "./flip";
 import { GetText } from "../../../../utils/common";
 import Save from "./save";
+import { Icon } from "../../../../utils/icon";
 export default function EditWin() {
   const editWin = useGlobal((state) => state.editWin);
   const pageNum= useGlobal((state) => state.pageNum);
@@ -87,7 +88,7 @@ export default function EditWin() {
     <div className="bg-enable" id="edit-back">
       <button className="btn media-btn media-widget close-media" 
       onClick={()=>{closeEditWin()}}
-      ></button>
+      >{Icon("no")}</button>
       <canvas id="edit-win" />
 
       <div className="tool-bar">
@@ -95,8 +96,13 @@ export default function EditWin() {
 
         {editMode ? (
           <>
-            <button className="btn" id="yes-btn" title={GetText("confirm")} onClick={() => runYes.current?.()} />
-            <button className="btn" id="no-btn" title={GetText("cancel")} onClick={() => runNo.current?.()} />
+            <button className="btn" title={GetText("confirm")} onClick={() => runYes.current?.()} >
+              {Icon("yes")}
+            </button>
+            <button className="btn" title={GetText("cancel")} onClick={() => runNo.current?.()} >
+              {Icon("no")}
+            </button>
+
           </>
         ):
         (<>

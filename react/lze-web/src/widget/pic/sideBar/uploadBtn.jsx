@@ -1,5 +1,6 @@
 import { useGlobal,Upload,UploadPermit } from "../global";
 import { GetText } from "../../../utils/common";
+import { Icon } from "../../../utils/icon";
 export default function UploadBtn() {
     const setGlobal = useGlobal.setState
     const pageNum = useGlobal((state) => state.pageNum);
@@ -35,9 +36,9 @@ export default function UploadBtn() {
         <>
              <input id="upFile" style={{display:"none"}} 
             type="file" multiple onChange={(e) => uploadChange(e)}/>
-            <label className="btn side-btn" id="upload" title={GetText("upload_media")}
+            <label className="btn side-btn" title={GetText("upload_media")}
             htmlFor="upFile"
-            ></label>
+            >{Icon("upload")}</label>
             </>
     )
 }

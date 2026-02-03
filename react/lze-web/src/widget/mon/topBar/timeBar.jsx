@@ -2,6 +2,7 @@ import { useState } from "react";
 import { GetText, notify  } from '../../../utils/common';
 import { useGlobal,list,loadPage } from "../global";
 import { Api } from "../../../utils/request";
+import { Icon } from "../../../utils/icon";
 export default function TimeBar() {
     const unitList = {
         never: GetText("never"),
@@ -50,9 +51,9 @@ export default function TimeBar() {
     }
     return (
       userconfig? ( <div id="time-box">
-            <button id="time-btn" className="btn" title={GetText("mod_log_time")}
+            <button className="btn" title={GetText("mod_log_time")}
             onClick={()=>setShowEdit(showEdit?false:true)}
-            ></button>
+            >{Icon("time")}</button>
 
             {showEdit?(  <>
                 <div id="time-input-box" className="time-text">
@@ -60,9 +61,9 @@ export default function TimeBar() {
                  value={editTime} onChange={timeChange}
                  onKeyDown={keyDown}
                 />
-                <button className="btn mini-btn" id="save-time" title={GetText("save")}
+                <button className="btn mini-btn"  title={GetText("save")}
                 onClick={()=>{saveTime(editTime,unit)}}
-                ></button>
+                >{Icon("save")}</button>
             </div>
 
             <div id="unit-box">
@@ -70,10 +71,9 @@ export default function TimeBar() {
                 <span>{unitList[unit]}</span>
                 <button
                   className="btn mini-btn"
-                    id="switch-unit"
                     title={GetText("switch")}
                     onClick={switchUnit}
-                >
+                >{Icon("switch")}
                 </button>
                 </div>
             </div>

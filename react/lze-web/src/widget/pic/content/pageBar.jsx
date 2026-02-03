@@ -2,6 +2,7 @@ import { useGlobal } from "../global";
 import { notify } from "../../../utils/common";
 import { GetText } from "../../../utils/common";
 import { useState } from "react";
+import { Icon } from "../../../utils/icon";
 export default function PageBar(){
     const [inputPage, setInputPage] = useState("")
     const vidList = useGlobal((state) => state.vidList);
@@ -21,9 +22,9 @@ export default function PageBar(){
     }
     return(
         <div id="page-bar">
-            <button className="btn" id="last-page"
+            <button className="btn" 
             onClick={()=>{jumpPage(pageNum==1?totalPage:pageNum-1)}}
-            ></button>
+            >{Icon("leftArr")}</button>
             <span id="page-num">{pageNum+"/"+(totalPage==0?1:totalPage)}</span>
             <div id="jump-page">
             <input id="page-input" value={inputPage}  type="text" 
@@ -42,11 +43,11 @@ export default function PageBar(){
                 onClick={()=>{jumpPage(inputPage)
                     setInputPage("")
                 }} title={GetText("jump")}
-                ></button>
+                >{Icon("toRight")}</button>
                 </div>
-            <button className="btn" id="next-page"
+            <button className="btn"
             onClick={()=>{jumpPage(pageNum==totalPage?1:pageNum+1)}}
-            ></button>
+            >{Icon("rightArr")}</button>
         </div>
     )
 }

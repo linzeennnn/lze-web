@@ -2,6 +2,7 @@ import { useGlobal, Save_note } from "../global";
 import { WinBg } from '../../../components/winBg';
 import { useEffect, useState } from "react";
 import { GetText, confirmWin, AddMouseMenu } from "../../../utils/common";
+import { Icon } from "../../../utils/icon";
 
 export default function EditWin() {
   const edit = useGlobal((state) => state.edit);
@@ -62,7 +63,7 @@ export default function EditWin() {
           id="close-edit"
           title={GetText("close")}
           onClick={() => setGlobal({ edit: { mode: false, type: "", title: "", text: "" } })}
-        ></button>
+        >{Icon("no")}</button>
 
         <button
           className="btn save"

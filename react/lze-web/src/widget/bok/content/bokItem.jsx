@@ -2,6 +2,7 @@ import { useGlobal,list,loadPage } from "../global"
 import { notify,GetText } from "../../../utils/common"
 import { confirmWin } from "../../../utils/common"
 import { Api } from "../../../utils/request"
+import { Icon } from "../../../utils/icon"
 export default function BokItem({name}){
     return(
         <div className="bookmark main-item"
@@ -14,7 +15,7 @@ export default function BokItem({name}){
         onClick={(e)=>{
             e.stopPropagation()
             del(name)}}
-        ></button>
+        >{Icon("no")}</button>
             <span>{name}</span>
         </div>
     )

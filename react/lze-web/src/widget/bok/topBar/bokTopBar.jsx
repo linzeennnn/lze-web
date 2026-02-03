@@ -3,6 +3,7 @@ import TopBar from '../../../components/topBar'
 import {useGlobal,list,loadPage} from '../global'
 import { notify,GetText } from '../../../utils/common'
 import { Api } from '../../../utils/request'
+import { Icon } from '../../../utils/icon'
 export default function BokTopBar(){
     const protocolList=[
         {type: 'none', showName: GetText("no_protocol")},
@@ -35,7 +36,7 @@ export default function BokTopBar(){
                 value={name} onChange={(e) => setName(e.target.value)}/>
                 <button id='save-add' title={GetText("save")} className='btn'
                 onClick={()=>addBok(name,checkProtocol(url))}
-                ></button>
+                >{Icon("save")}</button>
             </div>
             <div id='link-box'>
                 <button
@@ -45,7 +46,7 @@ export default function BokTopBar(){
                     onClick={() => {
                         setIndex((prev) => (prev + 1) % protocolList.length)
                     }}
-                ></button>
+                >{Icon("switch")}</button>
                 <span id='show-protocol'>{protocolList[index].showName}</span>
                 <input placeholder={GetText("bok_url")} id='link-input'
                 onKeyDown={KeyDown}

@@ -1,6 +1,7 @@
 import {  closeMediaWin, openEditWin, useGlobal } from "../global";
 import { GetExt, GetText } from "../../../utils/common";
 import { useRef, useEffect, useState } from "react";
+import { Icon } from "../../../utils/icon";
 export default function MediaWin() {
   const setGlobal = useGlobal.setState;
   const mediaWin = useGlobal((state) => state.mediaWin);
@@ -100,13 +101,13 @@ const switchPic=(action)=>{
         closeMediaWin()
       }}
     >
-      <button className="btn media-btn media-widget close-media" ></button>
+      <button className="btn media-btn media-widget close-media" >{Icon("no")}</button>
       <button className="btn media-btn media-widget" 
       id="last-pic"  onClick={(e)=>{e.stopPropagation();switchPic("min")}}
-      ></button>
+      >{Icon("leftArr")}</button>
       <button className="btn media-btn media-widget" 
       id="next-pic" onClick={(e)=>{e.stopPropagation();switchPic("add")}}
-      ></button>
+      >{Icon("rightArr")}</button>
       <div
         id="media-box"
         ref={mediaBoxRef}
@@ -125,19 +126,19 @@ const switchPic=(action)=>{
         )}
       </div>
     <div  className="media-widget tool-bar">
-      <button className="btn" id="zoom-out"
+      <button className="btn"
       title={GetText("zoom_out")} onClick={(e)=>{e.stopPropagation();zoom("out")}}
-      >
+      >{Icon("zoomOut")}
       </button>
-      <button className="btn" id="zoom-in"
+      <button className="btn"
       title={GetText("zoom_in")} onClick={(e)=>{e.stopPropagation();zoom("in")}}
-      >
+      >{Icon("zoomIn")}
       </button>
-      <button className="btn" id="edit-pic-btn" 
+      <button className="btn" 
       title={GetText("edit")}
       disabled={!avaExt.includes(GetExt(picList[mediaWin.index]))}
       onClick={()=>[openEditWin(mediaWin.url,mediaWin.index)]}
-      ></button>
+      >{Icon("edit")}</button>
     </div>
     </div>
   );

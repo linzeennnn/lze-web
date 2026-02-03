@@ -72,8 +72,6 @@ background-color: transparent;
     position: absolute;
     bottom: 0;
     right: 10px;
-    background-image: var(--copy_icon);
-    transition: background-image 1s ease-in-out ;
 
 }
 .edit-mode-btn{
@@ -85,7 +83,6 @@ background-color: transparent;
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: var(--no_icon);
 }
 #edit-back{
     display: flex;
@@ -195,7 +192,6 @@ background-color: transparent;
     position: absolute;
     top: 10px;
     left: 10px;
-    background-image: var(--no_icon);
 }
 #not-upload{
     display: flex;
@@ -225,16 +221,7 @@ background-color: transparent;
     height: 200px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: var(--upload_icon);
 }
-.save{background-image: var(--save_icon);}
-.edit{background-image: var(--edit_icon);}
-.copy-ok{background-image: var(--yes_icon) !important;}
-.open-note{background-image: var(--down_icon);}
-.close-note{background-image:var(--up_icon);}
-#add-btn{background-image: var(--add_icon);}
-#load-btn{background-image: var(--load_icon);}
-#upload-btn{background-image: var(--upload_icon);}
 @media (max-width: 600px) {
     .note{
         width: 80%;

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import {useGlobal } from "../global";
 import { GetText } from '../../../utils/common';
+import { Icon } from "../../../utils/icon";
 
 export default function UserPro({Mes}){
     const[showuser,setShowUser] = useState(false)
@@ -9,11 +10,11 @@ export default function UserPro({Mes}){
     const setGlobal=useGlobal.setState
     return(
         <div id="user-box">
-        <button id="user-btn" className="btn" title={GetText("view_user")}
+        <button className="btn" title={GetText("view_user")}
         onClick={()=>{
             setShowUser(true)
         }}
-        ></button>
+        >{Icon("user")}</button>
         <span id="user-text"
         onClick={()=>{
             setShowUser(true)

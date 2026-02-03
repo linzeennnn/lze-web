@@ -1,3 +1,4 @@
+import { Icon } from "../../../utils/icon";
 import { useGlobal} from "../global";
 export default function UploadWin() {
     const dragWin=useGlobal((state) => state.dragWin); 
@@ -7,7 +8,7 @@ export default function UploadWin() {
         <div id="drag-win"
         style={dragWin?{display:"flex"}:{display:"none"}}
         >
-            <div></div>
+            <div>{Icon("upload")}</div>
         </div>
        {upload.status&&<div id="uploading" className="bg-enable"></div>}
         </>

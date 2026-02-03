@@ -2,6 +2,7 @@ import SideBar from '../../../components/sideBar';
 import { list } from '../global';
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from 'react';
+import { Icon } from '../../../utils/icon';
 
 export default function BokSidepBar() {
   // 点击刷新逻辑
@@ -23,10 +24,9 @@ export default function BokSidepBar() {
     <SideBar>
       <button
         className='btn side-btn'
-        id='load'
         title={GetText("refresh")}
         onClick={refresh}
-      ></button>
+      >{Icon("load")}</button>
     </SideBar>
   );
 }

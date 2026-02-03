@@ -3,6 +3,7 @@ import { WinBg } from "../../../components/winBg"
 import { GetText ,notify,confirmWin} from '../../../utils/common';
 import { useGlobal,loadPage } from "../global"
 import { Api } from "../../../utils/request";
+import { Icon } from "../../../utils/icon";
 export default function CmdWin(){
     const showCmd=useGlobal(state=>state.showCmd)
     const [output,setOutput]=useState("输出")
@@ -46,7 +47,7 @@ export default function CmdWin(){
                 onClick={()=>{
                     useGlobal.setState({showCmd:false})
                 }}
-                ></button>
+                >{Icon("no")}</button>
             <div id="cus-cmd-box">
                 {cmdList.map((cmd_item,index)=>(
                         <div className="cmd-item" key={index+cmd_item.cmd} title={GetText("run")}
@@ -60,7 +61,7 @@ export default function CmdWin(){
                                 e.stopPropagation()
                                 delCmd(index)
                             }}
-                            ></button>
+                            >{Icon("no")}</button>
                             <span className="cmd-title">{cmd_item.title}</span>
                             <span className="cmd-cmd">{cmd_item.cmd}</span>
                         </div>
@@ -80,7 +81,7 @@ export default function CmdWin(){
             onClick={()=>{
                 sendCmd(inputCmd,setOutput)
             }}
-            ></button>
+            >{Icon("toRight")}</button>
             </div>
             <div id="cus-cmd-input-bar"  className="cmd-widget">
                 <input placeholder={GetText("cus_name")}  className="cmd-input" onKeyDown={cusKeyDown}
@@ -91,7 +92,7 @@ export default function CmdWin(){
                 onClick={()=>{
                     saveCmd(cusTitle,cusCmd)
                 }}
-                ></button>
+                >{Icon("add")}</button>
             </div>
             </div>
         </WinBg>

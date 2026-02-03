@@ -1,6 +1,7 @@
 import { useGlobal } from "../global";
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Logout() {
 
@@ -21,9 +22,8 @@ export default function Logout() {
   return (
     <button
       className="btn side-btn"
-      id="logout-btn"
       title={GetText("logout")}
       onClick={logout}
-    ></button>
+    >{Icon("delUser")}</button>
   );
 }

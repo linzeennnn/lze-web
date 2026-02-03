@@ -1,4 +1,5 @@
 import { GetText, AddMouseMenu } from "../../../utils/common";
+import { Icon } from "../../../utils/icon";
 import { useGlobal, Upload, UploadPermit } from "../global";
 import { useEffect, useRef } from "react";
 
@@ -65,11 +66,10 @@ export default function UploadBtn() {
       />
       <label
         className="btn side-btn"
-        id="upload-btn"
         title={GetText("upload")}
         htmlFor="upFile"
         onClick={() => inputRef.current?.click()} // 按钮点击
-      ></label>
+      >{Icon("upload")}</label>
     </>
   );
 }

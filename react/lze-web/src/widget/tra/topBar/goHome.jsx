@@ -1,6 +1,7 @@
 import { list, useGlobal } from "../global";
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function GoHome() {
   const nowPath = useGlobal((state) => state.nowPath);
@@ -24,9 +25,8 @@ export default function GoHome() {
   return (
     <button
       className="btn top-bar-widget"
-      id="go-home"
       onClick={goHome}
       title={GetText("back_main_dir")}
-    ></button>
+    >{Icon("home")}</button>
   );
 }

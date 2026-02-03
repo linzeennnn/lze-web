@@ -1,6 +1,7 @@
 import { useState } from "react"
 import ActionBar from "./actionBar"
 import { GetText } from '../../../utils/common';
+import { Icon } from "../../../utils/icon";
 export default function ControlBar({keyName,Mes}) {
     const [showAction,setShowAction]=useState(false)
     return (
@@ -16,7 +17,7 @@ Mes?(<div className="control-bar main-item">
     onClick={()=>{
         showAction?setShowAction(false):setShowAction(true)
     }}
-    ></button>
+    >{Icon("setting")}</button>
 </div>):null
     )
 }

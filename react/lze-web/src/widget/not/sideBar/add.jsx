@@ -1,6 +1,7 @@
 import { useGlobal } from "../global";
 import { AddMouseMenu, GetText } from "../../../utils/common";
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Add() {
   const editAdd = () => {
@@ -25,9 +26,8 @@ export default function Add() {
   return (
     <button
       className="btn side-btn"
-      id="add-btn"
       title={GetText("add")}
       onClick={editAdd}
-    ></button>
+    >{Icon("add")}</button>
   );
 }

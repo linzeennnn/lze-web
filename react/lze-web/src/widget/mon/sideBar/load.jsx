@@ -1,6 +1,7 @@
 import { list } from "../global";
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Load() {
 
@@ -20,9 +21,8 @@ export default function Load() {
   return (
     <button
       className="btn side-btn"
-      id="load"
       title={GetText("refresh")}
       onClick={load}
-    ></button>
+    >{Icon("load")}</button>
   );
 }

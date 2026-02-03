@@ -3,6 +3,7 @@ import { WinBg } from "../../../components/winBg"
 import {useGlobal,loadPage} from "../global"
 import { GetText,notify,confirmWin } from '../../../utils/common';
 import { Api, AsyncApi } from "../../../utils/request";
+import { Icon } from "../../../utils/icon";
 export default function LogoutWin(){
     const [userList,setUserList]=useState([])
     const showLogout=useGlobal(state=>state.showLogout)
@@ -19,7 +20,7 @@ export default function LogoutWin(){
             <div id="user-list-box">
             <button id="close-logout" className="btn" title={GetText("close")}
             onClick={()=>{useGlobal.setState({showLogout:false})}}
-            ></button>
+            >{Icon("no")}</button>
                 {userList.map(userName=>{
                     return(
                         <div className="user-item-box" key={userName+"-user-box"}>
@@ -27,7 +28,7 @@ export default function LogoutWin(){
                             onClick={()=>{
                                 removeUser(userName,setUserList)
                             }}
-                            ></button>
+                            >{Icon("no")}</button>
                             <span className="user-showname">{userName}</span>
                         </div>
                     )

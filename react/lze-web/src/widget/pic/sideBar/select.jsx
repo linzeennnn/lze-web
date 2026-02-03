@@ -1,4 +1,5 @@
 import { AddMouseMenu, GetText } from "../../../utils/common";
+import { Icon } from "../../../utils/icon";
 import { useGlobal } from "../global";
 import { useEffect } from "react";
 
@@ -22,9 +23,8 @@ export default function Select() {
   return (
     <button
       className={"btn side-btn " + (select.status ? "select-btn-active" : "")}
-      id="select-btn"
       title={GetText("select")}
       onClick={toggleSelect}
-    ></button>
+    >{Icon("select")}</button>
   );
 }

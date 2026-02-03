@@ -2,6 +2,7 @@ import { useGlobal, list } from "../global";
 import { AddMouseMenu, GetText, notify, confirmWin } from '../../../utils/common';
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
+import { Icon } from "../../../utils/icon";
 
 export default function Recover() {
 
@@ -36,9 +37,8 @@ export default function Recover() {
   return (
     <button
       className="btn side-btn"
-      id="recover"
       title={GetText("restore")}
       onClick={recover}
-    ></button>
+    >{Icon("recover")}</button>
   );
 }
