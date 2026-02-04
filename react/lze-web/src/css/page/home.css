@@ -266,20 +266,19 @@ align-items: center;
     z-index: 3;
 }
 #head-name{
+    display: flex;
+    justify-content: center;
     bottom: 10px;
     width: 200px;
     height: 60px;
-    background-repeat: no-repeat;
-    background-position: center;
     position: absolute;
     transition: bottom 0.5s ease-in-out;
-    background-image: url(../../assets/icon/name.svg);
 }
 .head-bar-load{
     top: 0 !important;
 }
 .head-bar-load div{
-    bottom: -40px !important;
+    bottom: -30px !important;
 }
 #lock-widget-box{
     background-color: antiquewhite;
