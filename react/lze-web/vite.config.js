@@ -15,9 +15,9 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: '/assets/icon/linzeen.svg',
+            src: '/assets/icon/linzeen.png',
             sizes: '512x512',
-            type: 'image/svg+xml',
+            type: 'image/png',
             purpose: 'any'
           }
         ]

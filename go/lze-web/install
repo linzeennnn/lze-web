@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+go build -o /opt/lze-web/lze-web main.go
+echo "install complete"

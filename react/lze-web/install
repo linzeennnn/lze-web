@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+rm -rf /opt/lze-web/web/*
+cp -r dist/* /opt/lze-web/web/
+echo "install completed"

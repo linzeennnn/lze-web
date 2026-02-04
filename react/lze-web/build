@@ -4,3 +4,4 @@ rm -rf /opt/lze-web/web/*
 rm -rf ../../server/web/*
 cp -r dist/* /opt/lze-web/web/
 cp -r dist/* ../../server/web/
+echo "build and install completed"

@@ -1,1 +1,1 @@
-{"name":"lze-web","short_name":"lze-web","start_url":".","display":"standalone","background_color":"#ffffff","theme_color":"#42b883","lang":"en","scope":"/","icons":[{"src":"/assets/icon/linzeen.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any"}]}
+{"name":"lze-web","short_name":"lze-web","start_url":".","display":"standalone","background_color":"#ffffff","theme_color":"#42b883","lang":"en","scope":"/","icons":[{"src":"/assets/icon/linzeen.png","sizes":"512x512","type":"image/png","purpose":"any"}]}
