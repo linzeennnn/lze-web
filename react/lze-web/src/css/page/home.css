@@ -269,8 +269,8 @@ align-items: center;
     display: flex;
     justify-content: center;
     bottom: 10px;
-    width: 200px;
-    height: 60px;
+    width: 150px;
+    height: 45px;
     position: absolute;
     transition: bottom 0.5s ease-in-out;
 }
@@ -278,7 +278,7 @@ align-items: center;
     top: 0 !important;
 }
 .head-bar-load div{
-    bottom: -30px !important;
+    bottom: -20px !important;
 }
 #lock-widget-box{
     background-color: antiquewhite;
