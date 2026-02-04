@@ -66,15 +66,32 @@ function InnerApp(){
     </>
   )
 }
-async function pastePic(e){
+async function pastePic(e) {
   if (!e) return;
-    const item = e.clipboardData.items[0];
-      if (item.type.startsWith("image/")&&await confirmWin.normal(GetText("are_you_sure"))) {
-        const file = item.getAsFile(); //  这是一个 File 对象
+
+  // 弹窗确认
+  if (!await confirmWin.normal(GetText("are_you_sure"))) return;
+    const clipboardItems = await navigator.clipboard.read();
+
+    for (const clipboardItem of clipboardItems) {
+      for (const type of clipboardItem.types) {
+        // 只处理图片类型
+        if (!type.startsWith("image/")) return;
+        const blob = await clipboardItem.getType(type);
+
+        // 根据 MIME 类型生成扩展名
+        const extension = type.split("/")[1]; // png, jpeg, gif 等
+        const timestamp = Date.now(); // 避免重名
+        const fileName = `clipboard-${timestamp}.${extension}`;
+
+        // 转成 File 对象
+        const file = new File([blob], fileName, { type: blob.type });
         const uploadData = {
         totalSize: file.size,
         sendSize: 0,
       };
       Upload(file, uploadData);
+        
       }
+    }
 }
