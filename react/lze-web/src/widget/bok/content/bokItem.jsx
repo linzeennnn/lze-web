@@ -25,7 +25,14 @@ Api.post({
     api:'bok/get_url',
     body:{name},
     success:(data)=>{
-    window.location.href=data
+        if(data.protocol=="doc"||
+           data.protocol=="pic"||
+           data.protocol=="not"
+        ){
+            console.log(data);
+            
+        }else
+            window.location.href=data.url
     }
 })
 }

@@ -4,6 +4,7 @@ import (
 	geturl "lze-web/model/bok/get_url"
 	"lze-web/model/public/response"
 	"lze-web/pkg/global"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -14,7 +15,7 @@ import (
 
 func GetUrl(c *gin.Context) {
 	var rec geturl.Rec
-	var sendData response.Response[string]
+	var sendData response.Response[geturl.Send]
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		sendData.Code = 400
 		sendData.Msg = err.Error()
@@ -28,13 +29,17 @@ func GetUrl(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	url := global.ReadText(path)
+	urlText := global.ReadText(path)
 	re := regexp.MustCompile(`url=([^">]+)`)
-	match := re.FindStringSubmatch(url)
+	match := re.FindStringSubmatch(urlText)
 
 	sendData.Code = 200
 	if len(match) > 1 {
-		sendData.Data = match[1]
+		urlStr := match[1]
+		u, _ := url.Parse(urlStr)
+		sendData.Data.Url = urlStr
+		sendData.Data.Protocol = u.Scheme
+		sendData.Data.Path = u.Host + u.Path
 	} else {
 		sendData.Code = 404
 		sendData.Msg = global.GetText("url_not_found", c)
