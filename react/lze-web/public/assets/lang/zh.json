@@ -1,6 +1,7 @@
 {
   "acc_or_pas_err":"用户名或密码错误",
   "add":"添加",
+  "addFile":"添加文件",
   "allow_login_time": "允许登陆时长",
   "are_you_sure": "确定执行此操作吗?",
   "back": "返回",

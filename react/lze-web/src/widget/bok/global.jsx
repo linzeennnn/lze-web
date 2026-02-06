@@ -9,6 +9,7 @@ export const useGlobal = create((set, get) => ({
   loading: false,
   langList:[],
   bokList:[],
+  fileWin:false,
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
