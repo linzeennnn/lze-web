@@ -10,9 +10,8 @@ export default function FileWin(){
         title={GetText('addFile')}
         setShow={()=>{useGlobal.setState({fileWin: false})}}
         >
-            <div id="file-win">
+            <div className="file-win">
                 
-                <div id="file-box"></div>
             </div>
         </FloatWin>
     )
