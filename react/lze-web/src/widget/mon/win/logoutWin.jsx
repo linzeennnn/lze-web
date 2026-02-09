@@ -18,6 +18,7 @@ export default function LogoutWin(){
 }, []);
     return(
         <FloatWin
+        title={GetText("logout")}
         show={showLogout}
         setShow={()=>{useGlobal.setState({showLogout:false})}}
         >

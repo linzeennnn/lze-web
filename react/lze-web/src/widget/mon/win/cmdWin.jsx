@@ -42,6 +42,7 @@ export default function CmdWin(){
     }
     return(
         <FloatWin
+        title={GetText("terminal")}
         show={showCmd}
         setShow={()=>{useGlobal.setState({showCmd:false})}}
         >

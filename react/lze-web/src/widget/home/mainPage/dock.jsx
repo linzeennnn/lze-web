@@ -6,7 +6,7 @@ import { useGlobal } from "../global";
 import { GetText, AddMouseMenu } from "../../../utils/common";
 import { useLangStore } from "../../../store/lang";
 import {FillIcon, Icon} from "../../../utils/icon";
-
+import FloatWin from '../../common/floatWin'
 export default function Dock({ tmpLoad, setTmpLoad }) {
   const lang=useLangStore((state)=>state.lang)
   const showBg = useGlobal((state) => state.showBg);
@@ -70,19 +70,16 @@ export default function Dock({ tmpLoad, setTmpLoad }) {
 
   return (
     <>
-      {showBg && (
-        <div className={`app-win float-win`}>
-          <button
-            className="btn"
-            id="close-win"
-            title={GetText("close")}
-            onClick={close_dock}
-          >{Icon("no")}</button>
+    <FloatWin
+      show={showBg}
+      setShow={close_dock}
+      title={GetText("systemSetting")}
+    >
+        <div className="app-win">
           {appType === "lang" && <Lang />}
           {appType === "sys" && <Sys />}
           {appType === "theme" && <Theme />}
-        </div>
-      )}
+        </div></FloatWin>
 
       <div id="dock" className={!locked && tmpLoad ? "dock-load" : ""}>
         {dockList.map((item) => (
