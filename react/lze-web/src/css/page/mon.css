@@ -167,18 +167,11 @@ input{
     margin-bottom: 20px;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    background-color: var(--bg_color);
     border-radius: 15px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-    width: 90%;
-    height: 90%;
-}
-#close-cmd{
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    min-width: 80vw;
+    min-height: 80vh;
+    width: 100%;
+    height: 100%;
 }
 #input-cmd{
     width: 90%;
@@ -281,8 +274,10 @@ input{
 #user-list-box{
     min-width: 60px;
     min-height: 60px;
+    width: 100%;
+    height: 100%;
+    
     position: relative;
-    background-color: var(--bg_color);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -290,7 +285,6 @@ input{
     border-radius: 15px;
     box-shadow: var(--out_shadow);
     padding: 20px;
-    width: fit-content;
 
 }
 .user-item-box{
@@ -313,11 +307,6 @@ input{
     position: absolute;
     top: 10px;
     left: 5px;
-}
-#close-logout{
-    position: absolute;
-    top: 10px;
-    left: 10px;
 }
 
 @media (max-width: 600px) {

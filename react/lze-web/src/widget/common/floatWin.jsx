@@ -7,6 +7,7 @@ export default function FloatWin({
   children,
   start = () => {},
   end = () => {},
+  title='',
   show,
   setShow,
 }) {
@@ -41,7 +42,7 @@ export default function FloatWin({
   useEffect(() => {
     if (!show) return;
     const win = winRef.current;
-    const bar = document.getElementById("float-win-top-bar");
+    const bar = document.getElementsByClassName("float-win-top-bar")[0];
     if (!win || !bar) return;
 
     let dragging = false;
@@ -179,7 +180,8 @@ export default function FloatWin({
   return (
     <div className="bg-enable">
       <div className={"float-win "+(fullScreen?"full-screen":"")} ref={winRef}>
-        <div id="float-win-top-bar">
+        <div className="float-win-top-bar">
+          <div className="float-btn-box">
           <button
             className="btn float-btn"
             title={GetText("close")}
@@ -189,6 +191,8 @@ export default function FloatWin({
           <button className="btn float-btn" title={GetText("zoom_in")}
           onClick={() => setFullScreen(!fullScreen)}
           >{Icon("circle")}</button>
+          </div>
+          <span className="float-title">{title}</span>
         </div>
 
         {children}

@@ -16,8 +16,10 @@
   align-items: center;
   min-width: 250px;
   min-height: 150px;
+  max-width: 100% !important;
+  max-height: 100% !important;
   border-radius: 15px;
-  background: var(--bg_color);
+  background: var(--body_color);
   overflow: hidden;
 }
 .full-screen{
@@ -31,7 +33,7 @@
   width: 20px !important;
   height: 20px !important;
   margin: 5px;
-  background-color: var(--bg_color);
+  background-color: var(--base_color);
   border-radius: 50%;
   justify-content: center;
   align-items: center;
@@ -43,21 +45,29 @@
   width: 10px;
   height: 10px;
 }
-#float-win-top-bar {
+.float-win-top-bar {
   top: 0;
   position: absolute;
   display: flex;
   padding-left: 10px;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   height: 40px;
   width: 100%;
-  background-color: var(--body_color);
+  background-color: var(--bg_color);
   z-index: 1;
   cursor: move;
   user-select: none;
 }
-
+.float-btn-box{
+  position: absolute;
+  left: 10px;
+  display: flex;
+  height: 100%;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+}
 /* 右下角缩放手柄 */
 #float-win-resize {
   position: absolute;

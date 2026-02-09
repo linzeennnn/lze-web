@@ -4,6 +4,7 @@ import { GetText ,notify,confirmWin} from '../../../utils/common';
 import { useGlobal,loadPage } from "../global"
 import { Api } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
+import FloatWin from "../../common/floatWin";
 export default function CmdWin(){
     const showCmd=useGlobal(state=>state.showCmd)
     const [output,setOutput]=useState("输出")
@@ -40,14 +41,11 @@ export default function CmdWin(){
         }
     }
     return(
-        <WinBg showBg={showCmd}>
-            <div id="cmd-box">
-                <button className="btn" id="close-cmd"
-                title={GetText("close")}
-                onClick={()=>{
-                    useGlobal.setState({showCmd:false})
-                }}
-                >{Icon("no")}</button>
+        <FloatWin
+        show={showCmd}
+        setShow={()=>{useGlobal.setState({showCmd:false})}}
+        >
+            <div id="cmd-box" >
             <div id="cus-cmd-box">
                 {cmdList.map((cmd_item,index)=>(
                         <div className="cmd-item" key={index+cmd_item.cmd} title={GetText("run")}
@@ -95,7 +93,7 @@ export default function CmdWin(){
                 >{Icon("add")}</button>
             </div>
             </div>
-        </WinBg>
+        </FloatWin>
     )
 }
 async function sendCmd(cmd,setOutput){

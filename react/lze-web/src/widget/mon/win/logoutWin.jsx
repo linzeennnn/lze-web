@@ -4,6 +4,7 @@ import {useGlobal,loadPage} from "../global"
 import { GetText,notify,confirmWin } from '../../../utils/common';
 import { Api, AsyncApi } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
+import FloatWin from "../../common/floatWin";
 export default function LogoutWin(){
     const [userList,setUserList]=useState([])
     const showLogout=useGlobal(state=>state.showLogout)
@@ -16,11 +17,11 @@ export default function LogoutWin(){
   fetchUsers();
 }, []);
     return(
-        <WinBg showBg={showLogout}>
+        <FloatWin
+        show={showLogout}
+        setShow={()=>{useGlobal.setState({showLogout:false})}}
+        >
             <div id="user-list-box">
-            <button id="close-logout" className="btn" title={GetText("close")}
-            onClick={()=>{useGlobal.setState({showLogout:false})}}
-            >{Icon("no")}</button>
                 {userList.map(userName=>{
                     return(
                         <div className="user-item-box" key={userName+"-user-box"}>
@@ -34,7 +35,7 @@ export default function LogoutWin(){
                     )
                 })}
             </div>
-        </WinBg>
+        </FloatWin>
     )
 }
 async function removeUser(name, setUserList) {
