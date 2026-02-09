@@ -1,0 +1,88 @@
+.bg-enable {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+
+.float-win {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 250px;
+  min-height: 150px;
+  border-radius: 15px;
+  background: var(--bg_color);
+  overflow: hidden;
+}
+.full-screen{
+  width: 100% !important;
+  height: 100% !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+.float-btn{
+  width: 20px !important;
+  height: 20px !important;
+  margin: 5px;
+  background-color: var(--bg_color);
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  vertical-align: middle;
+
+}
+.float-btn svg{
+  width: 10px;
+  height: 10px;
+}
+#float-win-top-bar {
+  top: 0;
+  position: absolute;
+  display: flex;
+  padding-left: 10px;
+  justify-content: start;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+  background-color: var(--body_color);
+  z-index: 1;
+  cursor: move;
+  user-select: none;
+}
+
+/* 右下角缩放手柄 */
+#float-win-resize {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 0;
+  bottom: 0;
+  cursor: nwse-resize;
+  background: transparent;
+}
+/* 通用手柄 */
+.resize-handle {
+  position: absolute;
+  background: transparent;
+  z-index: 10;
+}
+
+/* 边 */
+.t { top: -3px; left: 0; right: 0; height: 6px; cursor: n-resize; }
+.b { bottom: -3px; left: 0; right: 0; height: 6px; cursor: s-resize; }
+.l { left: -3px; top: 0; bottom: 0; width: 6px; cursor: w-resize; }
+.r { right: -3px; top: 0; bottom: 0; width: 6px; cursor: e-resize; }
+
+/* 角 */
+.tl { left: -3px; top: -3px; width: 10px; height: 10px; cursor: nw-resize; }
+.tr { right: -3px; top: -3px; width: 10px; height: 10px; cursor: ne-resize; }
+.bl { left: -3px; bottom: -3px; width: 10px; height: 10px; cursor: sw-resize; }
+.br { right: -3px; bottom: -3px; width: 10px; height: 10px; cursor: se-resize; }

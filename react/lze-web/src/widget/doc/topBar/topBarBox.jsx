@@ -1,9 +1,9 @@
-import ShowPath from './showPath';
 import NewDirInput from './newDirInput';
 import { useGlobal, list } from '../global';
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from 'react';
 import { Icon } from '../../../utils/icon';
+import ShowPath from '../../common/fileList/ShowPath';
 
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus;
@@ -37,7 +37,7 @@ export default function TopBarBox({ createStatus }) {
         >{Icon("home")}</button>
       )}
 
-      {!creating && !upload.status && <ShowPath />}
+      {!creating && !upload.status && <ShowPath nowPath={nowPath}/>}
 
       {upload.status && (
         <>

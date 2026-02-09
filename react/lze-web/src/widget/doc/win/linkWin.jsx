@@ -2,20 +2,20 @@ import { WinBg } from "../../../components/winBg";
 import { copy, GetText } from "../../../utils/common";
 import { Icon } from "../../../utils/icon";
 import { useGlobal } from "../global";
+import FloatWin from '../../common/floatWin'
 export default function LinkWin(){
     const setGlobal=useGlobal.setState
      const linkWin = useGlobal((state) => state.linkWin);
     return(
         <>
-        <WinBg showBg={linkWin.show}>
-        <div id="link-win">
-            <button id="close-link-btn"
-            onClick={()=>{setGlobal({linkWin:{
+        <FloatWin 
+        show={linkWin.show}
+        setShow={()=>{setGlobal({linkWin:{
                 link:"",
                 show:false
             }})}}
-            title={GetText("close")}
-            className="btn link-win-btn">{Icon("no")}</button>
+        >
+        <div id="link-win">
             <span
             onClick={()=>{openUrl()}}
             >{linkWin.link}</span>
@@ -25,7 +25,8 @@ export default function LinkWin(){
             onClick={()=>{coptLink()}}
             >{Icon("copy")}</button>
         </div>
-        </WinBg>
+
+        </FloatWin>
         </>
     )
 }
