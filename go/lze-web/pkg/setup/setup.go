@@ -77,7 +77,8 @@ func Setup() {
 	os.Mkdir(global.TempPath, 0755)
 	// 设置语言
 	setLang()
-
+	//设置后缀名
+	setFileType()
 }
 func setPath(pathType, defaultPath string, WorkConfig map[string]interface{}) string {
 	path := WorkConfig[pathType].(string)
@@ -86,4 +87,29 @@ func setPath(pathType, defaultPath string, WorkConfig map[string]interface{}) st
 	}
 	return path
 
+}
+func setFileType() {
+	global.WebTypeMap = map[string]bool{
+		".html": true, ".htm": true, ".css": true, ".js": true, ".mjs": true,
+		".json": true, ".xml": true, ".rss": true, ".svg": true, ".webmanifest": true,
+		".jpg": true, ".jpeg": true, ".png": true, ".gif": true, ".webp": true,
+		".bmp": true, ".ico": true, ".avif": true,
+		".mp3": true, ".wav": true, ".ogg": true, ".oga": true,
+		".m4a": true, ".aac": true, ".flac": true,
+		".mp4": true, ".webm": true, ".ogv": true, ".mov": true,
+		".pdf": true, ".csv": true, ".md": true,
+		".woff": true, ".woff2": true, ".ttf": true, ".otf": true,
+		".eot": true, ".wasm": true}
+	global.ImgMap = map[string]bool{".jpg": true, ".jpeg": true, ".png": true, ".gif": true,
+		".webp": true, ".bmp": true, ".ico": true, ".avif": true}
+	global.VidMap = map[string]bool{".mp4": true, ".webm": true, ".ogv": true, ".mov": true}
+	global.TextMap = map[string]bool{
+		".txt": true, ".md": true, ".html": true, ".htm": true, ".css": true, ".js": true,
+		".ts": true, ".json": true, ".xml": true, ".yaml": true, ".yml": true, ".toml": true,
+		".ini": true, ".conf": true, ".cfg": true, ".csv": true, ".log": true, ".c": true, ".h": true,
+		".cpp": true, ".hpp": true, ".cc": true, ".cxx": true, ".go": true, ".py": true, ".java": true,
+		".cs": true, ".php": true, ".rb": true, ".swift": true, ".sh": true, ".bash": true, ".bat": true,
+		".ps1": true, ".sql": true, ".vue": true, ".jsx": true, ".tsx": true, ".env": true,
+		".gitignore": true,
+	}
 }

@@ -257,7 +257,6 @@ input{
   all:unset;
 }
 iframe{
-  border-radius: 15px;
   border: none;
 }
 .btn{

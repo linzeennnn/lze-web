@@ -30,6 +30,11 @@ var (
 	FileLinkArr [10]FileLink
 	DirLinkArr  [10]DirLink
 	CmdCacheMap CmdCache
+	// 类型判断
+	WebTypeMap map[string]bool //浏览器可浏览类型
+	ImgMap     map[string]bool //图片类型
+	VidMap     map[string]bool //视频类型
+	TextMap    map[string]bool //文本类型
 )
 
 type Claims struct {

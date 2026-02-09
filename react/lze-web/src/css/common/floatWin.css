@@ -48,7 +48,6 @@
 }
 .float-win-top-bar {
   top: 0;
-  position: absolute;
   display: flex;
   padding-left: 10px;
   justify-content: center;

@@ -233,7 +233,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--base_color);
     padding: 10px;
     border-radius: 15px;
 }
@@ -250,11 +249,15 @@
 }
 .ext-full-screen-btn{
     position: fixed;
-    border-radius: 10px;
+    border-radius: 50%;
     right: 20px;
     bottom: 20px;
     z-index: 11;
-    background-color: var(--base_color);
+    background-color: var(--bg_color);
+}
+.ext-full-screen-btn svg{
+    width: 20px !important;
+    height: 20px !important;
 }
 .link-btn{
     width: 20px !important;
