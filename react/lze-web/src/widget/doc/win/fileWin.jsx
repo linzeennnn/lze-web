@@ -132,7 +132,9 @@ export default function FileWin(){
                     </div>
                 )
                 :
+                <div className="file-view-box">
                 <span>{GetText("not_support_type")}</span>
+                </div>
             }
         </FloatWin>
     )

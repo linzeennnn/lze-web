@@ -100,16 +100,19 @@ func setFileType() {
 		".pdf": true, ".csv": true, ".md": true,
 		".woff": true, ".woff2": true, ".ttf": true, ".otf": true,
 		".eot": true, ".wasm": true}
-	global.ImgMap = map[string]bool{".jpg": true, ".jpeg": true, ".png": true, ".gif": true,
-		".webp": true, ".bmp": true, ".ico": true, ".avif": true}
-	global.VidMap = map[string]bool{".mp4": true, ".webm": true, ".ogv": true, ".mov": true}
-	global.TextMap = map[string]bool{
-		".txt": true, ".md": true, ".html": true, ".htm": true, ".css": true, ".js": true,
-		".ts": true, ".json": true, ".xml": true, ".yaml": true, ".yml": true, ".toml": true,
-		".ini": true, ".conf": true, ".cfg": true, ".csv": true, ".log": true, ".c": true, ".h": true,
-		".cpp": true, ".hpp": true, ".cc": true, ".cxx": true, ".go": true, ".py": true, ".java": true,
-		".cs": true, ".php": true, ".rb": true, ".swift": true, ".sh": true, ".bash": true, ".bat": true,
-		".ps1": true, ".sql": true, ".vue": true, ".jsx": true, ".tsx": true, ".env": true,
-		".gitignore": true,
+	global.FileTypeMap = map[string]string{
+		// 文本
+		".txt": "not", ".md": "not", ".html": "not", ".htm": "not", ".css": "not", ".js": "not",
+		".ts": "not", ".json": "not", ".xml": "not", ".yaml": "not", ".yml": "not", ".toml": "not",
+		".ini": "not", ".conf": "not", ".cfg": "not", ".csv": "not", ".log": "not", ".c": "not", ".h": "not",
+		".cpp": "not", ".hpp": "not", ".cc": "not", ".cxx": "not", ".go": "not", ".py": "not", ".java": "not",
+		".cs": "not", ".php": "not", ".rb": "not", ".swift": "not", ".sh": "not", ".bash": "not", ".bat": "not",
+		".ps1": "not", ".sql": "not", ".vue": "not", ".jsx": "not", ".tsx": "not", ".env": "not",
+		".gitignore": "not",
+		// 图片
+		".jpg": "img", ".jpeg": "img", ".png": "img", ".gif": "img",
+		".webp": "img", ".bmp": "img", ".ico": "img", ".avif": "img",
+		// 视频
+		".mp4": "vid", ".webm": "vid", ".ogv": "vid", ".mov": "vid",
 	}
 }

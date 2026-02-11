@@ -21,3 +21,41 @@
     opacity: 0.7 !important;
 
 }
+.file-item{
+    width: 120px;
+    height: 120px;
+}
+.file-item svg{
+    fill: var(--bg_color);
+}
+
+.file-name{
+    cursor: pointer;
+    width: fit-content;
+    max-width: 80%;
+    white-space: nowrap;       
+    overflow: hidden;
+    text-overflow: ellipsis;  
+}
+.file-item-box{
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 15px;
+    margin: 20px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+.file-item-box:hover svg  {
+    fill: var(--base_color) !important;
+}
+.file-item-box:hover{
+    transform: scale(1.2);
+}

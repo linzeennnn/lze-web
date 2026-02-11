@@ -1,11 +1,10 @@
-// 判断是否为文本
-func IsText(path string) bool {
-	ext := strings.ToLower(filepath.Ext(path))
-	if global.TextMap[ext] {
-		return true
-	}
-	return IsTextFast(path)
-}
+package global
+
+import (
+	"os"
+	"unicode/utf8"
+)
+
 func IsTextFast(path string) bool { // 快速判断是否为文本
 	f, err := os.Open(path)
 	if err != nil {
@@ -41,20 +40,6 @@ func IsTextDeep(p string) bool { // 深度判断是否为文本
 			return false
 		}
 	}
+
 	return utf8.Valid(b)
-}
-
-// 判断是否为图片
-func IsImg(path string) bool {
-	return global.ImgMap[strings.ToLower(filepath.Ext(path))]
-}
-
-// 判断是否视频
-func IsVid(path string) bool {
-	return global.VidMap[strings.ToLower(filepath.Ext(path))]
-}
-
-// 判断是否为浏览器支持类型
-func IsWebType(path string) bool {
-	return global.WebTypeMap[strings.ToLower(filepath.Ext(path))]
 }

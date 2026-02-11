@@ -122,7 +122,6 @@ export function list(path,showVideo) {
                 tmpDir.push(item[0])
             }
             else{
-                if(item[1]=="file"||item[1]=="file_link"){
                     if(item[2]=="img"){
                         if(tmpGroupImg.length<12){
                             tmpGroupImg.push(item[0])
@@ -143,7 +142,6 @@ export function list(path,showVideo) {
                             tmpGroupVid.push(item[0])
                         }
                     }
-                }
             }
         })
        if(tmpGroupImg.length>0) tmpImg.push(tmpGroupImg)

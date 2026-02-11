@@ -1,13 +1,10 @@
 import '../../../css/common/fileList.css'
 import { FillIcon } from '../../../utils/icon'
-export default function FilrItem({name,type}){
+export default function FileItem({name,type,Fun}){
     return(
-        <div className='file-item'>
-            <div className='file-item-icon'>{
-                FillIcon((type=="dir"||type=="dir_link")?
-                "folder":"file")
-                }</div>
-            <span>{name}</span>
+        <div className='file-item' onClick={()=>{Fun(name)}}>{
+                FillIcon((type))
+                }
         </div>
     )
 }

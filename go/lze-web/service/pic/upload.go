@@ -21,7 +21,7 @@ func Upload(c *gin.Context) {
 	}
 	if global.CheckPermit(c, "pic", actionStr) {
 		filename := c.PostForm("fileName")
-		checkName := CheckType(filename)
+		checkName := global.FileTypeMap[global.GetExtName(filename)]
 		if checkName == "" {
 			c.String(400, filename+":不支持文件类型")
 			return

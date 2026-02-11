@@ -25,7 +25,7 @@ func List(c *gin.Context) {
 		case "dir", "dir_link":
 			picList = append(picList, [3]string{file.Name, file.FileType, ""})
 		default:
-			if mediaType := CheckType(file.Name); mediaType != "" {
+			if mediaType := global.FileTypeMap[global.GetExtName(file.Name)]; mediaType != "" {
 				picList = append(picList, [3]string{
 					file.Name,
 					file.FileType,
@@ -45,18 +45,7 @@ func List(c *gin.Context) {
 		sendData.ParentFolder = parent
 	}
 	sendData.ParentFolder = parent
-	resData.Code=200
-	resData.Data=sendData
+	resData.Code = 200
+	resData.Data = sendData
 	c.JSON(200, resData)
-}
-func CheckType(name string) string {
-	var imgFor = []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg", ".ico", ".apng", ".avif"}
-	if global.IncludeExt(name, imgFor) {
-		return "img"
-	}
-	var vidFor = []string{".mp4", ".webm", ".ogg", ".ogv", ".mov", ".m4v", ".avi", ".3gp", ".mkv"}
-	if global.IncludeExt(name, vidFor) {
-		return "vid"
-	}
-	return ""
 }

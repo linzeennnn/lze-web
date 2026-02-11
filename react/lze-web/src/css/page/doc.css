@@ -34,20 +34,7 @@
     border-top-right-radius: 8px;
     background-color: var(--base_color);
 }
-.file-item{
-  clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%, 0 28%);   
-    overflow: hidden;
-}
-.file-item::before{
-    content: "";
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 25%;
-    height: 28%;
-    border-bottom-right-radius:15px;
-    background-color: var(--base_color);
-}
+
 .file-list-text {
     cursor: pointer;
     width: fit-content;

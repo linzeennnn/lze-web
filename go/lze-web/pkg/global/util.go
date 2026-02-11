@@ -90,6 +90,12 @@ func ScanDir(path string) []fileSystem.Files {
 		}
 		filePath := filepath.Join(path, entry.Name())
 		fileType := FileType(filePath)
+		if fileType == "file" || fileType == "file_link" {
+			fileType = FileTypeMap[GetExtName(filePath)]
+			if len(fileType) == 0 {
+				fileType = "file"
+			}
+		}
 		info, err := os.Lstat(filePath)
 		if err != nil {
 			continue
@@ -106,7 +112,7 @@ func ScanDir(path string) []fileSystem.Files {
 	return fileList
 }
 
-// 文件类型
+// 路径文件类型(判断是目录还是文件)
 func FileType(path string) string {
 	info, err := os.Lstat(path)
 	if err != nil {
@@ -217,6 +223,11 @@ func IncludeExt(name string, extList []string) bool {
 		}
 	}
 	return false
+}
+
+// 获取后缀名
+func GetExtName(name string) string {
+	return strings.ToLower(filepath.Ext(name))
 }
 
 // 判断文件是否存在

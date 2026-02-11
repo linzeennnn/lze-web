@@ -2,7 +2,7 @@ import Content from '../../../components/content'
 import { notify } from '../../../utils/common';
 import {useGlobal} from '../global'
 import { GetText } from '../../../utils/common';
-import FileItem from './fileItem';
+import FileItem from './fileItem_new';
 export default function DocContent(){
     const doc_click = (name) => {
       let tmp = [...selected];
