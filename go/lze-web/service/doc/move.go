@@ -23,7 +23,7 @@ func Move(c *gin.Context) {
 	if global.CheckPermit(c, "doc", "move") {
 		destPath := filepath.Join(global.DocPath, rec.NowPath)
 		for _, files := range rec.CopyList {
-			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(files))
+			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(rec.Source), files)
 			filename := global.UniqueName(destPath, filepath.Base(files))
 			os.Rename(sourcePath, filepath.Join(destPath, filename))
 		}

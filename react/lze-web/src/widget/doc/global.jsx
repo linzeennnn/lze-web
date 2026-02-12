@@ -32,7 +32,10 @@ export const useGlobal = create((set, get) => ({
     status:false,
     percent:"0%"
   },
-  selected: [],
+  selected:{
+    selected: [],
+    status:false
+  },
   setGlobal: (partial) => {
     set((state) => ({ ...state, ...partial }));
   },
@@ -62,8 +65,7 @@ Api.post({
       useGlobal.setState({
         fileList: data.filelist,
         nowPath: data.currentFolder,
-        parentPath: data.parentFolder,
-        selected: [],
+        parentPath: data.parentFolder
       });
       if(sessionPath!=""){
         pageSession.doc.list.path=""
@@ -76,6 +78,22 @@ Api.post({
   }
 })
 }
+// selected属性函数
+export const Selected = {
+  set: status =>
+    useGlobal.setState(s => ({
+      selected: { ...s.selected, selected: [], status }
+    })),
+
+  open: () => Selected.set(true),
+  close: () => Selected.set(false),
+
+  hide: () =>
+    useGlobal.setState(s => ({
+      selected: { ...s.selected, status:false }
+    }))
+}
+
 // 设置文件窗口
 export function SetFileWin(data,path){
    SetInnerSession(path,data.innerApp[0],data.url)

@@ -4,13 +4,12 @@ import { Api } from "../../../utils/request";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
 
-export default function Paste({ paste, copyList }) {
+export default function Paste({ paste, copyList,source }) {
   const [pastestatus, setPastestatus] = paste;
-
   const onPaste = () => {
     if (!pastestatus.status) return;
     setPastestatus({ status: false });
-    paste_file(pastestatus.type, copyList);
+    paste_file(pastestatus.type, copyList,source);
   };
 
   // 右键菜单
@@ -50,7 +49,7 @@ export default function Paste({ paste, copyList }) {
   ) : null;
 }
 
-function paste_file(type, copylist) {
+function paste_file(type, copylist,source) {
   const global = useGlobal.getState();
 
   if (copylist.length === 0) {
@@ -59,11 +58,10 @@ function paste_file(type, copylist) {
   }
 
   const nowpath = global.nowPath;
-
   Api.post({
     api: "doc/" + type,
     notice: true,
-    body: { copylist, nowpath },
+    body: { copylist, nowpath,source },
     success: () => {
       list(nowpath);
     },

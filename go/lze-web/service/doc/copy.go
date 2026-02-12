@@ -23,7 +23,7 @@ func Copy(c *gin.Context) {
 	if global.CheckPermit(c, "doc", "copy") {
 		destPath := filepath.Join(global.DocPath, rec.NowPath)
 		for _, files := range rec.CopyList {
-			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(files))
+			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(rec.Source), files)
 			filename := global.UniqueName(destPath, filepath.Base(files))
 			destPath := filepath.Join(destPath, filename)
 			if !global.IsSub(sourcePath, destPath) {

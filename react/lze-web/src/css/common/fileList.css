@@ -28,7 +28,18 @@
 .file-item svg{
     fill: var(--bg_color);
 }
-
+.file-name-box{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+  white-space: nowrap;       
+  overflow: hidden;           
+  text-overflow: ellipsis; 
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
 .file-name{
     cursor: pointer;
     width: fit-content;
@@ -37,7 +48,7 @@
     overflow: hidden;
     text-overflow: ellipsis;  
 }
-.file-item-box{
+.file-item-frame{
     border-radius: 15px;
     cursor: pointer;
     display: flex;
@@ -49,13 +60,17 @@
     height: fit-content;
     padding: 10px;
     border-radius: 15px;
-    margin: 20px;
     margin-bottom: 30px;
     transition: transform 0.3s ease;
 }
-.file-item-box:hover svg  {
+.file-item-frame:hover svg  {
     fill: var(--base_color) !important;
 }
-.file-item-box:hover{
+.file-item-frame:hover{
     transform: scale(1.2);
+}
+.file-item-box{
+    position: relative;
+    display: flex;
+    margin: 5px;
 }

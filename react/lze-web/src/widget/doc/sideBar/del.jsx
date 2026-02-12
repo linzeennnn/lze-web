@@ -1,4 +1,4 @@
-import { useGlobal, list } from "../global";
+import { useGlobal, list, Selected } from "../global";
 import { AddMouseMenu, confirmWin, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
@@ -10,14 +10,16 @@ export default function Del() {
     if (!await confirmWin.normal(GetText("are_you_sure"))) return;
 
     const global = useGlobal.getState();
-    const dellist = global.selected;
+    const dellist = global.selected.selected;
+    const nowPath = global.nowPath;
+    Selected.close();
 
     Api.delete({
       api: "doc/del",
       notice: true,
-      body: { dellist },
+      body: { dellist,nowPath },
       success: () => {
-        list(global.nowPath);
+        list(nowPath);
       }
     });
   };

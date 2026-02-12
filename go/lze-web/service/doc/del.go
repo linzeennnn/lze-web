@@ -24,8 +24,9 @@ func Del(c *gin.Context) {
 	if global.CheckPermit(c, "doc", "delete") {
 		delData := global.GetDeldata()
 		for _, files := range rec.DelList {
-			cleanPath := strings.TrimPrefix(files, "./")
-			docPath := filepath.FromSlash(cleanPath)
+			cleanFile := strings.TrimPrefix(files, "./")
+			cleanNowPath := strings.TrimPrefix(rec.NowPath, "./")
+			docPath := filepath.Join(filepath.FromSlash(cleanNowPath), cleanFile)
 			sourcePath := filepath.Join(global.DocPath, docPath)
 			filename := global.UniqueName(global.TraPath, filepath.Base(docPath))
 			destPath := filepath.Join(global.TraPath, filename)
