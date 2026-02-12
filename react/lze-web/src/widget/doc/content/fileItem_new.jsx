@@ -1,5 +1,8 @@
+import { Icon } from "../../../utils/icon"
 import FileItem from "../../common/fileList/fileItem"
 import { list, useGlobal } from "../global"
+import DownloadBtn from "./downloadBtn"
+import Link from "./link"
 export default function fileItme({fileMes,selected,docClick}){
     const include=selected.selected.includes(fileMes[0])
     function FileItemMask(){
@@ -9,11 +12,23 @@ export default function fileItme({fileMes,selected,docClick}){
         onClick={()=>{MaskClick(include,fileMes[0])}}></div>
         )
     }
+    function FileBtn(){
+       return( <>
+        {(fileMes[1]!="dir"&&fileMes[1]!="dir_link"&&<Link name={fileMes[0]}/>)}
+        <DownloadBtn fileMes={fileMes}/>
+        </>)
+    }
+    function NameText(){
+        return(<>
+        <input></input>
+        </>)
+    }
     return(
             <FileItem name={fileMes[0]} type={fileMes[1]}
              Fun={ClickFun} 
              mask={selected.status?<FileItemMask/>:null}
-             
+             fileBtn={<FileBtn/>}
+            nameText={<NameText/>}
              /> 
     )
 }

@@ -8,16 +8,16 @@ import { Icon } from "../../../utils/icon";
 export default function Link({ name }) {
   return (
     <button
-      className="btn link-btn"
+      className="btn file-item-btn link-btn"
       title={GetText("get_link")}
-      onClick={(e) => {
-        e.stopPropagation()
-        getLink(name)
-      }}
+      onClick={(e) => {BtnClink(e,name)}}
     >{Icon("link")}</button>
   );
 }
-
+function BtnClink(e,name){
+        e.stopPropagation()
+        getLink(name)
+}
 // 获取直链并返回 URL
 function getLink(name) {
   const global = useGlobal.getState();

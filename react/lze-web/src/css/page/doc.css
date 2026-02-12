@@ -93,13 +93,6 @@
 .new-dir-btn{
     margin-right: 10px;
 }
-.down-btn{
-    width: 20px!important;
-    height: 20px!important;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
 #paste{
     animation: paste 1s ease-in-out infinite;
 }
@@ -246,13 +239,6 @@
     width: 20px !important;
     height: 20px !important;
 }
-.link-btn{
-    width: 20px !important;
-    height: 20px !important;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-}
 #link-win{
     justify-content: center;
     align-items: center;
@@ -293,12 +279,11 @@
     bottom: 10px;
     right: 10px;
 }
-/* file item mask */
+/* file item  */
 
 .file-item-mask{
     position: absolute;
     cursor: pointer;
-    /* pointer-events: none; */
     opacity: 0.5;
     width: 100%;
     height: 100%;
@@ -312,7 +297,28 @@
     opacity: 1;
     background-color: var(--bg_color);
 }
-
+.file-item-btn{
+    position: absolute;
+}
+.link-btn{
+    top: 15px;
+}
+.down-btn{
+    bottom: 10px;
+}
+.file-item-btn{
+    width: 20px!important;
+    height: 20px!important;
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--base_color);
+    right: -5px;
+    z-index: 2 !important;
+}
+.down-btn svg,.link-btn svg{
+    width: 15px !important;
+    height: 15px !important;
+}
 /*  */
   @keyframes paste {
     0% {

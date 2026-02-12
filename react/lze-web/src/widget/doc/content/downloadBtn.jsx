@@ -6,21 +6,27 @@ import { Api } from "../../../utils/request";
 import { getUrl } from "../../../store/request";
 import { Icon } from "../../../utils/icon";
 export default function DownloadBtn({fileMes}){
-    const global=useGlobal.getState()
-   
     return (
-        <button className="down-btn btn" title={GetText("download")+":"+fileMes[0]}
+        <button className="down-btn file-item-btn btn" 
+        title={GetText("download")+":"+fileMes[0]}
         onClick={((e)=>{
-            e.stopPropagation();
-            if(fileMes[1]==="file"||fileMes[1]==="file_link"){
-              DownLoadFile(global.nowPath+"/"+fileMes[0],true)
-            }
-            else{
-              DownLoadFile(global.nowPath+"/"+fileMes[0],false)
-            }
+          BtnDownLoad(e,fileMes)
         })}
         >{Icon("download")}</button>
     )
+}
+function BtnDownLoad(e,fileMes){
+            e.stopPropagation();
+    const global=useGlobal.getState()
+   
+            
+            if(fileMes[1]==="dir"||fileMes[1]==="dir_link"){
+              DownLoadFile(global.nowPath+"/"+fileMes[0],false)
+            }
+            else{
+              DownLoadFile(global.nowPath+"/"+fileMes[0],true)
+            }
+
 }
 // 下载文件
 async function DownLoadFile(path,isFile){
@@ -41,8 +47,6 @@ async function DownLoadFile(path,isFile){
 }
 // 下载操作
 function DownLoad(url){
-  console.log(url);
-  
 const a = document.createElement("a");
   a.href = url;
   a.download = "";  // 让浏览器根据 url 自动决定文件名

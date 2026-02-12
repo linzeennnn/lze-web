@@ -27,6 +27,7 @@
 }
 .file-item svg{
     fill: var(--bg_color);
+    transition: transform 0.3s ease;
 }
 .file-name-box{
     width: 100%;
@@ -61,13 +62,10 @@
     padding: 10px;
     border-radius: 15px;
     margin-bottom: 30px;
-    transition: transform 0.3s ease;
 }
-.file-item-frame:hover svg  {
+.file-item:hover svg {
     fill: var(--base_color) !important;
-}
-.file-item-frame:hover{
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 .file-item-box{
     position: relative;
