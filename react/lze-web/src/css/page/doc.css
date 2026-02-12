@@ -312,12 +312,46 @@
     position: absolute;
     border-radius: 50%;
     background-color: var(--base_color);
-    right: -5px;
+    right: 2px;
     z-index: 2 !important;
 }
 .down-btn svg,.link-btn svg{
     width: 15px !important;
     height: 15px !important;
+}
+.file-item-input-box{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    color: var(--text);
+    cursor: text;
+    position: absolute;
+    width: 100%;
+    background-color: var(--base_color);
+    z-index: 100;
+    border-radius: 15px;
+    box-shadow: var(--in_shadow);
+    padding: 2px;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+.file-name-input{
+    font-weight: bold;
+    color: var(--text);
+    cursor: text;
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: var(--in_shadow);
+    padding: 2px;
+    box-sizing: border-box;
+
+}
+.save-file-name{
+    width: 20px !important;
+    height: 20px !important;
+    margin-left: 5px;
 }
 /*  */
   @keyframes paste {

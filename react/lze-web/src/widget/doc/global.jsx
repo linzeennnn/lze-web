@@ -16,6 +16,10 @@ export const useGlobal = create((set, get) => ({
     show:false,
     link:""
   },
+  edit:{
+    status:false,
+    fileName:""
+  },
   showBg: false,
   loading: false,
   dragWin:false,

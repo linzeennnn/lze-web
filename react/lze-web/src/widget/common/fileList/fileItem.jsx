@@ -1,7 +1,7 @@
 import '../../../css/common/fileList.css'
 import { FillIcon } from '../../../utils/icon'
 export default function FileItem({
-    name,type,Fun,
+    name,type,Fun,TextFun,
     mask,NameText,fileBtn}){
     return(
         <div className='file-item-box'>
@@ -14,7 +14,7 @@ export default function FileItem({
         </div>
         <div className='file-name-box'>
         {NameText}
-        <span className="file-name">{name}</span>
+        <span className="file-name" onClick={()=>{TextFun(name)}}>{name}</span>
         </div>
         </div>
         </div>
