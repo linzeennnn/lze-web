@@ -1,5 +1,5 @@
 import NewDirInput from './newDirInput';
-import { useGlobal, list } from '../global';
+import { useGlobal, list, LocalList } from '../global';
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from 'react';
 import { Icon } from '../../../utils/icon';
@@ -12,7 +12,7 @@ export default function TopBarBox({ createStatus }) {
 
   const goHome = () => {
     if (nowPath === '') return;
-    list('');
+    LocalList(0)
   };
 
   // 注册右键菜单

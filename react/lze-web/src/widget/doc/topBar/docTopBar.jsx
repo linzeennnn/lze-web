@@ -1,7 +1,7 @@
 import TopBar from '../../../components/topBar'
 import TopBarBox from './topBarBox'
 import NewDirBtn from './newDirBtn'
-import { useGlobal, list } from '../global';
+import { useGlobal, list, LocalList } from '../global';
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from 'react';
 import GoUp from '../../common/fileList/goUp';
@@ -15,7 +15,8 @@ export default function DocTopBar(){
 
   const goUp = () => {
     if (isRoot) return;
-    list(parentPath);
+    const index=useGlobal.getState().CacheList.current;
+    LocalList(index-1)
   };
 
   // 只在挂载时注册右键菜单

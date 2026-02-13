@@ -67,6 +67,7 @@ function req(request, method) {
     })
     .catch(err => {
       confirmWin.err(err.message)
+      console.error(err)
       fail && fail(-1)
     })
     .finally(() => {

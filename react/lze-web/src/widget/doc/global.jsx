@@ -31,6 +31,15 @@ export const useGlobal = create((set, get) => ({
     currentType:"",
     path:""
   },
+  CacheList:{
+    stack:[
+      {  
+      name:"",
+      fileList:[]
+    }
+  ],
+    current:-1
+  },
   upload:{
     win:false,
     status:false,
@@ -56,6 +65,44 @@ PageInit("doc")
   const path=pageSession.doc.list.path
   list(path)
 }
+// 为缓存增加内容
+export function AddCacheList(listMsg){
+  const Cache=useGlobal.getState().CacheList
+  if (Cache.current!=-1&&Cache.stack[Cache.current].name==listMsg.name){
+    const newStack=Cache.stack
+    newStack[Cache.current]=listMsg
+    useGlobal.setState(
+      { CacheList: {
+         stack:newStack,
+          current:Cache.current
+      } }
+    )
+    return
+  }
+  useGlobal.setState(
+    { CacheList: {
+       stack:(Cache.current==-1)?[listMsg]:Cache.stack.concat(listMsg),
+        current:Cache.current+1
+    } }
+  )
+}
+// 使用缓存扫描目录
+export function LocalList(index){
+  const Cache=useGlobal.getState().CacheList
+useGlobal.setState({
+        fileList: Cache.stack[index].fileList,
+        nowPath: Cache.stack[index].name,
+        parentPath: ""
+      });
+      const newStack=Cache.stack
+      newStack.length=index+1
+      useGlobal.setState(
+        { CacheList: {
+           stack:newStack,
+            current:index
+        } }
+      )
+}
 // 扫描目录
 export function list(path) {
 const pageSession=GetPageSession()
@@ -71,6 +118,10 @@ Api.post({
         nowPath: data.currentFolder,
         parentPath: data.parentFolder
       });
+      AddCacheList({
+        name:data.currentFolder,
+        fileList:data.filelist
+      })
       if(sessionPath!=""){
         pageSession.doc.list.path=""
         SetPageSession(pageSession)
