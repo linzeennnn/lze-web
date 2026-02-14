@@ -34,6 +34,7 @@ export const useGlobal = create((set, get) => ({
   CacheList:{
     fileList:[],
     name:[],
+    nowPath:[],
     current:-1
   },
   upload:{
@@ -64,14 +65,17 @@ PageInit("doc")
 // 为缓存增加内容
 export function AddCacheList(listMsg){
   const Cache=useGlobal.getState().CacheList
-  if (Cache.current!=-1&&Cache.name[Cache.current]==listMsg.name){
+  if (Cache.current!=-1&&Cache.nowPath[Cache.current]==listMsg.nowPath){
     const newFileList=Cache.fileList
+    const newNowPath=Cache.nowPath
     const newName=Cache.name
     newFileList[Cache.current]=listMsg.FileList
+    newNowPath[Cache.current]=listMsg.nowPath
     newName[Cache.current]=listMsg.name
     useGlobal.setState(
       { CacheList: {
          stack:newFileList,
+         nowPath:newNowPath,
          name:newName,
           current:Cache.current
       } }
@@ -81,32 +85,33 @@ export function AddCacheList(listMsg){
   useGlobal.setState(
     { CacheList: {
        fileList:(Cache.current==-1)?[listMsg.fileList]:Cache.fileList.concat([listMsg.fileList]),
+       nowPath:(Cache.current==-1)?[listMsg.nowPath]:Cache.nowPath.concat(listMsg.nowPath),
        name:(Cache.current==-1)?[listMsg.name]:Cache.name.concat(listMsg.name),
-        current:Cache.current+1
+       current:Cache.current+1
     } }
   )
   
 }
 // 使用缓存扫描目录
 export function LocalList(index){
-  console.log(index);
   
   const Cache=useGlobal.getState().CacheList
-  console.log(JSON.stringify(Cache.fileList));
-  
 useGlobal.setState({
         fileList: Cache.fileList[index],
-        nowPath: Cache.name[index],
+        nowPath: Cache.nowPath[index],
         parentPath: ""
       });
       const newFileList=Cache.fileList
+      const newNowPath=Cache.nowPath
       const newName=Cache.name
       newFileList.length=index+1
+      newNowPath.length=index+1
       newName.length=index+1
       useGlobal.setState(
         { CacheList: {
            fileList:newFileList,
-           name:newName,
+          nowPath:newNowPath,
+          name:newName,
             current:index
         } }
       )
@@ -127,8 +132,9 @@ Api.post({
         parentPath: data.parentFolder
       });
       AddCacheList({
-        name:data.currentFolder,
-        fileList:data.filelist
+        nowPath:data.currentFolder,
+        fileList:data.filelist,
+        name:baseName(data.currentFolder)
       })
       if(sessionPath!=""){
         pageSession.doc.list.path=""

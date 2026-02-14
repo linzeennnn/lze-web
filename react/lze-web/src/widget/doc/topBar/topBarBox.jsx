@@ -9,7 +9,7 @@ export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus;
   const upload = useGlobal((state) => state.upload);
   const nowPath = useGlobal((state) => state.nowPath);
-
+  const nameList=useGlobal((state) => state.CacheList).name;
   const goHome = () => {
     if (nowPath === '') return;
     LocalList(0)
@@ -37,7 +37,10 @@ export default function TopBarBox({ createStatus }) {
         >{Icon("home")}</button>
       )}
 
-      {!creating && !upload.status && <ShowPath nowPath={nowPath}/>}
+      {!creating && !upload.status && <ShowPath
+       nameList={nameList}
+       localList={LocalList}
+       />}
 
       {upload.status && (
         <>
