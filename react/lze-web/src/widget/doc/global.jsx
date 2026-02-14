@@ -32,12 +32,8 @@ export const useGlobal = create((set, get) => ({
     path:""
   },
   CacheList:{
-    stack:[
-      {  
-      name:"",
-      fileList:[]
-    }
-  ],
+    fileList:[],
+    name:[],
     current:-1
   },
   upload:{
@@ -68,12 +64,15 @@ PageInit("doc")
 // 为缓存增加内容
 export function AddCacheList(listMsg){
   const Cache=useGlobal.getState().CacheList
-  if (Cache.current!=-1&&Cache.stack[Cache.current].name==listMsg.name){
-    const newStack=Cache.stack
-    newStack[Cache.current]=listMsg
+  if (Cache.current!=-1&&Cache.name[Cache.current]==listMsg.name){
+    const newFileList=Cache.fileList
+    const newName=Cache.name
+    newFileList[Cache.current]=listMsg.FileList
+    newName[Cache.current]=listMsg.name
     useGlobal.setState(
       { CacheList: {
-         stack:newStack,
+         stack:newFileList,
+         name:newName,
           current:Cache.current
       } }
     )
@@ -81,24 +80,33 @@ export function AddCacheList(listMsg){
   }
   useGlobal.setState(
     { CacheList: {
-       stack:(Cache.current==-1)?[listMsg]:Cache.stack.concat(listMsg),
+       fileList:(Cache.current==-1)?[listMsg.fileList]:Cache.fileList.concat([listMsg.fileList]),
+       name:(Cache.current==-1)?[listMsg.name]:Cache.name.concat(listMsg.name),
         current:Cache.current+1
     } }
   )
+  
 }
 // 使用缓存扫描目录
 export function LocalList(index){
+  console.log(index);
+  
   const Cache=useGlobal.getState().CacheList
+  console.log(JSON.stringify(Cache.fileList));
+  
 useGlobal.setState({
-        fileList: Cache.stack[index].fileList,
-        nowPath: Cache.stack[index].name,
+        fileList: Cache.fileList[index],
+        nowPath: Cache.name[index],
         parentPath: ""
       });
-      const newStack=Cache.stack
-      newStack.length=index+1
+      const newFileList=Cache.fileList
+      const newName=Cache.name
+      newFileList.length=index+1
+      newName.length=index+1
       useGlobal.setState(
         { CacheList: {
-           stack:newStack,
+           fileList:newFileList,
+           name:newName,
             current:index
         } }
       )
