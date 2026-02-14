@@ -1,17 +1,18 @@
 import NewDirInput from './newDirInput';
-import { useGlobal, list, LocalList } from '../global';
+import { useGlobal, } from '../global';
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from 'react';
 import { Icon } from '../../../utils/icon';
 import ShowPath from '../../common/fileList/ShowPath';
+import { LocalList } from '../../../utils/CacheList';
+import { useFileCacheStore } from '../../../store/CacheList';
 
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus;
   const upload = useGlobal((state) => state.upload);
-  const nowPath = useGlobal((state) => state.nowPath);
-  const nameList=useGlobal((state) => state.CacheList).name;
+  const current = useFileCacheStore((state) => state.fileCache).current;
   const goHome = () => {
-    if (nowPath === '') return;
+    if (current ==0) return;
     LocalList(0)
   };
 
@@ -19,12 +20,12 @@ export default function TopBarBox({ createStatus }) {
   useEffect(() => {
     AddMouseMenu({
       home: {
-        disable: nowPath === '',
+        disable: current==0,
         name: GetText("back_main_dir"),
         fun: goHome,
       }
     });
-  }, [nowPath]);
+  }, [current]);
 
   return (
     <div id="top-bar-box">
@@ -37,10 +38,7 @@ export default function TopBarBox({ createStatus }) {
         >{Icon("home")}</button>
       )}
 
-      {!creating && !upload.status && <ShowPath
-       nameList={nameList}
-       localList={LocalList}
-       />}
+      {!creating && !upload.status && <ShowPath/>}
 
       {upload.status && (
         <>

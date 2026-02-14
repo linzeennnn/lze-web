@@ -3,6 +3,7 @@ import { notify } from '../../../utils/common';
 import {useGlobal} from '../global'
 import { GetText } from '../../../utils/common';
 import FileItem from './fileItem';
+import { useFileCacheStore } from '../../../store/CacheList';
 export default function DocContent(){
     const doc_click = (name) => {
       let tmp = [...selected];
@@ -15,7 +16,8 @@ export default function DocContent(){
       }
       setGlobal({ selected: tmp }); // 更新 selected
     };
-  const fileList = useGlobal((state) => state.fileList);
+  const cache = useFileCacheStore((state) => state.fileCache);
+  const fileList = cache.fileList?.[cache.current] ?? [];
   const selected = useGlobal((state) => state.selected);
     const setGlobal = useGlobal((state) => state.setGlobal);
     return(

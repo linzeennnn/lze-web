@@ -2,6 +2,7 @@ import { Selected, useGlobal } from "../global";
 import { AddMouseMenu, GetText, notify } from "../../../utils/common";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 
 export default function CopyMove({ setPaste, setCopyList,setSource }) {
   const copy = (type) => {
@@ -9,7 +10,7 @@ export default function CopyMove({ setPaste, setCopyList,setSource }) {
     const selected = useGlobal.getState().selected;
     setCopyList(selected.selected);
     setPaste({ status: true, type: type });
-    setSource(useGlobal.getState().nowPath);
+    setSource(getNowPath());
     notify.normal(GetText("copied"));
   };
   // 右键菜单

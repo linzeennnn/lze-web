@@ -6,11 +6,10 @@ import { getToken, getUrl } from '../../store/request';
 import { GetPageSession, SetPageSession } from '../../utils/pageSession';
 import { PageUrl } from '../../utils/page';
 import { PageInit } from '../../utils/pageInit';
+import { AddCacheList } from '../../utils/CacheList';
+import { getNowPath } from '../../store/CacheList';
 // 全局变量
 export const useGlobal = create((set, get) => ({
-  nowPath: "",
-  parentPath: "",
-  fileList: [],
   uploading: false,
   linkWin:{
     show:false,
@@ -30,12 +29,6 @@ export const useGlobal = create((set, get) => ({
     data:null,
     currentType:"",
     path:""
-  },
-  CacheList:{
-    fileList:[],
-    name:[],
-    nowPath:[],
-    current:-1
   },
   upload:{
     win:false,
@@ -62,60 +55,7 @@ PageInit("doc")
   const path=pageSession.doc.list.path
   list(path)
 }
-// 为缓存增加内容
-export function AddCacheList(listMsg){
-  const Cache=useGlobal.getState().CacheList
-  if (Cache.current!=-1&&Cache.nowPath[Cache.current]==listMsg.nowPath){
-    const newFileList=Cache.fileList
-    const newNowPath=Cache.nowPath
-    const newName=Cache.name
-    newFileList[Cache.current]=listMsg.FileList
-    newNowPath[Cache.current]=listMsg.nowPath
-    newName[Cache.current]=listMsg.name
-    useGlobal.setState(
-      { CacheList: {
-         stack:newFileList,
-         nowPath:newNowPath,
-         name:newName,
-          current:Cache.current
-      } }
-    )
-    return
-  }
-  useGlobal.setState(
-    { CacheList: {
-       fileList:(Cache.current==-1)?[listMsg.fileList]:Cache.fileList.concat([listMsg.fileList]),
-       nowPath:(Cache.current==-1)?[listMsg.nowPath]:Cache.nowPath.concat(listMsg.nowPath),
-       name:(Cache.current==-1)?[listMsg.name]:Cache.name.concat(listMsg.name),
-       current:Cache.current+1
-    } }
-  )
-  
-}
-// 使用缓存扫描目录
-export function LocalList(index){
-  
-  const Cache=useGlobal.getState().CacheList
-useGlobal.setState({
-        fileList: Cache.fileList[index],
-        nowPath: Cache.nowPath[index],
-        parentPath: ""
-      });
-      const newFileList=Cache.fileList
-      const newNowPath=Cache.nowPath
-      const newName=Cache.name
-      newFileList.length=index+1
-      newNowPath.length=index+1
-      newName.length=index+1
-      useGlobal.setState(
-        { CacheList: {
-           fileList:newFileList,
-          nowPath:newNowPath,
-          name:newName,
-            current:index
-        } }
-      )
-}
+
 // 扫描目录
 export function list(path) {
 const pageSession=GetPageSession()
@@ -126,11 +66,6 @@ Api.post({
   success:(data)=>{
       loadPage(false)
       if(data.type=="dir"){
-      useGlobal.setState({
-        fileList: data.filelist,
-        nowPath: data.currentFolder,
-        parentPath: data.parentFolder
-      });
       AddCacheList({
         nowPath:data.currentFolder,
         fileList:data.filelist,
@@ -247,7 +182,7 @@ export function Upload(file, uploadData, type) {
   }
   const global = useGlobal.getState();
   const token = getToken()
-  const nowPath = global.nowPath;
+  const nowPath = getNowPath();
   const upload = global.upload;
   const setGlobal = useGlobal.setState;
   const api=getUrl()+"doc/"
@@ -273,7 +208,7 @@ export function Upload(file, uploadData, type) {
       if (type === "file") {
         uploadData.completed=true
         notify.normal(GetText("op_com"));
-        list(nowPath);
+        list(getNowPath());
       } else if (type === "dir") {
         const foldername = file.webkitRelativePath.split("/")[0];
         movefolder(foldername);
@@ -357,14 +292,13 @@ export function Upload(file, uploadData, type) {
 }
 // 从temp移动文件夹
 function movefolder(foldername) {
-  const global = useGlobal.getState();
 Api.post({
   api:"doc/move_folder",
   body:{name: foldername,
-        path: global.nowPath
+        path: getNowPath()
         },
   success:()=>{
-        list(global.nowPath)
+        list(getNowPath())
   }
 })
 }

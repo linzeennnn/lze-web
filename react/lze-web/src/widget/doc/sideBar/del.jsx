@@ -3,6 +3,7 @@ import { AddMouseMenu, confirmWin, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 
 export default function Del() {
 
@@ -11,7 +12,7 @@ export default function Del() {
 
     const global = useGlobal.getState();
     const dellist = global.selected.selected;
-    const nowPath = global.nowPath;
+    const nowPath = getNowPath();
     Selected.close();
 
     Api.delete({

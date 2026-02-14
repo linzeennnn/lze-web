@@ -5,6 +5,7 @@ import { GetText } from '../../../utils/common';
 import LinkWin from "../win/linkWin";
 import { Api } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 export default function Link({ name }) {
   return (
     <button
@@ -20,8 +21,7 @@ function BtnClink(e,name){
 }
 // 获取直链并返回 URL
 function getLink(name) {
-  const global = useGlobal.getState();
-  const path = global.nowPath + "/" + name;
+  const path = getNowPath() + "/" + name;
 Api.post({
   api:"doc/link",
   notice:true,

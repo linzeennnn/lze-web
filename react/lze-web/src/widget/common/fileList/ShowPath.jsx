@@ -1,12 +1,17 @@
 import '../../../css/common/fileList.css'
-export default function ShowPath({nameList,localList}) {
+import { useFileCacheStore } from '../../../store/CacheList';
+import { LocalList } from '../../../utils/CacheList';
+export default function ShowPath() {
+  const nameList=useFileCacheStore(state=>state.fileCache).name??[]
   return (
     <div id="show-path">
       <span>
         {
           nameList.map((name,index)=>(
-            <span key={index+name}
-            onClick={() => {localList(index)}}
+            <span
+            className='file-item-show-path'
+            key={index+name}
+            onClick={() => {LocalList(index)}}
             >
               {(name?"/":"")+name}
               </span>

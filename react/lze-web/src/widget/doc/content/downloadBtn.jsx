@@ -5,6 +5,7 @@ import { confirmWin } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { getUrl } from "../../../store/request";
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 export default function DownloadBtn({fileMes}){
     return (
         <button className="down-btn file-item-btn btn" 
@@ -17,14 +18,12 @@ export default function DownloadBtn({fileMes}){
 }
 function BtnDownLoad(e,fileMes){
             e.stopPropagation();
-    const global=useGlobal.getState()
-   
             
             if(fileMes[1]==="dir"||fileMes[1]==="dir_link"){
-              DownLoadFile(global.nowPath+"/"+fileMes[0],false)
+              DownLoadFile(getNowPath()+"/"+fileMes[0],false)
             }
             else{
-              DownLoadFile(global.nowPath+"/"+fileMes[0],true)
+              DownLoadFile(getNowPath()+"/"+fileMes[0],true)
             }
 
 }

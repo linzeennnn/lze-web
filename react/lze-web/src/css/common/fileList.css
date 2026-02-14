@@ -17,6 +17,13 @@
   border-radius: 15px;
   z-index: 2;
 }
+.file-item-show-path{
+    cursor: pointer;
+}
+.file-item-show-path:hover{
+    color: var(--global_text);
+     text-decoration: underline;
+}
 .go-up-disable:hover{
     cursor:default;
     opacity: 0.7 !important;

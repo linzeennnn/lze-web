@@ -3,6 +3,7 @@ import { AddMouseMenu, notify, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 
 export default function Paste({ paste, copyList,source }) {
   const [pastestatus, setPastestatus] = paste;
@@ -57,7 +58,7 @@ function paste_file(type, copylist,source) {
     return;
   }
 
-  const nowpath = global.nowPath;
+  const nowpath = getNowPath();
   Api.post({
     api: "doc/" + type,
     notice: true,

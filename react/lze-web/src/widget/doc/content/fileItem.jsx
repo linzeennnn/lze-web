@@ -6,6 +6,7 @@ import DownloadBtn from "./downloadBtn"
 import Link from "./link"
 import { Api } from "../../../utils/request";
 import { GetText } from "../../../utils/common"
+import { getNowPath } from "../../../store/CacheList"
 export default function fileItme({fileMes,selected,docClick}){
     const include=selected.selected.includes(fileMes[0])
     const edit=useGlobal(state=>state.edit)
@@ -84,8 +85,7 @@ function NameText({ name }) {
   );
 }
 function ClickFun(name){
-    useGlobal.getState().nowPath
-        list(useGlobal.getState().nowPath + "/" + name)
+        list(getNowPath() + "/" + name)
 }
 function MaskClick(include,name){
     let tmpSelected=useGlobal.getState().selected.selected
@@ -105,17 +105,18 @@ function TextClick(name=""){
 }
 }
 function rename(oldname,newname){
+  const nowPath=getNowPath()
     TextClick()
     if(oldname==newname){
         return
     }
     const global=useGlobal.getState()
-    const oldpath=global.nowPath+"/"+oldname
-    const newpath=global.nowPath+"/"+newname
+    const oldpath=nowPath+"/"+oldname
+    const newpath=nowPath+"/"+newname
 Api.patch({
     api:"doc/rename",
     body:{oldpath,newpath},
     notice:true,
-    success:()=>{list(global.nowPath)}
+    success:()=>{list(nowPath)}
 })
 }

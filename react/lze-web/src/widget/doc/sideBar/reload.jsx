@@ -1,10 +1,11 @@
-import { useGlobal ,list} from "../global"
+import { list} from "../global"
 import { AddMouseMenu, GetText } from '../../../utils/common';
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 export default function Relaod(){
     const refresh=()=>{
-            list(useGlobal.getState().nowPath)
+            list(getNowPath())
     }
      useEffect(() => {
         AddMouseMenu({

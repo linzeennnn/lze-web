@@ -2,11 +2,12 @@ import { useGlobal ,Upload,UploadPermit} from "../global";
 import { GetText } from '../../../utils/common';
 import { WinBg } from "../../../components/winBg";
 import { FillIcon, Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useGlobal((state) => state.upload); 
     const dragWin=useGlobal((state) => state.dragWin); 
-    const nowPath=useGlobal((state) => state.nowPath); 
+    const nowPath=getNowPath(); 
     const  uploadChange=async(e,type)=>{
         setGlobal({upload:{
             ...upload,

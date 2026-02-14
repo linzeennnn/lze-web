@@ -5,6 +5,7 @@ import { GetText } from '../../../utils/common';
 import { notify } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 export default function NewDirInput({setCreate}) {
     const[newName,setNewName]=useState("")
      const nameChange = (e) => {
@@ -47,10 +48,10 @@ export function NewDir(folderName) {
     notice:true,
     body:{
      folderName,
-    nowpath: global.nowPath     
+    nowpath: getNowPath()     
     },
     success:()=>{
-      list(global.nowPath);
+      list(getNowPath());
     }
   })
 }
