@@ -11,6 +11,12 @@ export function Upload(msg) {
 setTotalSize(files)
 
 }
+function sendFile(file){
+
+}
+function sendChunk(chunk){
+
+}
 function getChunk(file){
     const chunks = [];
     let start = 0;
@@ -29,7 +35,5 @@ function getChunkSize(file){
     return Math.min(10*MB, Math.max(2*MB, file.size / (100*MB)))
 }
 function isFinsh(){
-    const sendSize=getSendSize()
-    const totalSize=getTotalSize()
     return (getSendSize()>=getTotalSize())
 }
