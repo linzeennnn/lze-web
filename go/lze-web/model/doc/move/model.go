@@ -5,3 +5,7 @@ type Rec struct {
 	CopyList []string `json:"copylist"`
 	Source   string   `json:"source"`
 }
+
+type Send struct {
+	FileList [][2]string `json:"fileList"`
+}

@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
-import { Selected, useGlobal } from "../global";
+import { fileBuffer, Selected, useGlobal } from "../global";
 import { AddMouseMenu, GetText } from "../../../utils/common";
 
 export default function Select(){
+    const status = useGlobal(state=>state.fileBuffer.selected.status)
     const select=()=>{
-        status?Selected.close():Selected.open()
+      
+        status?fileBuffer.clean():fileBuffer.open()
     }
       useEffect(() => {
         AddMouseMenu({
@@ -15,7 +17,6 @@ export default function Select(){
           },
         });
       });
-    const status = useGlobal(state=>state.selected.status)
     return(
         <button className="btn side-btn"
         onClick={select}

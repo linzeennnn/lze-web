@@ -18,16 +18,17 @@ export default function DocContent(){
     };
   const cache = useFileCacheStore((state) => state.fileCache);
   const fileList = cache.fileList?.[cache.current] ?? [];
-  const selected = useGlobal((state) => state.selected);
+  const selected = useGlobal((state) => state.fileBuffer).selected;
     const setGlobal = useGlobal((state) => state.setGlobal);
     return(
         <Content>
-            {fileList.map((fileMes) => (
+            {fileList.map((fileMes,index) => (
         <FileItem
-          key={"doclist" + fileMes[0]}
+          key={index + fileMes[0]}
           fileMes={fileMes}
           selected={selected}
           docClick={doc_click}
+          index={index}
         />
       ))}
         </Content>

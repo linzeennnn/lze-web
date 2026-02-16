@@ -1,9 +1,9 @@
-import { useGlobal, list } from "../global";
+import { useGlobal, list, fileBuffer } from "../global";
 import { AddMouseMenu, notify, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
-import { getNowPath } from "../../../store/CacheList";
+import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList";
 
 export default function Paste({ paste, copyList,source }) {
   const [pastestatus, setPastestatus] = paste;
@@ -51,8 +51,6 @@ export default function Paste({ paste, copyList,source }) {
 }
 
 function paste_file(type, copylist,source) {
-  const global = useGlobal.getState();
-
   if (copylist.length === 0) {
     notify.err(GetText("no_select_file"));
     return;
@@ -63,8 +61,18 @@ function paste_file(type, copylist,source) {
     api: "doc/" + type,
     notice: true,
     body: { copylist, nowpath,source },
-    success: () => {
-      list(nowpath);
+    success: (data) => {
+      const source=fileBuffer.getSource()
+      const cache=structuredClone(getFileCache())
+      const newFilePage=data.fileList.concat(cache.fileList[cache.current])
+      cache.fileList[cache.current]=newFilePage
+      if(cache.current>=source&&type=="move"){
+        const set=new Set(fileBuffer.getSelected())
+        const newSourcePage=cache.fileList[source].filter((_, index) => !set.has(index));
+        cache.fileList[source]=newSourcePage
+      }
+      setFileCache(cache)
+      fileBuffer.clean()
     },
   });
 }

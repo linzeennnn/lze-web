@@ -1,15 +1,15 @@
-import { Selected, useGlobal } from "../global";
+import { fileBuffer, Selected, useGlobal } from "../global";
 import { AddMouseMenu, GetText, notify } from "../../../utils/common";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
-import { getNowPath } from "../../../store/CacheList";
+import { getFileListCurrent, getNowPath } from "../../../store/CacheList";
 
 export default function CopyMove({ setPaste, setCopyList,setSource }) {
   const copy = (type) => {
-    Selected.hide()
-    const selected = useGlobal.getState().selected;
-    setCopyList(selected.selected);
+    fileBuffer.hide()
+    setCopyList(fileBuffer.getSelectedFileList());
     setPaste({ status: true, type: type });
+    fileBuffer.setSource(getFileListCurrent())
     setSource(getNowPath());
     notify.normal(GetText("copied"));
   };

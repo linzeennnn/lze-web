@@ -1,26 +1,29 @@
-import { useGlobal, list, Selected } from "../global";
+import { useGlobal, list, Selected, fileBuffer } from "../global";
 import { AddMouseMenu, confirmWin, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
-import { getNowPath } from "../../../store/CacheList";
+import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList";
 
 export default function Del() {
 
   const del = async () => {
     if (!await confirmWin.normal(GetText("are_you_sure"))) return;
-
-    const global = useGlobal.getState();
-    const dellist = global.selected.selected;
+    const dellist = fileBuffer.getSelectedFileList()
     const nowPath = getNowPath();
-    Selected.close();
-
     Api.delete({
       api: "doc/del",
       notice: true,
       body: { dellist,nowPath },
       success: () => {
-        list(nowPath);
+        const cache=structuredClone(getFileCache())
+        const tmpFileList=cache.fileList
+        const filePage=cache.fileList[cache.current]
+        const set=new Set(fileBuffer.getSelected())
+        const newFilePage=filePage.filter((_, index) => !set.has(index));
+        tmpFileList[cache.current]=newFilePage
+        setFileCache({...cache,fileList:tmpFileList})
+        fileBuffer.clean()
       }
     });
   };

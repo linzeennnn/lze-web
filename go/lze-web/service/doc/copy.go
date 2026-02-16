@@ -12,7 +12,8 @@ import (
 
 func Copy(c *gin.Context) {
 	var rec copyDoc.Rec
-	var sendData response.Response[string]
+	var sendData response.Response[copyDoc.Send]
+	var fileList [][2]string
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		sendData.Code = 400
 		sendData.Msg = err.Error()
@@ -28,10 +29,12 @@ func Copy(c *gin.Context) {
 			destPath := filepath.Join(destPath, filename)
 			if !global.IsSub(sourcePath, destPath) {
 				copy.Copy(sourcePath, destPath)
+				fileList = append(fileList, [2]string{filename, global.FileType(destPath)})
 			}
 		}
 		sendData.Code = 200
 		sendData.Msg = global.GetText("copy_success", c)
+		sendData.Data.FileList = fileList
 		c.JSON(200, sendData)
 	} else {
 		sendData.Code = 403

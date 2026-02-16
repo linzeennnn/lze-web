@@ -19,6 +19,9 @@ export const getNowPath=()=>{
 export const getFileList=()=>{
   return  chacheGetter('fileList')
 }
+export const getFileListCurrent=()=>{
+  return  useFileCacheStore.getState().fileCache.current
+} 
 export const getName=()=>{
   return  chacheGetter('name')
 }

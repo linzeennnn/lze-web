@@ -12,7 +12,8 @@ import (
 
 func Move(c *gin.Context) {
 	var rec copyDoc.Rec
-	var sendData response.Response[string]
+	var sendData response.Response[copyDoc.Send]
+	var fileList [][2]string
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		sendData.Code = 400
 		sendData.Msg = err.Error()
@@ -25,10 +26,13 @@ func Move(c *gin.Context) {
 		for _, files := range rec.CopyList {
 			sourcePath := filepath.Join(global.DocPath, filepath.FromSlash(rec.Source), files)
 			filename := global.UniqueName(destPath, filepath.Base(files))
-			os.Rename(sourcePath, filepath.Join(destPath, filename))
+			targetPath := filepath.Join(destPath, filename)
+			os.Rename(sourcePath, targetPath)
+			fileList = append(fileList, [2]string{filename, global.FileType(targetPath)})
 		}
 		sendData.Code = 200
 		sendData.Msg = global.GetText("move_success", c)
+		sendData.Data.FileList = fileList
 		c.JSON(200, sendData)
 	} else {
 		sendData.Code = 403

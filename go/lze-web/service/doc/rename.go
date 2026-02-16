@@ -12,7 +12,7 @@ import (
 
 func Rename(c *gin.Context) {
 	var rec rename.Rec
-	var sendData response.Response[string]
+	var sendData response.Response[rename.Send]
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		sendData.Code = 400
 		sendData.Msg = err.Error()
@@ -30,6 +30,7 @@ func Rename(c *gin.Context) {
 		os.Rename(source, dest)
 		sendData.Code = 200
 		sendData.Msg = global.GetText("rename_success", c)
+		sendData.Data.FileItem = [2]string{fileName, global.FileType(dest)}
 		c.JSON(200, sendData)
 	} else {
 		sendData.Code = 403

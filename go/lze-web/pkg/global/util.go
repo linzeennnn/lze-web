@@ -90,12 +90,6 @@ func ScanDir(path string) []fileSystem.Files {
 		}
 		filePath := filepath.Join(path, entry.Name())
 		fileType := FileType(filePath)
-		if fileType == "file" || fileType == "file_link" {
-			fileType = FileTypeMap[GetExtName(filePath)]
-			if len(fileType) == 0 {
-				fileType = "file"
-			}
-		}
 		info, err := os.Lstat(filePath)
 		if err != nil {
 			continue
@@ -121,7 +115,7 @@ func FileType(path string) string {
 	mode := info.Mode()
 	switch {
 	case mode.IsRegular():
-		return "file"
+		return GetFileType(path)
 	case mode.IsDir():
 		return "dir"
 	case mode&os.ModeSymlink != 0:
@@ -130,13 +124,20 @@ func FileType(path string) string {
 			if target.IsDir() {
 				return "dir_link"
 			} else {
-				return "file_link"
+				return GetFileType(path)
 			}
 		}
 		return "unknow"
 	default:
 		return "other"
 	}
+}
+func GetFileType(path string) string {
+	fileType := FileTypeMap[GetExtName(path)]
+	if len(fileType) == 0 {
+		fileType = "file"
+	}
+	return fileType
 }
 
 // 获取唯一文件名

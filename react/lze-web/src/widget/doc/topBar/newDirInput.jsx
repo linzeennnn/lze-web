@@ -1,11 +1,11 @@
 import { useState } from "react"
-import {useGlobal,list,loadPage} from '../global'; 
+import {useGlobal,list,loadPage, fileBuffer} from '../global'; 
 import { GetText } from '../../../utils/common';
 
 import { notify } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
-import { getNowPath } from "../../../store/CacheList";
+import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList";
 export default function NewDirInput({setCreate}) {
     const[newName,setNewName]=useState("")
      const nameChange = (e) => {
@@ -50,8 +50,12 @@ export function NewDir(folderName) {
      folderName,
     nowpath: getNowPath()     
     },
-    success:()=>{
-      list(getNowPath());
+    success:(data)=>{
+          const cache=structuredClone(getFileCache())
+          const tmpFileList=cache.fileList
+          const newFileList=[data.fileItem].concat(cache.fileList[cache.current])
+          tmpFileList[cache.current]=newFileList
+          setFileCache({...cache,fileList:tmpFileList})
     }
   })
 }

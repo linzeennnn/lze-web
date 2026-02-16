@@ -25,8 +25,7 @@ func List(c *gin.Context) {
 	fileType := global.FileType(filePath)
 	if fileType == "dir" || fileType == "dir_link" {
 		getDir(rec, c)
-	}
-	if fileType == "file" || fileType == "file_link" {
+	} else {
 		getFile(rec, c)
 	}
 }

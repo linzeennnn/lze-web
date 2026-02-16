@@ -1,35 +1,36 @@
 import { useState, useEffect } from "react"
 import { Icon } from "../../../utils/icon"
 import FileItem from "../../common/fileList/fileItem"
-import { list, useGlobal} from "../global"
+import { fileBuffer, list, useGlobal} from "../global"
 import DownloadBtn from "./downloadBtn"
 import Link from "./link"
 import { Api } from "../../../utils/request";
 import { GetText } from "../../../utils/common"
-import { getNowPath } from "../../../store/CacheList"
-export default function fileItme({fileMes,selected,docClick}){
-    const include=selected.selected.includes(fileMes[0])
+import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList"
+export default function fileItme({index,fileMes,selected,docClick}){
+    const include=selected.selected.includes(index)
     const edit=useGlobal(state=>state.edit)
     return(
             <FileItem name={fileMes[0]} type={fileMes[1]}
              Fun={ClickFun} TextFun={TextClick}
              mask={selected.status?<FileItemMask 
               include={include}
-              fileMes={fileMes} 
+              index={index} 
               selected={selected}/>:null}
              fileBtn={<FileBtn fileMes={fileMes}/>}
             NameText={
             (edit.name==fileMes[0]
                 &&edit.status)
-            ?<NameText name={fileMes[0]}/>:null}
+            ?<NameText name={fileMes[0]} index={index}/>:null}
              /> 
     )
 }
-function FileItemMask({fileMes,selected,include}){
+function FileItemMask({index,selected,include}){
     return(
         <div className={'file-item-mask '
             +(selected.status&&include?'file-item-mask-selected':'')} 
-    onClick={()=>{MaskClick(include,fileMes[0])}}></div>
+    onClick={()=>{fileBuffer.add(index);
+    }}></div>
     )
 }
 function FileBtn({fileMes}){
@@ -38,10 +39,11 @@ function FileBtn({fileMes}){
     <DownloadBtn fileMes={fileMes}/>
     </>)
 }
-function NameText({ name }) {
+function NameText({ name,index }) {
   const [text, setText] = useState(name);
 
   const save = () => {
+    fileBuffer.add(index)
     rename(name, text);
   };
 
@@ -87,15 +89,6 @@ function NameText({ name }) {
 function ClickFun(name){
         list(getNowPath() + "/" + name)
 }
-function MaskClick(include,name){
-    let tmpSelected=useGlobal.getState().selected.selected
-    if(include){
-        tmpSelected=tmpSelected.filter(item=>item!==name)
-    }else{
-        tmpSelected.push(name)
-    }
-    useGlobal.setState({selected:{...useGlobal.getState().selected,selected:tmpSelected}})
-}
 function TextClick(name=""){
     if(useGlobal.getState().edit.status){
     useGlobal.setState({edit:{status:false,name:name}})
@@ -110,13 +103,21 @@ function rename(oldname,newname){
     if(oldname==newname){
         return
     }
-    const global=useGlobal.getState()
     const oldpath=nowPath+"/"+oldname
     const newpath=nowPath+"/"+newname
 Api.patch({
     api:"doc/rename",
     body:{oldpath,newpath},
     notice:true,
-    success:()=>{list(nowPath)}
+    success:(data)=>{
+      const cache=structuredClone(getFileCache())
+      const tmpFileList=cache.fileList
+      const newFileList=cache.fileList[cache.current]
+      newFileList[fileBuffer.getSelected()[0]]=data.fileItem
+      tmpFileList[cache.current]=newFileList
+      setFileCache({...cache,fileList:tmpFileList})
+      fileBuffer.clean()
+      
+    }
 })
 }

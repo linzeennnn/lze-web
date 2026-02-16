@@ -12,7 +12,7 @@ import (
 
 func NewFolder(c *gin.Context) {
 	var rec newfolder.Rec
-	var sendData response.Response[string]
+	var sendData response.Response[newfolder.Send]
 	if err := c.ShouldBindJSON(&rec); err != nil {
 		sendData.Code = 400
 		sendData.Msg = err.Error()
@@ -26,6 +26,7 @@ func NewFolder(c *gin.Context) {
 		os.Mkdir(filepath.Join(destPath, dirName), 0755)
 		sendData.Code = 200
 		sendData.Msg = global.GetText("new_dir_success", c)
+		sendData.Data.FileItem = [2]string{dirName, "dir"}
 		c.JSON(200, sendData)
 	} else {
 		sendData.Code = 403

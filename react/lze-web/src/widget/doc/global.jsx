@@ -7,7 +7,7 @@ import { GetPageSession, SetPageSession } from '../../utils/pageSession';
 import { PageUrl } from '../../utils/page';
 import { PageInit } from '../../utils/pageInit';
 import { AddCacheList } from '../../utils/CacheList';
-import { getNowPath } from '../../store/CacheList';
+import { getFileList, getNowPath } from '../../store/CacheList';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   uploading: false,
@@ -18,6 +18,15 @@ export const useGlobal = create((set, get) => ({
   edit:{
     status:false,
     fileName:""
+  },
+  fileBuffer:{
+    source:-1,
+    dest:-1,
+    selected:{
+    selected: [],
+    status:false
+  },
+    newFileList:[]
   },
   showBg: false,
   loading: false,
@@ -55,7 +64,132 @@ PageInit("doc")
   const path=pageSession.doc.list.path
   list(path)
 }
+///////// buffer相关//////////////
+export const fileBuffer = {
 
+  // 添加/移除选中
+ add: (index) => {
+  useGlobal.setState(s => {
+    const fb = s.fileBuffer;
+    const selObj = fb.selected;
+    const arr = selObj.selected;
+
+    let newArr;
+
+    if (arr.includes(index)) {
+      // 移除
+      newArr = arr.filter(item => item !== index);
+    } else {
+      // 添加
+      newArr = [...arr, index];
+    }
+
+    return {
+      fileBuffer: {
+        ...fb,
+        selected: {
+          selected: newArr,
+          status: newArr.length > 0   // 是否有选中
+        }
+      }
+    };
+  });
+},
+
+  include: (index) => {
+  return useGlobal
+    .getState()
+    .fileBuffer
+    .selected
+    .selected
+    .includes(index);
+},
+  open: () => {
+    useGlobal.setState(s => ({
+      fileBuffer: {
+        ...s.fileBuffer,
+        selected: {
+          ...s.fileBuffer.selected,
+          status: true
+        }
+      }
+    }));
+  },
+  hide: () => {
+    useGlobal.setState(s => ({
+      fileBuffer: {
+        ...s.fileBuffer,
+        selected: {
+          ...s.fileBuffer.selected,
+          status: false
+        }
+      }
+    }));
+  },
+  clean: () => {
+    useGlobal.setState(s => ({
+      fileBuffer: {
+        ...s.fileBuffer,
+        selected: {selected:[],status:false},
+        source: -1,
+        dest: -1,
+        newFileList: []
+      }
+    }));
+  },
+
+  // ===== getters =====
+  getSelected: () => useGlobal.getState().fileBuffer.selected.selected,
+  getSource: () => useGlobal.getState().fileBuffer.source,
+  getDest: () => useGlobal.getState().fileBuffer.dest,
+  getNewFileList: () => useGlobal.getState().fileBuffer.newFileList,
+  getSelectedFileList:()=>{
+      const fileList=getFileList()
+      const selected=fileBuffer.getSelected()
+      const selectedFileList=[]
+      for (const i of selected) {
+          selectedFileList.push(fileList[i][0]);
+        }
+      return selectedFileList
+  },
+  // ===== setters =====
+  setSource: (index) => {
+    useGlobal.setState(s => ({
+      fileBuffer: {
+        ...s.fileBuffer,
+        source: index
+      }
+    }));
+  },
+
+  setDest: (index) => {
+    useGlobal.setState(s => ({
+      fileBuffer: {
+        ...s.fileBuffer,
+        dest: index
+      }
+    }));
+  },
+
+  setNewFileList: (list) => {
+    useGlobal.setState(s => ({
+      fileBuffer: {
+        ...s.fileBuffer,
+        newFileList: list
+      }
+    }));
+  },
+
+  setSelected: (arr) => {
+    useGlobal.setState(s => ({
+      fileBuffer: {
+        ...s.fileBuffer,
+        selected: arr
+      }
+    }));
+  }
+};
+// //////////////////////
 // 扫描目录
 export function list(path) {
 const pageSession=GetPageSession()
