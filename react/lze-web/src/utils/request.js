@@ -27,27 +27,29 @@ function req(request, method) {
     fail,
     end,
     notice,
+    contentType,
     loading = true   
   } = request
 
   loading && loadingPage(true)
   const env=getEnv()
   const m = method.toUpperCase()
+  let headers = {
+    "authorization": "Bearer " + getToken(),
+    "lang": getLangType(),
+    "source": env.type
+  }
+  if (!(body instanceof FormData)) {
+  headers["Content-Type"] = contentType ? contentType : "application/json"
+}
 
   const options = {
     method: m,
-    headers: {
-      "Content-Type": "application/json",
-      "authorization": "Bearer " + getToken(),
-      "lang": getLangType(),
-      "source":env.type
-    }
+    headers: headers
   }
-
   if (body && m !== "GET") {
-    options.body = JSON.stringify(body)
+    options.body = isObj(body) ? JSON.stringify(body) : body
   }
-
   fetch(getUrl() + api, options)
     .then(async res => {
       const data = await res.json()
@@ -102,7 +104,7 @@ async function reqAsync(request, method) {
   }
 
   if (body && m !== "GET") {
-    options.body = JSON.stringify(body)
+    options.body = isObj(body) ? JSON.stringify(body) : body
   }
 
   try {
@@ -133,4 +135,8 @@ async function reqAsync(request, method) {
   } finally {
     loading && loadingPage(false)
   }
+}
+//判断是不是对象
+function isObj(obj) {
+  return Object.prototype.toString.call(obj) === "[object Object]";
 }

@@ -1,7 +1,10 @@
-import { useGlobal ,Upload,UploadPermit} from "../global";
+import { useGlobal ,UploadPermit, list} from "../global";
 import { GetText } from '../../../utils/common';
 import { WinBg } from "../../../components/winBg";
 import { FillIcon, Icon } from "../../../utils/icon";
+import { Upload } from "../../../utils/upload";
+import { getNowPath } from "../../../store/CacheList";
+import { closeUpload, openUpload } from "../../../store/upload";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useGlobal((state) => state.upload); 
@@ -12,23 +15,17 @@ export default function UploadWin() {
             status:true,
             win:false
         }})
-        const fileArr=Array.from(e.target.files);
-        let uploadData={
-            totalSize:0,
-            sendSize:0,
-            completed:false
-        }
         const permitted = await UploadPermit(type);
         if (!permitted) {
         return;
         }
-        fileArr.forEach((file,i)=>{
-           uploadData.totalSize+=file.size
-           
-        })
-        
-        fileArr.forEach((file,i)=>{
-            Upload(file,uploadData,type) 
+        openUpload()
+        Upload({
+            files:e.target.files,
+            apiUrl:"doc/upload_file",
+            success:()=>{
+                    list(getNowPath())
+            }
         })
          e.target.value = null;
     }

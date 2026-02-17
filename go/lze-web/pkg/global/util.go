@@ -161,10 +161,10 @@ func UniqueName(path, fileName string) string {
 // 合并文件
 func MergeFile(tempPath string, total int64) string {
 	fileName := filepath.Base(tempPath)
-	os.Mkdir(filepath.Join(tempPath, "target"), 0755)
-	targetFile := filepath.Join(tempPath, "target", fileName)
+	targetFile := filepath.Join(tempPath, "target_"+fileName)
 	output, err := os.Create(targetFile)
 	if err != nil {
+		fmt.Println("error")
 		return ""
 	}
 	defer output.Close()
@@ -234,7 +234,7 @@ func GetExtName(name string) string {
 // 判断文件是否存在
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
-	return err == nil || !os.IsNotExist(err)
+	return err == nil
 }
 func GetLangType(c *gin.Context) string {
 	langType := c.GetHeader("lang")

@@ -6,10 +6,11 @@ import { Icon } from '../../../utils/icon';
 import ShowPath from '../../common/fileList/ShowPath';
 import { LocalList } from '../../../utils/CacheList';
 import { useFileCacheStore } from '../../../store/CacheList';
+import { useUploadStore } from '../../../store/upload';
 
 export default function TopBarBox({ createStatus }) {
   const [creating, setCreating] = createStatus;
-  const upload = useGlobal((state) => state.upload);
+  const upload=useUploadStore((state)=>state.upload)
   const current = useFileCacheStore((state) => state.fileCache).current;
   const goHome = () => {
     if (current ==0) return;
@@ -42,8 +43,8 @@ export default function TopBarBox({ createStatus }) {
 
       {upload.status && (
         <>
-          <div id="progress" style={{ width: upload.percent }}></div>
-          <span id="progress-text">{upload.percent}</span>
+          <div id="progress" style={{ width: upload.percent+"%" }}></div>
+          <span id="progress-text">{upload.percent+"%"}</span>
         </>
       )}
 
