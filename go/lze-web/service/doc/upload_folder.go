@@ -1,6 +1,8 @@
 package doc
 
 import (
+	"lze-web/model/doc/upload"
+	"lze-web/model/public/response"
 	"lze-web/pkg/global"
 	"os"
 	"path/filepath"
@@ -10,36 +12,51 @@ import (
 )
 
 func UploadFolder(c *gin.Context) {
+	var sendData response.Response[upload.Send]
 	global.InitUserMes(c)
-	if global.CheckPermit(c, "doc", "updir") {
-		relativePath := filepath.FromSlash(c.PostForm("relativePath"))
-		curChunkStr := c.PostForm("currentChunk")
-		total, err := strconv.ParseInt(c.PostForm("totalChunks"), 10, 0)
+	if global.CheckPermit(c, "doc", "upfile") {
+		filename := c.PostForm("filename")
+		indexStr := c.PostForm("index")
+		relativePath := c.PostForm("relativePath")
+		uploadToken := c.PostForm("uploadToken")
+		tempPath := filepath.Join(global.TempPath, "doc", "uploadDir", "uploading", uploadToken, relativePath)
+		totalChunkStr := c.PostForm("totalChunk")
+		totalChunk, err := strconv.ParseInt(totalChunkStr, 10, 0)
+
 		if err != nil {
-			c.String(400, err.Error())
+			sendData.Msg = err.Error()
+			sendData.Code = 400
+			c.JSON(sendData.Code, sendData)
+
 			return
 		}
-		filename := c.PostForm("fileName")
-		tempPath := filepath.Join(global.TempPath, relativePath)
-		if curChunkStr == "0" {
+		chunk, err := c.FormFile("chunk")
+		if err != nil {
+			sendData.Msg = err.Error()
+			sendData.Code = 400
+			c.JSON(sendData.Code, sendData)
+			return
+		}
+		if !global.FileExists(tempPath) {
 			os.MkdirAll(tempPath, 0755)
 		}
-		file, err := c.FormFile("file")
-		if err != nil {
-			c.String(400, err.Error())
-			return
+		savingPath := filepath.Join(tempPath, indexStr+"_saving")
+		c.SaveUploadedFile(chunk, savingPath)
+		tmpChunkPath := filepath.Join(tempPath, indexStr)
+		os.Rename(savingPath, tmpChunkPath)
+		if isFinsh(int(totalChunk), tempPath) {
+			targetFile := global.MergeFile(tempPath, totalChunk)
+			tmpFinshPath := filepath.Join(global.TempPath, "doc", "uploadDir", "uploading", uploadToken, filepath.Dir(relativePath))
+			os.MkdirAll(tmpFinshPath, 0755)
+			destPath := filepath.Join(tmpFinshPath, filename)
+			os.Rename(targetFile, destPath)
+			sendData.Msg = global.GetText("upload_completed", c)
 		}
-		c.SaveUploadedFile(file, filepath.Join(tempPath, curChunkStr))
-		curCount, _ := strconv.ParseInt(curChunkStr, 10, 0)
-		if curCount == total-1 {
-			targetFile := global.MergeFile(tempPath, total)
-			destPath := filepath.Join(filepath.Dir(tempPath), filename)
-			os.Rename(targetFile, destPath+".tmp")
-			os.RemoveAll(tempPath)
-			os.Rename(destPath+".tmp", destPath)
-		}
-
+		sendData.Code = 200
+		c.JSON(sendData.Code, sendData)
 	} else {
-		c.Status(401)
+		sendData.Code = 401
+		sendData.Msg = global.GetText("no_upload_file_permit", c)
+		c.JSON(sendData.Code, sendData)
 	}
 }

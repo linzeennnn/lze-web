@@ -18,9 +18,7 @@ export default function LoadBtn(){
             InitData()
         }}
         >
-            <div>
             {Icon("load")}
-            </div>
             <span>{GetText("refresh")}</span>
         </button>
     )

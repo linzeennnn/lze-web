@@ -126,10 +126,14 @@
     left: 10px;
 }
 .upload-opt-btn{
-    margin: 10px !important;
     width: 100px !important;
     height: 100px !important;
+    margin: 10px !important;
     transition: transform 0.3s ease-in-out;
+}
+.upload-opt-btn svg{
+    width: 100px !important;
+    height: 100px !important;
 }
 #progress{
     text-align: center;

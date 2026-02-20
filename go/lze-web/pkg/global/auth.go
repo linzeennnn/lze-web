@@ -199,7 +199,18 @@ func GenJti() string {
 		builder.WriteRune(dict[index])
 	}
 	return builder.String() + "_" + strconv.FormatInt(GetTimeStamp(), 10)
+}
 
+// 生成会话令牌
+func GenSessionToken() string {
+	dict := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+	var builder strings.Builder
+	for i := 0; i < 32; i++ {
+		index := rand.Intn(32)
+		builder.WriteRune(dict[index])
+	}
+	return builder.String() + "_" + strconv.FormatInt(GetTimeStampS(), 10)
 }
 
 // 获取某个用户的配置信息

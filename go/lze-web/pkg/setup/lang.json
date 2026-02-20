@@ -53,7 +53,8 @@
         "add_bok_success":"添加书签成功",
         "no_add_bok_per":"没有添加书签的权限",
         "url_not_found":"未找到链接地址",
-        "no_upload_file_permit":"没有上传文件的权限"
+        "no_upload_file_permit":"没有上传文件的权限",
+        "upload_completed":"上传完成"
 },
 "en":{
         "login_outdate":"Login expired, please login again.",
@@ -109,7 +110,8 @@
         "add_bok_success":"Bookmark added successfully.",
         "no_add_bok_per":"No permission to add bookmark.",
         "url_not_found":"URL not found.",
-        "no_upload_file_permit":"No upload file permission."
+        "no_upload_file_permit":"No upload file permission.",
+        "upload_completed":"Upload completed."
 }
 
 }

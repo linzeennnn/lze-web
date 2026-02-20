@@ -2,6 +2,7 @@ package global
 
 import (
 	"lze-web/model/config"
+	"sync"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -31,8 +32,9 @@ var (
 	DirLinkArr  [10]DirLink
 	CmdCacheMap CmdCache
 	// 类型判断
-	WebTypeMap  map[string]bool   //浏览器可浏览类型
-	FileTypeMap map[string]string //文件类型
+	WebTypeMap  map[string]bool         //浏览器可浏览类型
+	FileTypeMap map[string]string       //文件类型
+	UploadTotal map[string]*UploadCount //上传总数统计
 )
 
 type Claims struct {
@@ -61,4 +63,8 @@ type CmdCache struct {
 	DummyIndex int // 1~10
 	MaxDummy   int // 10
 	OldestCmd  string
+}
+type UploadCount struct {
+	Count int
+	Lock  *sync.Mutex
 }

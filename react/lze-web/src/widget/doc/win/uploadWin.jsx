@@ -4,40 +4,30 @@ import { WinBg } from "../../../components/winBg";
 import { FillIcon, Icon } from "../../../utils/icon";
 import { Upload } from "../../../utils/upload";
 import { getNowPath } from "../../../store/CacheList";
-import { closeUpload, openUpload } from "../../../store/upload";
+import { closeUpload, openUpload, useUploadStore } from "../../../store/upload";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
-    const upload=useGlobal((state) => state.upload); 
+    const upload=useUploadStore((state)=>state.upload)
+    const uploadWin=useGlobal((state) => state.uploadWin);
     const dragWin=useGlobal((state) => state.dragWin);
-    const  uploadChange=async(e,type)=>{
-        setGlobal({upload:{
-            ...upload,
-            status:true,
-            win:false
-        }})
-        const permitted = await UploadPermit(type);
-        if (!permitted) {
-        return;
-        }
+    const  uploadChange=(e)=>{
+        useGlobal.setState({uploadWin:false})
         openUpload()
         Upload({
             files:e.target.files,
-            apiUrl:"doc/upload_file",
+            apiUrl:"doc/upfile",
             success:()=>{
+                e.target.value = null;
                     list(getNowPath())
             }
         })
-         e.target.value = null;
     }
     return(
         <>
-    {upload.win?(<div id="upload-opt">
+    {uploadWin?(<div id="upload-opt">
         <button id="close-upload" className="btn"
             title={GetText("close")} onClick={()=>{
-        setGlobal({upload:{
-            ...upload,
-            win:false
-        }})}}
+        setGlobal({uploadWin:false})}}
             >{Icon("no")}</button>
             <input id="upFile" style={{display:"none"}} 
             type="file" multiple onChange={(e) => uploadChange(e, "file")}/>
@@ -52,7 +42,7 @@ export default function UploadWin() {
             title={GetText("upload_folder")}  htmlFor="upDir"
             >{FillIcon("doc")}</label>
     </div>):null}
-    <WinBg showBg={upload.win} />
+    <WinBg showBg={uploadWin} />
     {upload.status?(<div id="uploading-back"></div>):null}
         <div id="drag-win"
         style={dragWin?{display:"flex"}:{display:"none"}}

@@ -1,18 +1,21 @@
 import { getNowPath } from "../store/CacheList"
 import { getUrl } from "../store/request"
 import { closeUpload, getFun, getSendSize, getTotalSize,  useUploadStore } from "../store/upload"
-import { Api } from "./request"
+import { Api, AsyncApi } from "./request"
 
-export function Upload(msg) {
+export async function Upload(msg) {
     const{
         files,
         apiUrl,
         success,
         fail
     }=msg
-    useUploadStore.getState().setTotalSize(files)
+    useUploadStore.getState().setTotal(files)
     useUploadStore.getState().setUrl(apiUrl)
     useUploadStore.getState().setFun({success,fail})
+    const uploadToken=await getUploadToken()
+    if(uploadToken=="")return
+    useUploadStore.getState().setToken(uploadToken)
     for(const file of files){
         sendFile(file)
     }
@@ -31,6 +34,8 @@ function sendChunk(chunk,file,totalchunk,index){
     const fd = new FormData();
     fd.append('filename',file.name)
     fd.append('nowPath',getNowPath())
+    fd.append('totalFile',useUploadStore.getState().upload.totalFile)
+    fd.append('uploadToken',useUploadStore.getState().upload.token)
     fd.append('relativePath',file.webkitRelativePath)
     fd.append('totalChunk',totalchunk)
     fd.append('index',index)
@@ -40,6 +45,7 @@ function sendChunk(chunk,file,totalchunk,index){
     Api.post({
         api:useUploadStore.getState().upload.apiUrl,
         body:fd,
+        notice:true,
         contentType:"multipart/form-data",
         success:(data)=>{
             if(data.fileItem.length!=0)
@@ -76,4 +82,12 @@ function getChunkSize(file){
 // 判断是否结束
 function isFinsh(){
     return (getSendSize()>=getTotalSize())
+}
+// 获取上传的token
+async function getUploadToken(){
+   const data=await AsyncApi.post({
+    api:"login/upload",
+    body:{action:useUploadStore.getState().upload.apiUrl}
+   })
+   return data
 }

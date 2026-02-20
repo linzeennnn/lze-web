@@ -6,11 +6,13 @@ export const useNotifyStore = create((set) => ({
   show:false,
 
   normal: (text) => {
+    if(text=="") return;
     set({ msg: text, type: "normal", show:true });
     setTimeout(() => set({show: false  }), 1000);
   },
 
   err: (text) => {
+    if(text=="") return;
     set({ msg: text, type: "err", show:true });
     setTimeout(() => set({ show: false }), 1000);
   }

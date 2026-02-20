@@ -13,9 +13,7 @@ export default function UnlockBtn({setTmpLoad}){
                         }, 500);
                             }}
         >
-            <div>
                 {Icon("power")}
-            </div>
             <span>{GetText("start")}</span>
         </button>
     )

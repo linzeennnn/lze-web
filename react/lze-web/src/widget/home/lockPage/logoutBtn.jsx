@@ -10,7 +10,7 @@ export default function LogoutBtn(){
         <button id="logout-btn" className={"btn lock-btn "+(user=='guest'?"logout-disabled":"")}
         onClick={()=>logout()}
         >
-            <div>{Icon("logout")}</div>
+            {Icon("logout")}
             <span>{GetText("exit")}</span>
         </button>
     )

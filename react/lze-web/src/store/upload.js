@@ -1,14 +1,16 @@
 import { create } from "zustand";
-import { setUrl } from "./request";
+import { setToken, setUrl } from "./request";
 
 export const useUploadStore = create((set, get) => ({
   upload: {
     totalSize: 0,
+    totalFile:0,
     sendSize: 0,
     percent: 0,
     fileList: [],//每个文件上传完成后的fileList,
     apiUrl:"",
     status:false,
+    token:"",
     fun:{
     success:()=>{},
     fail:()=>{}
@@ -46,6 +48,15 @@ export const useUploadStore = create((set, get) => ({
       }
     });
   },
+  setToken:(token)=>{
+    const { upload } = get();
+     set({
+      upload: {
+        ...upload,
+        token:token
+      }
+    });
+  },
   // 获取 fileList
   getFileList: () => {
     const { upload } = get();
@@ -61,7 +72,7 @@ export const useUploadStore = create((set, get) => ({
     });
   },
   // 设置总大小
-  setTotalSize: (files) => {
+  setTotal: (files) => {
     let size=0
     for(const file of files){
       size+=file.size
@@ -75,6 +86,7 @@ export const useUploadStore = create((set, get) => ({
       upload: {
         ...upload,
         totalSize: size,
+        totalFile:files.length,
         percent
       }
     });

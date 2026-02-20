@@ -39,11 +39,7 @@ export const useGlobal = create((set, get) => ({
     currentType:"",
     path:""
   },
-  upload:{
-    win:false,
-    status:false,
-    percent:"0%"
-  },
+  uploadWin:false,
   selected:{
     selected: [],
     status:false

@@ -18,7 +18,9 @@ func UploadFile(c *gin.Context) {
 		filename := c.PostForm("filename")
 		nowpath := filepath.FromSlash(c.PostForm("nowPath"))
 		indexStr := c.PostForm("index")
-		tempPath := filepath.Join(global.TempPath, "doc", "uploadFile", filename)
+		tottalFile, _ := strconv.ParseInt(c.PostForm("totalFile"), 10, 0)
+		uploadToken := c.PostForm("uploadToken")
+		tempPath := filepath.Join(global.TempPath, "doc", "uploadFile", uploadToken, filename)
 		totalChunkStr := c.PostForm("totalChunk")
 		totalChunk, err := strconv.ParseInt(totalChunkStr, 10, 0)
 
@@ -49,8 +51,11 @@ func UploadFile(c *gin.Context) {
 			saveName := global.UniqueName(targetPath, filename)
 			destPath := filepath.Join(global.DocPath, nowpath, saveName)
 			os.Rename(targetFile, destPath)
-			os.RemoveAll(tempPath)
+			if global.IsUploadFinished(uploadToken, int(tottalFile)) {
+				os.RemoveAll(filepath.Join(global.TempPath, "doc", "uploadFile", uploadToken))
+			}
 			sendData.Data.FileItem = [2]string{saveName, global.FileType(destPath)}
+			sendData.Msg = global.GetText("upload_completed", c)
 		}
 		sendData.Code = 200
 		c.JSON(sendData.Code, sendData)

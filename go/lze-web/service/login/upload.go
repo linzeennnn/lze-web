@@ -1,9 +1,11 @@
 package login
 
 import (
+	"fmt"
 	"lze-web/model/login/upload"
 	"lze-web/model/public/response"
 	"lze-web/pkg/global"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,11 +19,14 @@ func Upload(c *gin.Context) {
 		c.JSON(400, sendData)
 		return
 	}
-	control, action := getPermitName(rec)
+	control, action := getPermitName(rec.Action)
 	global.InitUserMes(c)
 	if global.CheckPermit(c, control, action) {
 		sendData.Code = 200
 		sendData.Msg = global.GetText("allow_upload", c)
+		token := global.GenSessionToken()
+		global.SetTotalFileCountItem(token)
+		sendData.Data = token
 		c.JSON(200, sendData)
 		return
 	}
@@ -29,15 +34,8 @@ func Upload(c *gin.Context) {
 	sendData.Msg = global.GetText("not_allow_upload", c)
 	c.JSON(403, sendData)
 }
-func getPermitName(rec upload.Rec) (string, string) {
-
-	if rec.AppType == "doc" {
-		if rec.FileType == "dir" {
-			return "doc", "updir"
-		} else {
-			return "doc", "upfile"
-		}
-	} else {
-		return rec.AppType, "upload"
-	}
+func getPermitName(action string) (string, string) {
+	fmt.Println(action)
+	parts := strings.Split(action, "/")
+	return parts[0], parts[1]
 }

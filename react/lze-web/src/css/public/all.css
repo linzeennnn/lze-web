@@ -267,6 +267,11 @@ iframe{
   background-position: center;
   background-repeat: no-repeat;
 }
+.btn svg{
+  width: 32px;
+  height: 32px;
+
+}
 .loading {
     width: 60px;
     height: 60px;
