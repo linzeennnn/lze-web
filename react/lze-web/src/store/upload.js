@@ -98,13 +98,16 @@ export const useUploadStore = create((set, get) => ({
   },
 
   // 设置已发送大小（自动计算 percent）
-  setSendSize: (size) => {
+setSendSize: (size) => {
   const { upload } = get();
   const newSendSize = upload.sendSize + size;
 
-  const percent = upload.totalSize === 0
+  let percent = upload.totalSize === 0
     ? 0
     : Math.floor(newSendSize / upload.totalSize * 100);
+
+  // 限制最大 100
+  if (percent > 100) percent = 100;
 
   set({
     upload: {

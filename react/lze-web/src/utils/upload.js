@@ -62,7 +62,10 @@ function sendChunk(chunk,file,totalchunk,index){
     })
 
 }
-
+// 设置发送文件大小
+function setprogress(percent,chunkSize){
+    
+}
 // 获取分块
 function getChunk(file){
     const chunks = [];

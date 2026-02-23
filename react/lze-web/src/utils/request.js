@@ -142,6 +142,7 @@ function isObj(obj) {
 }
 //使用xhr获取上传进度
 function uploadReq(request) {
+  let lastLoaded=0//记录1上一次上传的大小
   const {
     api,
     body,
@@ -151,13 +152,14 @@ function uploadReq(request) {
     notice,
     end,
   } = request
-  console.log(body);
   
   const env = getEnv();
     const xhr = new XMLHttpRequest();
     xhr.upload.addEventListener('progress', (event) => {
         if (event.lengthComputable) {
-          setProgress(event.loaded)
+          const delta = event.loaded - lastLoaded
+          lastLoaded = event.loaded
+          setProgress(delta/event.total)
         }
     });
     xhr.open('POST', getUrl() + api, true);
