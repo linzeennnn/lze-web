@@ -2,25 +2,31 @@ import { create } from "zustand";
 import { setToken, setUrl } from "./request";
 
 export const useUploadStore = create((set, get) => ({
-  upload: {
-    totalSize: 0,
-    totalFile:0,
-    sendSize: 0,
-    percent: 0,
-    fileList: [],//每个文件上传完成后的fileList,
-    apiUrl:"",
-    status:false,
-    token:"",
-    fun:{
-    success:()=>{},
-    fail:()=>{}
-    }
+  upload: {},
+  init:()=>{
+    set({
+      upload: {
+        totalSize: 0,
+        totalFile:0,
+        sendSize: 0,
+        percent: 0,
+        fileList: [],
+        status:true,
+        apiUrl:"",
+        status:false,
+        token:"",
+        fun:{
+          success:()=>{},
+          fail:()=>{}
+        }
+      }
+    });
   },
-
   // 添加文件到 fileList
   addFileList: (fileItem) => {
+    if(!fileItem[0]&&!fileItem[1]) return;
     const { upload } = get();
-    const newFileList = [...upload.fileList, ...fileItem];
+    const newFileList = [...upload.fileList, fileItem];
     set({
       upload: {
         ...upload,
@@ -28,7 +34,6 @@ export const useUploadStore = create((set, get) => ({
       }
     });
   },
-  
   setFun:(fun)=>{
     const { upload } = get();
     set({
@@ -58,7 +63,7 @@ export const useUploadStore = create((set, get) => ({
     });
   },
   // 获取 fileList
-  getFileList: () => {
+  getUploadFileList: () => {
     const { upload } = get();
     return upload.fileList;
   },
@@ -119,7 +124,7 @@ export function openUpload(){
   useUploadStore.getState().setStatus(true)
 }
 export const getUpload = () => useUploadStore.getState().upload;
-export const getFileList = () => useUploadStore.getState().getFileList();
+export const getUploadFileList = () => useUploadStore.getState().getUploadFileList();
 export const getSendSize = () => useUploadStore.getState().upload.sendSize;
 export const getTotalSize = () => useUploadStore.getState().upload.totalSize;
 export const getApiUrl=()=>useUploadStore.getState().upload.apiUrl;

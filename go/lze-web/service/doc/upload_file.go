@@ -18,7 +18,7 @@ func UploadFile(c *gin.Context) {
 		filename := c.PostForm("filename")
 		nowpath := filepath.FromSlash(c.PostForm("nowPath"))
 		indexStr := c.PostForm("index")
-		tottalFile, _ := strconv.ParseInt(c.PostForm("totalFile"), 10, 0)
+		totalFile, _ := strconv.ParseInt(c.PostForm("totalFile"), 10, 0)
 		uploadToken := c.PostForm("uploadToken")
 		tempPath := filepath.Join(global.TempPath, "doc", "uploadFile", uploadToken, filename)
 		totalChunkStr := c.PostForm("totalChunk")
@@ -39,7 +39,7 @@ func UploadFile(c *gin.Context) {
 			return
 		}
 		if !global.FileExists(tempPath) {
-			os.Mkdir(tempPath, 0755)
+			os.MkdirAll(tempPath, 0755)
 		}
 		savingPath := filepath.Join(tempPath, indexStr+"_saving")
 		c.SaveUploadedFile(chunk, savingPath)
@@ -51,11 +51,14 @@ func UploadFile(c *gin.Context) {
 			saveName := global.UniqueName(targetPath, filename)
 			destPath := filepath.Join(global.DocPath, nowpath, saveName)
 			os.Rename(targetFile, destPath)
-			if global.IsUploadFinished(uploadToken, int(tottalFile)) {
-				os.RemoveAll(filepath.Join(global.TempPath, "doc", "uploadFile", uploadToken))
-			}
 			sendData.Data.FileItem = [2]string{saveName, global.FileType(destPath)}
-			sendData.Msg = global.GetText("upload_completed", c)
+			if global.IsUploadFinished(uploadToken, int(totalFile)) {
+				os.RemoveAll(filepath.Join(global.TempPath, "doc", "uploadFile", uploadToken))
+				global.RemoveTotalFileCountItem(uploadToken)
+				sendData.Msg = global.GetText("upload_completed", c)
+			} else {
+				global.AddTotalFileCount(uploadToken)
+			}
 		}
 		sendData.Code = 200
 		c.JSON(sendData.Code, sendData)

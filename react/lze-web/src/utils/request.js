@@ -8,7 +8,8 @@ export  const Api={
     get:(request)=>{req(request,"GET")},
     put:(request)=>{req(request,"PUT")},
     delete:(request)=>{req(request,"DELETE")},
-    patch:(request)=>{req(request,"PATCH")}
+    patch:(request)=>{req(request,"PATCH")},
+    upload: (request) => uploadReq(request)
 }
 
 export const AsyncApi = {
@@ -16,7 +17,7 @@ export const AsyncApi = {
   get: (request) => reqAsync(request, "GET"),
   put: (request) => reqAsync(request, "PUT"),
   delete: (request) => reqAsync(request, "DELETE"),
-  patch: (request) => reqAsync(request, "PATCH")
+  patch: (request) => reqAsync(request, "PATCH"),
 };
 
 function req(request, method) {
@@ -30,7 +31,6 @@ function req(request, method) {
     contentType,
     loading = true   
   } = request
-
   loading && loadingPage(true)
   const env=getEnv()
   const m = method.toUpperCase()
@@ -139,4 +139,48 @@ async function reqAsync(request, method) {
 //判断是不是对象
 function isObj(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]";
+}
+//使用xhr获取上传进度
+function uploadReq(request) {
+  const {
+    api,
+    body,
+    setProgress,
+    success,
+    fail,
+    notice,
+    end,
+  } = request
+  console.log(body);
+  
+  const env = getEnv();
+    const xhr = new XMLHttpRequest();
+    xhr.upload.addEventListener('progress', (event) => {
+        if (event.lengthComputable) {
+          setProgress(event.loaded)
+        }
+    });
+    xhr.open('POST', getUrl() + api, true);
+    xhr.setRequestHeader("authorization", "Bearer " + getToken());
+    xhr.setRequestHeader("lang", getLangType());
+    xhr.setRequestHeader("source", env.type);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      const { code, msg, data } = xhr.response || {}
+      if (code=== 200) {
+        notice && notify.normal(msg)
+        success && success(data)
+      } else if (code === 400 || code === 500) {
+        confirmWin.err(msg)
+        fail && fail(code)
+      } else {
+        notify.err(msg)
+        fail && fail(code)
+      }
+    };
+    xhr.onerror = function() {
+        confirmWin.err("error")
+        fail && fail()
+    };
+    xhr.send(body);
 }

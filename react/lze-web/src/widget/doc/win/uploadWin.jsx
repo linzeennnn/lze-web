@@ -3,22 +3,27 @@ import { GetText } from '../../../utils/common';
 import { WinBg } from "../../../components/winBg";
 import { FillIcon, Icon } from "../../../utils/icon";
 import { Upload } from "../../../utils/upload";
-import { getNowPath } from "../../../store/CacheList";
-import { closeUpload, openUpload, useUploadStore } from "../../../store/upload";
+import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList";
+import { closeUpload, getUploadFileList, openUpload, useUploadStore } from "../../../store/upload";
 export default function UploadWin() {
     const setGlobal=useGlobal.setState
     const upload=useUploadStore((state)=>state.upload)
     const uploadWin=useGlobal((state) => state.uploadWin);
     const dragWin=useGlobal((state) => state.dragWin);
-    const  uploadChange=(e)=>{
+    const  uploadChange=(e,type)=>{
         useGlobal.setState({uploadWin:false})
         openUpload()
         Upload({
             files:e.target.files,
-            apiUrl:"doc/upfile",
+            apiUrl:"doc/"+type,
             success:()=>{
+                const newFileItems=getUploadFileList()
+                const cache=structuredClone(getFileCache())
+                const tmpFileList=cache.fileList
+                const newFileList=newFileItems.concat(tmpFileList[cache.current])
+                tmpFileList[cache.current]=newFileList
+                setFileCache({...cache,fileList:tmpFileList})
                 e.target.value = null;
-                    list(getNowPath())
             }
         })
     }
@@ -30,10 +35,10 @@ export default function UploadWin() {
         setGlobal({uploadWin:false})}}
             >{Icon("no")}</button>
             <input id="upFile" style={{display:"none"}} 
-            type="file" multiple onChange={(e) => uploadChange(e, "file")}/>
+            type="file" multiple onChange={(e) => uploadChange(e, "upfile")}/>
             <input type="file" name="folder" style={{display:"none"}}
             webkitdirectory="true" mozdirectory="true" directory="true" multiple
-            onChange={(e) => uploadChange(e, "dir")}   id="upDir" 
+            onChange={(e) => uploadChange(e, "updir")}   id="upDir" 
             />
             <label id="upload-file" className="btn upload-opt-btn"
             title={GetText("upload_file")} htmlFor="upFile"

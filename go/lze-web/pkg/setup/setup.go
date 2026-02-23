@@ -79,6 +79,7 @@ func Setup() {
 	setLang()
 	//设置后缀名
 	setFileType()
+	setupUploadFileCount()
 }
 func setPath(pathType, defaultPath string, WorkConfig map[string]interface{}) string {
 	path := WorkConfig[pathType].(string)
@@ -115,4 +116,7 @@ func setFileType() {
 		// 视频
 		".mp4": "vid", ".webm": "vid", ".ogv": "vid", ".mov": "vid",
 	}
+}
+func setupUploadFileCount() {
+	global.UploadTotal = make(map[string]*global.UploadCount)
 }

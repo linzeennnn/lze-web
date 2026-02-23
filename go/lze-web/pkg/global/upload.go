@@ -86,7 +86,7 @@ func AddTotalFileCount(token string) {
 // 设置总文件数量条目
 func SetTotalFileCountItem(token string) {
 	UploadTotal[token] = &UploadCount{
-		Count: 0,
+		Count: 1,
 		Lock:  &sync.Mutex{},
 	}
 }
@@ -103,5 +103,8 @@ func GetTotalFileCount(token string) int {
 
 // 是否上传完所有文件
 func IsUploadFinished(token string, num int) bool {
-	return UploadTotal[token].Count >= num
+	UploadTotal[token].Lock.Lock()
+	finsh := UploadTotal[token].Count >= num
+	UploadTotal[token].Lock.Unlock()
+	return finsh
 }

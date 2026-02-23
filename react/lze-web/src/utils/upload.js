@@ -1,9 +1,11 @@
 import { getNowPath } from "../store/CacheList"
 import { getUrl } from "../store/request"
-import { closeUpload, getFun, getSendSize, getTotalSize,  useUploadStore } from "../store/upload"
+import { closeUpload, getUploadFileList, getFun, getPercent, getSendSize, getTotalSize,  openUpload,  useUploadStore } from "../store/upload"
 import { Api, AsyncApi } from "./request"
 
 export async function Upload(msg) {
+    useUploadStore.getState().init()
+    openUpload()
     const{
         files,
         apiUrl,
@@ -42,15 +44,16 @@ function sendChunk(chunk,file,totalchunk,index){
     fd.append('chunk',chunk)
    for (const [key, value] of fd.entries()) {
 }
-    Api.post({
+    Api.upload({
         api:useUploadStore.getState().upload.apiUrl,
         body:fd,
+        loading:false,
+        setProgress:(sendSize)=>{useUploadStore.getState().setSendSize(sendSize)},
         notice:true,
         contentType:"multipart/form-data",
         success:(data)=>{
-            if(data.fileItem.length!=0)
-                useUploadStore.getState().addFileList(data.fileItem)
             useUploadStore.getState().setSendSize(chunk.size)
+            useUploadStore.getState().addFileList(data.fileItem)
             if(isFinsh()){
                 getFun().success(data)
                 closeUpload()
