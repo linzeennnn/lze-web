@@ -48,7 +48,7 @@ function sendChunk(chunk,file,totalchunk,index){
         api:useUploadStore.getState().upload.apiUrl,
         body:fd,
         loading:false,
-        setProgress:(sendSize)=>{useUploadStore.getState().setSendSize(sendSize)},
+        setProgress:(percent)=>{useUploadStore.getState().setSendSize(percent*chunk.size)},
         notice:true,
         contentType:"multipart/form-data",
         success:(data)=>{
@@ -61,10 +61,6 @@ function sendChunk(chunk,file,totalchunk,index){
         }
     })
 
-}
-// 设置发送文件大小
-function setprogress(percent,chunkSize){
-    
 }
 // 获取分块
 function getChunk(file){
