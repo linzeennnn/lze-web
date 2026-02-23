@@ -14,10 +14,17 @@ export const useUploadStore = create((set, get) => ({
         status:true,
         apiUrl:"",
         status:false,
+        apiList:{
+          file:"",
+          dir:""
+        },
+        drag:false,
         token:"",
+        files:null,
         fun:{
           success:()=>{},
-          fail:()=>{}
+          fail:()=>{},
+          end:()=>{}
         }
       }
     });
@@ -43,16 +50,36 @@ export const useUploadStore = create((set, get) => ({
       }
     });
   },
-  setUrl:(url)=>{
+  setUrl:(type)=>{
     const { upload } = get();
     
     set({
       upload: {
         ...upload,
-        apiUrl: url
+        apiUrl: upload.apiList[type]
       }
     });
   },
+setUploadMsg: (msg = {}) => {
+  const { upload } = get();
+
+  set({
+    upload: {
+      ...upload,
+      apiUrl: msg.apiUrl ?? upload.apiUrl,
+      fun: {
+        success: msg.success ?? (() => {}),
+        fail: msg.fail ?? (() => {}),
+        end: msg.end ?? (() => {})
+      },
+      files: msg.files ?? [],
+      apiList: {
+        file: msg.fileApi ?? upload.apiList?.file,
+        dir: msg.dirApi ?? upload.apiList?.dir
+      }
+    }
+  });
+},
   setToken:(token)=>{
     const { upload } = get();
      set({
@@ -73,6 +100,15 @@ export const useUploadStore = create((set, get) => ({
       upload: {
         ...upload,
         status: status
+      }
+    });
+  },
+  setDrag:(drag)=>{
+    const { upload } = get();
+    set({
+      upload: {
+        ...upload,
+        drag: drag
       }
     });
   },

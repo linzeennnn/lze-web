@@ -15,16 +15,6 @@ import { useEffect } from 'react';
 import { useThemeStore } from '../../store/theme';
 export default function App() {
     const theme=useThemeStore(state=>state.theme)
-  useEffect(() => {
-    window.addEventListener('dragover', DragOver);
-    window.addEventListener('dragleave', DragLeave);
-    window.addEventListener('drop', Drop);
-    return () => {
-      window.removeEventListener('dragover', DragOver);
-      window.removeEventListener('dragleave', DragLeave);
-      window.removeEventListener('drop', Drop);
-    };
-  }, []);
   return ( 
      <div id='app' color={theme.color["doc"]} mode={theme.mode}>
       <ScrollTop>

@@ -1,11 +1,22 @@
-import { useGlobal ,UploadPermit, list} from "../global";
+import { useGlobal ,UploadPermit, list, DragOver, DragLeave, Drop} from "../global";
 import { GetText } from '../../../utils/common';
 import { WinBg } from "../../../components/winBg";
 import { FillIcon, Icon } from "../../../utils/icon";
 import { Upload } from "../../../utils/upload";
 import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList";
 import { closeUpload, getUploadFileList, openUpload, useUploadStore } from "../../../store/upload";
+import { useEffect } from "react";
 export default function UploadWin() {
+  useEffect(() => {
+    window.addEventListener('dragover', DragOver);
+    window.addEventListener('dragleave', DragLeave);
+    window.addEventListener('drop', Drop);
+    return () => {
+      window.removeEventListener('dragover', DragOver);
+      window.removeEventListener('dragleave', DragLeave);
+      window.removeEventListener('drop', Drop);
+    };
+  }, []);
     const setGlobal=useGlobal.setState
     const upload=useUploadStore((state)=>state.upload)
     const uploadWin=useGlobal((state) => state.uploadWin);
