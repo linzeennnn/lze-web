@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
 import { GetText ,notify,confirmWin} from '../../../utils/common';
-import { useGlobal,loadPage } from "../global"
+import { useGlobal} from "../global"
 import { Api } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
 import FloatWin from "../../common/floatWin";

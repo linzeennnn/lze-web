@@ -10,7 +10,6 @@ import { AddCacheList } from '../../utils/CacheList';
 import { getFileList, getNowPath } from '../../store/CacheList';
 // 全局变量
 export const useGlobal = create((set, get) => ({
-  uploading: false,
   linkWin:{
     show:false,
     link:""
@@ -29,8 +28,6 @@ export const useGlobal = create((set, get) => ({
     newFileList:[]
   },
   showBg: false,
-  loading: false,
-  dragWin:false,
   fileWin:{
     status:false,
     url:"",
@@ -194,7 +191,6 @@ Api.post({
   api:"doc/list",
   body:{file: path},
   success:(data)=>{
-      loadPage(false)
       if(data.type=="dir"){
       AddCacheList({
         nowPath:data.currentFolder,
@@ -296,11 +292,4 @@ const sessionPath=pageSession.doc.list.path
         list("")
       }
  }
-// 加载页面
-export function loadPage(isLoad){
-  useGlobal.setState({
-    loading: isLoad,
-    showBg: isLoad
-  });
-}
 

@@ -1,4 +1,4 @@
-import { useGlobal,list,loadPage } from "../global"
+import { useGlobal,list} from "../global"
 import { notify,GetText } from "../../../utils/common"
 import { confirmWin } from "../../../utils/common"
 import { Api } from "../../../utils/request"
@@ -29,7 +29,8 @@ Api.post({
            data.protocol=="pic"||
            data.protocol=="not"
         ){
-            console.log(data);
+            const u = new URL(data.url);
+            window.location.href=window.location.origin+"/file/Documents/"+u.pathname.replace(/^\/+/, '')
             
         }else
             window.location.href=data.url

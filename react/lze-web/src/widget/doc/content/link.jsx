@@ -1,6 +1,6 @@
 
 import { notify } from "../../../utils/common";
-import { useGlobal, loadPage } from "../global"
+import { useGlobal} from "../global"
 import { GetText } from '../../../utils/common';
 import LinkWin from "../win/linkWin";
 import { Api } from "../../../utils/request";

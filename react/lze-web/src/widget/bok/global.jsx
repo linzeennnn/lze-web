@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import {Api} from '../../utils/request'
 import { PageInit } from '../../utils/pageInit';
+import { GetText, notify } from '../../utils/common';
 // 全局变量
 export const useGlobal = create((set, get) => ({
   userName: window.localStorage.getItem('userName'),
@@ -40,4 +41,34 @@ export function loadPage(isLoad){
     loading: isLoad,
     showBg: isLoad
   });
+}
+// 添加新书签
+
+export function addBok(name,text){
+    if(name=="")
+        name="new_bookmark"
+    if(!isUrl(text)){
+        notify.err(GetText("bok_url")+" "+GetText("error")+" "+text)
+        return
+    }
+Api.post({
+    api:'bok/add',
+    body:{name,text},
+    notice:true,
+    success:()=>{
+        list()
+    }
+})
+}
+
+function isUrl(str){
+  try {
+     const url = new URL(str);
+     if(url.protocol=="doc:"){
+      return true
+     }
+    return url.hostname.includes('.');
+  } catch (e) {
+    return false;
+  }
 }

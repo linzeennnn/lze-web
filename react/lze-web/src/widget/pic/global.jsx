@@ -161,13 +161,6 @@ export function list(path,showVideo) {
 }
 }
 
-// 加载页面
-export function loadPage(isLoad){
-  useGlobal.setState({
-    loading: isLoad,
-    showBg: isLoad,
-  });
-}
 // 关闭mediawin
 export function closeMediaWin(){
  useGlobal.setState({ mediaWin: { status: false } })

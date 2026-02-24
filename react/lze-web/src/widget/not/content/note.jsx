@@ -3,7 +3,7 @@ import { copy,GetText } from "../../../utils/common";
 import Del from "./del";
 import hljs from 'highlight.js/lib/common';
 import 'highlight.js/styles/atom-one-dark.min.css';
-import {  list, loadPage, useGlobal } from "../global";
+import { useGlobal } from "../global";
 import { Api } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
 export default function Note({name}){

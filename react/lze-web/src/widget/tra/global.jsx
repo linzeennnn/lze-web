@@ -32,7 +32,6 @@ export function list(path) {
       api:"tra/list",
       body:{folder: path},
       success:(data)=>{
-      loadPage(false)
       let sourcePath
       if(data.currentFolder==""){
         sourcePath = true
@@ -49,12 +48,4 @@ export function list(path) {
 
       }
     })
-}
-
-// 加载页面
-export function loadPage(isLoad){
-  useGlobal.setState({
-    loading: isLoad,
-    showBg: isLoad
-  });
 }

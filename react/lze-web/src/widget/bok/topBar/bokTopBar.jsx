@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import TopBar from '../../../components/topBar'
-import {useGlobal,list,loadPage} from '../global'
-import { notify,GetText } from '../../../utils/common'
-import { Api } from '../../../utils/request'
+import {addBok} from '../global'
+import { GetText } from '../../../utils/common'
 import { Icon } from '../../../utils/icon'
 export default function BokTopBar(){
     const protocolList=[
@@ -57,6 +56,7 @@ export default function BokTopBar(){
         </TopBar>
     )
 }
+
 function haveProtocol(url){
 if (
   url.startsWith('http://') ||
@@ -66,28 +66,4 @@ if (
     return true
 }
 return false
-}
-function addBok(name,text){
-    if(name=="")
-        name="new_bookmark"
-    if(!isUrl(text)){
-        notify.err(GetText("bok_url")+" "+GetText("error")+" "+text)
-        return
-    }
-Api.post({
-    api:'bok/add',
-    body:{name,text},
-    notice:true,
-    success:()=>{
-        list()
-    }
-})
-}
-function isUrl(str){
-  try {
-     const url = new URL(str);
-    return url.hostname.includes('.');
-  } catch (e) {
-    return false;
-  }
 }

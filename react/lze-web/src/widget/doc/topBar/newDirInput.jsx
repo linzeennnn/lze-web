@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {useGlobal,list,loadPage, fileBuffer} from '../global'; 
+import {useGlobal} from '../global'; 
 import { GetText } from '../../../utils/common';
 
 import { notify } from "../../../utils/common";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GetText, notify  } from '../../../utils/common';
-import { useGlobal,list,loadPage } from "../global";
+import { useGlobal,list} from "../global";
 import { Api } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";
 export default function TimeBar() {

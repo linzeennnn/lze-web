@@ -31,13 +31,6 @@ export function InitData(){
 PageInit("mon")
   list()
 }
-// 加载页面
-export function loadPage(isLoad){
-  useGlobal.setState({
-    loading: isLoad,
-    showBg: isLoad
-  });
-}
 //获取配置
 export function list(){
 Api.get({

@@ -1,4 +1,4 @@
-import { useGlobal ,loadPage} from "../global"
+import { useGlobal } from "../global"
 import { GetText } from '../../../utils/common';
 import { notify } from "../../../utils/common";
 import { confirmWin } from "../../../utils/common";

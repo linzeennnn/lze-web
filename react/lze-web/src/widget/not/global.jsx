@@ -119,13 +119,6 @@ export function Save_note(newTitle,newContent){
       }
     })
 }
-// 加载页面
-export function loadPage(isLoad){
-  useGlobal.setState({
-    loading: isLoad,
-    showBg: isLoad
-  });
-}
 // 上传文件
 export async function Upload(file, uploadData) {
   const setGlobal = useGlobal.setState;

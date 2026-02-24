@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { WinBg } from "../../../components/winBg"
-import {useGlobal,loadPage} from "../global"
+import {useGlobal} from "../global"
 import { GetText,notify,confirmWin } from '../../../utils/common';
 import { Api, AsyncApi } from "../../../utils/request";
 import { Icon } from "../../../utils/icon";

@@ -13,7 +13,8 @@ export default function fileItme({index,fileMes,selected,docClick}){
     return(
             <FileItem name={fileMes[0]} type={fileMes[1]}
              Fun={ClickFun} TextFun={TextClick}
-             mask={selected.status?<FileItemMask 
+             mask={selected.status?
+             <FileItemMask 
               include={include}
               index={index} 
               selected={selected}/>:null}
