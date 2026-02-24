@@ -112,7 +112,7 @@ func setFileType() {
 		".gitignore": "not",
 		// 图片
 		".jpg": "img", ".jpeg": "img", ".png": "img", ".gif": "img",
-		".webp": "img", ".bmp": "img", ".ico": "img", ".avif": "img",
+		".webp": "img", ".bmp": "img", ".ico": "img", ".avif": "img", ".svg": "img",
 		// 视频
 		".mp4": "vid", ".webm": "vid", ".ogv": "vid", ".mov": "vid",
 	}

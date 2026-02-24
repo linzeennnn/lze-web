@@ -2,18 +2,7 @@ import { create } from "zustand";
 import { setToken, setUrl } from "./request";
 
 export const useUploadStore = create((set, get) => ({
-  upload: {},
-  init:()=>{
-    set({
-      upload: {
-        totalSize: 0,
-        totalFile:0,
-        sendSize: 0,
-        percent: 0,
-        fileList: [],
-        status:true,
-        apiUrl:"",
-        status:false,
+  upload: {
         apiList:{
           file:"",
           dir:""
@@ -26,6 +15,20 @@ export const useUploadStore = create((set, get) => ({
           fail:()=>{},
           end:()=>{}
         }
+  },
+  init:()=>{
+    const { upload } = get();
+    set({
+      upload: {
+        ...upload,
+        totalSize: 0,
+        totalFile:0,
+        sendSize: 0,
+        percent: 0,
+        fileList: [],
+        status:true,
+        apiUrl:"",
+        status:false,
       }
     });
   },
@@ -41,18 +44,9 @@ export const useUploadStore = create((set, get) => ({
       }
     });
   },
-  setFun:(fun)=>{
+  setUrl:()=>{
     const { upload } = get();
-    set({
-      upload: {
-        ...upload,
-        fun: fun
-      }
-    });
-  },
-  setUrl:(type)=>{
-    const { upload } = get();
-    
+    const type=fileListType(upload.files)
     set({
       upload: {
         ...upload,
@@ -66,17 +60,24 @@ setUploadMsg: (msg = {}) => {
   set({
     upload: {
       ...upload,
-      apiUrl: msg.apiUrl ?? upload.apiUrl,
       fun: {
         success: msg.success ?? (() => {}),
         fail: msg.fail ?? (() => {}),
         end: msg.end ?? (() => {})
       },
-      files: msg.files ?? [],
       apiList: {
-        file: msg.fileApi ?? upload.apiList?.file,
-        dir: msg.dirApi ?? upload.apiList?.dir
+        file: msg.apiList[0] ?? upload.apiList?.file,
+        dir: msg.apiList[1] ?? upload.apiList?.dir
       }
+    }
+  });
+},
+setFiles:(files)=>{
+  const { upload } = get();
+  set({
+    upload: {
+      ...upload,
+      files: files
     }
   });
 },
@@ -177,3 +178,16 @@ export const setTotalSize = (files) => {
   }
   useUploadStore.getState().setTotalSize(total);
 };
+
+// 获取文件列表类型
+function fileListType(files) {
+  if (!files || files.length === 0) return null;
+
+  for (const file of files) {
+    if (file.webkitRelativePath && file.webkitRelativePath.includes("/")) {
+      return "dir";
+    }
+  }
+
+  return "file";
+}

@@ -7,11 +7,9 @@ import GoTopBtn from '../../components/goTopBtn'
 import HeadBar from '../../components/headBar'
 import GoBack from '../../components/goBack'
 import PublicWidget from "../../components/public/publicWidget";
-import{DragOver,DragLeave,Drop, useGlobal} from './global'
 import '../../css/page/doc.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
-import { useEffect } from 'react';
 import { useThemeStore } from '../../store/theme';
 export default function App() {
     const theme=useThemeStore(state=>state.theme)

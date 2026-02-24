@@ -3,20 +3,16 @@ import { getUrl } from "../store/request"
 import { closeUpload, getUploadFileList, getFun, getPercent, getSendSize, getTotalSize,  openUpload,  useUploadStore } from "../store/upload"
 import { Api, AsyncApi } from "./request"
 
-export async function Upload(msg) {
+export async function Upload(files) {
     useUploadStore.getState().init()
     openUpload()
-    const{
-        files,
-        apiUrl,
-        success,
-        fail
-    }=msg
-    useUploadStore.getState().setTotal(files)
-    useUploadStore.getState().setUrl(apiUrl)
-    useUploadStore.getState().setFun({success,fail})
+    useUploadStore.getState().setFiles(files)  
+    useUploadStore.getState().setUrl()
+    useUploadStore.getState().setTotal(files) 
     const uploadToken=await getUploadToken()
-    if(uploadToken=="")return
+    if(!uploadToken){
+        closeUpload()
+        return}
     useUploadStore.getState().setToken(uploadToken)
     for(const file of files){
         sendFile(file)
@@ -92,4 +88,83 @@ async function getUploadToken(){
     body:{action:useUploadStore.getState().upload.apiUrl}
    })
    return data
+}
+//拖拽上传
+export function DragOver(e) {
+    useUploadStore.getState().setDrag(true)
+  e.preventDefault();
+}
+
+export function DragLeave(e) {
+  useUploadStore.getState().setDrag(false)
+  e.preventDefault();
+}
+export async function Drop(e) {
+  useUploadStore.getState().setDrag(false)
+  e.preventDefault();
+  e.stopPropagation();
+
+  const items = e.dataTransfer.items;
+  const files = await getFilesFromItems(items);
+
+  if (files.length === 0) return;
+
+  Upload(files);
+}
+function getFilesFromItems(items) {
+  return new Promise((resolve) => {
+    const fileList = [];
+    let pending = items.length;
+
+    if (!pending) resolve([]);
+
+    for (let i = 0; i < items.length; i++) {
+      const entry = items[i].webkitGetAsEntry();
+      if (entry) {
+        traverseFileTree(entry, "", fileList, () => {
+          pending--;
+          if (!pending) resolve(fileList);
+        });
+      } else {
+        pending--;
+        if (!pending) resolve(fileList);
+      }
+    }
+  });
+}
+function traverseFileTree(entry, path = "", fileList, done) {
+  if (entry.isFile) {
+    entry.file((file) => {
+      // 关键：模拟 input webkitdirectory 的效果
+      Object.defineProperty(file, "webkitRelativePath", {
+        value: path + file.name
+      });
+
+      fileList.push(file);
+      done();
+    });
+  } 
+  else if (entry.isDirectory) {
+    const dirReader = entry.createReader();
+    dirReader.readEntries((entries) => {
+      let count = entries.length;
+
+      if (!count) {
+        done();
+        return;
+      }
+
+      entries.forEach((ent) => {
+        traverseFileTree(
+          ent,
+          path + entry.name + "/",
+          fileList,
+          () => {
+            count--;
+            if (!count) done();
+          }
+        );
+      });
+    });
+  }
 }

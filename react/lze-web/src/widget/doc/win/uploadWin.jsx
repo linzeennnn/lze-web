@@ -1,13 +1,36 @@
-import { useGlobal ,UploadPermit, list, DragOver, DragLeave, Drop} from "../global";
+import { useGlobal } from "../global";
 import { GetText } from '../../../utils/common';
 import { WinBg } from "../../../components/winBg";
 import { FillIcon, Icon } from "../../../utils/icon";
-import { Upload } from "../../../utils/upload";
-import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList";
-import { closeUpload, getUploadFileList, openUpload, useUploadStore } from "../../../store/upload";
-import { useEffect } from "react";
+import { Upload,Drop,DragOver,DragLeave } from "../../../utils/upload";
+import { getFileCache, setFileCache } from "../../../store/CacheList";
+import { getUploadFileList,useUploadStore } from "../../../store/upload";
+import { useEffect, useRef } from "react";
 export default function UploadWin() {
+    const fileRef = useRef(null);
+    const dirRef = useRef(null);
+    const setGlobal=useGlobal.setState
+    const upload=useUploadStore((state)=>state.upload)
+    const uploadWin=useGlobal((state) => state.uploadWin);
+    const dragWin=useUploadStore((state)=>state.upload.drag)
+    const  uploadChange=(e)=>{
+        useGlobal.setState({uploadWin:false})
+        Upload(e.target.files)
+    }
   useEffect(() => {
+        useUploadStore.getState().setUploadMsg({
+        apiList:["doc/upfile","doc/updir"],
+        success:()=>{
+                const newFileItems=getUploadFileList()
+                const cache=structuredClone(getFileCache())
+                const tmpFileList=cache.fileList
+                const newFileList=newFileItems.concat(tmpFileList[cache.current])
+                tmpFileList[cache.current]=newFileList
+                setFileCache({...cache,fileList:tmpFileList})
+                if (fileRef.current) fileRef.current.value = null;
+                if (dirRef.current) dirRef.current.value = null;
+            }
+    })
     window.addEventListener('dragover', DragOver);
     window.addEventListener('dragleave', DragLeave);
     window.addEventListener('drop', Drop);
@@ -17,27 +40,6 @@ export default function UploadWin() {
       window.removeEventListener('drop', Drop);
     };
   }, []);
-    const setGlobal=useGlobal.setState
-    const upload=useUploadStore((state)=>state.upload)
-    const uploadWin=useGlobal((state) => state.uploadWin);
-    const dragWin=useGlobal((state) => state.dragWin);
-    const  uploadChange=(e,type)=>{
-        useGlobal.setState({uploadWin:false})
-        openUpload()
-        Upload({
-            files:e.target.files,
-            apiUrl:"doc/"+type,
-            success:()=>{
-                const newFileItems=getUploadFileList()
-                const cache=structuredClone(getFileCache())
-                const tmpFileList=cache.fileList
-                const newFileList=newFileItems.concat(tmpFileList[cache.current])
-                tmpFileList[cache.current]=newFileList
-                setFileCache({...cache,fileList:tmpFileList})
-                e.target.value = null;
-            }
-        })
-    }
     return(
         <>
     {uploadWin?(<div id="upload-opt">
@@ -45,11 +47,15 @@ export default function UploadWin() {
             title={GetText("close")} onClick={()=>{
         setGlobal({uploadWin:false})}}
             >{Icon("no")}</button>
-            <input id="upFile" style={{display:"none"}} 
-            type="file" multiple onChange={(e) => uploadChange(e, "upfile")}/>
-            <input type="file" name="folder" style={{display:"none"}}
+            <input
+            ref={fileRef}
+            id="upFile" style={{display:"none"}} 
+            type="file" multiple onChange={(e) => uploadChange(e)}/>
+            <input
+            ref={dirRef}
+            type="file" name="folder" style={{display:"none"}}
             webkitdirectory="true" mozdirectory="true" directory="true" multiple
-            onChange={(e) => uploadChange(e, "updir")}   id="upDir" 
+            onChange={(e) => uploadChange(e,)}   id="upDir" 
             />
             <label id="upload-file" className="btn upload-opt-btn"
             title={GetText("upload_file")} htmlFor="upFile"

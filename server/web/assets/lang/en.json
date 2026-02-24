@@ -1,6 +1,7 @@
 {
   "acc_or_pas_err": "Incorrect username or password",
   "add": "Add",
+  "addFile":"Add File",
   "allow_login_time": "Allowed login duration",
   "are_you_sure": "Are you sure you want to perform this action?",
   "back": "Back",
@@ -116,6 +117,7 @@
   "switch_protocol": "Switch Protocol",
   "switch_user": "Switch User",
   "system": "System",
+  "systemSetting": "System Settings",
   "show": "Show",
   "terminal": "Terminal",
   "theme": "Theme",

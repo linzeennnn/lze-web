@@ -12,7 +12,6 @@ func RouterDoc(r *gin.Engine) {
 		loginGroup.POST("/list", doc.List)
 		loginGroup.POST("/upfile", doc.UploadFile)
 		loginGroup.POST("/updir", doc.UploadFolder)
-		loginGroup.POST("/move_folder", doc.MoveFolder)
 		loginGroup.POST("/new_folder", doc.NewFolder)
 		loginGroup.POST("/copy", doc.Copy)
 		loginGroup.POST("/move", doc.Move)
