@@ -42,6 +42,7 @@ export default function UploadWin() {
   }, []);
     return(
         <>
+        <WinBg showBg={uploadWin}>
     {uploadWin?(<div id="upload-opt">
         <button id="close-upload" className="btn"
             title={GetText("close")} onClick={()=>{
@@ -64,7 +65,8 @@ export default function UploadWin() {
             title={GetText("upload_folder")}  htmlFor="upDir"
             >{FillIcon("doc")}</label>
     </div>):null}
-    <WinBg showBg={uploadWin} />
+    </WinBg>
+    <WinBg showBg={upload.status} />
     {upload.status?(<div id="uploading-back"></div>):null}
         <div id="drag-win"
         style={dragWin?{display:"flex"}:{display:"none"}}
