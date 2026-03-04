@@ -1,8 +1,9 @@
 import { getFileCache, getFileListCurrent, setFileCache } from "../store/CacheList"
+import { DeepClone } from "./common"
 
 // 为缓存增加内容
 export function AddCacheList(listMsg){
-  const Cache=structuredClone(getFileCache())
+  const Cache=DeepClone(getFileCache())
   if (Cache.current!=-1&&Cache.nowPath[Cache.current]==listMsg.nowPath){
     const newFileList=Cache.fileList
     const newNowPath=Cache.nowPath
@@ -32,7 +33,7 @@ export function AddCacheList(listMsg){
 // 使用缓存扫描目录
 export function LocalList(index){
   
-  const Cache=structuredClone(getFileCache())
+  const Cache=DeepClone(getFileCache())
       const newFileList=Cache.fileList
       const newNowPath=Cache.nowPath
       const newName=Cache.name

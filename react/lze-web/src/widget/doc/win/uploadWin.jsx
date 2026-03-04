@@ -1,5 +1,5 @@
 import { useGlobal } from "../global";
-import { GetText } from '../../../utils/common';
+import { DeepClone, GetText } from '../../../utils/common';
 import { WinBg } from "../../../components/winBg";
 import { FillIcon, Icon } from "../../../utils/icon";
 import { Upload,Drop,DragOver,DragLeave } from "../../../utils/upload";
@@ -22,7 +22,7 @@ export default function UploadWin() {
         apiList:["doc/upfile","doc/updir"],
         success:()=>{
                 const newFileItems=getUploadFileList()
-                const cache=structuredClone(getFileCache())
+                const cache=DeepClone(getFileCache())
                 const tmpFileList=cache.fileList
                 const newFileList=newFileItems.concat(tmpFileList[cache.current])
                 tmpFileList[cache.current]=newFileList

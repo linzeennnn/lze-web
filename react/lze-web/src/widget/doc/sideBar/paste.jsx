@@ -1,5 +1,5 @@
 import { useGlobal, list, fileBuffer } from "../global";
-import { AddMouseMenu, notify, GetText } from "../../../utils/common";
+import { AddMouseMenu, notify, GetText, DeepClone } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
@@ -63,7 +63,7 @@ function paste_file(type, copylist,source) {
     body: { copylist, nowpath,source },
     success: (data) => {
       const source=fileBuffer.getSource()
-      const cache=structuredClone(getFileCache())
+      const cache=DeepClone(getFileCache())
       const newFilePage=data.fileList.concat(cache.fileList[cache.current])
       cache.fileList[cache.current]=newFilePage
       if(cache.current>=source&&type=="move"){

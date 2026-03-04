@@ -5,7 +5,7 @@ import { fileBuffer, list, useGlobal} from "../global"
 import DownloadBtn from "./downloadBtn"
 import Link from "./link"
 import { Api } from "../../../utils/request";
-import { GetText } from "../../../utils/common"
+import { DeepClone, GetText } from "../../../utils/common"
 import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList"
 export default function fileItme({index,fileMes,selected,docClick}){
     const include=selected.selected.includes(index)
@@ -111,7 +111,7 @@ Api.patch({
     body:{oldpath,newpath},
     notice:true,
     success:(data)=>{
-      const cache=structuredClone(getFileCache())
+      const cache=DeepClone(getFileCache())
       const tmpFileList=cache.fileList
       const newFileList=cache.fileList[cache.current]
       newFileList[fileBuffer.getSelected()[0]]=data.fileItem

@@ -122,3 +122,26 @@ export function GetExt(filename) {
   const parts = filename.split('.');
   return parts.length > 1 ? parts.pop().toLowerCase() : '';
 }
+/////////////深拷贝(为了兼容旧浏览器)////////
+export function DeepClone(obj, weakMap = new WeakMap()) {
+  if (obj === null || typeof obj !== 'object') return obj;
+
+  if (weakMap.has(obj)) return weakMap.get(obj);
+
+  if (obj instanceof Date) return new Date(obj);
+  if (obj instanceof RegExp) return new RegExp(obj);
+
+  const result = Array.isArray(obj)
+    ? []
+    : Object.create(Object.getPrototypeOf(obj));
+
+  weakMap.set(obj, result);
+
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      result[key] = DeepClone(obj[key], weakMap);
+    }
+  }
+
+  return result;
+}

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import {useGlobal} from '../global'; 
-import { GetText } from '../../../utils/common';
+import { DeepClone, GetText } from '../../../utils/common';
 
 import { notify } from "../../../utils/common";
 import { Api } from "../../../utils/request";
@@ -51,7 +51,7 @@ export function NewDir(folderName) {
     nowpath: getNowPath()     
     },
     success:(data)=>{
-          const cache=structuredClone(getFileCache())
+          const cache=DeepClone(getFileCache())
           const tmpFileList=cache.fileList
           const newFileList=[data.fileItem].concat(cache.fileList[cache.current])
           tmpFileList[cache.current]=newFileList

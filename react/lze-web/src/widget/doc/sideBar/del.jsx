@@ -1,5 +1,5 @@
 import { useGlobal, list, Selected, fileBuffer } from "../global";
-import { AddMouseMenu, confirmWin, GetText } from "../../../utils/common";
+import { AddMouseMenu, confirmWin, DeepClone, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
@@ -16,7 +16,7 @@ export default function Del() {
       notice: true,
       body: { dellist,nowPath },
       success: () => {
-        const cache=structuredClone(getFileCache())
+        const cache=DeepClone(getFileCache())
         const tmpFileList=cache.fileList
         const filePage=cache.fileList[cache.current]
         const set=new Set(fileBuffer.getSelected())
