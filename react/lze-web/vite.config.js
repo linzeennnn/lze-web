@@ -34,12 +34,12 @@ export default defineConfig({
     strictPort: true,
     proxy: {
      '/api': {
-    target: 'http://127.0.0.1',
+    target: 'http://127.0.0.1:1357',
     changeOrigin: true,
     rewrite: (path) => path, // 不改 path
   },
   '/file': {
-    target: 'http://127.0.0.1',
+    target: 'http://127.0.0.1:1357',
     changeOrigin: true,
     rewrite: (path) => path,
   },

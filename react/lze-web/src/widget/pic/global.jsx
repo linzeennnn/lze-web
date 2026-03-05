@@ -389,18 +389,5 @@ async  function maybeUpload() {
 }
 // 检查是否能有上传权限
 export async function UploadPermit(){
-  const upload = useGlobal.getState().upload;
-if (await AsyncApi.post({
-  api:"login/upload",
-  body:{appType:"pic",fileType:""}
-})==null){
-  useGlobal.setState({
-              upload: {
-                ...upload,
-                status: false
-              }
-            })
-        return false
-        }
-        return true
+  return true
 }

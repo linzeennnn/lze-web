@@ -48,7 +48,6 @@ function sendChunk(chunk,file,totalchunk,index){
         notice:true,
         contentType:"multipart/form-data",
         success:(data)=>{
-            useUploadStore.getState().setSendSize(chunk.size)
             useUploadStore.getState().addFileList(data.fileItem)
             if(isFinsh()){
                 getFun().success(data)
