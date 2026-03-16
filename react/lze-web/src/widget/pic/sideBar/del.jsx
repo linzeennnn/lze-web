@@ -1,3 +1,4 @@
+import { getNowPath } from "../../../store/CacheList";
 import { confirmWin, GetText, AddMouseMenu, notify } from "../../../utils/common";
 import { Icon } from "../../../utils/icon";
 import { Api } from "../../../utils/request";
@@ -10,7 +11,7 @@ export default function Del() {
     if (!confirm) return;
 
     const global = useGlobal.getState();
-    const nowPath = global.nowPath;
+    const nowPath = getNowPath()
     const select = global.select;
     const setGlobal = global.setGlobal;
 

@@ -1,36 +1,38 @@
-import { useGlobal,Upload,UploadPermit } from "../global";
-import { GetText } from "../../../utils/common";
+import { list, useGlobal } from "../global";
+import { DeepClone, GetText } from "../../../utils/common";
 import { Icon } from "../../../utils/icon";
+import { useEffect, useRef } from "react";
+import { getUploadFileList, useUploadStore } from "../../../store/upload";
+import { DragLeave, DragOver, Drop, Upload } from "../../../utils/upload";
+import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList";
 export default function UploadBtn() {
-    const setGlobal = useGlobal.setState
-    const pageNum = useGlobal((state) => state.pageNum);
-    const imgPage = useGlobal((state) => state.imgPage);
-    const upload=useGlobal((state) => state.upload); 
-    const dragWin=useGlobal((state) => state.dragWin); 
-    const nowPath=useGlobal((state) => state.nowPath); 
-    const uploadChange= async(e)=>{
-        setGlobal({upload:{
-            ...upload,
-            status:true
-        }})
-        const fileArr=Array.from(e.target.files);
-        let uploadData={
-            totalSize:0,
-            sendSize:0
+    const fileRef = useRef(null);
+       const  uploadChange=(e)=>{
+           useGlobal.setState({uploadWin:false})
+           Upload(e.target.files)
+       }
+     useEffect(() => {
+           useUploadStore.getState().setUploadMsg({
+           apiList:["pic/upload",""],
+           success:()=>{
+            const newFileItems=getUploadFileList()
+            const cache=DeepClone(getFileCache())
+            const tmpFileList=cache.fileList
+            const newFileList=newFileItems.concat(tmpFileList[cache.current])
+            tmpFileList[cache.current]=newFileList
+            setFileCache({...cache,fileList:tmpFileList})
+            if (fileRef.current) fileRef.current.value = null;
         }
-        fileArr.forEach((file,i)=>{
-           uploadData.totalSize+=file.size
-           
-        })
-            const permitted = await UploadPermit();
-            if (!permitted) {
-              return;
-            }
-        fileArr.forEach((file,i)=>{
-            Upload(file,uploadData) 
-        })
-         e.target.value = null;
-    }
+       })
+           window.addEventListener('dragover', DragOver);
+           window.addEventListener('dragleave', DragLeave);
+           window.addEventListener('drop', Drop);
+       return () => {
+             window.removeEventListener('dragover', DragOver);
+             window.removeEventListener('dragleave', DragLeave);
+             window.removeEventListener('drop', Drop);
+           };
+     }, []);
   
     return (
         <>

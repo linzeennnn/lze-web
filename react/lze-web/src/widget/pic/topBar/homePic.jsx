@@ -1,14 +1,18 @@
-import { useGlobal, list } from "../global";
+import { useGlobal, list, SortList } from "../global";
 import { AddMouseMenu, GetText, notify } from "../../../utils/common";
 import { useEffect } from "react";
 import { Icon } from "../../../utils/icon";
+import { getNowPath, useFileCacheStore } from "../../../store/CacheList";
+import { LocalList } from "../../../utils/CacheList";
 
 export default function HomePic() {
-  const nowPath = useGlobal((state) => state.nowPath);
+  const nowPath = useFileCacheStore((state) => state.fileCache.nowPath)
+    const current=useFileCacheStore((state) => state.fileCache.current)
   const backHome = () => {
-    nowPath === ""
-      ? notify.normal(GetText("main_album"))
-      : list("");
+    if(current==0)
+      return
+    LocalList(0)
+    SortList()
   };
 
   useEffect(() => {
@@ -16,10 +20,10 @@ export default function HomePic() {
       home: {
         name: GetText("back_main_album"),
         fun: backHome,
-        disable:(nowPath == "")
+        disable:(current==0)
       }
     });
-  }, [nowPath]);
+  }, [current]);
 
   return (
     <button

@@ -2,10 +2,10 @@ import { useState } from "react"
 import { GetText } from "../../../utils/common";
 import {useGlobal,list} from '../global'
 import { Icon } from "../../../utils/icon";
+import { getNowPath } from "../../../store/CacheList";
 export default function DirList(){
     const[showList,setShowList]=useState(false)
     const dirList=useGlobal((state)=>state.dirList)
-    const nowPath=useGlobal((state)=>state.nowPath)
     const openList=()=>{
         showList?setShowList(false):setShowList(true)
     }
@@ -21,7 +21,7 @@ export default function DirList(){
                     dirList.map((dir,index)=>{
                         return(
                             <div id="dir-item" key={dir+index}
-                            title={GetText("view")+dir} onClick={()=>{list(nowPath+"/"+dir)}}
+                            title={GetText("view")+dir} onClick={()=>{list(getNowPath()+"/"+dir)}}
                             >{dir}</div>
                         )
                     })

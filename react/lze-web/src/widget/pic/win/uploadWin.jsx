@@ -1,8 +1,9 @@
 import { Icon } from "../../../utils/icon";
-import { useGlobal} from "../global";
+import { useUploadStore } from '../../../store/upload'
 export default function UploadWin() {
-    const dragWin=useGlobal((state) => state.dragWin); 
-    const upload=useGlobal((state) => state.upload); 
+       const upload=useUploadStore((state)=>state.upload)
+       const dragWin=useUploadStore((state)=>state.upload.drag)
+       
     return(
         <>
         <div id="drag-win"

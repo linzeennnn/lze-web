@@ -38,8 +38,6 @@ function sendChunk(chunk,file,totalchunk,index){
     fd.append('totalChunk',totalchunk)
     fd.append('index',index)
     fd.append('chunk',chunk)
-   for (const [key, value] of fd.entries()) {
-}
     Api.upload({
         api:useUploadStore.getState().upload.apiUrl,
         body:fd,

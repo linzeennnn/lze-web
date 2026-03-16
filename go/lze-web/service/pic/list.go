@@ -19,23 +19,22 @@ func List(c *gin.Context) {
 		return
 	}
 	files := global.ScanDir(filepath.Join(global.PicPath, filepath.FromSlash(rec.Folder)))
-	picList := make([][3]string, 0, len(files))
+	picList := make([][2]string, 0, len(files))
 	for _, file := range files {
 		switch file.FileType {
 		case "dir", "dir_link":
-			picList = append(picList, [3]string{file.Name, file.FileType, ""})
+			picList = append(picList, [2]string{file.Name, file.FileType})
 		default:
 			if mediaType := global.FileTypeMap[global.GetExtName(file.Name)]; mediaType != "" {
-				picList = append(picList, [3]string{
+				picList = append(picList, [2]string{
 					file.Name,
 					file.FileType,
-					mediaType,
 				})
 			}
 		}
 	}
 	var sendData list.Send
-	sendData.Meta = [3]string{"name", "type", "media"}
+	sendData.Meta = [2]string{"name", "type"}
 	sendData.FileList = picList
 	sendData.CurrentFolder = rec.Folder
 	parent := filepath.Dir(rec.Folder)

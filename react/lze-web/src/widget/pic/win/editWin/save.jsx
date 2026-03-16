@@ -1,6 +1,6 @@
 import { confirmWin, GetExt, GetText } from "../../../../utils/common"
 import { Icon } from "../../../../utils/icon";
-import { closeEditWin, Upload, useGlobal } from "../../global";
+import { closeEditWin, useGlobal } from "../../global";
 import EditWin from "./editWin";
 
 export default function Save({editData}){

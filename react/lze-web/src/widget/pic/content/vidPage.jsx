@@ -1,12 +1,12 @@
 import PicItem from "./picItem";
 import { useGlobal } from "../global";
+import { getNowPath } from "../../../store/CacheList";
 export default function VidPage({inner}){
     const vidList = useGlobal((state) => state.vidList);
     const pageNum = useGlobal((state) => state.pageNum);
-    const nowPath = useGlobal((state) => state.nowPath);
     const url=inner.enable?
     inner.url
-   : `${window.location.origin}/file/Pictures/`+nowPath+"/"
+   : `${window.location.origin}/file/Pictures/`+getNowPath()+"/"
 
     return(
         <>{vidList[pageNum-1]?

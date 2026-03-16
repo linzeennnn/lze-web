@@ -29,7 +29,7 @@ export const confirmWin = {
 export function copy(text) {
   navigator.clipboard.writeText(text)
     .then(() => {
-          notify.normal(GetText("copy")+" "+GetText("success"));
+      notify.normal(GetText("copy") + " " + GetText("success"));
     })
     .catch(err => {
       console.error(err);

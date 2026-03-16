@@ -1,26 +1,34 @@
-import { useGlobal, list } from "../global";
+import { useGlobal, list, SortList } from "../global";
 import { AddMouseMenu, GetText } from "../../../utils/common";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getNowPath, useFileCacheStore } from "../../../store/CacheList";
+import { dirName } from "../../../utils/path";
+import { LocalList } from "../../../utils/CacheList";
 
 export default function ShowPath() {
-
-  const nowPath = useGlobal((state) => state.nowPath);
-  const parentPath = useGlobal((state) => state.parentPath);
-
+  const [nowPath, setNowPath]=useState("")
+  const [parentPath, setParentPath]=useState("")
+  const current=useFileCacheStore((state)=>state.fileCache.current)
   const backParent = () => {
-    
-    list(useGlobal.getState().parentPath);
+    if(current==0){
+      return
+    }
+    LocalList(current-1)
+    SortList()
   };
 
   useEffect(() => {
+    setNowPath(getNowPath())
+    
+    setParentPath(dirName(getNowPath()))
     AddMouseMenu({
       back: {
         name: GetText("back_parent_album"),
         fun: backParent,
-        disable: (nowPath == "")
+        disable: (current==0)
       }
     });
-  }, [nowPath]);
+  }, [current]);
 
   return (
     <div id="show-path-box">
@@ -30,7 +38,9 @@ export default function ShowPath() {
           title={GetText("back_parent_album")}
           onClick={backParent}
         >
-          {parentPath == "" ? GetText("main_album") : baseName(parentPath)}
+          {(parentPath == ""||parentPath=='/') ? 
+          GetText("main_album") : baseName(parentPath)
+          }
         </span>
       )}
 
