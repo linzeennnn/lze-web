@@ -1,6 +1,6 @@
 import { getNowPath } from "../store/CacheList"
 import { getUrl } from "../store/request"
-import { closeUpload, getUploadFileList, getFun, getPercent, getSendSize, getTotalSize,  openUpload,  useUploadStore } from "../store/upload"
+import { closeUpload, getUploadFileList, getFun, getPercent, getSendSize, getTotalSize,  openUpload,  useUploadStore, setExtraApi } from "../store/upload"
 import { Api, AsyncApi } from "./request"
 
 export async function Upload(files) {
@@ -29,6 +29,7 @@ function sendFile(file){
 }
 // 发送分块
 function sendChunk(chunk,file,totalchunk,index){
+  const upload=useUploadStore.getState().upload
     const fd = new FormData();
     fd.append('filename',file.name)
     fd.append('nowPath',getNowPath())
@@ -39,7 +40,7 @@ function sendChunk(chunk,file,totalchunk,index){
     fd.append('index',index)
     fd.append('chunk',chunk)
     Api.upload({
-        api:useUploadStore.getState().upload.apiUrl,
+        api:upload.extraApi.enable?upload.extraApi.api:upload.apiUrl,
         body:fd,
         loading:false,
         setProgress:(percent)=>{useUploadStore.getState().setSendSize(percent*chunk.size)},
@@ -50,7 +51,17 @@ function sendChunk(chunk,file,totalchunk,index){
             if(isFinsh()){
                 getFun().success(data)
                 closeUpload()
+                if(upload.extraApi.enable){
+                  setExtraApi({enable:false,api:""})
+                }
             }
+        },
+        fail:(data)=>{
+          getFun().fail(data)
+          closeUpload()
+          if(upload.extraApi.enable){
+            setExtraApi({enable:false,api:""})
+          }
         }
     })
 
@@ -80,9 +91,10 @@ function isFinsh(){
 }
 // 获取上传的token
 async function getUploadToken(){
+  const upload=useUploadStore.getState().upload
    const data=await AsyncApi.post({
     api:"login/upload",
-    body:{action:useUploadStore.getState().upload.apiUrl}
+    body:{action:(upload.extraApi.enable?upload.extraApi.api:upload.apiUrl)}
    })
    return data
 }

@@ -108,3 +108,25 @@ func IsUploadFinished(token string, num int) bool {
 	UploadTotal[token].Lock.Unlock()
 	return finsh
 }
+
+// 判断临时文件是否全部上传
+func IsTmpFinsh(totalChunk int, tmpPath string) bool {
+	doneFlag := filepath.Join(tmpPath, "done")
+
+	// 原子创建
+	f, err := os.OpenFile(doneFlag, os.O_CREATE|os.O_EXCL, 0644)
+	if err != nil {
+		// 文件已存在 → 说明别人已经合并过
+		return false
+	}
+	f.Close()
+
+	for i := 0; i < totalChunk; i++ {
+		if !FileExists(filepath.Join(tmpPath, strconv.Itoa(i))) {
+			os.Remove(doneFlag) // 回滚
+			return false
+		}
+	}
+
+	return true
+}

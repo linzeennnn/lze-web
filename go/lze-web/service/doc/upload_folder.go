@@ -47,7 +47,7 @@ func UploadFolder(c *gin.Context) {
 		c.SaveUploadedFile(chunk, savingPath)
 		tmpChunkPath := filepath.Join(uploadingPath, indexStr)
 		os.Rename(savingPath, tmpChunkPath)
-		if isFinsh(int(totalChunk), uploadingPath) {
+		if global.IsTmpFinsh(int(totalChunk), uploadingPath) {
 			targetFile := global.MergeFile(uploadingPath, totalChunk)
 			tmpFinshPath := filepath.Join(global.TempPath, "doc", "uploadDir", "finshed", uploadToken, filepath.Dir(relativePath))
 			os.MkdirAll(tmpFinshPath, 0755)

@@ -1,4 +1,4 @@
-import { useGlobal, list, Selected, fileBuffer } from "../global";
+import {fileBuffer } from "../global";
 import { AddMouseMenu, confirmWin, DeepClone, GetText } from "../../../utils/common";
 import { Api } from "../../../utils/request";
 import { useEffect } from "react";

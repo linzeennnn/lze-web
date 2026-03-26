@@ -1,4 +1,4 @@
-import { list, useGlobal } from "../global";
+import { list, SortList, useGlobal } from "../global";
 import { DeepClone, GetText } from "../../../utils/common";
 import { Icon } from "../../../utils/icon";
 import { useEffect, useRef } from "react";
@@ -15,13 +15,19 @@ export default function UploadBtn() {
            useUploadStore.getState().setUploadMsg({
            apiList:["pic/upload",""],
            success:()=>{
-            const newFileItems=getUploadFileList()
-            const cache=DeepClone(getFileCache())
-            const tmpFileList=cache.fileList
-            const newFileList=newFileItems.concat(tmpFileList[cache.current])
-            tmpFileList[cache.current]=newFileList
-            setFileCache({...cache,fileList:tmpFileList})
-            if (fileRef.current) fileRef.current.value = null;
+                if(useGlobal.getState().updateList){
+                    const newFileItems=getUploadFileList()
+                    const cache=DeepClone(getFileCache())
+                    const tmpFileList=cache.fileList
+                    const newFileList=newFileItems.concat(tmpFileList[cache.current])
+                    tmpFileList[cache.current]=newFileList
+                    setFileCache({...cache,fileList:tmpFileList})
+                    SortList()
+                    if (fileRef.current) fileRef.current.value = null;
+            }else{
+                useGlobal.setState({updateList:true})
+                SortList()
+            }
         }
        })
            window.addEventListener('dragover', DragOver);

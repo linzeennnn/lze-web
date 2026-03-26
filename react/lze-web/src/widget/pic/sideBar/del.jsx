@@ -1,8 +1,8 @@
-import { getNowPath } from "../../../store/CacheList";
-import { confirmWin, GetText, AddMouseMenu, notify } from "../../../utils/common";
+import { getFileCache, getFileList, getFileListCurrent, getNowPath, setFileCache } from "../../../store/CacheList";
+import { confirmWin, GetText, AddMouseMenu, notify, DeepClone } from "../../../utils/common";
 import { Icon } from "../../../utils/icon";
 import { Api } from "../../../utils/request";
-import { list, useGlobal } from "../global";
+import { list, SortList, useGlobal } from "../global";
 import { useEffect } from "react";
 
 export default function Del() {
@@ -19,14 +19,20 @@ export default function Del() {
       notify.err(GetText("no_select_file"));
       return;
     }
-
     Api.delete({
       api: "pic/del",
       notice: true,
       body: { delArr: select.list, nowPath },
       success: () => {
         setGlobal({ select: { status: false, list: [] } });
-        list(nowPath);
+        const cache=DeepClone(getFileCache())
+        const tmpFileList=cache.fileList
+        const filePage=cache.fileList[cache.current]
+        const set=new Set(nameToIndex(select.list))
+        const newFilePage=filePage.filter((_, index) => !set.has(index));
+        tmpFileList[cache.current]=newFilePage
+        setFileCache({...cache,fileList:tmpFileList})
+        SortList()
       }
     });
   };
@@ -63,4 +69,12 @@ export default function Del() {
       onClick={delPic}
     >{Icon("bin")}</button>
   );
+}
+function nameToIndex(nameList){
+  const fileList=getFileList()
+  
+  const indexList = nameList.map(name => {
+  return fileList.findIndex(item => item[0] === name);
+});
+return indexList
 }

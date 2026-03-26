@@ -12,6 +12,7 @@ export const useGlobal = create((set, get) => ({
   dirList: [],
   uploading: false,
   showBg: false,
+  updateList: true,//如果是edit的话要设置成false,不然会出现两张一样的图片
   editWin:{
     status:false,
     url:"",
@@ -155,14 +156,39 @@ export function SortList(showVideo){
         })
        if(tmpGroupImg.length>0) tmpImg.push(tmpGroupImg)
        if(tmpGroupVid.length>0) tmpVid.push(tmpGroupVid)
+        const current=getCurrentShowNum(tmpImg,tmpVid)
+      console.log();
+      
       useGlobal.setState({
         dirList: tmpDir,
         imgList: tmpImg,
         vidList: tmpVid,
         selected: [],
         imgPage: showVideo ? false : true,
-        pageNum:1
+        pageNum:current
       });
+}
+// 获取当前要刷新的页面的编号
+function getCurrentShowNum(newImg,newVid){
+  let currnetNum
+  const oldLength=
+  countMediaNum(useGlobal.getState().imgList)
+  +countMediaNum(useGlobal.getState().vidList)
+  const newLength=
+  countMediaNum(newImg)
+  +countMediaNum(newVid)
+    
+  if(oldLength<newLength){
+      currnetNum=1
+  }else{
+    currnetNum=useGlobal.getState().pageNum
+    if(newLength%12==0&&currnetNum!=1)
+      currnetNum--
+  }
+  return currnetNum
+}
+function countMediaNum(arr){
+  return ((arr.length-1)*12+(arr.length==0?0:arr[arr.length-1].length))
 }
 // 关闭mediawin
 export function closeMediaWin(){

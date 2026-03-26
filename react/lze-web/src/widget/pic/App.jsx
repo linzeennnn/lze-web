@@ -15,6 +15,7 @@ import '../../css/public/page.css';
 import { useEffect } from 'react';
 import { useThemeStore } from '../../store/theme';
 import { useEnvStore } from '../../store/common';
+import { Upload } from '../../utils/upload';
 export default function App() {
   const theme=useThemeStore(state=>state.theme);
   const inner=useGlobal(state=>state.inner);
@@ -61,5 +62,27 @@ function InnerApp(){
   )
 }
 async function pastePic(e) {
-  if (!e) return;
+  const clipboardData = e.clipboardData || window.clipboardData;
+  if (!clipboardData) return;
+
+  const items = clipboardData.items;
+  let targetFile = null;
+
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].kind === 'file') {
+      const file = items[i].getAsFile();
+      if (file && file.type.indexOf('image') !== -1) {
+        targetFile = file; // 先把文件存到变量里
+        break; 
+      }
+    }
+  }
+
+  if (!targetFile) return;
+  const confirm = await confirmWin.normal(GetText("are_you_sure"));
+  if (!confirm) {
+    console.log("用户取消上传");
+    return;
+  }
+  Upload([targetFile]);
 }

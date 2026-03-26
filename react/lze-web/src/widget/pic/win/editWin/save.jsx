@@ -1,5 +1,7 @@
+import { setExtraApi } from "../../../../store/upload";
 import { confirmWin, GetExt, GetText } from "../../../../utils/common"
 import { Icon } from "../../../../utils/icon";
+import { Upload } from "../../../../utils/upload";
 import { closeEditWin, useGlobal } from "../../global";
 import EditWin from "./editWin";
 
@@ -28,15 +30,17 @@ const dataUrl = fabricCanvas.toDataURL({
 
 // 转 Blob
 const blob = await (await fetch(dataUrl)).blob();
-
 const file = new File([blob], editData.fileName, { type: mime });
-const uploadData = { totalSize: file.size, sendSize: 0 };
 useGlobal.setState({
   editWin:{...editWin,
     newSaveImg:editData.fileName
   }
 })
-Upload(file, uploadData, true);
+setExtraApi({enable:true,api:"pic/edit"})
+useGlobal.setState({
+  updateList:false
+})
+Upload([file])
 closeEditWin();
 
 };

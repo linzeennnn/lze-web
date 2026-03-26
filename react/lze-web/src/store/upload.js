@@ -14,6 +14,10 @@ export const useUploadStore = create((set, get) => ({
           success:()=>{},
           fail:()=>{},
           end:()=>{}
+        },
+        extraApi:{
+          enable:false,
+          api:""
         }
   },
   init:()=>{
@@ -133,6 +137,19 @@ setFiles:(files)=>{
       }
     });
   },
+  // 设置额外 API 配置
+  setExtraApi: (config = {}) => {
+    const { upload } = get();
+    set({
+      upload: {
+        ...upload,
+        extraApi: {
+          ...upload.extraApi, 
+          ...config          
+        }
+      }
+    });
+  },
 
   // 设置已发送大小（自动计算 percent）
 setSendSize: (size) => {
@@ -171,6 +188,7 @@ export const getApiUrl=()=>useUploadStore.getState().upload.apiUrl;
 export const getPercent = () => useUploadStore.getState().upload.percent;
 export const getFun = () => useUploadStore.getState().upload.fun;
 export const setSendSize = (size) => useUploadStore.getState().setSendSize(size);
+export const setExtraApi = (config) => useUploadStore.getState().setExtraApi(config);
 export const setTotalSize = (files) => {
   let total = 0;
   for (const file of files) {

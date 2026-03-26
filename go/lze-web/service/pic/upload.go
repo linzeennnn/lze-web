@@ -1,7 +1,6 @@
 package pic
 
 import (
-	"fmt"
 	"lze-web/model/pic/upload"
 	"lze-web/model/public/response"
 	"lze-web/pkg/global"
@@ -46,13 +45,12 @@ func Upload(c *gin.Context) {
 		c.SaveUploadedFile(chunk, savingPath)
 		tmpChunkPath := filepath.Join(tempPath, indexStr)
 		os.Rename(savingPath, tmpChunkPath)
-		if isFinsh(int(totalChunk), tempPath) {
+		if global.IsTmpFinsh(int(totalChunk), tempPath) {
 			targetFile := global.MergeFile(tempPath, totalChunk)
 			targetPath := filepath.Join(global.PicPath, nowpath)
 			saveName := global.UniqueName(targetPath, filename)
 			destPath := filepath.Join(global.PicPath, nowpath, saveName)
 			os.Rename(targetFile, destPath)
-			fmt.Println(destPath)
 			sendData.Data.FileItem = [2]string{saveName, global.FileType(destPath)}
 			if global.IsUploadFinished(uploadToken, int(totalFile)) {
 				os.RemoveAll(filepath.Join(global.TempPath, "pic", uploadToken))
@@ -69,24 +67,4 @@ func Upload(c *gin.Context) {
 		sendData.Msg = global.GetText("no_upload_file_permit", c)
 		c.JSON(sendData.Code, sendData)
 	}
-}
-func isFinsh(totalChunk int, tmpPath string) bool {
-	doneFlag := filepath.Join(tmpPath, "done")
-
-	// 原子创建
-	f, err := os.OpenFile(doneFlag, os.O_CREATE|os.O_EXCL, 0644)
-	if err != nil {
-		// 文件已存在 → 说明别人已经合并过
-		return false
-	}
-	f.Close()
-
-	for i := 0; i < totalChunk; i++ {
-		if !global.FileExists(filepath.Join(tmpPath, strconv.Itoa(i))) {
-			os.Remove(doneFlag) // 回滚
-			return false
-		}
-	}
-
-	return true
 }

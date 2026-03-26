@@ -27,13 +27,43 @@ export const confirmWin = {
 };
 ////////////////复制//////////////////
 export function copy(text) {
-  navigator.clipboard.writeText(text)
-    .then(() => {
+  // 1. 优先使用现代 API (仅限 HTTPS)
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        notify.normal(GetText("copy") + " " + GetText("success"));
+      })
+      .catch(err => {
+        console.error("Modern copy failed:", err);
+        fallbackCopy(text); // 如果现代 API 出错，尝试备选方案
+      });
+  } else {
+    // 2. HTTP 环境下的备选方案
+    fallbackCopy(text);
+  }
+}
+// 备选方案：使用不可见的 textarea
+function fallbackCopy(text) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-9999px";
+  textArea.style.top = "0";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    const successful = document.execCommand('copy');
+    if (successful) {
       notify.normal(GetText("copy") + " " + GetText("success"));
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    } else {
+      console.error("Fallback copy failed");
+    }
+  } catch (err) {
+    console.error("Fallback copy error:", err);
+  }
+
+  document.body.removeChild(textArea);
 }
 ///////////////加载页面/////////////
 export function loadingPage(show){
