@@ -72,12 +72,12 @@ func compress(src_dir string, zip_file_name string) {
 	defer zipfile.Close()
 	archive := zip.NewWriter(zipfile)
 	defer archive.Close()
+	baseDir := filepath.Dir(src_dir)
 	filepath.Walk(src_dir, func(path string, info os.FileInfo, _ error) error {
-		if path == src_dir {
-			return nil
-		}
+
 		header, _ := zip.FileInfoHeader(info)
-		relPath, err := filepath.Rel(src_dir, path)
+
+		relPath, err := filepath.Rel(baseDir, path)
 		if err != nil {
 			return err
 		}
@@ -88,6 +88,7 @@ func compress(src_dir string, zip_file_name string) {
 		} else {
 			header.Method = zip.Deflate
 		}
+
 		writer, _ := archive.CreateHeader(header)
 		if !info.IsDir() {
 			file, _ := os.Open(path)
