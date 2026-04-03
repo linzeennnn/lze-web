@@ -7,7 +7,7 @@ import Link from "./link"
 import { Api } from "../../../utils/request";
 import { DeepClone, GetText } from "../../../utils/common"
 import { getFileCache, getNowPath, setFileCache } from "../../../store/CacheList"
-export default function fileItme({index,fileMes,selected,docClick}){
+export default function FileItme({index,fileMes,selected,docClick}){
     const include=selected.selected.includes(index)
     const edit=useGlobal(state=>state.edit)
     return(
