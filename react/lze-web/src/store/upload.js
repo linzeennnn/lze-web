@@ -10,6 +10,7 @@ export const useUploadStore = create((set, get) => ({
         drag:false,
         token:"",
         files:null,
+        finished:false,
         fun:{
           success:()=>{},
           fail:()=>{},
@@ -28,6 +29,7 @@ export const useUploadStore = create((set, get) => ({
         totalSize: 0,
         totalFile:0,
         sendSize: 0,
+        loadedSize:0,
         percent: 0,
         fileList: [],
         status:true,
@@ -152,9 +154,9 @@ setFiles:(files)=>{
   },
 
   // 设置已发送大小（自动计算 percent）
-setSendSize: (size) => {
+setLoadedSize: (size,overSize=0) => {
   const { upload } = get();
-  const newSendSize = upload.sendSize + size;
+  const newSendSize = upload.sendSize + size-overSize;
 
   let percent = upload.totalSize === 0
     ? 0
@@ -162,12 +164,22 @@ setSendSize: (size) => {
 
   // 限制最大 100
   if (percent > 100) percent = 100;
-
   set({
     upload: {
       ...upload,
-      sendSize: newSendSize,
+      loadedSize:newSendSize,
       percent
+    }
+  });
+},
+// 设置已发送大小,按块计数
+setSendSize: (size) => {
+  const { upload } = get();
+  const newSendSize = upload.sendSize + size;
+  set({
+    upload: {
+      ...upload,
+      sendSize:newSendSize
     }
   });
 }

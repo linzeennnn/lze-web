@@ -31,6 +31,7 @@ function sendFile(file){
 function sendChunk(chunk,file,totalchunk,index){
   const upload=useUploadStore.getState().upload
     const fd = new FormData();
+    let sendCount=0
     fd.append('filename',file.name)
     fd.append('nowPath',getNowPath())
     fd.append('totalFile',useUploadStore.getState().upload.totalFile)
@@ -43,11 +44,15 @@ function sendChunk(chunk,file,totalchunk,index){
         api:upload.extraApi.enable?upload.extraApi.api:upload.apiUrl,
         body:fd,
         loading:false,
-        setProgress:(percent)=>{useUploadStore.getState().setSendSize(percent*chunk.size)},
+        setProgress:(sendSize,finshed)=>{
+          sendCount+=sendSize
+          useUploadStore.getState().setLoadedSize(sendSize,finshed?(sendCount-chunk.size):0)
+        },
         notice:true,
         contentType:"multipart/form-data",
         success:(data)=>{
             useUploadStore.getState().addFileList(data.fileItem)
+            useUploadStore.getState().setSendSize(chunk.size)
             if(isFinsh()){
                 getFun().success(data)
                 closeUpload()
@@ -87,7 +92,9 @@ function getChunkSize(file){
 }
 // 判断是否结束
 function isFinsh(){
-    return (getSendSize()>=getTotalSize())
+    const state = useUploadStore.getState().upload
+console.log(state.sendSize,state.totalSize);
+  return state.sendSize >= state.totalSize
 }
 // 获取上传的token
 async function getUploadToken(){

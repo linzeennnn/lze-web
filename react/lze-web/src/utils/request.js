@@ -159,7 +159,7 @@ function uploadReq(request) {
         if (event.lengthComputable) {
           const delta = event.loaded - lastLoaded
           lastLoaded = event.loaded
-          setProgress(delta/event.total)
+          setProgress(delta,event.loaded==event.total)
         }
     });
     xhr.open('POST', getUrl() + api, true);
