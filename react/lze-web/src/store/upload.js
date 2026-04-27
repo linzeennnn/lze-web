@@ -156,14 +156,17 @@ setFiles:(files)=>{
   // 设置已发送大小（自动计算 percent）
 setLoadedSize: (size,overSize=0) => {
   const { upload } = get();
-  const newSendSize = upload.sendSize + size-overSize;
+  const newSendSize = upload.loadedSize + size-overSize;
 
   let percent = upload.totalSize === 0
     ? 0
     : Math.floor(newSendSize / upload.totalSize * 100);
+console.log(newSendSize,upload.totalSize);
 
   // 限制最大 100
   if (percent > 100) percent = 100;
+  console.log(percent);
+  
   set({
     upload: {
       ...upload,

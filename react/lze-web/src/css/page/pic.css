@@ -329,6 +329,218 @@ z-index: 1;
     background-color: transparent !important;
 }
 
+/* 视频播放器 */
+/* 你的原始配色方案全部保留 */
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+}
+
+.video-container:fullscreen {
+    max-width: none;
+    width: 100vw;
+    height: 100vh;
+}
+
+.video-element {
+    width: auto; 
+    height: auto;
+    display: block;
+    cursor: pointer;
+}
+
+.fullScreen-video {
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+/* 控制栏核心逻辑修整 */
+.controls-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: linear-gradient(transparent, var(--bg_color), var(--body_color));
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.controls-wrapper:hover{
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+.controls-wrapper.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.controls-wrapper.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.progress-box {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.progress-slider {
+    position: relative;
+    border-radius: 15px;
+    background-color: var(--bg_color);
+    width: 100%;
+    height: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    accent-color: var(--text);
+}
+.progress-bar{
+    border-radius: 15px;
+    height: 100%;
+    background-color: var(--text);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    transform-origin: left; 
+}
+.progress-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--text);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    pointer-events: none; 
+}
+
+
+.controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.control-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-button, .volume-btn {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.time-display {
+    font-size: 12px;
+    min-width: 80px;
+}
+
+.volume-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    accent-color: var(--text);
+}
+
+.volume-slider {
+    border-radius: 15px;
+    background: linear-gradient(
+        to right,
+        var(--text) 0%,
+        var(--text) var(--volume),
+        var(--base_color) var(--volume),
+        var(--base_color) 100%
+    );
+    width: 60px;
+    height: 5px;
+    cursor: pointer;
+}
+
+.speed-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.speed-btn {
+    width: 15px !important;
+    height: 15px !important;
+    color: var(--text);
+    font-size: small;
+    font-weight: bold;
+}
+
+.speed-menu {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg_color);
+    border-radius: 15px;
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 10;
+}
+
+.speed-item {
+    border-radius: 15px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: center;
+    color: var(--text);
+}
+
+.speed-item:hover, .speed-item.active {
+    background-color: var(--base_color);
+    color: var(--text);
+}
+.speed-notice{
+    background-color: var(--bg_color);
+    color: var(--text);
+    position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 10px;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+/* 媒体查询保留 */
+@media (max-width: 600px) {
+    #page-bar { margin-bottom: 80px; }
+}
+
+
 
 @media (max-width: 600px) {
     #page-bar{

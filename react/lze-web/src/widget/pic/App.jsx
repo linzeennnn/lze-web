@@ -15,8 +15,10 @@ import '../../css/public/page.css';
 import { useEffect } from 'react';
 import { useThemeStore } from '../../store/theme';
 import { useEnvStore } from '../../store/common';
+import useTitle from '../../utils/Title';
 import { Upload } from '../../utils/upload';
 export default function App() {
+  useTitle(GetText("pic"))
   const theme=useThemeStore(state=>state.theme);
   const inner=useGlobal(state=>state.inner);
   const env=useEnvStore(state=>state.env);

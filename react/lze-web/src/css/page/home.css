@@ -147,19 +147,32 @@ align-items: center;
     margin: 5px;
 }
 .pic-panel{
-    /* min-width: 80% !important; */
+    position: relative;
     max-width: 150px !important;
     aspect-ratio: 1/1;
     overflow: hidden;
     border-radius: 15px;
     padding: 5px;
 }
-.pic-panel img{
+.pic-panel-item{
     border-radius: 15px;
     width: 100%;
     height: 100%;
     position: relative;
     object-fit: cover;
+}
+.pic-panel-media{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.pic-panel-media svg{
+    width: 46px;
+    height: 46px;
 }
 .tra-panel{
     height: 25%;

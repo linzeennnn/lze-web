@@ -11,8 +11,11 @@ import '../../css/page/bok.css';
 import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useThemeStore } from '../../store/theme';
+import useTitle from '../../utils/Title';
+import { GetText } from '../../utils/common';
 
 export default function App() {
+  useTitle(GetText("bok"))
   const theme=useThemeStore(state=>state.theme)
   return ( 
      <div id='app' mode={theme.mode} color={theme.color["bok"]}>

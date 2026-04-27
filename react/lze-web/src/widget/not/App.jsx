@@ -13,10 +13,13 @@ import '../../css/public/all.css';
 import '../../css/public/page.css';
 import { useEffect } from 'react';
 import { useThemeStore } from '../../store/theme';
+import useTitle from '../../utils/Title';
 import { useEnvStore } from '../../store/common';
+import { GetText } from '../../utils/common';
 
 
 export default function App() {
+  useTitle(GetText("not"))
   const theme=useThemeStore(state=>state.theme)
   const inner=useGlobal(state=>state.inner)
   const env=useEnvStore(state=>state.env)

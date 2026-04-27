@@ -93,7 +93,6 @@ function getChunkSize(file){
 // 判断是否结束
 function isFinsh(){
     const state = useUploadStore.getState().upload
-console.log(state.sendSize,state.totalSize);
   return state.sendSize >= state.totalSize
 }
 // 获取上传的token

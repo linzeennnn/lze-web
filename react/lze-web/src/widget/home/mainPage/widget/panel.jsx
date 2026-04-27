@@ -1,6 +1,6 @@
 import React from "react";
 import { notify } from "../../../../utils/common";
-import { useGlobal } from "../../global";
+import { FillIcon } from "../../../../utils/icon"
 import {GetText} from "../../../../utils/common"
 import { getUsername } from "../../../../store/request";
 import { GetPageSession,SetPageSession } from "../../../../utils/pageSession";
@@ -55,10 +55,17 @@ function get_mon(str){
 function get_pic(picMes){
 const url=window.location.origin+"/file/Pictures/"+picMes.name;
 if(picMes.media=="img"){
-    return <img src={url} alt={picMes.name} />
+    return <img className="pic-panel-item" src={url} alt={picMes.name} />
 }
 if(picMes.media=="vid"){
-    return <video src={url} controls="controls" />
+    return (
+        <>
+    <div className="pic-panel-media">
+        {FillIcon("play")}
+    </div>
+    <video className="pic-panel-item" src={url}/>
+    </>
+    )
 }
 return (<span className="panel-text panel-text-null">{GetText("empty")}</span>)
 }

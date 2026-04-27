@@ -1,7 +1,8 @@
-import {  closeMediaWin, openEditWin, useGlobal } from "../global";
+ import {  closeMediaWin, openEditWin, useGlobal } from "../global";
 import { GetExt, GetText } from "../../../utils/common";
 import { useRef, useEffect, useState } from "react";
 import { Icon } from "../../../utils/icon";
+import VideoPlayer from "./videoPlayer";
 export default function MediaWin() {
   const setGlobal = useGlobal.setState;
   const mediaWin = useGlobal((state) => state.mediaWin);
@@ -78,6 +79,7 @@ const switchPic=(action)=>{
   }, [dragging, startPos]);
 
   const handleMouseDown = (e) => {
+    if (!mediaWin.img) return;
     e.preventDefault();
     e.stopPropagation();
     setDragging(true);
@@ -108,23 +110,26 @@ const switchPic=(action)=>{
       <button className="btn media-btn media-widget" 
       id="next-pic" onClick={(e)=>{e.stopPropagation();switchPic("add")}}
       >{Icon("rightArr")}</button>
-      <div
-        id="media-box"
-        ref={mediaBoxRef}
-        onMouseDown={handleMouseDown}
-        style={{
-          cursor: dragging ? "grabbing" : "grab",
-          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-          transition: dragging ? "none" : "transform 0.15s ease-out",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {mediaWin.img ? (
-          <img loading="lazy" src={mediaWin.url+picList[mediaWin.index]} />
-        ) : (
-          <video src={mediaWin.url+picList[mediaWin.index]} controls autoPlay loop />
-        )}
-      </div>
+     <div
+  id="media-box"
+  ref={mediaBoxRef}
+  onMouseDown={handleMouseDown}
+  style={{
+    cursor: !mediaWin.img ? "default" : dragging ? "grabbing" : "grab",
+    transform: mediaWin.img 
+      ? `translate(${position.x}px, ${position.y}px) scale(${scale})` 
+      : `translate(0px, 0px) scale(${scale})`,
+    
+    transition: dragging ? "none" : "transform 0.15s ease-out",
+  }}
+  onClick={(e) => e.stopPropagation()}
+>
+  {mediaWin.img ? (
+    <img loading="lazy" src={mediaWin.url + picList[mediaWin.index]} alt="media" />
+  ) : (
+    <VideoPlayer src={mediaWin.url + picList[mediaWin.index]} />
+  )}
+</div>
     <div  className="media-widget tool-bar">
       <button className="btn"
       title={GetText("zoom_out")} onClick={(e)=>{e.stopPropagation();zoom("out")}}

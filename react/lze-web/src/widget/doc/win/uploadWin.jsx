@@ -66,7 +66,6 @@ export default function UploadWin() {
             >{FillIcon("doc")}</label>
     </div>):null}
     </WinBg>
-    <WinBg showBg={upload.status} />
     {upload.status?(<div id="uploading-back"></div>):null}
         <div id="drag-win"
         style={dragWin?{display:"flex"}:{display:"none"}}
