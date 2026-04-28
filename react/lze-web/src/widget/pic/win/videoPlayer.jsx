@@ -22,7 +22,18 @@ const VideoPlayer = ({ src }) => {
   const [isLongPressing, setIsLongPressing] = useState(false);
   const [isDragging, setIsDragging] = useState(false); // 拖拽状态锁
 
+  // --- 新增状态：用于处理 Hover 时间显示 ---
+  const [hoverTime, setHoverTime] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+
   const speedOptions = [0.5, 1.0, 1.25, 1.5, 1.75, 2.0, 3.0];
+
+  // --- 辅助函数：格式化时间 ---
+  const formatTime = (time) => {
+    const mins = Math.floor(time / 60).toString().padStart(2, '0');
+    const secs = Math.floor(Math.max(0, time % 60)).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+  };
 
   // --- 逻辑函数 ---
 
@@ -80,11 +91,28 @@ const VideoPlayer = ({ src }) => {
     
     const newTime = (percentage / 100) * duration;
     videoRef.current.currentTime = newTime;
+    
+    // 如果正在拖动，实时更新底部的 currentTime 状态
+    if (isDragging) {
+      setCurrentTime(newTime);
+    }
+    
     setProgress(percentage);
+  };
+
+  // 新增：处理鼠标在进度条上移动时的预览逻辑
+  const handleProgressHover = (e) => {
+    if (!progressBarRef.current || isDragging) return;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, offsetX / rect.width));
+    setHoverTime(percentage * duration);
+    setIsHovering(true);
   };
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
+    setIsHovering(false); // 开始拖动时隐藏中间的预览
     handleProgressMove(e); // 点击即跳转
     resetTimer();
   };
@@ -183,12 +211,21 @@ const VideoPlayer = ({ src }) => {
       style={{ 
         position: 'relative', 
         backgroundColor: '#000',
-        cursor: (showControls || !isPlaying) ? 'default' : 'none' 
+        cursor: (showControls || !isPlaying) ? 'default' : 'none',
+        overflow: 'hidden'
       }}
     >
       {isLongPressing && (
         <div className='speed-notice'>
           ▶▶▶
+        </div>
+      )}
+
+      {/* --- 新增：正中间的时间显示 (仅在 Hover 且非拖拽时) --- */}
+      {isHovering && !isDragging && (
+        <div 
+        className='vid-time-preview'>
+          {formatTime(hoverTime)}
         </div>
       )}
 
@@ -209,22 +246,23 @@ const VideoPlayer = ({ src }) => {
         className={`controls-wrapper ${showControls || !isPlaying ? 'visible' : 'hidden'}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className='progress-box'>
+        <div className='vid-progress-box'>
           <button className="control-button btn" onClick={togglePlay}>
             {isPlaying ? FillIcon('pause') : FillIcon('play')}
           </button>
           
-          {/* 这里将 input 替换为 div，保留原有 className */}
           <div 
             ref={progressBarRef}
             className="progress-slider"
             onMouseDown={handleMouseDown}
+            onMouseMove={handleProgressHover} // 新增：处理 Hover 逻辑
+            onMouseLeave={() => setIsHovering(false)} // 新增：鼠标移出隐藏
           >
            <div
            className='progress-bar'
            style={{
                width: `${progress}%`,
-               ransition: isDragging ? 'none' : 'transform 0.1s linear'
+               transition: isDragging ? 'none' : 'transform 0.1s linear'
             }} />
             <div
            className='progress-dot'
@@ -238,10 +276,7 @@ const VideoPlayer = ({ src }) => {
         <div className="controls-row">
           <div className="controls-left">
             <span className="time-display">
-              {Math.floor(currentTime / 60).toString().padStart(2, '0')}:
-              {Math.floor(currentTime % 60).toString().padStart(2, '0')} / 
-              {Math.floor(duration / 60).toString().padStart(2, '0')}:
-              {Math.floor(duration % 60).toString().padStart(2, '0')}
+              {formatTime(currentTime)} / {formatTime(duration)}
             </span>
           </div>
 

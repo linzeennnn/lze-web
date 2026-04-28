@@ -393,7 +393,8 @@ z-index: 1;
     pointer-events: none;
 }
 
-.progress-box {
+.vid-progress-box {
+    gap: 7px;
     display: flex;
     justify-content: start;
     flex-direction: row;
@@ -534,6 +535,19 @@ z-index: 1;
   font-size: 10px;
   pointer-events: none;
   transition: opacity 0.3s ease;
+}
+.vid-time-preview {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bg_color);
+  color: var(--text);
+  padding: 12px 24px;
+  border-radius: 15px;
+  font-weight: bold;
+  z-index: 1;
+  pointer-events: none;
 }
 /* 媒体查询保留 */
 @media (max-width: 600px) {
