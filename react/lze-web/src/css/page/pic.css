@@ -344,7 +344,12 @@ z-index: 1;
     align-items: center;  
     justify-content: center;
 }
-
+.video-container.visible{
+    cursor: pointer !important;
+}
+.video-container.hidden{
+    cursor: none !important;
+}
 .video-container:fullscreen {
     max-width: none;
     width: 100vw;
@@ -355,7 +360,6 @@ z-index: 1;
     width: auto; 
     height: auto;
     display: block;
-    cursor: pointer;
 }
 
 .fullScreen-video {
@@ -363,25 +367,27 @@ z-index: 1;
     max-height: 100% !important;
 }
 
-/* 控制栏核心逻辑修整 */
 .controls-wrapper {
+    height: 45px;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 10px;
+    padding: clamp(6px, 1vw, 10px);
     background: linear-gradient(transparent, var(--bg_color), var(--body_color));
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: clamp(4px, 0.8vw, 10px);
     opacity: 0; 
     transition: opacity 0.3s ease;
     z-index: 10;
+    font-size: clamp(10px, 1.5vw, 16px);
 }
 
 .controls-wrapper:hover{
     opacity: 1 !important;
     pointer-events: auto !important;
+    cursor: pointer !important;
 }
 .controls-wrapper.visible {
     opacity: 1;
@@ -394,7 +400,7 @@ z-index: 1;
 }
 
 .vid-progress-box {
-    gap: 7px;
+    gap: 0.4em;
     display: flex;
     justify-content: start;
     flex-direction: row;
@@ -407,7 +413,7 @@ z-index: 1;
     border-radius: 15px;
     background-color: var(--bg_color);
     width: 100%;
-    height: 5px;
+    height: 4px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -424,15 +430,14 @@ z-index: 1;
 }
 .progress-dot {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 0.6em;
+    height: 0.6em;
     background-color: var(--text);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     top: 50%;
     pointer-events: none; 
 }
-
 
 .controls-row {
     display: flex;
@@ -445,23 +450,29 @@ z-index: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 0.6em;
 }
 
-.control-button, .volume-btn {
-    width: 20px !important;
-    height: 20px !important;
+.control-button, .volume-btn, .loop-btn {
+    width: 1.25em !important;
+    height: 1.25em !important;
+}
+
+.loop-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .time-display {
-    font-size: 12px;
-    min-width: 80px;
+    font-size: 0.75em;
+    min-width: 5em;
 }
 
 .volume-group {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.3em;
     accent-color: var(--text);
 }
 
@@ -474,8 +485,8 @@ z-index: 1;
         var(--base_color) var(--volume),
         var(--base_color) 100%
     );
-    width: 60px;
-    height: 5px;
+    width: 4em;
+    height: 4px;
     cursor: pointer;
 }
 
@@ -486,10 +497,10 @@ z-index: 1;
 }
 
 .speed-btn {
-    width: 15px !important;
-    height: 15px !important;
+    width: 1em !important;
+    height: 1em !important;
     color: var(--text);
-    font-size: small;
+    font-size: 1em;
     font-weight: bold;
 }
 
@@ -500,20 +511,20 @@ z-index: 1;
     transform: translateX(-50%);
     background-color: var(--bg_color);
     border-radius: 15px;
-    padding: 8px;
-    margin-bottom: 10px;
-    width: 80px;
+    padding: 0.5em;
+    margin-bottom: 0.6em;
+    width: 5em;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.25em;
     z-index: 10;
 }
 
 .speed-item {
     border-radius: 15px;
-    padding: 4px 12px;
+    padding: 0.25em 0.75em;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 0.8em;
     text-align: center;
     color: var(--text);
 }
@@ -522,32 +533,34 @@ z-index: 1;
     background-color: var(--base_color);
     color: var(--text);
 }
+
 .speed-notice{
     background-color: var(--bg_color);
     color: var(--text);
     position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 10px;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    font-size: 0.6em;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
+
 .vid-time-preview {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--bg_color);
-  color: var(--text);
-  padding: 12px 24px;
-  border-radius: 15px;
-  font-weight: bold;
-  z-index: 1;
-  pointer-events: none;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg_color);
+    color: var(--text);
+    padding: 0.75em 1.5em;
+    border-radius: 15px;
+    font-weight: bold;
+    z-index: 1;
+    pointer-events: none;
 }
 /* 媒体查询保留 */
 @media (max-width: 600px) {

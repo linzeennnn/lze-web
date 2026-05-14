@@ -115,7 +115,6 @@ const switchPic=(action)=>{
   ref={mediaBoxRef}
   onMouseDown={handleMouseDown}
   style={{
-    cursor: !mediaWin.img ? "default" : dragging ? "grabbing" : "grab",
     transform: mediaWin.img 
       ? `translate(${position.x}px, ${position.y}px) scale(${scale})` 
       : `translate(0px, 0px) scale(${scale})`,
@@ -127,7 +126,7 @@ const switchPic=(action)=>{
   {mediaWin.img ? (
     <img loading="lazy" src={mediaWin.url + picList[mediaWin.index]} alt="media" />
   ) : (
-    <VideoPlayer src={mediaWin.url + picList[mediaWin.index]} />
+    <VideoPlayer/>
   )}
 </div>
     <div  className="media-widget tool-bar">

@@ -12,6 +12,7 @@ export const useGlobal = create((set, get) => ({
   dirList: [],
   uploading: false,
   showBg: false,
+  loopPlay:"single",
   updateList: true,//如果是edit的话要设置成false,不然会出现两张一样的图片
   editWin:{
     status:false,
@@ -38,7 +39,7 @@ export const useGlobal = create((set, get) => ({
   mediaWin:{
     status:false,
     img:true,
-    path:window.location.origin+"/file/Pictures/",
+    url:window.location.origin+"/file/Pictures/",
     index:0
   },
   select:{
@@ -218,4 +219,8 @@ setGlobal({editWin:{
 export function closeEditWin(){
   const editWin=useGlobal.getState().editWin
   useGlobal.setState({ editWin: {...editWin, status: false } })
+}
+// 循环播放
+export function LoopPlay(){
+
 }

@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FillIcon, Icon } from '../../../utils/icon';
+import { useGlobal } from '../global';
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = () => {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const timerRef = useRef(null);
   const longPressTimerRef = useRef(null); 
   const prevRateRef = useRef(1.0);        
   const progressBarRef = useRef(null); // 用于计算点击位置
-
+  const loopPlay = useGlobal((state) => state.loopPlay)
+  const mediaWin = useGlobal((state) => state.mediaWin);
+  const pageNum = useGlobal((state) => state.pageNum);
+  const vidList = useGlobal((state) => state.vidList)[pageNum - 1];
   const [isPlaying, setIsPlaying] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -22,32 +26,44 @@ const VideoPlayer = ({ src }) => {
   const [isLongPressing, setIsLongPressing] = useState(false);
   const [isDragging, setIsDragging] = useState(false); // 拖拽状态锁
 
-  // --- 新增状态：用于处理 Hover 时间显示 ---
   const [hoverTime, setHoverTime] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
 
   const speedOptions = [0.5, 1.0, 1.25, 1.5, 1.75, 2.0, 3.0];
 
-  // --- 辅助函数：格式化时间 ---
   const formatTime = (time) => {
     const mins = Math.floor(time / 60).toString().padStart(2, '0');
     const secs = Math.floor(Math.max(0, time % 60)).toString().padStart(2, '0');
     return `${mins}:${secs}`;
   };
 
-  // --- 逻辑函数 ---
-
   const resetTimer = () => {
+  if (!showControls) {
     setShowControls(true);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (isPlaying) {
-      timerRef.current = setTimeout(() => {
-        setShowControls(false);
-        setShowSpeedMenu(false);
-      }, 2000);
+  }
+
+  if (timerRef.current) {
+    clearTimeout(timerRef.current);
+  }
+
+  if (isPlaying) {
+    timerRef.current = setTimeout(() => {
+      setShowControls(false);
+      setShowSpeedMenu(false);
+    }, 2000);
+  }
+};
+useEffect(() => {
+  return () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
     }
   };
-
+}, []);
   const seek = (amount) => {
     if (!videoRef.current) return;
     const newTime = videoRef.current.currentTime + amount;
@@ -81,26 +97,43 @@ const VideoPlayer = ({ src }) => {
     resetTimer();
   };
 
-  // --- 进度条模拟逻辑 ---
+  // --- 新增：处理视频播放结束的逻辑 ---
+  const handleVideoEnded = () => {
+    if (loopPlay === "single") {
+      // 单曲循环：直接重置时间并播放
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    } else {
+      let nextIndex = mediaWin.index;
+      if (loopPlay === "sequence") {
+        // 顺序播放：索引 + 1，如果到末尾则回到 0
+        nextIndex = (mediaWin.index + 1) % vidList.length;
+      } else if (loopPlay === "random") {
+        // 随机播放：生成一个不同于当前的随机索引
+        if (vidList.length > 1) {
+          while (nextIndex === mediaWin.index) {
+            nextIndex = Math.floor(Math.random() * vidList.length);
+          }
+        }
+      }
+      // 更新全局状态，触发 src 变化
+      useGlobal.setState({ mediaWin: { ...mediaWin, index: nextIndex } });
+    }
+  };
 
   const handleProgressMove = (e) => {
     if (!progressBarRef.current || !videoRef.current) return;
     const rect = progressBarRef.current.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (offsetX / rect.width) * 100));
-    
     const newTime = (percentage / 100) * duration;
     videoRef.current.currentTime = newTime;
-    
-    // 如果正在拖动，实时更新底部的 currentTime 状态
     if (isDragging) {
       setCurrentTime(newTime);
     }
-    
     setProgress(percentage);
   };
 
-  // 新增：处理鼠标在进度条上移动时的预览逻辑
   const handleProgressHover = (e) => {
     if (!progressBarRef.current || isDragging) return;
     const rect = progressBarRef.current.getBoundingClientRect();
@@ -112,8 +145,8 @@ const VideoPlayer = ({ src }) => {
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
-    setIsHovering(false); // 开始拖动时隐藏中间的预览
-    handleProgressMove(e); // 点击即跳转
+    setIsHovering(false);
+    handleProgressMove(e);
     resetTimer();
   };
 
@@ -124,7 +157,6 @@ const VideoPlayer = ({ src }) => {
     const handleGlobalMouseUp = () => {
       setIsDragging(false);
     };
-
     if (isDragging) {
       window.addEventListener('mousemove', handleGlobalMouseMove);
       window.addEventListener('mouseup', handleGlobalMouseUp);
@@ -134,8 +166,6 @@ const VideoPlayer = ({ src }) => {
       window.removeEventListener('mouseup', handleGlobalMouseUp);
     };
   }, [isDragging, duration]);
-
-  // --- 事件监听 ---
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -199,20 +229,22 @@ const VideoPlayer = ({ src }) => {
     <div
       mode="dark"
       ref={containerRef}
-      className="video-container"
+      className={`video-container ${showControls || !isPlaying ? 'visible' : 'hidden'}`}
       onMouseMove={resetTimer}
-      onMouseLeave={() => isPlaying && (timerRef.current = setTimeout(() => setShowControls(false), 500))}
+      onMouseLeave={() => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+
+        if (isPlaying) {
+          setShowControls(false);
+        }
+      }}
       onClick={() => setShowSpeedMenu(false)}
       onDoubleClick={toggleFullScreen}
       onContextMenu={(e) => {
         e.preventDefault();
         seek(5);
-      }}
-      style={{ 
-        position: 'relative', 
-        backgroundColor: '#000',
-        cursor: (showControls || !isPlaying) ? 'default' : 'none',
-        overflow: 'hidden'
       }}
     >
       {isLongPressing && (
@@ -221,23 +253,27 @@ const VideoPlayer = ({ src }) => {
         </div>
       )}
 
-      {/* --- 新增：正中间的时间显示 (仅在 Hover 且非拖拽时) --- */}
       {isHovering && !isDragging && (
-        <div 
-        className='vid-time-preview'>
+        <div className='vid-time-preview'>
           {formatTime(hoverTime)}
         </div>
       )}
 
       <video
-        autoPlay
+        autoPlay={true}
+        // 注意：这里将原有的 loop={true} 改为 false，因为我们要手动控制 onEnded 逻辑
+        loop={loopPlay === "single"}
         ref={videoRef}
-        src={src}
+        src={mediaWin.url + vidList[mediaWin.index]}
         className={"video-element " + (fullScreen ? "fullScreen-video" : "")}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={() => setDuration(videoRef.current.duration)}
+        onLoadedMetadata={() => {
+          setDuration(videoRef.current.duration);
+          videoRef.current.playbackRate = playbackRate; // 确保切歌后倍速不变
+        }}
+        onEnded={handleVideoEnded} // 绑定结束逻辑
         onClick={togglePlay}
         style={{ width: '100%', height: '100%', display: 'block' }}
       />
@@ -255,8 +291,8 @@ const VideoPlayer = ({ src }) => {
             ref={progressBarRef}
             className="progress-slider"
             onMouseDown={handleMouseDown}
-            onMouseMove={handleProgressHover} // 新增：处理 Hover 逻辑
-            onMouseLeave={() => setIsHovering(false)} // 新增：鼠标移出隐藏
+            onMouseMove={handleProgressHover}
+            onMouseLeave={() => setIsHovering(false)}
           >
            <div
            className='progress-bar'
@@ -307,7 +343,11 @@ const VideoPlayer = ({ src }) => {
                 style={{ "--volume": `${volume * 100}%` }}
               />
             </div>
-
+            <div className='loop-box' onClick={()=>{switchLoop()}}>
+                {loopPlay=="single"&&<button className='btn loop-btn'>{Icon("loopSingle")}</button>}
+                {loopPlay=="sequence"&&<button className='btn loop-btn'>{Icon("loopSequence")}</button>}
+                {loopPlay=="random"&&<button className='btn loop-btn'>{Icon("loopRandom")}</button>}
+            </div>
             <div className="speed-group" style={{ position: 'relative' }}>
               {showSpeedMenu && (
                 <div className="speed-menu" style={{ position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)' }}>
@@ -341,3 +381,22 @@ const VideoPlayer = ({ src }) => {
 };
 
 export default VideoPlayer;
+
+function switchLoop(){
+  const global = useGlobal.getState()
+  let setvalue
+  switch (global.loopPlay) {
+    case "single":
+      setvalue = "sequence"
+      break;
+    case "sequence":
+      setvalue = "random"
+      break;
+    case "random":
+      setvalue = "single"
+      break;
+    default:
+      setvalue = "sequence"
+  }
+  useGlobal.setState({ loopPlay: setvalue })
+}
