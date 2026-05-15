@@ -9,6 +9,7 @@ import (
 
 var (
 	UserConfig    map[string]interface{}       //用户配置
+	ApiMap        map[string]interface{}       //api映射表
 	UserList      []string                     //用户列表
 	Port          string                       //服务监听端口
 	MaxUploadSize int64                        //最大上传大小

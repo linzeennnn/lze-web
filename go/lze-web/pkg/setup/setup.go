@@ -25,6 +25,7 @@ func Setup() {
 	global.WorkDir = global.GetWorkDir()
 	userConfigStr := global.ReadText(filepath.Join(global.WorkDir, "config", "user_config.json"))
 	workConfigStr := global.ReadText(filepath.Join(global.WorkDir, "config", "work_config.json"))
+	apiConfigStr := global.ReadText(filepath.Join(global.WorkDir, "config", "api_config.json"))
 	global.CmdPath = filepath.Join(global.WorkDir, "config", "cmd_config.json")
 
 	// 解析用户配置
@@ -72,6 +73,8 @@ func Setup() {
 	global.BokPath = setPath("bok_path", "Bookmark", WorkConfig)
 	global.TraPath = setPath("tra_path", "trash", WorkConfig)
 	global.TempPath = setPath("tmp_path", "temp", WorkConfig)
+	// 解析api配置
+	global.ApiMap = global.JsonToMap(apiConfigStr)
 	// 清空临时目录
 	os.RemoveAll(global.TempPath)
 	os.Mkdir(global.TempPath, 0755)

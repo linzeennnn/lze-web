@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// 开发时手动添加别名到这里
+const devAliases = ['rd'];
+
 export default defineConfig({
   plugins: [
     react(),
@@ -33,16 +36,23 @@ export default defineConfig({
     port: 1234,
     strictPort: true,
     proxy: {
-     '/api': {
-    target: 'http://127.0.0.1:1357',
-    changeOrigin: true,
-    rewrite: (path) => path, // 不改 path
-  },
-  '/file': {
-    target: 'http://127.0.0.1:1357',
-    changeOrigin: true,
-    rewrite: (path) => path,
-  },
+      '/api': {
+        target: 'http://127.0.0.1:1357',
+        changeOrigin: true,
+        rewrite: (path) => path,
+      },
+      '/file': {
+        target: 'http://127.0.0.1:1357',
+        changeOrigin: true,
+        rewrite: (path) => path,
+      },
+      // 自动展开别名列表
+      ...Object.fromEntries(
+        devAliases.map(alias => [
+          `/${alias}`,
+          { target: 'http://127.0.0.1:1357', changeOrigin: true }
+        ])
+      ),
     },
     middlewareMode: false,
     fs: {
