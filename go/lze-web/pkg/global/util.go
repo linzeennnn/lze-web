@@ -28,6 +28,10 @@ func GetWorkDir() string {
 func ReadText(path string) string {
 	data, err := os.ReadFile(path)
 	if err != nil {
+		if os.IsNotExist(err) {
+			os.WriteFile(path, []byte(""), 0644)
+			return ""
+		}
 		panic(err)
 	}
 	return string(data)
@@ -67,6 +71,9 @@ func LogOutput(logtext string) {
 
 // json转map
 func JsonToMap(jsonStr string) map[string]interface{} {
+	if jsonStr == "" {
+		return map[string]interface{}{}
+	}
 	var data map[string]interface{}
 	err := json.Unmarshal([]byte(jsonStr), &data)
 	if err != nil {
