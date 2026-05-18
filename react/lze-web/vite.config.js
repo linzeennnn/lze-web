@@ -27,7 +27,16 @@ export default defineConfig({
       },
       workbox: {
         cleanupOutdatedCaches: true,
-        navigateFallbackDenylist: [/^\/file\//],
+        navigateFallback: 'index.html',
+        navigateFallbackAllowlist: [
+          /^\/$/, 
+          /^\/doc$/, 
+          /^\/pic$/, 
+          /^\/tra$/, 
+          /^\/mon$/, 
+          /^\/not$/, 
+          /^\/bok$/,
+        ],
       }
     })
   ],
@@ -46,7 +55,6 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path,
       },
-      // 自动展开别名列表
       ...Object.fromEntries(
         devAliases.map(alias => [
           `/${alias}`,
